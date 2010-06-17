@@ -14,3 +14,8 @@ html
       | some
     #just-a-div
       p without a tag
+    - if (items)
+      ul
+        - each item in items
+          li= item
+    
