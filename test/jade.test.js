@@ -96,6 +96,8 @@ module.exports = {
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
+        assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'), 'Test boolean attrs');
+        
         assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'), 'Test attr =');
         assert.equal('<img src="/foo.png" />', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
         assert.equal('<img src="/foo.png" />', render('img(src:"/foo.png")'), 'Test attr :');
