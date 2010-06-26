@@ -31,12 +31,12 @@ module.exports = {
     },
     
     'test attrs': function(assert){
-        assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'));
+        assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
-        assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'));
-        assert.equal('<img src="/foo.png" />', render('img(src  =  "/foo.png")'));
-        assert.equal('<img src="/foo.png" />', render('img(src:"/foo.png")'));
-        assert.equal('<img src="/foo.png" />', render('img(src  :  "/foo.png")'));
+        assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'), 'Test attr =');
+        assert.equal('<img src="/foo.png" />', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
+        assert.equal('<img src="/foo.png" />', render('img(src:"/foo.png")'), 'Test attr :');
+        assert.equal('<img src="/foo.png" />', render('img(src  :  "/foo.png")'), 'Test attr : whitespace');
         
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src: "/foo.png", alt: "just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src   : "/foo.png", alt  :  "just some foo")'));
