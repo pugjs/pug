@@ -42,6 +42,7 @@ module.exports = {
         assert.equal('<div id="foo" class="bar"></div>', render('div#foo(class="bar")'));
         assert.equal('<div class="bar" id="foo"></div>', render('div(class="bar")#foo'));
         assert.equal('<div id="bar" class="foo"></div>', render('div(id="bar").foo'));
+        assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz', { debug: true }));
     },
     
     'test nested tags': function(assert){
