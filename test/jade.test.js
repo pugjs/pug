@@ -27,7 +27,31 @@ module.exports = {
             '<img />'
         ].join('');
 
-        assert.equal(html, render(str));
+        assert.equal(html, render(str), 'Test basic tags');
+    },
+    
+    'test nested tags': function(assert){
+        var str = [
+            'ul',
+            '  li a',
+            '  li b',
+            '  li',
+            '    ul',
+            '      li c',
+            '      li d',
+            '  li e',
+        ].join('\n');
+
+        var html = [
+            '<ul>',
+            '<li>a</li>',
+            '<li>b</li>',
+            '<li><ul><li>c</li><li>d</li></ul></li>',
+            '<li>e</li>',
+            '</ul>'
+        ].join('');
+
+        assert.equal(html, render(str), 'Test nesting');
     },
     
     'test attrs': function(assert){
