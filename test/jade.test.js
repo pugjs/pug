@@ -33,6 +33,12 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str), 'Test basic tags');
+        assert.equal('<div class="something"></div>', render('div.something'), 'Test classes');
+        assert.equal('<div id="something"></div>', render('div#something'), 'Test ids');
+        assert.equal('<div class="something"></div>', render('.something'), 'Test stand-alone classes');
+        assert.equal('<div id="something"></div>', render('#something'), 'Test stand-alone ids');
+        assert.equal('<div id="foo" class="bar"></div>', render('#foo.bar'));
+        assert.equal('<div class="bar" id="foo"></div>', render('.bar#foo'));
     },
     
     'test nested tags': function(assert){
