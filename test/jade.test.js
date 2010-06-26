@@ -14,6 +14,11 @@ module.exports = {
         assert.ok(/^\d+\.\d+\.\d+$/.test(jade.version), "Invalid version format");
     },
     
+    'test doctypes': function(assert){
+        assert.equal('<?xml version="1.0" encoding="utf-8" ?>', render('!!! xml'));
+        assert.equal('<!DOCTYPE html>', render('!!! 5'));
+    },
+    
     'test tags': function(assert){
         var str = [
             'p',
