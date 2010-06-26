@@ -72,6 +72,16 @@ module.exports = {
         assert.equal('Jade(2): Invalid indentation, got 3 spaces, must be a multiple of two.', err.message);
     },
     
+    'test invalid indents': function(assert){
+        var err;
+        try {
+            render('ul\n\n\n    li');
+        } catch (e) {
+            err = e;
+        }
+        assert.equal('Jade(4): Invalid indentation, got 2 expected 1.', err.message);
+    },
+    
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
