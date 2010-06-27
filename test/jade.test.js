@@ -38,15 +38,14 @@ module.exports = {
         assert.equal('<div class="something"></div>', render('.something'), 'Test stand-alone classes');
         assert.equal('<div id="something"></div>', render('#something'), 'Test stand-alone ids');
         assert.equal('<div id="foo" class="bar"></div>', render('#foo.bar'));
-        assert.equal('<div class="bar" id="foo"></div>', render('.bar#foo'));
+        assert.equal('<div id="foo" class="bar"></div>', render('.bar#foo'));
         assert.equal('<div id="foo" class="bar"></div>', render('div#foo(class="bar")'));
-        assert.equal('<div class="bar" id="foo"></div>', render('div(class="bar")#foo'));
+        assert.equal('<div id="foo" class="bar"></div>', render('div(class="bar")#foo'));
         assert.equal('<div id="bar" class="foo"></div>', render('div(id="bar").foo'));
-        
-        assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz', { debug: true }));
-        // assert.equal('<div class="foo bar baz"></div>', render('div(class="foo").bar.baz'));
-        // assert.equal('<div class="foo bar baz"></div>', render('div.foo(class="bar").baz'));
-        // assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar(class="baz")'));
+        assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz'));
+        assert.equal('<div class="foo bar baz"></div>', render('div(class="foo").bar.baz'));
+        assert.equal('<div class="foo bar baz"></div>', render('div.foo(class="bar").baz'));
+        assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar(class="baz")'));
     },
     
     'test nested tags': function(assert){
