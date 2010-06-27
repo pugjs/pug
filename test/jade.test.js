@@ -171,6 +171,7 @@ module.exports = {
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
+        assert.equal('<p class="foo"></p>', render("p(class='foo')"), 'Test single quoted attrs');
         assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'), 'Test boolean attrs');
         
         assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'), 'Test attr =');
@@ -182,6 +183,10 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src   : "/foo.png", alt  :  "just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src="/foo.png", alt="just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
+    },
+    
+    'test code attrs': function(assert){
+        // assert.equal('', render('p(class: "name")', { locals: { name: 'tj' }}));
     },
     
     'test code': function(assert){
