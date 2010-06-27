@@ -7,7 +7,8 @@
 var sys = require('sys'),
     fs = require('fs'),
     jade = require('./../lib/jade'),
-    haml = require('./haml/lib/haml');
+    haml = require('./haml/lib/haml'),
+    hamljs = require('./haml-js/lib/haml');
 
 /**
  * Iterations.
@@ -47,6 +48,10 @@ bm('jade render', function(){
 
 bm('haml.js render', function(){
     haml.render(hamlStr, { locals: { title: 'Haml' }});
+});
+
+bm('haml-js render', function(){
+    hamljs.render(hamlStr, { locals: { title: 'Haml' }});
 });
 
 bm('jade cached', function(){
