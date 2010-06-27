@@ -273,7 +273,7 @@ module.exports = {
     },
     
     'test html 5 mode': function(assert){
-        assert.equal('<!DOCTYPE html>\n<input type="checked" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
+        assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
     },
     
     'test attrs': function(assert){
