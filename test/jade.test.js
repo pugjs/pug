@@ -19,6 +19,36 @@ module.exports = {
         assert.equal('<!DOCTYPE html>', render('!!! 5'));
     },
     
+    'test line endings': function(assert){
+        var str = [
+            'p',
+            'div',
+            'img'
+        ].join('\r\n');
+
+        var html = [
+            '<p></p>',
+            '<div></div>',
+            '<img />'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        var str = [
+            'p',
+            'div',
+            'img'
+        ].join('\r');
+
+        var html = [
+            '<p></p>',
+            '<div></div>',
+            '<img />'
+        ].join('');
+
+        assert.equal(html, render(str));
+    },
+    
     'test tags': function(assert){
         var str = [
             'p',
