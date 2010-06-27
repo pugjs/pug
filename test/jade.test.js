@@ -116,5 +116,58 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src   : "/foo.png", alt  :  "just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src="/foo.png", alt="just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
+    },
+    
+    'test code': function(assert){
+        var str = [
+            '- var foo = "<script>";',
+            '= foo',
+            '!= foo'
+        ].join('\n');
+
+        var html = [
+            '&lt;script&gt;',
+            '<script>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        var str = [
+            '- var foo = "<script>";',
+            '- if (foo)',
+            '  p= foo'
+        ].join('\n');
+
+        var html = [
+            '<p>&lt;script&gt;</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        var str = [
+            '- var foo = "<script>";',
+            '- if (foo)',
+            '  p!= foo'
+        ].join('\n');
+
+        var html = [
+            '<p><script></p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        var str = [
+            '- var foo;',
+            '- if (foo)',
+            '  p= foo',
+            '- else',
+            '  p no foo'
+        ].join('\n');
+
+        var html = [
+            '<p>no foo</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
     }
 };
