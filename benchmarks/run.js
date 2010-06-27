@@ -6,13 +6,14 @@
 
 var sys = require('sys'),
     fs = require('fs'),
-    jade = require('./../lib/jade');
+    jade = require('./../lib/jade'),
+    haml = require('./haml/lib/haml');
 
 /**
  * Iterations.
  */
 
-var times = 500;
+var times = 1000;
 sys.puts('running ' + times + ' times.');
 
 /**
@@ -36,9 +37,15 @@ function bm(label, fn) {
 // Setup
 
 var jadeStr = fs.readFileSync(__dirname + '/layout.jade', 'utf8');
+var hamlStr = fs.readFileSync(__dirname + '/layout.haml', 'utf8');
 
 // Jade
 
 bm('jade', function(){
     jade.render(jadeStr);
 });
+
+bm('haml.js', function(){
+    haml.render(hamlStr);
+});
+

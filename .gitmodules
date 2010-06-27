@@ -1,3 +1,6 @@
 [submodule "support/expresso"]
 	path = support/expresso
 	url = git://github.com/visionmedia/expresso.git
+[submodule "benchmarks/haml"]
+	path = benchmarks/haml
+	url = git://github.com/visionmedia/haml.js.git
