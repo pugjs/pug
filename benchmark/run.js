@@ -13,7 +13,7 @@ var sys = require('sys'),
  * Iterations.
  */
 
-var times = 1000;
+var times = 500;
 sys.puts('running ' + times + ' times.');
 
 /**
