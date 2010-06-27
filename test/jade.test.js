@@ -134,6 +134,20 @@ module.exports = {
         assert.equal(html, render(str), 'Test newlines');
     },
     
+    'test cache': function(assert){
+        var err;
+        try {
+            render('foo', { cache: true });
+        } catch (e) {
+            err = e;
+        }
+        assert.equal('filename is required when using the cache option', err.message);
+        
+        assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
+        assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
+        assert.ok(typeof jade.cache['foo.jade'] === 'string', 'Test cache');
+    },
+    
     'test tag text': function(assert){
         assert.equal('some random text ', render('| some random text'), 'Test root text');
         assert.equal('<p>some random text</p>', render('p some random text'), 'Test basic tag text');
