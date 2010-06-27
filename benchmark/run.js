@@ -39,14 +39,22 @@ function bm(label, fn) {
 var jadeStr = fs.readFileSync(__dirname + '/layout.jade', 'utf8');
 var hamlStr = fs.readFileSync(__dirname + '/layout.haml', 'utf8');
 
-// Jade
+// Benchmarks
 
 bm('jade render', function(){
-    jade.render(jadeStr);
+    jade.render(jadeStr, { locals: { title: 'Jade' }});
 });
 
 bm('haml.js render', function(){
-    haml.render(hamlStr);
+    haml.render(hamlStr, { locals: { title: 'Haml' }});
+});
+
+bm('jade cached', function(){
+    jade.render(jadeStr, { cache: true, filename: 'layout.jade', locals: { title: 'Jade' }});
+});
+
+bm('haml.js cached', function(){
+    haml.render(hamlStr, { cache: true, filename: 'layout.haml', locals: { title: 'Haml' }});
 });
 
 
