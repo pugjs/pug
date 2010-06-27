@@ -35,6 +35,12 @@ module.exports = {
         assert.equal('<![CDATA[\nfoo\nbar\n]]><p>something else</p>', render(':cdata\n  | foo\n  | bar\np something else'));
     },
     
+    'test :javascript filter': function(assert){
+        assert.equal(
+            '<script type="text/javascript">\n//<![CDATA[\nfoo\n//]]></script>',
+            render(':javascript\n  | foo'));
+    },
+    
     'test line endings': function(assert){
         var str = [
             'p',
