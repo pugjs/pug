@@ -41,6 +41,12 @@ module.exports = {
             render(':javascript\n  | foo'));
     },
     
+    'test :sass filter': function(assert){
+        assert.equal(
+            '<style>body {\n  color: #cc0000;}\n</style>',
+            render(':sass\n  | body\n  |   :color #cc0000'));
+    },
+    
     'test line endings': function(assert){
         var str = [
             'p',
