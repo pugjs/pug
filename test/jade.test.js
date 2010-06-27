@@ -74,6 +74,36 @@ module.exports = {
         assert.equal(html, render(str), 'Test nesting');
     },
     
+    'test newlines': function(assert){
+        var str = [
+            'ul',
+            '  li a',
+            '  ',
+            '  ',
+            '  ',
+            '  ',
+            '  li b',
+            '  li',
+            '    ',
+            '    ul',
+            '      ',
+            '      li c',
+            '      li d',
+            '  li e',
+        ].join('\n');
+
+        var html = [
+            '<ul>',
+            '<li>a</li>',
+            '<li>b</li>',
+            '<li><ul><li>c</li><li>d</li></ul></li>',
+            '<li>e</li>',
+            '</ul>'
+        ].join('');
+
+        assert.equal(html, render(str), 'Test newlines');
+    },
+    
     'test tag text': function(assert){
         assert.equal('some random text ', render('| some random text'), 'Test root text');
         assert.equal('<p>some random text</p>', render('p some random text'), 'Test basic tag text');
