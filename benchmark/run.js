@@ -62,4 +62,9 @@ bm('haml.js cached', function(){
     haml.render(hamlStr, { cache: true, filename: 'layout.haml', locals: { title: 'Haml' }});
 });
 
+var js = hamljs.compile(hamlStr);
+bm('haml-js cached', function(){
+    hamljs.execute(js, { locals: { title: 'Haml' }});
+});
+
 
