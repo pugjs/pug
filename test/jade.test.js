@@ -186,9 +186,15 @@ module.exports = {
     },
     
     'test code attrs': function(assert){
-        // TODO: special case class
         assert.equal('<p id="tj"></p>', render('p(id: name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
+    },
+    
+    'test code attrs class': function(assert){
+        assert.equal('<p class="tj"></p>', render('p(class: name)', { locals: { name: 'tj' }}));
+        assert.equal('<p class="default"></p>', render('p(class: name || "default")', { locals: { name: null }}));
+        assert.equal('<p class="foo default"></p>', render('p.foo(class: name || "default")', { locals: { name: null }}));
+        assert.equal('<p class="default foo"></p>', render('p(class: name || "default").foo', { locals: { name: null }}));
     },
     
     'test code': function(assert){
