@@ -2,4 +2,7 @@
 test:
 	@./support/expresso/bin/expresso -I lib test/*.js
 
-.PHONY: test example
+test-cov:
+	@./support/expresso/bin/expresso -I lib --cov test/*.js
+
+.PHONY: test test-cov example
