@@ -31,7 +31,7 @@ function bm(label, fn) {
         if (n % dotAt === 0) sys.print('.');
         fn();
     }
-    sys.puts(' ' + label + ': ' + (+new Date - start) + 'ms');
+    sys.puts(' ' + label + ': \x1b[32m' + (+new Date - start) + '\x1b[0m ms');
 }
 
 // Setup
@@ -41,11 +41,12 @@ var hamlStr = fs.readFileSync(__dirname + '/layout.haml', 'utf8');
 
 // Jade
 
-bm('jade', function(){
+bm('jade render', function(){
     jade.render(jadeStr);
 });
 
-bm('haml.js', function(){
+bm('haml.js render', function(){
     haml.render(hamlStr);
 });
+
 
