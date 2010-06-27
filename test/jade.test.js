@@ -175,6 +175,7 @@ module.exports = {
         } catch (e) {
             err = e;
         }
+        assert.equal('path/to/foo.jade', err.path);
         assert.equal('path/to/foo.jade:2 Invalid indentation, got 3 spaces, must be a multiple of two.', err.message);
     },
     
