@@ -5,7 +5,7 @@ test:
 test-cov:
 	@./support/expresso/bin/expresso -I lib --cov test/*.js
 
-benchmarks:
-	@./benchmarks/run.js
+benchmark:
+	@./benchmark/run.js
 
-.PHONY: test test-cov example benchmarks
+.PHONY: test test-cov example benchmark
