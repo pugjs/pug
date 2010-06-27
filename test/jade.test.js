@@ -41,6 +41,12 @@ module.exports = {
             render(':javascript\n  | foo'));
     },
     
+    'test :markdown filter': function(assert){
+        assert.equal(
+            '<h1>foo</h1>\n\n<ul>\n<li>bar</li>\n<li>baz</li>\n</ul>\n',
+            render(':markdown\n  | #foo\n  | - bar\n  | - baz'))
+    },
+    
     'test :sass filter': function(assert){
         assert.equal(
             '<style>body {\n  color: #cc0000;}\n</style>',
