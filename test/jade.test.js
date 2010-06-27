@@ -105,6 +105,36 @@ module.exports = {
         assert.equal(html, render(str), 'Test nesting');
     },
     
+    'test variable length newlines': function(assert){
+        var str = [
+            'ul',
+            '  li a',
+            '  ',
+            '  li b',
+            ' ',
+            '  li',
+            '    ul',
+            '          ',
+            ' ',
+            '',
+            '      li c',
+            '',
+            '      li d',
+            '  li e',
+        ].join('\n');
+
+        var html = [
+            '<ul>',
+            '<li>a</li>',
+            '<li>b</li>',
+            '<li><ul><li>c</li><li>d</li></ul></li>',
+            '<li>e</li>',
+            '</ul>'
+        ].join('');
+
+        assert.equal(html, render(str), 'Test nesting');
+    },
+    
     'test newlines': function(assert){
         var str = [
             'ul',
