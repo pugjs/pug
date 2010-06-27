@@ -153,15 +153,15 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        assert.equal('Jade(2): Invalid indentation, got 1 space, must be a multiple of two.', err.message);
+        assert.equal('Jade:2 Invalid indentation, got 1 space, must be a multiple of two.', err.message);
         
         var err;
         try {
-            render('ul\n   li');
+            render('ul\n   li', { filename: 'path/to/foo.jade' });
         } catch (e) {
             err = e;
         }
-        assert.equal('Jade(2): Invalid indentation, got 3 spaces, must be a multiple of two.', err.message);
+        assert.equal('path/to/foo.jade:2 Invalid indentation, got 3 spaces, must be a multiple of two.', err.message);
     },
     
     'test invalid indents': function(assert){
@@ -171,7 +171,7 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        assert.equal('Jade(4): Invalid indentation, got 2 expected 1.', err.message);
+        assert.equal('Jade:4 Invalid indentation, got 2 expected 1.', err.message);
     },
     
     'test attrs': function(assert){
