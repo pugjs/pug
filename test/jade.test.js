@@ -272,6 +272,10 @@ module.exports = {
             err.message);
     },
     
+    'test html 5 mode': function(assert){
+        assert.equal('<!DOCTYPE html>\n<input type="checked" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
+    },
+    
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
