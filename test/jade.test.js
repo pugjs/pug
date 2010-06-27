@@ -19,6 +19,22 @@ module.exports = {
         assert.equal('<!DOCTYPE html>', render('!!! 5'));
     },
     
+    'test unknown filter': function(assert){
+        var err;
+        try {
+            render(':doesNotExist');
+        } catch (e) {
+            err = e;
+        }
+        assert.equal("Jade:1\n    1. ':doesNotExist'\n\nunknown filter \":doesNotExist\"", err.message);
+    },
+    
+    'test :cdata filter': function(assert){
+        assert.equal('<![CDATA[\nfoo\n]]>', render(':cdata\n  | foo'));
+        assert.equal('<![CDATA[\nfoo\nbar\n]]>', render(':cdata\n  | foo\n  | bar'));
+        assert.equal('<![CDATA[\nfoo\nbar\n]]><p>something else</p>', render(':cdata\n  | foo\n  | bar\np something else'));
+    },
+    
     'test line endings': function(assert){
         var str = [
             'p',
