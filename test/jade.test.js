@@ -43,7 +43,7 @@ module.exports = {
         assert.equal('<div class="bar" id="foo"></div>', render('div(class="bar")#foo'));
         assert.equal('<div id="bar" class="foo"></div>', render('div(id="bar").foo'));
         
-        // assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz'));
+        assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz', { debug: true }));
         // assert.equal('<div class="foo bar baz"></div>', render('div(class="foo").bar.baz'));
         // assert.equal('<div class="foo bar baz"></div>', render('div.foo(class="bar").baz'));
         // assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar(class="baz")'));
