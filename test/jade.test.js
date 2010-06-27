@@ -167,7 +167,7 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        assert.equal('Jade:2 Invalid indentation, got 1 space, must be a multiple of two.', err.message);
+        assert.equal('Jade:2\n    \' li\'\n\nInvalid indentation, got 1 space, must be a multiple of two.', err.message);
         
         var err;
         try {
@@ -176,7 +176,7 @@ module.exports = {
             err = e;
         }
         assert.equal('path/to/foo.jade', err.path);
-        assert.equal('path/to/foo.jade:2 Invalid indentation, got 3 spaces, must be a multiple of two.', err.message);
+        assert.equal('path/to/foo.jade:2\n    \'   li\'\n\nInvalid indentation, got 3 spaces, must be a multiple of two.', err.message);
     },
     
     'test invalid indents': function(assert){
@@ -186,7 +186,17 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        assert.equal('Jade:4 Invalid indentation, got 2 expected 1.', err.message);
+        assert.equal('Jade:4\n    \'    li\'\n\nInvalid indentation, got 2 expected 1.', err.message);
+    },
+    
+    'test exceptions': function(assert){
+        var err;
+        try {
+            render('p= foo');
+        } catch (e) {
+            err = e;
+        }
+        assert.equal('foo is not defined', err.message);
     },
     
     'test attrs': function(assert){
