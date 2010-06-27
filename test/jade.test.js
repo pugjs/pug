@@ -186,7 +186,8 @@ module.exports = {
     },
     
     'test code attrs': function(assert){
-        // assert.equal('', render('p(class: "name")', { locals: { name: 'tj' }}));
+        assert.equal('<p class="tj"></p>', render('p(class: name)', { locals: { name: 'tj' }}));
+        assert.equal('<p class="default"></p>', render('p(class: name || "default")', { locals: { name: null }}));
     },
     
     'test code': function(assert){
