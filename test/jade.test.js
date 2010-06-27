@@ -318,5 +318,49 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+    },
+    
+    'test renderFile() fs exception': function(assert, beforeExit){
+        var called = true;
+        jade.renderFile('foo', function(err, str){
+            assert.equal(process.ENOENT, err.errno);
+            assert.equal(undefined, str);
+        });
+        beforeExit(function(){
+            assert.ok(called);
+        });
+    },
+    
+    'test renderFile() with valid path': function(assert, beforeExit){
+        var called = true;
+        jade.renderFile(__dirname + '/fixtures/layout.jade', function(err, str){
+            assert.equal(null, err);
+            assert.equal('<html><body><h1>Jade</h1></body></html>', str);
+        });
+        beforeExit(function(){
+            assert.ok(called);
+        });
+    },
+    
+    'test renderFile() with options': function(assert, beforeExit){
+        var called = true;
+        jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
+            assert.equal(null, err);
+            assert.equal('<html><body><h1>Jade</h1></body></html>', str);
+        });
+        beforeExit(function(){
+            assert.ok(called);
+        });
+    },
+    
+    'test renderFile() passing of exceptions': function(assert, beforeExit){
+        var called = true;
+        jade.renderFile(__dirname + '/fixtures/invalid.jade', { cache: true }, function(err, str){
+            assert.ok(typeof err.message === 'string', 'Test passing of exceptions to renderFile() callback');
+            assert.equal(undefined, str);
+        });
+        beforeExit(function(){
+            assert.ok(called);
+        });
     }
 };
