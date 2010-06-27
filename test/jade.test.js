@@ -74,6 +74,12 @@ module.exports = {
         assert.equal(html, render(str), 'Test nesting');
     },
     
+    'test tag text': function(assert){
+        assert.equal('some random text ', render('| some random text'), 'Test root text');
+        assert.equal('<p>some random text</p>', render('p some random text'), 'Test basic tag text');
+        assert.equal('<p>foo bar baz </p>', render('p\n  | foo\n  | bar\n  | baz'));
+    },
+    
     'test invalid indentation multiple': function(assert){
         var err;
         try {
@@ -159,13 +165,13 @@ module.exports = {
         var str = [
             '- var foo;',
             '- if (foo)',
-            '  p= foo',
+            '  p.hasFoo= foo',
             '- else',
-            '  p no foo'
+            '  p.noFoo no foo'
         ].join('\n');
 
         var html = [
-            '<p>no foo</p>'
+            '<p class="noFoo">no foo</p>'
         ].join('');
 
         assert.equal(html, render(str));
