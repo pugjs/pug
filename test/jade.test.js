@@ -233,7 +233,9 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        assert.equal('foo is not defined', err.message);
+        assert.equal(
+            "Jade:1\n    1. 'p= foo'\n\nfoo is not defined",
+            err.message);
     },
     
     'test attrs': function(assert){
