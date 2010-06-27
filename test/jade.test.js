@@ -142,6 +142,7 @@ module.exports = {
     
     'test tag text interpolation': function(assert){
         assert.equal('yo, jade is cool', render('| yo #{name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('<p>yo, jade is cool</p>', render('p yo #{name} is cool', { locals: { name: 'jade' }}));
         assert.equal('yo, jade is cool', render('| yo #{name || "jade"} is cool', { locals: { name: null }}));
     },
     
