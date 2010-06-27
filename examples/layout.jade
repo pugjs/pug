@@ -2,10 +2,8 @@
 html(lang="en")
   head
     title Jade
-  body
-    h1 Jade Template Engine
-    p
-      | foo bar baz
-      | asdfa #{foo} asdf
-      | asdf
-  
+    script
+      :cdata
+        | if (foo) {
+        |    bar()
+        | }
