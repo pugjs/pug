@@ -256,13 +256,15 @@ module.exports = {
     
     'test html 5 mode': function(assert){
         assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
+        assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked: true)'));
+        assert.equal('<!DOCTYPE html><input type="checkbox">', render('!!! 5\ninput(type="checkbox", checked: false)'));
     },
     
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
         assert.equal('<p class="foo"></p>', render("p(class='foo')"), 'Test single quoted attrs');
-        assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'), 'Test boolean attrs');
+        assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'));
         assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked: true)'));
         assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: false)'));
         
