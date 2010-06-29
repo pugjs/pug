@@ -59,6 +59,12 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test single quotes': function(assert){
+        assert.equal("<p>'foo'</p>", render("p 'foo'"));
+        assert.equal("<p>'foo' </p>", render("p\n  | 'foo'"));
+        assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
+    },
+    
     'test tags': function(assert){
         var str = [
             'p',
