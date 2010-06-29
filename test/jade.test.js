@@ -263,6 +263,8 @@ module.exports = {
         
         assert.equal('<p class="foo"></p>', render("p(class='foo')"), 'Test single quoted attrs');
         assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'), 'Test boolean attrs');
+        assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked: true)'));
+        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: false)'));
         
         assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'), 'Test attr =');
         assert.equal('<img src="/foo.png" />', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
