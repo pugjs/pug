@@ -9,6 +9,15 @@ var jade = require('jade');
 var render = jade.render;
 
 module.exports = {
+    'test filter interpolation': function(assert){
+        assert.equal(
+            '<script type="text/javascript">\n//<![CDATA[\nvar name = "tj";\n//]]></script>',
+            render(':javascript\n  | var name = "#{userName}";', { locals: { userName: 'tj' }}));
+        assert.equal(
+            '<script type="text/javascript">\n//<![CDATA[\nvar name = "#{userName}";\n//]]></script>',
+            render(':javascript\n  | var name = "\#{userName}";', { locals: { userName: 'tj' }}));
+    },
+    
     'test :cdata filter': function(assert){
         assert.equal('<![CDATA[\nfoo\n]]>', render(':cdata\n  | foo'));
         assert.equal('<![CDATA[\nfoo\nbar\n]]>', render(':cdata\n  | foo\n  | bar'));
