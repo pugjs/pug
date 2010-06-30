@@ -89,8 +89,8 @@ module.exports = {
         assert.equal('<div id="foo" class="bar"></div>', render('div(class="bar")#foo'));
         assert.equal('<div id="bar" class="foo"></div>', render('div(id="bar").foo'));
         assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz'));
-        assert.equal('<div class="foo bar baz"></div>', render('div(class="foo").bar.baz'));
-        assert.equal('<div class="foo bar baz"></div>', render('div.foo(class="bar").baz'));
+        assert.equal('<div class="bar baz foo"></div>', render('div(class="foo").bar.baz'));
+        assert.equal('<div class="foo baz bar"></div>', render('div.foo(class="bar").baz'));
         assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar(class="baz")'));
         assert.equal('<div class="a-b2"></div>', render('div.a-b2'));
         assert.equal('<div class="a_b2"></div>', render('div.a_b2'));
@@ -282,6 +282,8 @@ module.exports = {
     'test code attrs': function(assert){
         assert.equal('<p id="tj"></p>', render('p(id: name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
+        assert.equal('<p id="something"></p>', render("p(id: 'something')", { locals: { name: null }}));
+        // assert.equal('<p id="foo"></p>', render("p(id: (true ? 'foo' : 'bar'))", { debug: true }));
     },
     
     'test code attrs class': function(assert){
@@ -289,6 +291,8 @@ module.exports = {
         assert.equal('<p class="default"></p>', render('p(class: name || "default")', { locals: { name: null }}));
         assert.equal('<p class="foo default"></p>', render('p.foo(class: name || "default")', { locals: { name: null }}));
         assert.equal('<p class="foo default"></p>', render('p(class: name || "default").foo', { locals: { name: null }}));
+        assert.equal('<p id="user-1"></p>', render('p(id: "user-" + 1)'));
+        assert.equal('<p class="user-1"></p>', render('p(class: "user-" + 1)'));
     },
     
     'test code': function(assert){
