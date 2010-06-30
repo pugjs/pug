@@ -2,11 +2,10 @@
 html(lang="en")
   head
     title Jade
-    script
-      :cdata
-        | if (foo) {
-        |    bar()
-        | }
+    :javascript
+      | if (foo) {
+      |    bar()
+      | }
   body
     h1 Jade - node template engine
     #container
