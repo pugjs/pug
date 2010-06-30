@@ -15,7 +15,7 @@ module.exports = {
             render(':javascript\n  | var name = "#{userName}";', { locals: { userName: 'tj' }}));
         assert.equal(
             '<script type="text/javascript">\n//<![CDATA[\nvar name = "#{userName}";\n//]]></script>',
-            render(':javascript\n  | var name = "\#{userName}";', { locals: { userName: 'tj' }}));
+            render(':javascript\n  | var name = "\\#{userName}";', { locals: { userName: 'tj' }}));
     },
     
     'test :cdata filter': function(assert){
