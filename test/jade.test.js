@@ -198,7 +198,11 @@ module.exports = {
     'test tag text': function(assert){
         assert.equal('some random text ', render('| some random text'), 'Test root text');
         assert.equal('<p>some random text</p>', render('p some random text'), 'Test basic tag text');
+    },
+    
+    'test tag text block': function(assert){
         assert.equal('<p>foo bar baz </p>', render('p\n  | foo\n  | bar\n  | baz'));
+        assert.equal('<label>Password: <input /></label>', render('label\n  | Password:\n  input'));
     },
     
     'test tag text interpolation': function(assert){
