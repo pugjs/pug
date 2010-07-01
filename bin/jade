@@ -21,6 +21,12 @@ var args = process.argv.slice(2);
 var pipe;
 
 /**
+ * Options javascript.
+ */
+
+var options = {};
+
+/**
  * Usage information.
  */
 
@@ -28,8 +34,9 @@ var usage = ''
     + '\x1b[1mUsage\x1b[0m: jade [options] <path ...>\n'
     + '\n'
     + '\x1b[1mOptions:\x1b[0m\n'
-    + '  -p, --pipe    Output to stdout instead of PATH.html\n';
-    + '  -h, --help    Output help information\n';
+    + '  -o, --options STR   JavaScript options object passed\n'
+    + '  -p, --pipe          Output to stdout instead of PATH.html\n'
+    + '  -h, --help          Output help information\n';
 
 // Parse arguments
 
@@ -45,7 +52,17 @@ while (args.length) {
             break;
         case '-p':
         case '--pipe':
-            pip = true;
+            pipe = true;
+            break;
+        case '-o':
+        case '--options':
+            var str = args.shift();
+            if (str) {
+                options = eval('(' + str + ')');
+            } else {
+                sys.error('-o, --options requires a string.');
+                process.exit(1);
+            }
             break;
         default:
             files.push(arg);
@@ -56,7 +73,7 @@ while (args.length) {
 
 if (files.length) {
     files.forEach(function(file){
-        jade.renderFile(file, function(err, html){
+        jade.renderFile(file, options, function(err, html){
             if (err) throw err;
             if (pipe) {
                 sys.puts(html);
