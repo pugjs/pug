@@ -85,7 +85,26 @@ which is syntactic sugar for what we have already been doing, and outputs:
 Simply place some content after the tag:
 
     p wahoo!
-    <p>wahoo!</p>
+
+renders `<p>wahoo!</p>`.
+
+well cool, but how about large bodies of text:
+
+    p
+      | foo bar baz
+      | rawr rawr
+      | super cool
+      | go jade go
+
+renders `<p>foo bar baz rawr.....</p>`
+
+interpolation? yup! both types of text can utilize interpolation,
+if we passed `{ locals: { name: 'tj', email: 'tj@vision-media.ca' }}` to `render()`
+we can do the following:
+
+    #user #{name} &lt;#{email}&gt;
+
+outputs `<div id="user">tj &lt;tj@vision-media.ca&gt;</div>`
 
 ### Nesting
 

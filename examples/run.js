@@ -20,3 +20,8 @@ jade.renderFile(__dirname + '/users.jade', { locals: { users: users }}, function
     if (err) throw err;
     sys.puts('\x1b[1musers.jade:\x1b[0m', html, '');
 });
+
+jade.renderFile(__dirname + '/interpolation.jade', { locals: { name: 'tj', email: 'tj@vision-media.ca' }}, function(err, html){
+    if (err) throw err;
+    sys.puts('\x1b[1minterpolation.jade:\x1b[0m', html, '');
+});
