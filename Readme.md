@@ -80,6 +80,13 @@ which is syntactic sugar for what we have already been doing, and outputs:
 
     `<div id="foo"></div><div class="bar"></div>`
 
+### Tag Text
+
+Simply place some content after the tag:
+
+    p wahoo!
+    <p>wahoo!</p>
+
 ### Nesting
 
     ul
