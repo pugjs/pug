@@ -1,0 +1,10 @@
+!!! xml
+users
+  - users.forEach(function(user){
+    user(name: user.name)
+      - if (user.roles)
+        roles
+          - user.roles.forEach(function(role){
+            role= role
+          - })
+  - })
