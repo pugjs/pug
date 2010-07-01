@@ -201,6 +201,10 @@ defined by default, which can easily be extended:
 	    'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
 	};
 
+To alter the default simply change:
+
+    jade.doctypes.default = 'whatever you want';
+
 ## Filters
 
 Filters are prefixed with `:`, for example `:markdown` and
