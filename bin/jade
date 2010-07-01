@@ -1,0 +1,92 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var sys = require('sys'),
+    jade = require('jade'),
+    fs = require('fs');
+
+/**
+ * Arguments.
+ */
+
+var args = process.argv.slice(2);
+
+/**
+ * Output to stdout.
+ */
+
+var pipe;
+
+/**
+ * Options javascript.
+ */
+
+var options = {};
+
+/**
+ * Usage information.
+ */
+
+var usage = ''
+    + '\x1b[1mUsage\x1b[0m: jade [options] <path ...>\n'
+    + '\n'
+    + '\x1b[1mOptions:\x1b[0m\n'
+    + '  -o, --options STR   JavaScript options object passed\n'
+    + '  -p, --pipe          Output to stdout instead of PATH.html\n'
+    + '  -h, --help          Output help information\n';
+
+// Parse arguments
+
+var arg,
+    files = [];
+while (args.length) {
+    arg = args.shift();
+    switch (arg) {
+        case '-h':
+        case '--help':
+            sys.puts(usage);
+            process.exit(1);
+            break;
+        case '-p':
+        case '--pipe':
+            pipe = true;
+            break;
+        case '-o':
+        case '--options':
+            var str = args.shift();
+            if (str) {
+                options = eval('(' + str + ')');
+            } else {
+                sys.error('-o, --options requires a string.');
+                process.exit(1);
+            }
+            break;
+        default:
+            files.push(arg);
+    }
+}
+
+// Render files
+
+if (files.length) {
+    files.forEach(function(file){
+        jade.renderFile(file, options, function(err, html){
+            if (err) throw err;
+            if (pipe) {
+                sys.puts(html);
+            }  else {
+                file = file.replace(/\.jade$/, '.html');
+                fs.writeFile(file, html, function(err){
+                    if (err) throw err;
+                    sys.error('  create : ' + file);
+                });
+            }
+        });
+    });
+} else {
+    sys.error('files required.');
+    process.exit(1);
+}
