@@ -106,6 +106,12 @@ we can do the following:
 
 outputs `<div id="user">tj &lt;tj@vision-media.ca&gt;</div>`
 
+Actually want `#{}` for some reason? escape it!
+
+    p \#{something}
+
+now we have `<p>#{something}</p>`
+
 ### Nesting
 
     ul
