@@ -33,6 +33,51 @@
 	    // the callback can be the second arg
     });
 
+## Syntax
+
+### Line Endings
+
+**CRLF** and **CR* are converted to **LF** before parsing.
+
+### Indentation
+
+Jade is indentation based, however currently only supports a _2 space_ indent.
+We may implement tab support in the future, until then use spaces, so make sure soft
+tabs are enabled in your editor.
+
+### Nesting
+
+    ul
+      li one
+      li two
+      li three
+
+Fucked up your whitespace? no worries, jade's error reporting should help you out:
+
+    ul
+        li one
+      li two
+
+    Error: /Users/tj/Projects/jade/examples/layout.jade:2
+	    1. 'ul'
+	    2. '    li one'
+
+	Invalid indentation, got 2 expected 1.
+
+Note: Trailing are generated on **EOS** if not present.
+
+### Attributes
+
+Jade currently supports '(' and ')' as attribute delimiters.
+
+    a(href='/login', title='View login page') Login
+
+Alternatively we may use the colon to separate pairs:
+
+    a(href: '/login', title: 'View login page') Login
+
+Note: Leading / trailing whitespace is _ignore_ for attr pairs.
+
 ## bin/jade
 
 Output html to _stdout_:
