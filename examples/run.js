@@ -30,3 +30,8 @@ jade.renderFile(__dirname + '/markdown.jade', function(err, html){
     if (err) throw err;
     sys.puts('\x1b[1mmarkdown.jade:\x1b[0m', html, '');
 });
+
+jade.renderFile(__dirname + '/whitespace.jade', function(err, html){
+    if (err) throw err;
+    sys.puts('\x1b[1mwhitepace.jade:\x1b[0m', html, '');
+});
