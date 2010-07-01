@@ -238,7 +238,7 @@ Due to Jade's buffering techniques the following is valid as well:
     - else
       p shit! didnt work
 
-Hell, even verbose interation:
+Hell, even verbose iteration:
 
     - if (items.length)
       ul
