@@ -34,6 +34,13 @@
 	    // the callback can be the second arg
     });
 
+### Options
+
+ - `scope`     Evaluation scope (`this`)
+ - `locals`    Local variable object
+ - `filename`  Used in exceptions, and required by `cache`
+ - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
+
 ## Syntax
 
 ### Line Endings
