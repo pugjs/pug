@@ -53,6 +53,33 @@ A tag is simply a leading word:
 
 for example is converted to `<html></html>`
 
+tags can also have ids:
+
+    div#container
+
+which would render `<div id="container"></div>`
+
+how about some classes?
+
+    div.user-details
+
+renders `<div class="user-details"></div>`
+
+multiple classes? _and_ an id? sure:
+
+    div#foo.bar.baz
+
+renders `<div id="foo" class="bar baz"></div>`
+
+div div div sure is annoying, how about:
+
+    #foo
+    .bar
+
+which is syntactic sugar for what we have already been doing, and outputs:
+
+    `<div id="foo"></div><div class="bar"></div>`
+
 ### Nesting
 
     ul
