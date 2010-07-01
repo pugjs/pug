@@ -37,7 +37,7 @@
 
 ### Line Endings
 
-**CRLF** and **CR* are converted to **LF** before parsing.
+**CRLF** and **CR** are converted to **LF** before parsing.
 
 ### Indentation
 
