@@ -271,6 +271,9 @@ module.exports = {
         assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'));
         assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked: true)'));
         assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: false)'));
+        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: null)'));
+        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: undefined)'));
+        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: "")'));
         
         assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'), 'Test attr =');
         assert.equal('<img src="/foo.png" />', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
