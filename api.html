@@ -135,7 +135,7 @@ code .comment { color: #bbb; }
 code .this { color: #19469D; }</style>
 	</head>
 	<body>
-<ul id="menu"><li><a href="#lib/jade.js">lib/<strong>jade</strong></a></li></ul><table id="source"><tbody><tr><td><h1>Jade</h1><p>Jade is a high performance template engine for <a href="http://nodejs.org">node</a>, inspired by <a href="http://haml-lang.com/">haml</a>, created by <a href="http://github.com/visionmedia">TJ Holowaychuk</a>.</p></td><td></td></tr><tr class="filename"><td><h2 id="lib/jade.js">jade</h2></td><td>lib/jade.js</td></tr><tr class="code">
+<ul id="menu"><li><a href="#lib/jade.js">lib/<strong>jade</strong></a></li></ul><table id="source"><tbody><tr><td><h1>Jade</h1><p>Jade is a high performance template engine for <a href="http://nodejs.org">node</a>, inspired by <a href="http://haml-lang.com/">haml</a>, created by <a href="http://github.com/visionmedia">TJ Holowaychuk</a>.</p></td><td></td></tr><tr class="filename"><td><h2 id="lib/jade.js">jade</h2></td><td>lib/jade.js</td></tr><tr class="code">
 <td class="docs">
 <p>Library version.</p>
 </td>
@@ -257,7 +257,7 @@ code .this { color: #19469D; }</style>
 </tr>
 <tr class="code">
 <td class="docs">
-<p>Transform markdown to html.</p>in style tags.
+<p>Transform markdown to html.</p>in style tags.
 </td>
 <td class="code">
 <pre><code><span class="variable">markdown</span>: <span class="keyword">function</span>(<span class="variable">str</span>){
@@ -437,7 +437,7 @@ code .this { color: #19469D; }</style>
 | filter
 | doctype
 | code block?
-| expr newline</p>
+| expr newline</p>
 </td>
 <td class="code">
 <pre><code><span class="variable">parseExpr</span>: <span class="keyword">function</span>(){
@@ -492,14 +492,14 @@ code .this { color: #19469D; }</style>
 </tr>
 <tr class="code">
 <td class="docs">
-<p>filter</p>
+<p>filter text</p>
 </td>
 <td class="code">
 <pre><code><span class="variable">parseFilter</span>: <span class="keyword">function</span>(){
         <span class="keyword">var</span> <span class="variable">name</span> = <span class="this">this</span>.<span class="variable">expect</span>(<span class="string">'filter'</span>).<span class="variable">val</span>,
             <span class="variable">filter</span> = <span class="variable">filters</span>[<span class="variable">name</span>];
         <span class="keyword">if</span> (<span class="variable">filter</span>) {
-            <span class="keyword">return</span> &<span class="variable">quot</span>;<span class="variable">buf</span>.<span class="variable">push</span>(<span class="string">'&quot; + filter(this.parseTextBlock()) + &quot;'</span>);&<span class="variable">quot</span>;;
+            <span class="keyword">return</span> &<span class="variable">quot</span>;<span class="variable">buf</span>.<span class="variable">push</span>(<span class="string">'&quot; + filter(interpolate(this.parseTextBlock())) + &quot;'</span>);&<span class="variable">quot</span>;;
         } <span class="keyword">else</span> {
             <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">Error</span>(<span class="string">'unknown filter &quot;:'</span> + <span class="variable">name</span> + <span class="string">'&quot;'</span>);
         }
@@ -508,8 +508,7 @@ code .this { color: #19469D; }</style>
 </tr>
 <tr class="code">
 <td class="docs">
-<p>indent (text | newline)* outdent</p>xt
-| filt
+<p>indent (text | newline)* outdent</p>
 </td>
 <td class="code">
 <pre><code><span class="variable">parseTextBlock</span>: <span class="keyword">function</span>(){
@@ -579,11 +578,7 @@ code .this { color: #19469D; }</style>
                             <span class="keyword">var</span> <span class="variable">key</span> = <span class="variable">keys</span>[<span class="variable">i</span>],
                                 <span class="variable">val</span> = <span class="variable">obj</span>[<span class="variable">key</span>];
                             <span class="keyword">if</span> (<span class="variable">key</span> === <span class="string">'class'</span>) {
-                                <span class="keyword">if</span> (<span class="variable">val</span>[<span class="number integer">0</span>] === <span class="string">'&quot;'</span> || <span class="variable">val</span>[<span class="number integer">0</span>] === &<span class="variable">quot</span>;'&<span class="variable">quot</span>;) {
-                                    <span class="variable">classes</span>.<span class="variable">push</span>(<span class="variable">val</span>.<span class="variable">slice</span>(<span class="number integer">1</span>, -<span class="number integer">1</span>));
-                                } <span class="keyword">else</span> {
-                                    <span class="variable">codeClass</span> = <span class="variable">val</span>;
-                                }
+                                <span class="variable">codeClass</span> = <span class="variable">val</span>;
                             } <span class="keyword">else</span> {
                                 <span class="variable">attrs</span>[<span class="variable">key</span>] = <span class="variable">val</span> === <span class="variable">undefined</span>
                                     ? <span class="variable">true</span>
@@ -637,7 +632,7 @@ code .this { color: #19469D; }</style>
             <span class="keyword">for</span> (<span class="keyword">var</span> <span class="variable">i</span> = <span class="number integer">0</span>, <span class="variable">len</span> = <span class="variable">keys</span>.<span class="variable">length</span>; <span class="variable">i</span> &<span class="variable">lt</span>; <span class="variable">len</span>; ++<span class="variable">i</span>) {
                 <span class="keyword">var</span> <span class="variable">key</span> = <span class="variable">keys</span>[<span class="variable">i</span>],
                     <span class="variable">val</span> = <span class="variable">attrs</span>[<span class="variable">key</span>];
-                <span class="variable">attrBuf</span> += <span class="variable">key</span> + <span class="string">': '</span> + <span class="variable">val</span> + (<span class="variable">i</span> === <span class="variable">len</span> - <span class="number integer">1</span> ? <span class="string">''</span> : <span class="string">', '</span>);
+                <span class="variable">attrBuf</span> += &<span class="variable">quot</span>;<span class="string">'&quot; + key + &quot;'</span>: &<span class="variable">quot</span>; + <span class="variable">val</span> + (<span class="variable">i</span> === <span class="variable">len</span> - <span class="number integer">1</span> ? <span class="string">''</span> : <span class="string">', '</span>);
             }
             <span class="variable">attrBuf</span> += &<span class="variable">quot</span>; }) + '&<span class="variable">quot</span>;;
         } <span class="keyword">else</span> {
