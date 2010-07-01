@@ -20,6 +20,19 @@
     - :cdata
     - :javascript
 
+## Public API
+
+    var jade = require('jade');
+
+    // Render a string
+    jade.render('string of jade', { options: 'here' });
+
+    // Render a file
+    jade.renderFile('path/to/some.jade', { options: 'here' }, function(err, html){
+	    // options are optional,
+	    // the callback can be the second arg
+    });
+
 ## bin/jade
 
 Output html to _stdout_:
