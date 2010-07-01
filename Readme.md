@@ -128,7 +128,8 @@ now we have `<p>#{something}</p>`
       li two
       li three
 
-Fucked up your whitespace? no worries, jade's error reporting should help you out:
+Fucked up your whitespace? no worries, jade's error reporting should help you out.
+Jade instruments the compiled JavaScript to provide meaningful context for runtime exceptions.
 
     ul
         li one
