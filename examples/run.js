@@ -25,3 +25,8 @@ jade.renderFile(__dirname + '/interpolation.jade', { locals: { name: 'tj', email
     if (err) throw err;
     sys.puts('\x1b[1minterpolation.jade:\x1b[0m', html, '');
 });
+
+jade.renderFile(__dirname + '/markdown.jade', function(err, html){
+    if (err) throw err;
+    sys.puts('\x1b[1mmarkdown.jade:\x1b[0m', html, '');
+});

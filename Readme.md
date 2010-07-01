@@ -13,6 +13,7 @@
   - executable for compiling jade templates via the command line
   - html 5 mode (using the _!!! 5_ doctype)
   - optional memory caching
+  - combine dynamic and static tag classes
   - no tag prefix
   - filters
     - :sass
@@ -176,6 +177,21 @@ defined by default, which can easily be extended:
 	    'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
 	    'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
 	};
+
+## Filters
+
+Filters are prefixed with `:`, for example `:markdown` and
+pass the following block of text to an arbitrary function for processing. View the _features_
+at the top of this document for available filters.
+
+    body
+      :markdown
+        | Woah! jade _and_ markdown, very **cool**
+        | we can even link to [stuff](http://google.com)
+
+Renders:
+
+       <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
 
 ## bin/jade
 
