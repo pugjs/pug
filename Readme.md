@@ -193,6 +193,51 @@ Renders:
 
        <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
 
+## Code
+
+Jade currently supports three classifications of executable code. The first
+is prefixed by `-`, and is not buffered:
+
+    - var foo = 'bar';
+
+This can be used for conditionals, or iteration:
+
+    - for (var key in obj)
+      p= obj[key]
+
+Due to Jade's buffering techniques the following is valid as well:
+
+    - if (foo)
+      ul
+        li yay
+        li foo
+        li worked
+    - else
+      p shit! didnt work
+
+Hell, even verbose interation:
+
+    - if (items.length)
+      ul
+        - items.forEach(function(item){
+	      li= item
+	    - })
+
+Anything you want!
+
+Next up we have _escaped_ buffered code, which is used to
+buffer a return value, which is prefixed by `=`:
+
+    - var foo = 'bar'
+    = foo
+    h1= foo
+
+Which outputs `bar<h1>bar<h1/>`. Code buffered by `=` is escaped 
+by default for security, however to output unescaped return values
+you may use `!=`:
+
+    p!= aVarContainingMoreHTML
+
 ## bin/jade
 
 Output html to _stdout_:
