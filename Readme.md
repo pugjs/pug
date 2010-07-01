@@ -1,6 +1,22 @@
 
 # Jade - template engine
 
+ Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
+ and implemented with JavaScript for [node](http://nodejs.org).
+
+## Features
+
+  - high performance parser
+  - great readability
+  - code is escaped by default for security
+  - contextual error reporting at compile &amp; run time
+  - no tag prefix
+  - filters
+    - :sass
+    - :markdown
+    - :cdata
+    - :javascript
+
 ## bin/jade
 
 Output html to _stdout_:
