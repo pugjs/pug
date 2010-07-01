@@ -45,6 +45,14 @@ Jade is indentation based, however currently only supports a _2 space_ indent.
 We may implement tab support in the future, until then use spaces, so make sure soft
 tabs are enabled in your editor.
 
+### Tags
+
+A tag is simply a leading word:
+
+    html
+
+for example is converted to `<html></html>`
+
 ### Nesting
 
     ul
