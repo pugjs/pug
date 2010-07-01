@@ -21,6 +21,20 @@
     - :cdata
     - :javascript
 
+## Installation
+
+via tarball or git:
+
+    make install
+
+via npm:
+
+    npm install jade
+
+via kiwi:
+
+	kiwi install jade
+
 ## Public API
 
     var jade = require('jade');
