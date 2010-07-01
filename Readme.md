@@ -40,6 +40,7 @@
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required by `cache`
  - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
+ - `debug`     Outputs tokens and function body generated
 
 ## Syntax
 

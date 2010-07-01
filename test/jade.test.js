@@ -148,7 +148,7 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        assert.equal(html, render(str), 'Test nesting');
+        assert.equal(html, render(str, { debug: true }), 'Test nesting');
     },
     
     'test newlines': function(assert){
