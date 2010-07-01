@@ -1,0 +1,56 @@
+html {
+    background: url(../images/tile.png);
+}
+body {
+    margin: 0;
+    font: 12px/1.4 "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
+    background: url(../images/top.png) 0 0 repeat-x;
+    text-align: center;
+}
+h1 {
+    margin: 0 auto 40px auto;
+    width: 217px;
+    height: 120px;
+    text-indent: -999999px;
+    background: url(../images/logo.png);
+    outline: none;
+}
+#container {
+    margin: 0 auto;
+    width: 950px;
+    text-align: left;
+}
+#header {
+    position: relative;
+    padding: 90px 0;
+}
+#tagline {
+    position: absolute;
+    top: 180px;
+    left: 410px;
+    opacity: 0.7;
+}
+#arrow {
+    position: absolute;
+    top: 340px;
+    left: 400px;
+    z-index: 10;
+    width: 120px;
+    height: 130px;
+    background: url(../images/arrow.png);
+}
+pre {
+    float: left;
+    margin: 0 15px;
+    padding: 10px 64px;
+    width: 33%;
+    background: white;
+    -webkit-border-radius: 12px;
+    -webkit-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;
+    color: #555;
+}
