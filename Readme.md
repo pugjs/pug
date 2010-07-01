@@ -76,7 +76,39 @@ Alternatively we may use the colon to separate pairs:
 
     a(href: '/login', title: 'View login page') Login
 
+Boolean attributes are also supported:
+
+    input(type="checkbox", checked)
+
+Boolean attributes with code will only output the attribute when `true`:
+
+	input(type="checkbox", checked: someValue)
+    
 Note: Leading / trailing whitespace is _ignore_ for attr pairs.
+
+### Doctypes
+
+To add a doctype simply use `!!!` followed by an optional value:
+
+    !!!
+
+Will output the _transitional_ doctype, however:
+
+    !!! 5
+
+Will output html 5's doctype. Below are the doctypes
+defined by default, which can easily be extended:
+    var doctypes = exports.doctypes = {
+	    '5': '<!DOCTYPE html>',
+	    'xml': '<?xml version="1.0" encoding="utf-8" ?>',
+	    'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+	    'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+	    'strict': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+	    'frameset': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
+	    '1.1': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',
+	    'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
+	    'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
+	};
 
 ## bin/jade
 
