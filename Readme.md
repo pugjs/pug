@@ -14,6 +14,7 @@
   - html 5 mode (using the _!!! 5_ doctype)
   - optional memory caching
   - combine dynamic and static tag classes
+  - supports [Express JS](http://expressjs.com)
   - no tag prefix
   - filters
     - :sass
