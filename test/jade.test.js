@@ -284,6 +284,7 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
         
         assert.equal('<label for="name"></label>', render('label(for="name")'));
+        assert.equal('<div class="b:a=c"></div>', render("div(class='b:a=c')"), 'Test attrs that contain attr separators');
     },
     
     'test code attrs': function(assert){
@@ -295,6 +296,7 @@ module.exports = {
     
     'test code attrs class': function(assert){
         assert.equal('<p class="tj"></p>', render('p(class: name)', { locals: { name: 'tj' }}));
+        assert.equal('<p class="tj"></p>', render('p( class: name )', { locals: { name: 'tj' }}));
         assert.equal('<p class="default"></p>', render('p(class: name || "default")', { locals: { name: null }}));
         assert.equal('<p class="foo default"></p>', render('p.foo(class: name || "default")', { locals: { name: null }}));
         assert.equal('<p class="foo default"></p>', render('p(class: name || "default").foo', { locals: { name: null }}));
