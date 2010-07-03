@@ -283,6 +283,7 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src="/foo.png", alt="just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
         
+        assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', render('a(href: "http://google.com", title: "Some : weird = title")'));
         assert.equal('<label for="name"></label>', render('label(for="name")'));
         assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
         assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
