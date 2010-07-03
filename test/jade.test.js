@@ -284,6 +284,7 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
         
         assert.equal('<label for="name"></label>', render('label(for="name")'));
+        assert.equal('<div class="b:a=c"></div>', render("div(class='b:a=c')"), 'Test attrs that contain attr separators');
     },
     
     'test code attrs': function(assert){
