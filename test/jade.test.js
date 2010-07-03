@@ -284,13 +284,15 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
         
         assert.equal('<label for="name"></label>', render('label(for="name")'));
-        assert.equal('<div class="b:a=c"></div>', render("div(class='b:a=c')"), 'Test attrs that contain attr separators');
+        assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
+        assert.equal('<div style="color: white"></div>', render("div(style='color: white')"), 'Test attrs that contain attr separators');
     },
     
     'test code attrs': function(assert){
         assert.equal('<p id="tj"></p>', render('p(id: name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id: 'something')", { locals: { name: null }}));
+        assert.equal('<p id="something"></p>', render("p(id = 'something')", { locals: { name: null }}));
         // assert.equal('<p id="foo"></p>', render("p(id: (true ? 'foo' : 'bar'))", { debug: true }));
     },
     
