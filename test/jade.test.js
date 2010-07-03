@@ -285,6 +285,7 @@ module.exports = {
         
         assert.equal('<label for="name"></label>', render('label(for="name")'));
         assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
+        assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
         assert.equal('<div style="color: white"></div>', render("div(style='color: white')"), 'Test attrs that contain attr separators');
     },
     
