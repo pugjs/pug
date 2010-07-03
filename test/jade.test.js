@@ -293,7 +293,7 @@ module.exports = {
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id: 'something')", { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id = 'something')", { locals: { name: null }}));
-        //assert.equal('<p id="foo"></p>', render("p(id: (true ? 'foo' : 'bar'))", { debug: true }));
+        assert.equal('<p id="foo"></p>', render("p(id: (true ? 'foo' : 'bar'))"));
     },
     
     'test code attrs class': function(assert){
