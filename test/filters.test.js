@@ -40,5 +40,10 @@ module.exports = {
         assert.equal(
             '<style>body {\n  color: #cc0000;}\n</style>',
             render(':sass\n  | body\n  |   :color #cc0000'));
+    },
+    'test :less filter': function(assert){
+        assert.equal(
+            '<style>.class { width: 20px }\n</style>',
+            render(':less\n  | .class { width: 10px * 2 }'));
     }
 };
