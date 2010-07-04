@@ -289,6 +289,8 @@ module.exports = {
         assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
         assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
         assert.equal('<div style="color: white"></div>', render("div(style='color: white')"), 'Test attrs that contain attr separators');
+        assert.equal('<p class="foo"></p>', render("p('class'='foo')"), 'Test keys with single quotes');
+        assert.equal('<p class="foo"></p>', render("p(\"class\": 'foo')"), 'Test keys with double quotes');
     },
     
     'test code attrs': function(assert){
