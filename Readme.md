@@ -18,6 +18,7 @@
   - no tag prefix
   - filters
     - :sass
+    - :less
     - :markdown
     - :cdata
     - :javascript
