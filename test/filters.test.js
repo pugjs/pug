@@ -43,7 +43,7 @@ module.exports = {
     },
     'test :less filter': function(assert){
         assert.equal(
-            '<style>.class { width: 20px }\n</style>',
+            '<style>.class {\n  width: 20px;\n}\n</style>',
             render(':less\n  | .class { width: 10px * 2 }'));
     }
 };
