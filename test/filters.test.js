@@ -32,7 +32,7 @@ module.exports = {
     
     'test :markdown filter': function(assert){
         assert.equal(
-            '<h1>foo</h1>\n\n<ul>\n<li>bar</li>\n<li>baz</li>\n</ul>\n',
+            '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
             render(':markdown\n  | #foo\n  | - bar\n  | - baz'))
     },
     
