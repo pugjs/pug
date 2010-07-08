@@ -102,7 +102,7 @@ module.exports = {
             'ul',
             '  li a',
             '  li b',
-            '  li',
+            '  li  ',
             '    ul',
             '      li c',
             '      li d',
@@ -118,7 +118,33 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        assert.equal(html, render(str), 'Test nesting');
+        assert.equal(html, render(str));
+        
+        var str = [
+            'a(href="#") foo ',
+            '  | bar',
+            '  | baz'
+        ].join('\n');
+        
+        assert.equal('<a href="#">foobar baz </a>', render(str));
+        
+        var str = [
+            'ul  ',
+            '  li  one',
+            '  ul two',
+            '    li three'
+        ].join('\n');
+        
+        var html = [
+            '<ul>',
+            '<li>one</li>',
+            '<ul>two',
+            '<li>three</li>',
+            '</ul>',
+            '</ul>'
+        ].join('');
+        
+        assert.equal(html, render(str));
     },
     
     'test variable length newlines': function(assert){
@@ -146,7 +172,7 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        assert.equal(html, render(str), 'Test nesting');
+        assert.equal(html, render(str));
     },
     
     'test newlines': function(assert){
