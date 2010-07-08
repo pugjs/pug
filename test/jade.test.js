@@ -367,6 +367,22 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test - each': function(assert){
+        var str = [
+            '- var items = ["one", "two", "three"];',
+            '- each item in items',
+            '  li= item'
+        ].join('\n');
+    
+        var html = [
+            '<li>one</li>',
+            '<li>two</li>',
+            '<li>three</li>',
+        ].join('');
+        
+        assert.equal(html, render(str));
+    },
+    
     'test renderFile() fs exception': function(assert, beforeExit){
         var called = true;
         jade.renderFile('foo', function(err, str){
