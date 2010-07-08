@@ -367,6 +367,100 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test - each': function(assert){
+        // Array
+        var str = [
+            '- var items = ["one", "two", "three"];',
+            '- each item in items',
+            '  li= item'
+        ].join('\n');
+    
+        var html = [
+            '<li>one</li>',
+            '<li>two</li>',
+            '<li>three</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Empty array
+        var str = [
+            '- var items = [];',
+            '- each item in items',
+            '  li= item'
+        ].join('\n');
+    
+        assert.equal('', render(str));
+
+        // Object
+        var str = [
+            '- var obj = { foo: "bar", baz: "raz" };',
+            '- each val in obj',
+            '  li= val'
+        ].join('\n');
+    
+        var html = [
+            '<li>bar</li>',
+            '<li>raz</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Non-Enumerable
+        var str = [
+            '- each val in 1',
+            '  li= val'
+        ].join('\n');
+    
+        var html = [
+            '<li>1</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+
+        // Complex 
+        var str = [
+            '- var obj = { foo: "bar", baz: "raz" };',
+            '- each key in Object.keys(obj)',
+            '  li= key'
+        ].join('\n');
+    
+        var html = [
+            '<li>foo</li>',
+            '<li>baz</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Keys
+        var str = [
+            '- var obj = { foo: "bar", baz: "raz" };',
+            '- each val, key in obj',
+            '  li #{key}: #{val}'
+        ].join('\n');
+    
+        var html = [
+            '<li>foo: bar</li>',
+            '<li>baz: raz</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Nested
+        var str = [
+            '- var users = [{ name: "tj" }]',
+            '- each user in users',
+            '  - each val, key in user',
+            '    li #{key} #{val}',
+        ].join('\n');
+    
+        var html = [
+            '<li>name tj</li>'
+        ].join('');
+
+        assert.equal(html, render(str));
+    },
+    
     'test renderFile() fs exception': function(assert, beforeExit){
         var called = true;
         jade.renderFile('foo', function(err, str){
