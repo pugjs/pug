@@ -1,0 +1,8 @@
+!!! xml
+users
+  - each user in users
+    user(name: user.name)
+      - if (user.roles)
+        roles
+          - each role in user.roles
+            role= role
