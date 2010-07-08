@@ -432,7 +432,7 @@ module.exports = {
         
         assert.equal(html, render(str));
         
-        // Keyse 
+        // Keys
         var str = [
             '- var obj = { foo: "bar", baz: "raz" };',
             '- each val, key in obj',
@@ -444,6 +444,20 @@ module.exports = {
             '<li>baz: raz</li>'
         ].join('');
         
+        assert.equal(html, render(str));
+        
+        // Nested
+        var str = [
+            '- var users = [{ name: "tj" }]',
+            '- each user in users',
+            '  - each val, key in user',
+            '    li #{key} #{val}',
+        ].join('\n');
+    
+        var html = [
+            '<li>name tj</li>'
+        ].join('');
+
         assert.equal(html, render(str));
     },
     
