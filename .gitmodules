@@ -1,6 +1,6 @@
 [submodule "support/expresso"]
 	path = support/expresso
 	url = git://github.com/visionmedia/expresso.git
-[submodule "deps/markdown-js"]
-	path = deps/markdown-js
+[submodule "support/markdown"]
+	path = support/markdown
 	url = http://github.com/evilstreak/markdown-js.git

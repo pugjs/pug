@@ -11,10 +11,10 @@ uninstall:
 	rm -f $(LIB_PREFIX)/jade.js
 
 test:
-	@./support/expresso/bin/expresso -I lib test/*.js
+	@./support/expresso/bin/expresso -I lib -I support/markdown/lib test/*.js
 
 test-cov:
-	@./support/expresso/bin/expresso -I lib --cov test/*.js
+	@./support/expresso/bin/expresso -I lib -I support/markdown/lib --cov test/*.js
 
 api.html: lib/jade.js
 	@dox --title "Jade" \
