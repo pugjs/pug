@@ -1,4 +1,11 @@
 
+0.2.0 / 2010-07-08
+==================
+
+  * Added `- each` support for readable iteration
+  * Added [markdown-js](http://github.com/evilstreak/markdown-js) support (no compilation required)
+  * Removed node-discount support
+
 0.1.0 / 2010-07-05
 ==================
 
