@@ -216,7 +216,7 @@ module.exports = {
         
         assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
         assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
-        assert.ok(typeof jade.cache['foo.jade'] === 'string', 'Test cache');
+        assert.ok(typeof jade.cache['foo.jade'] === 'function', 'Test cache');
     },
     
     'test tag text': function(assert){
