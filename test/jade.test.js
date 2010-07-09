@@ -276,12 +276,13 @@ module.exports = {
     'test exceptions': function(assert){
         var err;
         try {
-            render('p= foo');
+            render('p= foo', { cache: true, filename: 'foo', locals: { foo: 'bar' }});
+            render('p= foo', { cache: true, filename: 'foo' });
         } catch (e) {
             err = e;
         }
         assert.equal(
-            "Jade:1\n    1. 'p= foo'\n\nfoo is not defined",
+            "foo:1\n    1. 'p= foo'\n\nfoo is not defined",
             err.message);
     },
     
