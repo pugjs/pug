@@ -1,4 +1,16 @@
 
+0.2.1 / 2010-07-09
+==================
+
+  * Added support for node-discount and markdown-js
+    depending on which is available.
+
+  * Added support for tags to have blocks _and_ text.
+    this kinda fucks with arbitrary whitespace unfortunately,
+    but also fixes trailing spaces after tags _with_ blocks.
+
+  * Caching generated functions. Closes #46
+
 0.2.0 / 2010-07-08
 ==================
 
