@@ -20,7 +20,7 @@
   - filters
     - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
-    - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed
+    - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
     - :javascript
 
