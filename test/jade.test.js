@@ -296,6 +296,9 @@ module.exports = {
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
         
+        assert.equal('<a data-attr="bar"></a>', render('a(data-attr:"bar")'));
+        assert.equal('<a data-attr="bar" data-attr-2="baz"></a>', render('a(data-attr:"bar", data-attr-2:"baz")'));
+        
         assert.equal('<a title="foo,bar"></a>', render('a(title: "foo,bar")'));
         assert.equal('<a title="foo,bar" href="#"></a>', render('a(title: "foo,bar", href="#")'));
         
