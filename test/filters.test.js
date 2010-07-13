@@ -26,8 +26,8 @@ module.exports = {
     
     'test :javascript filter': function(assert){
         assert.equal(
-            '<script type="text/javascript">\n//<![CDATA[\nfoo\n//]]></script>',
-            render(':javascript\n  | foo'));
+            '<script type="text/javascript">\n//<![CDATA[\nalert(\'foo\')\n//]]></script>',
+            render(':javascript\n  | alert(\'foo\')'));
     },
     
     'test :markdown filter': function(assert){
