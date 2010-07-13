@@ -14,6 +14,9 @@ module.exports = {
             '<script type="text/javascript">\n//<![CDATA[\nvar name = "tj";\n//]]></script>',
             render(':javascript\n  | var name = "#{userName}";', { locals: { userName: 'tj' }}));
         assert.equal(
+            '<script type="text/javascript">\n//<![CDATA[\nvar name = \'tj\';\n//]]></script>',
+            render(':javascript\n  | var name = #{userName};', { locals: { userName: "'tj'" }}));
+        assert.equal(
             '<script type="text/javascript">\n//<![CDATA[\nvar name = "#{userName}";\n//]]></script>',
             render(':javascript\n  | var name = "\\#{userName}";', { locals: { userName: 'tj' }}));
     },
@@ -40,7 +43,11 @@ module.exports = {
         assert.equal(
             '<style>body {\n  color: #cc0000;}\n</style>',
             render(':sass\n  | body\n  |   :color #cc0000'));
-    },
+        assert.equal(
+            '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
+            render(':sass\n  | body\n  |   :font-family \'Lucida Grande\''));
+},
+
     'test :less filter': function(assert){
         assert.equal(
             '<style>.class {\n  width: 20px;\n}\n</style>',
