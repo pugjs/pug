@@ -16,7 +16,7 @@
   - combine dynamic and static tag classes
   - supports [Express JS](http://expressjs.com)
   - transparent iteration over objects, arrays, and even non-enumerables via `- each`
-  - client-side browser support via [miksago's branch](http://github.com/miksago/jade/tree/browser)
+  - client-side browser support via [miksago's branch](http://github.com/miksago/jade)
   - no tag prefix
   - filters
     - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
