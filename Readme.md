@@ -36,10 +36,6 @@ via npm:
 
     npm install jade
 
-via kiwi:
-
-	kiwi install jade
-
 ## Public API
 
     var jade = require('jade');

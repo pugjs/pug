@@ -1,4 +1,14 @@
 
+0.2.2 / 2010-07-16
+==================
+
+  * Added support for `jade.renderFile()` to utilize primed cache
+  * Added link to [textmate bundle](http://github.com/miksago/jade-tmbundle)
+  * Fixed filter issue with single quotes
+  * Fixed hyphenated attr bug
+  * Fixed interpolation single quotes. Closes #28
+  * Fixed issue with comma in attrs
+
 0.2.1 / 2010-07-09
 ==================
 
