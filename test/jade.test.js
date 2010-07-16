@@ -496,8 +496,9 @@ module.exports = {
     },
     
     'test renderFile() fs exception': function(assert, beforeExit){
-        var called = true;
+        var called;
         jade.renderFile('foo', function(err, str){
+            called = true;
             assert.equal(process.ENOENT, err.errno);
             assert.equal(undefined, str);
         });
@@ -507,8 +508,9 @@ module.exports = {
     },
     
     'test renderFile() with valid path': function(assert, beforeExit){
-        var called = true;
+        var called;
         jade.renderFile(__dirname + '/fixtures/layout.jade', function(err, str){
+            called = true;
             assert.equal(null, err);
             assert.equal('<html><body><h1>Jade</h1></body></html>', str);
         });
@@ -518,24 +520,32 @@ module.exports = {
     },
     
     'test renderFile() with options': function(assert, beforeExit){
-        var called = true;
+        var called = 0;
         jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
+            ++called;
             assert.equal(null, err);
             assert.equal('<html><body><h1>Jade</h1></body></html>', str);
+
+            jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
+                ++called;
+                assert.equal(null, err);
+                assert.equal('<html><body><h1>Jade</h1></body></html>', str);
+            });
         });
         beforeExit(function(){
-            assert.ok(called);
+            assert.equal(2, called);
         });
     },
     
     'test renderFile() passing of exceptions': function(assert, beforeExit){
-        var called = true;
+        var called = 0;
         jade.renderFile(__dirname + '/fixtures/invalid.jade', { cache: true }, function(err, str){
+            ++called;
             assert.ok(typeof err.message === 'string', 'Test passing of exceptions to renderFile() callback');
             assert.equal(undefined, str);
         });
         beforeExit(function(){
-            assert.ok(called);
+            assert.equal(1, called);
         });
     }
 };

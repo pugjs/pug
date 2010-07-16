@@ -27,7 +27,6 @@ jade.renderFile(__dirname + '/iteration.jade', { locals: { users: users }}, func
     sys.puts('\x1b[1miteration.jade:\x1b[0m', html, '');
 });
 
-
 jade.renderFile(__dirname + '/interpolation.jade', { locals: { name: 'tj', email: 'tj@vision-media.ca' }}, function(err, html){
     if (err) throw err;
     sys.puts('\x1b[1minterpolation.jade:\x1b[0m', html, '');
