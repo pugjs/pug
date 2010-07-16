@@ -24,6 +24,7 @@
     - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
     - :javascript
+  - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
 
 ## Installation
 
