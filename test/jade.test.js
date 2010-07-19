@@ -126,7 +126,7 @@ module.exports = {
             '  | baz'
         ].join('\n');
         
-        assert.equal('<a href="#">foobar baz </a>', render(str));
+        assert.equal('<a href="#">foo bar baz </a>', render(str));
         
         var str = [
             'ul  ',
