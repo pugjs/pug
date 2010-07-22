@@ -19,8 +19,9 @@ h1 {
   position: absolute;
   top: 10px;
   left: 0;
-  padding: 12px 0;
+  padding: 14px 0 12px 0;
   text-indent: 40px;
+  font-family: "Helvetica";
   width: 100%;
   border-top: 1px solid rgba(0,0,0,0.2);
   border-bottom: 1px solid rgba(0,0,0,0.2);
