@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 
-var jade = require('jade');
+var jade = require('jade'),
+    Buffer = require('buffer').Buffer;
 
 // Shortcut
 
@@ -27,6 +28,10 @@ module.exports = {
             err = e;
         }
         assert.equal("Jade:1\n    1. ':doesNotExist'\n\nunknown filter \":doesNotExist\"", err.message);
+    },
+    
+    'test Buffers': function(assert){
+        assert.equal('<p>foo</p>', render(new Buffer('p foo')));
     },
     
     'test line endings': function(assert){
