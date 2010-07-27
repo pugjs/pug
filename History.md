@@ -1,4 +1,10 @@
 
+0.2.3 / 2010-07-27
+==================
+
+  * Fixed newlines before block
+  * Fixed; tag text allowing arbitrary trailing whitespace
+
 0.2.2 / 2010-07-16
 ==================
 
