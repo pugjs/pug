@@ -180,12 +180,14 @@ module.exports = {
             'ul',
             '  li a',
             '  ',
-            '  ',
-            '  ',
-            '  ',
+            '    ',
+            '',
+            ' ',
             '  li b',
             '  li',
             '    ',
+            '        ',
+            ' ',
             '    ul',
             '      ',
             '      li c',
@@ -202,7 +204,7 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        // assert.equal(html, render(str), 'Test newlines');
+        assert.equal(html, render(str));
     },
     
     'test cache': function(assert){
