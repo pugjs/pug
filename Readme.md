@@ -27,7 +27,7 @@
 
 ## Implementations
 
-  - [php](http://github.com/everzet/HTAML)
+  - [php](http://github.com/everzet/jade.php)
   - [client-side js](http://github.com/miksago/jade)
 
 ## Installation
