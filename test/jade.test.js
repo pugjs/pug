@@ -202,7 +202,7 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        // assert.equal(html, render(str), 'Test newlines');
+        assert.equal(html, render(str), 'Test newlines');
     },
     
     'test cache': function(assert){
