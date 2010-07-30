@@ -63,7 +63,9 @@ pre {
     width: 33%;
     background: white;
     -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
     -webkit-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
+    -moz-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
