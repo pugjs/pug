@@ -304,6 +304,17 @@ module.exports = {
         assert.equal(
             "Jade:1\n    1. 'p #{foo}'\n\nfoo is not defined",
             err.message);
+
+        var err;
+        try {
+            render('p\np #{foo}');
+        } catch (e) {
+            err = e;
+        }
+        console.log(err.message)
+        assert.equal(
+            "Jade:1\n    2. 'p #{foo}'\n\nfoo is not defined",
+            err.message);
     },
     
     'test html 5 mode': function(assert){
