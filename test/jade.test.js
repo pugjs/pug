@@ -281,7 +281,7 @@ module.exports = {
             err.message);
     },
     
-    'test exceptions': function(assert){
+    'test code exceptions': function(assert){
         var err;
         try {
             render('p= foo', { cache: true, filename: 'foo', locals: { foo: 'bar' }});
@@ -291,6 +291,31 @@ module.exports = {
         }
         assert.equal(
             "foo:1\n    1. 'p= foo'\n\nfoo is not defined",
+            err.message);
+    },
+    
+    'test interpolation exceptions': function(assert){
+        var err;
+        try {
+            render('p #{foo}');
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:1\n    1. 'p #{foo}'\n\nfoo is not defined",
+            err.message);
+
+        var err;
+        try {
+            render([
+                'p',
+                'p #{foo}',
+            ].join('\n'));
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:2\n    1. 'p'\n    2. 'p #{foo}'\n\nfoo is not defined",
             err.message);
     },
     
