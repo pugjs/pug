@@ -337,6 +337,27 @@ module.exports = {
             err.message);
     },
     
+    'test filter text block exceptions': function(assert){
+        var err;
+        try {
+            render([
+                ':javascript',
+                '  | foo',
+                '  | bar',
+                '  | bar',
+                '  | bar',
+                '  | bar',
+                '  | #{baz}',
+                '  | raz'
+            ].join('\n'));
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:8\n    6. '  | bar'\n    7. '  | #{baz}'\n    8. '  | raz'\n\nbaz is not defined",
+            err.message);
+    },
+    
     'test html 5 mode': function(assert){
         assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
         assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked: true)'));
