@@ -319,6 +319,24 @@ module.exports = {
             err.message);
     },
     
+    'test text block exceptions': function(assert){
+        var err;
+        try {
+            render([
+                'p',
+                '  | foo',
+                '  | bar',
+                '  | #{baz}',
+                '  | raz'
+            ].join('\n'));
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:4\n    2. '  | foo'\n    3. '  | bar'\n    4. '  | #{baz}'\n\nbaz is not defined",
+            err.message);
+    },
+    
     'test html 5 mode': function(assert){
         assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
         assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked: true)'));
