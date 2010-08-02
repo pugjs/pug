@@ -4,3 +4,6 @@
 [submodule "support/markdown"]
 	path = support/markdown
 	url = http://github.com/evilstreak/markdown-js.git
+[submodule "support/sass"]
+	path = support/sass
+	url = git://github.com/visionmedia/sass.js.git
