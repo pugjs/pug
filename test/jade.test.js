@@ -344,15 +344,17 @@ module.exports = {
                 ':javascript',
                 '  | foo',
                 '  | bar',
+                '  | bar',
+                '  | bar',
+                '  | bar',
                 '  | #{baz}',
                 '  | raz'
             ].join('\n'));
         } catch (e) {
             err = e;
         }
-        console.log(err.message);
         assert.equal(
-            "Jade:5\n    2. '  | foo'\n    3. '  | bar'\n    4. '  | #{baz}'\n\nbaz is not defined",
+            "Jade:8\n    6. '  | bar'\n    7. '  | #{baz}'\n    8. '  | raz'\n\nbaz is not defined",
             err.message);
     },
     
