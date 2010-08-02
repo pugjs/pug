@@ -1,4 +1,11 @@
 
+0.2.4 / 2010-08-02
+==================
+
+  * Added Buffer support to `render()`
+  * Fixed filter text block exception reporting
+  * Fixed tag exception reporting
+
 0.2.3 / 2010-07-27
 ==================
 
