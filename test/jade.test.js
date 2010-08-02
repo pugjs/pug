@@ -307,13 +307,15 @@ module.exports = {
 
         var err;
         try {
-            render('p\np #{foo}');
+            render([
+                'p',
+                'p #{foo}',
+            ].join('\n'));
         } catch (e) {
             err = e;
         }
-        console.log(err.message)
         assert.equal(
-            "Jade:1\n    2. 'p #{foo}'\n\nfoo is not defined",
+            "Jade:2\n    1. 'p'\n    2. 'p #{foo}'\n\nfoo is not defined",
             err.message);
     },
     
