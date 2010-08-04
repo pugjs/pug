@@ -14,6 +14,9 @@ module.exports = {
             '<script type="text/javascript">\n//<![CDATA[\nvar name = "tj";\n//]]></script>',
             render(':javascript\n  | var name = "#{userName}";', { locals: { userName: 'tj' }}));
         assert.equal(
+            '<script type="text/javascript">\n//<![CDATA[\nvar name = \'tj\';\n//]]></script>',
+            render(':javascript\n  | var name = #{userName};', { locals: { userName: "'tj'" }}));
+        assert.equal(
             '<script type="text/javascript">\n//<![CDATA[\nvar name = "#{userName}";\n//]]></script>',
             render(':javascript\n  | var name = "\\#{userName}";', { locals: { userName: 'tj' }}));
     },
@@ -26,13 +29,13 @@ module.exports = {
     
     'test :javascript filter': function(assert){
         assert.equal(
-            '<script type="text/javascript">\n//<![CDATA[\nfoo\n//]]></script>',
-            render(':javascript\n  | foo'));
+            '<script type="text/javascript">\n//<![CDATA[\nalert(\'foo\')\n//]]></script>',
+            render(':javascript\n  | alert(\'foo\')'));
     },
     
     'test :markdown filter': function(assert){
         assert.equal(
-            '<h1>foo</h1>\n\n<ul>\n<li>bar</li>\n<li>baz</li>\n</ul>\n',
+            '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
             render(':markdown\n  | #foo\n  | - bar\n  | - baz'))
     },
     
@@ -40,5 +43,14 @@ module.exports = {
         assert.equal(
             '<style>body {\n  color: #cc0000;}\n</style>',
             render(':sass\n  | body\n  |   :color #cc0000'));
+        assert.equal(
+            '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
+            render(':sass\n  | body\n  |   :font-family \'Lucida Grande\''));
+},
+
+    'test :less filter': function(assert){
+        assert.equal(
+            '<style>.class {\n  width: 20px;\n}\n</style>',
+            render(':less\n  | .class { width: 10px * 2 }'));
     }
 };

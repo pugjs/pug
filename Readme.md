@@ -15,12 +15,21 @@
   - optional memory caching
   - combine dynamic and static tag classes
   - supports [Express JS](http://expressjs.com)
+  - transparent iteration over objects, arrays, and even non-enumerables via `- each`
   - no tag prefix
   - filters
-    - :sass
-    - :markdown
+    - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
+    - :less must have [less.js](http://github.com/cloudhead/less.js) installed
+    - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
     - :javascript
+  - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+
+## Implementations
+
+  - [php](http://github.com/everzet/jade.php)
+  - [client-side js](http://github.com/miksago/jade)
+  - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
 
 ## Installation
 
@@ -31,10 +40,6 @@ via tarball or git:
 via npm:
 
     npm install jade
-
-via kiwi:
-
-	kiwi install jade
 
 ## Public API
 
@@ -265,6 +270,44 @@ by default for security, however to output unescaped return values
 you may use `!=`:
 
     p!= aVarContainingMoreHTML
+
+The on exception made in terms of allowing "vanilla" JavaScript, is
+the `- each` token. This takes the form of:
+
+    - each VAL[, KEY] in OBJ
+
+An example iterating over an array:
+
+    - var items = ["one", "two", "three"]
+    - each item in items
+      li= item
+
+outputs:
+
+    <li>one</li>
+    <li>two</li>
+    <li>three</li>
+
+iterating an object's keys and values:
+
+    - var obj = { foo: 'bar' }
+    - each val, key in obj
+      li #{key}: #{val}
+
+would output `<li>foo: bar</li>`
+
+Non-enumerables are simply passed as the **only** value:
+
+    - each n in 15
+      li= n
+
+would simply output `<li>15</li>`
+
+You can also nest these!
+
+    - each user in users
+      - each role in user.roles
+        li= role
 
 ## bin/jade
 

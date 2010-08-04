@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 
-var jade = require('jade');
+var jade = require('jade'),
+    Buffer = require('buffer').Buffer;
 
 // Shortcut
 
@@ -27,6 +28,10 @@ module.exports = {
             err = e;
         }
         assert.equal("Jade:1\n    1. ':doesNotExist'\n\nunknown filter \":doesNotExist\"", err.message);
+    },
+    
+    'test Buffers': function(assert){
+        assert.equal('<p>foo</p>', render(new Buffer('p foo')));
     },
     
     'test line endings': function(assert){
@@ -102,7 +107,7 @@ module.exports = {
             'ul',
             '  li a',
             '  li b',
-            '  li',
+            '  li  ',
             '    ul',
             '      li c',
             '      li d',
@@ -118,7 +123,33 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        assert.equal(html, render(str), 'Test nesting');
+        assert.equal(html, render(str));
+        
+        var str = [
+            'a(href="#") foo ',
+            '  | bar',
+            '  | baz'
+        ].join('\n');
+        
+        assert.equal('<a href="#">foo bar baz </a>', render(str));
+        
+        var str = [
+            'ul  ',
+            '  li  one',
+            '  ul two',
+            '    li three'
+        ].join('\n');
+        
+        var html = [
+            '<ul>',
+            '<li>one</li>',
+            '<ul>two',
+            '<li>three</li>',
+            '</ul>',
+            '</ul>'
+        ].join('');
+        
+        assert.equal(html, render(str));
     },
     
     'test variable length newlines': function(assert){
@@ -146,7 +177,7 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        assert.equal(html, render(str), 'Test nesting');
+        assert.equal(html, render(str));
     },
     
     'test newlines': function(assert){
@@ -154,12 +185,14 @@ module.exports = {
             'ul',
             '  li a',
             '  ',
-            '  ',
-            '  ',
-            '  ',
+            '    ',
+            '',
+            ' ',
             '  li b',
             '  li',
             '    ',
+            '        ',
+            ' ',
             '    ul',
             '      ',
             '      li c',
@@ -176,7 +209,7 @@ module.exports = {
             '</ul>'
         ].join('');
 
-        // assert.equal(html, render(str), 'Test newlines');
+        assert.equal(html, render(str));
     },
     
     'test cache': function(assert){
@@ -190,7 +223,7 @@ module.exports = {
         
         assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
         assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
-        assert.ok(typeof jade.cache['foo.jade'] === 'string', 'Test cache');
+        assert.ok(typeof jade.cache['foo.jade'] === 'function', 'Test cache');
     },
     
     'test tag text': function(assert){
@@ -205,8 +238,12 @@ module.exports = {
     
     'test tag text interpolation': function(assert){
         assert.equal('yo, jade is cool ', render('| yo, #{name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool ', render('| yo, ${name} is cool', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('<p>yo, jade is cool</p>', render('p yo, ${name} is cool', { locals: { name: 'jade' }}));
         assert.equal('yo, jade is cool ', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
+        assert.equal('yo, \'jade\' is cool ', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool ', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
     },
     
     'test invalid indentation multiple': function(assert){
@@ -244,15 +281,80 @@ module.exports = {
             err.message);
     },
     
-    'test exceptions': function(assert){
+    'test code exceptions': function(assert){
         var err;
         try {
-            render('p= foo');
+            render('p= foo', { cache: true, filename: 'foo', locals: { foo: 'bar' }});
+            render('p= foo', { cache: true, filename: 'foo' });
         } catch (e) {
             err = e;
         }
         assert.equal(
-            "Jade:1\n    1. 'p= foo'\n\nfoo is not defined",
+            "foo:1\n    1. 'p= foo'\n\nfoo is not defined",
+            err.message);
+    },
+    
+    'test interpolation exceptions': function(assert){
+        var err;
+        try {
+            render('p #{foo}');
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:1\n    1. 'p #{foo}'\n\nfoo is not defined",
+            err.message);
+
+        var err;
+        try {
+            render([
+                'p',
+                'p #{foo}',
+            ].join('\n'));
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:2\n    1. 'p'\n    2. 'p #{foo}'\n\nfoo is not defined",
+            err.message);
+    },
+    
+    'test text block exceptions': function(assert){
+        var err;
+        try {
+            render([
+                'p',
+                '  | foo',
+                '  | bar',
+                '  | #{baz}',
+                '  | raz'
+            ].join('\n'));
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:4\n    2. '  | foo'\n    3. '  | bar'\n    4. '  | #{baz}'\n\nbaz is not defined",
+            err.message);
+    },
+    
+    'test filter text block exceptions': function(assert){
+        var err;
+        try {
+            render([
+                ':javascript',
+                '  | foo',
+                '  | bar',
+                '  | bar',
+                '  | bar',
+                '  | bar',
+                '  | #{baz}',
+                '  | raz'
+            ].join('\n'));
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:8\n    6. '  | bar'\n    7. '  | #{baz}'\n    8. '  | raz'\n\nbaz is not defined",
             err.message);
     },
     
@@ -264,6 +366,12 @@ module.exports = {
     
     'test attrs': function(assert){
         assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
+        
+        assert.equal('<a data-attr="bar"></a>', render('a(data-attr:"bar")'));
+        assert.equal('<a data-attr="bar" data-attr-2="baz"></a>', render('a(data-attr:"bar", data-attr-2:"baz")'));
+        
+        assert.equal('<a title="foo,bar"></a>', render('a(title: "foo,bar")'));
+        assert.equal('<a title="foo,bar" href="#"></a>', render('a(title: "foo,bar", href="#")'));
         
         assert.equal('<p class="foo"></p>', render("p(class='foo')"), 'Test single quoted attrs');
         assert.equal('<input type="checkbox" checked="checked" />', render('input(type="checkbox", checked)'));
@@ -283,6 +391,7 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src="/foo.png", alt="just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
         
+        // assert.equal('<p foo="foo,bar,baz"></p>', render('p(class="foo,bar,baz")'));
         assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', render('a(href: "http://google.com", title: "Some : weird = title")'));
         assert.equal('<label for="name"></label>', render('label(for="name")'));
         assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
@@ -363,9 +472,104 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test - each': function(assert){
+        // Array
+        var str = [
+            '- var items = ["one", "two", "three"];',
+            '- each item in items',
+            '  li= item'
+        ].join('\n');
+    
+        var html = [
+            '<li>one</li>',
+            '<li>two</li>',
+            '<li>three</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Empty array
+        var str = [
+            '- var items = [];',
+            '- each item in items',
+            '  li= item'
+        ].join('\n');
+    
+        assert.equal('', render(str));
+
+        // Object
+        var str = [
+            '- var obj = { foo: "bar", baz: "raz" };',
+            '- each val in obj',
+            '  li= val'
+        ].join('\n');
+    
+        var html = [
+            '<li>bar</li>',
+            '<li>raz</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Non-Enumerable
+        var str = [
+            '- each val in 1',
+            '  li= val'
+        ].join('\n');
+    
+        var html = [
+            '<li>1</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+
+        // Complex 
+        var str = [
+            '- var obj = { foo: "bar", baz: "raz" };',
+            '- each key in Object.keys(obj)',
+            '  li= key'
+        ].join('\n');
+    
+        var html = [
+            '<li>foo</li>',
+            '<li>baz</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Keys
+        var str = [
+            '- var obj = { foo: "bar", baz: "raz" };',
+            '- each val, key in obj',
+            '  li #{key}: #{val}'
+        ].join('\n');
+    
+        var html = [
+            '<li>foo: bar</li>',
+            '<li>baz: raz</li>'
+        ].join('');
+        
+        assert.equal(html, render(str));
+        
+        // Nested
+        var str = [
+            '- var users = [{ name: "tj" }]',
+            '- each user in users',
+            '  - each val, key in user',
+            '    li #{key} #{val}',
+        ].join('\n');
+    
+        var html = [
+            '<li>name tj</li>'
+        ].join('');
+
+        assert.equal(html, render(str));
+    },
+    
     'test renderFile() fs exception': function(assert, beforeExit){
-        var called = true;
+        var called;
         jade.renderFile('foo', function(err, str){
+            called = true;
             assert.equal(process.ENOENT, err.errno);
             assert.equal(undefined, str);
         });
@@ -375,8 +579,9 @@ module.exports = {
     },
     
     'test renderFile() with valid path': function(assert, beforeExit){
-        var called = true;
+        var called;
         jade.renderFile(__dirname + '/fixtures/layout.jade', function(err, str){
+            called = true;
             assert.equal(null, err);
             assert.equal('<html><body><h1>Jade</h1></body></html>', str);
         });
@@ -386,24 +591,32 @@ module.exports = {
     },
     
     'test renderFile() with options': function(assert, beforeExit){
-        var called = true;
+        var called = 0;
         jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
+            ++called;
             assert.equal(null, err);
             assert.equal('<html><body><h1>Jade</h1></body></html>', str);
+
+            jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
+                ++called;
+                assert.equal(null, err);
+                assert.equal('<html><body><h1>Jade</h1></body></html>', str);
+            });
         });
         beforeExit(function(){
-            assert.ok(called);
+            assert.equal(2, called);
         });
     },
     
     'test renderFile() passing of exceptions': function(assert, beforeExit){
-        var called = true;
+        var called = 0;
         jade.renderFile(__dirname + '/fixtures/invalid.jade', { cache: true }, function(err, str){
+            ++called;
             assert.ok(typeof err.message === 'string', 'Test passing of exceptions to renderFile() callback');
             assert.equal(undefined, str);
         });
         beforeExit(function(){
-            assert.ok(called);
+            assert.equal(1, called);
         });
     }
 };

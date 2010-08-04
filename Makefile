@@ -11,14 +11,15 @@ uninstall:
 	rm -f $(LIB_PREFIX)/jade.js
 
 test:
-	@./support/expresso/bin/expresso -I lib test/*.js
-
-test-cov:
-	@./support/expresso/bin/expresso -I lib --cov test/*.js
+	@./support/expresso/bin/expresso \
+		-I lib \
+		-I support/markdown/lib \
+		-I support/sass/lib \
+		test/*.js
 
 api.html: lib/jade.js
 	@dox --title "Jade" \
 		 --desc "Jade is a high performance template engine for [node](http://nodejs.org), inspired by [haml](http://haml-lang.com/), created by [TJ Holowaychuk](http://github.com/visionmedia)." \
 		 $< > $@
 
-.PHONY: install uninstall test test-cov example
+.PHONY: install uninstall test example
