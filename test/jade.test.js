@@ -482,17 +482,17 @@ module.exports = {
 
         assert.equal(html, render(str));
 
-        // var str = [
-        //     'title foo',
-        //     '- if (true)',
-        //     '  p something',
-        // ].join('\n');
-        // 
-        // var html = [
-        //     '<title>foo</title><p>something</p>'
-        // ].join('');
-        // 
-        // assert.equal(html, render(str));
+        var str = [
+            'title foo',
+            '- if (true)',
+            '  p something',
+        ].join('\n');
+        
+        var html = [
+            '<title>foo</title><p>something</p>'
+        ].join('');
+        
+        assert.equal(html, render(str));
     },
     
     'test - each': function(assert){
