@@ -141,6 +141,21 @@ Actually want `#{}` for some reason? escape it!
 
 now we have `<p>#{something}</p>`
 
+### Comments
+
+Single line comments currently look the same as JavaScript comments,
+aka "//" and must be placed on their own line:
+
+    // just some paragraphs
+    p foo
+    p bar
+
+would output
+
+    <!-- just some paragraphs -->
+    <p>foo</p>
+    <p>bar</p>
+
 ### Nesting
 
     ul
