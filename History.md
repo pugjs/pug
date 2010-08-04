@@ -1,4 +1,12 @@
 
+0.3.0 / 2010-08-04
+==================
+
+  * Added single line comment support. Closes #25
+  * Removed CDATA from _:javascript_ filter. Closes #47
+  * Removed _sys_ local
+  * Fixed code following tag
+
 0.2.4 / 2010-08-02
 ==================
 
