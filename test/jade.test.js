@@ -419,6 +419,34 @@ module.exports = {
         assert.equal('<p class="user-1"></p>', render('p(class: "user-" + 1)'));
     },
     
+    'test comments': function(assert){
+        var str = [
+            '// foo',
+            'p bar'
+        ].join('\n');
+
+        var html = [
+            '<!-- foo -->',
+            '<p>bar</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        var str = [
+            'p foo',
+            '// bar',
+            'p baz'
+        ].join('\n');
+
+        var html = [
+            '<p>foo</p>',
+            '<!-- bar -->',
+            '<p>baz</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+    },
+    
     'test code': function(assert){
         var str = [
             '- var foo = "<script>";',
