@@ -227,8 +227,9 @@ module.exports = {
     },
     
     'test tag text': function(assert){
-        assert.equal('some random text ', render('| some random text'), 'Test root text');
-        assert.equal('<p>some random text</p>', render('p some random text'), 'Test basic tag text');
+        assert.equal('some random text ', render('| some random text'));
+        assert.equal('<p>some random text</p>', render('p some random text'));
+        assert.equal('<p>(parens)</p>', render('p (parens)'));
     },
     
     'test tag text block': function(assert){
