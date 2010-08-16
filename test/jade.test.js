@@ -421,12 +421,12 @@ module.exports = {
     
     'test comments': function(assert){
         var str = [
-            '// foo',
+            '//foo',
             'p bar'
         ].join('\n');
 
         var html = [
-            '<!-- foo -->',
+            '<!--foo-->',
             '<p>bar</p>'
         ].join('');
 
@@ -434,7 +434,7 @@ module.exports = {
         
         var str = [
             'p foo',
-            '// bar',
+            '// bar ',
             'p baz'
         ].join('\n');
 
