@@ -230,6 +230,7 @@ module.exports = {
         assert.equal('some random text ', render('| some random text'));
         assert.equal('<p>some random text</p>', render('p some random text'));
         assert.equal('<p>(parens)</p>', render('p (parens)'));
+        assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
     },
     
     'test tag text block': function(assert){
