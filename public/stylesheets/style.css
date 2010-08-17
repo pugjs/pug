@@ -8,29 +8,12 @@ body {
     text-align: center;
 }
 h1 {
-    margin: 0 auto 40px auto;
+    margin: 0 auto 55px auto;
     width: 217px;
     height: 120px;
     text-indent: -999999px;
     background: url(../images/logo.png);
     outline: none;
-}
-#banner {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  padding: 14px 0 12px 0;
-  text-indent: 40px;
-  font-family: "Helvetica";
-  width: 100%;
-  border-top: 1px solid rgba(0,0,0,0.2);
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-  background: rgba(255,255,255,0.6) url(http://www.sencha.com/favicon.ico) no-repeat 15px 50%;
-  text-align: left;
-  color: #888;
-}
-#banner strong {
-  color: #222;
 }
 #container {
     margin: 0 auto;
@@ -39,11 +22,11 @@ h1 {
 }
 #header {
     position: relative;
-    padding: 105px 0;
+    padding: 80px 0;
 }
 #tagline {
     position: absolute;
-    top: 195px;
+    top: 170px;
     left: 410px;
     opacity: 0.7;
 }
