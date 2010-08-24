@@ -24,6 +24,7 @@
     - :cdata
     - :javascript
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+  - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
 
 ## Implementations
 
