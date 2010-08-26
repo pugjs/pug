@@ -10,3 +10,6 @@
 [submodule "benchmarks/haml-js"]
 	path = benchmarks/haml-js
 	url = git://github.com/creationix/haml-js.git
+[submodule "benchmarks/ejs"]
+	path = benchmarks/ejs
+	url = git://github.com/visionmedia/ejs.git

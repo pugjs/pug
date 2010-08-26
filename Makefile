@@ -24,6 +24,7 @@ api.html: lib/jade.js
 
 benchmark:
 	@node benchmarks/jade.js && \
-	 node benchmarks/haml.js
+	 node benchmarks/haml.js && \
+	 node benchmarks/ejs.js
 
 .PHONY: install uninstall test example benchmark

@@ -1,4 +1,10 @@
 
+/**
+ * Module dependencies.
+ */
+
+var sys = require('sys');
+
 var currentLabel,
     startTime;
 
@@ -7,12 +13,13 @@ exports.times = 5000;
 exports.start = function(label){
     currentLabel = label;
     startTime = new Date;
+    sys.print('  - \x1b[33m' + currentLabel + '\x1b[0m: ');
 };
 
 exports.stop = function(){
     var stopTime = new Date,
         duration = stopTime - startTime;
-    console.log('%s: %dms', currentLabel, duration);
+    sys.print(duration + ' ms\n');
 };
 
 exports.locals = {
