@@ -19,7 +19,7 @@ exports.locals = {
     one: 'one',
     two: 'two',
     three: 'three',
-    items: ['foo', 'bar', 'baz', 'raz']
+    items: Array(200).join('test ').split(' ')
 };
 
-console.log('benchmarking %d times', exports.times);
+console.log('\nbenchmarking %d times\n', exports.times);

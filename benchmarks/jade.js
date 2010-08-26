@@ -10,7 +10,7 @@ var bm = require('./common'),
 var str = fs.readFileSync(__dirname + '/example.jade', 'ascii');
 var n = bm.times;
 
-bm.start('jade parser');
+bm.start('jade compilation');
 while (n--) {
     jade.render(str, {
         filename: 'example.jade',
