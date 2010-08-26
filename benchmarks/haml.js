@@ -10,7 +10,7 @@ var bm = require('./common'),
 var str = fs.readFileSync(__dirname + '/example.haml', 'ascii');
 
 var n = bm.times;
-bm.start('haml compilation');
+bm.start('haml-js compilation');
 while (n--) {
     haml(str);
 }
@@ -18,7 +18,7 @@ bm.stop();
 
 var n = bm.times;
 var fn = haml(str);
-bm.start('haml execution');
+bm.start('haml-js execution');
 while (n--) {
     fn.call('whatever scope', bm.locals);
 }
