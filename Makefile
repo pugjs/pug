@@ -22,4 +22,9 @@ api.html: lib/jade.js
 		 --desc "Jade is a high performance template engine for [node](http://nodejs.org), inspired by [haml](http://haml-lang.com/), created by [TJ Holowaychuk](http://github.com/visionmedia)." \
 		 $< > $@
 
-.PHONY: install uninstall test example
+benchmark:
+	@node benchmarks/jade.js && \
+	 node benchmarks/haml.js && \
+	 node benchmarks/ejs.js
+
+.PHONY: install uninstall test example benchmark
