@@ -84,6 +84,7 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str), 'Test basic tags');
+        assert.equal('<fb:foo-bar></fb:foo-bar>', render('fb:foo-bar'), 'Test hyphens');
         assert.equal('<div class="something"></div>', render('div.something'), 'Test classes');
         assert.equal('<div id="something"></div>', render('div#something'), 'Test ids');
         assert.equal('<div class="something"></div>', render('.something'), 'Test stand-alone classes');
