@@ -157,6 +157,17 @@ would output
     <p>foo</p>
     <p>bar</p>
 
+Jade also supports unbuffered comments, by simply adding a hyphen:
+
+    //- will not output within markup
+    p foo
+    p bar
+
+outputting
+
+    <p>foo</p>
+    <p>bar</p>
+
 ### Nesting
 
     ul

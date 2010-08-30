@@ -450,6 +450,32 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test unbuffered comments': function(assert){
+        var str = [
+            '//- foo',
+            'p bar'
+        ].join('\n');
+
+        var html = [
+            '<p>bar</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        var str = [
+            'p foo',
+            '//- bar ',
+            'p baz'
+        ].join('\n');
+
+        var html = [
+            '<p>foo</p>',
+            '<p>baz</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+    },
+    
     'test code': function(assert){
         var str = [
             '- var foo = "<script>";',
