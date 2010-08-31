@@ -181,6 +181,34 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test tab conversion': function(assert){
+        var str = [
+            'ul',
+            '\tli a',
+            '\t',
+            '\tli b',
+            '\t\t',
+            '\t\t\t\t\t\t',
+            '\tli',
+            '\t\tul',
+            '\t\t\tli c',
+            '',
+            '\t\t\tli d',
+            '\tli e',
+        ].join('\n');
+
+        var html = [
+            '<ul>',
+            '<li>a</li>',
+            '<li>b</li>',
+            '<li><ul><li>c</li><li>d</li></ul></li>',
+            '<li>e</li>',
+            '</ul>'
+        ].join('');
+
+        assert.equal(html, render(str));
+    },
+    
     'test newlines': function(assert){
         var str = [
             'ul',
