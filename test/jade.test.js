@@ -448,6 +448,10 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+
+        var str = "<!-- script(src: '/js/validate.js') -->",
+            js = "// script(src: '/js/validate.js') ";
+        assert.equal(str, render(js));
     },
     
     'test unbuffered comments': function(assert){
