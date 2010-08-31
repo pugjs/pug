@@ -1,4 +1,13 @@
 
+0.4.0 / 2010-08-30 
+==================
+
+  * Added tab naive support (tabs are converted to a single indent, aka two spaces). Closes #24
+  * Added unbuffered comment support. Closes #62
+  * Added hyphen support for tag names, ex: "fb:foo-bar"
+  * Fixed bug with single quotes in comments. Closes #61
+  * Fixed comment whitespace issue, previously padding. Closes #55
+
 0.3.0 / 2010-08-04
 ==================
 
