@@ -265,9 +265,6 @@ module.exports = {
     'test tag text block': function(assert){
         assert.equal('<p>foo bar baz </p>', render('p\n  | foo\n  | bar\n  | baz'));
         assert.equal('<label>Password: <input /></label>', render('label\n  | Password:\n  input'));
-        // assert.equal('ey <p>foo</p> bar baz', render('| ey\np foo\n|  bar\n| baz'));
-        // assert.equal('ey <p>foo</p> bar baz', render('| ey\np\n  | foo\n| bar\n| baz'));
-        // assert.equal('<p>foo</p> bar baz', render('p\n  | foo\n| bar\n| baz'));
     },
     
     'test tag text interpolation': function(assert){
