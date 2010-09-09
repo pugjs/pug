@@ -1,4 +1,10 @@
 
+0.4.1 / 2010-09-09 
+==================
+
+  * Added support for arbitrary indentation for single-line comments. Closes #71
+  * Only strip first space in text (ex '|  foo' will buffer ' foo')
+
 0.4.0 / 2010-08-30 
 ==================
 
