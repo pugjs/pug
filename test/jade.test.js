@@ -451,6 +451,7 @@ module.exports = {
     },
     
     'test comments': function(assert){
+        // Regular
         var str = [
             '//foo',
             'p bar'
@@ -462,6 +463,22 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        // Arbitrary indentation
+        
+        var str = [
+            '     //foo',
+            'p bar'
+        ].join('\n');
+
+        var html = [
+            '<!--foo-->',
+            '<p>bar</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        
+        // Between tags
         
         var str = [
             'p foo',
@@ -476,6 +493,8 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+
+        // Quotes
 
         var str = "<!-- script(src: '/js/validate.js') -->",
             js = "// script(src: '/js/validate.js') ";
