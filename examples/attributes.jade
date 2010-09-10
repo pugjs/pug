@@ -3,8 +3,6 @@ div#id(class='user user-' + name)
   form
     //- unbuffered comment :)
     // Just an example of different attribute styles
-    label(for:'user[name]')
-      | Username:
-      input(type: 'text' , name : 'user[name]', value: name)
+    input(type: 'text' , name : 'user[name]', value: name)
     input(checked, type: 'checkbox', name: 'user[blocked]')
     input(type='submit', value="Update")
