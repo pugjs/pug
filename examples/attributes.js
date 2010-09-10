@@ -5,7 +5,8 @@
 
 var jade = require('./../lib/jade');
 
-jade.renderFile(__dirname + '/layout.jade', function(err, html){
+var options = { locals: { name: 'tj' }};
+jade.renderFile(__dirname + '/attributes.jade', options, function(err, html){
     if (err) throw err;
     console.log(html);
 });
