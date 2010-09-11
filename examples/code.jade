@@ -2,4 +2,7 @@
 h1= title
 ul#users
   - each user, name in users
-    li(class: 'user-' + name) #{name} #{user.email}
+    - if (user.isA == "ferret")
+      li(class: 'user-' + name) #{name} is just a ferret
+    - else
+      li(class: 'user-' + name) #{name} #{user.email}
