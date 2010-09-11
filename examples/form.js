@@ -6,6 +6,7 @@
 var jade = require('./../lib/jade');
 
 var options = {
+    pretty: true,
     locals: {
         user: {
             name: 'TJ',
