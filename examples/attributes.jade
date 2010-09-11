@@ -1,0 +1,8 @@
+div#id.left(class='user user-' + name).container
+  h1.title= name
+  form
+    //- unbuffered comment :)
+    // Just an example of different attribute styles
+    input(type: 'text' , name : 'user[name]', value: name)
+    input(checked, type: 'checkbox', name: 'user[blocked]')
+    input(type='submit', value="Update")
