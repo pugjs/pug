@@ -447,7 +447,8 @@ module.exports = {
         assert.equal('<p class="tj"></p>', render('p( class: name )', { locals: { name: 'tj' }}));
         assert.equal('<p class="default"></p>', render('p(class: name || "default")', { locals: { name: null }}));
         assert.equal('<p class="foo default"></p>', render('p.foo(class: name || "default")', { locals: { name: null }}));
-        assert.equal('<p class="foo default"></p>', render('p(class: name || "default").foo', { locals: { name: null }}));
+        assert.equal('<p class="default foo"></p>', render('p(class: name || "default").foo', { locals: { name: null }}));
+        assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
         assert.equal('<p id="user-1"></p>', render('p(id: "user-" + 1)'));
         assert.equal('<p class="user-1"></p>', render('p(class: "user-" + 1)'));
     },
