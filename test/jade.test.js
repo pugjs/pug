@@ -23,11 +23,11 @@ module.exports = {
     'test unknown filter': function(assert){
         var err;
         try {
-            render(':doesNotExist');
+            render(':doesNotExist\n  | foo');
         } catch (e) {
             err = e;
         }
-        assert.equal("unknown filter \":doesNotExist\"", err.message);
+        assert.equal("Jade:2\n    1. ':doesNotExist'\n    2. '  | foo'\n\nunknown filter \":doesNotExist\"", err.message);
     },
     
     'test Buffers': function(assert){
