@@ -1,0 +1,3 @@
+ul#users
+  - each user, name in users
+    li(class: 'user-' + name) #{name} #{user.email}
