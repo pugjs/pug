@@ -11,6 +11,7 @@
   - code is escaped by default for security
   - contextual error reporting at compile &amp; run time
   - executable for compiling jade templates via the command line
+  - formatted output option
   - html 5 mode (using the _!!! 5_ doctype)
   - optional memory caching
   - combine dynamic and static tag classes
