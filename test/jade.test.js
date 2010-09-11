@@ -257,6 +257,12 @@ module.exports = {
         assert.ok(typeof jade.cache['foo.jade'] === 'function', 'Test cache');
     },
     
+    'test text': function(assert){
+      assert.equal('foobarbaz', render('| foo\n| bar\n| baz'));
+      assert.equal('foo bar baz', render('| foo \n| bar \n| baz'));
+      assert.equal('(hey)', render('| (hey)'));
+    },
+    
     'test tag text': function(assert){
         assert.equal('some random text', render('| some random text'));
         assert.equal('<p>some random text</p>', render('p some random text'));
