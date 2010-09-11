@@ -60,8 +60,10 @@ via npm:
  - `scope`     Evaluation scope (`this`)
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required by `cache`
+ - `pretty`    Output formatted HTML
  - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
  - `debug`     Outputs tokens and function body generated
+ - `compiler`  Compiler to replace jade's default
 
 ## Syntax
 
