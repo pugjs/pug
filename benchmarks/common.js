@@ -8,7 +8,7 @@ var sys = require('sys');
 var currentLabel,
     startTime;
 
-exports.times = 5000;
+exports.times = 2000;
 
 exports.start = function(label){
     currentLabel = label;
