@@ -1,6 +1,7 @@
 
 LIB_PREFIX = ~/.node_libraries
 PREFIX = /usr/local
+TESTS = test/*.js
 
 install:
 	cp -f bin/jade $(PREFIX)/bin/jade
@@ -15,7 +16,7 @@ test:
 		-I lib \
 		-I support/markdown/lib \
 		-I support/sass/lib \
-		test/*.js
+		$(TESTS)
 
 api.html: lib/jade.js
 	@dox \
