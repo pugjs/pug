@@ -127,8 +127,9 @@ module.exports = {
         assert.equal(html, render(str));
         
         var str = [
-            'a(href="#") foo ',
-            '  | bar',
+            'a(href="#")',
+            '  | foo ',
+            '  | bar ',
             '  | baz'
         ].join('\n');
         
@@ -137,7 +138,8 @@ module.exports = {
         var str = [
             'ul',
             '  li one',
-            '  ul two',
+            '  ul',
+            '    | two',
             '    li three'
         ].join('\n');
         
@@ -256,25 +258,25 @@ module.exports = {
     },
     
     'test tag text': function(assert){
-        assert.equal('some random text ', render('| some random text'));
+        assert.equal('some random text', render('| some random text'));
         assert.equal('<p>some random text</p>', render('p some random text'));
         assert.equal('<p>(parens)</p>', render('p (parens)'));
         //assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
     },
     
     'test tag text block': function(assert){
-        assert.equal('<p>foo bar baz </p>', render('p\n  | foo\n  | bar\n  | baz'));
-        assert.equal('<label>Password: <input /></label>', render('label\n  | Password:\n  input'));
+        assert.equal('<p>foo bar baz</p>', render('p\n  | foo \n  | bar \n  | baz'));
+        assert.equal('<label>Password:<input/></label>', render('label\n  | Password:\n  input'));
     },
     
     'test tag text interpolation': function(assert){
-        assert.equal('yo, jade is cool ', render('| yo, #{name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool ', render('| yo, ${name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool', render('| yo, #{name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool', render('| yo, ${name} is cool', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, ${name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool ', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
-        assert.equal('yo, \'jade\' is cool ', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
-        assert.equal('yo, jade is cool ', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
+        assert.equal('yo, \'jade\' is cool', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
     },
     
     'test invalid indentation multiple': function(assert){
@@ -396,7 +398,7 @@ module.exports = {
     },
     
     'test attrs': function(assert){
-        assert.equal('<img src="&lt;script&gt;" />', render('img(src="<script>")'), 'Test attr escaping');
+        assert.equal('<img src="&lt;script&gt;"/>', render('img(src="<script>")'), 'Test attr escaping');
         
         assert.equal('<a data-attr="bar"></a>', render('a(data-attr:"bar")'));
         assert.equal('<a data-attr="bar" data-attr-2="baz"></a>', render('a(data-attr:"bar", data-attr-2:"baz")'));
@@ -405,28 +407,28 @@ module.exports = {
         assert.equal('<a title="foo,bar" href="#"></a>', render('a(title: "foo,bar", href="#")'));
         
         assert.equal('<p class="foo"></p>', render("p(class='foo')"), 'Test single quoted attrs');
-        assert.equal('<input type="checkbox" checked="checked" />', render('input( type="checkbox", checked )'));
-        assert.equal('<input type="checkbox" checked="checked" />', render('input( type="checkbox", checked: true )'));
-        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: false)'));
-        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: null)'));
-        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: undefined)'));
-        assert.equal('<input type="checkbox" />', render('input(type="checkbox", checked: "")'));
+        assert.equal('<input type="checkbox" checked="checked"/>', render('input( type="checkbox", checked )'));
+        assert.equal('<input type="checkbox" checked="checked"/>', render('input( type="checkbox", checked: true )'));
+        assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked: false)'));
+        assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked: null)'));
+        assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked: undefined)'));
+        assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked: "")'));
         
-        assert.equal('<img src="/foo.png" />', render('img(src="/foo.png")'), 'Test attr =');
-        assert.equal('<img src="/foo.png" />', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
-        assert.equal('<img src="/foo.png" />', render('img(src:"/foo.png")'), 'Test attr :');
-        assert.equal('<img src="/foo.png" />', render('img(src  :  "/foo.png")'), 'Test attr : whitespace');
+        assert.equal('<img src="/foo.png"/>', render('img(src="/foo.png")'), 'Test attr =');
+        assert.equal('<img src="/foo.png"/>', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
+        assert.equal('<img src="/foo.png"/>', render('img(src:"/foo.png")'), 'Test attr :');
+        assert.equal('<img src="/foo.png"/>', render('img(src  :  "/foo.png")'), 'Test attr : whitespace');
         
-        assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src: "/foo.png", alt: "just some foo")'));
-        assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src   : "/foo.png", alt  :  "just some foo")'));
-        assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src="/foo.png", alt="just some foo")'));
-        assert.equal('<img src="/foo.png" alt="just some foo" />', render('img(src = "/foo.png", alt = "just some foo")'));
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src: "/foo.png", alt: "just some foo")'));
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src   : "/foo.png", alt  :  "just some foo")'));
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src="/foo.png", alt="just some foo")'));
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src = "/foo.png", alt = "just some foo")'));
         
         assert.equal('<p class="foo,bar,baz"></p>', render('p(class="foo,bar,baz")'));
         assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', render('a(href: "http://google.com", title: "Some : weird = title")'));
         assert.equal('<label for="name"></label>', render('label(for="name")'));
-        assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
-        assert.equal('<meta name="viewport" content="width=device-width" />', render("meta(name: 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
+        assert.equal('<meta name="viewport" content="width=device-width"/>', render("meta(name: 'viewport', content: 'width=device-width')"), 'Test attrs that contain attr separators');
+        assert.equal('<meta name="viewport" content="width=device-width"/>', render("meta(name: 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
         assert.equal('<div style="color: white"></div>', render("div(style='color: white')"), 'Test attrs that contain attr separators');
         assert.equal('<p class="foo"></p>', render("p('class'='foo')"), 'Test keys with single quotes');
         assert.equal('<p class="foo"></p>', render("p(\"class\": 'foo')"), 'Test keys with double quotes');
