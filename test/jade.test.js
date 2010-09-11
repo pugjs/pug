@@ -27,7 +27,7 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        assert.equal("Jade:1\n    1. ':doesNotExist'\n\nunknown filter \":doesNotExist\"", err.message);
+        assert.equal("unknown filter \":doesNotExist\"", err.message);
     },
     
     'test Buffers': function(assert){
