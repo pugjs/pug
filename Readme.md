@@ -191,7 +191,7 @@ Jade instruments the compiled JavaScript to provide meaningful context for runti
 
 	Invalid indentation, got 2 expected 1.
 
-Note: Trailing are generated on **EOS** if not present.
+Note: Trailing are generated on **EOS** (end-of-source) if not present.
 
 ### Attributes
 
@@ -283,8 +283,8 @@ Hell, even verbose iteration:
     - if (items.length)
       ul
         - items.forEach(function(item){
-	      li= item
-	    - })
+          li= item
+        - })
 
 Anything you want!
 
@@ -325,13 +325,6 @@ iterating an object's keys and values:
       li #{key}: #{val}
 
 would output `<li>foo: bar</li>`
-
-Non-enumerables are simply passed as the **only** value:
-
-    - each n in 15
-      li= n
-
-would simply output `<li>15</li>`
 
 You can also nest these!
 

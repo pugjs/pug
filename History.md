@@ -1,4 +1,13 @@
 
+0.5.0 / 2010-09-11 
+==================
+
+  * __Major__ refactor. Logic now separated into lexer/parser/compiler for future extensibility.
+  * Added _pretty_ option
+  * Added parse tree output for _debug_ option
+  * Added new examples
+  * Removed _context_ option, use _scope_
+
 0.4.1 / 2010-09-09 
 ==================
 
