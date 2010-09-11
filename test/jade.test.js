@@ -66,7 +66,7 @@ module.exports = {
     
     'test single quotes': function(assert){
         assert.equal("<p>'foo'</p>", render("p 'foo'"));
-        assert.equal("<p>'foo' </p>", render("p\n  | 'foo'"));
+        assert.equal("<p>'foo'</p>", render("p\n  | 'foo'"));
         assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
     },
     
@@ -80,7 +80,7 @@ module.exports = {
         var html = [
             '<p></p>',
             '<div></div>',
-            '<img />'
+            '<img/>'
         ].join('');
 
         assert.equal(html, render(str), 'Test basic tags');
@@ -95,8 +95,8 @@ module.exports = {
         assert.equal('<div id="foo" class="bar"></div>', render('div(class="bar")#foo'));
         assert.equal('<div id="bar" class="foo"></div>', render('div(id="bar").foo'));
         assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz'));
-        assert.equal('<div class="bar baz foo"></div>', render('div(class="foo").bar.baz'));
-        assert.equal('<div class="foo baz bar"></div>', render('div.foo(class="bar").baz'));
+        assert.equal('<div class="foo bar baz"></div>', render('div(class="foo").bar.baz'));
+        assert.equal('<div class="foo bar baz"></div>', render('div.foo(class="bar").baz'));
         assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar(class="baz")'));
         assert.equal('<div class="a-b2"></div>', render('div.a-b2'));
         assert.equal('<div class="a_b2"></div>', render('div.a_b2'));
@@ -132,7 +132,7 @@ module.exports = {
             '  | baz'
         ].join('\n');
         
-        assert.equal('<a href="#">foo bar baz </a>', render(str));
+        assert.equal('<a href="#">foo bar baz</a>', render(str));
         
         var str = [
             'ul',
