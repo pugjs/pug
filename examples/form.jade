@@ -1,0 +1,28 @@
+form(method="post")
+  fieldset
+    legend General
+    p
+      label(for="user[name]")
+        | Username:
+        input(type="text", name="user[name]", value=user.name)
+    p
+      label(for="user[email]")
+        | Email:
+        input(type="text", name="user[email]", value=user.email)
+  fieldset
+    legend Location    
+    p
+      label(for="user[city]")
+        | City:
+        input(type="text", name="user[city]", value=user.city)
+    p
+      select(name="user[province]")
+        option(value="") -- Select Province --
+        option(value="AB") Alberta
+        option(value="BC") British Columbia
+        option(value="SK") Saskatchewan
+        option(value="MB") Manitoba
+        option(value="ON") Ontario
+        option(value="QC") Quebec
+  p.buttons
+    input(type="submit", value="Save")
