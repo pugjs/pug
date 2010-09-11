@@ -44,7 +44,7 @@ module.exports = {
         var html = [
             '<p></p>',
             '<div></div>',
-            '<img />'
+            '<img/>'
         ].join('');
 
         assert.equal(html, render(str));
@@ -58,7 +58,7 @@ module.exports = {
         var html = [
             '<p></p>',
             '<div></div>',
-            '<img />'
+            '<img/>'
         ].join('');
 
         assert.equal(html, render(str));
