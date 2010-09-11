@@ -645,18 +645,6 @@ module.exports = {
         
         assert.equal(html, render(str));
         
-        // Non-Enumerable
-        var str = [
-            '- each val in 1',
-            '  li= val'
-        ].join('\n');
-    
-        var html = [
-            '<li>1</li>'
-        ].join('');
-        
-        assert.equal(html, render(str));
-
         // Complex 
         var str = [
             '- var obj = { foo: "bar", baz: "raz" };',
