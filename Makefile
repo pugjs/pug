@@ -5,7 +5,7 @@ TESTS = test/*.js
 
 install:
 	cp -f bin/jade $(PREFIX)/bin/jade
-	cp -f lib/jade.js $(LIB_PREFIX)/jade.js
+	cp -rf lib/jade $(LIB_PREFIX)/.
 
 uninstall:
 	rm -f $(PREFIX)/bin/jade
