@@ -11,8 +11,16 @@ var jade = require('jade'),
 var render = jade.render;
 
 module.exports = {
-    'version': function(assert){
+    'test .version': function(assert){
         assert.ok(/^\d+\.\d+\.\d+$/.test(jade.version), "Invalid version format");
+    },
+    
+    'test exports': function(assert){
+        assert.equal('object', typeof jade.selfClosing, 'exports.selfClosing missing');
+        assert.equal('object', typeof jade.doctypes, 'exports.doctypes missing');
+        assert.equal('object', typeof jade.filters, 'exports.filters missing');
+        assert.equal('object', typeof jade.utils, 'exports.utils missing');
+        assert.equal('function', typeof jade.Compiler, 'exports.Compiler missing');
     },
     
     'test doctypes': function(assert){
