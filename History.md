@@ -1,4 +1,36 @@
 
+0.5.0 / 2010-09-11 
+==================
+
+  * __Major__ refactor. Logic now separated into lexer/parser/compiler for future extensibility.
+  * Added _pretty_ option
+  * Added parse tree output for _debug_ option
+  * Added new examples
+  * Removed _context_ option, use _scope_
+
+0.4.1 / 2010-09-09 
+==================
+
+  * Added support for arbitrary indentation for single-line comments. Closes #71
+  * Only strip first space in text (ex '|  foo' will buffer ' foo')
+
+0.4.0 / 2010-08-30 
+==================
+
+  * Added tab naive support (tabs are converted to a single indent, aka two spaces). Closes #24
+  * Added unbuffered comment support. Closes #62
+  * Added hyphen support for tag names, ex: "fb:foo-bar"
+  * Fixed bug with single quotes in comments. Closes #61
+  * Fixed comment whitespace issue, previously padding. Closes #55
+
+0.3.0 / 2010-08-04
+==================
+
+  * Added single line comment support. Closes #25
+  * Removed CDATA from _:javascript_ filter. Closes #47
+  * Removed _sys_ local
+  * Fixed code following tag
+
 0.2.4 / 2010-08-02
 ==================
 

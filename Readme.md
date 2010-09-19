@@ -11,6 +11,7 @@
   - code is escaped by default for security
   - contextual error reporting at compile &amp; run time
   - executable for compiling jade templates via the command line
+  - formatted output option
   - html 5 mode (using the _!!! 5_ doctype)
   - optional memory caching
   - combine dynamic and static tag classes
@@ -24,6 +25,7 @@
     - :cdata
     - :javascript
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+  - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
 
 ## Implementations
 
@@ -59,8 +61,10 @@ via npm:
  - `scope`     Evaluation scope (`this`)
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required by `cache`
+ - `pretty`    Output formatted HTML
  - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
  - `debug`     Outputs tokens and function body generated
+ - `compiler`  Compiler to replace jade's default
 
 ## Syntax
 
@@ -141,6 +145,32 @@ Actually want `#{}` for some reason? escape it!
 
 now we have `<p>#{something}</p>`
 
+### Comments
+
+Single line comments currently look the same as JavaScript comments,
+aka "//" and must be placed on their own line:
+
+    // just some paragraphs
+    p foo
+    p bar
+
+would output
+
+    <!-- just some paragraphs -->
+    <p>foo</p>
+    <p>bar</p>
+
+Jade also supports unbuffered comments, by simply adding a hyphen:
+
+    //- will not output within markup
+    p foo
+    p bar
+
+outputting
+
+    <p>foo</p>
+    <p>bar</p>
+
 ### Nesting
 
     ul
@@ -161,7 +191,7 @@ Jade instruments the compiled JavaScript to provide meaningful context for runti
 
 	Invalid indentation, got 2 expected 1.
 
-Note: Trailing are generated on **EOS** if not present.
+Note: Trailing are generated on **EOS** (end-of-source) if not present.
 
 ### Attributes
 
@@ -253,8 +283,8 @@ Hell, even verbose iteration:
     - if (items.length)
       ul
         - items.forEach(function(item){
-	      li= item
-	    - })
+          li= item
+        - })
 
 Anything you want!
 
@@ -296,13 +326,6 @@ iterating an object's keys and values:
 
 would output `<li>foo: bar</li>`
 
-Non-enumerables are simply passed as the **only** value:
-
-    - each n in 15
-      li= n
-
-would simply output `<li>15</li>`
-
 You can also nest these!
 
     - each user in users
@@ -332,3 +355,27 @@ Usage info:
 	  -p, --pipe          Output to stdout instead of PATH.html
 	  -h, --help          Output help information
 
+## License 
+
+(The MIT License)
+
+Copyright (c) 2009-2010 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

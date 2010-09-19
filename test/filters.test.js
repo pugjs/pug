@@ -11,13 +11,13 @@ var render = jade.render;
 module.exports = {
     'test filter interpolation': function(assert){
         assert.equal(
-            '<script type="text/javascript">\n//<![CDATA[\nvar name = "tj";\n//]]></script>',
+            '<script type="text/javascript">\nvar name = "tj";</script>',
             render(':javascript\n  | var name = "#{userName}";', { locals: { userName: 'tj' }}));
         assert.equal(
-            '<script type="text/javascript">\n//<![CDATA[\nvar name = \'tj\';\n//]]></script>',
+            '<script type="text/javascript">\nvar name = \'tj\';</script>',
             render(':javascript\n  | var name = #{userName};', { locals: { userName: "'tj'" }}));
         assert.equal(
-            '<script type="text/javascript">\n//<![CDATA[\nvar name = "#{userName}";\n//]]></script>',
+            '<script type="text/javascript">\nvar name = "#{userName}";</script>',
             render(':javascript\n  | var name = "\\#{userName}";', { locals: { userName: 'tj' }}));
     },
     
@@ -29,7 +29,7 @@ module.exports = {
     
     'test :javascript filter': function(assert){
         assert.equal(
-            '<script type="text/javascript">\n//<![CDATA[\nalert(\'foo\')\n//]]></script>',
+            '<script type="text/javascript">\nalert(\'foo\')</script>',
             render(':javascript\n  | alert(\'foo\')'));
     },
     

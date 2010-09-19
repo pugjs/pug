@@ -1,10 +1,11 @@
 
 LIB_PREFIX = ~/.node_libraries
 PREFIX = /usr/local
+TESTS = test/*.js
 
 install:
 	cp -f bin/jade $(PREFIX)/bin/jade
-	cp -f lib/jade.js $(LIB_PREFIX)/jade.js
+	cp -rf lib/jade $(LIB_PREFIX)/.
 
 uninstall:
 	rm -f $(PREFIX)/bin/jade
@@ -15,11 +16,19 @@ test:
 		-I lib \
 		-I support/markdown/lib \
 		-I support/sass/lib \
-		test/*.js
+		$(TESTS)
 
 api.html: lib/jade.js
-	@dox --title "Jade" \
-		 --desc "Jade is a high performance template engine for [node](http://nodejs.org), inspired by [haml](http://haml-lang.com/), created by [TJ Holowaychuk](http://github.com/visionmedia)." \
+	@dox \
+		--private \
+		--title "Jade" \
+		--desc "Jade is a high performance template engine for [node](http://nodejs.org), inspired by [haml](http://haml-lang.com/), created by [TJ Holowaychuk](http://github.com/visionmedia)." \
 		 $< > $@
 
-.PHONY: install uninstall test example
+benchmark:
+	@node benchmarks/jade.js && \
+	 node benchmarks/haml.js && \
+	 node benchmarks/haml2.js && \
+	 node benchmarks/ejs.js
+
+.PHONY: install uninstall test example benchmark
