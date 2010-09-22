@@ -9,7 +9,7 @@ install:
 
 uninstall:
 	rm -f $(PREFIX)/bin/jade
-	rm -Rf $(LIB_PREFIX)/jade
+	rm -rf $(LIB_PREFIX)/jade
 
 test:
 	@./support/expresso/bin/expresso \
