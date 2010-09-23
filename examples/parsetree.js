@@ -11,7 +11,7 @@ var options = {
     locals: {
         name: 'tj',
         email: 'tj@vision-media.ca',
-        admin: true
+        role: 'admin'
     }
 };
 
