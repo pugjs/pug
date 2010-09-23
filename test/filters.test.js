@@ -11,7 +11,7 @@ jade.filters.conditionals = function(block, compiler){
     block.nodes.forEach(function(node, i){
         switch (node.name) {
             case 'if':
-                block.nodes[i] = new nodes.Code('if (false)');
+                block.nodes[i] = new nodes.Code('if (' + node.block.nodes[0].lines[0] + ')');
                 block.nodes[i].block = node.block;
                 break;
             case 'else':
@@ -74,7 +74,7 @@ module.exports = {
         var str = [
             ':conditionals',
             '  if false',
-            '    p doh',
+            '    | oh noes',
             '  else',
             '    p amazing!'
         ].join('\n');
