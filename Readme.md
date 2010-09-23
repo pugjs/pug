@@ -35,10 +35,6 @@
 
 ## Installation
 
-via tarball or git:
-
-    make install
-
 via npm:
 
     npm install jade

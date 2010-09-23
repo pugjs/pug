@@ -1,15 +1,5 @@
 
-LIB_PREFIX = ~/.node_libraries
-PREFIX = /usr/local
 TESTS = test/*.js
-
-install:
-	cp -f bin/jade $(PREFIX)/bin/jade
-	cp -rf lib/jade $(LIB_PREFIX)/.
-
-uninstall:
-	rm -f $(PREFIX)/bin/jade
-	rm -rf $(LIB_PREFIX)/jade
 
 test:
 	@./support/expresso/bin/expresso \
@@ -31,4 +21,4 @@ benchmark:
 	 node benchmarks/haml2.js && \
 	 node benchmarks/ejs.js
 
-.PHONY: install uninstall test example benchmark
+.PHONY: test example benchmark
