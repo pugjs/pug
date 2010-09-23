@@ -15,7 +15,8 @@
   - html 5 mode (using the _!!! 5_ doctype)
   - optional memory caching
   - combine dynamic and static tag classes
-  - supports [Express JS](http://expressjs.com)
+  - parse tree manipulation via _filters_
+  - supports [Express JS](http://expressjs.com) out of the box
   - transparent iteration over objects, arrays, and even non-enumerables via `- each`
   - no tag prefix
   - filters
@@ -251,6 +252,19 @@ at the top of this document for available filters.
 Renders:
 
        <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
+
+Filters may also now manipulate the parse tree. For example perhaps I want to
+bake conditionals right into jade, we could do so with a filter named _conditionals_. Typically filters work on text blocks, however by passing a regular block our filter can do anything it wants with the tags nested within it.
+
+    body
+      :conditionals
+        if role == 'admin'
+          p You are amazing
+        else
+          p Not so amazing
+
+Not that we no longer prefix with "-" for these code blocks. An example of 
+how to manipulate the parse tree can be found at _./examples/parsetree.js_.
 
 ## Code
 
