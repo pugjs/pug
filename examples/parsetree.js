@@ -23,6 +23,10 @@ jade.renderFile(__dirname + '/parsetree.jade', options, function(err, html){
 // To support nesting etc you will need to create a more
 // robust compiler, view ./lib/compiler.js for the core example.
 
+// Without our filter we could either construct an entirely new string,
+// and simply return it (using "buf.push('buffered text')") etc, or utilize
+// the core compiler which is passed
+
 jade.filters.conditionals = function(block, compiler){
     block.nodes.forEach(function(node, i){
         switch (node.name) {
