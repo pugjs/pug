@@ -3,13 +3,25 @@
  * Module dependencies.
  */
 
-var jade = require('jade');
+var jade = require('jade'),
+    render = jade.render,
+    nodes = jade.nodes;
 
-// Shortcut
-var render = jade.render;
-
-jade.filters.conditionals = function(tree){
-    console.log(tree);
+jade.filters.conditionals = function(block, compiler){
+    block.nodes.forEach(function(node, i){
+        switch (node.name) {
+            case 'if':
+                block.nodes[i] = new nodes.Code('if (false)');
+                block.nodes[i].block = node.block;
+                break;
+            case 'else':
+                block.nodes[i] = new nodes.Code('else');
+                block.nodes[i].block = node.block;
+                break;
+        }
+    });
+    compiler.visit(block);
+    return '';
 };
 
 module.exports = {
