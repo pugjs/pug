@@ -8,6 +8,10 @@ var jade = require('jade');
 // Shortcut
 var render = jade.render;
 
+jade.filters.conditionals = function(tree){
+    console.log(tree);
+};
+
 module.exports = {
     'test filter interpolation': function(assert){
         assert.equal(
@@ -46,11 +50,27 @@ module.exports = {
         assert.equal(
             '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
             render(':sass\n  | body\n  |   :font-family \'Lucida Grande\''));
-},
+    },
 
     'test :less filter': function(assert){
         assert.equal(
             '<style>.class {\n  width: 20px;\n}\n</style>',
             render(':less\n  | .class { width: 10px * 2 }'));
+    },
+    
+    'test parse tree': function(assert){
+        var str = [
+            ':conditionals',
+            '  if false',
+            '    p doh',
+            '  else',
+            '    p amazing!'
+        ].join('\n');
+
+        var html = [
+            '<p>amazing!</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
     }
 };
