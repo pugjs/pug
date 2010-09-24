@@ -42,5 +42,4 @@ jade.filters.conditionals = function(block, compiler){
         }
     });
     compiler.visit(block);
-    return '';
 };
