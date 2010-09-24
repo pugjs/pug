@@ -51,7 +51,8 @@ Visitor.prototype.visitTag = function(node){
     switch (node.name) {
         case 'form':
             // Store the record variable name,
-            // in our case "user"
+            // in our case "user" is our first
+            // anonymous attribute
             this.record = node.attrs[0].name;
             // remove the record name attribute
             node.removeAttribute(this.record);
@@ -71,28 +72,45 @@ Visitor.prototype.visitTag = function(node){
             parent.call(this, node);
             break;
         case 'field':
+            // Grab "as" attribute, defaulting it to "text"
+            // perform some surgery on it since it IS literal JavaScript
             var name = node.attrs[0].name,
+                as = (node.getAttribute('as') || 'text').trim().replace(/'/g, ''),
                 capitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
+            // Field label
             var label = new nodes.Tag('label');
             label.setAttribute('for', '"' + this.record + '[' + name + ']"');
             label.block.push(new nodes.Text(capitalized + ':'));
             parent.call(this, label);
 
-            node = new nodes.Tag('input');
-            node.setAttribute('type', '"text"');
+            // Field input
+            switch (as) {
+                case 'textarea':
+                    var code = new nodes.Code(this.record + '.' + name, true, true);
+                    node = new nodes.Tag('textarea');
+                    node.block.push(code);
+                    break;
+                case 'text':
+                    node = new nodes.Tag('input');
+                    node.setAttribute('type', '"text"');
+                    node.setAttribute('value', this.record + '.' + name);
+            }
             node.setAttribute('name', '"' + this.record + '[' + name + ']"');
-            node.setAttribute('value', this.record + '.' + name);
             parent.call(this, node);
 
+            // Potential error tag
             var err = this.record + '.errors.' + name;
             node = new nodes.Code('if (' + err + ')');
             node.block = new nodes.Block;
             var p = new nodes.Tag('p', new nodes.Block(new nodes.Code(err, true, true)));
             node.block.push(p);
+
             Visitor.prototype.visitCode.call(this, node);
             break;
         case 'buttons':
+            // Generate context sensative buttons which
+            // check the record's state.
             node = new nodes.Tag('input');
             node.setAttribute('type', '"submit"');
             node.setAttribute('value', this.record + '.new ? "Save" : "Update"');
