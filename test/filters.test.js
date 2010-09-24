@@ -3,10 +3,26 @@
  * Module dependencies.
  */
 
-var jade = require('jade');
+var jade = require('jade'),
+    render = jade.render,
+    nodes = jade.nodes;
 
-// Shortcut
-var render = jade.render;
+jade.filters.conditionals = function(block, compiler){
+    block.nodes.forEach(function(node, i){
+        switch (node.name) {
+            case 'if':
+                block.nodes[i] = new nodes.Code('if (' + node.block.nodes[0].lines[0] + ')');
+                block.nodes[i].block = node.block;
+                break;
+            case 'else':
+                block.nodes[i] = new nodes.Code('else');
+                block.nodes[i].block = node.block;
+                break;
+        }
+    });
+    compiler.visit(block);
+    return '';
+};
 
 module.exports = {
     'test filter interpolation': function(assert){
@@ -46,11 +62,27 @@ module.exports = {
         assert.equal(
             '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
             render(':sass\n  | body\n  |   :font-family \'Lucida Grande\''));
-},
+    },
 
     'test :less filter': function(assert){
         assert.equal(
             '<style>.class {\n  width: 20px;\n}\n</style>',
             render(':less\n  | .class { width: 10px * 2 }'));
+    },
+    
+    'test parse tree': function(assert){
+        var str = [
+            ':conditionals',
+            '  if false',
+            '    | oh noes',
+            '  else',
+            '    p amazing!'
+        ].join('\n');
+
+        var html = [
+            '<p>amazing!</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
     }
 };
