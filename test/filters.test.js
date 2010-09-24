@@ -37,6 +37,15 @@ module.exports = {
             render(':javascript\n  | var name = "\\#{userName}";', { locals: { userName: 'tj' }}));
     },
     
+    'test filter arguments': function(assert){
+        jade.filters.withArgs = function(str, params){
+            assert.equal(params.a, 'hello');
+            assert.equal(params.b.a, 'world');
+            assert.equal(params.c, 'local');
+        };
+        render(':withArgs(a: \'hello\', b: { a: \'world\', c: some })', { locals: { some: 'local' } });
+    },
+    
     'test :cdata filter': function(assert){
         assert.equal('<![CDATA[\nfoo\n]]>', render(':cdata\n  | foo'));
         assert.equal('<![CDATA[\nfoo\nbar\n]]>', render(':cdata\n  | foo\n  | bar'));
