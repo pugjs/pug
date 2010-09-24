@@ -114,8 +114,7 @@ module.exports = {
     
     'test filter attrs': function(assert){
         jade.filters.testing = function(str, attrs){
-            console.log(attrs);
-            return str;
+            return str + ' ' + attrs.stuff;
         };
 
         var str = [
@@ -123,10 +122,17 @@ module.exports = {
             '  | foo bar',
         ].join('\n');
 
-        var html = [
-            '<p>foo bar</p>'
-        ].join('');
+        assert.equal('foo bar true', render(str));
+        
+        jade.filters.testing = function(node, compiler, attrs){
+            return 'buf.push(' + attrs.foo + ')';
+        };
 
-        assert.equal(html, render(str));
+        var str = [
+            ':testing(foo="bar", baz)',
+            '  foo',
+        ].join('\n');
+
+        assert.equal('bar', render(str));
     } 
 };
