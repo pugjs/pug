@@ -40,8 +40,8 @@ Visitor.prototype.visitTag = function(node){
         case 'form':
             this.record = node.attrs[0].name;
             node = new nodes.Tag('form');
-            node.addAttribute('id', '"' + this.record + '-model-form"');
-            node.addAttribute('method', '"post"');
+            node.setAttribute('id', '"' + this.record + '-model-form"');
+            node.setAttribute('method', '"post"');
             parent.call(this, node);
             break;
         case 'field':
@@ -49,33 +49,29 @@ Visitor.prototype.visitTag = function(node){
                 capitalized = name.charAt(0).toUpperCase() + name.slice(1);
 
             var label = new nodes.Tag('label');
-            label.addAttribute('for', '"' + this.record + '[' + name + ']"');
-            label.block = new nodes.Block;
+            label.setAttribute('for', '"' + this.record + '[' + name + ']"');
             label.block.push(new nodes.Text(capitalized + ':'));
             parent.call(this, label);
 
             node = new nodes.Tag('input');
-            node.addAttribute('type', '"text"');
-            node.addAttribute('name', '"' + this.record + '[' + name + ']"');
-            node.addAttribute('value', this.record + '.' + name);
+            node.setAttribute('type', '"text"');
+            node.setAttribute('name', '"' + this.record + '[' + name + ']"');
+            node.setAttribute('value', this.record + '.' + name);
             parent.call(this, node);
 
             var err = this.record + '.errors.' + name;
-            node = new nodes.Code('if (' + err + ')', false, false);
+            node = new nodes.Code('if (' + err + ')');
             node.block = new nodes.Block;
-            var p = new nodes.Tag('p');
-            p.block = new nodes.Block;
-            p.block.push(new nodes.Code(err, true, true));
+            var p = new nodes.Tag('p', new nodes.Block(new nodes.Code(err, true, true)));
             node.block.push(p);
             Visitor.prototype.visitCode.call(this, node);
             break;
         case 'buttons':
             node = new nodes.Tag('input');
-            node.addAttribute('type', '"submit"');
-            node.addAttribute('value', this.record + '.new ? "Save" : "Update"');
-            var p = new nodes.Tag('p');
-            p.addAttribute('class', '"buttons"');
-            p.block.push(node);
+            node.setAttribute('type', '"submit"');
+            node.setAttribute('value', this.record + '.new ? "Save" : "Update"');
+            var p = new nodes.Tag('p', new nodes.Block(node));
+            p.setAttribute('class', '"buttons"');
             parent.call(this, p);
             break;
         default:
