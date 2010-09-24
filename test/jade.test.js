@@ -595,6 +595,22 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        var str = [
+            '- var foo;',
+            '- if (foo)',
+            '  p.hasFoo= foo',
+            '- else if (true)',
+            '  p kinda foo',
+            '- else',
+            '  p.noFoo no foo'
+        ].join('\n');
+
+        var html = [
+            '<p>kinda foo</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
 
         var str = [
             'p foo',

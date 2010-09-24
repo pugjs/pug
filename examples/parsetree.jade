@@ -1,5 +1,8 @@
 :conditionals
   if role == 'admin'
-    p User #{name} is an administrator
+    if name == 'tj'
+      p User is a wicked cool administrator
+    else
+      p User #{name} is an administrator
   else
     p User #{name} is a guest

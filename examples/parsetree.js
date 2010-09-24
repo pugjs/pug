@@ -5,6 +5,7 @@
  */
 
 var jade = require('./../lib/jade'),
+    Compiler = jade.Compiler,
     nodes = jade.nodes;
 
 var options = {
@@ -20,26 +21,39 @@ jade.renderFile(__dirname + '/parsetree.jade', options, function(err, html){
     console.log(html);
 });
 
-// To support nesting etc you will need to create a more
-// robust compiler, view ./lib/compiler.js for the core example.
-
-// Without our filter we could either construct an entirely new string,
-// and simply return it (using "buf.push('buffered text')") etc, or utilize
-// the core compiler which is passed
-
 jade.filters.conditionals = function(block, compiler){
-    block.nodes.forEach(function(node, i){
-        switch (node.name) {
-            case 'if':
-                block.nodes[i] = new nodes.Code('if (' + node.block.nodes[0].lines[0] + ')');
-                node.block.nodes.shift();
-                block.nodes[i].block = node.block;
-                break;
-            case 'else':
-                block.nodes[i] = new nodes.Code('else');
-                block.nodes[i].block = node.block;
-                break;
-        }
-    });
-    compiler.visit(block);
+    return new Visitor(block).compile();
+};
+
+function Visitor(node) {
+    this.node = node;
+}
+
+Visitor.prototype.__proto__ = Compiler.prototype;
+
+Visitor.prototype.visit = function(node){
+    if (node.name != 'else') this.line(node);
+    this.visitNode(node);
+};
+
+Visitor.prototype.visitTag = function(node){
+    switch (node.name) {
+        case 'if':
+            var condition = node.block.nodes[0].lines[0],
+                block = node.block;
+            block.nodes.shift();
+            node = new nodes.Code('if (' + condition + ')', false);
+            node.block = block;
+            this.visit(node);
+            break;
+        case 'else':
+            var block = node.block;
+            node = new nodes.Code('else', false);
+            node.block = block;
+            node.instrumentLineNumber = false;
+            this.visit(node);
+            break;
+        default:
+            Compiler.prototype.visitTag.call(this, node);
+    }
 };
