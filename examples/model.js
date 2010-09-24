@@ -25,22 +25,35 @@ jade.renderFile(__dirname + '/model.jade', options, function(err, html){
     console.log(html);
 });
 
+// First define a filter named "model",
+// which accepts a node (a Block node),
+// and the parent Compiler
+
 jade.filters.model = function(block, compiler){
+    // pass the block / previous options to our new Visitor
     return new Visitor(block, compiler.options).compile();
 };
 
 function Visitor(node, options) {
+    // "super" to the Compiler() constructor
     Compiler.call(this, node, options);
 }
 
+// Inherit from Compiler
+
 Visitor.prototype.__proto__ = Compiler.prototype;
+
+// Overwrite visitTag method 
 
 Visitor.prototype.visitTag = function(node){
     var parent = Compiler.prototype.visitTag;
     switch (node.name) {
         case 'form':
+            // Store the record variable name,
+            // in our case "user"
             this.record = node.attrs[0].name;
-            node = new nodes.Tag('form');
+            // remove the record name attribute
+            node.removeAttribute(this.record);
             node.setAttribute('id', '"' + this.record + '-model-form"');
             node.setAttribute('method', '"post"');
             parent.call(this, node);
