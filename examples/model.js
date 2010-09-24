@@ -12,8 +12,9 @@ var options = {
     pretty: true,
     locals: {
         user: {
-            name: 'tj',
+            name: 'Tobi',
             email: 'vision-media.ca',
+            summary: 'Tobi is a ferret, he is supes cool.',
             errors: { email: 'Invalid email' },
             new: false
         }
