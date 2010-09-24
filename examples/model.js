@@ -104,6 +104,7 @@ Visitor.prototype.visitTag = function(node){
             node = new nodes.Code('if (' + err + ')');
             node.block = new nodes.Block;
             var p = new nodes.Tag('p', new nodes.Block(new nodes.Code(err, true, true)));
+            p.setAttribute('class', '"error"');
             node.block.push(p);
 
             Visitor.prototype.visitCode.call(this, node);
