@@ -12,7 +12,7 @@ var options = {
     locals: {
         name: 'tj',
         email: 'tj@vision-media.ca',
-        role: 'admin'
+        admin: true
     }
 };
 
@@ -42,6 +42,9 @@ Visitor.prototype.visitTag = function(node){
             var condition = node.block[0][0],
                 block = node.block;
             block.shift();
+            if ('?' == condition[condition.length-1]) {
+                condition = condition.slice(0, -1);
+            }
             node = new nodes.Code('if (' + condition + ')');
             node.block = block;
             this.visit(node);
