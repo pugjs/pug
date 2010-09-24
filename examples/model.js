@@ -9,6 +9,7 @@ var jade = require('./../lib/jade'),
     nodes = jade.nodes;
 
 var options = {
+    pretty: true,
     locals: {
         user: {
             name: 'tj',
@@ -25,11 +26,11 @@ jade.renderFile(__dirname + '/model.jade', options, function(err, html){
 });
 
 jade.filters.model = function(block, compiler){
-    return new Visitor(block).compile();
+    return new Visitor(block, compiler.options).compile();
 };
 
-function Visitor(node) {
-    this.node = node;
+function Visitor(node, options) {
+    Compiler.call(this, node, options);
 }
 
 Visitor.prototype.__proto__ = Compiler.prototype;
