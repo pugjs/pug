@@ -39,16 +39,16 @@ Visitor.prototype.visit = function(node){
 Visitor.prototype.visitTag = function(node){
     switch (node.name) {
         case 'if':
-            var condition = node.block.nodes[0].lines[0],
+            var condition = node.block[0][0],
                 block = node.block;
-            block.nodes.shift();
-            node = new nodes.Code('if (' + condition + ')', false);
+            block.shift();
+            node = new nodes.Code('if (' + condition + ')');
             node.block = block;
             this.visit(node);
             break;
         case 'else':
             var block = node.block;
-            node = new nodes.Code('else', false);
+            node = new nodes.Code('else');
             node.block = block;
             node.instrumentLineNumber = false;
             this.visit(node);

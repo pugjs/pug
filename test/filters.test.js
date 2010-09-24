@@ -31,13 +31,13 @@ Visitor.prototype.visitTag = function(node){
             var condition = node.block[0][0],
                 block = node.block;
             block.shift();
-            node = new nodes.Code('if (' + condition + ')', false);
+            node = new nodes.Code('if (' + condition + ')');
             node.block = block;
             this.visit(node);
             break;
         case 'else':
             var block = node.block;
-            node = new nodes.Code('else', false);
+            node = new nodes.Code('else');
             node.block = block;
             node.instrumentLineNumber = false;
             this.visit(node);
