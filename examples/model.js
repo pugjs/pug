@@ -15,7 +15,7 @@ var options = {
             name: 'tj',
             email: 'vision-media.ca',
             errors: { email: 'Invalid email' },
-            new: true
+            new: false
         }
     }
 };
@@ -56,6 +56,16 @@ Visitor.prototype.visitTag = function(node){
             node.removeAttribute(this.record);
             node.setAttribute('id', '"' + this.record + '-model-form"');
             node.setAttribute('method', '"post"');
+            // when the record is not new, we probably want a _method hidden
+            // field to tell our server to use PUT with frameworks like Express
+            var code = new nodes.Code('if (!' + this.record + '.new)');
+            var put = new nodes.Tag('input');
+            put.setAttribute('type', '"hidden"');
+            put.setAttribute('name', '"_method"');
+            put.setAttribute('value', '"put"');
+            code.block = new nodes.Block(put);
+            node.block.push(code);
+
             parent.call(this, node);
             break;
         case 'field':
