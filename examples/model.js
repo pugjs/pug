@@ -56,6 +56,7 @@ Visitor.prototype.visitTag = function(node){
             node.removeAttribute(this.record);
             node.setAttribute('id', '"' + this.record + '-model-form"');
             node.setAttribute('method', '"post"');
+
             // when the record is not new, we probably want a _method hidden
             // field to tell our server to use PUT with frameworks like Express
             var code = new nodes.Code('if (!' + this.record + '.new)');
