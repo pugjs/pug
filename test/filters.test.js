@@ -110,5 +110,23 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
-    }
+    },
+    
+    'test filter attrs': function(assert){
+        jade.filters.testing = function(str, attrs){
+            console.log(attrs);
+            return str;
+        };
+
+        var str = [
+            ':testing(stuff)',
+            '  | foo bar',
+        ].join('\n');
+
+        var html = [
+            '<p>foo bar</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
+    } 
 };
