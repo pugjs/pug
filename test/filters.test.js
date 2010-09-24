@@ -4,24 +4,46 @@
  */
 
 var jade = require('jade'),
+    Compiler = jade.Compiler,
     render = jade.render,
     nodes = jade.nodes;
 
+
 jade.filters.conditionals = function(block, compiler){
-    block.nodes.forEach(function(node, i){
-        switch (node.name) {
-            case 'if':
-                block.nodes[i] = new nodes.Code('if (' + node.block.nodes[0].lines[0] + ')');
-                block.nodes[i].block = node.block;
-                break;
-            case 'else':
-                block.nodes[i] = new nodes.Code('else');
-                block.nodes[i].block = node.block;
-                break;
-        }
-    });
-    compiler.visit(block);
-    return '';
+    return new Visitor(block).compile();
+};
+
+function Visitor(node) {
+    this.node = node;
+}
+
+Visitor.prototype.__proto__ = Compiler.prototype;
+
+Visitor.prototype.visit = function(node){
+    if (node.name != 'else') this.line(node);
+    this.visitNode(node);
+};
+
+Visitor.prototype.visitTag = function(node){
+    switch (node.name) {
+        case 'if':
+            var condition = node.block.nodes[0].lines[0],
+                block = node.block;
+            block.nodes.shift();
+            node = new nodes.Code('if (' + condition + ')', false);
+            node.block = block;
+            this.visit(node);
+            break;
+        case 'else':
+            var block = node.block;
+            node = new nodes.Code('else', false);
+            node.block = block;
+            node.instrumentLineNumber = false;
+            this.visit(node);
+            break;
+        default:
+            Compiler.prototype.visitTag.call(this, node);
+    }
 };
 
 module.exports = {
@@ -76,7 +98,10 @@ module.exports = {
             '  if false',
             '    | oh noes',
             '  else',
-            '    p amazing!'
+            '    if null == false',
+            '      p doh',
+            '    else',
+            '      p amazing!'
         ].join('\n');
 
         var html = [
