@@ -8,7 +8,6 @@ var jade = require('jade'),
     render = jade.render,
     nodes = jade.nodes;
 
-
 jade.filters.conditionals = function(block, compiler){
     return new Visitor(block).compile();
 };
