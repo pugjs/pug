@@ -545,6 +545,11 @@ module.exports = {
     },
     
     'test code': function(assert){
+        assert.equal('test', render('!= "test"'));
+        assert.equal('test', render('= "test"'));
+        assert.equal('test', render('- var foo = "test"\n=foo'));
+        assert.equal('test<h2>something</h2>', render('!= "test"\nh2 something'));
+
         var str = [
             '- var foo = "<script>";',
             '= foo',
