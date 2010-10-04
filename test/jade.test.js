@@ -249,6 +249,28 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        var str = [
+            'html',
+            ' ',
+            '  head',
+            '    != "test"',
+            '  ',
+            '  ',
+            '  ',
+            '  body'
+        ].join('\n');
+
+        var html = [
+            '<html>',
+            '<head>',
+            'test',
+            '</head>',
+            '<body></body>',
+            '</html>'
+        ].join('');
+
+        assert.equal(html, render(str));
     },
     
     'test cache': function(assert){
