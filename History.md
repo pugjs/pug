@@ -1,4 +1,16 @@
 
+0.5.1 / 2010-10-04 
+==================
+
+  * Added many examples
+  * Added; compiler api is now public
+  * Added; filters can accept / manipulate the parse tree
+  * Added filter attribute support. Closes #79
+  * Added LL(*) capabilities
+  * Performance; wrapping code blocks in {} instead of `(function(){}).call(this)`
+  * Performance; Optimized attribute buffering
+  * Fixed trailing newlines in blocks
+
 0.5.0 / 2010-09-11 
 ==================
 
