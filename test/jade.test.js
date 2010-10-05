@@ -271,6 +271,9 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
+        assert.equal('<foo></foo>"something"<bar></bar>', render('foo\n"something"\nbar'));
+        assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
     },
     
     'test cache': function(assert){
