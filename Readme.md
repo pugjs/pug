@@ -142,6 +142,17 @@ Actually want `#{}` for some reason? escape it!
 
 now we have `<p>#{something}</p>`
 
+Nested tags that also contain text can optionally use a text block:
+
+    label
+      | Username:
+      input(name='user[name]')
+
+or immediate tag text:
+
+    label Username:
+      input(name='user[name]')
+
 ### Comments
 
 Single line comments currently look the same as JavaScript comments,
@@ -188,7 +199,7 @@ Jade instruments the compiled JavaScript to provide meaningful context for runti
 
 	Invalid indentation, got 2 expected 1.
 
-Note: Trailing are generated on **EOS** (end-of-source) if not present.
+Note: Trailing outdents are generated on **EOS** (end-of-source) if not present.
 
 ### Attributes
 
@@ -208,7 +219,7 @@ Boolean attributes with code will only output the attribute when `true`:
 
 	input(type="checkbox", checked: someValue)
     
-Note: Leading / trailing whitespace is _ignore_ for attr pairs.
+Note: Leading / trailing whitespace is _ignored_ for attr pairs.
 
 ### Doctypes
 
@@ -263,8 +274,8 @@ bake conditionals right into jade, we could do so with a filter named _condition
         else
           p Not so amazing
 
-Not that we no longer prefix with "-" for these code blocks. An example of 
-how to manipulate the parse tree can be found at _./examples/parsetree.js_.
+Not that we no longer prefix with "-" for these code blocks. Examples of 
+how to manipulate the parse tree can be found at _./examples/conditionals.js_ and _./examples/model.js_. There are several interesting use-cases for this functionality above what was shown above such as transparently aggregating / compressing assets to reduce the number of HTTP requests, transparent record error reporting, and more.
 
 ## Code
 

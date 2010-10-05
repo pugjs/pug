@@ -74,7 +74,7 @@ module.exports = {
     
     'test single quotes': function(assert){
         assert.equal("<p>'foo'</p>", render("p 'foo'"));
-        assert.equal("<p>'foo'</p>", render("p\n  | 'foo'"));
+        assert.equal("<p>'foo'\n</p>", render("p\n  | 'foo'"));
         assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
     },
     
@@ -141,7 +141,7 @@ module.exports = {
             '  | baz'
         ].join('\n');
         
-        assert.equal('<a href="#">foo bar baz</a>', render(str));
+        assert.equal('<a href="#">foo \nbar \nbaz\n</a>', render(str));
         
         var str = [
             'ul',
@@ -154,7 +154,7 @@ module.exports = {
         var html = [
             '<ul>',
             '<li>one</li>',
-            '<ul>two',
+            '<ul>two\n',
             '<li>three</li>',
             '</ul>',
             '</ul>'
@@ -272,7 +272,7 @@ module.exports = {
 
         assert.equal(html, render(str));
         assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
-        assert.equal('<foo></foo>"something"<bar></bar>', render('foo\n"something"\nbar'));
+        assert.equal('<foo></foo>"something"\n<bar></bar>', render('foo\n"something"\nbar'));
         assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
     },
     
@@ -291,31 +291,32 @@ module.exports = {
     },
     
     'test text': function(assert){
-      assert.equal('foobarbaz', render('| foo\n| bar\n| baz'));
-      assert.equal('foo bar baz', render('| foo \n| bar \n| baz'));
-      assert.equal('(hey)', render('| (hey)'));
+      assert.equal('foo\nbar\nbaz\n', render('| foo\n| bar\n| baz'));
+      assert.equal('foo \nbar \nbaz\n', render('| foo \n| bar \n| baz'));
+      assert.equal('(hey)\n', render('| (hey)'));
     },
     
     'test tag text': function(assert){
-        assert.equal('some random text', render('| some random text'));
+        assert.equal('some random text\n', render('| some random text'));
         assert.equal('<p>some random text</p>', render('p some random text'));
-        assert.equal('<p>(parens)</p>', render('p (parens)'));
+        // assert.equal('<p>(parens)</p>', render('p (parens)'));
         //assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
     },
     
     'test tag text block': function(assert){
-        assert.equal('<p>foo bar baz</p>', render('p\n  | foo \n  | bar \n  | baz'));
-        assert.equal('<label>Password:<input/></label>', render('label\n  | Password:\n  input'));
+        assert.equal('<p>foo \nbar \nbaz\n</p>', render('p\n  | foo \n  | bar \n  | baz'));
+        assert.equal('<label>Password:\n<input/></label>', render('label\n  | Password:\n  input'));
+        assert.equal('<label>Password:<input/></label>', render('label Password:\n  input'));
     },
     
     'test tag text interpolation': function(assert){
-        assert.equal('yo, jade is cool', render('| yo, #{name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool', render('| yo, ${name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool\n', render('| yo, ${name} is cool\n', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, ${name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
-        assert.equal('yo, \'jade\' is cool', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
-        assert.equal('yo, jade is cool', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
+        assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool\n', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
     },
     
     'test invalid indentation multiple': function(assert){
