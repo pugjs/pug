@@ -39,9 +39,8 @@ Visitor.prototype.visit = function(node){
 Visitor.prototype.visitTag = function(node){
     switch (node.name) {
         case 'if':
-            var condition = node.block[0][0],
+            var condition = node.text[0],
                 block = node.block;
-            block.shift();
             if ('?' == condition[condition.length-1]) {
                 condition = condition.slice(0, -1);
             }
