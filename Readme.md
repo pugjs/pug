@@ -188,7 +188,7 @@ Jade instruments the compiled JavaScript to provide meaningful context for runti
 
 	Invalid indentation, got 2 expected 1.
 
-Note: Trailing are generated on **EOS** (end-of-source) if not present.
+Note: Trailing outdents are generated on **EOS** (end-of-source) if not present.
 
 ### Attributes
 
@@ -208,7 +208,7 @@ Boolean attributes with code will only output the attribute when `true`:
 
 	input(type="checkbox", checked: someValue)
     
-Note: Leading / trailing whitespace is _ignore_ for attr pairs.
+Note: Leading / trailing whitespace is _ignored_ for attr pairs.
 
 ### Doctypes
 
