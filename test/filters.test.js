@@ -27,9 +27,8 @@ Visitor.prototype.visitTag = function(node){
     switch (node.name) {
         case 'if':
             // First text -> line
-            var condition = node.block[0][0],
+            var condition = node.text[0],
                 block = node.block;
-            block.shift();
             node = new nodes.Code('if (' + condition + ')');
             node.block = block;
             this.visit(node);
