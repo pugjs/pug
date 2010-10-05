@@ -1,4 +1,21 @@
 
+0.5.2 / 2010-10-05 
+==================
+
+  * Added; Text introduces newlines to mimic the grammar.
+    Whitespace handling is a little tricky with this sort of grammar.
+    Jade will now mimic the written grammar, meaning that text blocks
+    using the "|" margin character will introduce a literal newline,
+    where as immediate tag text (ex "a(href='#') Link") will not.
+
+    This may not be ideal, but it makes more sense than what Jade was     
+    previously doing.
+
+  * Added `Tag#text` to disambiguate between immediate / block text
+  * Removed _pretty_ option (was kinda useless in the state it was in)
+  * Reverted ignoring of newlines. Closes #92.
+  * Fixed; `Parser#parse()` ignoring newlines
+
 0.5.1 / 2010-10-04 
 ==================
 
