@@ -2,21 +2,19 @@ form(method="post")
   fieldset
     legend General
     p
-      label(for="user[name]")
-        | Username:
+      label(for="user[name]") Username:
         input(type="text", name="user[name]", value=user.name)
     p
-      label(for="user[email]")
-        | Email:
+      label(for="user[email]") Email:
         input(type="text", name="user[email]", value=user.email)
-        | Enter a valid 
-        | email address 
-        | such as <em>tj@vision-media.ca</em>.
+        .tip
+          | Enter a valid 
+          | email address 
+          | such as <em>tj@vision-media.ca</em>.
   fieldset
     legend Location
     p
-      label(for="user[city]")
-        | City:
+      label(for="user[city]") City:
         input(type="text", name="user[city]", value=user.city)
     p
       select(name="user[province]")
