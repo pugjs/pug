@@ -665,6 +665,22 @@ module.exports = {
         ].join('');
         
         assert.equal(html, render(str));
+
+        var str = [
+            'foo',
+            '  bar= "bar"',
+            '    baz= "baz"',
+        ].join('\n');
+
+        var html = [
+            '<foo>',
+            '<bar>bar',
+            '<baz>baz</baz>',
+            '</bar>',
+            '</foo>'
+        ].join('');
+
+        assert.equal(html, render(str));
     },
     
     'test - each': function(assert){
