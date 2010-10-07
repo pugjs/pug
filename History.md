@@ -1,4 +1,9 @@
 
+0.5.3 / 2010-10-06 
+==================
+
+  * Fixed bug when tags with code also have a block [reported by chrisirhc]
+
 0.5.2 / 2010-10-05 
 ==================
 
