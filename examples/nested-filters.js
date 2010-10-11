@@ -12,21 +12,53 @@ jade.renderFile(__dirname + '/nested-filters.jade', function(err, html){
     console.log(html);
 });
 
-jade.filters.stylesheets = function(block, compiler){
-    return new Visitor(block, compiler.options).compile();
+// :javascripts
+
+jade.filters.javascripts = function(block, compiler){
+    return new JavascriptsVisitor(block, compiler.options).compile();
 };
 
-function Visitor(node, options) {
+function JavascriptsVisitor(node, options) {
     Compiler.call(this, node, options);
 }
 
 // Inherit from Compiler
 
-Visitor.prototype.__proto__ = Compiler.prototype;
+JavascriptsVisitor.prototype.__proto__ = Compiler.prototype;
 
 // Overwrite visitTag method 
 
-Visitor.prototype.visitTag = function(node){
+JavascriptsVisitor.prototype.visitTag = function(node){
+    var parent = Compiler.prototype.visitTag;
+    switch (node.name) {
+        case 'js':
+            var script = new nodes.Tag('script');
+            script.setAttribute('type', "'text/javascript'");
+            script.setAttribute('src', "'" + node.attrs[0].name + "'")
+            parent.call(this, script);
+            break;
+        default:
+            parent.call(this, node);
+    }
+};
+
+// :stylesheets
+
+jade.filters.stylesheets = function(block, compiler){
+    return new StylesheetsVisitor(block, compiler.options).compile();
+};
+
+function StylesheetsVisitor(node, options) {
+    Compiler.call(this, node, options);
+}
+
+// Inherit from Compiler
+
+StylesheetsVisitor.prototype.__proto__ = Compiler.prototype;
+
+// Overwrite visitTag method 
+
+StylesheetsVisitor.prototype.visitTag = function(node){
     var parent = Compiler.prototype.visitTag;
     switch (node.name) {
         case 'stylesheet':
