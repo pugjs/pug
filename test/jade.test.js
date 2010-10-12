@@ -272,7 +272,7 @@ module.exports = {
 
         assert.equal(html, render(str));
         assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
-        assert.equal('<foo></foo>"something"\n<bar></bar>', render('foo\n"something"\nbar'));
+        assert.equal('<foo>\n</foo>"something"\n<bar></bar>', render('foo\n"something"\nbar'));
         assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
     },
     
@@ -575,6 +575,7 @@ module.exports = {
         assert.equal('test', render('!= "test"'));
         assert.equal('test', render('= "test"'));
         assert.equal('test', render('- var foo = "test"\n=foo'));
+        assert.equal('foo\n<em>test\n</em>bar\n', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
         assert.equal('test<h2>something</h2>', render('!= "test"\nh2 something'));
 
         var str = [
