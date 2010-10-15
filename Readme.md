@@ -71,8 +71,7 @@ via npm:
 ### Indentation
 
 Jade is indentation based, however currently only supports a _2 space_ indent.
-We may implement tab support in the future, until then use spaces, so make sure soft
-tabs are enabled in your editor.
+Tabs are converted to 2 spaces before they hit the lexer.
 
 ### Tags
 
@@ -185,7 +184,7 @@ outputting
       li two
       li three
 
-Fucked up your whitespace? no worries, jade's error reporting should help you out.
+Messed up your whitespace? no worries, jade's error reporting should help you out.
 Jade instruments the compiled JavaScript to provide meaningful context for runtime exceptions.
 
     ul
@@ -296,7 +295,7 @@ Due to Jade's buffering techniques the following is valid as well:
         li foo
         li worked
     - else
-      p shit! didnt work
+      p oh no! didnt work
 
 Hell, even verbose iteration:
 
