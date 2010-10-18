@@ -1,4 +1,13 @@
 
+0.5.4 / 2010-10-18 
+==================
+
+  * Adding newline when using tag code when preceding text
+  * Assume newline in tag text when preceding text
+  * Changed; retain leading text whitespace
+  * Fixed code block support to prevent multiple buffer openings [Jake Luer]
+  * Fixed nested filter support
+
 0.5.3 / 2010-10-06 
 ==================
 
