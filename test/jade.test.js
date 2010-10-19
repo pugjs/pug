@@ -478,9 +478,10 @@ module.exports = {
         assert.equal('<p class="foo"></p>', render("p(\"class\": 'foo')"), 'Test keys with double quotes');
 
         assert.equal('<p data-dynamic="true"></p>', render('p("data-dynamic": "true")'));
-        assert.equal('<p class="name" data-dynamic="true"></p>', render('p("class": "name", "data-dynamic": "true")'));
+        assert.equal('<p data-dynamic="true" class="name"></p>', render('p("class": "name", "data-dynamic": "true")'));
         assert.equal('<p data-dynamic="true"></p>', render('p(\'data-dynamic\': "true")'));
-        assert.equal('<p class="name" data-dynamic="true"></p>', render('p(\'class\': "name", \'data-dynamic\': "true")'));
+        assert.equal('<p data-dynamic="true" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true")'));
+        assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true", yay)'));
     },
     
     'test code attrs': function(assert){
