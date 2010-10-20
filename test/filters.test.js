@@ -98,7 +98,7 @@ module.exports = {
             '  square = function(x) {',
             '    return x * x;',
             '  };',
-            '})();'
+            '}).call(this);'
         ].join('\n');
 
         assert.equal(
