@@ -90,6 +90,21 @@ module.exports = {
             '<style>.class {\n  width: 20px;\n}\n</style>',
             render(':less\n  | .class { width: 10px * 2 }'));
     },
+
+    'test :coffeescript filter': function(assert){
+        var js = [
+            '(function() {',
+            '  var square;',
+            '  square = function(x) {',
+            '    return x * x;',
+            '  };',
+            '}).call(this);'
+        ].join('\n');
+
+        assert.equal(
+            '<script type="text/javascript">\n' + js + '\n</script>',
+            render(':coffeescript\n  | square = (x) ->\n  |   x * x'));
+    },
     
     'test parse tree': function(assert){
         var str = [
