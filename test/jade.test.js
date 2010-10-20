@@ -580,6 +580,10 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test literal html': function(assert){
+        assert.equal('<!--[if IE lt 9]>weeee<![endif]-->\n', render('<!--[if IE lt 9]>weeee<![endif]-->'));
+    },
+    
     'test code': function(assert){
         assert.equal('test', render('!= "test"'));
         assert.equal('test', render('= "test"'));
