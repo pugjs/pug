@@ -34,6 +34,7 @@
   - [php](http://github.com/everzet/jade.php)
   - [client-side js](http://github.com/miksago/jade)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
+  - [ruby](http://github.com/stonean/slim)
 
 ## Installation
 
