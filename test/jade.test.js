@@ -485,6 +485,10 @@ module.exports = {
         assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true", yay)'));
     },
     
+    'test attr parens': function(assert){
+        assert.equal('<p foo="bar">baz</p>', render('p(foo=((("bar"))))= ((("baz")))'));
+    },
+    
     'test code attrs': function(assert){
         assert.equal('<p id="tj"></p>', render('p(id: name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
