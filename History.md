@@ -1,4 +1,17 @@
 
+0.5.5 / 2010-10-30 
+==================
+
+  * Add _coffeescript_ filter [Michael Hampton]
+  * Added link to _slim_; a ruby implementation
+  * Fixed quoted attributes issue.
+
+  * Fixed attribute issue with over greedy regexp.
+    Previously "p(foo=(((('bar')))))= ((('baz')))"
+    would __fail__ for example since the regexp
+    would lookahead to far. Now we simply pair
+    the delimiters.
+
 0.5.4 / 2010-10-18 
 ==================
 
