@@ -852,5 +852,16 @@ module.exports = {
     'test .compile() scope': function(assert){
         var fn = jade.compile('p= this.foo');
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
+    },
+    
+    'test .compile() error handling': function(assert){
+        var fn = jade.compile('p= asdf'),
+            err;
+        try {
+            fn();
+        } catch (e) {
+            err = e;
+        }
+        console.log(err.stack);
     }
 };
