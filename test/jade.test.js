@@ -862,6 +862,8 @@ module.exports = {
         } catch (e) {
             err = e;
         }
-        console.log(err.stack);
+        assert.equal(
+            "Jade:1\n    1. 'p= asdf'\n\nasdf is not defined",
+            err.message);
     }
 };
