@@ -837,5 +837,20 @@ module.exports = {
         beforeExit(function(){
             assert.equal(1, called);
         });
+    },
+    
+    'test .compile()': function(assert){
+        var fn = jade.compile('p foo');
+        assert.equal('<p>foo</p>', fn());
+    },
+    
+    'test .compile() locals': function(assert){
+        var fn = jade.compile('p= foo');
+        assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
+    },
+    
+    'test .compile() scope': function(assert){
+        var fn = jade.compile('p= this.foo');
+        assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     }
 };
