@@ -8,6 +8,7 @@ var bm = require('./common'),
     fs = require('fs');
 
 var str = fs.readFileSync(__dirname + '/example.jade', 'ascii');
+var fn = jade.compile(str);
 var n = bm.times;
 
 bm.start('jade compilation');
@@ -28,5 +29,13 @@ while (n--) {
         cache: true,
         locals: bm.locals
     });
+}
+bm.stop();
+
+var n = bm.times;
+
+bm.start('jade compile()');
+while (n--) {
+    fn(bm.locals);
 }
 bm.stop();
