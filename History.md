@@ -1,4 +1,10 @@
 
+0.5.6 / 2010-11-24 
+==================
+
+  * Added `exports.compile(str, options)`
+  * Renamed internal `_` to `__`, since `_()` is commonly used for translation
+
 0.5.5 / 2010-10-30 
 ==================
 
