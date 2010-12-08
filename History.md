@@ -1,4 +1,71 @@
 
+0.5.7 / 2010-12-08 
+==================
+
+  * Fixed; hyphen in get `tag()`
+
+0.5.6 / 2010-11-24 
+==================
+
+  * Added `exports.compile(str, options)`
+  * Renamed internal `_` to `__`, since `_()` is commonly used for translation
+
+0.5.5 / 2010-10-30 
+==================
+
+  * Add _coffeescript_ filter [Michael Hampton]
+  * Added link to _slim_; a ruby implementation
+  * Fixed quoted attributes issue.
+
+  * Fixed attribute issue with over greedy regexp.
+    Previously "p(foo=(((('bar')))))= ((('baz')))"
+    would __fail__ for example since the regexp
+    would lookahead to far. Now we simply pair
+    the delimiters.
+
+0.5.4 / 2010-10-18 
+==================
+
+  * Adding newline when using tag code when preceding text
+  * Assume newline in tag text when preceding text
+  * Changed; retain leading text whitespace
+  * Fixed code block support to prevent multiple buffer openings [Jake Luer]
+  * Fixed nested filter support
+
+0.5.3 / 2010-10-06 
+==================
+
+  * Fixed bug when tags with code also have a block [reported by chrisirhc]
+
+0.5.2 / 2010-10-05 
+==================
+
+  * Added; Text introduces newlines to mimic the grammar.
+    Whitespace handling is a little tricky with this sort of grammar.
+    Jade will now mimic the written grammar, meaning that text blocks
+    using the "|" margin character will introduce a literal newline,
+    where as immediate tag text (ex "a(href='#') Link") will not.
+
+    This may not be ideal, but it makes more sense than what Jade was     
+    previously doing.
+
+  * Added `Tag#text` to disambiguate between immediate / block text
+  * Removed _pretty_ option (was kinda useless in the state it was in)
+  * Reverted ignoring of newlines. Closes #92.
+  * Fixed; `Parser#parse()` ignoring newlines
+
+0.5.1 / 2010-10-04 
+==================
+
+  * Added many examples
+  * Added; compiler api is now public
+  * Added; filters can accept / manipulate the parse tree
+  * Added filter attribute support. Closes #79
+  * Added LL(*) capabilities
+  * Performance; wrapping code blocks in {} instead of `(function(){}).call(this)`
+  * Performance; Optimized attribute buffering
+  * Fixed trailing newlines in blocks
+
 0.5.0 / 2010-09-11 
 ==================
 

@@ -4,24 +4,45 @@
  */
 
 var jade = require('jade'),
+    Compiler = jade.Compiler,
     render = jade.render,
     nodes = jade.nodes;
 
 jade.filters.conditionals = function(block, compiler){
-    block.nodes.forEach(function(node, i){
-        switch (node.name) {
-            case 'if':
-                block.nodes[i] = new nodes.Code('if (' + node.block.nodes[0].lines[0] + ')');
-                block.nodes[i].block = node.block;
-                break;
-            case 'else':
-                block.nodes[i] = new nodes.Code('else');
-                block.nodes[i].block = node.block;
-                break;
-        }
-    });
-    compiler.visit(block);
-    return '';
+    return new Visitor(block).compile();
+};
+
+function Visitor(node) {
+    this.node = node;
+}
+
+Visitor.prototype.__proto__ = Compiler.prototype;
+
+Visitor.prototype.visit = function(node){
+    if (node.name != 'else') this.line(node);
+    this.visitNode(node);
+};
+
+Visitor.prototype.visitTag = function(node){
+    switch (node.name) {
+        case 'if':
+            // First text -> line
+            var condition = node.text[0],
+                block = node.block;
+            node = new nodes.Code('if (' + condition + ')');
+            node.block = block;
+            this.visit(node);
+            break;
+        case 'else':
+            var block = node.block;
+            node = new nodes.Code('else');
+            node.block = block;
+            node.instrumentLineNumber = false;
+            this.visit(node);
+            break;
+        default:
+            Compiler.prototype.visitTag.call(this, node);
+    }
 };
 
 module.exports = {
@@ -78,6 +99,21 @@ module.exports = {
             '<style>.class {\n  width: 20px;\n}\n</style>',
             render(':less\n  | .class { width: 10px * 2 }'));
     },
+
+    'test :coffeescript filter': function(assert){
+        var js = [
+            '(function() {',
+            '  var square;',
+            '  square = function(x) {',
+            '    return x * x;',
+            '  };',
+            '}).call(this);'
+        ].join('\n');
+
+        assert.equal(
+            '<script type="text/javascript">\n' + js + '\n</script>',
+            render(':coffeescript\n  | square = (x) ->\n  |   x * x'));
+    },
     
     'test parse tree': function(assert){
         var str = [
@@ -85,7 +121,10 @@ module.exports = {
             '  if false',
             '    | oh noes',
             '  else',
-            '    p amazing!'
+            '    if null == false',
+            '      p doh',
+            '    else',
+            '      p amazing!'
         ].join('\n');
 
         var html = [
@@ -93,5 +132,29 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
-    }
+    },
+    
+    'test filter attrs': function(assert){
+        jade.filters.testing = function(str, attrs){
+            return str + ' ' + attrs.stuff;
+        };
+
+        var str = [
+            ':testing(stuff)',
+            '  | foo bar',
+        ].join('\n');
+
+        assert.equal('foo bar true', render(str));
+        
+        jade.filters.testing = function(node, compiler, attrs){
+            return 'buf.push(' + attrs.foo + ')';
+        };
+
+        var str = [
+            ':testing(foo="bar", baz)',
+            '  foo',
+        ].join('\n');
+
+        assert.equal('bar', render(str));
+    } 
 };

@@ -74,7 +74,7 @@ module.exports = {
     
     'test single quotes': function(assert){
         assert.equal("<p>'foo'</p>", render("p 'foo'"));
-        assert.equal("<p>'foo'</p>", render("p\n  | 'foo'"));
+        assert.equal("<p>'foo'\n</p>", render("p\n  | 'foo'"));
         assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
     },
     
@@ -109,6 +109,7 @@ module.exports = {
         assert.equal('<div class="a-b2"></div>', render('div.a-b2'));
         assert.equal('<div class="a_b2"></div>', render('div.a_b2'));
         assert.equal('<fb:user></fb:user>', render('fb:user'));
+        assert.equal('<fb:user:role></fb:user:role>', render('fb:user:role'));
     },
     
     'test nested tags': function(assert){
@@ -141,7 +142,7 @@ module.exports = {
             '  | baz'
         ].join('\n');
         
-        assert.equal('<a href="#">foo bar baz</a>', render(str));
+        assert.equal('<a href="#">foo \nbar \nbaz\n</a>', render(str));
         
         var str = [
             'ul',
@@ -154,7 +155,7 @@ module.exports = {
         var html = [
             '<ul>',
             '<li>one</li>',
-            '<ul>two',
+            '<ul>two\n',
             '<li>three</li>',
             '</ul>',
             '</ul>'
@@ -249,6 +250,31 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        var str = [
+            'html',
+            ' ',
+            '  head',
+            '    != "test"',
+            '  ',
+            '  ',
+            '  ',
+            '  body'
+        ].join('\n');
+
+        var html = [
+            '<html>',
+            '<head>',
+            'test',
+            '</head>',
+            '<body></body>',
+            '</html>'
+        ].join('');
+
+        assert.equal(html, render(str));
+        assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
+        assert.equal('<foo>\n</foo>"something"\n<bar></bar>', render('foo\n"something"\nbar'));
+        assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
     },
     
     'test cache': function(assert){
@@ -266,31 +292,36 @@ module.exports = {
     },
     
     'test text': function(assert){
-      assert.equal('foobarbaz', render('| foo\n| bar\n| baz'));
-      assert.equal('foo bar baz', render('| foo \n| bar \n| baz'));
-      assert.equal('(hey)', render('| (hey)'));
+        assert.equal('foo\nbar\nbaz\n', render('| foo\n| bar\n| baz'));
+        assert.equal('foo \nbar \nbaz\n', render('| foo \n| bar \n| baz'));
+        assert.equal('(hey)\n', render('| (hey)'));
+        assert.equal('some random text\n', render('| some random text'));
+        assert.equal('  foo\n', render('|   foo'));
+        assert.equal('  foo  \n', render('|   foo  '));
+        assert.equal('  foo  \n bar    \n', render('|   foo  \n|  bar    '));
     },
     
     'test tag text': function(assert){
-        assert.equal('some random text', render('| some random text'));
         assert.equal('<p>some random text</p>', render('p some random text'));
-        assert.equal('<p>(parens)</p>', render('p (parens)'));
+        assert.equal('foo\n<em>bar\n\n</em>baz\n', render('| foo\nem bar\n| baz'));
+        // assert.equal('<p>(parens)</p>', render('p (parens)'));
         //assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
     },
     
     'test tag text block': function(assert){
-        assert.equal('<p>foo bar baz</p>', render('p\n  | foo \n  | bar \n  | baz'));
-        assert.equal('<label>Password:<input/></label>', render('label\n  | Password:\n  input'));
+        assert.equal('<p>foo \nbar \nbaz\n</p>', render('p\n  | foo \n  | bar \n  | baz'));
+        assert.equal('<label>Password:\n<input/></label>', render('label\n  | Password:\n  input'));
+        assert.equal('<label>Password:<input/></label>', render('label Password:\n  input'));
     },
     
     'test tag text interpolation': function(assert){
-        assert.equal('yo, jade is cool', render('| yo, #{name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool', render('| yo, ${name} is cool', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { locals: { name: 'jade' }}));
+        assert.equal('yo, jade is cool\n', render('| yo, ${name} is cool\n', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, ${name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
-        assert.equal('yo, \'jade\' is cool', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
-        assert.equal('yo, jade is cool', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
+        assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
+        assert.equal('yo, jade is cool\n', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
     },
     
     'test invalid indentation multiple': function(assert){
@@ -446,6 +477,16 @@ module.exports = {
         assert.equal('<div style="color: white"></div>', render("div(style='color: white')"), 'Test attrs that contain attr separators');
         assert.equal('<p class="foo"></p>', render("p('class'='foo')"), 'Test keys with single quotes');
         assert.equal('<p class="foo"></p>', render("p(\"class\": 'foo')"), 'Test keys with double quotes');
+
+        assert.equal('<p data-dynamic="true"></p>', render('p("data-dynamic": "true")'));
+        assert.equal('<p data-dynamic="true" class="name"></p>', render('p("class": "name", "data-dynamic": "true")'));
+        assert.equal('<p data-dynamic="true"></p>', render('p(\'data-dynamic\': "true")'));
+        assert.equal('<p data-dynamic="true" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true")'));
+        assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true", yay)'));
+    },
+    
+    'test attr parens': function(assert){
+        assert.equal('<p foo="bar">baz</p>', render('p(foo=((("bar"))))= ((("baz")))'));
     },
     
     'test code attrs': function(assert){
@@ -544,7 +585,17 @@ module.exports = {
         assert.equal(html, render(str));
     },
     
+    'test literal html': function(assert){
+        assert.equal('<!--[if IE lt 9]>weeee<![endif]-->\n', render('<!--[if IE lt 9]>weeee<![endif]-->'));
+    },
+    
     'test code': function(assert){
+        assert.equal('test', render('!= "test"'));
+        assert.equal('test', render('= "test"'));
+        assert.equal('test', render('- var foo = "test"\n=foo'));
+        assert.equal('foo\n<em>test\n</em>bar\n', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
+        assert.equal('test<h2>something</h2>', render('!= "test"\nh2 something'));
+
         var str = [
             '- var foo = "<script>";',
             '= foo',
@@ -595,6 +646,22 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        var str = [
+            '- var foo;',
+            '- if (foo)',
+            '  p.hasFoo= foo',
+            '- else if (true)',
+            '  p kinda foo',
+            '- else',
+            '  p.noFoo no foo'
+        ].join('\n');
+
+        var html = [
+            '<p>kinda foo</p>'
+        ].join('');
+
+        assert.equal(html, render(str));
 
         var str = [
             'p foo',
@@ -617,6 +684,22 @@ module.exports = {
             '<title>foo</title><p>something</p>'
         ].join('');
         
+        assert.equal(html, render(str));
+
+        var str = [
+            'foo',
+            '  bar= "bar"',
+            '    baz= "baz"',
+        ].join('\n');
+
+        var html = [
+            '<foo>',
+            '<bar>bar',
+            '<baz>baz</baz>',
+            '</bar>',
+            '</foo>'
+        ].join('');
+
         assert.equal(html, render(str));
     },
     
@@ -754,5 +837,33 @@ module.exports = {
         beforeExit(function(){
             assert.equal(1, called);
         });
+    },
+    
+    'test .compile()': function(assert){
+        var fn = jade.compile('p foo');
+        assert.equal('<p>foo</p>', fn());
+    },
+    
+    'test .compile() locals': function(assert){
+        var fn = jade.compile('p= foo');
+        assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
+    },
+    
+    'test .compile() scope': function(assert){
+        var fn = jade.compile('p= this.foo');
+        assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
+    },
+    
+    'test .compile() error handling': function(assert){
+        var fn = jade.compile('p= asdf'),
+            err;
+        try {
+            fn();
+        } catch (e) {
+            err = e;
+        }
+        assert.equal(
+            "Jade:1\n    1. 'p= asdf'\n\nasdf is not defined",
+            err.message);
     }
 };

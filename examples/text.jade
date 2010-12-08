@@ -1,10 +1,19 @@
-p
-  | Just some random stuff
-  | because I dont have to much
-  | to write here, but my name is #{name}
-  | and my email is #{email} :)
-  | .
+form
+  label Username:
+    input(type='text', name='user[name]')
+    p
+      | Just an example of some text usage.
+      | You can have <em>inline</em> html,
+      | as well as
+      strong tags
+      | .
 
-  | Spaces are fine.
-  | yup....
-p another para
+      | Interpolation is also supported. The 
+      | username is currently "#{name}".
+
+  label Email:
+    input(type='text', name='user[email]')
+    p
+      | Email is currently
+      em= email
+      | .

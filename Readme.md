@@ -25,6 +25,7 @@
     - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
     - :javascript
+    - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
 
@@ -33,6 +34,7 @@
   - [php](http://github.com/everzet/jade.php)
   - [client-side js](http://github.com/miksago/jade)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
+  - [ruby](http://github.com/stonean/slim)
 
 ## Installation
 
@@ -58,7 +60,6 @@ via npm:
  - `scope`     Evaluation scope (`this`)
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required by `cache`
- - `pretty`    Output formatted HTML
  - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
  - `debug`     Outputs tokens and function body generated
  - `compiler`  Compiler to replace jade's default
@@ -72,8 +73,7 @@ via npm:
 ### Indentation
 
 Jade is indentation based, however currently only supports a _2 space_ indent.
-We may implement tab support in the future, until then use spaces, so make sure soft
-tabs are enabled in your editor.
+Tabs are converted to 2 spaces before they hit the lexer.
 
 ### Tags
 
@@ -142,6 +142,17 @@ Actually want `#{}` for some reason? escape it!
 
 now we have `<p>#{something}</p>`
 
+Nested tags that also contain text can optionally use a text block:
+
+    label
+      | Username:
+      input(name='user[name]')
+
+or immediate tag text:
+
+    label Username:
+      input(name='user[name]')
+
 ### Comments
 
 Single line comments currently look the same as JavaScript comments,
@@ -175,7 +186,7 @@ outputting
       li two
       li three
 
-Fucked up your whitespace? no worries, jade's error reporting should help you out.
+Messed up your whitespace? no worries, jade's error reporting should help you out.
 Jade instruments the compiled JavaScript to provide meaningful context for runtime exceptions.
 
     ul
@@ -188,7 +199,7 @@ Jade instruments the compiled JavaScript to provide meaningful context for runti
 
 	Invalid indentation, got 2 expected 1.
 
-Note: Trailing are generated on **EOS** (end-of-source) if not present.
+Note: Trailing outdents are generated on **EOS** (end-of-source) if not present.
 
 ### Attributes
 
@@ -208,7 +219,7 @@ Boolean attributes with code will only output the attribute when `true`:
 
 	input(type="checkbox", checked: someValue)
     
-Note: Leading / trailing whitespace is _ignore_ for attr pairs.
+Note: Leading / trailing whitespace is _ignored_ for attr pairs.
 
 ### Doctypes
 
@@ -263,8 +274,8 @@ bake conditionals right into jade, we could do so with a filter named _condition
         else
           p Not so amazing
 
-Not that we no longer prefix with "-" for these code blocks. An example of 
-how to manipulate the parse tree can be found at _./examples/parsetree.js_.
+Not that we no longer prefix with "-" for these code blocks. Examples of 
+how to manipulate the parse tree can be found at _./examples/conditionals.js_ and _./examples/model.js_. There are several interesting use-cases for this functionality above what was shown above such as transparently aggregating / compressing assets to reduce the number of HTTP requests, transparent record error reporting, and more.
 
 ## Code
 
@@ -286,7 +297,7 @@ Due to Jade's buffering techniques the following is valid as well:
         li foo
         li worked
     - else
-      p shit! didnt work
+      p oh no! didnt work
 
 Hell, even verbose iteration:
 
