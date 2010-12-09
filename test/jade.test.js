@@ -306,6 +306,7 @@ module.exports = {
         assert.equal('foo\n<em>bar\n\n</em>baz\n', render('| foo\nem bar\n| baz'));
         assert.equal('<p>(parens)</p>', render('p (parens)'));
         assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
+        assert.equal('<option>-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
     },
     
     'test tag text block': function(assert){
