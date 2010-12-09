@@ -491,6 +491,10 @@ module.exports = {
     },
     
     'test code attrs': function(assert){
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: undefined }}));
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: null }}));
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: false }}));
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: '' }}));
         assert.equal('<p id="tj"></p>', render('p(id: name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id: 'something')", { locals: { name: null }}));
