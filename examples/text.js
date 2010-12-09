@@ -3,10 +3,8 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade');
+var jade = require('./../lib/jade')
+  , str = require('fs').readFileSync(__dirname + '/text.jade', 'utf8')
+  , fn = jade.compile(str);
 
-var options = { locals: { name: 'tj', email: 'tj@vision-media.ca' }};
-jade.renderFile(__dirname + '/text.jade', options, function(err, html){
-    if (err) throw err;
-    console.log(html);
-});
+console.log(fn({ name: 'tj', email: 'tj@vision-media.ca' }));
