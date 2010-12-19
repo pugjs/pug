@@ -1,4 +1,10 @@
 
+0.6.0 / 2010-12-19 
+==================
+
+  * Added unescaped interpolation variant `!{code}`. Closes #124
+  * Changed; escape interpolated code by default `#{code}`
+
 0.5.7 / 2010-12-08 
 ==================
 
