@@ -105,6 +105,12 @@ module.exports = {
             '<script type="text/javascript">\n' + js + '\n</script>',
             render(':coffeescript\n  | square = (x) ->\n  |   x * x'));
     },
+
+    'test :plain filter': function(assert){
+        assert.equal(
+            'this is for\na large block of unmodified text\n <b>and markup</b>',
+            render(':plain\n  | this is for\n  | a large block of unmodified text\n  |  <b>and markup</b>'));
+    },
     
     'test parse tree': function(assert){
         var str = [
