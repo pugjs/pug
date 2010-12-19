@@ -142,6 +142,12 @@ Actually want `#{}` for some reason? escape it!
 
 now we have `<p>#{something}</p>`
 
+We can also utilize the unescaped variant `!{html}`, so the following
+will result in a literal script tag:
+
+    - var html = "<script></script>"
+    | !{html}
+
 Nested tags that also contain text can optionally use a text block:
 
     label
