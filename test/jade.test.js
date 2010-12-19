@@ -324,6 +324,7 @@ module.exports = {
         assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
         assert.equal('yo, jade is cool\n', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
         assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { locals: { code: '<script>' }}));
+        assert.equal('foo <script> bar\n', render('| foo !{code} bar', { locals: { code: '<script>' }}));
     },
     
     'test invalid indentation multiple': function(assert){
