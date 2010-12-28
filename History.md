@@ -1,4 +1,10 @@
 
+0.6.1 / 2010-12-28 
+==================
+
+  * Added `.npmignore`
+  * Fixed attr namespace support. Closes #105
+
 0.6.0 / 2010-12-19 
 ==================
 
