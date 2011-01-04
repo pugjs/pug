@@ -472,6 +472,10 @@ module.exports = {
         assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src="/foo.png", alt="just some foo")'));
         assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src = "/foo.png", alt = "just some foo")'));
         
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src: "/foo.png",\nalt: "just some foo")'), 'Test attr : newline between');
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src="/foo.png",\nalt="just some foo")'));
+        assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(\nsrc: "/foo.png", alt: "just some foo")'), 'Test attr : newline before');        
+
         assert.equal('<p class="foo,bar,baz"></p>', render('p(class="foo,bar,baz")'));
         assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', render('a(href: "http://google.com", title: "Some : weird = title")'));
         assert.equal('<label for="name"></label>', render('label(for="name")'));
