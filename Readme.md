@@ -26,6 +26,7 @@
     - :cdata
     - :javascript
     - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
+  - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
 
