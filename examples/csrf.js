@@ -32,7 +32,7 @@ CSRF.prototype.visitTag = function(node){
     case 'form':
       if ("'post'" == node.getAttribute('method')) {
         var tok = new nodes.Tag('input');
-        tok.setAttribute('type', '"_hidden"');
+        tok.setAttribute('type', '"hidden"');
         tok.setAttribute('name', '"csrf"');
         tok.setAttribute('value', 'csrf');
         node.block.unshift(tok);
