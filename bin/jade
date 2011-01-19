@@ -21,6 +21,12 @@ var args = process.argv.slice(2);
 var pipe;
 
 /**
+ * Output to stdout, input from stdin.
+ */
+
+var stdio;
+
+/**
  * Options javascript.
  */
 
@@ -36,6 +42,7 @@ var usage = ''
     + '\x1b[1mOptions:\x1b[0m\n'
     + '  -o, --options STR   JavaScript options object passed\n'
     + '  -p, --pipe          Output to stdout instead of PATH.html\n'
+    + '  -s, --stdio         Output to stdout, input from stdin\n'
     + '  -h, --help          Output help information\n';
 
 // Parse arguments
@@ -54,6 +61,10 @@ while (args.length) {
         case '--pipe':
             pipe = true;
             break;
+        case '-s':
+        case '--stdio':
+            stdio = true;
+            break;
         case '-o':
         case '--options':
             var str = args.shift();
@@ -71,7 +82,26 @@ while (args.length) {
 
 // Render files
 
+var argsError = function(msg) {
+    sys.error(msg);
+    process.exit(1);
+}
+
+var textFromStream = function(stream, callback) {
+    var strings = [];
+    stream.resume();
+    stream.on('data', function(data){
+        strings.push(data.toString('utf-8'));
+    })
+    stream.on('end', function(){
+        callback(strings.join(''));
+    })
+}
+
 if (files.length) {
+    if (stdio) {
+        argsError('--stdio is incompatible with file path args');
+    }
     files.forEach(function(file){
         jade.renderFile(file, options, function(err, html){
             if (err) throw err;
@@ -87,6 +117,10 @@ if (files.length) {
         });
     });
 } else {
-    sys.error('files required.');
-    process.exit(1);
+    if (!stdio) {
+        argsError('files or --stdio required.');
+    }
+    textFromStream(process.stdin, function(text){
+        process.stdout.write(jade.render(text, options));
+    })
 }
