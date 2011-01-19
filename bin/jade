@@ -69,7 +69,14 @@ while (args.length) {
         case '--options':
             var str = args.shift();
             if (str) {
-                options = eval('(' + str + ')');
+                if (str.match(/\.coffee$/)) {
+                  var coffee = fs.readFileSync(str).toString('utf-8');
+                  var js = require('coffee-script').compile(coffee, {bare: true});
+                  options = eval(js);
+                }
+                else {
+                  options = eval('(' + str + ')');
+                }
             } else {
                 sys.error('-o, --options requires a string.');
                 process.exit(1);
