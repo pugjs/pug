@@ -872,5 +872,15 @@ module.exports = {
         assert.equal(
             "Jade:1\n    1. 'p= asdf'\n\nasdf is not defined",
             err.message);
+    },
+
+    'test null attrs on tag': function(assert){
+        var tag = new jade.nodes.Tag('a'),
+            name = 'href',
+            val = '"/"';
+        tag.setAttribute(name, val)
+        assert.equal(tag.getAttribute(name), val)
+        tag.removeAttribute(name)
+        assert.isUndefined(tag.getAttribute(name))
     }
 };
