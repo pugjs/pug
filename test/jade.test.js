@@ -726,6 +726,21 @@ module.exports = {
         ].join('');
         
         assert.equal(html, render(str));
+
+        // Any enumerable (length property)
+        var str = [
+            '- var jQuery = { length: 3, 0: 1, 1: 2, 2: 3 };',
+            '- each item in jQuery',
+            '  li= item'
+        ].join('\n');
+
+        var html = [
+            '<li>1</li>',
+            '<li>2</li>',
+            '<li>3</li>'
+        ].join('');
+
+        assert.equal(html, render(str));
         
         // Empty array
         var str = [
