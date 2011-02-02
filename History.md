@@ -1,4 +1,9 @@
 
+0.6.3 / 2011-02-02 
+==================
+
+  * Added `each` support for Array-like objects [guillermo]
+
 0.6.2 / 2011-02-02 
 ==================
 
