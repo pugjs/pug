@@ -1,5 +1,5 @@
 
-0.6.1 / 2011-02-02 
+0.6.2 / 2011-02-02 
 ==================
 
   * Added CSRF example, showing how you can transparently add inputs to a form
