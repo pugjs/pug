@@ -1,4 +1,12 @@
 
+0.6.1 / 2011-02-02 
+==================
+
+  * Added CSRF example, showing how you can transparently add inputs to a form
+  * Added link to vim-jade
+  * Fixed self-closing col support [guillermo]
+  * Fixed exception when getAttribute or removeAttribute run into removed attributes [Naitik Shah]
+
 0.6.0 / 2010-12-19 
 ==================
 
