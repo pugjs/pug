@@ -304,8 +304,9 @@ module.exports = {
     'test tag text': function(assert){
         assert.equal('<p>some random text</p>', render('p some random text'));
         assert.equal('foo\n<em>bar\n\n</em>baz\n', render('| foo\nem bar\n| baz'));
-        // assert.equal('<p>(parens)</p>', render('p (parens)'));
-        //assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
+        assert.equal('<p>(parens)</p>', render('p (parens)'));
+        assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
+        assert.equal('<option>-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
     },
     
     'test tag text block': function(assert){
@@ -322,6 +323,8 @@ module.exports = {
         assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
         assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
         assert.equal('yo, jade is cool\n', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
+        assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { locals: { code: '<script>' }}));
+        assert.equal('foo <script> bar\n', render('| foo !{code} bar', { locals: { code: '<script>' }}));
     },
     
     'test invalid indentation multiple': function(assert){
@@ -490,6 +493,10 @@ module.exports = {
     },
     
     'test code attrs': function(assert){
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: undefined }}));
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: null }}));
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: false }}));
+        assert.equal('<p></p>', render('p(id: name)', { locals: { name: '' }}));
         assert.equal('<p id="tj"></p>', render('p(id: name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id: name || "default")', { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id: 'something')", { locals: { name: null }}));
@@ -865,5 +872,15 @@ module.exports = {
         assert.equal(
             "Jade:1\n    1. 'p= asdf'\n\nasdf is not defined",
             err.message);
+    },
+
+    'test null attrs on tag': function(assert){
+        var tag = new jade.nodes.Tag('a'),
+            name = 'href',
+            val = '"/"';
+        tag.setAttribute(name, val)
+        assert.equal(tag.getAttribute(name), val)
+        tag.removeAttribute(name)
+        assert.isUndefined(tag.getAttribute(name))
     }
 };

@@ -11,7 +11,6 @@
   - code is escaped by default for security
   - contextual error reporting at compile &amp; run time
   - executable for compiling jade templates via the command line
-  - formatted output option
   - html 5 mode (using the _!!! 5_ doctype)
   - optional memory caching
   - combine dynamic and static tag classes
@@ -26,6 +25,7 @@
     - :cdata
     - :javascript
     - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
+  - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
 
@@ -141,6 +141,12 @@ Actually want `#{}` for some reason? escape it!
     p \#{something}
 
 now we have `<p>#{something}</p>`
+
+We can also utilize the unescaped variant `!{html}`, so the following
+will result in a literal script tag:
+
+    - var html = "<script></script>"
+    | !{html}
 
 Nested tags that also contain text can optionally use a text block:
 
