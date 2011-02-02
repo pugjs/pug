@@ -110,6 +110,7 @@ module.exports = {
         assert.equal('<div class="a_b2"></div>', render('div.a_b2'));
         assert.equal('<fb:user></fb:user>', render('fb:user'));
         assert.equal('<fb:user:role></fb:user:role>', render('fb:user:role'));
+        assert.equal('<colgroup><col class="test"/></colgroup>', render('colgroup\n  col.test'));
     },
     
     'test nested tags': function(assert){
