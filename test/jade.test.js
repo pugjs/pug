@@ -3,8 +3,17 @@
  * Module dependencies.
  */
 
-var jade = require('jade'),
-    Buffer = require('buffer').Buffer;
+var jade = require('jade')
+  , Buffer = require('buffer').Buffer
+  , ENOENT;
+
+// COMPAT:
+
+try {
+  ENOENT = require('constants').ENOENT;
+} catch (err) {
+  ENOENT = process.ENOENT;
+}
 
 // Shortcut
 
@@ -812,7 +821,7 @@ module.exports = {
         var called;
         jade.renderFile('foo', function(err, str){
             called = true;
-            assert.equal(process.ENOENT, err.errno);
+            assert.equal(ENOENT, err.errno);
             assert.equal(undefined, str);
         });
         beforeExit(function(){
