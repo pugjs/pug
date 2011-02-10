@@ -173,6 +173,12 @@ module.exports = {
         
         assert.equal(html, render(str));
     },
+
+    'test selfclosetags option': function(assert){
+        assert.equal('<link>foo</link>', render('link foo', { selfclosetags: false }));
+        assert.equal('<link/>', render('link'));
+        assert.equal('<link rel=\"stylesheet\"/>', render('link(rel="stylesheet")'));
+    },
     
     'test variable length newlines': function(assert){
         var str = [
