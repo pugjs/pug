@@ -502,6 +502,10 @@ module.exports = {
         assert.equal('<p data-dynamic="true"></p>', render('p(\'data-dynamic\': "true")'));
         assert.equal('<p data-dynamic="true" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true")'));
         assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true", yay)'));
+        
+        assert.equal('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"></rss>', render('rss(version="2.0", xmlns:atom="http://www.w3.org/2005/Atom")', 'Test attrs containing colons for namespacing'));
+        assert.equal('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"></rss>', render('rss(version: \'2.0\', xmlns:atom: \'http://www.w3.org/2005/Atom\')', 'Test attrs containing colons for namespacing (single-quoted & colon assigned)'));
+        assert.equal('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"></rss>', render('rss(version : "2.0", xmlns:atom  : \'http://www.w3.org/2005/Atom\')', 'Test attrs containing colons for namespacing (whitespace test)'));
     },
     
     'test attr parens': function(assert){
