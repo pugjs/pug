@@ -4,9 +4,15 @@
  * Module dependencies.
  */
 
-var sys = require('sys'),
-    jade = require('jade'),
-    fs = require('fs');
+var sys = require('sys')
+  , fs = require('fs')
+  , jade;
+
+try {
+  jade = require('../lib/jade');
+} catch (err) {
+  jade = require('jade');
+}
 
 /**
  * Arguments.
