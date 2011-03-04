@@ -17,6 +17,7 @@
   - parse tree manipulation via _filters_
   - supports [Express JS](http://expressjs.com) out of the box
   - transparent iteration over objects, arrays, and even non-enumerables via `- each`
+  - block comments
   - no tag prefix
   - filters
     - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
@@ -183,6 +184,25 @@ outputting
 
     <p>foo</p>
     <p>bar</p>
+
+### Block Comments
+
+ A block comment is the `/` character followed by a block.
+
+      body
+        /
+          #content
+            h1 Example
+
+outputting
+
+    <body>
+      <!--
+      <div id="content">
+        <h1>Example</h1>
+      </div>
+      -->
+    </body>
 
 ### Nesting
 
