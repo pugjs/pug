@@ -496,6 +496,15 @@ module.exports = {
         assert.equal('<p data-dynamic="true"></p>', render('p(\'data-dynamic\': "true")'));
         assert.equal('<p data-dynamic="true" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true")'));
         assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', render('p(\'class\': "name", \'data-dynamic\': "true", yay)'));
+
+        assert.equal('<input checked="checked" type="checkbox"/>', render('input(checked, type="checkbox")'));
+        assert.equal('<input checked="checked" type="checkbox"/>', render('input(checked, type: "checkbox")'));
+
+        assert.equal('<a data-foo="{ foo: \'bar\', bar: \'baz\' }"></a>', render('a(data-foo  : "{ foo: \'bar\', bar: \'baz\' }")'));
+        assert.equal('<a data-foo="{ foo: \'bar\', bar: \'baz\' }"></a>', render('a(data-foo  = "{ foo: \'bar\', bar: \'baz\' }")'));
+
+        assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', render('meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")'));
+        assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', render('meta(http-equiv: "X-UA-Compatible", content: "IE=edge,chrome=1")'));
     },
     
     'test attr parens': function(assert){
