@@ -393,6 +393,15 @@ You can also nest these!
       - each role in user.roles
         li= role
 
+When a property is undefined, Jade will output an empty string. For example:
+
+    textarea= user.signature
+
+when undefined would normally output "undefined" in your html, however recent
+versions of Jade will simply render:
+
+    <textarea></textarea>
+
 ## bin/jade
 
 Output html to _stdout_:
