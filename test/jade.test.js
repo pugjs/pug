@@ -336,6 +336,10 @@ module.exports = {
         assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { locals: { code: '<script>' }}));
         assert.equal('foo <script> bar\n', render('| foo !{code} bar', { locals: { code: '<script>' }}));
     },
+
+    'test flexible indentation': function(assert){
+        assert.equal('<html><body><h1>Wahoo</h1><p>test</p></body></html>', render('html\n  body\n   h1 Wahoo\n   p test'));
+    },
     
     'test code exceptions': function(assert){
         var err;
