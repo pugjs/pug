@@ -337,41 +337,6 @@ module.exports = {
         assert.equal('foo <script> bar\n', render('| foo !{code} bar', { locals: { code: '<script>' }}));
     },
     
-    'test invalid indentation multiple': function(assert){
-        var err;
-        try {
-            render('\n\nul\n  li\n li');
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:5\n    3. 'ul'\n    4. '  li'\n    5. ' li'\n\nInvalid indentation, got 1 space, must be a multiple of two.",
-            err.message);
-        
-        var err;
-        try {
-            render('ul\n   li', { filename: 'path/to/foo.jade' });
-        } catch (e) {
-            err = e;
-        }
-        assert.equal('path/to/foo.jade', err.path);
-        assert.equal(
-            "path/to/foo.jade:2\n    1. 'ul'\n    2. '   li'\n\nInvalid indentation, got 3 spaces, must be a multiple of two.",
-            err.message);
-    },
-    
-    'test invalid indents': function(assert){
-        var err;
-        try {
-            render('ul\n\n\n    li');
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:4\n    2. ''\n    3. ''\n    4. '    li'\n\nInvalid indentation, got 2 expected 1.",
-            err.message);
-    },
-    
     'test code exceptions': function(assert){
         var err;
         try {
