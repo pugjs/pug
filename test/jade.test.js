@@ -524,6 +524,13 @@ module.exports = {
         assert.equal('<p id="user-1"></p>', render('p(id: "user-" + 1)'));
         assert.equal('<p class="user-1"></p>', render('p(class: "user-" + 1)'));
     },
+
+    'test code buffering': function(assert){
+        assert.equal('<p></p>', render('p= null'));
+        assert.equal('<p></p>', render('p= undefined'));
+        assert.equal('<p>0</p>', render('p= 0'));
+        assert.equal('<p>false</p>', render('p= false'));
+    },
     
     'test comments': function(assert){
         // Regular
