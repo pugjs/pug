@@ -84,6 +84,12 @@ module.exports = {
             '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
             render(':sass\n  | body\n  |   :font-family \'Lucida Grande\''));
     },
+    
+    'test :stylus filter': function(assert){
+        assert.equal(
+            '<style>body {\n  color: #c00;\n}\n</style>',
+            render(':stylus\n  | body\n  |  color #c00'));
+    },
 
     'test :less filter': function(assert){
         assert.equal(
