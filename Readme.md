@@ -204,6 +204,21 @@ outputting
       -->
     </body>
 
+Jade supports conditional-comments as well, for example:
+
+    body
+      /if IE
+        a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
+
+outputs:
+
+    <body>
+      <!--[if IE]>
+        <a href="http://www.mozilla.com/en-US/firefox/">Get Firefox</a>
+      <![endif]-->
+    </body>
+
+
 ### Nesting
 
     ul
