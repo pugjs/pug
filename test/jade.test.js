@@ -313,7 +313,7 @@ module.exports = {
     
     'test tag text': function(assert){
         assert.equal('<p>some random text</p>', render('p some random text'));
-        assert.equal('foo\n<em>bar\n\n</em>baz\n', render('| foo\nem bar\n| baz'));
+        assert.equal('<p>click\n<a>Google</a>.\n</p>', render('p\n  | click\n  a Google\n  | .'));
         assert.equal('<p>(parens)</p>', render('p (parens)'));
         assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
         assert.equal('<option>-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
