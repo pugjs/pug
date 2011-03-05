@@ -1,4 +1,9 @@
 
+0.8.1 / 2011-03-04 
+==================
+
+  * Added `pre` pipe-less text support (and auto-escaping)
+
 0.8.0 / 2011-03-04 
 ==================
 
