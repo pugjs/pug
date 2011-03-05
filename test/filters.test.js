@@ -46,18 +46,6 @@ Visitor.prototype.visitTag = function(node){
 };
 
 module.exports = {
-    'test filter interpolation': function(assert){
-        assert.equal(
-            '<script type="text/javascript">\nvar name = "tj";</script>',
-            render(':javascript\n  | var name = "#{userName}";', { locals: { userName: 'tj' }}));
-        assert.equal(
-            '<script type="text/javascript">\nvar name = \'tj\';</script>',
-            render(':javascript\n  | var name = #{userName};', { locals: { userName: "'tj'" }}));
-        assert.equal(
-            '<script type="text/javascript">\nvar name = "#{userName}";</script>',
-            render(':javascript\n  | var name = "\\#{userName}";', { locals: { userName: 'tj' }}));
-    },
-    
     'test :cdata filter': function(assert){
         assert.equal('<![CDATA[\nfoo\n]]>', render(':cdata\n  | foo'));
         assert.equal('<![CDATA[\nfoo\nbar\n]]>', render(':cdata\n  | foo\n  | bar'));
