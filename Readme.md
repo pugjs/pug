@@ -56,6 +56,10 @@ via npm:
 	    // the callback can be the second arg
     });
 
+    // Compile a function
+    var fn = jade.compile('string of jade', options);
+    fn.call(scope, locals);
+
 ### Options
 
  - `scope`     Evaluation scope (`this`)
