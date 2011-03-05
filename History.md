@@ -1,4 +1,10 @@
 
+0.8.0 / 2011-03-04 
+==================
+
+  * Added block-expansion support. Closes #74
+  * Added support for multi-line attrs without commas. Closes #65
+
 0.7.1 / 2011-03-04 
 ==================
 
