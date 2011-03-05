@@ -16,10 +16,10 @@
 <span class="tag">html</span>(<span class="key">lang</span>=<span class="val">"en"</span>)
   <span class="tag">head</span>
     <span class="tag">title</span><span class="text">= pageTitle</span>
-    <span class="filter">:javascript</span>
-      <span class="text">| if (foo) {
-      |    bar()
-      | }</span>
+    <span class="filter">script(type='text/javascript')</span>
+      <span class="text">if (foo) {
+         bar()
+      }</span>
   <span class="tag">body</span>
     <span class="tag">h1</span> <span class="text">Jade - node template engine</span>
     <span class="tag">#container</span>
@@ -36,11 +36,9 @@
   &lt;head&gt;
     &lt;title&gt;Jade&lt;/title&gt;
     &lt;script type=&quot;text/javascript&quot;&gt;
-      //&lt;![CDATA[
       if (foo) {
       	bar()
       }
-      //]]&gt;
     &lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
