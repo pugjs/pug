@@ -160,6 +160,32 @@ or immediate tag text:
     label Username:
       input(name='user[name]')
 
+Tags that accept _only_ text such as `script`, `style`, and `textarea` do not
+need the leading `|` character, for example:
+
+      html
+        head
+          title Example
+          script
+            if (foo) {
+              bar();
+            } else {
+              baz();
+            }
+
+Alternatively if you decide no inline tags are needed, you may use the `:text` filter:
+
+      html
+        head
+          title Example
+          p
+            :text
+              You can place any text,
+                that you like here
+              even if it is indented really
+                  strange
+              . 
+
 ### Comments
 
 Single line comments currently look the same as JavaScript comments,
