@@ -75,11 +75,6 @@ via npm:
 
 **CRLF** and **CR** are converted to **LF** before parsing.
 
-### Indentation
-
-Jade is indentation based, however currently only supports a _2 space_ indent.
-Tabs are converted to 2 spaces before they hit the lexer.
-
 ### Tags
 
 A tag is simply a leading word:
