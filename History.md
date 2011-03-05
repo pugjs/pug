@@ -1,4 +1,22 @@
 
+0.7.0 / 2011-03-04 
+==================
+
+  * Removed `:javascript` filter (it doesn't really do anything special, use `script` tags)
+  * Added pipe-less text support. Tags that only accept text nodes (`script`, `textarea`, etc) do not require `|`. 
+  * Added `:text` filter for ad-hoc pipe-less 
+  * Added flexible indentation. Tabs, arbitrary number of spaces etc
+  * Added conditional-comment support. Closes #146
+  * Added block comment support
+  * Added rss example
+  * Added `:stylus` filter
+  * Added `:discount` filter
+  * Fixed; auto-detect xml and do not self-close tags. Closes #147
+  * Fixed whitespace issue. Closes #118
+  * Fixed attrs. `,`, `=`, and `:` within attr value strings are valid  Closes #133
+  * Fixed; only output "" when code == null. Ex: `span.name= user.name` when undefined or null will not output "undefined". Closes #130
+  * Fixed; throw on unexpected token instead of hanging
+
 0.6.3 / 2011-02-02 
 ==================
 
