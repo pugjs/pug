@@ -285,7 +285,12 @@ Boolean attributes with code will only output the attribute when `true`:
 
 	input(type="checkbox", checked: someValue)
     
-Note: Leading / trailing whitespace is _ignored_ for attr pairs.
+Multiple lines work too:
+
+    input(type='checkbox',
+      name='agreement',
+      checked)
+
 
 ### Doctypes
 
