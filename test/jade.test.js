@@ -86,6 +86,11 @@ module.exports = {
         assert.equal("<p>'foo'\n</p>", render("p\n  | 'foo'"));
         assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
     },
+
+    'test block-expansion': function(assert){
+        assert.equal("<li><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li: a foo\nli: a bar\nli: a baz"));
+        assert.equal("<li class=\"first\"><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li.first: a foo\nli: a bar\nli: a baz"));
+    },
     
     'test tags': function(assert){
         var str = [

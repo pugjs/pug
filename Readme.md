@@ -9,6 +9,7 @@
   - high performance parser
   - great readability
   - flexible indentation
+  - block-expansion
   - code is escaped by default for security
   - contextual error reporting at compile &amp; run time
   - executable for compiling jade templates via the command line
@@ -247,25 +248,26 @@ outputs:
 
 ### Nesting
 
-    ul
-      li one
-      li two
-      li three
-
-Messed up your whitespace? no worries, jade's error reporting should help you out.
-Jade instruments the compiled JavaScript to provide meaningful context for runtime exceptions.
+ Jade supports nesting to define the tags in a natural way:
 
     ul
-        li one
-      li two
+      li.first
+        a(href='#') foo
+      li
+        a(href='#') bar
+      li.last
+        a(href='#') baz
 
-    Error: /Users/tj/Projects/jade/examples/layout.jade:2
-	    1. 'ul'
-	    2. '    li one'
+### Block Expansion
 
-	Invalid indentation, got 2 expected 1.
+ Block expansion allows you to create terse single-line nested tags,
+ the following example is equivalent to the nesting example above.
 
-Note: Trailing outdents are generated on **EOS** (end-of-source) if not present.
+      ul
+        li.first: a(href='#') foo
+        li: a(href='#') bar
+        li.last: a(href='#') baz
+
 
 ### Attributes
 
