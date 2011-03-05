@@ -52,12 +52,6 @@ module.exports = {
         assert.equal('<![CDATA[\nfoo\nbar\n]]><p>something else</p>', render(':cdata\n  | foo\n  | bar\np something else'));
     },
     
-    'test :javascript filter': function(assert){
-        assert.equal(
-            '<script type="text/javascript">\nalert(\'foo\')</script>',
-            render(':javascript\n  | alert(\'foo\')'));
-    },
-    
     'test :markdown filter': function(assert){
         assert.equal(
             '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',

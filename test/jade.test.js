@@ -401,7 +401,7 @@ module.exports = {
         var err;
         try {
             render([
-                ':javascript',
+                ':cdata',
                 '  | foo',
                 '  | bar',
                 '  | bar',
