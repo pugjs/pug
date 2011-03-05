@@ -291,7 +291,6 @@ Multiple lines work too:
       name='agreement',
       checked)
 
-
 ### Doctypes
 
 To add a doctype simply use `!!!` followed by an optional value:
