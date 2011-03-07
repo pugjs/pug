@@ -1,4 +1,10 @@
 
+0.8.2 / 2011-03-07 
+==================
+
+  * Added markdown, discount, and markdown-js support to `:markdown`. Closes #160
+  * Removed `:discount`
+
 0.8.1 / 2011-03-04 
 ==================
 
