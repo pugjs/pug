@@ -1,5 +1,5 @@
 
-0.8.3 / 2011-03-08 
+0.8.4 / 2011-03-08 
 ==================
 
   * Fixed issue with expressions being evaluated several times. closes #162
