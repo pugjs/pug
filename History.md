@@ -1,4 +1,9 @@
 
+0.8.3 / 2011-03-08 
+==================
+
+  * Fixed issue with expressions being evaluated several times. closes #162
+
 0.8.2 / 2011-03-07 
 ==================
 
