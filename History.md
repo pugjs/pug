@@ -1,4 +1,11 @@
 
+0.8.5 / 2011-03-09 
+==================
+
+  * Added pipe-less text support with immediate ".". Closes #157
+  * Fixed object support in attrs
+  * Fixed array support for attrs
+
 0.8.4 / 2011-03-08 
 ==================
 
