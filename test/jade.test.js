@@ -489,6 +489,7 @@ module.exports = {
 
         assert.equal('<div style="background: url(/images/test.png)">Foo</div>', render("div(style: 'background: url(/images/test.png)') Foo"));
         assert.equal('<div style="foo">Foo</div>', render("div(style: ['foo', 'bar'][0]) Foo"));
+        assert.equal('<div style="bar">Foo</div>', render("div(style: { foo: 'bar', baz: 'raz' }['foo']) Foo"));
     },
     
     'test attr parens': function(assert){
