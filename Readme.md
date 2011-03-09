@@ -186,6 +186,33 @@ Alternatively if you decide no inline tags are needed, you may use the `:text` f
                   strange
               . 
 
+Once again as an alternative, we may use a leading '.' to indicate a text block, for example:
+
+      p.
+        foo asdf
+        asdf
+         asdfasdfaf
+         asdf
+        asd.
+
+outputs:
+
+        <p>foo asdf
+        asdf
+          asdfasdfaf
+          asdf
+        asd
+        .
+        </p>
+
+This however differs from a leading '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
+
+    p .
+    
+outputs:
+
+    <p>.</p>
+
 ### Comments
 
 Single line comments currently look the same as JavaScript comments,
