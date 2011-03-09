@@ -486,6 +486,8 @@ module.exports = {
 
         assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', render('meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")'));
         assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', render('meta(http-equiv: "X-UA-Compatible", content: "IE=edge,chrome=1")'));
+
+        assert.equal('<div style="background: url(/images/test.png)">Foo</div>', render("div(style: 'background: url(/images/test.png)') Foo"));
     },
     
     'test attr parens': function(assert){
