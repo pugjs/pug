@@ -26,7 +26,7 @@
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
     - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
-    - :javascript
+    - :text
     - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
