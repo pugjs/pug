@@ -359,6 +359,15 @@ module.exports = {
             err.message);
     },
     
+    'test interpolation values': function(assert){
+        assert.equal('<p>Users: 15</p>', render('p Users: #{15}'));
+        assert.equal('<p>Users: </p>', render('p Users: #{null}'));
+        assert.equal('<p>Users: </p>', render('p Users: #{undefined}'));
+        assert.equal('<p>Users: none</p>', render('p Users: #{undefined || "none"}'));
+        assert.equal('<p>Users: 0</p>', render('p Users: #{0}'));
+        assert.equal('<p>Users: false</p>', render('p Users: #{false}'));
+    },
+    
     'test interpolation exceptions': function(assert){
         var err;
         try {
