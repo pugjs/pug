@@ -1,4 +1,10 @@
 
+0.8.6 / 2011-03-11 
+==================
+
+  * Fixed parenthesized expressions in attrs. Closes #170
+  * Changed; default interpolation values `== null` to ''. Closes #167
+
 0.8.5 / 2011-03-09 
 ==================
 
