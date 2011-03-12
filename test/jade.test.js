@@ -499,6 +499,9 @@ module.exports = {
         assert.equal('<div style="background: url(/images/test.png)">Foo</div>', render("div(style: 'background: url(/images/test.png)') Foo"));
         assert.equal('<div style="foo">Foo</div>', render("div(style: ['foo', 'bar'][0]) Foo"));
         assert.equal('<div style="bar">Foo</div>', render("div(style: { foo: 'bar', baz: 'raz' }['foo']) Foo"));
+        assert.equal('<a href="def">Foo</a>', render("a(href='abcdefg'.substr(3,3)) Foo"));
+        assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,3)) Foo"));
+        assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,[0,3][1])) Foo"));
     },
     
     'test attr parens': function(assert){
