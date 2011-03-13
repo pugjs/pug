@@ -100,7 +100,7 @@ while (args.length) {
       break;
     case '-w':
     case '--watch':
-      watchdir = args.shift();
+      watchdir = args.shift() || process.cwd();
       watchers = {};
       break;
     case '--out':
