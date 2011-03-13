@@ -22,12 +22,6 @@ try {
 var args = process.argv.slice(2);
 
 /**
- * Output to stdout.
- */
-
-var pipe;
-
-/**
  * Options javascript.
  */
 
@@ -66,7 +60,6 @@ var usage = ''
   + '\n'
   + '\x1b[1mOptions:\x1b[0m\n'
   + '  -o, --options <str> JavaScript options object passed\n'
-  + '  -p, --pipe          Output to stdout instead of PATH.html\n'
   + '  -h, --help          Output help information\n'
   + '  -w, --watch <dir>   Watch the jade files in <dir>\n'
   + '  -r, --walk          Walk the subdirectories of the watched <dir>. Only applicable with --watch\n'
@@ -83,10 +76,6 @@ while (args.length) {
     case '--help':
       console.log(usage);
       process.exit(1);
-      break;
-    case '-p':
-    case '--pipe':
-      pipe = true;
       break;
     case '-o':
     case '--options':
@@ -125,11 +114,7 @@ if (watchers && !files.length) {
   files.forEach(function(file){
     jade.renderFile(file, options, function(err, html){
       if (err) throw err;
-      if (pipe) {
-        console.log(html);
-      }  else {
-        writeFile(file, html);
-      }
+      writeFile(file, html);
     });
   });
 } else {
