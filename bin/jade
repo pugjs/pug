@@ -185,19 +185,19 @@ function renderJade(jadefile) {
  * to the folder containing the jade file.
  */
 
-function writeFile(jadefilepath, html) {
-  var htmlfilepath = jadefilepath.replace('.jade', '.html');
+function writeFile(src, html) {
+  var path = src.replace('.jade', '.html');
   // watchdir and dest specified
   if (dest && watchdir) {
-    htmlfilepath = htmlfilepath.replace(watchdir, dest);
+    path = path.replace(watchdir, dest);
   // dest specified, but we are not watching
   } else if (dest) {
-    htmlfilepath = dest + '/' + basename(htmlfilepath);
+    path = dest + '/' + basename(path);
   }
-  fs.writeFile(htmlfilepath, html, function(err) {
+  fs.writeFile(path, html, function(err) {
     if (err) throw err;
-    console.log('  \033[90mcompiled\033[0m %s', htmlfilepath);
-    watch(jadefilepath, renderJade);
+    console.log('  \033[90mcompiled\033[0m %s', path);
+    watch(src, renderJade);
   });
 }
 
