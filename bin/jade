@@ -62,79 +62,79 @@ var walk = false;
  */
 
 var usage = ''
-    + '\x1b[1mUsage\x1b[0m: jade [options] [path ...]\n'
-    + '\n'
-    + '\x1b[1mOptions:\x1b[0m\n'
-    + '  -o, --options STR   JavaScript options object passed\n'
-    + '  -p, --pipe          Output to stdout instead of PATH.html\n'
-    + '  -h, --help          Output help information\n'
-    + '  -w, --watch <dir>   Watch the jade files in <dir>\n'
-    + '  -r, --walk          Walk the subdirectories of the watched <dir>. Only applicable with --watch\n'
-    + '  --out <dir>         Output the compiled html to <dir>\n';
+  + '\x1b[1mUsage\x1b[0m: jade [options] [path ...]\n'
+  + '\n'
+  + '\x1b[1mOptions:\x1b[0m\n'
+  + '  -o, --options STR   JavaScript options object passed\n'
+  + '  -p, --pipe          Output to stdout instead of PATH.html\n'
+  + '  -h, --help          Output help information\n'
+  + '  -w, --watch <dir>   Watch the jade files in <dir>\n'
+  + '  -r, --walk          Walk the subdirectories of the watched <dir>. Only applicable with --watch\n'
+  + '  --out <dir>         Output the compiled html to <dir>\n';
 
 // Parse arguments
 
-var arg,
-    files = [];
+var arg
+  , files = [];
 while (args.length) {
-    arg = args.shift();
-    switch (arg) {
-        case '-h':
-        case '--help':
-            console.log(usage);
-            process.exit(1);
-            break;
-        case '-p':
-        case '--pipe':
-            pipe = true;
-            break;
-        case '-o':
-        case '--options':
-            var str = args.shift();
-            if (str) {
-                options = eval('(' + str + ')');
-            } else {
-                console.error('-o, --options requires a string.');
-                process.exit(1);
-            }
-            break;
-        case '-w':
-        case '--watch':
-            watchdir = args.shift();
-            watchers = {};
-            break;
-        case '--out':
-            dest = args.shift();
-            break;
-        case '-r':
-            walk = true;
-            break;
-        default:
-            files.push(arg);
-    }
+  arg = args.shift();
+  switch (arg) {
+    case '-h':
+    case '--help':
+      console.log(usage);
+      process.exit(1);
+      break;
+    case '-p':
+    case '--pipe':
+      pipe = true;
+      break;
+    case '-o':
+    case '--options':
+      var str = args.shift();
+      if (str) {
+        options = eval('(' + str + ')');
+      } else {
+        console.error('-o, --options requires a string.');
+        process.exit(1);
+      }
+      break;
+    case '-w':
+    case '--watch':
+      watchdir = args.shift();
+      watchers = {};
+      break;
+    case '--out':
+      dest = args.shift();
+      break;
+    case '-r':
+      walk = true;
+      break;
+    default:
+      files.push(arg);
+  }
 }
 
 // Watching
 if (watchers && !files.length) {
-    console.log('Watching: ' + resolve(watchdir));
-    fs.readdirSync(watchdir).map(function(filename) {
-        return watchdir + '/' + filename;
-    }).forEach(processFile);
+  console.log('Watching: ' + resolve(watchdir));
+  fs.readdirSync(watchdir).map(function(filename) {
+    return watchdir + '/' + filename;
+  }).forEach(processFile);
 // Render files
 } else if (files.length) {
-    files.forEach(function(file){
-        jade.renderFile(file, options, function(err, html){
-            if (err) throw err;
-            if (pipe) {
-                console.log(html);
-            }  else {
-                writeFile(file, html);
-            }
-        });
+  files.forEach(function(file){
+    jade.renderFile(file, options, function(err, html){
+      if (err) throw err;
+      if (pipe) {
+        console.log(html);
+      }  else {
+        writeFile(file, html);
+      }
     });
+  });
 } else {
-    console.log(usage);
-    process.exit(1);
+  console.log(usage);
+  process.exit(1);
 }
 
 /**
@@ -143,21 +143,21 @@ if (watchers && !files.length) {
  */
 
 function processFile(path) {
-    fs.lstat(path, function(err, stat) {
+  fs.lstat(path, function(err, stat) {
+    if (err) throw err;
+    // Found jade file
+    if (stat.isFile() && path.match(/\.jade$/)) {
+      renderJade(path);
+    // Found directory
+    } else if (walk && stat.isDirectory()) {
+      fs.readdir(path, function(err, files) {
         if (err) throw err;
-        // Found jade file
-        if (stat.isFile() && path.match(/\.jade$/)) {
-            renderJade(path);
-        // Found directory
-        } else if (walk && stat.isDirectory()) {
-            fs.readdir(path, function(err, files) {
-                if (err) throw err;
-                files.map(function(filename) {
-                    return path + '/' + filename;
-                }).forEach(processFile);
-            });
-        }
-    });
+        files.map(function(filename) {
+          return path + '/' + filename;
+        }).forEach(processFile);
+      });
+    }
+  });
 }
 
 /**
@@ -165,10 +165,10 @@ function processFile(path) {
  */
 
 function renderJade(jadefile) {
-    jade.renderFile(jadefile, options, function(err, html) {
-        if (err) throw err;
-        writeFile(jadefile, html);
-    });
+  jade.renderFile(jadefile, options, function(err, html) {
+    if (err) throw err;
+    writeFile(jadefile, html);
+  });
 }
 
 /**
@@ -186,19 +186,19 @@ function renderJade(jadefile) {
  */
 
 function writeFile(jadefilepath, html) {
-    var htmlfilepath = jadefilepath.replace('.jade', '.html');
-    // watchdir and dest specified
-    if (dest && watchdir) {
-        htmlfilepath = htmlfilepath.replace(watchdir, dest);
-    // dest specified, but we are not watching
-    } else if (dest) {
-        htmlfilepath = dest + '/' + basename(htmlfilepath);
-    }
-    fs.writeFile(htmlfilepath, html, function(err) {
-        if (err) throw err;
-        console.log('  \033[90mcompiled\033[0m %s', htmlfilepath);
-        watch(jadefilepath, renderJade);
-    });
+  var htmlfilepath = jadefilepath.replace('.jade', '.html');
+  // watchdir and dest specified
+  if (dest && watchdir) {
+    htmlfilepath = htmlfilepath.replace(watchdir, dest);
+  // dest specified, but we are not watching
+  } else if (dest) {
+    htmlfilepath = dest + '/' + basename(htmlfilepath);
+  }
+  fs.writeFile(htmlfilepath, html, function(err) {
+    if (err) throw err;
+    console.log('  \033[90mcompiled\033[0m %s', htmlfilepath);
+    watch(jadefilepath, renderJade);
+  });
 }
 
 /**
@@ -206,16 +206,16 @@ function writeFile(jadefilepath, html) {
  */
 
 function watch(file, fn) {
-    // not watching
-    if (!watchers) return;
+  // not watching
+  if (!watchers) return;
 
-    // already watched
-    if (watchers[file]) return;
+  // already watched
+  if (watchers[file]) return;
 
-    // watch the file itself
-    watchers[file] = true;
-    console.log('  \033[90mwatching\033[0m %s', file);
-    fs.watchFile(file, { interval: 50 }, function(curr, prev){
-        if (curr.mtime > prev.mtime) fn(file);
-    });
+  // watch the file itself
+  watchers[file] = true;
+  console.log('  \033[90mwatching\033[0m %s', file);
+  fs.watchFile(file, { interval: 50 }, function(curr, prev){
+    if (curr.mtime > prev.mtime) fn(file);
+  });
 }
