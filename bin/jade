@@ -56,14 +56,18 @@ var walk = false;
  */
 
 var usage = ''
-  + 'Usage: jade [options] [path ...]\n'
   + '\n'
-  + 'Options:\n'
-  + '  -o, --options <str> JavaScript options object passed\n'
-  + '  -h, --help          Output help information\n'
-  + '  -w, --watch <dir>   Watch the jade files in <dir>\n'
-  + '  -r, --walk          Walk the subdirectories of the watched <dir>. Only applicable with --watch\n'
-  + '  --out <dir>         Output the compiled html to <dir>\n';
+  + '  Usage: jade [options]\n'
+  + '              [path ...]\n'
+  + '              < in.jade > out.jade'
+  + '  \n'
+  + '  Options:\n'
+  + '    -o, --options <str> JavaScript options object passed\n'
+  + '    -h, --help          Output help information\n'
+  + '    -w, --watch <dir>   Watch the jade files in <dir>\n'
+  + '    -r, --walk          Walk the subdirectories of the watched <dir>. Only applicable with --watch\n'
+  + '    --out <dir>         Output the compiled html to <dir>\n';
+  + '\n';
 
 // Parse arguments
 
