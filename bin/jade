@@ -56,9 +56,9 @@ var walk = false;
  */
 
 var usage = ''
-  + '\x1b[1mUsage\x1b[0m: jade [options] [path ...]\n'
+  + 'Usage: jade [options] [path ...]\n'
   + '\n'
-  + '\x1b[1mOptions:\x1b[0m\n'
+  + 'Options:\n'
   + '  -o, --options <str> JavaScript options object passed\n'
   + '  -h, --help          Output help information\n'
   + '  -w, --watch <dir>   Watch the jade files in <dir>\n'
