@@ -65,7 +65,6 @@ var usage = ''
   + '    -o, --options <str> JavaScript options object passed\n'
   + '    -h, --help          Output help information\n'
   + '    -w, --watch <dir>   Watch the jade files in <dir>\n'
-  + '    -r, --walk          Walk the subdirectories of the watched <dir>. Only applicable with --watch\n'
   + '    --out <dir>         Output the compiled html to <dir>\n';
   + '\n';
 
