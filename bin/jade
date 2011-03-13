@@ -121,9 +121,18 @@ if (watchers && !files.length) {
       writeFile(file, html);
     });
   });
+// Stdio
 } else {
-  console.log(usage);
-  process.exit(1);
+  var buf = '';
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', function(chunk){
+    buf += chunk;
+  }).on('end', function(){
+    jade.render(buf, options, function(err, html){
+      if (err) throw err;
+      console.log(html);
+    });
+  }).resume();
 }
 
 /**
