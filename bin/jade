@@ -4,8 +4,7 @@
  * Module dependencies.
  */
 
-var sys = require('sys')
-  , fs = require('fs')
+var fs = require('fs')
   , resolve = require('path').resolve
   , basename = require('path').basename
   , jade;
@@ -82,7 +81,7 @@ while (args.length) {
     switch (arg) {
         case '-h':
         case '--help':
-            sys.puts(usage);
+            console.log(usage);
             process.exit(1);
             break;
         case '-p':
@@ -95,7 +94,7 @@ while (args.length) {
             if (str) {
                 options = eval('(' + str + ')');
             } else {
-                sys.error('-o, --options requires a string.');
+                console.error('-o, --options requires a string.');
                 process.exit(1);
             }
             break;
@@ -127,7 +126,7 @@ if (watchers && !files.length) {
         jade.renderFile(file, options, function(err, html){
             if (err) throw err;
             if (pipe) {
-                sys.puts(html);
+                console.log(html);
             }  else {
                 writeFile(file, html);
             }
