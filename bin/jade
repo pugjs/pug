@@ -7,6 +7,7 @@
 var fs = require('fs')
   , resolve = require('path').resolve
   , basename = require('path').basename
+  , dirname = require('path').dirname
   , jade;
 
 try {
@@ -145,16 +146,41 @@ function renderJade(jadefile) {
 }
 
 /**
+ * mkdir -p implementation.
+ */
+
+function mkdirs(path, fn) {
+  var segs = dirname(path).split('/')
+    , dir = '';
+
+  (function next() {
+    var seg = segs.shift();
+    if (seg) {
+      dir += seg + '/';
+      fs.mkdir(dir, 0755, function(err){
+        if (!err) return next();
+        if ('EEXIST' == err.code) return next();
+      });
+    } else {
+      fn();
+    }
+  })();
+}
+
+/**
  * Write the html output to a file.
  */
 
 function writeFile(src, html) {
   var path = src.replace('.jade', '.html');
   if (dest) path = dest + '/' + path;
-  fs.writeFile(path, html, function(err) {
+  mkdirs(path, function(err){
     if (err) throw err;
-    console.log('  \033[90mcompiled\033[0m %s', path);
-    watch(src, renderJade);
+    fs.writeFile(path, html, function(err) {
+      if (err) throw err;
+      console.log('  \033[90mcompiled\033[0m %s', path);
+      watch(src, renderJade);
+    });
   });
 }
 
