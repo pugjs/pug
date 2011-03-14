@@ -146,20 +146,11 @@ function renderJade(jadefile) {
 
 /**
  * Write the html output to a file.
- *
- * If watching folder ./views and the destination directory is ./public
- * a jade file in ./jades/person/index.jade will be written to 
- * ./public/views/person/index.html if the ./public/views/person folder exists.
- *
- * If no destination directory is specified, the output file is written
- * to the folder containing the jade file.
  */
 
 function writeFile(src, html) {
   var path = src.replace('.jade', '.html');
-  if (dest) {
-    path = dest + '/' + path;
-  }
+  if (dest) path = dest + '/' + path;
   fs.writeFile(path, html, function(err) {
     if (err) throw err;
     console.log('  \033[90mcompiled\033[0m %s', path);
