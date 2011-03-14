@@ -5,9 +5,10 @@
  */
 
 var fs = require('fs')
-  , resolve = require('path').resolve
-  , basename = require('path').basename
-  , dirname = require('path').dirname
+  , path = require('path')
+  , resolve = path.resolve
+  , basename = path.basename
+  , dirname = path.dirname
   , jade;
 
 try {
