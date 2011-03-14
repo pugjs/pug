@@ -40,12 +40,6 @@ var dest;
 var watchers;
 
 /**
- * Directory to watch.
- */
-
-var watchdir;
-
-/**
  * Walk subdirectories
  */
 
@@ -92,7 +86,6 @@ while (args.length) {
       break;
     case '-w':
     case '--watch':
-      watchdir = args.shift() || process.cwd();
       watchers = {};
       break;
     case '--out':
@@ -106,20 +99,12 @@ while (args.length) {
   }
 }
 
-// Watching
+// Watching and no files passed - watch cwd
 if (watchers && !files.length) {
-  console.log('Watching: ' + resolve(watchdir));
-  fs.readdirSync(watchdir).map(function(filename) {
-    return watchdir + '/' + filename;
-  }).forEach(processFile);
-// Render files
+  fs.readdirSync(process.cwd()).forEach(processFile);
+// Process passed files
 } else if (files.length) {
-  files.forEach(function(file){
-    jade.renderFile(file, options, function(err, html){
-      if (err) throw err;
-      writeFile(file, html);
-    });
-  });
+  files.forEach(processFile);
 // Stdio
 } else {
   var buf = '';
@@ -171,12 +156,9 @@ function renderJade(jadefile) {
 /**
  * Write the html output to a file.
  *
- * If watching folder ./jades and the destination directory is ./public
+ * If watching folder ./views and the destination directory is ./public
  * a jade file in ./jades/person/index.jade will be written to 
- * ./public/person/index.html if the ./public/person folder exists.
- *
- * If not watching, the html output file is written to the root of the
- * destination directory, if specified.
+ * ./public/views/person/index.html if the ./public/views/person folder exists.
  *
  * If no destination directory is specified, the output file is written
  * to the folder containing the jade file.
@@ -184,12 +166,9 @@ function renderJade(jadefile) {
 
 function writeFile(src, html) {
   var path = src.replace('.jade', '.html');
-  // watchdir and dest specified
-  if (dest && watchdir) {
-    path = path.replace(watchdir, dest);
-  // dest specified, but we are not watching
-  } else if (dest) {
-    path = dest + '/' + basename(path);
+  if (dest) {
+    console.log('dest: ' + dest);
+    path = dest + '/' + path;
   }
   fs.writeFile(path, html, function(err) {
     if (err) throw err;
