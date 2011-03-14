@@ -40,12 +40,6 @@ var dest;
 var watchers;
 
 /**
- * Walk subdirectories
- */
-
-var walk = false;
-
-/**
  * Usage information.
  */
 
@@ -91,9 +85,6 @@ while (args.length) {
     case '--out':
       dest = args.shift();
       break;
-    case '-r':
-      walk = true;
-      break;
     default:
       files.push(arg);
   }
@@ -121,7 +112,7 @@ if (watchers && !files.length) {
 
 /**
  * Process the given path, compiling the jade files found.
- * Walk the subdirectories if the -r flag was passed.
+ * Always walk the subdirectories.;
  */
 
 function processFile(path) {
@@ -131,7 +122,7 @@ function processFile(path) {
     if (stat.isFile() && path.match(/\.jade$/)) {
       renderJade(path);
     // Found directory
-    } else if (walk && stat.isDirectory()) {
+    } else if (stat.isDirectory()) {
       fs.readdir(path, function(err, files) {
         if (err) throw err;
         files.map(function(filename) {
@@ -167,7 +158,6 @@ function renderJade(jadefile) {
 function writeFile(src, html) {
   var path = src.replace('.jade', '.html');
   if (dest) {
-    console.log('dest: ' + dest);
     path = dest + '/' + path;
   }
   fs.writeFile(path, html, function(err) {
