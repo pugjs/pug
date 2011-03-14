@@ -52,7 +52,7 @@ var usage = ''
   + '  Options:\n'
   + '    -o, --options <str> JavaScript options object passed\n'
   + '    -h, --help          Output help information\n'
-  + '    -w, --watch <dir>   Watch the jade files in <dir>\n'
+  + '    -w, --watch         Watch file(s) or folder(s) for changes and re-compile\n'
   + '    --out <dir>         Output the compiled html to <dir>\n';
   + '\n';
 
