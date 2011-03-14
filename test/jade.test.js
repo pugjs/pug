@@ -316,6 +316,12 @@ module.exports = {
         assert.equal('  foo  \n bar    \n', render('|   foo  \n|  bar    '));
     },
     
+    'test pipe-less text': function(assert){
+      assert.equal('<pre>foo\n\n\nbar\n</pre>', render('pre\n  foo\n\n  bar'));
+      assert.equal('<p>foo\n\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
+      assert.equal('<p>foo\n\n\nbar\n</p>', render('p\n  :text\n    foo\n\n    bar'));
+    },
+    
     'test tag text': function(assert){
         assert.equal('<p>some random text</p>', render('p some random text'));
         assert.equal('<p>click\n<a>Google</a>.\n</p>', render('p\n  | click\n  a Google\n  | .'));
