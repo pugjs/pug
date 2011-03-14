@@ -1,4 +1,13 @@
 
+0.8.7  / 2011-03-14 
+==================
+
+  * Added `mkdirs()` to jade(1)
+  * Added jade(1) stdio support
+  * Added new features to jade(1), `--watch`, recursive compilation etc [khingebjerg]
+  * Fixed pipe-less text newlines
+  * Removed jade(1) `--pipe` flag
+
 0.8.6 / 2011-03-11 
 ==================
 
