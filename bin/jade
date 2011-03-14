@@ -105,10 +105,7 @@ if (watchers && !files.length) {
   process.stdin.on('data', function(chunk){
     buf += chunk;
   }).on('end', function(){
-    jade.render(buf, options, function(err, html){
-      if (err) throw err;
-      console.log(html);
-    });
+    console.log(jade.render(buf, options));
   }).resume();
 }
 
