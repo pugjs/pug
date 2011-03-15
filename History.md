@@ -1,4 +1,9 @@
 
+0.8.9 / 2011-03-15 
+==================
+
+  * Fixed preservation of newlines in text blocks
+
 0.8.8 / 2011-03-14 
 ==================
 
