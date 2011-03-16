@@ -1,4 +1,9 @@
 
+0.9.0 / 2011-03-16 
+==================
+
+  * Added client-side browser support via `make jade.js` and `make jade.min.js`.
+
 0.8.9 / 2011-03-15 
 ==================
 
