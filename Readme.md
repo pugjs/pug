@@ -44,6 +44,16 @@ via npm:
 
     npm install jade
 
+## Browser Support
+
+ To compile jade to a single file compatible for client-side use simply execute:
+ 
+    $ make jade.js
+
+ Alternatively, if uglifyjs is installed via npm (`npm install uglify-js`) you may execute the following which will create both files.
+ 
+    $ make jade.min.js
+
 ## Public API
 
     var jade = require('jade');
