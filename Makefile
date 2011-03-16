@@ -1,5 +1,7 @@
 
 TESTS = test/*.js
+SRC = $(shell find lib -name "*.js" -type f)
+UGLIFY_FLAGS = --no-mangle 
 
 test:
 	@./support/expresso/bin/expresso \
@@ -15,4 +17,14 @@ benchmark:
 	 node benchmarks/haml2.js && \
 	 node benchmarks/ejs.js
 
-.PHONY: test benchmark
+jade.js: $(SRC)
+	@node support/compile.js $^
+
+jade.min.js: jade.js
+	@uglifyjs $(UGLIFY_FLAGS) $< > $@
+
+clean:
+	rm -f jade.js
+	rm -f jade.min.js
+
+.PHONY: test benchmark clean

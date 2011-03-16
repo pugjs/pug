@@ -6,7 +6,7 @@
 
 ## Features
 
-  - high performance parser
+  - client-side support
   - great readability
   - flexible indentation
   - block-expansion
