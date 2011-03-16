@@ -13,13 +13,6 @@ var args = process.argv.slice(2)
   , pending = args.length
   , files = {};
 
-// note about uglify
-
-console.log('');
-console.log('  compiling jade.js');
-console.log('');
-console.log('  NOTE: to compile jade.min.js first `$ npm install uglify-js`');
-console.log('  and then execute `$ make jade.min.js`.');
 console.log('');
 
 // parse arguments
