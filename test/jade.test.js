@@ -321,6 +321,7 @@ module.exports = {
       assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
       assert.equal('<p>foo\n\nbar\n</p>', render('p\n  :text\n    foo\n\n    bar'));
       assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
+      assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
     },
     
     'test tag text': function(assert){
