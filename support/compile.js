@@ -52,10 +52,10 @@ function parse(js) {
 
   for (var i = 0; i < len; ++i) {
     line = lines[i];
-    if (/^\/\/ *if *(node|browser)/gm.exec(line)) {
+    if (/^ *\/\/ *if *(node|browser)/gm.exec(line)) {
       cond = RegExp.$1;
       buffer = 'browser' == cond;
-    } else if (/^\/\/ *end/.test(line)) {
+    } else if (/^ *\/\/ *end/.test(line)) {
       buffer = true;
     } else if (buffer) {
       buf.push(line);
