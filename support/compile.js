@@ -28,6 +28,26 @@ args.forEach(function(file){
 });
 
 /**
+ * Parse the given `js`.
+ */
+
+function parse(js) {
+  return parseInheritance(parseConditionals(js));
+}
+
+/**
+ * Parse __proto__.
+ */
+
+function parseInheritance(js) {
+  return js
+    .replace(/^ *(\w+)\.prototype\.__proto__ * = *(\w+)/gm, function(_, child, parent){
+      return child + '.prototype = new ' + parent + ';\n'
+        + child + '.prototype.constructor = '+ child + '\n';
+    });
+}
+
+/**
  * Parse the given `js`, currently supporting:.
  * 
  *    'if' ['node' | 'browser']
@@ -35,7 +55,7 @@ args.forEach(function(file){
  * 
  */
 
-function parse(js) {
+function parseConditionals(js) {
   var lines = js.split('\n')
     , len = lines.length
     , buffer = true
