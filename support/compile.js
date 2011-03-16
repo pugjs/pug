@@ -41,9 +41,9 @@ function parse(js) {
 
 function parseInheritance(js) {
   return js
-    .replace(/^ *(\w+)\.prototype\.__proto__ * = *(\w+)/gm, function(_, child, parent){
+    .replace(/^ *(\w+)\.prototype\.__proto__ * = *(\w+)\.prototype *;?/gm, function(_, child, parent){
       return child + '.prototype = new ' + parent + ';\n'
-        + child + '.prototype.constructor = '+ child + '\n';
+        + child + '.prototype.constructor = '+ child + ';\n';
     });
 }
 
