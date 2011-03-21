@@ -288,7 +288,6 @@ module.exports = {
 
         assert.equal(html, render(str));
         assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
-        assert.equal('<foo>\n</foo>"something"\n<bar></bar>', render('foo\n"something"\nbar'));
         assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
     },
     
@@ -340,12 +339,9 @@ module.exports = {
     
     'test tag text interpolation': function(assert){
         assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool\n', render('| yo, ${name} is cool\n', { locals: { name: 'jade' }}));
         assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('<p>yo, jade is cool</p>', render('p yo, ${name} is cool', { locals: { name: 'jade' }}));
         assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
         assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
-        assert.equal('yo, jade is cool\n', render('| yo, ${name || \'jade\'} is cool', { locals: { name: null }}));
         assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { locals: { code: '<script>' }}));
         assert.equal('foo <script> bar\n', render('| foo !{code} bar', { locals: { code: '<script>' }}));
     },
@@ -632,7 +628,7 @@ module.exports = {
         assert.equal('test', render('!= "test"'));
         assert.equal('test', render('= "test"'));
         assert.equal('test', render('- var foo = "test"\n=foo'));
-        assert.equal('foo\n<em>test\n</em>bar\n', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
+        assert.equal('foo\n<em>test</em>bar\n', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
         assert.equal('test<h2>something</h2>', render('!= "test"\nh2 something'));
 
         var str = [
