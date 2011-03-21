@@ -489,6 +489,7 @@ module.exports = {
         assert.equal('<p class="foo"></p>', render("p('class'='foo')"), 'Test keys with single quotes');
         assert.equal('<p class="foo"></p>', render("p(\"class\": 'foo')"), 'Test keys with double quotes');
 
+        assert.equal('<p data-lang="en"></p>', render('p(data-lang: "en")'));
         assert.equal('<p data-dynamic="true"></p>', render('p("data-dynamic": "true")'));
         assert.equal('<p data-dynamic="true" class="name"></p>', render('p("class": "name", "data-dynamic": "true")'));
         assert.equal('<p data-dynamic="true"></p>', render('p(\'data-dynamic\': "true")'));
