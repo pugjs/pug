@@ -1,4 +1,10 @@
 
+0.9.2 / 2011-03-23 
+==================
+
+  * Added jade `--version`
+  * Removed `${}` interpolation support, use `#{}`
+
 0.9.1 / 2011-03-16 
 ==================
 
