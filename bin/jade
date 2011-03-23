@@ -52,10 +52,11 @@ var usage = ''
   + '              < in.jade > out.jade'
   + '  \n'
   + '  Options:\n'
-  + '    -o, --options <str> JavaScript options object passed\n'
-  + '    -h, --help          Output help information\n'
-  + '    -w, --watch         Watch file(s) or folder(s) for changes and re-compile\n'
-  + '    --out <dir>         Output the compiled html to <dir>\n';
+  + '    -o, --options <str>  JavaScript options object passed\n'
+  + '    -h, --help           Output help information\n'
+  + '    -w, --watch          Watch file(s) or folder(s) for changes and re-compile\n'
+  + '    -v, --version        Output jade version\n'
+  + '    --out <dir>          Output the compiled html to <dir>\n';
   + '\n';
 
 // Parse arguments
@@ -69,7 +70,10 @@ while (args.length) {
     case '--help':
       console.log(usage);
       process.exit(1);
-      break;
+    case '-v':
+    case '--version':
+      console.log(jade.version);
+      process.exit(1);
     case '-o':
     case '--options':
       var str = args.shift();
