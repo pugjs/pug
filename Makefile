@@ -9,6 +9,7 @@ test:
 		-I support/coffee-script/lib \
 		-I support/markdown/lib \
 		-I support/sass/lib \
+		-I support \
 		$(TESTS)
 
 benchmark:
