@@ -3,6 +3,8 @@
 ==================
 
   * Added `Block#unshift(node)`
+  * Added `jade.js` for the client-side to the repo
+  * Added `jade.min.js` for the client-side to the repo
   * Removed need for pipes in filters. Closes #185
     Note that this _will_ break filters used to
     manipulate the AST, until we have a different
