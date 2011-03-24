@@ -507,6 +507,8 @@ module.exports = {
         assert.equal('<a href="def">Foo</a>', render("a(href='abcdefg'.substr(3,3)) Foo"));
         assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,3)) Foo"));
         assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,[0,3][1])) Foo"));
+        
+        assert.equal('<a data-obj="{ foo: \'bar\' }"></a>', render("a(data-obj: \"{ foo: 'bar' }\")"));
     },
     
     'test attr parens': function(assert){
