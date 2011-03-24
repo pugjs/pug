@@ -58,12 +58,6 @@ module.exports = {
             render(':markdown\n  #foo\n  - bar\n  - baz\n'))
     },
     
-    'test :sass filter': function(assert){
-        assert.equal(
-            '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
-            render(':sass\n  body\n      :font-family \'Lucida Grande\''));
-    },
-    
     'test :stylus filter': function(assert){
         assert.equal(
             '<style>body {\n  color: #c00;\n}\n</style>',
@@ -121,16 +115,5 @@ module.exports = {
         ].join('\n');
 
         assert.equal('foo bar true', render(str));
-        
-        jade.filters.testing = function(node, compiler, attrs){
-            return 'buf.push(' + attrs.foo + ')';
-        };
-
-        var str = [
-            ':testing(foo="bar", baz)',
-            '  foo',
-        ].join('\n');
-
-        assert.equal('bar', render(str));
-    } 
+     } 
 };
