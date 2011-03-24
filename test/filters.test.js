@@ -55,13 +55,10 @@ module.exports = {
     'test :markdown filter': function(assert){
         assert.equal(
             '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
-            render(':markdown\n  #foo\n  - bar\n  - baz'))
+            render(':markdown\n  #foo\n  - bar\n  - baz\n'))
     },
     
     'test :sass filter': function(assert){
-        assert.equal(
-            '<style>body {\n  color: #cc0000;}\n</style>',
-            render(':sass\n  body\n      :color #cc0000'));
         assert.equal(
             '<style>body {\n  font-family: \'Lucida Grande\';}\n</style>',
             render(':sass\n  body\n      :font-family \'Lucida Grande\''));
@@ -76,7 +73,7 @@ module.exports = {
     'test :less filter': function(assert){
         assert.equal(
             '<style>.class {\n  width: 20px;\n}\n</style>',
-            render(':less\n  .class { width: 10px * 2 }'));
+            render(':less\n  .class { width: 10px * 2 }\n'));
     },
 
     'test :coffeescript filter': function(assert){
