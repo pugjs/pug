@@ -1,4 +1,13 @@
 
+0.9.3 / 2011-03-24 
+==================
+
+  * Added `Block#unshift(node)`
+  * Removed need for pipes in filters. Closes #185
+    Note that this _will_ break filters used to
+    manipulate the AST, until we have a different
+    syntax for doing so.
+
 0.9.2 / 2011-03-23 
 ==================
 

@@ -1,7 +1,7 @@
 {
   "name": "jade",
   "description": "Jade template engine",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "main": "./index.js",
   "bin": { "jade": "./bin/jade" },
