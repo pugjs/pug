@@ -26,7 +26,6 @@
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
     - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
-    - :text
     - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
@@ -182,19 +181,6 @@ need the leading `|` character, for example:
             } else {
               baz();
             }
-
-Alternatively if you decide no inline tags are needed, you may use the `:text` filter:
-
-      html
-        head
-          title Example
-          p
-            :text
-              You can place any text,
-                that you like here
-              even if it is indented really
-                  strange
-              . 
 
 Once again as an alternative, we may use a leading '.' to indicate a text block, for example:
 
@@ -366,14 +352,14 @@ at the top of this document for available filters.
 
     body
       :markdown
-        | Woah! jade _and_ markdown, very **cool**
-        | we can even link to [stuff](http://google.com)
+        Woah! jade _and_ markdown, very **cool**
+        we can even link to [stuff](http://google.com)
 
 Renders:
 
        <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
 
-Filters may also now manipulate the parse tree. For example perhaps I want to
+Filters may also manipulate the parse tree. For example perhaps I want to
 bake conditionals right into jade, we could do so with a filter named _conditionals_. Typically filters work on text blocks, however by passing a regular block our filter can do anything it wants with the tags nested within it.
 
     body
