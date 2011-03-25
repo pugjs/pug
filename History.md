@@ -1,4 +1,9 @@
 
+0.9.4 / 2011-03-24 
+==================
+
+  * Added support for `script(type="text/jade")` as literal jade text
+
 0.9.3 / 2011-03-24 
 ==================
 
