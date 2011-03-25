@@ -85,24 +85,24 @@ module.exports = {
             render(':coffeescript\n  square = (x) ->\n    x * x'));
     },
     
-    // 'test parse tree': function(assert){
-    //     var str = [
-    //         ':conditionals',
-    //         '  if false',
-    //         '    | oh noes',
-    //         '  else',
-    //         '    if null == false',
-    //         '      p doh',
-    //         '    else',
-    //         '      p amazing!'
-    //     ].join('\n');
-    // 
-    //     var html = [
-    //         '<p>amazing!</p>'
-    //     ].join('');
-    // 
-    //     assert.equal(html, render(str));
-    // },
+    'test parse tree': function(assert){
+        var str = [
+            'conditionals:',
+            '  if false',
+            '    | oh noes',
+            '  else',
+            '    if null == false',
+            '      p doh',
+            '    else',
+            '      p amazing!'
+        ].join('\n');
+    
+        var html = [
+            '<p>amazing!</p>'
+        ].join('');
+    
+        assert.equal(html, render(str));
+    },
     
     'test filter attrs': function(assert){
         jade.filters.testing = function(str, attrs){
