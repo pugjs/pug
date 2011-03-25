@@ -21,6 +21,7 @@
   - transparent iteration over objects, arrays, and even non-enumerables via `- each`
   - block comments
   - no tag prefix
+  - AST filters
   - filters
     - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
@@ -363,14 +364,14 @@ Filters may also manipulate the parse tree. For example perhaps I want to
 bake conditionals right into jade, we could do so with a filter named _conditionals_. Typically filters work on text blocks, however by passing a regular block our filter can do anything it wants with the tags nested within it.
 
     body
-      :conditionals
+      conditionals:
         if role == 'admin'
           p You are amazing
         else
           p Not so amazing
 
 Not that we no longer prefix with "-" for these code blocks. Examples of 
-how to manipulate the parse tree can be found at _./examples/conditionals.js_ and _./examples/model.js_. There are several interesting use-cases for this functionality above what was shown above such as transparently aggregating / compressing assets to reduce the number of HTTP requests, transparent record error reporting, and more.
+how to manipulate the parse tree can be found at _./examples/conditionals.js_ and _./examples/model.js_, basically we subclass and re-implement visitor methods as needed. There are several interesting use-cases for this functionality above what was shown above such as transparently aggregating / compressing assets to reduce the number of HTTP requests, transparent record error reporting, and more.
 
 ## Code
 
