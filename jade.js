@@ -218,8 +218,16 @@ Compiler.prototype = {
   
   visitFilter: function(filter){
     var fn = filters[filter.name];
-    if (!fn) throw new Error('unknown filter ":' + filter.name + '"');
-    if (filter.block instanceof nodes.Block) {
+
+    // unknown filter
+    if (!fn) {
+      if (filter.isASTFilter) {
+        throw new Error('unknown ast filter "' + filter.name + ':"');
+      } else {
+        throw new Error('unknown filter ":' + filter.name + '"');
+      }
+    }
+    if (filter.isASTFilter) {
       this.buf.push(fn(filter.block, this, filter.attrs));
     } else {
       this.buffer(fn(utils.text(filter.block.nodes.join('')), filter.attrs));
@@ -515,7 +523,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.9.3';
+exports.version = '0.10.0';
 
 /**
  * Intermediate JavaScript cache.
@@ -1589,7 +1597,8 @@ require.register("nodes/filter.js", function(module, exports, require){
  * Module dependencies.
  */
 
-var Node = require('./node');
+var Node = require('./node')
+  , Block = require('./block');
 
 /**
  * Initialize a `Filter` node with the given 
@@ -1604,6 +1613,7 @@ var Filter = module.exports = function Filter(name, block, attrs) {
   this.name = name;
   this.block = block;
   this.attrs = attrs;
+  this.isASTFilter = block instanceof Block;
 };
 
 /**
@@ -2054,6 +2064,23 @@ Parser.prototype = {
   },
   
   /**
+   * tag ':' attrs? block
+   */
+  
+  parseASTFilter: function(){
+    var block
+      , tok = this.expect('tag')
+      , attrs = this.accept('attrs');
+
+    this.expect(':');
+    block = this.parseBlock();
+
+    var node = new nodes.Filter(tok.val, block, attrs && attrs.attrs);
+    node.line = this.line();
+    return node;
+  },
+  
+  /**
    * each block
    */
   
@@ -2118,6 +2145,15 @@ Parser.prototype = {
    */
   
   parseTag: function(){
+    // ast-filter look-ahead
+    var i = 2;
+    if ('attrs' == this.lookahead(i).type) ++i;
+    if (':' == this.lookahead(i).type) {
+      if ('indent' == this.lookahead(++i).type) {
+        return this.parseASTFilter();
+      }
+    }
+
     var name = this.advance().val
       , tag = new nodes.Tag(name);
 

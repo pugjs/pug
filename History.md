@@ -1,4 +1,9 @@
 
+0.10.0 / 2011-03-25 
+==================
+
+  * Added AST-filter support back in the form of `<tag>[attrs]<:><block>`
+
 0.9.3 / 2011-03-24 
 ==================
 
