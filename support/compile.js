@@ -59,6 +59,7 @@ function parseConditionals(js) {
   var lines = js.split('\n')
     , len = lines.length
     , buffer = true
+    , browser = false
     , buf = []
     , line
     , cond;
@@ -67,9 +68,12 @@ function parseConditionals(js) {
     line = lines[i];
     if (/^ *\/\/ *if *(node|browser)/gm.exec(line)) {
       cond = RegExp.$1;
-      buffer = 'browser' == cond;
+      buffer = browser = 'browser' == cond;
     } else if (/^ *\/\/ *end/.test(line)) {
       buffer = true;
+      browser = false;
+    } else if (browser) {
+      buf.push(line.replace(/^( *)\/\//, '$1'));
     } else if (buffer) {
       buf.push(line);
     }

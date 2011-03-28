@@ -64,6 +64,12 @@ var nodes = require('./nodes')
   , selfClosing = require('./self-closing')
   , utils = require('./utils');
 
+ if (!String.prototype.trimLeft) {
+   String.prototype.trimLeft = function(){
+     return this.replace(/^\s+/, '');
+   }
+ }
+
 /**
  * Initialize `Compiler` with the given `node`.
  *
@@ -140,7 +146,9 @@ Compiler.prototype = {
    */
   
   visitNode: function(node){
-    return this['visit' + node.constructor.name](node);
+    var name = node.constructor.name
+      || node.constructor.toString().match(/function ([^(\s]+)()/)[1];
+    return this['visit' + name](node);
   },
   
   /**
@@ -333,12 +341,12 @@ Compiler.prototype = {
       + '    }\n'
       + '  } else {\n'
       + '    for (var ' + each.key + ' in ' + each.obj + ') {\n'
-      + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
+       + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
       + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
 
     this.visit(each.block);
 
-    this.buf.push('      }\n');
+     this.buf.push('      }\n');
 
     this.buf.push('   }\n  }\n}).call(this);\n');
   },
@@ -353,7 +361,9 @@ Compiler.prototype = {
   visitAttributes: function(attrs){
     var buf = []
       , classes = [];
+
     if (this.terse) buf.push('terse: true');
+
     attrs.forEach(function(attr){
       if (attr.name == 'class') {
         classes.push('(' + attr.val + ')');
@@ -362,11 +372,15 @@ Compiler.prototype = {
         buf.push(pair);
       }
     });
+
     if (classes.length) {
       classes = classes.join(" + ' ' + ");
       buf.push("class: " + classes);
     }
-    this.buf.push("buf.push(attrs({ " + buf.join(', ') + " }));");
+
+    buf = buf.join(', ').replace('class:', '"class":');
+
+    this.buf.push("buf.push(attrs({ " + buf + " }));");
   }
 };
 
