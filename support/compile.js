@@ -48,7 +48,7 @@ function parseInheritance(js) {
 }
 
 /**
- * Parse the given `js`, currently supporting:.
+ * Parse the given `js`, currently supporting:
  * 
  *    'if' ['node' | 'browser']
  *    'end'
