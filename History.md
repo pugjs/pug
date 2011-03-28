@@ -1,4 +1,10 @@
 
+0.10.1 / 2011-03-28 
+==================
+
+  * Fixed `support/compile.js` to exclude browser js in node
+  * Fixes for IE [Patrick Pfeiffer]
+
 0.10.0 / 2011-03-25 
 ==================
 
