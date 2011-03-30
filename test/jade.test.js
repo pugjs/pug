@@ -509,6 +509,9 @@ module.exports = {
         assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,3)) Foo"));
         assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,[0,3][1])) Foo"));
         
+        assert.equal('<rss xmlns:atom="atom"></rss>', render("rss('xmlns:atom'=\"atom\")"));
+        assert.equal('<rss xmlns:atom="atom"></rss>', render("rss(\"xmlns:atom\"='atom')"));
+        assert.equal('<rss xmlns:atom="atom" foo="bar"></rss>', render("rss('xmlns:atom'=\"atom\", 'foo': 'bar')"));
         assert.equal('<a data-obj="{ foo: \'bar\' }"></a>', render("a(data-obj: \"{ foo: 'bar' }\")"));
     },
     
