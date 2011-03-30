@@ -320,6 +320,8 @@ module.exports = {
       assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
       assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
       assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
     },
     
     'test tag text': function(assert){
