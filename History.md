@@ -1,4 +1,9 @@
 
+0.10.3 / 2011-03-30 
+==================
+
+  * Fixed support for quoted attribute keys ex `rss("xmlns:atom"="atom")`
+
 0.10.2 / 2011-03-30 
 ==================
 
