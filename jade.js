@@ -62,6 +62,7 @@ var nodes = require('./nodes')
   , filters = require('./filters')
   , doctypes = require('./doctypes')
   , selfClosing = require('./self-closing')
+  , inlineTags = require('./inline-tags')
   , utils = require('./utils');
 
  if (!String.prototype.trimLeft) {
@@ -81,6 +82,8 @@ var nodes = require('./nodes')
 var Compiler = module.exports = function Compiler(node, options) {
   this.options = options = options || {};
   this.node = node;
+  this.pp = options.prettyprint || false;
+  this.indentDepth = 0;
 };
 
 /**
@@ -192,8 +195,10 @@ Compiler.prototype = {
    */
   
   visitTag: function(tag){
+    this.indentDepth++;
     var name = tag.name;
 
+    if(this.pp && inlineTags.indexOf(name) == -1) this.buffer('\\n' + new Array(this.indentDepth).join('  '));
     if (~selfClosing.indexOf(name) && !this.xml) {
       this.buffer('<' + name);
       this.visitAttributes(tag.attrs);
@@ -213,8 +218,10 @@ Compiler.prototype = {
       if (tag.text) this.buffer(utils.text(tag.text.nodes[0].trimLeft()));
       this.escape = 'pre' == tag.name;
       this.visit(tag.block);
+      if (this.pp && inlineTags.indexOf(name) == -1 && tag.textOnly == 0) this.buffer('\\n' + new Array(this.indentDepth).join('  '));
       this.buffer('</' + name + '>');
     }
+    this.indentDepth--;
   },
   
   /**
@@ -265,6 +272,7 @@ Compiler.prototype = {
   
   visitComment: function(comment){
     if (!comment.buffer) return;
+    if (this.pp) this.buffer('\\n' + new Array(this.indentDepth + 1).join('  '));
     this.buffer('<!--' + utils.escape(comment.val) + '-->');
   },
   
@@ -412,6 +420,7 @@ require.register("doctypes.js", function(module, exports, require){
 
 module.exports = {
     '5': '<!DOCTYPE html>'
+  , 'html': '<!DOCTYPE html>'
   , 'xml': '<?xml version="1.0" encoding="utf-8" ?>'
   , 'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
   , 'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
@@ -518,6 +527,37 @@ module.exports = {
 };
 }); // module: filters.js
 
+require.register("inline-tags.js", function(module, exports, require){
+
+/*!
+ * Jade - inline tags
+ * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
+module.exports = [
+  'a', 
+  'abbr', 
+  'acronym', 
+  'b',   
+  'br', 
+  'code',  
+  'em', 
+  'font', 
+  'i', 
+  'img', 
+  'ins', 
+  'kbd', 
+  'map', 
+  'samp', 
+  'small', 
+  'span', 
+  'strong', 
+  'sub', 
+  'sup'
+];
+}); // module: inline-tags.js
+
 require.register("jade.js", function(module, exports, require){
 
 /*!
@@ -537,7 +577,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.10.0';
+exports.version = '0.10.3';
 
 /**
  * Intermediate JavaScript cache.
@@ -857,7 +897,7 @@ var Lexer = module.exports = function Lexer(str) {
   this.stash = [];
   this.indentStack = [];
   this.indentRe = null;
-  this.textPipe = true;
+  this.pipeless = false;
 };
 
 /**
@@ -1162,6 +1202,9 @@ Lexer.prototype = {
           case ':':
           case '=':
             switch (state()) {
+              case 'key char':
+                key += c;
+                break;
               case 'val':
               case 'expr':
               case 'array':
@@ -1199,19 +1242,32 @@ Lexer.prototype = {
             break;
           case '"':
           case "'":
-            if ('key' == state()) break;
-            'string' == state()
-              ? states.pop()
-              : states.push('string');
-            val += c;
+            switch (state()) {
+              case 'key':
+                states.push('key char');
+                break;
+              case 'key char':
+                states.pop();
+                break;
+              case 'string':
+                states.pop();
+                val += c;
+                break;
+              default:
+                states.push('string');
+                val += c;
+            }
             break;
           case '':
             break;
           default:
-            if ('key' == state()) {
-              key += c;
-            } else {
-              val += c;
+            switch (state()) {
+              case 'key':
+              case 'key char':
+                key += c;
+                break;
+              default:
+                val += c;
             }
         }
       }
@@ -1288,15 +1344,15 @@ Lexer.prototype = {
 
   /**
    * Pipe-less text consumed only when 
-   * textPipe is false;
+   * pipeless is true;
    */
 
   pipelessText: function() {
-    if (false === this.textPipe) {
+    if (this.pipeless) {
       if ('\n' == this.input[0]) return;
-      var i = this.input.indexOf('\n')
-        , str = this.input.substr(0, i);
-      if (-1 == i) return;
+      var i = this.input.indexOf('\n');
+      if (-1 == i) i = this.input.length;
+      var str = this.input.substr(0, i);
       this.consume(str.length);
       return this.tok('text', str);
     }
@@ -1844,7 +1900,7 @@ var Parser = exports = module.exports = function Parser(str, filename){
  * Tags that may not contain tags.
  */
 
-var textOnly = exports.textOnly = ['pre', 'script', 'textarea', 'style'];
+var textOnly = exports.textOnly = ['pre', 'script', 'textarea', 'style', 'title'];
 
 /**
  * Parser prototype.
@@ -2068,9 +2124,9 @@ Parser.prototype = {
       , tok = this.expect('filter')
       , attrs = this.accept('attrs');
 
-    this.lexer.textPipe = false;
+    this.lexer.pipeless = true;
     block = this.parseTextBlock();
-    this.lexer.textPipe = true;
+    this.lexer.pipeless = false;
 
     var node = new nodes.Filter(tok.val, block, attrs && attrs.attrs);
     node.line = this.line();
@@ -2110,8 +2166,7 @@ Parser.prototype = {
    */
    
   parseTextBlock: function(){
-    var text = new nodes.Text
-      , pipeless = false === this.lexer.textPipe;
+    var text = new nodes.Text;
     text.line = this.line();
     this.expect('indent');
     while ('outdent' != this.peek().type) {
@@ -2233,9 +2288,9 @@ Parser.prototype = {
     // block?
     if ('indent' == this.peek().type) {
       if (tag.textOnly) {
-        this.lexer.textPipe = false;
+        this.lexer.pipeless = true;
         tag.block = this.parseTextBlock();
-        this.lexer.textPipe = true;
+        this.lexer.pipeless = false;
       } else {
         var block = this.parseBlock();
         if (tag.block) {
