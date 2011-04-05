@@ -316,7 +316,7 @@ module.exports = {
     },
     
     'test pipe-less text': function(assert){
-      assert.equal('<pre>foo\n\nbar\n</pre>', render('pre\n  foo\n\n  bar'));
+      assert.equal('<pre><code>foo\n\nbar\n</code></pre>', render('pre\n  code\n    foo\n\n    bar'));
       assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
       assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
       assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
