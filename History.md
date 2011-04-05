@@ -1,4 +1,10 @@
 
+0.10.4 / 2011-04-05 
+==================
+
+  * Added `html` doctype, same as "5"
+  * Fixed `pre`, no longer text-only
+
 0.10.3 / 2011-03-30 
 ==================
 
