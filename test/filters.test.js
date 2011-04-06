@@ -83,6 +83,9 @@ module.exports = {
         assert.equal(
             '<script type="text/javascript">\n' + js + '\n</script>',
             render(':coffeescript\n  square = (x) ->\n    x * x'));
+
+        assert.equal('<script type="text/javascript">\n(function() {\n  alert(\'test\');\n}).call(this);\n</script>'
+          , render(":coffeescript\n  alert 'test'"));
     },
     
     'test parse tree': function(assert){
