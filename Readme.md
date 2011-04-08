@@ -238,10 +238,10 @@ outputting
 
 ### Block Comments
 
- A block comment is the `/` character followed by a block.
+ A block comment is legal as well:
 
       body
-        /
+        //
           #content
             h1 Example
 
