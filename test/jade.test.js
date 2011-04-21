@@ -37,16 +37,6 @@ module.exports = {
         assert.equal('<!DOCTYPE html>', render('!!! 5'));
     },
     
-    'test unknown filter': function(assert){
-        var err;
-        try {
-            render(':doesNotExist\n  | foo');
-        } catch (e) {
-            err = e;
-        }
-        assert.equal("Jade:2\n    1. ':doesNotExist'\n    2. '  | foo'\n\nunknown filter \":doesNotExist\"", err.message);
-    },
-    
     'test Buffers': function(assert){
         assert.equal('<p>foo</p>', render(new Buffer('p foo')));
     },
@@ -351,19 +341,6 @@ module.exports = {
         assert.equal('<html><body><h1>Wahoo</h1><p>test</p></body></html>', render('html\n  body\n   h1 Wahoo\n   p test'));
     },
     
-    'test code exceptions': function(assert){
-        var err;
-        try {
-            render('p= foo', { cache: true, filename: 'foo', locals: { foo: 'bar' }});
-            render('p= foo', { cache: true, filename: 'foo' });
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "foo:1\n    1. 'p= foo'\n\nfoo is not defined",
-            err.message);
-    },
-    
     'test interpolation values': function(assert){
         assert.equal('<p>Users: 15</p>', render('p Users: #{15}'));
         assert.equal('<p>Users: </p>', render('p Users: #{null}'));
@@ -371,70 +348,6 @@ module.exports = {
         assert.equal('<p>Users: none</p>', render('p Users: #{undefined || "none"}'));
         assert.equal('<p>Users: 0</p>', render('p Users: #{0}'));
         assert.equal('<p>Users: false</p>', render('p Users: #{false}'));
-    },
-    
-    'test interpolation exceptions': function(assert){
-        var err;
-        try {
-            render('p #{foo}');
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:1\n    1. 'p #{foo}'\n\nfoo is not defined",
-            err.message);
-
-        var err;
-        try {
-            render([
-                'p',
-                'p #{foo}',
-            ].join('\n'));
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:2\n    1. 'p'\n    2. 'p #{foo}'\n\nfoo is not defined",
-            err.message);
-    },
-    
-    'test text block exceptions': function(assert){
-        var err;
-        try {
-            render([
-                'p',
-                '  | foo',
-                '  | bar',
-                '  | #{baz}',
-                '  | raz'
-            ].join('\n'));
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:4\n    2. '  | foo'\n    3. '  | bar'\n    4. '  | #{baz}'\n\nbaz is not defined",
-            err.message);
-    },
-    
-    'test filter text block exceptions': function(assert){
-        var err;
-        try {
-            render([
-                ':cdata',
-                '  | foo',
-                '  | bar',
-                '  | bar',
-                '  | bar',
-                '  | bar',
-                '  | #{baz}',
-                '  | raz'
-            ].join('\n'));
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:8\n    6. '  | bar'\n    7. '  | #{baz}'\n    8. '  | raz'\n\nbaz is not defined",
-            err.message);
     },
     
     'test html 5 mode': function(assert){
@@ -910,19 +823,6 @@ module.exports = {
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     },
     
-    'test .compile() error handling': function(assert){
-        var fn = jade.compile('p= asdf'),
-            err;
-        try {
-            fn();
-        } catch (e) {
-            err = e;
-        }
-        assert.equal(
-            "Jade:1\n    1. 'p= asdf'\n\nasdf is not defined",
-            err.message);
-    },
-
     'test null attrs on tag': function(assert){
         var tag = new jade.nodes.Tag('a'),
             name = 'href',
