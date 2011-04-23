@@ -931,5 +931,9 @@ module.exports = {
         assert.equal(tag.getAttribute(name), val)
         tag.removeAttribute(name)
         assert.isUndefined(tag.getAttribute(name))
+    },
+
+    'test locals property named escape': function(assert){
+      assert.equal('<p>Jade</p>', render('p #{value}', { locals: { value:"Jade", escape: function(){ return "evil"; } }}));
     }
 };
