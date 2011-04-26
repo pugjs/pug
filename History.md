@@ -1,4 +1,15 @@
 
+0.10.5 / 2011-04-26 
+==================
+
+  * Added error context after the lineno
+  * Added; indicate failing lineno with ">"
+  * Added `Object.keys()` for the client-side
+  * Fixed attr strings when containing the opposite quote. Closes 207
+  * Fixed attr issue with js expressions within strings
+  * Fixed single-quote filter escape bug. Closes #196
+
+
 0.10.4 / 2011-04-05 
 ==================
 

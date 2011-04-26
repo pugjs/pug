@@ -64,11 +64,25 @@ var nodes = require('./nodes')
   , selfClosing = require('./self-closing')
   , utils = require('./utils');
 
+ 
+ if (!Object.keys) {
+   Object.keys = function(obj){
+     var arr;
+     for (var key in obj) {
+       if (obj.hasOwnProperty(key)) {
+         arr.push(obj);
+       }
+     }
+     return arr;
+   } 
+ }
+ 
  if (!String.prototype.trimLeft) {
    String.prototype.trimLeft = function(){
      return this.replace(/^\s+/, '');
    }
  }
+
 
 /**
  * Initialize `Compiler` with the given `node`.
@@ -238,7 +252,8 @@ Compiler.prototype = {
     if (filter.isASTFilter) {
       this.buf.push(fn(filter.block, this, filter.attrs));
     } else {
-      this.buffer(fn(utils.text(filter.block.nodes.join('')), filter.attrs));
+      var text = filter.block.nodes.join('');
+      this.buffer(utils.text(fn(text, filter.attrs)));
     }
   },
   
@@ -412,6 +427,7 @@ require.register("doctypes.js", function(module, exports, require){
 
 module.exports = {
     '5': '<!DOCTYPE html>'
+  , 'html': '<!DOCTYPE html>'
   , 'xml': '<?xml version="1.0" encoding="utf-8" ?>'
   , 'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
   , 'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
@@ -537,7 +553,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.10.0';
+exports.version = '0.10.5';
 
 /**
  * Intermediate JavaScript cache.
@@ -656,17 +672,18 @@ function escape(html){
  */
 
 function rethrow(err, str, filename, lineno){
-  var start = lineno - 3 > 0
-    ? lineno - 3
-    : 0;
+  var context = 3
+    , lines = str.split('\n')
+    , start = Math.max(lineno - context, 0)
+    , end = Math.min(lines.length, lineno + context); 
 
   // Error context
-  var context = str.split('\n').slice(start, lineno).map(function(line, i){
-    return '    '
-      + (i + start + 1)
-      + ". '"
-      + line.replace("'", "\\'")
-      + "'";
+  var context = lines.slice(start, end).map(function(line, i){
+    var curr = i + start + 1;
+    return (curr == lineno ? '  > ' : '    ')
+      + curr
+      + '| '
+      + line;
   }).join('\n');
 
   // Alter exception message
@@ -857,7 +874,7 @@ var Lexer = module.exports = function Lexer(str) {
   this.stash = [];
   this.indentStack = [];
   this.indentRe = null;
-  this.textPipe = true;
+  this.pipeless = false;
 };
 
 /**
@@ -1128,6 +1145,7 @@ Lexer.prototype = {
         , states = ['key']
         , key = ''
         , val = ''
+        , quote
         , c;
 
       function state(){
@@ -1162,6 +1180,9 @@ Lexer.prototype = {
           case ':':
           case '=':
             switch (state()) {
+              case 'key char':
+                key += c;
+                break;
               case 'val':
               case 'expr':
               case 'array':
@@ -1174,44 +1195,58 @@ Lexer.prototype = {
             }
             break;
           case '(':
-            states.push('expr');
+            if ('val' == state()) states.push('expr');
             val += c;
             break;
           case ')':
-            states.pop();
+            if ('expr' == state()) states.pop();
             val += c;
             break;
           case '{':
-            states.push('object');
+            if ('val' == state()) states.push('object');
             val += c;
             break;
           case '}':
-            states.pop();
+            if ('object' == state()) states.pop();
             val += c;
             break;
           case '[':
-            states.push('array');
+            if ('val' == state()) states.push('array');
             val += c;
             break;
           case ']':
-            states.pop();
+            if ('array' == state()) states.pop();
             val += c;
             break;
           case '"':
           case "'":
-            if ('key' == state()) break;
-            'string' == state()
-              ? states.pop()
-              : states.push('string');
-            val += c;
+            switch (state()) {
+              case 'key':
+                states.push('key char');
+                break;
+              case 'key char':
+                states.pop();
+                break;
+              case 'string':
+                if (c == quote) states.pop();
+                val += c;
+                break;
+              default:
+                states.push('string');
+                val += c;
+                quote = c;
+            }
             break;
           case '':
             break;
           default:
-            if ('key' == state()) {
-              key += c;
-            } else {
-              val += c;
+            switch (state()) {
+              case 'key':
+              case 'key char':
+                key += c;
+                break;
+              default:
+                val += c;
             }
         }
       }
@@ -1288,15 +1323,15 @@ Lexer.prototype = {
 
   /**
    * Pipe-less text consumed only when 
-   * textPipe is false;
+   * pipeless is true;
    */
 
   pipelessText: function() {
-    if (false === this.textPipe) {
+    if (this.pipeless) {
       if ('\n' == this.input[0]) return;
-      var i = this.input.indexOf('\n')
-        , str = this.input.substr(0, i);
-      if (-1 == i) return;
+      var i = this.input.indexOf('\n');
+      if (-1 == i) i = this.input.length;
+      var str = this.input.substr(0, i);
       this.consume(str.length);
       return this.tok('text', str);
     }
@@ -1844,7 +1879,7 @@ var Parser = exports = module.exports = function Parser(str, filename){
  * Tags that may not contain tags.
  */
 
-var textOnly = exports.textOnly = ['pre', 'script', 'textarea', 'style'];
+var textOnly = exports.textOnly = ['code', 'script', 'textarea', 'style'];
 
 /**
  * Parser prototype.
@@ -2068,9 +2103,9 @@ Parser.prototype = {
       , tok = this.expect('filter')
       , attrs = this.accept('attrs');
 
-    this.lexer.textPipe = false;
+    this.lexer.pipeless = true;
     block = this.parseTextBlock();
-    this.lexer.textPipe = true;
+    this.lexer.pipeless = false;
 
     var node = new nodes.Filter(tok.val, block, attrs && attrs.attrs);
     node.line = this.line();
@@ -2110,8 +2145,7 @@ Parser.prototype = {
    */
    
   parseTextBlock: function(){
-    var text = new nodes.Text
-      , pipeless = false === this.lexer.textPipe;
+    var text = new nodes.Text;
     text.line = this.line();
     this.expect('indent');
     while ('outdent' != this.peek().type) {
@@ -2233,9 +2267,9 @@ Parser.prototype = {
     // block?
     if ('indent' == this.peek().type) {
       if (tag.textOnly) {
-        this.lexer.textPipe = false;
+        this.lexer.pipeless = true;
         tag.block = this.parseTextBlock();
-        this.lexer.textPipe = true;
+        this.lexer.pipeless = false;
       } else {
         var block = this.parseBlock();
         if (tag.block) {
