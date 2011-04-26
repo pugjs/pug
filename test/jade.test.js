@@ -426,6 +426,8 @@ module.exports = {
         assert.equal('<rss xmlns:atom="atom"></rss>', render("rss(\"xmlns:atom\"='atom')"));
         assert.equal('<rss xmlns:atom="atom" foo="bar"></rss>', render("rss('xmlns:atom'=\"atom\", 'foo': 'bar')"));
         assert.equal('<a data-obj="{ foo: \'bar\' }"></a>', render("a(data-obj: \"{ foo: 'bar' }\")"));
+        
+        assert.equal('<meta content="what\'s up? \'weee\'"/>', render('meta(content="what\'s up? \'weee\'")'));
     },
     
     'test attr parens': function(assert){
