@@ -31,6 +31,7 @@
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
+  - [html2jade](https://github.com/donpark/html2jade) converter
 
 ## Implementations
 
