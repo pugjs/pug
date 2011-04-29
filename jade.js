@@ -67,7 +67,7 @@ var nodes = require('./nodes')
  
  if (!Object.keys) {
    Object.keys = function(obj){
-     var arr;
+     var arr = [];
      for (var key in obj) {
        if (obj.hasOwnProperty(key)) {
          arr.push(obj);
@@ -553,7 +553,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.10.5';
+exports.version = '0.10.6';
 
 /**
  * Intermediate JavaScript cache.
