@@ -64,6 +64,12 @@ module.exports = {
             render(':stylus\n  body\n    color #c00'));
     },
 
+    'test :stylus filter with options': function(assert){
+        assert.equal(
+            '<style>body{color:#c00}\n</style>',
+            render(':stylus(compress=true)\n  body\n    color #c00'));
+    },
+
     'test :less filter': function(assert){
         assert.equal(
             '<style>.class {\n  width: 20px;\n}\n</style>',
