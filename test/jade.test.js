@@ -71,6 +71,20 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        var str = [
+            'p',
+            'div',
+            'img'
+        ].join('\r\n');
+
+        var html = [
+            '<p></p>',
+            '<div></div>',
+            '<img>'
+        ].join('');
+
+        assert.equal(html, render(str, { doctype:'html' }));
     },
     
     'test single quotes': function(assert){
