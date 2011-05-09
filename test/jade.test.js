@@ -35,6 +35,11 @@ module.exports = {
     'test doctypes': function(assert){
         assert.equal('<?xml version="1.0" encoding="utf-8" ?>', render('!!! xml'));
         assert.equal('<!DOCTYPE html>', render('!!! 5'));
+        assert.equal('<!DOCTYPE html>', render('!!!', { doctype:'html' }));
+        assert.equal('<!DOCTYPE html>', render('!!! html', { doctype:'xml' }));
+        assert.equal('<html></html>', render('html'));
+        assert.equal('<!DOCTYPE html><html></html>', render('html', { doctype:'html' }));
+        assert.equal('<!DOCTYPE html><HTML></HTML>', render('HTML', { doctype:'html' }));
     },
     
     'test Buffers': function(assert){
@@ -69,6 +74,20 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+        
+        var str = [
+            'p',
+            'div',
+            'img'
+        ].join('\r\n');
+
+        var html = [
+            '<p></p>',
+            '<div></div>',
+            '<img>'
+        ].join('');
+
+        assert.equal(html, render(str, { doctype:'html' }));
     },
     
     'test single quotes': function(assert){
