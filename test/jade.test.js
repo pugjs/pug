@@ -39,7 +39,6 @@ module.exports = {
         assert.equal('<!DOCTYPE html>', render('!!! html', { doctype:'xml' }));
         assert.equal('<html></html>', render('html'));
         assert.equal('<!DOCTYPE html><html></html>', render('html', { doctype:'html' }));
-        assert.equal('<!DOCTYPE html><HTML></HTML>', render('HTML', { doctype:'html' }));
     },
     
     'test Buffers': function(assert){
