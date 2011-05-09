@@ -37,6 +37,8 @@ module.exports = {
         assert.equal('<!DOCTYPE html>', render('!!! 5'));
         assert.equal('<!DOCTYPE html>', render('!!!', { doctype:'html' }));
         assert.equal('<!DOCTYPE html>', render('!!! strict', { doctype:'html', forceDoctype:true }));
+        assert.equal('<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html></html>', render('html', { isTopLevel:true }));
+        assert.equal('<!DOCTYPE html><html></html>', render('html', { doctype:'html', isTopLevel:true }));
     },
     
     'test Buffers': function(assert){
