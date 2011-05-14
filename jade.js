@@ -84,6 +84,7 @@ var nodes = require('./nodes')
  }
 
 
+
 /**
  * Initialize `Compiler` with the given `node`.
  *
@@ -95,6 +96,9 @@ var nodes = require('./nodes')
 var Compiler = module.exports = function Compiler(node, options) {
   this.options = options = options || {};
   this.node = node;
+  this.hasCompiledDoctype = false;
+  this.hasCompiledTag = false;
+  if (options.doctype) this.setDoctype(options.doctype);
 };
 
 /**
@@ -113,6 +117,23 @@ Compiler.prototype = {
     this.buf = ['var interp;'];
     this.visit(this.node);
     return this.buf.join('\n');
+  },
+
+  /**
+   * Sets the default doctype `name`. Sets terse mode to `true` when
+   * html 5 is used, causing self-closing tags to end with ">" vs "/>",
+   * and boolean attributes are not mirrored.
+   *
+   * @param {string} name
+   * @api public
+   */
+  
+  setDoctype: function(name){
+    var doctype = doctypes[name || 'default'];
+    if (!doctype) throw new Error('unknown doctype "' + name + '"');
+    this.doctype = doctype;
+    this.terse = '5' == name || 'html' == name;
+    this.xml = 0 == this.doctype.indexOf('<?xml');
   },
   
   /**
@@ -189,12 +210,12 @@ Compiler.prototype = {
    */
   
   visitDoctype: function(doctype){
-    var name = doctype.val;
-    if ('5' == name) this.terse = true;
-    doctype = doctypes[name || 'default'];
-    this.xml = 0 == doctype.indexOf('<?xml');
-    if (!doctype) throw new Error('unknown doctype "' + name + '"');
-    this.buffer(doctype);
+    if (doctype && (doctype.val || !this.doctype)) {
+      this.setDoctype(doctype.val || 'default');
+    }
+
+    if (this.doctype) this.buffer(this.doctype);
+    this.hasCompiledDoctype = true;
   },
   
   /**
@@ -207,6 +228,13 @@ Compiler.prototype = {
   
   visitTag: function(tag){
     var name = tag.name;
+
+    if (!this.hasCompiledTag) {
+      if (!this.hasCompiledDoctype && 'html' == name) {
+        this.visitDoctype();
+      }
+      this.hasCompiledTag = true;
+    }
 
     if (~selfClosing.indexOf(name) && !this.xml) {
       this.buffer('<' + name);
@@ -553,7 +581,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.10.7';
+exports.version = '0.11.0';
 
 /**
  * Intermediate JavaScript cache.
@@ -715,7 +743,9 @@ function parse(str, options){
         + attrs.toString() + '\n\n'
         + escape.toString()  + '\n\n'
         + 'var buf = [];\n'
-        + 'with (locals || {}) {' + js + '}'
+        + (options.self
+          ? 'var self = locals || {}, __ = locals.__;\n' + js
+          : 'with (locals || {}) {' + js + '}')
         + 'return buf.join("");';
     } catch (err) {
       process.compile(js, filename || 'Jade');
@@ -841,6 +871,7 @@ exports.renderFile = function(path, options, fn){
     });
   }
 };
+
 }); // module: jade.js
 
 require.register("lexer.js", function(module, exports, require){

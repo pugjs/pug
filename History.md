@@ -1,4 +1,10 @@
 
+0.11.0 / 2011-05-14 
+==================
+
+  * Added `self` object to avoid poor `with(){}` performance [masylum]
+  * Added `doctype` option [Jeremy Larkin]
+
 0.10.7 / 2011-05-04 
 ==================
 
