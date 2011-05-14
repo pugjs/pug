@@ -14,6 +14,7 @@ test:
 
 benchmark:
 	@node benchmarks/jade.js \
+	 && node benchmarks/jade-self.js \
 	 && node benchmarks/haml.js \
 	 && node benchmarks/haml2.js \
 	 && node benchmarks/ejs.js
