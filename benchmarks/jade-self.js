@@ -8,10 +8,10 @@ var bm = require('./common'),
     fs = require('fs');
 
 var str = fs.readFileSync(__dirname + '/example-self.jade', 'ascii');
-var fn = jade.compile(str, {self: true});
+var fn = jade.compile(str, { self: true });
 var n = bm.times;
 
-bm.start('jade compilation');
+bm.start('jade self compilation');
 while (n--) {
   jade.render(str, {
     filename: 'example-self.jade'
@@ -23,7 +23,7 @@ bm.stop();
 
 var n = bm.times;
 
-bm.start('jade execution');
+bm.start('jade self execution');
 while (n--) {
   jade.render(str, {
     filename: 'example-self.jade'
