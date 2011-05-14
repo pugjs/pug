@@ -75,6 +75,7 @@ via npm:
 ### Options
 
  - `scope`     Evaluation scope (`this`)
+ - `self`      Use a `self` namespace to hold the locals. _false by default_
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required by `cache`
  - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
