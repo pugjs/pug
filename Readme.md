@@ -301,23 +301,23 @@ Jade currently supports '(' and ')' as attribute delimiters.
 
     a(href='/login', title='View login page') Login
 
-Alternatively we may use the colon to separate pairs:
-
-    a(href: '/login', title: 'View login page') Login
-
 Boolean attributes are also supported:
 
     input(type="checkbox", checked)
 
 Boolean attributes with code will only output the attribute when `true`:
 
-	input(type="checkbox", checked: someValue)
+    input(type="checkbox", checked: someValue)
     
 Multiple lines work too:
 
     input(type='checkbox',
       name='agreement',
       checked)
+
+Colons work:
+
+    rss(xmlns:atom="atom")
 
 ### Doctypes
 
