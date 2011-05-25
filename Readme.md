@@ -57,6 +57,7 @@ via npm:
 
 ## Public API
 
+```javascript
     var jade = require('jade');
 
     // Render a string
@@ -71,6 +72,7 @@ via npm:
     // Compile a function
     var fn = jade.compile('string of jade', options);
     fn.call(scope, locals);
+```
 
 ### Options
 
@@ -329,8 +331,10 @@ Will output the _transitional_ doctype, however:
 
     !!! 5
 
-Will output html 5's doctype. Below are the doctypes
+Will output the _html 5_ doctype. Below are the doctypes
 defined by default, which can easily be extended:
+
+```javascript
     var doctypes = exports.doctypes = {
 	    '5': '<!DOCTYPE html>',
 	    'xml': '<?xml version="1.0" encoding="utf-8" ?>',
@@ -342,10 +346,13 @@ defined by default, which can easily be extended:
 	    'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
 	    'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
 	};
+```
 
 To alter the default simply change:
 
-    jade.doctypes.default = 'whatever you want';
+```javascript
+    jade.doctypes['default'] = 'whatever you want';
+```
 
 ## Filters
 
@@ -414,7 +421,7 @@ buffer a return value, which is prefixed by `=`:
     = foo
     h1= foo
 
-Which outputs `bar<h1>bar<h1/>`. Code buffered by `=` is escaped 
+Which outputs `bar<h1>bar</h1>`. Code buffered by `=` is escaped 
 by default for security, however to output unescaped return values
 you may use `!=`:
 
