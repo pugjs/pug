@@ -351,7 +351,7 @@ defined by default, which can easily be extended:
 To alter the default simply change:
 
 ```javascript
-    jade.doctypes['default'] = 'whatever you want';
+    jade.doctypes.default = 'whatever you want';
 ```
 
 ## Filters
