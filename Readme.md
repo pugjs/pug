@@ -309,7 +309,7 @@ Boolean attributes are also supported:
 
 Boolean attributes with code will only output the attribute when `true`:
 
-    input(type="checkbox", checked: someValue)
+    input(type="checkbox", checked= someValue)
     
 Multiple lines work too:
 
