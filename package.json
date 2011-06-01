@@ -7,7 +7,7 @@
   "main": "./index.js",
   "bin": { "jade": "./bin/jade" },
   "devDependencies": {
-    "expresso": ">= 0.0.1",
+    "expresso": "0.6.4",
     "coffee-script": ">= 0.0.1",
     "sass": ">= 0.0.1",
     "stylus": ">= 0.0.1"

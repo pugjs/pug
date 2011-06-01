@@ -4,12 +4,8 @@ SRC = $(shell find lib -name "*.js" -type f)
 UGLIFY_FLAGS = --no-mangle 
 
 test:
-	@./support/expresso/bin/expresso \
+	@./node_modules/.bin/expresso \
 		-I lib \
-		-I support/coffee-script/lib \
-		-I support/markdown/lib \
-		-I support/sass/lib \
-		-I support \
 		$(TESTS)
 
 benchmark:
