@@ -10,6 +10,8 @@
     "expresso": "0.6.4",
     "coffee-script": ">= 0.0.1",
     "sass": ">= 0.0.1",
+    "less": ">= 0.0.1",
+    "markdown": ">= 0.0.1",
     "stylus": ">= 0.0.1"
   },
   "engines": { "node": ">= 0.1.98" }
