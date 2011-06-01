@@ -10,6 +10,7 @@
   - great readability
   - flexible indentation
   - block-expansion
+  - attribute interpolation
   - code is escaped by default for security
   - contextual error reporting at compile &amp; run time
   - executable for compiling jade templates via the command line
@@ -320,6 +321,16 @@ Multiple lines work too:
 Colons work:
 
     rss(xmlns:atom="atom")
+
+Suppose we have the `user` local `{ id: 12, name: 'tobi' }`
+and we wish to create an anchor tag with `href` pointing to "/user/12"
+we could use regular javascript concatenation:
+
+    a(href='/user/' + user.id)= user.name
+
+or we could use jade's interpolation:
+
+   a(href='/user/#{user.id}')= user.name
 
 ### Doctypes
 
