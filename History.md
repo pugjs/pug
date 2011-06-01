@@ -1,4 +1,12 @@
 
+0.11.1 / 2011-06-01 
+==================
+
+  * Fixed text block indentation [Laszlo Bacsi]
+  * Changed; utilizing devDependencies
+  * Fixed try/catch issue with renderFile(). Closes #227
+  * Removed attribute ":" support, use "=" (option for ':' coming soon)
+
 0.11.0 / 2011-05-14 
 ==================
 
