@@ -77,21 +77,46 @@ module.exports = {
     },
 
     'test :coffeescript filter': function(assert){
-        var js = [
+        var coffee, js;
+        coffee = [
+            ':coffeescript',
+            '  square = (x) ->',
+            '    x * x'
+        ].join('\n');
+        js = [
+            '<script type="text/javascript">',
             '(function() {',
             '  var square;',
             '  square = function(x) {',
             '    return x * x;',
             '  };',
-            '}).call(this);'
+            '}).call(this);',
+            '</script>'
         ].join('\n');
 
-        assert.equal(
-            '<script type="text/javascript">\n' + js + '\n</script>',
-            render(':coffeescript\n  square = (x) ->\n    x * x'));
+        assert.equal(js, render(coffee));
 
-        assert.equal('<script type="text/javascript">\n(function() {\n  alert(\'test\');\n}).call(this);\n</script>'
-          , render(":coffeescript\n  alert 'test'"));
+        coffee = [
+            ':coffeescript',
+            '  $ ->',
+            '    $("#flash").fadeIn ->',
+            '      console.log("first line")',
+            '      console.log("second line")'
+        ].join('\n');
+        js = [
+            '<script type="text/javascript">',
+            '(function() {',
+            '  $(function() {',
+            '    return $("#flash").fadeIn(function() {',
+            '      console.log("first line");',
+            '      return console.log("second line");',
+            '    });',
+            '  });',
+            '}).call(this);',
+            '</script>'
+        ].join('\n');
+
+        assert.equal(js, render(coffee));
     },
     
     'test parse tree': function(assert){
