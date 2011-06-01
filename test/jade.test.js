@@ -445,6 +445,17 @@ module.exports = {
         assert.equal('<meta content="what\'s up? \'weee\'"/>', render('meta(content="what\'s up? \'weee\'")'));
     },
     
+    'test attr interpolation': function(assert){
+        assert.equal('<a href="/user/12">tj</a>'
+          , render("a(href='/user/#{id}') #{name}", { locals: { name: 'tj', id: 12 }}));
+
+        assert.equal('<a href="/user/12-tj">tj</a>'
+          , render("a(href='/user/#{id}-#{name}') #{name}", { locals: { name: 'tj', id: 12 }}));
+
+        assert.equal('<a href="/user/&lt;script&gt;">tj</a>'
+          , render("a(href='/user/#{id}') #{name}", { locals: { name: 'tj', id: '<script>' }}));
+    },
+    
     'test attr parens': function(assert){
         assert.equal('<p foo="bar">baz</p>', render('p(foo=((("bar"))))= ((("baz")))'));
     },
