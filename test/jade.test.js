@@ -34,6 +34,7 @@ module.exports = {
     
     'test doctypes': function(assert){
         assert.equal('<?xml version="1.0" encoding="utf-8" ?>', render('!!! xml'));
+        assert.equal('<!DOCTYPE html>', render('doctype html'));
         assert.equal('<!DOCTYPE html>', render('!!! 5'));
         assert.equal('<!DOCTYPE html>', render('!!!', { doctype:'html' }));
         assert.equal('<!DOCTYPE html>', render('!!! html', { doctype:'xml' }));

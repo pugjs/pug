@@ -348,13 +348,21 @@ or we could use jade's interpolation:
 
 ### Doctypes
 
-To add a doctype simply use `!!!` followed by an optional value:
+To add a doctype simply use `!!!`, or `doctype` followed by an optional value:
 
     !!!
 
 Will output the _transitional_ doctype, however:
 
     !!! 5
+
+or
+
+    !!! html
+
+or
+
+    doctype html
 
 Will output the _html 5_ doctype. Below are the doctypes
 defined by default, which can easily be extended:
