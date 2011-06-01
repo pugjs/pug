@@ -318,6 +318,20 @@ Multiple lines work too:
       name='agreement',
       checked)
 
+Multiple lines without the comma work fine:
+
+    input(type='checkbox'
+      name='agreement'
+      checked)
+
+Funky whitespace? fine:
+
+
+    input(
+      type='checkbox'
+      name='agreement'
+      checked)
+
 Colons work:
 
     rss(xmlns:atom="atom")
