@@ -364,6 +364,11 @@ or
 
     doctype html
 
+doctypes are case-insensitive, so the following are equivalent:
+
+    doctype Basic
+    doctype basic
+
 Will output the _html 5_ doctype. Below are the doctypes
 defined by default, which can easily be extended:
 
