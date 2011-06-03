@@ -1,4 +1,12 @@
 
+0.12.0 / 2011-06-03 
+==================
+
+  * Added `doctype` as alias of `!!!`
+  * Added; doctype value is now case-insensitive
+  * Added attribute interpolation support
+  * Fixed; retain original indentation spaces in text blocks
+
 0.11.1 / 2011-06-01 
 ==================
 
