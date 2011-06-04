@@ -448,6 +448,7 @@ module.exports = {
     },
     
     'test attr interpolation': function(assert){
+        // Test single quote interpolation
         assert.equal('<a href="/user/12">tj</a>'
           , render("a(href='/user/#{id}') #{name}", { locals: { name: 'tj', id: 12 }}));
 
@@ -456,6 +457,16 @@ module.exports = {
 
         assert.equal('<a href="/user/&lt;script&gt;">tj</a>'
           , render("a(href='/user/#{id}') #{name}", { locals: { name: 'tj', id: '<script>' }}));
+
+        // Test double quote interpolation
+        assert.equal('<a href="/user/13">ds</a>'
+          , render('a(href="/user/#{id}") #{name}', { locals: { name: 'ds', id: 13 }}));
+
+        assert.equal('<a href="/user/13-ds">ds</a>'
+          , render('a(href="/user/#{id}-#{name}") #{name}', { locals: { name: 'ds', id: 13 }}));
+
+        assert.equal('<a href="/user/&lt;script&gt;">ds</a>'
+          , render('a(href="/user/#{id}") #{name}', { locals: { name: 'ds', id: '<script>' }}));
     },
     
     'test attr parens': function(assert){
