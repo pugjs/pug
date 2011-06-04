@@ -1,8 +1,8 @@
 
-n.n.n / 2011-06-04 
+0.12.1 / 2011-06-04 
 ==================
 
-  * fix attribute interpolation with double quotes. Fixes #232
+  * Fixed attribute interpolation with double quotes. Fixes #232 [topaxi]
 
 0.12.0 / 2011-06-03 
 ==================
