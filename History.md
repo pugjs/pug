@@ -1,4 +1,9 @@
 
+n.n.n / 2011-06-04 
+==================
+
+  * fix attribute interpolation with double quotes. Fixes #232
+
 0.12.0 / 2011-06-03 
 ==================
 

@@ -129,7 +129,7 @@ Compiler.prototype = {
    */
   
   setDoctype: function(name){
-    var doctype = doctypes[name || 'default'];
+    var doctype = doctypes[(name || 'default').toLowerCase()];
     if (!doctype) throw new Error('unknown doctype "' + name + '"');
     this.doctype = doctype;
     this.terse = '5' == name || 'html' == name;
@@ -581,7 +581,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.11.0';
+exports.version = '0.12.1';
 
 /**
  * Intermediate JavaScript cache.
@@ -744,7 +744,7 @@ function parse(str, options){
         + escape.toString()  + '\n\n'
         + 'var buf = [];\n'
         + (options.self
-          ? 'var self = locals || {}, __ = locals.__;\n' + js
+          ? 'var self = locals || {}, __ = __ || locals.__;\n' + js
           : 'with (locals || {}) {' + js + '}')
         + 'return buf.join("");';
     } catch (err) {
@@ -796,6 +796,7 @@ exports.compile = function(str, options){
  *   - `filename`  Used in exceptions, and required by `cache`
  *   - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
  *   - `compiler`  Compiler to replade jade's default
+ *   - `doctype`   Specify the default doctype
  *
  * @param {String|Buffer} str
  * @param {Object} options
@@ -847,6 +848,8 @@ exports.render = function(str, options){
  */
 
 exports.renderFile = function(path, options, fn){
+  var ret;
+
   if (typeof options === 'function') {
     fn = options;
     options = {};
@@ -856,18 +859,20 @@ exports.renderFile = function(path, options, fn){
   // Primed cache
   if (options.cache && cache[path]) {
     try {
-      fn(null, exports.render('', options));
+      ret = exports.render('', options);
     } catch (err) {
-      fn(err);
+      return fn(err);
     }
+    fn(null, ret);
   } else {
     fs.readFile(path, 'utf8', function(err, str){
       if (err) return fn(err);
       try {
-        fn(null, exports.render(str, options));
+        ret = exports.render(str, options);
       } catch (err) {
-        fn(err);
+        return fn(err);
       }
+      fn(null, ret);
     });
   }
 };
@@ -1096,7 +1101,7 @@ Lexer.prototype = {
    */
   
   doctype: function() {
-    return this.scan(/^!!! *(\w+)?/, 'doctype');
+    return this.scan(/^(?:!!!|doctype) *(\w+)?/, 'doctype');
   },
   
   /**
@@ -1175,6 +1180,12 @@ Lexer.prototype = {
         return states[states.length - 1];
       }
 
+      function interpolate(attr) {
+        return attr.replace(/#\{([^}]+)\}/g, function(_, expr){
+          return quote + " + (" + expr + ") + " + quote;
+        });
+      }
+
       this.consume(index + 1);
       tok.attrs = {};
 
@@ -1196,11 +1207,10 @@ Lexer.prototype = {
                 if ('' == key) return;
                 tok.attrs[key.replace(/^['"]|['"]$/g, '')] = '' == val
                   ? true
-                  : val;
+                  : interpolate(val);
                 key = val = '';
             }
             break;
-          case ':':
           case '=':
             switch (state()) {
               case 'key char':
@@ -1334,7 +1344,7 @@ Lexer.prototype = {
       // indent
       } else if (indents && indents != this.indentStack[0]) {
         this.indentStack.unshift(indents);
-        tok = this.tok('indent');
+        tok = this.tok('indent', indents);
       // newline
       } else {
         tok = this.tok('newline');
@@ -1392,11 +1402,11 @@ Lexer.prototype = {
     return this.deferred()
       || this.eos()
       || this.pipelessText()
+      || this.doctype()
       || this.tag()
       || this.filter()
       || this.each()
       || this.code()
-      || this.doctype()
       || this.id()
       || this.className()
       || this.attrs()
@@ -2166,11 +2176,13 @@ Parser.prototype = {
   /**
    * indent (text | newline)* outdent
    */
-   
+
   parseTextBlock: function(){
     var text = new nodes.Text;
     text.line = this.line();
-    this.expect('indent');
+    var spaces = this.expect('indent').val;
+    if (null == this._spaces) this._spaces = spaces;
+    var indent = Array(spaces - this._spaces + 1).join(' ');
     while ('outdent' != this.peek().type) {
       switch (this.peek().type) {
         case 'newline':
@@ -2179,15 +2191,16 @@ Parser.prototype = {
           break;
         case 'indent':
           text.push('\\n');
-          text.push(this.parseTextBlock().nodes.map(function(text){
-            return '  ' + text;
-          }).join(''));
+          this.parseTextBlock().nodes.forEach(function(node){
+            text.push(node);
+          });
           text.push('\\n');
           break;
         default:
-          text.push(this.advance().val);
+          text.push(indent + this.advance().val);
       }
     }
+    this._spaces = null;
     this.expect('outdent');
     return text;
   },
