@@ -5,7 +5,6 @@ UGLIFY_FLAGS = --no-mangle
 
 test:
 	@./node_modules/.bin/expresso \
-		-I lib \
 		-I node_modules \
 		$(TESTS)
 

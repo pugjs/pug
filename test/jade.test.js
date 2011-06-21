@@ -3,8 +3,7 @@
  * Module dependencies.
  */
 
-var jade = require('jade')
-  , Buffer = require('buffer').Buffer
+var jade = require('../')
   , ENOENT;
 
 // COMPAT:
@@ -339,7 +338,7 @@ module.exports = {
         assert.equal('<p>click\n<a>Google</a>.\n</p>', render('p\n  | click\n  a Google\n  | .'));
         assert.equal('<p>(parens)</p>', render('p (parens)'));
         assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
-        assert.equal('<option>-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
+        assert.equal('<option value="">-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
     },
     
     'test tag text block': function(assert){
@@ -398,7 +397,6 @@ module.exports = {
         assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= false)'));
         assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= null)'));
         assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= undefined)'));
-        assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= "")'));
         
         assert.equal('<img src="/foo.png"/>', render('img(src="/foo.png")'), 'Test attr =');
         assert.equal('<img src="/foo.png"/>', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
@@ -477,12 +475,13 @@ module.exports = {
         assert.equal('<p></p>', render('p(id= name)', { locals: { name: undefined }}));
         assert.equal('<p></p>', render('p(id= name)', { locals: { name: null }}));
         assert.equal('<p></p>', render('p(id= name)', { locals: { name: false }}));
-        assert.equal('<p></p>', render('p(id= name)', { locals: { name: '' }}));
+        assert.equal('<p id=""></p>', render('p(id= name)', { locals: { name: '' }}));
         assert.equal('<p id="tj"></p>', render('p(id= name)', { locals: { name: 'tj' }}));
         assert.equal('<p id="default"></p>', render('p(id= name || "default")', { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id= 'something')", { locals: { name: null }}));
         assert.equal('<p id="something"></p>', render("p(id = 'something')", { locals: { name: null }}));
         assert.equal('<p id="foo"></p>', render("p(id= (true ? 'foo' : 'bar'))"));
+        assert.equal('<option value="">Foo</option>', render("option(value='') Foo"));
     },
     
     'test code attrs class': function(assert){
