@@ -263,7 +263,7 @@ outputting
 Jade supports conditional-comments as well, for example:
 
     body
-      /if IE
+      //if IE
         a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
 
 outputs:
