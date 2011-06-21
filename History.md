@@ -1,4 +1,10 @@
 
+0.12.3 / 2011-06-21 
+==================
+
+  * Fixed empty strings support. Closes #223
+  * Fixed conditional comments documentation. Closes #245
+
 0.12.2 / 2011-06-16 
 ==================
 
