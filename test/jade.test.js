@@ -447,6 +447,12 @@ module.exports = {
 
     'test class attr array': function(assert){
         assert.equal('<body class="foo bar baz"></body>', render('body(class=["foo", "bar", "baz"])'));
+
+        assert.equal('<body class="foo bar baz"></body>', render('body.foo(class=["bar", "baz"])'));
+        assert.equal('<body class="foo bar baz"></body>', render('body.foo.bar(class=["baz"])'));
+
+        assert.equal('<body class="foo bar baz"></body>', render('body.foo(class=classes)', { locals: { classes: ['bar', 'baz'] }}));
+        assert.equal('<body class="foo bar baz"></body>', render('body.foo.bar(class=classes)', { locals: { classes: ['baz'] }}));
     },
 
     'test attr interpolation': function(assert){
