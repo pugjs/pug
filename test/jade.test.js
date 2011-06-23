@@ -444,7 +444,11 @@ module.exports = {
         
         assert.equal('<meta content="what\'s up? \'weee\'"/>', render('meta(content="what\'s up? \'weee\'")'));
     },
-    
+
+    'test class attr array': function(assert){
+        assert.equal('<body class="foo bar baz"></body>', render('body(class=["foo", "bar", "baz"])'));
+    },
+
     'test attr interpolation': function(assert){
         // Test single quote interpolation
         assert.equal('<a href="/user/12">tj</a>'

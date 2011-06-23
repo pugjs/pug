@@ -346,6 +346,11 @@ or we could use jade's interpolation:
 
    a(href='/user/#{user.id}')= user.name
 
+The `class` attribute is special-cased when an array is given,
+allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` directly:
+
+    body(class=bodyClasses)
+
 ### Doctypes
 
 To add a doctype simply use `!!!`, or `doctype` followed by an optional value:
