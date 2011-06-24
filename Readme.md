@@ -514,7 +514,7 @@ versions of Jade will simply render:
 
 Output html to _stdout_:
 
-    jade examples/*.jade --pipe
+    jade < my.jade > my.html
 
 Generate _examples/*.html_:
 
@@ -526,12 +526,15 @@ Pass options:
 
 Usage info:
 
-	Usage: jade [options] <path ...>
-
-	Options:
-	  -o, --options STR   JavaScript options object passed
-	  -p, --pipe          Output to stdout instead of PATH.html
-	  -h, --help          Output help information
+    Usage: jade [options]
+                [path ...]
+                < in.jade > out.jade  
+    Options:
+      -o, --options <str>  JavaScript options object passed
+      -h, --help           Output help information
+      -w, --watch          Watch file(s) or folder(s) for changes and re-compile
+      -v, --version        Output jade version
+      --out <dir>          Output the compiled html to <dir>
 
 ## License 
 
