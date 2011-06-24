@@ -12,6 +12,10 @@ jade.filters.conditionals = function(block, compiler){
     return new Visitor(block).compile();
 };
 
+jade.filters.indents = function(str){
+    return str.split('\\n').map(function(line) { return line.match(/^ */)[0].length; }).join(",");
+};
+
 function Visitor(node) {
     this.node = node;
 }
@@ -149,5 +153,28 @@ module.exports = {
         ].join('\n');
 
         assert.equal('foo bar true', render(str));
-     } 
+     },
+
+    'test indentation': function(assert){
+      var indents = [
+        ':indents',
+        '  x',
+        '   x',
+        '    x',
+        '     x',
+        '  x',
+        '      x',
+        '      x',
+        '     x',
+        '     x',
+        '      x',
+        '    x',
+        '  x',
+        '    x',
+        '  x',
+        '   x'
+      ].join('\n');
+
+      assert.equal('0,1,2,3,0,4,4,3,3,4,2,0,2,0,1', render(indents));
+    }
 };
