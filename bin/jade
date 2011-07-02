@@ -42,6 +42,12 @@ var dest;
 var watchers;
 
 /**
+ * Option file.
+ */
+
+var optFile;
+
+/**
  * Usage information.
  */
 
@@ -81,6 +87,16 @@ while (args.length) {
         options = eval('(' + str + ')');
       } else {
         console.error('-o, --options requires a string.');
+        process.exit(1);
+      }
+      break;
+    case '-f':
+    case '--option-file':
+      optFile = args.shift();
+      if (optFile) {
+        options = parseOptionFile(optFile);
+      } else {
+        console.error('-f, --option-file requires a string.');
         process.exit(1);
       }
       break;
@@ -137,6 +153,14 @@ function processFile(path) {
 }
 
 /**
+ * Parse option file
+ */
+
+function parseOptionFile(path) {
+  return JSON.parse(fs.readFileSync(path, 'utf8'));
+}
+
+/**
  * Render jade
  */
 
@@ -182,6 +206,10 @@ function writeFile(src, html) {
       if (err) throw err;
       console.log('  \033[90mcompiled\033[0m %s', path);
       watch(src, renderJade);
+      optFile && watch(optFile, function() {
+        options = parseOptionFile(optFile);
+        renderJade(src);
+      });
     });
   });
 }
