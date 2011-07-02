@@ -42,10 +42,16 @@ var dest;
 var watchers;
 
 /**
- * Option file.
+ * Option files.
  */
 
-var optFile;
+var optFiles = [];
+
+/**
+ * Passed jade files.
+ */
+
+var jadeFiles = [];
 
 /**
  * Usage information.
@@ -59,6 +65,10 @@ var usage = ''
   + '  \n'
   + '  Options:\n'
   + '    -o, --options <str>  JavaScript options object passed\n'
+  + '    -f, --option-file <path>\n'  
+  + '                         File containing JavaScript options object. You\n'
+  + '                         can include multiple files by specifying this\n'
+  + '                         option multiple times\n'
   + '    -h, --help           Output help information\n'
   + '    -w, --watch          Watch file(s) or folder(s) for changes and re-compile\n'
   + '    -v, --version        Output jade version\n'
@@ -92,9 +102,9 @@ while (args.length) {
       break;
     case '-f':
     case '--option-file':
-      optFile = args.shift();
+      var optFile = args.shift();
       if (optFile) {
-        options = parseOptionFile(optFile);
+        optFiles.push(optFile);
       } else {
         console.error('-f, --option-file requires a string.');
         process.exit(1);
@@ -110,6 +120,17 @@ while (args.length) {
     default:
       files.push(arg);
   }
+}
+
+// Process passed options files
+if (optFiles.length) {
+  optFiles.forEach(function(optFile) {
+    processOptFile(optFile);
+    watch(optFile, function() {
+      processOptFile(optFile);
+      renderAllJade();
+    });
+  });
 }
 
 // Watching and no files passed - watch cwd
@@ -130,6 +151,22 @@ if (watchers && !files.length) {
 }
 
 /**
+ * Parse option file
+ */
+
+function parseOptFile(path) {
+  return eval('(' + fs.readFileSync(path, 'utf8') + ')');
+}
+
+/**
+ * Extend option file's content to options
+ */
+
+function processOptFile(optFile) {
+  return extend(options, parseOptFile(optFile));
+}
+
+/**
  * Process the given path, compiling the jade files found.
  * Always walk the subdirectories.;
  */
@@ -139,6 +176,7 @@ function processFile(path) {
     if (err) throw err;
     // Found jade file
     if (stat.isFile() && path.match(/\.jade$/)) {
+      jadeFiles.push(path);
       renderJade(path);
     // Found directory
     } else if (stat.isDirectory()) {
@@ -153,14 +191,6 @@ function processFile(path) {
 }
 
 /**
- * Parse option file
- */
-
-function parseOptionFile(path) {
-  return JSON.parse(fs.readFileSync(path, 'utf8'));
-}
-
-/**
  * Render jade
  */
 
@@ -169,6 +199,14 @@ function renderJade(jadefile) {
     if (err) throw err;
     writeFile(jadefile, html);
   });
+}
+
+/**
+ * Render all monitored jade
+ */
+
+function renderAllJade() {
+  jadeFiles.forEach(renderJade);
 }
 
 /**
@@ -206,10 +244,6 @@ function writeFile(src, html) {
       if (err) throw err;
       console.log('  \033[90mcompiled\033[0m %s', path);
       watch(src, renderJade);
-      optFile && watch(optFile, function() {
-        options = parseOptionFile(optFile);
-        renderJade(src);
-      });
     });
   });
 }
@@ -231,4 +265,22 @@ function watch(file, fn) {
   fs.watchFile(file, { interval: 50 }, function(curr, prev){
     if (curr.mtime > prev.mtime) fn(file);
   });
+}
+
+/**
+ * Deeply extend an object with another object
+ */
+
+function extend(target, obj) {
+  for(var k in obj) {
+    var val = obj[k];
+    if(val !== undefined) {
+      if(typeof val === 'object') {
+        target[k] = extend(target[k] || {}, val);
+      } else {
+        target[k] = val;
+      }
+    }
+  }
+  return target;
 }
