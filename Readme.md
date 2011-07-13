@@ -538,23 +538,66 @@ which should be an absolute path to this file, however Express
 and the `renderFile()` method do this for you. Include then parses
 these files, and injects the AST produced to render what you would expect:
 
-      <html>
-        <head>
-          <title>My Site</title>
-          <script src="/javascripts/jquery.js">
-          </script><script src="/javascripts/app.js"></script>
-        </head>
-        <body>
-          <h1>My Site</h1>
-          <p>Welcome to my super lame site.</p>
-          <div id="footer">
-            <p>Copyright>(c) foobar</p>
-          </div>
-        </body>
-      </html>
-
+```html
+<html>
+  <head>
+    <title>My Site</title>
+    <script src="/javascripts/jquery.js">
+    </script><script src="/javascripts/app.js"></script>
+  </head>
+  <body>
+    <h1>My Site</h1>
+    <p>Welcome to my super lame site.</p>
+    <div id="footer">
+      <p>Copyright>(c) foobar</p>
+    </div>
+  </body>
+</html>
+```
 
 ## Mixins
+
+ Mixins are converted to regular JavaScript functions in
+ the compiled template that Jade constructs. Mixins may
+ take arguments, though not required:
+
+      mixin list
+        ul
+          li foo
+          li bar
+          li baz
+
+  Utilizing a mixin without args looks similar, just without a block:
+  
+      h2 Groceries
+      mixin list
+
+  Mixins may take one or more arguments as well, the arguments
+  are regular javascripts expressions, so for example the following:
+
+      mixin pets(pets)
+        ul.pets
+          - each pet in pets
+            li= pet
+
+      mixin profile(user)
+        .user
+          h2= user.name
+          mixin pets(user.pets)
+
+   Would yield something similar to the following html:
+
+```html
+<div class="user">
+  <h2>tj</h2>
+  <ul class="pets">
+    <li>tobi</li>
+    <li>loki</li>
+    <li>jane</li>
+    <li>manny</li>
+  </ul>
+</div>
+```
 
 ## bin/jade
 
