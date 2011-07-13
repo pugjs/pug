@@ -1,0 +1,24 @@
+
+@mixin dialog
+  .dialog
+    h1 Whoop
+    p stuff
+
+.one
+  @mixin dialog
+
+@mixin dialog(title)
+  .dialog
+    h1= title
+    p stuff
+
+.two
+  @mixin dialog('Whoop')
+
+@mixin dialog(title, desc)
+  .dialog
+    h1= title
+    p= desc
+
+.three
+  @mixin dialog('Whoop', 'Just a mixin')
