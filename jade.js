@@ -97,13 +97,11 @@ var nodes = require('./nodes')
 var Compiler = module.exports = function Compiler(node, options) {
   this.options = options = options || {};
   this.node = node;
-
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
+  this.pp = options.pretty || false;
+  this.indents = 0;
   if (options.doctype) this.setDoctype(options.doctype);
-
-  this.pp = options.prettyprint || false;
-  this.indentDepth = 0;
 };
 
 /**
@@ -119,7 +117,7 @@ Compiler.prototype = {
    */
   
   compile: function(){
-    this.buf = ['var interp;'];
+    this.buf = [];
     this.visit(this.node);
     return this.buf.join('\n');
   },
@@ -222,7 +220,28 @@ Compiler.prototype = {
     if (this.doctype) this.buffer(this.doctype);
     this.hasCompiledDoctype = true;
   },
-  
+
+  /**
+   * Visit `mixin`, generating a function that
+   * may be called within the template.
+   *
+   * @param {Mixin} mixin
+   * @api public
+   */
+
+  visitMixin: function(mixin){
+    var name = mixin.name.replace(/-/g, '_') + '_mixin'
+      , args = mixin.args || '';
+
+    if (mixin.block) {
+      this.buf.push('var ' + name + ' = function(' + args + '){');
+      this.visit(mixin.block);
+      this.buf.push('}');
+    } else {
+      this.buf.push(name + '(' + args + ');');
+    }
+  },
+
   /**
    * Visit `tag` buffering tag markup, generating
    * attributes, visiting the `tag`'s code and block.
@@ -232,7 +251,7 @@ Compiler.prototype = {
    */
   
   visitTag: function(tag){
-    this.indentDepth++;
+    this.indents++;
     var name = tag.name;
 
     if (!this.hasCompiledTag) {
@@ -242,8 +261,10 @@ Compiler.prototype = {
       this.hasCompiledTag = true;
     }
 
-    if(this.pp && inlineTags.indexOf(name) == -1) 
-      this.buffer('\\n' + new Array(this.indentDepth).join('  '));
+    // pretty print
+    if (this.pp && inlineTags.indexOf(name) == -1) {
+      this.buffer('\\n' + Array(this.indents).join('  '));
+    }
 
     if (~selfClosing.indexOf(name) && !this.xml) {
       this.buffer('<' + name);
@@ -264,10 +285,15 @@ Compiler.prototype = {
       if (tag.text) this.buffer(utils.text(tag.text.nodes[0].trimLeft()));
       this.escape = 'pre' == tag.name;
       this.visit(tag.block);
-      if (this.pp && inlineTags.indexOf(name) == -1 && tag.textOnly == 0) this.buffer('\\n' + new Array(this.indentDepth).join('  '));
+
+      // pretty print
+      if (this.pp && !~inlineTags.indexOf(name) && !tag.textOnly) {
+        this.buffer('\\n' + Array(this.indents).join('  '));
+      }
+
       this.buffer('</' + name + '>');
     }
-    this.indentDepth--;
+    this.indents--;
   },
   
   /**
@@ -319,7 +345,7 @@ Compiler.prototype = {
   
   visitComment: function(comment){
     if (!comment.buffer) return;
-    if (this.pp) this.buffer('\\n' + new Array(this.indentDepth + 1).join('  '));
+    if (this.pp) this.buffer('\\n' + Array(this.indents + 1).join('  '));
     this.buffer('<!--' + utils.escape(comment.val) + '-->');
   },
   
@@ -331,6 +357,7 @@ Compiler.prototype = {
    */
   
   visitBlockComment: function(comment){
+    if (!comment.buffer) return;
     if (0 == comment.val.indexOf('if')) {
       this.buffer('<!--[' + comment.val + ']>');
       this.visit(comment.block);
@@ -583,25 +610,25 @@ require.register("inline-tags.js", function(module, exports, require){
  */
 
 module.exports = [
-  'a', 
-  'abbr', 
-  'acronym', 
-  'b',   
-  'br', 
-  'code',  
-  'em', 
-  'font', 
-  'i', 
-  'img', 
-  'ins', 
-  'kbd', 
-  'map', 
-  'samp', 
-  'small', 
-  'span', 
-  'strong', 
-  'sub', 
-  'sup'
+    'a'
+  , 'abbr'
+  , 'acronym'
+  , 'b'
+  , 'br'
+  , 'code'
+  , 'em'
+  , 'font'
+  , 'i'
+  , 'img'
+  , 'ins'
+  , 'kbd'
+  , 'map'
+  , 'samp'
+  , 'small'
+  , 'span'
+  , 'strong'
+  , 'sub'
+  , 'sup'
 ];
 }); // module: inline-tags.js
 
@@ -624,7 +651,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.12.1';
+exports.version = '0.13.0';
 
 /**
  * Intermediate JavaScript cache.
@@ -693,12 +720,14 @@ function attrs(obj){
     for (var i = 0; i < len; ++i) {
       var key = keys[i]
         , val = obj[key];
-      if (typeof val === 'boolean' || val === '' || val == null) {
+      if ('boolean' == typeof val || null == val) {
         if (val) {
           terse
             ? buf.push(key)
             : buf.push(key + '="' + key + '"');
         }
+      } else if ('class' == key && Array.isArray(val)) {
+        buf.push(key + '="' + escape(val.join(' ')) + '"');
       } else {
         buf.push(key + '="' + escape(val) + '"');
       }
@@ -1084,25 +1113,12 @@ Lexer.prototype = {
   },
 
   /**
-   * Block comment
-   */
-
-   blockComment: function() {
-     var captures;
-     if (captures = /^\/([^\n]+)/.exec(this.input)) {
-       this.consume(captures[0].length);
-       var tok = this.tok('block-comment', captures[1]);
-       return tok;
-     }
-   },
-  
-  /**
    * Comment.
    */
   
   comment: function() {
     var captures;
-    if (captures = /^ *\/\/(-)?([^\n]+)/.exec(this.input)) {
+    if (captures = /^ *\/\/(-)?([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
@@ -1146,7 +1162,7 @@ Lexer.prototype = {
   doctype: function() {
     return this.scan(/^(?:!!!|doctype) *(\w+)?/, 'doctype');
   },
-  
+
   /**
    * Id.
    */
@@ -1169,6 +1185,28 @@ Lexer.prototype = {
   
   text: function() {
     return this.scan(/^(?:\| ?)?([^\n]+)/, 'text');
+  },
+
+  /**
+   * Include.
+   */
+  
+  include: function() {
+    return this.scan(/^include +([^\n]+)/, 'include');
+  },
+
+  /**
+   * Mixin.
+   */
+
+  mixin: function(){
+    var captures;
+    if (captures = /^mixin +([-\w]+)(?:\(([^\)]+)\))?/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var tok = this.tok('mixin', captures[1]);
+      tok.args = captures[2];
+      return tok;
+    }
   },
 
   /**
@@ -1446,6 +1484,8 @@ Lexer.prototype = {
       || this.eos()
       || this.pipelessText()
       || this.doctype()
+      || this.include()
+      || this.mixin()
       || this.tag()
       || this.filter()
       || this.each()
@@ -1455,7 +1495,6 @@ Lexer.prototype = {
       || this.attrs()
       || this.indent()
       || this.comment()
-      || this.blockComment()
       || this.colon()
       || this.text();
   }
@@ -1482,12 +1521,14 @@ var Node = require('./node');
  *
  * @param {String} val
  * @param {Block} block
+ * @param {Boolean} buffer
  * @api public
  */
 
-var BlockComment = module.exports = function BlockComment(val, block) {
+var BlockComment = module.exports = function BlockComment(val, block, buffer) {
   this.block = block;
   this.val = val;
+  this.buffer = buffer;
 };
 
 /**
@@ -1764,12 +1805,53 @@ exports.Code = require('./code');
 exports.Each = require('./each');
 exports.Text = require('./text');
 exports.Block = require('./block');
+exports.Mixin = require('./mixin');
 exports.Filter = require('./filter');
 exports.Comment = require('./comment');
 exports.BlockComment = require('./block-comment');
 exports.Doctype = require('./doctype');
 
 }); // module: nodes/index.js
+
+require.register("nodes/mixin.js", function(module, exports, require){
+
+/*!
+ * Jade - nodes - Mixin
+ * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
+
+var Node = require('./node');
+
+/**
+ * Initialize a new `Mixin` with `name` and `block`.
+ *
+ * @param {String} name
+ * @param {String} args
+ * @param {Block} block
+ * @api public
+ */
+
+var Mixin = module.exports = function Mixin(name, args, block){
+  this.name = name;
+  this.args = args;
+  this.block = block;
+};
+
+/**
+ * Inherit from `Node`.
+ */
+
+Mixin.prototype = new Node;
+Mixin.prototype.constructor = Mixin;
+
+
+
+}); // module: nodes/mixin.js
 
 require.register("nodes/node.js", function(module, exports, require){
 
@@ -1935,7 +2017,11 @@ require.register("parser.js", function(module, exports, require){
  */
 
 var Lexer = require('./lexer')
-  , nodes = require('./nodes');
+  , nodes = require('./nodes')
+  , path = require('path')
+  , dirname = path.dirname
+  , join = path.join
+  , fs = require('fs');
 
 /**
  * Initialize `Parser` with the given input `str` and `filename`.
@@ -2073,6 +2159,8 @@ Parser.prototype = {
   /**
    *   tag
    * | doctype
+   * | mixin
+   * | include
    * | filter
    * | comment
    * | text
@@ -2086,14 +2174,16 @@ Parser.prototype = {
     switch (this.peek().type) {
       case 'tag':
         return this.parseTag();
+      case 'mixin':
+        return this.parseMixin();
+      case 'include':
+        return this.parseInclude();
       case 'doctype':
         return this.parseDoctype();
       case 'filter':
         return this.parseFilter();
       case 'comment':
         return this.parseComment();
-      case 'block-comment':
-        return this.parseBlockComment();
       case 'text':
         return this.parseText();
       case 'each':
@@ -2135,18 +2225,6 @@ Parser.prototype = {
     }
     return node;
   },
-
-  /**
-   * block comment
-   */
-  
-  parseBlockComment: function(){
-    var tok = this.expect('block-comment')
-      , node = new nodes.BlockComment(tok.val, this.parseBlock());
-    node.line = this.line();
-    return node;
-  },
-
   
   /**
    * comment
@@ -2154,7 +2232,14 @@ Parser.prototype = {
   
   parseComment: function(){
     var tok = this.expect('comment')
-      , node = new nodes.Comment(tok.val, tok.buffer);
+      , node;
+
+    if ('indent' == this.peek().type) {
+      node = new nodes.BlockComment(tok.val, this.parseBlock(), tok.buffer);
+    } else {
+      node = new nodes.Comment(tok.val, tok.buffer);
+    }
+
     node.line = this.line();
     return node;
   },
@@ -2215,7 +2300,40 @@ Parser.prototype = {
     node.line = this.line();
     return node;
   },
-  
+
+  /**
+   * include
+   */
+
+  parseInclude: function(){
+    if (!this.filename)
+      throw new Error('the "filename" option is required to use includes');
+
+    var path = name = this.expect('include').val.trim()
+      , dir = dirname(this.filename)
+      , path = join(dir, path + '.jade');
+
+    var str = fs.readFileSync(path, 'utf8')
+      , parser = new Parser(str, path)
+      , ast = parser.parse();
+
+    return ast;
+  },
+
+  /**
+   * mixin block
+   */
+
+  parseMixin: function(){
+    var tok = this.expect('mixin')
+      , name = tok.val
+      , args = tok.args;
+    var block = 'indent' == this.peek().type
+      ? this.parseBlock()
+      : null;
+    return new nodes.Mixin(name, args, block);
+  },
+
   /**
    * indent (text | newline)* outdent
    */
@@ -2243,7 +2361,8 @@ Parser.prototype = {
           text.push(indent + this.advance().val);
       }
     }
-    this._spaces = null;
+
+    if (spaces == this._spaces) this._spaces = null;
     this.expect('outdent');
     return text;
   },
@@ -2364,6 +2483,7 @@ Parser.prototype = {
     return tag;
   }
 };
+
 }); // module: parser.js
 
 require.register("self-closing.js", function(module, exports, require){
