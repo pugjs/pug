@@ -10,6 +10,8 @@
   - great readability
   - flexible indentation
   - block-expansion
+  - mixins
+  - static includes
   - attribute interpolation
   - code is escaped by default for security
   - contextual error reporting at compile &amp; run time
@@ -80,8 +82,7 @@ via npm:
  - `scope`     Evaluation scope (`this`)
  - `self`      Use a `self` namespace to hold the locals. _false by default_
  - `locals`    Local variable object
- - `filename`  Used in exceptions, and required by `cache`
- - `cache`     Cache intermediate JavaScript in memory keyed by `filename`
+ - `filename`  Used in exceptions, and required when using includes
  - `debug`     Outputs tokens and function body generated
  - `compiler`  Compiler to replace jade's default
 
@@ -509,6 +510,51 @@ when undefined would normally output "undefined" in your html, however recent
 versions of Jade will simply render:
 
     <textarea></textarea>
+
+## Includes
+
+ Includes allow you to statically include chunks of Jade
+ which lives in a separate file. The classical example is
+ including a header and footer. Suppose we have the following
+ directory structure:
+
+     ./layout.jade
+     ./includes/
+       ./head.jade
+       ./tail.jade
+
+and the following _layout.jade_:
+
+      html
+        include includes/head  
+        body
+          h1 My Site
+          p Welcome to my super amazing site.
+          include includes/foot
+
+both includes _includes/head_ and _includes/foot_ are
+read relative to the `filename` option given to _layout.jade_,
+which should be an absolute path to this file, however Express
+and the `renderFile()` method do this for you. Include then parses
+these files, and injects the AST produced to render what you would expect:
+
+      <html>
+        <head>
+          <title>My Site</title>
+          <script src="/javascripts/jquery.js">
+          </script><script src="/javascripts/app.js"></script>
+        </head>
+        <body>
+          <h1>My Site</h1>
+          <p>Welcome to my super lame site.</p>
+          <div id="footer">
+            <p>Copyright>(c) foobar</p>
+          </div>
+        </body>
+      </html>
+
+
+## Mixins
 
 ## bin/jade
 
