@@ -1,4 +1,11 @@
 
+0.13.0 / 2011-07-13 
+==================
+
+  * Added `mixin` support
+  * Added `include` support
+  * Added array support for the class attribute
+
 0.12.4 / 2011-06-23 
 ==================
 
