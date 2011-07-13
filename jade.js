@@ -62,6 +62,7 @@ var nodes = require('./nodes')
   , filters = require('./filters')
   , doctypes = require('./doctypes')
   , selfClosing = require('./self-closing')
+  , inlineTags = require('./inline-tags')
   , utils = require('./utils');
 
  
@@ -96,9 +97,13 @@ var nodes = require('./nodes')
 var Compiler = module.exports = function Compiler(node, options) {
   this.options = options = options || {};
   this.node = node;
+
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
   if (options.doctype) this.setDoctype(options.doctype);
+
+  this.pp = options.prettyprint || false;
+  this.indentDepth = 0;
 };
 
 /**
@@ -227,6 +232,7 @@ Compiler.prototype = {
    */
   
   visitTag: function(tag){
+    this.indentDepth++;
     var name = tag.name;
 
     if (!this.hasCompiledTag) {
@@ -235,6 +241,9 @@ Compiler.prototype = {
       }
       this.hasCompiledTag = true;
     }
+
+    if(this.pp && inlineTags.indexOf(name) == -1) 
+      this.buffer('\\n' + new Array(this.indentDepth).join('  '));
 
     if (~selfClosing.indexOf(name) && !this.xml) {
       this.buffer('<' + name);
@@ -255,8 +264,10 @@ Compiler.prototype = {
       if (tag.text) this.buffer(utils.text(tag.text.nodes[0].trimLeft()));
       this.escape = 'pre' == tag.name;
       this.visit(tag.block);
+      if (this.pp && inlineTags.indexOf(name) == -1 && tag.textOnly == 0) this.buffer('\\n' + new Array(this.indentDepth).join('  '));
       this.buffer('</' + name + '>');
     }
+    this.indentDepth--;
   },
   
   /**
@@ -308,6 +319,7 @@ Compiler.prototype = {
   
   visitComment: function(comment){
     if (!comment.buffer) return;
+    if (this.pp) this.buffer('\\n' + new Array(this.indentDepth + 1).join('  '));
     this.buffer('<!--' + utils.escape(comment.val) + '-->');
   },
   
@@ -561,6 +573,37 @@ module.exports = {
   }
 };
 }); // module: filters.js
+
+require.register("inline-tags.js", function(module, exports, require){
+
+/*!
+ * Jade - inline tags
+ * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
+module.exports = [
+  'a', 
+  'abbr', 
+  'acronym', 
+  'b',   
+  'br', 
+  'code',  
+  'em', 
+  'font', 
+  'i', 
+  'img', 
+  'ins', 
+  'kbd', 
+  'map', 
+  'samp', 
+  'small', 
+  'span', 
+  'strong', 
+  'sub', 
+  'sup'
+];
+}); // module: inline-tags.js
 
 require.register("jade.js", function(module, exports, require){
 
@@ -1912,7 +1955,7 @@ var Parser = exports = module.exports = function Parser(str, filename){
  * Tags that may not contain tags.
  */
 
-var textOnly = exports.textOnly = ['code', 'script', 'textarea', 'style'];
+var textOnly = exports.textOnly = ['code', 'script', 'textarea', 'style', 'title'];
 
 /**
  * Parser prototype.
