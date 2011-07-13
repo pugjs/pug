@@ -1,0 +1,10 @@
+
+mixin pets(pets)
+  ul.pets
+    - each pet in pets
+      li= pet
+
+mixin profile(user)
+  .user
+    h2= user.name
+    mixin pets(user.pets)

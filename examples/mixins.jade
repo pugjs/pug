@@ -1,5 +1,6 @@
 
-include dialog-mixins
+include mixins/dialog
+include mixins/profile
 
 .one
   mixin dialog
@@ -9,3 +10,7 @@ include dialog-mixins
 
 .three
   mixin dialog-title-desc('Whoop', 'Just a mixin')
+
+
+#profile
+  mixin profile(user)
