@@ -4,18 +4,8 @@
 .one
   @mixin dialog
 
-@mixin dialog(title)
-  .dialog
-    h1= title
-    p stuff
-
 .two
-  @mixin dialog('Whoop')
-
-@mixin dialog(title, desc)
-  .dialog
-    h1= title
-    p= desc
+  @mixin dialog-title('Whoop')
 
 .three
-  @mixin dialog('Whoop', 'Just a mixin')
+  @mixin dialog-title-desc('Whoop', 'Just a mixin')
