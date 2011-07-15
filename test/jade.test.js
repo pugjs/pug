@@ -868,13 +868,13 @@ module.exports = {
     },
     
     'test .compile() with inline helpers': function(assert){
-        var fn = jade.compile('p foo', {helpers: 'inline'});
-        assert.equal('<p>foo</p>', fn());
+        var fn = jade.compile('p foo\np bar', {helpers: 'inline'});
+        assert.equal('<p>foo</p><p>bar</p>', fn());
     },
     
     'test .compile() no debug': function(assert){
-        var fn = jade.compile('p foo', {compileDebug: false});
-        assert.equal('<p>foo</p>', fn());
+        var fn = jade.compile('p foo\np bar', {compileDebug: false});
+        assert.equal('<p>foo</p><p>bar</p>', fn());
     },
     
     'test null attrs on tag': function(assert){
