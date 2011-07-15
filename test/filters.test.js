@@ -54,8 +54,19 @@ module.exports = {
     
     'test :markdown filter': function(assert){
         assert.equal(
-            '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
-            render(':markdown\n  #foo\n  - bar\n  - baz\n'))
+            '<h1>foo</h1><ul><li>bar</li><li>baz</li></ul>',
+            render(':markdown\n  #foo\n  - bar\n  - baz\n').replace(/\n/g, ''))
+    },
+    
+    'test :markdown filter with preformatted code': function(assert){
+        assert.includes(
+          render([':markdown',
+                  '  x',
+                  '      {',
+                  '        x',
+                  '          x',
+                  '      }.'].join('\n')),
+          '<pre><code>{\n  x\n    x\n}.\n</code></pre>')
     },
     
     'test :stylus filter': function(assert){
