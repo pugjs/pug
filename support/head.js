@@ -1,2 +1,2 @@
 
-var jade = (function(){
+var jade = (function(exports){
