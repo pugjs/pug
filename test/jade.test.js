@@ -867,6 +867,12 @@ module.exports = {
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     },
     
+    'test .compile() no debug': function(assert){
+        var fn = jade.compile('p no debug', {compileDebug: false});
+        assert.equal('<p>no debug</p>', fn());
+    },
+    
+    
     'test null attrs on tag': function(assert){
         var tag = new jade.nodes.Tag('a'),
             name = 'href',
