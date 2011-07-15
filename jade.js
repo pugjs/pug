@@ -1969,8 +1969,7 @@ require.register("parser.js", function(module, exports, require){
  */
 
 var Lexer = require('./lexer')
-  , nodes = require('./nodes')
-  , fs = require('fs');
+  , nodes = require('./nodes');
 
 /**
  * Initialize `Parser` with the given input `str` and `filename`.
@@ -2256,6 +2255,7 @@ Parser.prototype = {
 
   parseInclude: function(){
     var path = require('path')
+      , fs = require('fs')
       , dirname = path.dirname
       , join = path.join;
 
