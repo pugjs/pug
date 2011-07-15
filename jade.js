@@ -704,6 +704,16 @@ exports.Parser = Parser;
 exports.nodes = require('./nodes');
 
 /**
+ * Runtime helpers.
+ */
+
+exports.helpers = {
+    attrs: attrs
+  , escape: escape
+  , rethrow: rethrow
+};
+
+/**
  * Render the given attributes object.
  *
  * @param {Object} obj
@@ -798,16 +808,13 @@ function rethrow(err, str, filename, lineno){
 
 function parse(str, options){
   var filename = options.filename
-    , helpers = ''
+    , inline = false !== options.inline
+    , inlined = '';
   
-  if (options.helpers !== 'inline') {
-    jadeHelpers = {
-      attrs: attrs,
-      escape: escape
-    }
-    helpers = 'var attrs = jadeHelpers.attrs, escape = jadeHelpers.escape;\n';
+  if (inline) {
+    inlined = attrs.toString() + '\n' + escape.toString() + '\n';
   } else {
-    helpers = attrs.toString() + '\n' + escape.toString() + '\n';
+    inlined = 'var attrs = jade.attrs, escape = jade.escape;\n';
   }
   
   try {
@@ -826,7 +833,7 @@ function parse(str, options){
 
     try {
       return ''
-        + helpers
+        + inlined
         + 'var buf = [];\n'
         + (options.self
           ? 'var self = locals || {}, __ = __ || locals.__;\n' + js
@@ -846,8 +853,9 @@ function parse(str, options){
  * Compile a `Function` representation of the given jade `str`.
  *
  * Options:
- *   - `compileDebug` Include/exclude debug helpers such as attrs, escape and rethrow, defaults to true
- *   - `helpers`  Include helpers as `inline` or get from temporary `global` variables, defaults to `global` 
+ * 
+ *   - `compileDebug` when `false` debugging code is stripped from the compiled template
+ *   - `inline` when `false` helpers are not inlined
  *
  * @param {String} str
  * @param {Options} options
@@ -858,26 +866,24 @@ function parse(str, options){
 exports.compile = function(str, options){
   var options = options || {}
     , input = JSON.stringify(str)
+    , inline = false !== options.inline
     , filename = options.filename
       ? JSON.stringify(options.filename)
       : 'undefined'
-    , fn = []
-    , helpers = '';
+    , inlined = ''
+    , fn;
   
-  if (options.helpers !== 'inline') {
-    jadeHelpers = {
-      rethrow: rethrow
-    };
-    helpers = 'var rethrow = jadeHelpers.rethrow;';
+  if (inline) {
+    inlined = rethrow.toString();
   } else {
-    helpers = rethrow.toString();
+    inlined = 'var rethrow = jade.rethrow;';
   }
 
   if (options.compileDebug !== false) {
     // Reduce closure madness by injecting some locals
     fn = [
         'var __ = { lineno: 1, input: ' + input + ', filename: ' + filename + ' };'
-      , helpers
+      , inlined
       , 'try {'
       , parse(String(str), options || {})
       , '} catch (err) {'
