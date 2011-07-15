@@ -867,8 +867,8 @@ module.exports = {
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     },
     
-    'test .compile() with global helpers': function(assert){
-        var fn = jade.compile('p foo\np #{bar}', {helpers: 'global'});
+    'test .compile() with inline false': function(assert){
+        var fn = jade.compile('p foo\np #{bar}', { inline: false });
         assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
     },
     
