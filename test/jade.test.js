@@ -867,6 +867,16 @@ module.exports = {
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     },
     
+    'test .compile() no debug': function(assert){
+        var fn = jade.compile('p foo\np #{bar}', {compileDebug: false});
+        assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
+    },
+    
+    'test .compile() no debug and global helpers': function(assert){
+        var fn = jade.compile('p foo\np #{bar}', {compileDebug: false, helpers: 'global'});
+        assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
+    },
+    
     'test null attrs on tag': function(assert){
         var tag = new jade.nodes.Tag('a'),
             name = 'href',

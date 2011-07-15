@@ -54,9 +54,31 @@ via npm:
  
     $ make jade.js
 
- Alternatively, if uglifyjs is installed via npm (`npm install uglify-js`) you may execute the following which will create both files.
+ Alternatively, if uglifyjs is installed via npm (`npm install uglify-js`) you may execute the following which will create both files. However each release builds these for you.
  
     $ make jade.min.js
+
+  By default Jade inlines its utility functions within the template functions generated, such as `escape()` and `attrs()`. Jade also instruments templates with line number statements such as `__.lineno = 3` for debugging purposes. When used in a browser it's useful to minimize this boiler plate, you can do so by passing the option `{ compileDebug: false }`, and `{ inline: false }`. The following template
+  
+    p Hello #{name}
+
+ Can then be as small as the following generated function:
+
+```js
+function anonymous(locals) {
+  var attrs = jade.attrs, escape = jade.escape;
+  var buf = [];
+  with (locals || {}) {
+    var interp;
+    buf.push('<p>');
+    buf.push('Hello ' + escape((interp = name) == null ? '' : interp) + '');
+    buf.push('</p>');
+  }
+  return buf.join("");
+}
+```
+
+  Through the use of Jade's `./runtime.js` you may utilize these pre-compiled templates on the client-side _without_ Jade itself, all you need is the associated utility functions (in runtime.js), which are then available as `jade.attrs`, `jade.escape` etc.
 
 ## Public API
 
