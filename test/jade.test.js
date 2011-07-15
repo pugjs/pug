@@ -867,16 +867,15 @@ module.exports = {
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     },
     
-    'test .compile() no debug': function(assert){
-        var fn = jade.compile('p foo', {compileDebug: false});
-        assert.equal('<p>foo</p>', fn());
-    },
-    
     'test .compile() with inline helpers': function(assert){
         var fn = jade.compile('p foo', {helpers: 'inline'});
         assert.equal('<p>foo</p>', fn());
     },
     
+    'test .compile() no debug': function(assert){
+        var fn = jade.compile('p foo', {compileDebug: false});
+        assert.equal('<p>foo</p>', fn());
+    },
     
     'test null attrs on tag': function(assert){
         var tag = new jade.nodes.Tag('a'),
