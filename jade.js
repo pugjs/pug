@@ -117,7 +117,7 @@ Compiler.prototype = {
    */
   
   compile: function(){
-    this.buf = [];
+    this.buf = ['var interp;'];
     this.visit(this.node);
     return this.buf.join('\n');
   },
