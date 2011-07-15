@@ -725,7 +725,8 @@ function parse(str, options){
     , inlined = '';
   
   if (inline) {
-    inlined = attrs.toString() + '\n' + escape.toString() + '\n';
+    inlined += runtime.attrs.toString() + '\n';
+    inlined += runtime.escape.toString() + '\n';
   } else {
     inlined = 'var attrs = jade.attrs, escape = jade.escape;\n';
   }
@@ -758,9 +759,57 @@ function parse(str, options){
       return;
     }
   } catch (err) {
-    rethrow(err, str, filename, parser.lexer.lineno);
+    runtime.rethrow(err, str, filename, parser.lexer.lineno);
   }
 }
+
+/**
+ * Compile a `Function` representation of the given jade `str`.
+ *
+ * Options:
+ * 
+ *   - `compileDebug` when `false` debugging code is stripped from the compiled template
+ *   - `inline` when `false` helpers are not inlined
+ *
+ * @param {String} str
+ * @param {Options} options
+ * @return {Function}
+ * @api public
+ */
+
+exports.compile = function(str, options){
+  var options = options || {}
+    , input = JSON.stringify(str)
+    , inline = false !== options.inline
+    , filename = options.filename
+      ? JSON.stringify(options.filename)
+      : 'undefined'
+    , inlined = ''
+    , fn;
+  
+  if (inline) {
+    inlined = runtime.rethrow.toString();
+  } else {
+    inlined = 'var rethrow = jade.rethrow;';
+  }
+
+  if (options.compileDebug !== false) {
+    // Reduce closure madness by injecting some locals
+    fn = [
+        'var __ = { lineno: 1, input: ' + input + ', filename: ' + filename + ' };'
+      , inlined
+      , 'try {'
+      , parse(String(str), options || {})
+      , '} catch (err) {'
+      , '  rethrow(err, __.input, __.filename, __.lineno);'
+      , '}'
+    ].join('\n');
+  } else {
+    fn = parse(String(str), options || {});
+  }
+  
+  return new Function('locals', fn);
+};
 
 /**
  * Render the given `str` of jade.
@@ -810,7 +859,7 @@ exports.render = function(str, options){
     locals.__ = meta;
     return fn.call(options.scope, locals); 
   } catch (err) {
-    rethrow(err, str, filename, meta.lineno);
+    runtime.rethrow(err, str, filename, meta.lineno);
   }
 };
 
@@ -2405,7 +2454,7 @@ require.register("runtime.js", function(module, exports, require){
  * @api private
  */
 
-exports.attrs = function(obj){
+exports.attrs = function attrs(obj){
   var buf = []
     , terse = obj.terse;
   delete obj.terse;
@@ -2440,7 +2489,7 @@ exports.attrs = function(obj){
  * @api private
  */
 
-exports.escape = function(html){
+exports.escape = function escape(html){
   return String(html)
     .replace(/&(?!\w+;)/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -2481,53 +2530,6 @@ exports.rethrow = function rethrow(err, str, filename, lineno){
   throw err;
 };
 
-/**
- * Compile a `Function` representation of the given jade `str`.
- *
- * Options:
- * 
- *   - `compileDebug` when `false` debugging code is stripped from the compiled template
- *   - `inline` when `false` helpers are not inlined
- *
- * @param {String} str
- * @param {Options} options
- * @return {Function}
- * @api public
- */
-
-exports.compile = function(str, options){
-  var options = options || {}
-    , input = JSON.stringify(str)
-    , inline = false !== options.inline
-    , filename = options.filename
-      ? JSON.stringify(options.filename)
-      : 'undefined'
-    , inlined = ''
-    , fn;
-  
-  if (inline) {
-    inlined = rethrow.toString();
-  } else {
-    inlined = 'var rethrow = jade.rethrow;';
-  }
-
-  if (options.compileDebug !== false) {
-    // Reduce closure madness by injecting some locals
-    fn = [
-        'var __ = { lineno: 1, input: ' + input + ', filename: ' + filename + ' };'
-      , inlined
-      , 'try {'
-      , parse(String(str), options || {})
-      , '} catch (err) {'
-      , '  rethrow(err, __.input, __.filename, __.lineno);'
-      , '}'
-    ].join('\n');
-  } else {
-    fn = parse(String(str), options || {});
-  }
-  
-  return new Function('locals', fn);
-};
 }); // module: runtime.js
 
 require.register("self-closing.js", function(module, exports, require){
