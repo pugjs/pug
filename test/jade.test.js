@@ -867,11 +867,6 @@ module.exports = {
         assert.equal('<p>bar</p>', fn.call({ foo: 'bar' }));
     },
     
-    'test .compile() with inline false': function(assert){
-        var fn = jade.compile('p foo\np #{bar}', { inline: false });
-        assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
-    },
-    
     'test .compile() no debug': function(assert){
         var fn = jade.compile('p foo\np #{bar}', {compileDebug: false});
         assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
