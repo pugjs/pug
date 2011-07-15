@@ -648,6 +648,7 @@ require.register("jade.js", function(module, exports, require){
 
 var Parser = require('./parser')
   , Compiler = require('./compiler')
+  , runtime = require('./runtime')
 
 /**
  * Library version.
@@ -704,98 +705,10 @@ exports.Parser = Parser;
 exports.nodes = require('./nodes');
 
 /**
- * Runtime helpers.
+ * Jade runtime helpers.
  */
 
-exports.helpers = {
-    attrs: attrs
-  , escape: escape
-  , rethrow: rethrow
-};
-
-/**
- * Render the given attributes object.
- *
- * @param {Object} obj
- * @return {String}
- * @api private
- */
-
-function attrs(obj){
-  var buf = []
-    , terse = obj.terse;
-  delete obj.terse;
-  var keys = Object.keys(obj)
-    , len = keys.length;
-  if (len) {
-    buf.push('');
-    for (var i = 0; i < len; ++i) {
-      var key = keys[i]
-        , val = obj[key];
-      if ('boolean' == typeof val || null == val) {
-        if (val) {
-          terse
-            ? buf.push(key)
-            : buf.push(key + '="' + key + '"');
-        }
-      } else if ('class' == key && Array.isArray(val)) {
-        buf.push(key + '="' + escape(val.join(' ')) + '"');
-      } else {
-        buf.push(key + '="' + escape(val) + '"');
-      }
-    }
-  }
-  return buf.join(' ');
-}
-
-/**
- * Escape the given string of `html`.
- *
- * @param {String} html
- * @return {String}
- * @api private
- */
-
-function escape(html){
-  return String(html)
-    .replace(/&(?!\w+;)/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-/**
- * Re-throw the given `err` in context to the
- * `str` of jade, `filename`, and `lineno`.
- *
- * @param {Error} err
- * @param {String} str
- * @param {String} filename
- * @param {String} lineno
- * @api private
- */
-
-function rethrow(err, str, filename, lineno){
-  var context = 3
-    , lines = str.split('\n')
-    , start = Math.max(lineno - context, 0)
-    , end = Math.min(lines.length, lineno + context); 
-
-  // Error context
-  var context = lines.slice(start, end).map(function(line, i){
-    var curr = i + start + 1;
-    return (curr == lineno ? '  > ' : '    ')
-      + curr
-      + '| '
-      + line;
-  }).join('\n');
-
-  // Alter exception message
-  err.path = filename;
-  err.message = (filename || 'Jade') + ':' + lineno 
-    + '\n' + context + '\n\n' + err.message;
-  throw err;
-}
+exports.runtime = runtime;
 
 /**
  * Parse the given `str` of jade and return a function body.
@@ -848,54 +761,6 @@ function parse(str, options){
     rethrow(err, str, filename, parser.lexer.lineno);
   }
 }
-
-/**
- * Compile a `Function` representation of the given jade `str`.
- *
- * Options:
- * 
- *   - `compileDebug` when `false` debugging code is stripped from the compiled template
- *   - `inline` when `false` helpers are not inlined
- *
- * @param {String} str
- * @param {Options} options
- * @return {Function}
- * @api public
- */
-
-exports.compile = function(str, options){
-  var options = options || {}
-    , input = JSON.stringify(str)
-    , inline = false !== options.inline
-    , filename = options.filename
-      ? JSON.stringify(options.filename)
-      : 'undefined'
-    , inlined = ''
-    , fn;
-  
-  if (inline) {
-    inlined = rethrow.toString();
-  } else {
-    inlined = 'var rethrow = jade.rethrow;';
-  }
-
-  if (options.compileDebug !== false) {
-    // Reduce closure madness by injecting some locals
-    fn = [
-        'var __ = { lineno: 1, input: ' + input + ', filename: ' + filename + ' };'
-      , inlined
-      , 'try {'
-      , parse(String(str), options || {})
-      , '} catch (err) {'
-      , '  rethrow(err, __.input, __.filename, __.lineno);'
-      , '}'
-    ].join('\n');
-  } else {
-    fn = parse(String(str), options || {});
-  }
-  
-  return new Function('locals', fn);
-};
 
 /**
  * Render the given `str` of jade.
@@ -2523,6 +2388,147 @@ Parser.prototype = {
 };
 
 }); // module: parser.js
+
+require.register("runtime.js", function(module, exports, require){
+
+/*!
+ * Jade - runtime
+ * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
+/**
+ * Render the given attributes object.
+ *
+ * @param {Object} obj
+ * @return {String}
+ * @api private
+ */
+
+exports.attrs = function(obj){
+  var buf = []
+    , terse = obj.terse;
+  delete obj.terse;
+  var keys = Object.keys(obj)
+    , len = keys.length;
+  if (len) {
+    buf.push('');
+    for (var i = 0; i < len; ++i) {
+      var key = keys[i]
+        , val = obj[key];
+      if ('boolean' == typeof val || null == val) {
+        if (val) {
+          terse
+            ? buf.push(key)
+            : buf.push(key + '="' + key + '"');
+        }
+      } else if ('class' == key && Array.isArray(val)) {
+        buf.push(key + '="' + escape(val.join(' ')) + '"');
+      } else {
+        buf.push(key + '="' + escape(val) + '"');
+      }
+    }
+  }
+  return buf.join(' ');
+};
+
+/**
+ * Escape the given string of `html`.
+ *
+ * @param {String} html
+ * @return {String}
+ * @api private
+ */
+
+exports.escape = function(html){
+  return String(html)
+    .replace(/&(?!\w+;)/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+};
+
+/**
+ * Re-throw the given `err` in context to the
+ * `str` of jade, `filename`, and `lineno`.
+ *
+ * @param {Error} err
+ * @param {String} str
+ * @param {String} filename
+ * @param {String} lineno
+ * @api private
+ */
+
+exports.rethrow = function rethrow(err, str, filename, lineno){
+  var context = 3
+    , lines = str.split('\n')
+    , start = Math.max(lineno - context, 0)
+    , end = Math.min(lines.length, lineno + context); 
+
+  // Error context
+  var context = lines.slice(start, end).map(function(line, i){
+    var curr = i + start + 1;
+    return (curr == lineno ? '  > ' : '    ')
+      + curr
+      + '| '
+      + line;
+  }).join('\n');
+
+  // Alter exception message
+  err.path = filename;
+  err.message = (filename || 'Jade') + ':' + lineno 
+    + '\n' + context + '\n\n' + err.message;
+  throw err;
+};
+
+/**
+ * Compile a `Function` representation of the given jade `str`.
+ *
+ * Options:
+ * 
+ *   - `compileDebug` when `false` debugging code is stripped from the compiled template
+ *   - `inline` when `false` helpers are not inlined
+ *
+ * @param {String} str
+ * @param {Options} options
+ * @return {Function}
+ * @api public
+ */
+
+exports.compile = function(str, options){
+  var options = options || {}
+    , input = JSON.stringify(str)
+    , inline = false !== options.inline
+    , filename = options.filename
+      ? JSON.stringify(options.filename)
+      : 'undefined'
+    , inlined = ''
+    , fn;
+  
+  if (inline) {
+    inlined = rethrow.toString();
+  } else {
+    inlined = 'var rethrow = jade.rethrow;';
+  }
+
+  if (options.compileDebug !== false) {
+    // Reduce closure madness by injecting some locals
+    fn = [
+        'var __ = { lineno: 1, input: ' + input + ', filename: ' + filename + ' };'
+      , inlined
+      , 'try {'
+      , parse(String(str), options || {})
+      , '} catch (err) {'
+      , '  rethrow(err, __.input, __.filename, __.lineno);'
+      , '}'
+    ].join('\n');
+  } else {
+    fn = parse(String(str), options || {});
+  }
+  
+  return new Function('locals', fn);
+};
+}); // module: runtime.js
 
 require.register("self-closing.js", function(module, exports, require){
 
