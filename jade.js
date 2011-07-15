@@ -769,7 +769,7 @@ function parse(str, options){
  * Options:
  * 
  *   - `compileDebug` when `false` debugging code is stripped from the compiled template
- *   - `inline` when `false` helpers are not inlined
+ *   - `inline` when `false` helpers are not inlined, and `jade.<helper>` is used
  *
  * @param {String} str
  * @param {Options} options
@@ -1970,9 +1970,6 @@ require.register("parser.js", function(module, exports, require){
 
 var Lexer = require('./lexer')
   , nodes = require('./nodes')
-  , path = require('path')
-  , dirname = path.dirname
-  , join = path.join
   , fs = require('fs');
 
 /**
@@ -2258,6 +2255,10 @@ Parser.prototype = {
    */
 
   parseInclude: function(){
+    var path = require('path')
+      , dirname = path.dirname
+      , join = path.join;
+
     if (!this.filename)
       throw new Error('the "filename" option is required to use includes');
 
