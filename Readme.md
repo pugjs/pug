@@ -327,13 +327,18 @@ Jade currently supports '(' and ')' as attribute delimiters.
 
     a(href='/login', title='View login page') Login
 
+When a value is `undefined` or `null` the attribute is _not_ added,
+so this is fine, it will not compile 'something="null"'.
+
+    div(something=null)
+
 Boolean attributes are also supported:
 
     input(type="checkbox", checked)
 
 Boolean attributes with code will only output the attribute when `true`:
 
-    input(type="checkbox", checked= someValue)
+    input(type="checkbox", checked=someValue)
     
 Multiple lines work too:
 
@@ -365,7 +370,8 @@ we could use regular javascript concatenation:
 
     a(href='/user/' + user.id)= user.name
 
-or we could use jade's interpolation:
+or we could use jade's interpolation, which I added because everyone
+using Ruby or CoffeeScript seems to think this is legal js..:
 
    a(href='/user/#{user.id}')= user.name
 
