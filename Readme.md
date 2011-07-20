@@ -107,6 +107,8 @@ function anonymous(locals) {
  - `filename`  Used in exceptions, and required when using includes
  - `debug`     Outputs tokens and function body generated
  - `compiler`  Compiler to replace jade's default
+ - `compileDebug`  When `false` no debug instrumentation is compiled
+ - `inline`     When `false` the helpers are not inlined (ideal for client-side use)
 
 ## Syntax
 
@@ -625,6 +627,76 @@ these files, and injects the AST produced to render what you would expect:
     <li>manny</li>
   </ul>
 </div>
+```
+
+## Generated Output
+
+ Suppose we have the following Jade:
+
+```
+- var title = 'yay'
+h1.title #{title}
+p Just an example
+```
+
+ When the `compileDebug` option is not explicitly `false`, Jade
+ will compile the function instrumented with `__.lineno = n;`, which
+ in the event of an exception is passed to `rethrow()` which constructs
+ a useful message relative to the initial Jade input.
+
+```js
+function anonymous(locals) {
+  var __ = { lineno: 1, input: "- var title = 'yay'\nh1.title #{title}\np Just an example", filename: "testing/test.js" };
+  var rethrow = jade.rethrow;
+  try {
+    var attrs = jade.attrs, escape = jade.escape;
+    var buf = [];
+    with (locals || {}) {
+      var interp;
+      __.lineno = 1;
+       var title = 'yay'
+      __.lineno = 2;
+      buf.push('<h1');
+      buf.push(attrs({ "class": ('title') }));
+      buf.push('>');
+      buf.push('' + escape((interp = title) == null ? '' : interp) + '');
+      buf.push('</h1>');
+      __.lineno = 3;
+      buf.push('<p>');
+      buf.push('Just an example');
+      buf.push('</p>');
+    }
+    return buf.join("");
+  } catch (err) {
+    rethrow(err, __.input, __.filename, __.lineno);
+  }
+}
+```
+
+When the `compileDebug` option _is_ explicitly `false`, this instrumentation
+is stripped, which is very helpful for light-weight client-side templates. Combining Jade's options with the `./runtime.js` file in this repo allows you
+to toString() compiled templates and avoid running the entire Jade library on
+the client, increasing performance, and decreasing the amount of JavaScript
+required.
+
+```js
+function anonymous(locals) {
+  var attrs = jade.attrs, escape = jade.escape;
+  var buf = [];
+  with (locals || {}) {
+    var interp;
+    var title = 'yay'
+    buf.push('<h1');
+    buf.push(attrs({ "class": ('title') }));
+    buf.push('>');
+    buf.push('' + escape((interp = title) == null ? '' : interp) + '');
+    buf.push('</h1>');
+    buf.push('<p>');
+    buf.push('Just an example');
+    buf.push('</p>');
+  }
+  return buf.join("");
+}
 ```
 
 ## bin/jade
