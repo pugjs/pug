@@ -518,6 +518,18 @@ outputs:
     <li>two</li>
     <li>three</li>
 
+iterating an array with index:
+
+    - var items = ["one", "two", "three"]
+    - each item, i in items
+      li #{item}: #{i}
+
+outputs:
+
+    <li>one: 0</li>
+    <li>two: 1</li>
+    <li>three: 2</li>
+
 iterating an object's keys and values:
 
     - var obj = { foo: 'bar' }
