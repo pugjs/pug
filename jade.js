@@ -100,6 +100,7 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
+  this.debug = false !== options.compileDebug;
   this.indents = 0;
   if (options.doctype) this.setDoctype(options.doctype);
 };
@@ -160,7 +161,7 @@ Compiler.prototype = {
    */
   
   line: function(node){
-    if (node.instrumentLineNumber === false) return;
+    if (false === node.instrumentLineNumber) return;
     this.buf.push('__.lineno = ' + node.line + ';');
   },
   
@@ -172,9 +173,7 @@ Compiler.prototype = {
    */
   
   visit: function(node){
-    if (this.options.compileDebug !== false) {
-      this.line(node);
-    }
+    if (this.debug) this.line(node);
     return this.visitNode(node);
   },
   
@@ -654,7 +653,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.13.0';
+exports.version = '0.14.0';
 
 /**
  * Intermediate JavaScript cache.
@@ -751,7 +750,7 @@ function parse(str, options){
         + 'var buf = [];\n'
         + (options.self
           ? 'var self = locals || {}, __ = __ || locals.__;\n' + js
-          : 'with (locals || {}) {' + js + '}')
+          : 'with (locals || {}) {\n' + js + '\n}\n')
         + 'return buf.join("");';
       
     } catch (err) {

@@ -1,4 +1,12 @@
 
+0.14.0 / 2011-08-08 
+==================
+
+  * Added array iteration with index example. Closes #276
+  * Added _runtime.js_
+  * Added `compileDebug` option to enable lineno instrumentation
+  * Added `inline` option to disable inlining of helpers (for client-side)
+
 0.13.0 / 2011-07-13 
 ==================
 
