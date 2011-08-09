@@ -1,4 +1,3 @@
-
 # Jade - template engine
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
@@ -239,6 +238,16 @@ This however differs from a leading '.' followed by a space, which although is i
 outputs:
 
     <p>.</p>
+
+
+It should be noted that text blocks should be doubled escaped.  For example if you desire the following output.
+
+    </p>foo\bar</p>
+
+use:
+
+    p.
+      foo\\bar
 
 ### Comments
 
@@ -501,7 +510,7 @@ you may use `!=`:
 
     p!= aVarContainingMoreHTML
 
-The on exception made in terms of allowing "vanilla" JavaScript, is
+The one exception made in terms of allowing "vanilla" JavaScript, is
 the `- each` token. This takes the form of:
 
     - each VAL[, KEY] in OBJ
