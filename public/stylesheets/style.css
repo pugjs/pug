@@ -39,20 +39,24 @@ h1 {
     height: 130px;
     background: url(../images/arrow.png);
 }
-pre {
+#jade,#html {
+    border:0;
     float: left;
     margin: 0 15px;
     padding: 10px 64px;
     width: 33%;
+    resize:none;
     background: white;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
     -webkit-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
     -moz-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
+}
+
+pre {
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;
-    color: #555;
 }
