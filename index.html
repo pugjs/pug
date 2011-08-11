@@ -1,4 +1,4 @@
-<html>
+<!doctype html><html>
 	<head>
 		<title>Jade - Template Engine</title>
 		<link rel="stylesheet" href="public/stylesheets/style.css" />
@@ -52,5 +52,50 @@
 				</pre>
 			</div>
 		</div>
+  <script src="https://raw.github.com/visionmedia/jade/master/jade.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="public/js/jquery.autogrow.js"></script>
+  <script src="public/js/beautify.min.js"></script>
+<script>(function(){
+
+function throttle(fn, delay) {  
+  var timer = null;  
+  return function () {  
+    var context = this, args = arguments;  
+    clearTimeout(timer);  
+    timer = setTimeout(function () {  
+      fn.apply(context, args);  
+    }, delay);  
+  };  
+}  
+
+
+var $jade = $('#jade');
+var default_text = '/n!!! 5/nhtml(lang="en")/n  head/n    title= "pageTitle"/n    script(type="text/javascript")/n      if (foo) {/n         bar()/n      }/n  body/n    h1 Jade - node template engine/n    #container/n        p You are amazing/n/n'.replace(/\/n/g,'\n');
+
+var $jade_replace = $('<textarea id="jade"></textarea>');
+$jade.replaceWith($jade_replace);
+$jade_replace.val(default_text || $jade.text().replace(/\t/g,'')).autogrow();
+
+var $html = $('<textarea id="html"></textarea>');
+$('#html').replaceWith($html);
+$html.autogrow();
+
+var jade = require('jade');
+
+$jade_replace.keyup(throttle(function(){
+  console.log($jade_replace.val)
+  var html = jade.render($jade_replace.val());
+  html = style_html(html, {
+    'indent_size': 2
+   , 'indent_char': ' '
+ //, 'max_char': 78
+   , 'brace_style': 'collapse'
+  });
+  $html.val(html).keyup();
+  
+},300)).keyup();
+
+})()</script>
 	</body>
 </html>
