@@ -1,4 +1,10 @@
 
+0.14.1 / 2011-08-14 
+==================
+
+  * Added `colons` option for everyone stuck with ":". Closes #231
+  * Optimization: consecutive lines are merged in compiled js
+
 0.14.0 / 2011-08-08 
 ==================
 

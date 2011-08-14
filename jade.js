@@ -119,6 +119,7 @@ Compiler.prototype = {
   
   compile: function(){
     this.buf = ['var interp;'];
+    this.lastBufferedIdx = -1
     this.visit(this.node);
     return this.buf.join('\n');
   },
@@ -150,7 +151,15 @@ Compiler.prototype = {
   
   buffer: function(str, esc){
     if (esc) str = utils.escape(str);
-    this.buf.push("buf.push('" + str + "');");
+    
+    if (this.lastBufferedIdx == this.buf.length) {
+      this.lastBuffered += str;
+      this.buf[this.lastBufferedIdx - 1] = "buf.push('" + this.lastBuffered + "');"
+    } else {
+      this.buf.push("buf.push('" + str + "');");
+      this.lastBuffered = str;
+      this.lastBufferedIdx = this.buf.length;
+    }    
   },
   
   /**
@@ -732,7 +741,7 @@ function parse(str, options){
   
   try {
     // Parse
-    var parser = new Parser(str, filename);
+    var parser = new Parser(str, filename, options);
     if (options.debug) parser.debug();
 
     // Compile
@@ -913,12 +922,19 @@ require.register("lexer.js", function(module, exports, require){
 /**
  * Initialize `Lexer` with the given `str`.
  *
+ * Options:
+ *
+ *   - `colons` allow colons for attr delimiters
+ *
  * @param {String} str
+ * @param {Object} options
  * @api private
  */
 
-var Lexer = module.exports = function Lexer(str) {
+var Lexer = module.exports = function Lexer(str, options) {
+  options = options || {};
   this.input = str.replace(/\r\n|\r/g, '\n');
+  this.colons = options.colons;
   this.deferredTokens = [];
   this.lastIndents = 0;
   this.lineno = 1;
@@ -1202,6 +1218,7 @@ Lexer.prototype = {
         , str = this.input.substr(1, index-1)
         , tok = this.tok('attrs')
         , len = str.length
+        , colons = this.colons
         , states = ['key']
         , key = ''
         , val = ''
@@ -1222,6 +1239,9 @@ Lexer.prototype = {
       tok.attrs = {};
 
       function parse(c) {
+        var real = c;
+        // TODO: remove when people fix ":"
+        if (colons && ':' == c) c = '=';
         switch (c) {
           case ',':
           case '\n':
@@ -1246,14 +1266,14 @@ Lexer.prototype = {
           case '=':
             switch (state()) {
               case 'key char':
-                key += c;
+                key += real;
                 break;
               case 'val':
               case 'expr':
               case 'array':
               case 'string':
               case 'object':
-                val += c;
+                val += real;
                 break;
               default:
                 states.push('val');
@@ -1975,12 +1995,13 @@ var Lexer = require('./lexer')
  *
  * @param {String} str
  * @param {String} filename
+ * @param {Object} options
  * @api public
  */
 
-var Parser = exports = module.exports = function Parser(str, filename){
+var Parser = exports = module.exports = function Parser(str, filename, options){
   this.input = str;
-  this.lexer = new Lexer(str);
+  this.lexer = new Lexer(str, options);
   this.filename = filename;
 };
 
