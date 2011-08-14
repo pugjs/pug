@@ -445,6 +445,10 @@ module.exports = {
         assert.equal('<meta content="what\'s up? \'weee\'"/>', render('meta(content="what\'s up? \'weee\'")'));
     },
 
+    'test colons option': function(assert){
+        assert.equal('<a href="/bar"></a>', render('a(href:"/bar")', { colons: true }));
+    },
+
     'test class attr array': function(assert){
         assert.equal('<body class="foo bar baz"></body>', render('body(class=["foo", "bar", "baz"])'));
     },
