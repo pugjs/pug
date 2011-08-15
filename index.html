@@ -1,4 +1,4 @@
-<html>
+<!doctype html><html>
 	<head>
 		<title>Jade - Template Engine</title>
 		<link rel="stylesheet" href="public/stylesheets/style.css" />
@@ -10,47 +10,110 @@
 				<h1>Jade</h1>
 				<div id="arrow"></div>
 				<span id="tagline">Node Template Engine</span>
-				<pre id="jade">
-					<code>
-<span class="doctype">!!!</span> 5
-<span class="tag">html</span>(<span class="key">lang</span>=<span class="val">"en"</span>)
-  <span class="tag">head</span>
-    <span class="tag">title</span><span class="text">= pageTitle</span>
-    <span class="filter">script(type='text/javascript')</span>
-      <span class="text">if (foo) {
-         bar()
-      }</span>
-  <span class="tag">body</span>
-    <span class="tag">h1</span> <span class="text">Jade - node template engine</span>
-    <span class="tag">#container</span>
-      - if (youAreUsingJade)
-        p <span class="text">You are amazing</span>
-      - else
-        p <span class="text">Get on it!</span>
-					</code>
-				</pre>
-				<pre id="html">
-					<code>
-&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;title&gt;Jade&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
+        <div id="editors">
+				  <pre id="jade">
+					  <code>
+!!! 5
+html(lang="en")
+  head
+    title= "pageTitle"
+    script(type="text/javascript")
       if (foo) {
-      	bar()
+         bar()
       }
-    &lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Jade - node template engine&lt;/h1&gt;
-    &lt;div id=&quot;container&quot;&gt;
-      &lt;p&gt;You are amazing&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;					
-					</code>
-				</pre>
+  body
+    h1 Jade - node template engine
+    #container
+        p You are amazing
+
+					  </code>
+				  </pre>
+				  <pre id="html">
+					  <code>
+  &lt;!DOCTYPE html&gt;
+  &lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+      &lt;title&gt;Jade&lt;/title&gt;
+      &lt;script type=&quot;text/javascript&quot;&gt;
+        if (foo) {
+        	bar()
+        }
+      &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Jade - node template engine&lt;/h1&gt;
+      &lt;div id=&quot;container&quot;&gt;
+        &lt;p&gt;You are amazing&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;					
+					  </code>
+				  </pre>
+        </idv>
 			</div>
 		</div>
+  <script src="https://raw.github.com/visionmedia/jade/master/jade.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+  <script src="public/js/jquery.autogrow.js"></script>
+  <script src="public/js/beautify.min.js"></script>
+<script type="text/template" id="render_template">
+return jade.render(text,{
+  locals:{
+    title:'Demo title!'
+  }
+});
+</script>
+<script>(function(){
+
+function throttle(fn, delay) {  
+  var timer = null;  
+  return function () {  
+    var context = this, args = arguments;  
+    clearTimeout(timer);  
+    timer = setTimeout(function () {  
+      fn.apply(context, args);  
+    }, delay);  
+  };  
+}  
+
+var $render = $('<textarea id="render"></textarea>');
+$('#html').after($render);
+$render
+   .before('<h5><code>function(text){</code></h5>')
+   .after('<h5><code>}</code></h5>')
+   .val($('#render_template').html())
+   .autogrow()
+
+var text = $('#jade').text().replace(/\t/g,'');
+
+var $jade = $('<textarea id="jade"></textarea>');
+
+$('#jade').replaceWith($jade);
+$jade.val(text).autogrow();
+
+var $html = $('<textarea id="html"></textarea>');
+$('#html').replaceWith($html);
+$html.autogrow();
+
+window.jade = require('jade');
+
+var render = throttle(function(){
+  var fn = new Function('text',$render.val());
+  var html = style_html(fn($jade.val()), {
+    'indent_size': 2
+   , 'indent_char': ' '
+ //, 'max_char': 78
+   , 'brace_style': 'collapse'
+  });
+  $html.val(html).keyup();
+  
+},300);
+
+$jade.keyup(render);
+$render.keyup(render);
+//initial render
+render();
+
+})()</script>
 	</body>
 </html>
