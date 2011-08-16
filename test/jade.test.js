@@ -801,7 +801,7 @@ module.exports = {
 
         assert.equal(html, render(str));
     },
-    
+
     'test renderFile() fs exception': function(assert, beforeExit){
         var called;
         jade.renderFile('foo', function(err, str){
