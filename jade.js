@@ -198,7 +198,19 @@ Compiler.prototype = {
       || node.constructor.toString().match(/function ([^(\s]+)()/)[1];
     return this['visit' + name](node);
   },
-  
+
+  /**
+   * Visit literal `node`.
+   *
+   * @param {Literal} node
+   * @api public
+   */
+
+  visitLiteral: function(node){
+    var str = node.str.replace(/\n/g, '\\\\n');
+    this.buffer(str);
+  },
+
   /**
    * Visit all nodes in `block`.
    *
@@ -662,7 +674,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.14.0';
+exports.version = '0.14.2';
 
 /**
  * Intermediate JavaScript cache.
@@ -1779,10 +1791,46 @@ exports.Block = require('./block');
 exports.Mixin = require('./mixin');
 exports.Filter = require('./filter');
 exports.Comment = require('./comment');
+exports.Literal = require('./literal');
 exports.BlockComment = require('./block-comment');
 exports.Doctype = require('./doctype');
 
 }); // module: nodes/index.js
+
+require.register("nodes/literal.js", function(module, exports, require){
+
+/*!
+ * Jade - nodes - Literal
+ * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
+
+var Node = require('./node');
+
+/**
+ * Initialize a `Literal` node with the given `str.
+ *
+ * @param {String} str
+ * @api public
+ */
+
+var Literal = module.exports = function Literal(str) {
+  this.str = str;
+};
+
+/**
+ * Inherit from `Node`.
+ */
+
+Literal.prototype = new Node;
+Literal.prototype.constructor = Literal;
+
+
+}); // module: nodes/literal.js
 
 require.register("nodes/mixin.js", function(module, exports, require){
 
@@ -2041,6 +2089,17 @@ Parser.prototype = {
   advance: function(){
     return this.lexer.advance();
   },
+
+  /**
+   * Skip `n` tokens.
+   *
+   * @param {Number} n
+   * @api private
+   */
+
+  skip: function(n){
+    while (n--) this.advance();
+  },
   
   /**
    * Single token lookahead.
@@ -2186,9 +2245,14 @@ Parser.prototype = {
   
   parseCode: function(){
     var tok = this.expect('code')
-      , node = new nodes.Code(tok.val, tok.buffer, tok.escape);
+      , node = new nodes.Code(tok.val, tok.buffer, tok.escape)
+      , block
+      , i = 1;
     node.line = this.line();
-    if ('indent' == this.peek().type) {
+    while (this.lookahead(i) && 'newline' == this.lookahead(i).type) ++i;
+    block = 'indent' == this.lookahead(i).type;
+    if (block) {
+      this.skip(i-1);
       node.block = this.parseBlock();
     }
     return node;
@@ -2277,16 +2341,24 @@ Parser.prototype = {
     var path = require('path')
       , fs = require('fs')
       , dirname = path.dirname
+      , basename = path.basename
       , join = path.join;
 
     if (!this.filename)
       throw new Error('the "filename" option is required to use includes');
 
     var path = name = this.expect('include').val.trim()
-      , dir = dirname(this.filename)
-      , path = join(dir, path + '.jade');
+      , dir = dirname(this.filename);
 
-    var str = fs.readFileSync(path, 'utf8')
+    // non-jade
+    if (~basename(path).indexOf('.')) {
+      var path = join(dir, path)
+        , str = fs.readFileSync(path, 'utf8');
+      return new nodes.Literal(str);
+    }
+
+    var path = join(dir, path + '.jade')
+      , str = fs.readFileSync(path, 'utf8')
       , parser = new Parser(str, path)
       , ast = parser.parse();
 

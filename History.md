@@ -1,4 +1,10 @@
 
+0.14.2 / 2011-08-16 
+==================
+
+  * Added `include` support for non-jade files
+  * Fixed code indentation when followed by newline(s). Closes #295 [reported by masylum]
+
 0.14.1 / 2011-08-14 
 ==================
 
