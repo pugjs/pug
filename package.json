@@ -12,7 +12,8 @@
     "sass": ">= 0.0.1",
     "less": ">= 0.0.1",
     "markdown": ">= 0.0.1",
-    "stylus": ">= 0.0.1"
+    "stylus": ">= 0.0.1",
+    "uubench": "0.0.1"
   },
   "scripts" : { "prepublish" : "npm prune" },
   "engines": { "node": ">= 0.1.98" }

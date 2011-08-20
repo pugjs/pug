@@ -11,11 +11,7 @@ test:
 		$(TESTS)
 
 benchmark:
-	@node benchmarks/jade.js \
-	 && node benchmarks/jade-self.js \
-	 && node benchmarks/haml.js \
-	 && node benchmarks/haml2.js \
-	 && node benchmarks/ejs.js
+	@node support/benchmark
 
 jade.js: $(SRC)
 	@node support/compile.js $^
