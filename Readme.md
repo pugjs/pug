@@ -391,6 +391,45 @@ allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` 
 
     body(class=bodyClasses)
 
+### HTML
+
+ Inline html is fine, we can use the pipe syntax to 
+ write arbitrary text, in this case some html:
+
+```
+html
+  body
+    | <h1>Title</h1>
+    | <p>foo bar baz</p>
+```
+
+ Or we can use the trailing `.` to indicate to Jade that we
+ only want text in this block, allowing us to omit the pipes:
+
+```
+html
+  body.
+    <h1>Title</h1>
+    <p>foo bar baz</p>
+```
+
+ Both of these examples yield the same result:
+
+```
+<html><body><h1>Title</h1>
+<p>foo bar baz</p>
+</body></html>
+```
+
+ The same rule applies for anywhere you can have text
+ in jade, raw html is fine:
+
+```
+html
+  body
+    h1 User <em>#{name}</em>
+```
+
 ### Doctypes
 
 To add a doctype simply use `!!!`, or `doctype` followed by an optional value:
