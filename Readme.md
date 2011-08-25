@@ -604,6 +604,34 @@ JavaScript:
       for role in user.roles
         li= role
 
+## Conditionals
+
+ Jade conditionals are equivalent to those using the code (`-`) prefix,
+ however allow you to ditch parenthesis to become more designer friendly,
+ however keep in mind the expression given is _regular_ JavaScript:
+
+    for user in users
+      if user.role == 'admin'
+        p #{user.name} is an admin
+      else
+        p= user.name
+
+ is equivalent to the following using vanilla JavaScript literals:
+
+     for user in users
+       - if (user.role == 'admin')
+         p #{user.name} is an admin
+       - else
+         p= user.name
+
+  Jade also provides have `unless` which is equivalent to `if (!(expr))`:
+
+     for user in users
+       unless user.isAnonymous
+         p
+           | Click to view
+           a(href='/users/' + user.id)= user.name 
+
 ## Includes
 
  Includes allow you to statically include chunks of Jade

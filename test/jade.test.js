@@ -830,6 +830,61 @@ module.exports = {
         assert.equal(html, render(str));
     },
 
+    'test if': function(assert){
+      var str = [
+          '- var users = ["tobi", "loki", "jane"]',
+          'if users.length',
+          '  p users: #{users.length}',
+      ].join('\n');
+  
+      assert.equal('<p>users: 3</p>', render(str));
+    },
+
+    'test unless': function(assert){
+      var str = [
+          '- var users = ["tobi", "loki", "jane"]',
+          'unless users.length',
+          '  p no users',
+      ].join('\n');
+  
+      assert.equal('', render(str));
+
+      var str = [
+          '- var users = []',
+          'unless users.length',
+          '  p no users',
+      ].join('\n');
+  
+      assert.equal('<p>no users</p>', render(str));
+    },
+
+    'test else': function(assert){
+      var str = [
+          '- var users = []',
+          'if users.length',
+          '  p users: #{users.length}',
+          'else',
+          '  p users: none',
+      ].join('\n');
+  
+      assert.equal('<p>users: none</p>', render(str));
+    },
+
+    'test else if': function(assert){
+      var str = [
+          '- var users = ["tobi", "jane", "loki"]',
+          'for user in users',
+          '  if user == "tobi"',
+          '    p awesome #{user}',
+          '  else if user == "jane"',
+          '    p lame #{user}',
+          '  else',
+          '    p #{user}',
+      ].join('\n');
+  
+      assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
+    },
+
     'test renderFile() fs exception': function(assert, beforeExit){
         var called;
         jade.renderFile('foo', function(err, str){
