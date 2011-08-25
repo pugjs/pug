@@ -20,7 +20,7 @@
   - combine dynamic and static tag classes
   - parse tree manipulation via _filters_
   - supports [Express JS](http://expressjs.com) out of the box
-  - transparent iteration over objects, arrays, and even non-enumerables via `- each`
+  - transparent iteration over objects, arrays, and even non-enumerables via `each`
   - block comments
   - no tag prefix
   - AST filters
@@ -600,6 +600,18 @@ when undefined would normally output "undefined" in your html, however recent
 versions of Jade will simply render:
 
     <textarea></textarea>
+
+ Jade also now supports `each` without the code prefix (`-`):
+ 
+    each user in users
+      each role in user.roles
+        li= role
+
+ You may also use `for` if you prefer:
+ 
+    for user in users
+      for role in user.roles
+        li= role
 
 ## Includes
 

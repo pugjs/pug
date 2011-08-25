@@ -800,6 +800,34 @@ module.exports = {
         ].join('');
 
         assert.equal(html, render(str));
+
+        var str = [
+            '- var users = ["tobi", "loki", "jane"]',
+            'each user in users',
+            '  li= user',
+        ].join('\n');
+    
+        var html = [
+            '<li>tobi</li>',
+            '<li>loki</li>',
+            '<li>jane</li>',
+        ].join('');
+
+        assert.equal(html, render(str));
+
+        var str = [
+            '- var users = ["tobi", "loki", "jane"]',
+            'for user in users',
+            '  li= user',
+        ].join('\n');
+    
+        var html = [
+            '<li>tobi</li>',
+            '<li>loki</li>',
+            '<li>jane</li>',
+        ].join('');
+
+        assert.equal(html, render(str));
     },
 
     'test renderFile() fs exception': function(assert, beforeExit){
