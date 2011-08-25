@@ -549,15 +549,18 @@ you may use `!=`:
 
     p!= aVarContainingMoreHTML
 
-The one exception made in terms of allowing "vanilla" JavaScript, is
-the `- each` token. This takes the form of:
+## Iteration
 
-    - each VAL[, KEY] in OBJ
+ Along with vanilla JavaScript Jade also supports a subset of
+ constructs that allow you to create more designer-friendly templates,
+ one of these constructs is `each`, taking the form:
+
+    each VAL[, KEY] in OBJ
 
 An example iterating over an array:
 
     - var items = ["one", "two", "three"]
-    - each item in items
+    each item in items
       li= item
 
 outputs:
@@ -569,7 +572,7 @@ outputs:
 iterating an array with index:
 
     - var items = ["one", "two", "three"]
-    - each item, i in items
+    each item, i in items
       li #{item}: #{i}
 
 outputs:
@@ -581,28 +584,16 @@ outputs:
 iterating an object's keys and values:
 
     - var obj = { foo: 'bar' }
-    - each val, key in obj
+    each val, key in obj
       li #{key}: #{val}
 
 would output `<li>foo: bar</li>`
 
-You can also nest these!
+Internally Jade converts these statements to regular
+JavaScript loops such as `users.forEach(function(user){`,
+so lexical scope and nesting applies as it would with regular
+JavaScript:
 
-    - each user in users
-      - each role in user.roles
-        li= role
-
-When a property is undefined, Jade will output an empty string. For example:
-
-    textarea= user.signature
-
-when undefined would normally output "undefined" in your html, however recent
-versions of Jade will simply render:
-
-    <textarea></textarea>
-
- Jade also now supports `each` without the code prefix (`-`):
- 
     each user in users
       each role in user.roles
         li= role
