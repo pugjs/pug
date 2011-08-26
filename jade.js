@@ -2562,6 +2562,12 @@ require.register("runtime.js", function(module, exports, require){
  * MIT Licensed
  */
 
+if (!Array.isArray) {
+  Array.isArray = function(arr){
+    return '[object Array]' == toString.call(arr);
+  };
+}
+
 if (!Object.keys) {
   Object.keys = function(obj){
     var arr = [];
@@ -2600,9 +2606,9 @@ exports.attrs = function attrs(obj){
             : buf.push(key + '="' + key + '"');
         }
       } else if ('class' == key && Array.isArray(val)) {
-        buf.push(key + '="' + escape(val.join(' ')) + '"');
+        buf.push(key + '="' + exports.escape(val.join(' ')) + '"');
       } else {
-        buf.push(key + '="' + escape(val) + '"');
+        buf.push(key + '="' + exports.escape(val) + '"');
       }
     }
   }

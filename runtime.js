@@ -21,7 +21,7 @@ if (!Object.keys) {
       }
     }
     return arr;
-  };
+  } 
 }
 
 /**
@@ -67,7 +67,7 @@ exports.attrs = function attrs(obj){
  * @api private
  */
 
-exports.escape = function(html){
+exports.escape = function escape(html){
   return String(html)
     .replace(/&(?!\w+;)/g, '&amp;')
     .replace(/</g, '&lt;')
