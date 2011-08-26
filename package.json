@@ -1,0 +1,24 @@
+{
+  "name": "jade",
+  "description": "Jade template engine",
+  "version": "0.15.1",
+  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+  "repository": "git://github.com/visionmedia/jade",
+  "main": "./index.js",
+  "bin": { "jade": "./bin/jade" },
+  "dependencies": {
+    "commander": "0.1.0",
+    "mkdirp": "0.0.6"
+  },
+  "devDependencies": {
+    "expresso": "0.6.4",
+    "coffee-script": ">= 0.0.1",
+    "sass": ">= 0.0.1",
+    "less": ">= 0.0.1",
+    "markdown": ">= 0.0.1",
+    "stylus": ">= 0.0.1",
+    "uubench": "0.0.1"
+  },
+  "scripts" : { "prepublish" : "npm prune" },
+  "engines": { "node": ">= 0.1.98" }
+}

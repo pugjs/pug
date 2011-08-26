@@ -1,4 +1,10 @@
 
+0.15.1 / 2011-08-26 
+==================
+
+  * Fixed jade(1) support due to `res.render()` removal
+  * Removed --watch support (use a makefile + watch...)
+
 0.15.0 / 2011-08-26 
 ==================
 
