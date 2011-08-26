@@ -10,13 +10,11 @@ var fs = require('fs')
   , resolve = path.resolve
   , basename = path.basename
   , dirname = path.dirname
-  , jade;
+  , jade = require('../');
 
-try {
-  jade = require('../lib/jade');
-} catch (err) {
-  jade = require('jade');
-}
+// jade options
+
+var options = {};
 
 // options
 
@@ -45,62 +43,33 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-// 
-// /**
-//  * Usage information.
-//  */
-// 
-// var usage = ''
-//   + '\n'
-//   + '  Usage: jade [options]\n'
-//   + '              [path ...]\n'
-//   + '              < in.jade > out.jade'
-//   + '  \n'
-//   + '  Options:\n'
-//   + '    -o, --options <str>  JavaScript options object passed\n'
-//   + '    -h, --help           Output help information\n'
-//   + '    -w, --watch          Watch file(s) or folder(s) for changes and re-compile\n'
-//   + '    -v, --version        Output jade version\n'
-//   + '    --out <dir>          Output the compiled html to <dir>\n';
-//   + '\n';
-// 
-// // Parse arguments
-// 
-// var arg
-//   , files = [];
-// while (args.length) {
-//   arg = args.shift();
-//   switch (arg) {
-//     case '-h':
-//     case '--help':
-//       console.log(usage);
-//       process.exit(1);
-//     case '-v':
-//     case '--version':
-//       console.log(jade.version);
-//       process.exit(1);
-//     case '-o':
-//     case '--options':
-//       var str = args.shift();
-//       if (str) {
-//         options = eval('(' + str + ')');
-//       } else {
-//         console.error('-o, --options requires a string.');
-//         process.exit(1);
-//       }
-//       break;
-//     case '-w':
-//     case '--watch':
-//       watchers = {};
-//       break;
-//     case '--out':
-//       dest = args.shift();
-//       break;
-//     default:
-//       files.push(arg);
-//   }
-// }
-// 
+// left-over args are file paths
+
+var files = program.args;
+
+// compile files
+
+if (files.length) {
+  
+// stdio
+} else {
+  stdin();
+}
+
+/**
+ * Compile from stdin.
+ */
+
+function stdin() {
+  var buf = '';
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', function(chunk){ buf += chunk; });
+  process.stdin.on('end', function(){
+    var fn = jade.compile(buf, options);
+    process.stdout.write(fn(options));
+  }).resume();
+}
+
 // // Watching and no files passed - watch cwd
 // if (watchers && !files.length) {
 //   fs.readdirSync(process.cwd()).forEach(processFile);
