@@ -25,21 +25,13 @@ function Visitor(node) {
 Visitor.prototype.__proto__ = Compiler.prototype;
 
 Visitor.prototype.visit = function(node){
-    if (node.name != 'else') this.line(node);
+    if (node.name != 'or') this.line(node);
     this.visitNode(node);
 };
 
 Visitor.prototype.visitTag = function(node){
   switch (node.name) {
-    case 'if':
-      // First text -> line
-      var condition = node.text[0]
-        , block = node.block;
-      node = new nodes.Code('if (' + condition + ')');
-      node.block = block;
-      this.visit(node);
-      break;
-    case 'else':
+    case 'or':
       var block = node.block;
       node = new nodes.Code('else');
       node.block = block;
@@ -130,10 +122,10 @@ module.exports = {
           'conditionals:',
           '  if false',
           '    | oh noes',
-          '  else',
+          '  or',
           '    if null == false',
           '      p doh',
-          '    else',
+          '    or',
           '      p amazing!'
       ].join('\n');
   
