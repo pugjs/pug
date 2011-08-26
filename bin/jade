@@ -40,6 +40,9 @@ program.on('--help', function(){
   console.log('    # jade over stdio');
   console.log('    $ echo "h1 Jade!" | jade');
   console.log('');
+  console.log('    # foo, bar dirs rendering to /tmp');
+  console.log('    $ jade foo bar --out /tmp ');
+  console.log('');
 });
 
 program.parse(process.argv);
