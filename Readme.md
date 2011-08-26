@@ -64,13 +64,11 @@ via npm:
  Can then be as small as the following generated function:
 
 ```js
-function anonymous(locals) {
+function anonymous(locals, attrs, escape, rethrow) {
   var buf = [];
   with (locals || {}) {
     var interp;
-    buf.push('<p>');
-    buf.push('Hello ' + escape((interp = name) == null ? '' : interp) + '');
-    buf.push('</p>');
+    buf.push('\n<p>Hello ' + escape((interp = name) == null ? '' : interp) + '\n</p>');
   }
   return buf.join("");
 }
@@ -80,14 +78,12 @@ function anonymous(locals) {
   via `jade.attrs`, `jade.escape` etc.
 
 ```js
-function anonymous(locals) {
-  var attrs = jade.attrs, escape = jade.escape;
+function anonymous(locals, attrs, escape, rethrow) {
+  var attrs = jade.attrs, escape = jade.escape, rethrow = jade.rethrow;
   var buf = [];
   with (locals || {}) {
     var interp;
-    buf.push('<p>');
-    buf.push('Hello ' + escape((interp = name) == null ? '' : interp) + '');
-    buf.push('</p>');
+    buf.push('\n<p>Hello ' + escape((interp = name) == null ? '' : interp) + '\n</p>');
   }
   return buf.join("");
 }
