@@ -1189,12 +1189,34 @@ Lexer.prototype = {
   },
 
   /**
+   * Conditional.
+   */
+  
+  conditional: function() {
+    var captures;
+    if (captures = /^(if|unless|else if|else) *([^\n]*)/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var type = captures[1]
+        , js = captures[2];
+
+      switch (type) {
+        case 'if': js = 'if (' + js + ')'; break;
+        case 'unless': js = 'if (!(' + js + '))'; break;
+        case 'else if': js = 'else if (' + js + ')'; break;
+        case 'else': js = 'else'; break;
+      }
+
+      return this.tok('code', js);
+    }
+  },
+
+  /**
    * Each.
    */
   
   each: function() {
     var captures;
-    if (captures = /^- *each *(\w+)(?: *, *(\w+))? * in *([^\n]+)/.exec(this.input)) {
+    if (captures = /^(?:- *)?(?:each|for) *(\w+)(?: *, *(\w+))? * in *([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('each', captures[1]);
       tok.key = captures[2] || 'index';
@@ -1469,9 +1491,10 @@ Lexer.prototype = {
       || this.doctype()
       || this.include()
       || this.mixin()
+      || this.conditional()
+      || this.each()
       || this.tag()
       || this.filter()
-      || this.each()
       || this.code()
       || this.id()
       || this.className()
@@ -2538,6 +2561,18 @@ require.register("runtime.js", function(module, exports, require){
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
  * MIT Licensed
  */
+
+if (!Object.keys) {
+  Object.keys = function(obj){
+    var arr = [];
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        arr.push(obj);
+      }
+    }
+    return arr;
+  } 
+}
 
 /**
  * Render the given attributes object.

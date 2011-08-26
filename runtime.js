@@ -6,6 +6,18 @@ var jade = (function(exports){
  * MIT Licensed
  */
 
+if (!Object.keys) {
+  Object.keys = function(obj){
+    var arr = [];
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        arr.push(obj);
+      }
+    }
+    return arr;
+  } 
+}
+
 /**
  * Render the given attributes object.
  *
