@@ -3,10 +3,16 @@
  * Module dependencies.
  */
 
-var jade = require('../'),
-    Compiler = jade.Compiler,
-    render = jade.render,
-    nodes = jade.nodes;
+var jade = require('../')
+  , Compiler = jade.Compiler
+  , nodes = jade.nodes;
+
+// Shortcut
+
+var render = function(str, options){
+  var fn = jade.compile(str, options);
+  return fn(options);
+};
 
 jade.filters.conditionals = function(block, compiler){
     return new Visitor(block).compile();

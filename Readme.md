@@ -57,7 +57,7 @@ via npm:
  
     $ make jade.min.js
 
-  By default Jade inlines its utility functions within the template functions generated, such as `escape()` and `attrs()`. Jade also instruments templates with line number statements such as `__.lineno = 3` for debugging purposes. When used in a browser it's useful to minimize this boiler plate, you can do so by passing the option `{ compileDebug: false }`, and `{ inline: false }`. The following template
+  By default Jade instruments templates with line number statements such as `__.lineno = 3` for debugging purposes. When used in a browser it's useful to minimize this boiler plate, you can do so by passing the option `{ compileDebug: false }`, and `{ inline: false }`. The following template
   
     p Hello #{name}
 
@@ -84,30 +84,19 @@ function anonymous(locals) {
 ```javascript
     var jade = require('jade');
 
-    // Render a string
-    jade.render('string of jade', { options: 'here' });
-
-    // Render a file
-    jade.renderFile('path/to/some.jade', { options: 'here' }, function(err, html){
-	    // options are optional,
-	    // the callback can be the second arg
-    });
-
     // Compile a function
     var fn = jade.compile('string of jade', options);
-    fn.call(scope, locals);
+    fn(locals);
 ```
 
 ### Options
 
- - `scope`     Evaluation scope (`this`)
  - `self`      Use a `self` namespace to hold the locals. _false by default_
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required when using includes
  - `debug`     Outputs tokens and function body generated
  - `compiler`  Compiler to replace jade's default
  - `compileDebug`  When `false` no debug instrumentation is compiled
- - `inline`     When `false` the helpers are not inlined (ideal for client-side use)
 
 ## Syntax
 
@@ -169,8 +158,7 @@ well cool, but how about large bodies of text:
 renders `<p>foo bar baz rawr.....</p>`
 
 interpolation? yup! both types of text can utilize interpolation,
-if we passed `{ locals: { name: 'tj', email: 'tj@vision-media.ca' }}` to `render()`
-we can do the following:
+if we passed `{ name: 'tj', email: 'tj@vision-media.ca' }` to the compiled function we can do the following:
 
     #user #{name} &lt;#{email}&gt;
 
@@ -655,9 +643,7 @@ and the following _layout.jade_:
 
 both includes _includes/head_ and _includes/foot_ are
 read relative to the `filename` option given to _layout.jade_,
-which should be an absolute path to this file, however Express
-and the `renderFile()` method do this for you. Include then parses
-these files, and injects the AST produced to render what you would expect:
+which should be an absolute path to this file, however Express does this for you. Include then parses these files, and injects the AST produced to render what you would expect:
 
 ```html
 <html>
