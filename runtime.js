@@ -6,11 +6,19 @@ var jade = (function(exports){
  * MIT Licensed
  */
 
+/**
+ * Lame Array.isArray() polyfill for now.
+ */
+
 if (!Array.isArray) {
   Array.isArray = function(arr){
     return '[object Array]' == toString.call(arr);
   };
 }
+
+/**
+ * Lame Object.keys() polyfill for now.
+ */
 
 if (!Object.keys) {
   Object.keys = function(obj){
