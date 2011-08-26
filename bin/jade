@@ -7,9 +7,10 @@
 var fs = require('fs')
   , program = require('commander')
   , path = require('path')
-  , resolve = path.resolve
   , basename = path.basename
   , dirname = path.dirname
+  , resolve = path.resolve
+  , join = path.join
   , mkdirp = require('mkdirp')
   , jade = require('../');
 
@@ -95,9 +96,14 @@ function renderFile(path) {
         if (err) throw err;
         var fn = jade.compile(str, options);
         path = path.replace(re, '.html');
-        fs.writeFile(path, fn(options), function(err){
+        if (program.out) path = join(program.out, basename(path));
+        var dir = resolve(dirname(path));
+        mkdirp(dir, 0755, function(err){
           if (err) throw err;
-          console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+          fs.writeFile(path, fn(options), function(err){
+            if (err) throw err;
+            console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+          });
         });
       });
     // Found directory
