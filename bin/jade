@@ -10,6 +10,7 @@ var fs = require('fs')
   , resolve = path.resolve
   , basename = path.basename
   , dirname = path.dirname
+  , mkdirp = require('mkdirp')
   , jade = require('../');
 
 // jade options
@@ -50,7 +51,9 @@ var files = program.args;
 // compile files
 
 if (files.length) {
-  
+  console.log();
+  files.forEach(renderFile);
+  process.on('exit', console.log);
 // stdio
 } else {
   stdin();
@@ -70,111 +73,34 @@ function stdin() {
   }).resume();
 }
 
-// // Watching and no files passed - watch cwd
-// if (watchers && !files.length) {
-//   fs.readdirSync(process.cwd()).forEach(processFile);
-// // Process passed files
-// } else if (files.length) {
-//   files.forEach(processFile);
-// // Stdio
-// } else {
-//   var buf = '';
-//   process.stdin.setEncoding('utf8');
-//   process.stdin.on('data', function(chunk){
-//     buf += chunk;
-//   }).on('end', function(){
-//     console.log(jade.render(buf, options));
-//   }).resume();
-// }
-// 
-// /**
-//  * Process the given path, compiling the jade files found.
-//  * Always walk the subdirectories.;
-//  */
-// 
-// function processFile(path) {
-//   fs.lstat(path, function(err, stat) {
-//     if (err) throw err;
-//     // Found jade file
-//     if (stat.isFile() && path.match(/\.jade$/)) {
-//       renderJade(path);
-//     // Found directory
-//     } else if (stat.isDirectory()) {
-//       fs.readdir(path, function(err, files) {
-//         if (err) throw err;
-//         files.map(function(filename) {
-//           return path + '/' + filename;
-//         }).forEach(processFile);
-//       });
-//     }
-//   });
-// }
-// 
-// /**
-//  * Render jade
-//  */
-// 
-// function renderJade(jadefile) {
-//   jade.renderFile(jadefile, options, function(err, html) {
-//     if (err) throw err;
-//     writeFile(jadefile, html);
-//   });
-// }
-// 
-// /**
-//  * mkdir -p implementation.
-//  */
-// 
-// function mkdirs(path, fn) {
-//   var segs = dirname(path).split('/')
-//     , dir = '';
-// 
-//   (function next() {
-//     var seg = segs.shift();
-//     if (seg) {
-//       dir += seg + '/';
-//       fs.mkdir(dir, 0755, function(err){
-//         if (!err) return next();
-//         if ('EEXIST' == err.code) return next();
-//       });
-//     } else {
-//       fn();
-//     }
-//   })();
-// }
-// 
-// /**
-//  * Write the html output to a file.
-//  */
-// 
-// function writeFile(src, html) {
-//   var path = src.replace('.jade', '.html');
-//   if (dest) path = dest + '/' + path;
-//   mkdirs(path, function(err){
-//     if (err) throw err;
-//     fs.writeFile(path, html, function(err) {
-//       if (err) throw err;
-//       console.log('  \033[90mcompiled\033[0m %s', path);
-//       watch(src, renderJade);
-//     });
-//   });
-// }
-// 
-// /**
-//  * Watch the given `file` and invoke `fn` when modified.
-//  */
-// 
-// function watch(file, fn) {
-//   // not watching
-//   if (!watchers) return;
-// 
-//   // already watched
-//   if (watchers[file]) return;
-// 
-//   // watch the file itself
-//   watchers[file] = true;
-//   console.log('  \033[90mwatching\033[0m %s', file);
-//   fs.watchFile(file, { interval: 50 }, function(curr, prev){
-//     if (curr.mtime > prev.mtime) fn(file);
-//   });
-// }
+/**
+ * Process the given path, compiling the jade files found.
+ * Always walk the subdirectories.
+ */
+
+function renderFile(path) {
+  var re = /\.jade$/;
+  fs.lstat(path, function(err, stat) {
+    if (err) throw err;
+    // Found jade file
+    if (stat.isFile() && re.test(path)) {
+      fs.readFile(path, 'utf8', function(err, str){
+        if (err) throw err;
+        var fn = jade.compile(str, options);
+        path = path.replace(re, '.html');
+        fs.writeFile(path, fn(options), function(err){
+          if (err) throw err;
+          console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+        });
+      });
+    // Found directory
+    } else if (stat.isDirectory()) {
+      fs.readdir(path, function(err, files) {
+        if (err) throw err;
+        files.map(function(filename) {
+          return path + '/' + filename;
+        }).forEach(renderFile);
+      });
+    }
+  });
+}
