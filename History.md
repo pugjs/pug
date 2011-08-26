@@ -1,4 +1,19 @@
 
+0.15.0 / 2011-08-26 
+==================
+
+  * Added `client` option to reference runtime helpers
+  * Added `Array.isArray()` for runtime.js as well
+  * Added `Object.keys()` for the client-side runtime
+  * Added first-class `if`, `unless`, `else` and `else if` support
+  * Added first-class `each` / `for` support
+  * Added `make benchmark` for continuous-bench
+  * Removed `inline` option, SS helpers are no longer inlined either
+  * Removed `Parser#debug()`
+  * Removed `jade.render()` and `jade.renderFile()`
+  * Fixed runtime.js `escape()` bug causing window.escape to be used
+  * Fixed a bunch of tests
+
 0.14.2 / 2011-08-16 
 ==================
 
