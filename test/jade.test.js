@@ -16,7 +16,10 @@ try {
 
 // Shortcut
 
-var render = jade.render;
+var render = function(str, options){
+  var fn = jade.compile(str, options);
+  return fn(options);
+};
 
 module.exports = {
     'test .version': function(assert){
@@ -300,20 +303,6 @@ module.exports = {
         assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
     },
     
-    'test cache': function(assert){
-        var err;
-        try {
-            render('foo', { cache: true });
-        } catch (e) {
-            err = e;
-        }
-        assert.equal('filename is required when using the cache option', err.message);
-        
-        assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
-        assert.equal('<p></p>', render('p', { cache: true, filename: 'foo.jade' }));
-        assert.ok(typeof jade.cache['foo.jade'] === 'function', 'Test cache');
-    },
-    
     'test text': function(assert){
         assert.equal('foo\nbar\nbaz\n', render('| foo\n| bar\n| baz'));
         assert.equal('foo \nbar \nbaz\n', render('| foo \n| bar \n| baz'));
@@ -348,12 +337,12 @@ module.exports = {
     },
     
     'test tag text interpolation': function(assert){
-        assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { locals: { name: 'jade' }}));
-        assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { locals: { name: 'jade' }}));
-        assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { locals: { name: null }}));
-        assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { locals: { name: null }}));
-        assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { locals: { code: '<script>' }}));
-        assert.equal('foo <script> bar\n', render('| foo !{code} bar', { locals: { code: '<script>' }}));
+        assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { name: 'jade' }));
+        assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { name: 'jade' }));
+        assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { name: null }));
+        assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { name: null }));
+        assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { code: '<script>' }));
+        assert.equal('foo <script> bar\n', render('| foo !{code} bar', { code: '<script>' }));
     },
     
     'test flexible indentation': function(assert){
@@ -456,23 +445,23 @@ module.exports = {
     'test attr interpolation': function(assert){
         // Test single quote interpolation
         assert.equal('<a href="/user/12">tj</a>'
-          , render("a(href='/user/#{id}') #{name}", { locals: { name: 'tj', id: 12 }}));
+          , render("a(href='/user/#{id}') #{name}", { name: 'tj', id: 12 }));
     
         assert.equal('<a href="/user/12-tj">tj</a>'
-          , render("a(href='/user/#{id}-#{name}') #{name}", { locals: { name: 'tj', id: 12 }}));
+          , render("a(href='/user/#{id}-#{name}') #{name}", { name: 'tj', id: 12 }));
     
         assert.equal('<a href="/user/&lt;script&gt;">tj</a>'
-          , render("a(href='/user/#{id}') #{name}", { locals: { name: 'tj', id: '<script>' }}));
+          , render("a(href='/user/#{id}') #{name}", { name: 'tj', id: '<script>' }));
     
         // Test double quote interpolation
         assert.equal('<a href="/user/13">ds</a>'
-          , render('a(href="/user/#{id}") #{name}', { locals: { name: 'ds', id: 13 }}));
+          , render('a(href="/user/#{id}") #{name}', { name: 'ds', id: 13 }));
     
         assert.equal('<a href="/user/13-ds">ds</a>'
-          , render('a(href="/user/#{id}-#{name}") #{name}', { locals: { name: 'ds', id: 13 }}));
+          , render('a(href="/user/#{id}-#{name}") #{name}', { name: 'ds', id: 13 }));
     
         assert.equal('<a href="/user/&lt;script&gt;">ds</a>'
-          , render('a(href="/user/#{id}") #{name}', { locals: { name: 'ds', id: '<script>' }}));
+          , render('a(href="/user/#{id}") #{name}', { name: 'ds', id: '<script>' }));
     },
     
     'test attr parens': function(assert){
@@ -480,25 +469,25 @@ module.exports = {
     },
     
     'test code attrs': function(assert){
-        assert.equal('<p></p>', render('p(id= name)', { locals: { name: undefined }}));
-        assert.equal('<p></p>', render('p(id= name)', { locals: { name: null }}));
-        assert.equal('<p></p>', render('p(id= name)', { locals: { name: false }}));
-        assert.equal('<p id=""></p>', render('p(id= name)', { locals: { name: '' }}));
-        assert.equal('<p id="tj"></p>', render('p(id= name)', { locals: { name: 'tj' }}));
-        assert.equal('<p id="default"></p>', render('p(id= name || "default")', { locals: { name: null }}));
-        assert.equal('<p id="something"></p>', render("p(id= 'something')", { locals: { name: null }}));
-        assert.equal('<p id="something"></p>', render("p(id = 'something')", { locals: { name: null }}));
+        assert.equal('<p></p>', render('p(id= name)', { name: undefined }));
+        assert.equal('<p></p>', render('p(id= name)', { name: null }));
+        assert.equal('<p></p>', render('p(id= name)', { name: false }));
+        assert.equal('<p id=""></p>', render('p(id= name)', { name: '' }));
+        assert.equal('<p id="tj"></p>', render('p(id= name)', { name: 'tj' }));
+        assert.equal('<p id="default"></p>', render('p(id= name || "default")', { name: null }));
+        assert.equal('<p id="something"></p>', render("p(id= 'something')", { name: null }));
+        assert.equal('<p id="something"></p>', render("p(id = 'something')", { name: null }));
         assert.equal('<p id="foo"></p>', render("p(id= (true ? 'foo' : 'bar'))"));
         assert.equal('<option value="">Foo</option>', render("option(value='') Foo"));
     },
     
     'test code attrs class': function(assert){
-        assert.equal('<p class="tj"></p>', render('p(class= name)', { locals: { name: 'tj' }}));
-        assert.equal('<p class="tj"></p>', render('p( class= name )', { locals: { name: 'tj' }}));
-        assert.equal('<p class="default"></p>', render('p(class= name || "default")', { locals: { name: null }}));
-        assert.equal('<p class="foo default"></p>', render('p.foo(class= name || "default")', { locals: { name: null }}));
-        assert.equal('<p class="default foo"></p>', render('p(class= name || "default").foo', { locals: { name: null }}));
-        assert.equal('<p id="default"></p>', render('p(id = name || "default")', { locals: { name: null }}));
+        assert.equal('<p class="tj"></p>', render('p(class= name)', { name: 'tj' }));
+        assert.equal('<p class="tj"></p>', render('p( class= name )', { name: 'tj' }));
+        assert.equal('<p class="default"></p>', render('p(class= name || "default")', { name: null }));
+        assert.equal('<p class="foo default"></p>', render('p.foo(class= name || "default")', { name: null }));
+        assert.equal('<p class="default foo"></p>', render('p(class= name || "default").foo', { name: null }));
+        assert.equal('<p id="default"></p>', render('p(id = name || "default")', { name: null }));
         assert.equal('<p id="user-1"></p>', render('p(id = "user-" + 1)'));
         assert.equal('<p class="user-1"></p>', render('p(class = "user-" + 1)'));
     },
@@ -884,61 +873,7 @@ module.exports = {
       
       assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
     },
-    
-    'test renderFile() fs exception': function(assert, beforeExit){
-        var called;
-        jade.renderFile('foo', function(err, str){
-            called = true;
-            assert.equal(ENOENT, err.errno);
-            assert.equal(undefined, str);
-        });
-        beforeExit(function(){
-            assert.ok(called);
-        });
-    },
-    
-    'test renderFile() with valid path': function(assert, beforeExit){
-        var called;
-        jade.renderFile(__dirname + '/fixtures/layout.jade', function(err, str){
-            called = true;
-            assert.equal(null, err);
-            assert.equal('<html><body><h1>Jade</h1></body></html>', str);
-        });
-        beforeExit(function(){
-            assert.ok(called);
-        });
-    },
-    
-    'test renderFile() with options': function(assert, beforeExit){
-        var called = 0;
-        jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
-            ++called;
-            assert.equal(null, err);
-            assert.equal('<html><body><h1>Jade</h1></body></html>', str);
-    
-            jade.renderFile(__dirname + '/fixtures/layout.jade', { cache: true }, function(err, str){
-                ++called;
-                assert.equal(null, err);
-                assert.equal('<html><body><h1>Jade</h1></body></html>', str);
-            });
-        });
-        beforeExit(function(){
-            assert.equal(2, called);
-        });
-    },
-    
-    'test renderFile() passing of exceptions': function(assert, beforeExit){
-        var called = 0;
-        jade.renderFile(__dirname + '/fixtures/invalid.jade', { cache: true }, function(err, str){
-            ++called;
-            assert.ok(typeof err.message === 'string', 'Test passing of exceptions to renderFile() callback');
-            assert.equal(undefined, str);
-        });
-        beforeExit(function(){
-            assert.equal(1, called);
-        });
-    },
-    
+
     'test .compile()': function(assert){
         var fn = jade.compile('p foo');
         assert.equal('<p>foo</p>', fn());
