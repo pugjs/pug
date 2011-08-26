@@ -759,7 +759,7 @@ function parse(str, options){
       return ''
         + 'var buf = [];\n'
         + (options.self
-          ? 'var self = locals || {}, __ = __ || locals.__;\n' + js
+          ? 'var self = locals || {};\n' + js
           : 'with (locals || {}) {\n' + js + '\n}\n')
         + 'return buf.join("");';
       
@@ -778,6 +778,8 @@ function parse(str, options){
  * Options:
  * 
  *   - `compileDebug` when `false` debugging code is stripped from the compiled template
+ *   - `client` when `true` the helper functions `escape()` etc will reference `jade.escape()`
+ *      for use with the Jade client-side runtime.js
  *
  * @param {String} str
  * @param {Options} options
@@ -788,13 +790,13 @@ function parse(str, options){
 exports.compile = function(str, options){
   var options = options || {}
     , input = JSON.stringify(str)
+    , client = options.client
     , filename = options.filename
       ? JSON.stringify(options.filename)
       : 'undefined'
     , fn;
 
   if (options.compileDebug !== false) {
-    // Reduce closure madness by injecting some locals
     fn = [
         'var __ = { lineno: 1, input: ' + input + ', filename: ' + filename + ' };'
       , 'try {'
@@ -807,7 +809,14 @@ exports.compile = function(str, options){
     fn = parse(String(str), options || {});
   }
 
+  if (client) {
+    fn = 'var attrs = jade.attrs, escape = jade.escape, rethrow = jade.rethrow;\n' + fn;
+  }
+
   fn = new Function('locals, attrs, escape, rethrow', fn);
+
+  if (client) return fn;
+
   return function(locals){
     return fn(locals, runtime.attrs, runtime.escape, runtime.rethrow);
   };
