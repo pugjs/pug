@@ -22,10 +22,28 @@ try {
 
 program
   .version(jade.version)
+  .usage('[options] [dir|file ...]')
   .option('-o, --options <str>', 'javascript options object')
-  .options('-O, --out <dir>', 'output the compiled html to <dir>')
-  .parse(process.argv)
+  .option('-O, --out <dir>', 'output the compiled html to <dir>')
 
+program.on('--help', function(){
+  console.log('  Examples:');
+  console.log('');
+  console.log('    # translate jade the templates dir');
+  console.log('    $ jade templates');
+  console.log('');
+  console.log('    # create {foo,bar}.html');
+  console.log('    $ jade {foo,bar}.jade');
+  console.log('');
+  console.log('    # jade over stdio');
+  console.log('    $ jade < my.jade > my.html');
+  console.log('');
+  console.log('    # jade over stdio');
+  console.log('    $ echo "h1 Jade!" | jade');
+  console.log('');
+});
+
+program.parse(process.argv);
 
 // 
 // /**
