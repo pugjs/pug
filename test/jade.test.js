@@ -818,6 +818,8 @@ module.exports = {
     ].join('\n');
     
     assert.equal('<p>users: 3</p>', render(str));
+
+    assert.equal('<iframe foo="bar"></iframe>', render('iframe(foo="bar")'));
   },
   
   'test unless': function(assert){
