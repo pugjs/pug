@@ -22,7 +22,7 @@ var options = {};
 program
   .version(jade.version)
   .usage('[options] [dir|file ...]')
-  .option('-o, --options <str>', 'javascript options object')
+  .option('-o, --obj <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
 
 program.on('--help', function(){
@@ -43,6 +43,10 @@ program.on('--help', function(){
 });
 
 program.parse(process.argv);
+
+// options given, parse them
+
+if (program.obj) options = eval('(' + program.obj + ')');
 
 // left-over args are file paths
 
