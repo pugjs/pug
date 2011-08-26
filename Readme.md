@@ -57,7 +57,7 @@ via npm:
  
     $ make jade.min.js
 
-  By default Jade inlines its utility functions within the template functions generated, such as `escape()` and `attrs()`. Jade also instruments templates with line number statements such as `__.lineno = 3` for debugging purposes. When used in a browser it's useful to minimize this boiler plate, you can do so by passing the option `{ compileDebug: false }`, and `{ inline: false }`. The following template
+  By default Jade instruments templates with line number statements such as `__.lineno = 3` for debugging purposes. When used in a browser it's useful to minimize this boiler plate, you can do so by passing the option `{ compileDebug: false }`, and `{ inline: false }`. The following template
   
     p Hello #{name}
 
@@ -107,7 +107,6 @@ function anonymous(locals) {
  - `debug`     Outputs tokens and function body generated
  - `compiler`  Compiler to replace jade's default
  - `compileDebug`  When `false` no debug instrumentation is compiled
- - `inline`     When `false` the helpers are not inlined (ideal for client-side use)
 
 ## Syntax
 
