@@ -9,7 +9,7 @@ var jade = (function(exports){
 if (!Array.isArray) {
   Array.isArray = function(arr){
     return '[object Array]' == toString.call(arr);
-  }
+  };
 }
 
 if (!Object.keys) {
@@ -21,7 +21,7 @@ if (!Object.keys) {
       }
     }
     return arr;
-  } 
+  };
 }
 
 /**
