@@ -674,7 +674,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.14.2';
+exports.version = '0.15.2';
 
 /**
  * Intermediate JavaScript cache.
@@ -1095,7 +1095,7 @@ Lexer.prototype = {
   
   conditional: function() {
     var captures;
-    if (captures = /^(if|unless|else if|else) *([^\n]*)/.exec(this.input)) {
+    if (captures = /^(if|unless|else if|else)\b([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
       var type = captures[1]
         , js = captures[2];
@@ -1117,7 +1117,7 @@ Lexer.prototype = {
   
   each: function() {
     var captures;
-    if (captures = /^(?:- *)?(?:each|for) *(\w+)(?: *, *(\w+))? * in *([^\n]+)/.exec(this.input)) {
+    if (captures = /^(?:- *)?(?:each|for) +(\w+)(?: *, *(\w+))? * in *([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('each', captures[1]);
       tok.key = captures[2] || 'index';
