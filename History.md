@@ -1,4 +1,10 @@
 
+0.15.3 / 2011-08-30 
+==================
+
+  * Added Makefile example. Closes #312
+  * Fixed script() tag with trailing ".". Closes #314
+
 0.15.2 / 2011-08-26 
 ==================
 

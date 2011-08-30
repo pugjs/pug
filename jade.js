@@ -219,7 +219,7 @@ Compiler.prototype = {
    */
 
   visitBlock: function(block){
-    var len = len = block.nodes.length;
+    var len = block.nodes.length;
     for (var i = 0; i < len; ++i) {
       this.visit(block.nodes[i]);
     }
@@ -674,7 +674,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.15.2';
+exports.version = '0.15.3';
 
 /**
  * Intermediate JavaScript cache.
@@ -2412,7 +2412,7 @@ Parser.prototype = {
     // script special-case
     if ('script' == tag.name) {
       var type = tag.getAttribute('type');
-      if (type && 'text/javascript' != type.replace(/^['"]|['"]$/g, '')) {
+      if (!tag.textOnly && type && 'text/javascript' != type.replace(/^['"]|['"]$/g, '')) {
         tag.textOnly = false;
       }
     }
