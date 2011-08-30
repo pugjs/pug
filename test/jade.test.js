@@ -684,7 +684,24 @@ module.exports = {
   
       assert.equal(html, render(str));
   },
-  
+
+  'test script trailing .': function(assert){
+    var str = [
+     'script(type="text/x-template").',
+     '  .foo',
+     '    h1 Hello'
+    ].join('\n');
+
+    var html = [
+        '<script type="text/x-template">',
+        '.foo\n',
+        '  h1 Hello\n\n',
+        '</script>'
+    ].join('');
+
+    assert.equal(html, render(str));
+  },
+
   'test - each': function(assert){
       // Array
       var str = [
