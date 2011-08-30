@@ -811,31 +811,37 @@ a watcher-like behaviour:
 
      $ watch make
 
-## bin/jade
+## jade(1)
 
-Output html to _stdout_:
+```
 
-    jade < my.jade > my.html
+Usage: jade [options] [dir|file ...]
 
-Generate _examples/*.html_:
+Options:
 
-    jade examples/*.jade
+  -h, --help       output usage information
+  -v, --version    output the version number
+  -o, --obj <str>  javascript options object
+  -O, --out <dir>  output the compiled html to <dir>
 
-Pass options:
+Examples:
 
-    jade examples/layout.jade --options '{ locals: { title: "foo" }}'
+  # translate jade the templates dir
+  $ jade templates
 
-Usage info:
+  # create {foo,bar}.html
+  $ jade {foo,bar}.jade
 
-    Usage: jade [options]
-                [path ...]
-                < in.jade > out.jade  
-    Options:
-      -o, --options <str>  JavaScript options object passed
-      -h, --help           Output help information
-      -w, --watch          Watch file(s) or folder(s) for changes and re-compile
-      -v, --version        Output jade version
-      --out <dir>          Output the compiled html to <dir>
+  # jade over stdio
+  $ jade < my.jade > my.html
+
+  # jade over stdio
+  $ echo "h1 Jade!" | jade
+
+  # foo, bar dirs rendering to /tmp
+  $ jade foo bar --out /tmp 
+
+```
 
 ## License 
 
