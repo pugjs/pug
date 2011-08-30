@@ -786,6 +786,31 @@ function anonymous(locals) {
 }
 ```
 
+## Example Makefile
+
+  Below is an example Makefile used to compile _pages/*.jade_
+  into _pages/*.html_ files by simply executing `make`.
+ 
+```make
+JADE = $(shell find pages/*.jade)
+HTML = $(JADE:.jade=.html)
+
+all: $(HTML)
+	
+%.html: %.jade
+	jade < $< > $@
+
+clean:
+	rm -f $(HTML)
+
+.PHONY: clean
+```
+
+this can be combined with the `watch(1)` command to produce
+a watcher-like behaviour:
+
+     $ watch make
+
 ## bin/jade
 
 Output html to _stdout_:
