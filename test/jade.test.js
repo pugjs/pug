@@ -702,6 +702,24 @@ module.exports = {
     assert.equal(html, render(str));
   },
 
+  'test non javascript script without trailing .': function(assert){
+    var str = [
+     'script(type="text/x-template")',
+     '  .foo',
+     '    h1 Hello'
+    ].join('\n');
+
+    var html = [
+        '<script type="text/x-template">',
+        '<div class="foo">',
+        '<h1>Hello</h1>',
+        '</div>',
+        '</script>'
+    ].join('');
+
+    assert.equal(html, render(str));
+  },
+
   'test - each': function(assert){
       // Array
       var str = [
