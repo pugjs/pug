@@ -489,7 +489,28 @@ module.exports = {
       assert.equal('<p>0</p>', render('p= 0'));
       assert.equal('<p>false</p>', render('p= false'));
   },
-  
+
+  'test script text': function(assert){
+    var str = [
+      'script',
+      '  p foo',
+      '',
+      'script(type="text/template")',
+      '  p foo',
+      '',
+      'script(type="text/template").',
+      '  p foo'
+    ].join('\n');
+
+    var html = [
+      '<script>p foo\n\n</script>',
+      '<script type="text/template"><p>foo</p></script>',
+      '<script type="text/template">p foo\n</script>'
+    ].join('');
+
+    assert.equal(html, render(str));
+  },
+
   'test comments': function(assert){
       // Regular
       var str = [
