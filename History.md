@@ -1,4 +1,10 @@
 
+0.15.4 / 2011-09-05 
+==================
+
+  * Fixed script template html. Closes #316
+  * Revert "Fixed script() tag with trailing ".". Closes #314"
+
 0.15.3 / 2011-08-30 
 ==================
 

@@ -674,7 +674,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.15.3';
+exports.version = '0.15.4';
 
 /**
  * Intermediate JavaScript cache.
@@ -2356,7 +2356,8 @@ Parser.prototype = {
     }
 
     var name = this.advance().val
-      , tag = new nodes.Tag(name);
+      , tag = new nodes.Tag(name)
+      , dot;
 
     tag.line = this.line();
 
@@ -2385,7 +2386,7 @@ Parser.prototype = {
 
     // check immediate '.'
     if ('.' == this.peek().val) {
-      tag.textOnly = true;
+      dot = tag.textOnly = true;
       this.advance();
     }
 
@@ -2412,7 +2413,7 @@ Parser.prototype = {
     // script special-case
     if ('script' == tag.name) {
       var type = tag.getAttribute('type');
-      if (!tag.textOnly && type && 'text/javascript' != type.replace(/^['"]|['"]$/g, '')) {
+      if (!dot && type && 'text/javascript' != type.replace(/^['"]|['"]$/g, '')) {
         tag.textOnly = false;
       }
     }
