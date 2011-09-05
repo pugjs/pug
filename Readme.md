@@ -210,7 +210,7 @@ need the leading `|` character, for example:
               baz();
             }
 
-Once again as an alternative, we may use a leading '.' to indicate a text block, for example:
+Once again as an alternative, we may use a trailing '.' to indicate a text block, for example:
 
       p.
         foo asdf
@@ -229,7 +229,7 @@ outputs:
         .
         </p>
 
-This however differs from a leading '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
+This however differs from a trailing '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
 
     p .
     
