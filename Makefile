@@ -16,6 +16,9 @@ benchmark:
 jade.js: $(SRC)
 	@node support/compile.js $^
 
+gem: jade.js
+	@rake gem
+
 jade.min.js: jade.js
 	@uglifyjs $(UGLIFY_FLAGS) $< > $@ \
 		&& du jade.min.js \
