@@ -23,6 +23,7 @@ task :gem do
 
     s.files = [
       'lib/jade_js/jade.js',
+      'lib/jade_js/runtime.js',
       'lib/jade_js/source.rb'
     ]
 
@@ -42,6 +43,9 @@ module JadeJs
     def self.bundled_path
       File.expand_path("../jade.js", __FILE__)
     end
+    def self.bundled_runtime_path
+      File.expand_path("../runtime.js", __FILE__)
+    end
   end
 end
     ERUBY
@@ -51,6 +55,11 @@ end
 
     contents = File.read("jade.js")
     path = "lib/jade_js/jade.js"
+    pkg.add_file_simple(path, 0644, contents.size) do |tar_io|
+      tar_io.write(contents)
+    end
+    contents = File.read("runtime.js")
+    path = "lib/jade_js/runtime.js"
     pkg.add_file_simple(path, 0644, contents.size) do |tar_io|
       tar_io.write(contents)
     end
