@@ -888,6 +888,20 @@ module.exports = {
     assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
   },
   
+  'test .render(str, fn)': function(assert){
+    jade.render('p foo bar', function(err, str){
+      assert.ok(!err);
+      assert.equal('<p>foo bar</p>', str);
+    });
+  },
+  
+  'test .render(str, options, fn)': function(assert){
+    jade.render('p #{foo}', { foo: 'bar' }, function(err, str){
+      assert.ok(!err);
+      assert.equal('<p>bar</p>', str);
+    });
+  },
+  
   'test .compile()': function(assert){
       var fn = jade.compile('p foo');
       assert.equal('<p>foo</p>', fn());
