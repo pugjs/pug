@@ -902,6 +902,17 @@ module.exports = {
     });
   },
   
+  'test .render(str, options, fn) cache': function(assert){
+    jade.render('p bar', { cache: true }, function(err, str){
+      assert.ok(/the "filename" option is required for caching/.test(err.message));
+    });
+    
+    jade.render('p foo bar', { cache: true, filename: 'test' }, function(err, str){
+      assert.ok(!err);
+      assert.equal('<p>foo bar</p>', str);
+    });
+  },
+  
   'test .compile()': function(assert){
       var fn = jade.compile('p foo');
       assert.equal('<p>foo</p>', fn());
