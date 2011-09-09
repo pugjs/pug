@@ -19,6 +19,7 @@
   - optional memory caching
   - combine dynamic and static tag classes
   - parse tree manipulation via _filters_
+  - template inheritance
   - supports [Express JS](http://expressjs.com) out of the box
   - transparent iteration over objects, arrays, and even non-enumerables via `each`
   - block comments
