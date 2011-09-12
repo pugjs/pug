@@ -119,14 +119,13 @@ module.exports = {
   
   'test parse tree': function(assert){
       var str = [
-          'conditionals:',
-          '  if false',
-          '    | oh noes',
-          '  or',
-          '    if null == false',
-          '      p doh',
-          '    or',
-          '      p amazing!'
+          '- if (false)',
+          '  | oh noes',
+          '- else',
+          '  - if (null == false)',
+          '    p doh',
+          '  - else',
+          '    p amazing!'
       ].join('\n');
   
       var html = [
