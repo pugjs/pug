@@ -99,6 +99,7 @@ function renderFile(path) {
     if (stat.isFile() && re.test(path)) {
       fs.readFile(path, 'utf8', function(err, str){
         if (err) throw err;
+        options.filename = path;
         var fn = jade.compile(str, options);
         path = path.replace(re, '.html');
         if (program.out) path = join(program.out, basename(path));
