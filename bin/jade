@@ -25,6 +25,7 @@ program
   .usage('[options] [dir|file ...]')
   .option('-o, --obj <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
+  .option('-p, --path <path>', 'filename used to resolve includes')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -51,6 +52,10 @@ program.parse(process.argv);
 // options given, parse them
 
 if (program.obj) options = eval('(' + program.obj + ')');
+
+// filename
+
+if (program.path) options.filename = program.path;
 
 // left-over args are file paths
 

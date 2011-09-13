@@ -820,10 +820,11 @@ Usage: jade [options] [dir|file ...]
 
 Options:
 
-  -h, --help       output usage information
-  -v, --version    output the version number
-  -o, --obj <str>  javascript options object
-  -O, --out <dir>  output the compiled html to <dir>
+  -h, --help         output usage information
+  -v, --version      output the version number
+  -o, --obj <str>    javascript options object
+  -O, --out <dir>    output the compiled html to <dir>
+  -p, --path <path>  filename used to resolve includes over stdio
 
 Examples:
 
@@ -835,6 +836,9 @@ Examples:
 
   # jade over stdio
   $ jade < my.jade > my.html
+
+  # jade over stdio specifying filename to resolve include directives
+  $ jade < my.jade -p my.jade > my.html
 
   # jade over stdio
   $ echo "h1 Jade!" | jade
