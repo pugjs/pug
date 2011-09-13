@@ -799,7 +799,7 @@ HTML = $(JADE:.jade=.html)
 all: $(HTML)
 	
 %.html: %.jade
-	jade < $< > $@
+	jade < $< --path $<> > $@
 
 clean:
 	rm -f $(HTML)
