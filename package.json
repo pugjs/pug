@@ -8,7 +8,7 @@
   "bin": { "jade": "./bin/jade" },
   "dependencies": {
     "commander": "0.1.0",
-    "mkdirp": "0.0.6"
+    "mkdirp": ">= 0.0.7"
   },
   "devDependencies": {
     "expresso": "0.6.4",
