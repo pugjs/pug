@@ -25,7 +25,7 @@ if (!Object.keys) {
     var arr = [];
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        arr.push(obj);
+        arr.push(key);
       }
     }
     return arr;
