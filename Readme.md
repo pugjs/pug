@@ -452,6 +452,14 @@ doctypes are case-insensitive, so the following are equivalent:
     doctype Basic
     doctype basic
 
+it's also possible to simply pass a doctype literal:
+
+    doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN
+
+yielding:
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
+
 Will output the _html 5_ doctype. Below are the doctypes
 defined by default, which can easily be extended:
 
