@@ -25,8 +25,7 @@ function Visitor(node) {
 Visitor.prototype.__proto__ = Compiler.prototype;
 
 Visitor.prototype.visit = function(node){
-    if (node.name != 'or') this.line(node);
-    this.visitNode(node);
+  this.visitNode(node);
 };
 
 Visitor.prototype.visitTag = function(node){
