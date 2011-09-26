@@ -747,6 +747,28 @@ html
     include content.html
 ```
 
+  Include directives may also accept a block, in which case the
+  the given block will be appended to the _last_ block defined
+  in the file. For example if `head.jade` contains:
+
+```
+head
+  script(src='/jquery.js')
+```
+
+ We may append values by providing a block to `include head`
+ as shown below, adding the two scripts.
+
+```
+html
+  include head
+    script(src='/foo.js')
+    script(src='/bar.js')
+  body
+    h1 test
+```
+
+
 ## Mixins
 
  Mixins are converted to regular JavaScript functions in
