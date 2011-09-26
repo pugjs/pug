@@ -633,10 +633,8 @@ JavaScript:
 
 ## Includes
 
- Includes allow you to statically include chunks of Jade
- which lives in a separate file. The classical example is
- including a header and footer. Suppose we have the following
- directory structure:
+ Includes allow you to statically include chunks of Jade,
+ or other content like css, or html which lives in separate files. The classical example is including a header and footer. Suppose we have the following directory structure:
 
      ./layout.jade
      ./includes/
@@ -671,6 +669,17 @@ which should be an absolute path to this file, however Express does this for you
     </div>
   </body>
 </html>
+```
+
+ As mentioned `include` can be used to include other content
+ such as html or css. By providing an extension Jade will not
+ assume that the file is Jade source and will include it as
+ a literal:
+
+```
+html
+  body
+    include content.html
 ```
 
 ## Mixins
