@@ -548,6 +548,23 @@ you may use `!=`:
 
     p!= aVarContainingMoreHTML
 
+ Jade also has designer-friendly variants, making the literal JavaScript
+ more expressive and declarative. For example the following assignments
+ are equivalent, and the expression is still regular javascript:
+ 
+     - var foo = 'foo ' + 'bar'
+     foo = 'foo ' + 'bar'
+
+  Likewise Jade has first-class `if`, `else if`, `else`, `until`, `while`, `unless` among others, however you must remember that the expressions are still regular javascript:
+
+     if foo == 'bar'
+       ul
+         li yay
+         li foo
+         li worked
+     else
+       p oh no! didnt work  
+
 ## Iteration
 
  Along with vanilla JavaScript Jade also supports a subset of
@@ -570,7 +587,7 @@ outputs:
 
 iterating an array with index:
 
-    - var items = ["one", "two", "three"]
+    items = ["one", "two", "three"]
     each item, i in items
       li #{item}: #{i}
 
@@ -582,7 +599,7 @@ outputs:
 
 iterating an object's keys and values:
 
-    - var obj = { foo: 'bar' }
+    obj = { foo: 'bar' }
     each val, key in obj
       li #{key}: #{val}
 
