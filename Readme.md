@@ -631,6 +631,42 @@ JavaScript:
            | Click to view
            a(href='/users/' + user.id)= user.name 
 
+## Template inheritance
+
+  Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive.
+  
+  Jade blocks (currently) expect default content, as shown below by the `block scripts`, `block content`, and `block foot` directives.
+
+```
+html
+  head
+    h1 My Site - #{title}
+    block scripts
+      script(src='/jquery.js')
+  body
+    block content
+      h1 Default content
+      p nothing exciting
+    block foot
+      #footer
+        p some footer content
+```
+
+  Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".
+
+```
+extends extend-layout
+
+block scripts
+  script(src='/jquery.js')
+  script(src='/pets.js')
+
+block content
+  h1= title
+  each pet in pets
+    include pet
+```
+
 ## Includes
 
  Includes allow you to statically include chunks of Jade,
