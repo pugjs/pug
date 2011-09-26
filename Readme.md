@@ -667,6 +667,20 @@ block content
     include pet
 ```
 
+  It's also possible to override a block to provide additional blocks, as shown in the following example where `content` now exposes a `sidebar` and `primary` block for overriding, or the child template could override `content` all together.
+
+```
+extends regular-layout
+
+block content
+  .sidebar
+    block sidebar
+      p nothing
+  .primary
+    block primary
+      p nothing
+```
+
 ## Includes
 
  Includes allow you to statically include chunks of Jade,
