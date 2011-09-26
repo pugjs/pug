@@ -3,10 +3,9 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade');
+var jade = require('./../')
+  , path = __dirname + '/attributes.jade'
+  , str = require('fs').readFileSync(path, 'utf8')
+  , fn = jade.compile(str, { filename: path, pretty: true });
 
-var options = { locals: { name: 'tj' }};
-jade.renderFile(__dirname + '/attributes.jade', options, function(err, html){
-    if (err) throw err;
-    console.log(html);
-});
+console.log(fn({ name: 'tj' }));
