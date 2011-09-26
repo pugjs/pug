@@ -635,7 +635,7 @@ JavaScript:
 
   Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive.
   
-  Jade blocks (currently) expect default content, as shown below by the `block scripts`, `block content`, and `block foot` directives.
+  Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
 
 ```
 html
@@ -645,8 +645,6 @@ html
       script(src='/jquery.js')
   body
     block content
-      h1 Default content
-      p nothing exciting
     block foot
       #footer
         p some footer content
