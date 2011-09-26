@@ -3,16 +3,14 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade');
+var jade = require('./../')
+  , path = __dirname + '/mixins.jade'
+  , str = require('fs').readFileSync(path, 'utf8')
+  , fn = jade.compile(str, { filename: path, pretty: true });
 
 var user = {
     name: 'tj'
   , pets: ['tobi', 'loki', 'jane', 'manny']
 };
 
-var options = { locals: { user: user }};
-
-jade.renderFile(__dirname + '/mixins.jade', options, function(err, html){
-  if (err) throw err;
-  console.log(html);
-});
+console.log(fn({ user: user }));
