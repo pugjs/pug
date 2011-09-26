@@ -57,19 +57,19 @@ module.exports = {
   
   'test :stylus filter': function(assert){
       assert.equal(
-          '<style>body {\n  color: #c00;\n}\n</style>',
+          '<style type="text/css">body {\n  color: #c00;\n}\n</style>',
           render(':stylus\n  body\n    color #c00'));
   },
   
   'test :stylus filter with options': function(assert){
       assert.equal(
-          '<style>body{color:#c00}\n</style>',
+          '<style type="text/css">body{color:#c00}\n</style>',
           render(':stylus(compress=true)\n  body\n    color #c00'));
   },
   
   'test :less filter': function(assert){
       assert.equal(
-          '<style>.class {\n  width: 20px;\n}\n</style>',
+          '<style type="text/css">.class {\n  width: 20px;\n}\n</style>',
           render(':less\n  .class { width: 10px * 2 }\n'));
   },
   
