@@ -182,7 +182,7 @@ Compiler.prototype = {
 
     // Massive hack to fix our context
     // stack for - else[ if] etc
-    if (false === node.debug) {
+    if (false === node.debug && this.debug) {
       this.buf.pop();
       this.buf.pop();
     }
@@ -558,7 +558,7 @@ module.exports = {
   sass: function(str){
     str = str.replace(/\\n/g, '\n');
     var sass = require('sass').render(str).replace(/\n/g, '\\n');
-    return '<style>' + sass + '</style>'; 
+    return '<style type="text/css">' + sass + '</style>'; 
   },
   
   /**
@@ -573,11 +573,11 @@ module.exports = {
       if (err) throw err;
       ret = css.replace(/\n/g, '\\n');
     });
-    return '<style>' + ret + '</style>'; 
+    return '<style type="text/css">' + ret + '</style>'; 
   },
   
   /**
-   * Transform sass to css, wrapped in style tags.
+   * Transform less to css, wrapped in style tags.
    */
   
   less: function(str){
@@ -585,7 +585,7 @@ module.exports = {
     str = str.replace(/\\n/g, '\n');
     require('less').render(str, function(err, css){
       if (err) throw err;
-      ret = '<style>' + css.replace(/\n/g, '\\n') + '</style>';  
+      ret = '<style type="text/css">' + css.replace(/\n/g, '\\n') + '</style>';  
     });
     return ret;
   },
@@ -626,6 +626,7 @@ module.exports = {
     return '<script type="text/javascript">\\n' + js + '</script>';
   }
 };
+
 }); // module: filters.js
 
 require.register("inline-tags.js", function(module, exports, require){
@@ -680,7 +681,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.16.0';
+exports.version = '0.16.1';
 
 /**
  * Expose self closing tags.
@@ -1297,11 +1298,13 @@ Lexer.prototype = {
             }
             break;
           case '(':
-            if ('val' == state()) states.push('expr');
+            if ('val' == state()
+              || 'expr' == state()) states.push('expr');
             val += c;
             break;
           case ')':
-            if ('expr' == state()) states.pop();
+            if ('expr' == state()
+              || 'val' == state()) states.pop();
             val += c;
             break;
           case '{':
@@ -1592,6 +1595,17 @@ Block.prototype.push = function(node){
 };
 
 /**
+ * Check if this block is empty.
+ *
+ * @return {Boolean}
+ * @api public
+ */
+
+Block.prototype.isEmpty = function(){
+  return 0 == this.nodes.length;
+};
+
+/**
  * Unshift the given `node`.
  *
  * @param {Node} node
@@ -1602,6 +1616,25 @@ Block.prototype.push = function(node){
 Block.prototype.unshift = function(node){
   return this.nodes.unshift(node);
 };
+
+/**
+ * Return the "last" block.
+ *
+ * @return {Block}
+ * @api private
+ */
+
+Block.prototype.lastBlock = function(){
+  var last = this
+    , node;
+  for (var i = 0, len = this.nodes.length; i < len; ++i) {
+    node = this.nodes[i];
+    if (node.nodes) last = node.lastBlock();
+    else if (node.block && !node.block.isEmpty()) last = node.block.lastBlock();
+  }
+  return last;
+};
+
 
 }); // module: nodes/block.js
 
@@ -2412,7 +2445,7 @@ Parser.prototype = {
   },
 
   /**
-   * include
+   * include block?
    */
 
   parseInclude: function(){
@@ -2443,6 +2476,11 @@ Parser.prototype = {
     var ast = parser.parse();
     this.context();
     ast.filename = path;
+
+    if ('indent' == this.peek().type) {
+      ast.lastBlock().push(this.block());
+    }
+
     return ast;
   },
 

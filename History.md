@@ -1,4 +1,10 @@
 
+0.16.1 / 2011-09-29 
+==================
+
+  * Fixed unexpected `else` bug when compileDebug: false
+  * Fixed attr state issue for balancing pairs. Closes #353
+
 0.16.0 / 2011-09-26 
 ==================
 
