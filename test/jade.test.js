@@ -888,6 +888,29 @@ module.exports = {
     assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
   },
   
+  'test include': function(assert){
+    var str = [
+        'html',
+        '  head',
+        '    include fixtures/test.css',
+    ].join('\n');
+    
+    assert.equal('<html><head>body {\n  color: black;\n}</head></html>'
+      , render(str, { filename: __dirname + '/jade.test.js' }));
+  },
+
+  'test include block': function(assert){
+    var str = [
+        'html',
+        '  head',
+        '    include fixtures/scripts',
+        '      scripts(src="/app.js")',
+    ].join('\n');
+    
+    assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
+      , render(str, { filename: __dirname + '/jade.test.js' }));
+  },
+
   'test .render(str, fn)': function(assert){
     jade.render('p foo bar', function(err, str){
       assert.ok(!err);
