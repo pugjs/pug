@@ -964,5 +964,16 @@ module.exports = {
       assert.equal(tag.getAttribute(name), val)
       tag.removeAttribute(name)
       assert.isUndefined(tag.getAttribute(name))
+  },
+
+  'test assignment': function(assert){
+    assert.equal('<div>5</div>', render('a = 5;\ndiv= a'));
+    assert.equal('<div>5</div>', render('a = 5\ndiv= a'));
+    assert.equal('<div>5</div>', render('a = 5      \ndiv= a'));
+    assert.equal('<div>5</div>', render('a = 5      ; \ndiv= a'));
+
+    var fn = jade.compile('test = local\np=test');
+    assert.equal('<p>bar</p>', fn({ local: 'bar' }));
   }
+
 };
