@@ -3,7 +3,8 @@
  * Module dependencies.
  */
 
-var jade = require('../');
+var jade = require('../')
+  , fs = require('fs');
 
 // Shortcut
 
@@ -11,6 +12,10 @@ var render = function(str, options){
   var fn = jade.compile(str, options);
   return fn(options);
 };
+
+function fixture(path) {
+  return fs.readFileSync(__dirname + '/fixtures/' + path, 'utf8');
+}
 
 module.exports = {
   'test .version': function(assert){
@@ -94,7 +99,12 @@ module.exports = {
       assert.equal("<li><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li: a foo\nli: a bar\nli: a baz"));
       assert.equal("<li class=\"first\"><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li.first: a foo\nli: a bar\nli: a baz"));
   },
-  
+
+  'test case statement': function(assert){
+      assert.equal(fixture('case.html'), render(fixture('case.jade')));
+      assert.equal(fixture('case-blocks.html'), render(fixture('case-blocks.jade')));
+  },
+
   'test tags': function(assert){
       var str = [
           'p',
