@@ -969,6 +969,7 @@ module.exports = {
   'test assignment': function(assert){
     assert.equal('<div>5</div>', render('a = 5;\ndiv= a'));
     assert.equal('<div>5</div>', render('a = 5\ndiv= a'));
+    assert.equal('<div>foo bar baz</div>', render('a = "foo bar baz"\ndiv= a'));
     assert.equal('<div>5</div>', render('a = 5      \ndiv= a'));
     assert.equal('<div>5</div>', render('a = 5      ; \ndiv= a'));
 
