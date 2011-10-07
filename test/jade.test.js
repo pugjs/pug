@@ -31,6 +31,7 @@ assert.render = function(jade, html, options){
     console.error('\n\033[31mgot:\033[m ');
     console.error(res);
   }
+  process.exit(1);
 };
 
 module.exports = {
