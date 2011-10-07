@@ -18,11 +18,13 @@ function fixture(path) {
   return fs.readFileSync(__dirname + '/fixtures/' + path, 'utf8');
 }
 
-assert.render = function(jade, html){
-  var path = __dirname + '/fixtures/' + jade;
+assert.render = function(jade, html, options){
+  var path = __dirname + '/fixtures/' + jade
+    , opts = { pretty: true, filename: path };
   jade = fixture(jade);
   html = fixture(html).trim();
-  var res = render(jade, { pretty: true, filename: path }).trim();
+  for (var key in options) opts[key] = options[key];
+  var res = render(jade, opts).trim();
   if (res !== html) {
     console.error('\n\033[31mexpected:\033[m ');
     console.error(html);
@@ -913,7 +915,7 @@ module.exports = {
   },
 
   'test inheritance': function(assert){
-    assert.render('users.jade', 'users.html');
+    assert.render('users.jade', 'users.html', { users: ['tobi', 'loki', 'jane'] });
   },
 
   'test include': function(assert){

@@ -2,10 +2,9 @@
 extends user-layout
 
 block head
-  title Users
+  title Viewing #{users.length} users
 
 block content
-  users = ['loki', 'tobi', 'jane']
   ul#users
     for user, i in users
       li(id='user-#{i}')
