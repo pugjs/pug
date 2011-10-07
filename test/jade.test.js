@@ -30,8 +30,8 @@ assert.render = function(jade, html, options){
     console.error(html);
     console.error('\n\033[31mgot:\033[m ');
     console.error(res);
+    process.exit(1);
   }
-  process.exit(1);
 };
 
 module.exports = {
@@ -917,6 +917,7 @@ module.exports = {
 
   'test inheritance': function(assert){
     assert.render('users.jade', 'users.html', { users: ['tobi', 'loki', 'jane'] });
+    assert.render('pet-page.jade', 'pet.html', { name: 'tobi', age: 1, species: 'ferret' });
   },
 
   'test include': function(assert){
