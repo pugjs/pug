@@ -1,0 +1,12 @@
+
+extends user-layout
+
+block head
+  title Users
+
+block content
+  users = ['loki', 'tobi', 'jane']
+  ul#users
+    for user, i in users
+      li(id='user-#{i}')
+        include user

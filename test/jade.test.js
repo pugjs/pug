@@ -4,6 +4,7 @@
  */
 
 var jade = require('../')
+  , assert = require('assert')
   , fs = require('fs');
 
 // Shortcut
@@ -16,6 +17,19 @@ var render = function(str, options){
 function fixture(path) {
   return fs.readFileSync(__dirname + '/fixtures/' + path, 'utf8');
 }
+
+assert.render = function(jade, html){
+  var path = __dirname + '/fixtures/' + jade;
+  jade = fixture(jade);
+  html = fixture(html).trim();
+  var res = render(jade, { pretty: true, filename: path }).trim();
+  if (res !== html) {
+    console.error('\n\033[31mexpected:\033[m ');
+    console.error(html);
+    console.error('\n\033[31mgot:\033[m ');
+    console.error(res);
+  }
+};
 
 module.exports = {
   'test .version': function(assert){
@@ -897,7 +911,11 @@ module.exports = {
     
     assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
   },
-  
+
+  'test inheritance': function(assert){
+    assert.render('users.jade', 'users.html');
+  },
+
   'test include': function(assert){
     var str = [
         'html',
