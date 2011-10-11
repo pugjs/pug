@@ -915,6 +915,10 @@ module.exports = {
     assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
   },
 
+  'test conditional comments': function(assert){
+    assert.render('conditional-comment.jade', 'conditional-comment.html');
+  },
+
   'test inheritance': function(assert){
     assert.render('users.jade', 'users.html', { users: ['tobi', 'loki', 'jane'] });
     assert.render('pet-page.jade', 'pet.html', { super: false, name: 'tobi', age: 1, species: 'ferret' });
