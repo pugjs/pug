@@ -295,15 +295,15 @@ outputting
 
 Jade supports conditional-comments as well, for example:
 
-    body
-      //if IE
-        a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
+    head
+      //if lt IE 8
+        script(src='/ie-sucks.js')
 
 outputs:
 
     <body>
-      <!--[if IE]>
-        <a href="http://www.mozilla.com/en-US/firefox/">Get Firefox</a>
+      <!--[if lt IE 8]>
+        <script src="/ie-sucks.js"></script>
       <![endif]-->
     </body>
 
