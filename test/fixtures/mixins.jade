@@ -1,0 +1,10 @@
+
+mixin comment(title, str)
+  .comment
+    h2= title
+    p.body= str
+
+#user
+  h1 Tobi
+  .comments
+    mixin comment('foo', 'bar (baz)')

@@ -915,6 +915,10 @@ module.exports = {
     assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
   },
 
+  'test mixins': function(assert){
+    assert.render('mixins.jade', 'mixins.html');
+  },
+
   'test conditional comments': function(assert){
     assert.render('conditional-comment.jade', 'conditional-comment.html');
   },
