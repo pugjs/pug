@@ -206,6 +206,39 @@ Compiler.prototype = {
   },
 
   /**
+   * Visit case `node`.
+   *
+   * @param {Literal} node
+   * @api public
+   */
+
+  visitCase: function(node){
+    var _ = this.withinCase;
+    this.withinCase = true;
+    this.buf.push('switch (' + node.expr + '){');
+    this.visit(node.block);
+    this.buf.push('}');
+    this.withinCase = _;
+  },
+  
+  /**
+   * Visit when `node`.
+   *
+   * @param {Literal} node
+   * @api public
+   */
+
+  visitWhen: function(node){
+    if ('default' == node.expr) {
+      this.buf.push('default:');
+    } else {
+      this.buf.push('case ' + node.expr + ':');
+    }
+    this.visit(node.block);
+    this.buf.push('  break;');
+  },
+
+  /**
    * Visit literal `node`.
    *
    * @param {Literal} node
@@ -386,8 +419,8 @@ Compiler.prototype = {
   
   visitBlockComment: function(comment){
     if (!comment.buffer) return;
-    if (0 == comment.val.indexOf('if')) {
-      this.buffer('<!--[' + comment.val + ']>');
+    if (0 == comment.val.trim().indexOf('if')) {
+      this.buffer('<!--[' + comment.val.trim() + ']>');
       this.visit(comment.block);
       this.buffer('<![endif]-->');
     } else {
@@ -681,7 +714,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.16.1';
+exports.version = '0.16.2';
 
 /**
  * Expose self closing tags.
@@ -1133,16 +1166,40 @@ Lexer.prototype = {
   },
 
   /**
+   * Case.
+   */
+  
+  case: function() {
+    return this.scan(/^case +([^\n]+)/, 'case');
+  },
+
+  /**
+   * When.
+   */
+  
+  when: function() {
+    return this.scan(/^when +([^:\n]+)/, 'when');
+  },
+
+  /**
+   * Default.
+   */
+  
+  default: function() {
+    return this.scan(/^default */, 'default');
+  },
+
+  /**
    * Assignment.
    */
   
   assignment: function() {
     var captures;
-    if (captures = /^(\w+) += *([^\n]+)/.exec(this.input)) {
+    if (captures = /^(\w+) += *([^;\n]+)( *;? *)/.exec(this.input)) {
       this.consume(captures[0].length);
       var name = captures[1]
         , val = captures[2];
-      return this.tok('code', 'var ' + name + ' = (' + val + ')');
+      return this.tok('code', 'var ' + name + ' = (' + val + ');');
     }
   },
 
@@ -1152,7 +1209,7 @@ Lexer.prototype = {
 
   mixin: function(){
     var captures;
-    if (captures = /^mixin +([-\w]+)(?:\(([^\)]+)\))?/.exec(this.input)) {
+    if (captures = /^mixin +([-\w]+)(?:\((.*)\))?/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('mixin', captures[1]);
       tok.args = captures[2];
@@ -1475,6 +1532,9 @@ Lexer.prototype = {
       || this.eos()
       || this.pipelessText()
       || this.doctype()
+      || this.case()
+      || this.when()
+      || this.default()
       || this.extends()
       || this.block()
       || this.include()
@@ -1637,6 +1697,57 @@ Block.prototype.lastBlock = function(){
 
 
 }); // module: nodes/block.js
+
+require.register("nodes/case.js", function(module, exports, require){
+
+/*!
+ * Jade - nodes - Case
+ * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
+/**
+ * Module dependencies.
+ */
+
+var Node = require('./node');
+
+/**
+ * Initialize a new `Case` with `expr`.
+ *
+ * @param {String} expr
+ * @api public
+ */
+
+var Case = exports = module.exports = function Case(expr, block){
+  this.expr = expr;
+  this.block = block;
+};
+
+/**
+ * Inherit from `Node`.
+ */
+
+Case.prototype = new Node;
+Case.prototype.constructor = Case;
+
+
+var When = exports.When = function When(expr, block){
+  this.expr = expr;
+  this.block = block;
+  this.debug = false;
+};
+
+/**
+ * Inherit from `Node`.
+ */
+
+When.prototype = new Node;
+When.prototype.constructor = When;
+
+
+
+}); // module: nodes/case.js
 
 require.register("nodes/code.js", function(module, exports, require){
 
@@ -1841,6 +1952,7 @@ exports.Node = require('./node');
 exports.Tag = require('./tag');
 exports.Code = require('./code');
 exports.Each = require('./each');
+exports.Case = require('./case');
 exports.Text = require('./text');
 exports.Block = require('./block');
 exports.Mixin = require('./mixin');
@@ -1874,7 +1986,9 @@ var Node = require('./node');
  */
 
 var Literal = module.exports = function Literal(str) {
-  this.str = str;
+  this.str = str
+    .replace(/\n/g, "\\n")
+    .replace(/'/g, "\\'");
 };
 
 /**
@@ -2271,6 +2385,12 @@ Parser.prototype = {
         return this.parseMixin();
       case 'block':
         return this.parseBlock();
+      case 'case':
+        return this.parseCase();
+      case 'when':
+        return this.parseWhen();
+      case 'default':
+        return this.parseDefault();
       case 'extends':
         return this.parseExtends();
       case 'include':
@@ -2308,7 +2428,51 @@ Parser.prototype = {
     node.line = this.line();
     return node;
   },
+
+  /**
+   *   ':' expr
+   * | block
+   */
+
+  parseBlockExpansion: function(){
+    if (':' == this.peek().type) {
+      this.advance();
+      return new nodes.Block(this.parseExpr());
+    } else {
+      return this.block();
+    }
+  },
+
+  /**
+   * case
+   */
+
+  parseCase: function(){
+    var val = this.expect('case').val
+      , node = new nodes.Case(val);
+    node.line = this.line();
+    node.block = this.block();
+    return node;
+  },
+
+  /**
+   * when
+   */
+
+  parseWhen: function(){
+    var val = this.expect('when').val
+    return new nodes.Case.When(val, this.parseBlockExpansion());
+  },
   
+  /**
+   * default
+   */
+
+  parseDefault: function(){
+    this.expect('default');
+    return new nodes.Case.When('default', this.parseBlockExpansion());
+  },
+
   /**
    * code
    */
@@ -2398,8 +2562,9 @@ Parser.prototype = {
   
   parseEach: function(){
     var tok = this.expect('each')
-      , node = new nodes.Each(tok.code, tok.val, tok.key, this.block());
+      , node = new nodes.Each(tok.code, tok.val, tok.key);
     node.line = this.line();
+    node.block = this.block();
     return node;
   },
 
@@ -2461,14 +2626,19 @@ Parser.prototype = {
     if (!this.filename)
       throw new Error('the "filename" option is required to use includes');
 
+    // no extension
+    if (!~basename(path).indexOf('.')) {
+      path += '.jade';
+    }
+
     // non-jade
-    if (~basename(path).indexOf('.')) {
+    if ('.jade' != path.substr(-5)) {
       var path = join(dir, path)
         , str = fs.readFileSync(path, 'utf8');
       return new nodes.Literal(str);
     }
 
-    var path = join(dir, path + '.jade')
+    var path = join(dir, path)
       , str = fs.readFileSync(path, 'utf8')
      , parser = new Parser(str, path, this.options);
 

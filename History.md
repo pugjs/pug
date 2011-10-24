@@ -1,4 +1,12 @@
 
+0.16.3 / 2011-10-24 
+==================
+
+  * Added: allow leading space for conditional comments
+  * Added quick implementation of a switch statement
+  * Fixed parens in mixin args. Closes #380
+  * Fixed: include files with a .jade extension as jade files
+
 0.16.2 / 2011-09-30 
 ==================
 
