@@ -925,8 +925,8 @@ module.exports = {
 
   'test inheritance': function(){
     assert.render('users.jade', 'users.html', { users: ['tobi', 'loki', 'jane'] });
-    assert.render('pet-page.jade', 'pet.html', { super: false, name: 'tobi', age: 1, species: 'ferret' });
-    assert.render('pet-page.jade', 'super-pet.html', { super: true, name: 'tobi', age: 1, species: 'ferret' });
+    assert.render('pet-page.jade', 'pet.html', { superCool: false, name: 'tobi', age: 1, species: 'ferret' });
+    assert.render('pet-page.jade', 'super-pet.html', { superCool: true, name: 'tobi', age: 1, species: 'ferret' });
   },
 
   'test include': function(){
