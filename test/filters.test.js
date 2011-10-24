@@ -4,6 +4,7 @@
  */
 
 var jade = require('../')
+  , assert = require('assert')
   , Compiler = jade.Compiler
   , nodes = jade.nodes;
 
@@ -43,37 +44,37 @@ Visitor.prototype.visitTag = function(node){
 };
 
 module.exports = {
-  'test :cdata filter': function(assert){
+  'test :cdata filter': function(){
     assert.equal('<![CDATA[\nfoo\n]]>', render(':cdata\n  foo'));
     assert.equal('<![CDATA[\nfoo\nbar\n]]>', render(':cdata\n  foo\n  bar'));
     assert.equal('<![CDATA[\nfoo\nbar\n]]><p>something else</p>', render(':cdata\n  foo\n  bar\np something else'));
   },
   
-  'test :markdown filter': function(assert){
+  'test :markdown filter': function(){
       assert.equal(
           '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
           render(':markdown\n  #foo\n  - bar\n  - baz\n'))
   },
   
-  'test :stylus filter': function(assert){
+  'test :stylus filter': function(){
       assert.equal(
           '<style type="text/css">body {\n  color: #c00;\n}\n</style>',
           render(':stylus\n  body\n    color #c00'));
   },
   
-  'test :stylus filter with options': function(assert){
+  'test :stylus filter with options': function(){
       assert.equal(
           '<style type="text/css">body{color:#c00}\n</style>',
           render(':stylus(compress=true)\n  body\n    color #c00'));
   },
   
-  'test :less filter': function(assert){
+  'test :less filter': function(){
       assert.equal(
           '<style type="text/css">.class {\n  width: 20px;\n}\n</style>',
           render(':less\n  .class { width: 10px * 2 }\n'));
   },
   
-  'test :coffeescript filter': function(assert){
+  'test :coffeescript filter': function(){
       var coffee, js;
       coffee = [
           ':coffeescript',
@@ -116,7 +117,7 @@ module.exports = {
       assert.equal(js, render(coffee));
   },
   
-  'test parse tree': function(assert){
+  'test parse tree': function(){
       var str = [
           'conditionals:',
           '  if false',
@@ -135,7 +136,7 @@ module.exports = {
       assert.equal(html, render(str));
   },
   
-  'test filter attrs': function(assert){
+  'test filter attrs': function(){
      jade.filters.testing = function(str, attrs){
        return str + ' ' + attrs.stuff;
      };
