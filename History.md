@@ -1,4 +1,10 @@
 
+0.16.4 / 2011-10-24 
+==================
+
+  * Fixed a test due to reserved keyword
+  * Fixed: commander 0.1.x dep for 0.5.x
+
 0.16.3 / 2011-10-24 
 ==================
 

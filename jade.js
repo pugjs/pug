@@ -714,7 +714,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.16.2';
+exports.version = '0.16.4';
 
 /**
  * Expose self closing tags.
