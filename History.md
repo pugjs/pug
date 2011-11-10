@@ -1,4 +1,10 @@
 
+0.17.0 / 2011-11-10 
+==================
+
+  * jade.renderFile() is back! (for express 3.x)
+  * Fixed `Object.keys()` failover bug
+
 0.16.4 / 2011-10-24 
 ==================
 

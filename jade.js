@@ -714,7 +714,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.16.4';
+exports.version = '0.17.0';
 
 /**
  * Expose self closing tags.
@@ -896,6 +896,36 @@ exports.render = function(str, options, fn){
     fn(err);
   }
 };
+
+/**
+ * Render a Jade file at the given `path` and callback `fn(err, str)`.
+ *
+ * @param {String} path
+ * @param {Object|Function} options or callback
+ * @param {Function} fn
+ * @api public
+ */
+
+exports.renderFile = function(path, options, fn){
+  var key = path + ':string';
+
+  if ('function' == typeof options) {
+    fn = options, options = {};
+  }
+
+  options.filename = path;
+  var str = options.cache
+    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
+    : fs.readFileSync(path, 'utf8');
+
+  exports.render(str, options, fn);
+};
+
+/**
+ * Express support.
+ */
+
+exports.__express = exports.renderFile;
 }); // module: jade.js
 
 require.register("lexer.js", function(module, exports, require){
