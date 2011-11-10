@@ -68,54 +68,54 @@ module.exports = {
           render(':stylus(compress=true)\n  body\n    color #c00'));
   },
   
-  'test :less filter': function(){
-      assert.equal(
-          '<style type="text/css">.class {\n  width: 20px;\n}\n</style>',
-          render(':less\n  .class { width: 10px * 2 }\n'));
-  },
+  // 'test :less filter': function(){
+  //     assert.equal(
+  //         '<style type="text/css">.class {\n  width: 20px;\n}\n</style>',
+  //         render(':less\n  .class { width: 10px * 2 }\n'));
+  // },
   
-  'test :coffeescript filter': function(){
-      var coffee, js;
-      coffee = [
-          ':coffeescript',
-          '  square = (x) ->',
-          '    x * x'
-      ].join('\n');
-      js = [
-          '<script type="text/javascript">',
-          '(function() {',
-          '  var square;',
-          '  square = function(x) {',
-          '    return x * x;',
-          '  };',
-          '}).call(this);',
-          '</script>'
-      ].join('\n');
-  
-      assert.equal(js, render(coffee));
-  
-      coffee = [
-          ':coffeescript',
-          '  $ ->',
-          '    $("#flash").fadeIn ->',
-          '      console.log("first line")',
-          '      console.log("second line")'
-      ].join('\n');
-      js = [
-          '<script type="text/javascript">',
-          '(function() {',
-          '  $(function() {',
-          '    return $("#flash").fadeIn(function() {',
-          '      console.log("first line");',
-          '      return console.log("second line");',
-          '    });',
-          '  });',
-          '}).call(this);',
-          '</script>'
-      ].join('\n');
-  
-      assert.equal(js, render(coffee));
-  },
+  // 'test :coffeescript filter': function(){
+  //     var coffee, js;
+  //     coffee = [
+  //         ':coffeescript',
+  //         '  square = (x) ->',
+  //         '    x * x'
+  //     ].join('\n');
+  //     js = [
+  //         '<script type="text/javascript">',
+  //         '(function() {',
+  //         '  var square;',
+  //         '  square = function(x) {',
+  //         '    return x * x;',
+  //         '  };',
+  //         '}).call(this);',
+  //         '</script>'
+  //     ].join('\n');
+  // 
+  //     assert.equal(js, render(coffee));
+  // 
+  //     coffee = [
+  //         ':coffeescript',
+  //         '  $ ->',
+  //         '    $("#flash").fadeIn ->',
+  //         '      console.log("first line")',
+  //         '      console.log("second line")'
+  //     ].join('\n');
+  //     js = [
+  //         '<script type="text/javascript">',
+  //         '(function() {',
+  //         '  $(function() {',
+  //         '    return $("#flash").fadeIn(function() {',
+  //         '      console.log("first line");',
+  //         '      return console.log("second line");',
+  //         '    });',
+  //         '  });',
+  //         '}).call(this);',
+  //         '</script>'
+  //     ].join('\n');
+  // 
+  //     assert.equal(js, render(coffee));
+  // },
   
   'test parse tree': function(){
       var str = [
