@@ -50,11 +50,11 @@ module.exports = {
     assert.equal('<![CDATA[\nfoo\nbar\n]]><p>something else</p>', render(':cdata\n  foo\n  bar\np something else'));
   },
   
-  'test :markdown filter': function(){
-      assert.equal(
-          '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
-          render(':markdown\n  #foo\n  - bar\n  - baz\n'))
-  },
+  // 'test :markdown filter': function(){
+  //     assert.equal(
+  //         '<h1>foo</h1>\n\n<ul><li>bar</li><li>baz</li></ul>',
+  //         render(':markdown\n  #foo\n  - bar\n  - baz\n'))
+  // },
   
   'test :stylus filter': function(){
       assert.equal(
