@@ -26,6 +26,8 @@ assert.render = function(jade, html, options){
   for (var key in options) opts[key] = options[key];
   var res = render(jade, opts).trim();
   if (res !== html) {
+    console.error();
+    console.error(path);
     console.error('\n\033[31mexpected:\033[m ');
     console.error(html);
     console.error('\n\033[31mgot:\033[m ');
@@ -332,7 +334,7 @@ module.exports = {
   },
   
   'test pipe-less text': function(){
-    assert.equal('<pre><code>foo\n\nbar\n</code></pre>', render('pre\n  code\n    foo\n\n    bar'));
+    assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', render('pre\n  code\n    foo\n\n    bar'));
     assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
     assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
     assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
