@@ -199,7 +199,7 @@ or immediate tag text:
     label Username:
       input(name='user[name]')
 
-Tags that accept _only_ text such as `script`, `style`, and `textarea` do not
+Tags that accept _only_ text such as `script` and `style` do not
 need the leading `|` character, for example:
 
       html
