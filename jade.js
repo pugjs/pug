@@ -812,6 +812,42 @@ function parse(str, options){
 }
 
 /**
+ * Hack to one-line javascript embedded in jade
+ *
+ * @param {String} str
+ * @return {String}
+ */
+
+var multilineCodeHack = function (str) {
+  var code = false,
+    lines = str.split('\n'),
+    out = '',
+    indent = 0,
+    captures, line;
+
+  for (var i = 0; i < lines.length; i += 1) {
+    line = lines[i];
+    if (code) {
+      captures = /^([ \t]*)/.exec(line);
+      if (captures[1].length > indent) {
+        out += line;
+      } else {
+        code = false;
+        out += '\n' + line + '\n';
+      }
+    } else if (captures = /^([\w]*)-(.*)$/.exec(line)) {
+      code = true;
+      indent = captures[1].length;
+      out += line;
+    } else {
+      out += line + '\n';
+    }
+  }
+  return out;
+};
+
+ 
+/**
  * Compile a `Function` representation of the given jade `str`.
  *
  * Options:
@@ -833,6 +869,8 @@ exports.compile = function(str, options){
       ? JSON.stringify(options.filename)
       : 'undefined'
     , fn;
+
+  str = multilineCodeHack(str);
 
   if (options.compileDebug !== false) {
     fn = [
