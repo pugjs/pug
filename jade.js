@@ -1175,7 +1175,7 @@ Lexer.prototype = {
    * Extends.
    */
   
-  extends: function() {
+  'extends': function() {
     return this.scan(/^extends +([^\n]+)/, 'extends');
   },
 
@@ -1199,7 +1199,7 @@ Lexer.prototype = {
    * Case.
    */
   
-  case: function() {
+  'case': function() {
     return this.scan(/^case +([^\n]+)/, 'case');
   },
 
@@ -1215,7 +1215,7 @@ Lexer.prototype = {
    * Default.
    */
   
-  default: function() {
+  'default': function() {
     return this.scan(/^default */, 'default');
   },
 
@@ -1273,7 +1273,7 @@ Lexer.prototype = {
    * While.
    */
   
-  while: function() {
+  'while': function() {
     var captures;
     if (captures = /^while +([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
@@ -1562,16 +1562,16 @@ Lexer.prototype = {
       || this.eos()
       || this.pipelessText()
       || this.doctype()
-      || this.case()
+      || this['case']()
       || this.when()
-      || this.default()
-      || this.extends()
+      || this['default']()
+      || this['extends']()
       || this.block()
       || this.include()
       || this.mixin()
       || this.conditional()
       || this.each()
-      || this.while()
+      || this['while']()
       || this.assignment()
       || this.tag()
       || this.filter()
