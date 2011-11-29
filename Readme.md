@@ -42,6 +42,7 @@
   - [php](http://github.com/everzet/jade.php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
   - [ruby](http://github.com/stonean/slim)
+  - [python](https://github.com/SyrusAkbary/pyjade)
 
 ## Installation
 
