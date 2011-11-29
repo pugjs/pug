@@ -447,7 +447,7 @@ Compiler.prototype = {
     // Buffer code
     if (code.buffer) {
       var val = code.val.trimLeft();
-      this.buf.push('var __val__ = ' + val);
+      this.buf.push('var __val__ = ' + val + ';');
       val = 'null == __val__ ? "" : __val__';
       if (code.escape) val = 'escape(' + val + ')';
       this.buf.push("buf.push(" + val + ");");
