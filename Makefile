@@ -9,6 +9,7 @@ all: jade.min.js runtime.min.js
 test:
 	@./node_modules/.bin/mocha \
 	  --ui exports \
+	  --globals name \
 	  $(TESTS)
 
 benchmark:
