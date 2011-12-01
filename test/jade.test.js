@@ -1006,7 +1006,7 @@ module.exports = {
       tag.setAttribute(name, val)
       assert.equal(tag.getAttribute(name), val)
       tag.removeAttribute(name)
-      assert.isUndefined(tag.getAttribute(name))
+      assert.ok(!tag.getAttribute(name))
   },
 
   'test assignment': function(){

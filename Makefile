@@ -7,7 +7,9 @@ UGLIFY_FLAGS = --no-mangle
 all: jade.min.js runtime.min.js
 
 test:
-	@./node_modules/.bin/expresso $(TESTS)
+	@./node_modules/.bin/mocha \
+	  --ui exports \
+	  $(TESTS)
 
 benchmark:
 	@node support/benchmark
