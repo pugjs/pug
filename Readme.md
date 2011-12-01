@@ -1,3 +1,6 @@
+
+ [![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
+
 # Jade - template engine
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
