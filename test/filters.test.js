@@ -56,17 +56,17 @@ module.exports = {
   //         render(':markdown\n  #foo\n  - bar\n  - baz\n'))
   // },
   
-  'test :stylus filter': function(){
-      assert.equal(
-          '<style type="text/css">body {\n  color: #c00;\n}\n</style>',
-          render(':stylus\n  body\n    color #c00'));
-  },
-  
-  'test :stylus filter with options': function(){
-      assert.equal(
-          '<style type="text/css">body{color:#c00}\n</style>',
-          render(':stylus(compress=true)\n  body\n    color #c00'));
-  },
+  // 'test :stylus filter': function(){
+  //     assert.equal(
+  //         '<style type="text/css">body {\n  color: #c00;\n}\n</style>',
+  //         render(':stylus\n  body\n    color #c00'));
+  // },
+  // 
+  // 'test :stylus filter with options': function(){
+  //     assert.equal(
+  //         '<style type="text/css">body{color:#c00}\n</style>',
+  //         render(':stylus(compress=true)\n  body\n    color #c00'));
+  // },
   
   // 'test :less filter': function(){
   //     assert.equal(
