@@ -1,4 +1,11 @@
 
+0.19.0 / 2011-12-02 
+==================
+
+  * Added block `append` / `prepend` support. Closes #355
+  * Added link in readme to jade-mode for Emacs
+  * Added link to python implementation
+
 0.18.0 / 2011-11-21 
 ==================
 

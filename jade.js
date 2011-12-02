@@ -714,7 +714,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.17.0';
+exports.version = '0.19.0';
 
 /**
  * Expose self closing tags.
@@ -913,12 +913,15 @@ exports.renderFile = function(path, options, fn){
     fn = options, options = {};
   }
 
-  options.filename = path;
-  var str = options.cache
-    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
-    : fs.readFileSync(path, 'utf8');
-
-  exports.render(str, options, fn);
+  try {
+    options.filename = path;
+    var str = options.cache
+      ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
+      : fs.readFileSync(path, 'utf8');
+    exports.render(str, options, fn);
+  } catch (err) {
+    fn(err);
+  }
 };
 
 /**
@@ -1180,11 +1183,51 @@ Lexer.prototype = {
   },
 
   /**
+   * Block prepend.
+   */
+  
+  prepend: function() {
+    var captures;
+    if (captures = /^prepend +([^\n]+)/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var mode = 'prepend'
+        , name = captures[1]
+        , tok = this.tok('block', name);
+      tok.mode = mode;
+      return tok;
+    }
+  },
+  
+  /**
+   * Block append.
+   */
+  
+  append: function() {
+    var captures;
+    if (captures = /^append +([^\n]+)/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var mode = 'append'
+        , name = captures[1]
+        , tok = this.tok('block', name);
+      tok.mode = mode;
+      return tok;
+    }
+  },
+
+  /**
    * Block.
    */
   
   block: function() {
-    return this.scan(/^block +([^\n]+)/, 'block');
+    var captures;
+    if (captures = /^block +(?:(prepend|append) +)?([^\n]+)/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var mode = captures[1] || 'replace'
+        , name = captures[2]
+        , tok = this.tok('block', name);
+      tok.mode = mode;
+      return tok;
+    }
   },
 
   /**
@@ -1566,6 +1609,8 @@ Lexer.prototype = {
       || this.when()
       || this.default()
       || this.extends()
+      || this.append()
+      || this.prepend()
       || this.block()
       || this.include()
       || this.mixin()
@@ -2259,7 +2304,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
  * Tags that may not contain tags.
  */
 
-var textOnly = exports.textOnly = ['code', 'script', 'textarea', 'style', 'title'];
+var textOnly = exports.textOnly = ['script', 'style'];
 
 /**
  * Parser prototype.
@@ -2632,11 +2677,31 @@ Parser.prototype = {
    */
 
   parseBlock: function(){
-    var name = this.expect('block').val.trim();
-    var block = 'indent' == this.peek().type
+    var block = this.expect('block')
+      , mode = block.mode
+      , name = block.val.trim();
+
+    block = 'indent' == this.peek().type
       ? this.block()
       : new nodes.Block(new nodes.Literal(''));
-    return this.blocks[name] = this.blocks[name] || block;
+
+    var prev = this.blocks[name];
+
+    if (prev) {
+      switch (prev.mode) {
+        case 'append':
+          block.nodes = block.nodes.concat(prev.nodes);
+          prev = block;
+          break;
+        case 'prepend':
+          block.nodes = prev.nodes.concat(block.nodes);
+          prev = block;
+          break;
+      }
+    }
+
+    block.mode = mode;
+    return this.blocks[name] = prev || block;
   },
 
   /**
