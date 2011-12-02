@@ -23,6 +23,7 @@
   - combine dynamic and static tag classes
   - parse tree manipulation via _filters_
   - template inheritance
+  - block append / prepend
   - supports [Express JS](http://expressjs.com) out of the box
   - transparent iteration over objects, arrays, and even non-enumerables via `each`
   - block comments
@@ -695,6 +696,40 @@ block content
   .primary
     block primary
       p nothing
+```
+
+## Block append / prepend
+
+ Jade allows you to _replace_ (default), _prepend_, or _append_ blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on _every_ page, you might do this:
+
+```
+html
+  head
+    block head
+      script(src='/vendor/jquery.js')
+      script(src='/vendor/caustic.js')
+    body
+      block content
+```
+
+ Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
+
+```
+include layout
+
+block append head
+  script(src='/vendor/three.js')
+  script(src='/game.js')
+```
+
+  When using `block append` or `block prepend` the `block` is optional:
+
+```
+include layout
+
+append head
+  script(src='/vendor/three.js')
+  script(src='/game.js')
 ```
 
 ## Includes
