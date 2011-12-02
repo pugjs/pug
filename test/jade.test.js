@@ -930,6 +930,16 @@ module.exports = {
     assert.render('pet-page.jade', 'pet.html', { superCool: false, name: 'tobi', age: 1, species: 'ferret' });
     assert.render('pet-page.jade', 'super-pet.html', { superCool: true, name: 'tobi', age: 1, species: 'ferret' });
   },
+  
+  'test block append': function(){
+    assert.render('append/page.jade', 'append/page.html');
+    assert.render('append-without-block/page.jade', 'append/page.html');
+  },
+  
+  'test block prepend': function(){
+    assert.render('prepend/page.jade', 'prepend/page.html');
+    assert.render('prepend-without-block/page.jade', 'prepend/page.html');
+  },
 
   'test include': function(){
     var str = [

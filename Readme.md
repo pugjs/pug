@@ -671,7 +671,7 @@ html
   Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".
 
 ```
-extends extend-layout
+extends layout
 
 block scripts
   script(src='/jquery.js')
