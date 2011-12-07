@@ -941,6 +941,10 @@ module.exports = {
     assert.render('prepend-without-block/page.jade', 'prepend/page.html');
   },
 
+  'test include literal': function(){
+    assert.render('include-html.jade', 'include-html.html')
+  },
+
   'test include': function(){
     var str = [
         'html',
