@@ -651,7 +651,7 @@ JavaScript:
 
 ## Template inheritance
 
-  Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive. To activate template inheritance in Express you must add: `app.set('view options', { layout: false });`.
+  Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive. To activate template inheritance in Express 2.x you must add: `app.set('view options', { layout: false });`.
   
   Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
 
