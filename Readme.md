@@ -232,8 +232,7 @@ outputs:
         asdf
           asdfasdfaf
           asdf
-        asd
-        .
+        asd.
         </p>
 
 This however differs from a trailing '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
