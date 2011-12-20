@@ -336,6 +336,31 @@ outputs:
         li: a(href='#') bar
         li.last: a(href='#') baz
 
+### Case
+
+ The case statement takes the following form:
+ 
+     html
+       body
+         friends = 10
+         case friends
+           when 0
+             p you have no friends
+           when 1
+             p you have a friend
+           default
+             p you have #{friends} friends
+
+ Block expansion may also be used:
+ 
+     friends = 5
+
+     html
+       body
+         case friends
+           when 0: p you have no friends
+           when 1: p you have a friend
+           default: p you have #{friends} friends
 
 ### Attributes
 
