@@ -173,10 +173,10 @@ Compiler.prototype = {
     var debug = this.debug;
 
     if (debug) {
-      this.buf.push('__.unshift({ lineno: ' + node.line
+      this.buf.push('__jade.unshift({ lineno: ' + node.line
         + ', filename: ' + (node.filename
           ? '"' + node.filename + '"'
-          : '__[0].filename')
+          : '__jade[0].filename')
         + ' });');
     }
 
@@ -189,7 +189,7 @@ Compiler.prototype = {
 
     this.visitNode(node);
 
-    if (debug) this.buf.push('__.shift();');
+    if (debug) this.buf.push('__jade.shift();');
   },
   
   /**
@@ -836,11 +836,11 @@ exports.compile = function(str, options){
 
   if (options.compileDebug !== false) {
     fn = [
-        'var __ = [{ lineno: 1, filename: ' + filename + ' }];'
+        'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
       , parse(String(str), options || {})
       , '} catch (err) {'
-      , '  rethrow(err, __[0].filename, __[0].lineno);'
+      , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
       , '}'
     ].join('\n');
   } else {
