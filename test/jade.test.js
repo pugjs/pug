@@ -968,6 +968,18 @@ module.exports = {
       , render(str, { filename: __dirname + '/jade.test.js' }));
   },
 
+  'test include block ending with inline content': function(){
+    var str = [
+        'html',
+        '  head',
+        '    include fixtures/scripts-inline',
+        '      scripts(src="/app.js")',
+    ].join('\n');
+
+    assert.equal('<html><head><script type=\"text/javascript\">var foo=\"bar\";\n</script><scripts src=\"/app.js\"></scripts></head></html>'
+      , render(str, { filename: __dirname + '/jade.test.js' }));
+  },
+
   'test .render(str, fn)': function(){
     jade.render('p foo bar', function(err, str){
       assert.ok(!err);
