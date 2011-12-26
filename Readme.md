@@ -478,7 +478,9 @@ or
 
     doctype html
 
-doctypes are case-insensitive, so the following are equivalent:
+Will output the _html 5_ doctype.
+
+Doctypes are case-insensitive, so the following are equivalent:
 
     doctype Basic
     doctype basic
@@ -491,8 +493,7 @@ yielding:
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
 
-Will output the _html 5_ doctype. Below are the doctypes
-defined by default, which can easily be extended:
+Below are the doctypes defined by default, which can easily be extended:
 
 ```javascript
     var doctypes = exports.doctypes = {
