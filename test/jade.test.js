@@ -973,6 +973,18 @@ module.exports = {
       , render(str, { filename: __dirname + '/jade.test.js' }));
   },
 
+  'test include block containing a conditional': function(){
+    var str = [
+        'html',
+        '  head',
+        '    include fixtures/scripts-conditional',
+        '      script(src="/app.js")',
+    ].join('\n');
+
+    assert.equal('<html><head><script src=\"caustic.js\"></script><script src=\"/app.js\"></script></head></html>'
+      , render(str, { filename: __dirname + '/jade.test.js' }));
+  },
+
   'test .render(str, fn)': function(){
     jade.render('p foo bar', function(err, str){
       assert.ok(!err);
