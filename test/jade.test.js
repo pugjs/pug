@@ -973,10 +973,10 @@ module.exports = {
         'html',
         '  head',
         '    include fixtures/scripts-conditional',
-        '      scripts(src="/app.js")',
+        '      script(src="/app.js")',
     ].join('\n');
 
-    assert.equal('<html><head><scripts src=\"/app.js\"></scripts></head></html>'
+    assert.equal('<html><head><script src=\"caustic.js\"></script><script src=\"/app.js\"></script></head></html>'
       , render(str, { filename: __dirname + '/jade.test.js' }));
   },
 
