@@ -837,6 +837,40 @@ head
   script(src='/jquery.ui.js')
 ```
 
+ Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example support we have `user.jade` which utilizes a `user` variable.
+ 
+```
+h1= user.name
+p= user.occupation
+```
+
+We could then simply `include user` while iterating users, and since the `user` variable is already defined within the loop the included template will have access to it.
+
+```
+users = [{ name: 'Tobi', occupation: 'Ferret' }]
+
+each user in users
+  .user
+    include user
+```
+
+yielding:
+
+```html
+<div class="user">
+  <h1>Tobi</h1>
+  <p>Ferret</p>
+</div>
+```
+
+If we wanted to expose a different variable name as `user` since `user.jade` references that name, we could simply define a new variable as shown here with `user = person`:
+
+```
+each person in users
+  .user
+    user = person
+    include user
+```
 
 ## Mixins
 
