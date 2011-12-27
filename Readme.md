@@ -828,6 +828,15 @@ html
     h1 test
 ```
 
+ You may also `yield` within an included template, allowing you to explicitly mark where the block given to `include` will be placed. Suppose for example you wish to prepend scripts rather than append, you might do the following:
+ 
+```
+head
+  yield
+  script(src='/jquery.js')
+  script(src='/jquery.ui.js')
+```
+
 
 ## Mixins
 

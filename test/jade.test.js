@@ -944,6 +944,11 @@ module.exports = {
   'test include literal': function(){
     assert.render('include-html.jade', 'include-html.html')
   },
+  
+  'test yield': function(){
+    assert.render('yield.jade', 'yield.html')
+    assert.render('yield-title.jade', 'yield-title.html')
+  },
 
   'test include': function(){
     var str = [
