@@ -26,9 +26,9 @@
     var arr = []
       , pets = [];
 
-    arr.push({ name: 'Tobi', species: 'Ferret', age: 2 });
-    arr.push({ name: 'Loki', species: 'Ferret', age: 1 });
-    arr.push({ name: 'Jane', species: 'Ferret', age: 5 });
+    arr.push({ name: 'Tobi', species: 'Ferret', age: 2, siblings: ['Loki', 'Jane'] });
+    arr.push({ name: 'Loki', species: 'Ferret', age: 1, siblings: ['Tobi', 'Jane'] });
+    arr.push({ name: 'Jane', species: 'Ferret', age: 5, siblings: ['Tobi', 'Loki'] });
 
     var n = 500;
     while (n--) pets.push(arr[Math.random() * arr.length | 0]);
@@ -54,9 +54,24 @@
       table td.name {
         font-weight: bold;
       }
-      table td.description {
+      table td.description,
+      table td.siblings {
         font-weight: 200;
         letter-spacing: 1px;
+      }
+      table ul {
+        margin: 0;
+        padding: 0;
+      }
+      table ul::before {
+        margin-left: 15px;
+        content: 'Siblings: ';
+        font-weight: bold;
+      }
+      table ul li {
+        display: inline-block;
+        list-style: none;
+        margin: 0 3px;
       }
     </style>
   </head>
@@ -68,6 +83,10 @@
 tr.pet
   td.name= pet.name
   td.description is a #{pet.age} year old #{pet.species}
+  td.siblings
+    ul
+      each sibling in pet.siblings
+        li= sibling
     </script>
   </body>
 </html>
