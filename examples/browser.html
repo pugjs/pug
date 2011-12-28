@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Jade</title>
+    <script src="../jade.js"></script>
+    <script>
+
+    $ = function(id){
+      return document.getElementById(id);
+    };
+
+    function template(name) {
+      return $(name + '-template').innerHTML.trim();
+    }
+
+    function render(name, obj) {
+      var html = template(name)
+        , fn = jade.compile(html)
+        , el = document.createElement('div');
+
+      el.innerHTML = fn(obj);
+      return el.children[0];
+    }
+
+    var pets = [];
+
+    pets.push({ name: 'Tobi', species: 'Ferret', age: 2 });
+    pets.push({ name: 'Loki', species: 'Ferret', age: 1 });
+    pets.push({ name: 'Jane', species: 'Ferret', age: 5 });
+
+    onload = function(){
+      pets.forEach(function(pet){
+        var el = render('pet', { pet: pet });
+        document.body.appendChild(el);
+      });
+    };
+    </script>
+    <style>
+      body {
+        padding: 60px;
+        font: 16px/1.6 "Helvetica Neue", Helvetica, Arial;
+      }
+      h2 {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script id="pet-template" type="text/template">
+.user
+  h2 #{pet.name} #{pet.age}
+  p #{pet.name} is a #{pet.species}
+    </script>
+  </body>
+</html>
