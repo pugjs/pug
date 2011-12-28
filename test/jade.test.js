@@ -948,6 +948,7 @@ module.exports = {
   'test yield': function(){
     assert.render('yield.jade', 'yield.html')
     assert.render('yield-title.jade', 'yield-title.html')
+    assert.render('yield-before-conditional.jade', 'yield-before-conditional.html')
   },
 
   'test include': function(){
