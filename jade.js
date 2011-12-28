@@ -810,7 +810,7 @@ function parse(str, options){
     runtime.rethrow(err, parser.filename, parser.lexer.lineno);
   }
 }
-
+ 
 /**
  * Compile a `Function` representation of the given jade `str`.
  *
