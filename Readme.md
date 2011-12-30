@@ -763,7 +763,7 @@ append head
      ./layout.jade
      ./includes/
        ./head.jade
-       ./tail.jade
+       ./foot.jade
 
 and the following _layout.jade_:
 
