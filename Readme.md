@@ -306,11 +306,11 @@ Jade supports conditional-comments as well, for example:
 
 outputs:
 
-    <body>
+    <head>
       <!--[if lt IE 8]>
         <script src="/ie-sucks.js"></script>
       <![endif]-->
-    </body>
+    </head>
 
 
 ### Nesting
