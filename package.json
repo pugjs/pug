@@ -7,7 +7,7 @@
   "main": "./index.js",
   "bin": { "jade": "./bin/jade" },
   "dependencies": {
-    "commander": "0.2.x",
+    "commander": "0.5.x",
     "mkdirp": ">= 0.0.7"
   },
   "devDependencies": {
