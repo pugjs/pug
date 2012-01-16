@@ -1,4 +1,12 @@
 
+0.20.0 / 2011-12-28 
+==================
+
+  * Added a browser example
+  * Added `yield` for block `include`s
+  * Changed: replaced internal `__` var with `__jade` [chrisleishman]
+  * Fixed two globals. Closes #433
+
 0.19.0 / 2011-12-02 
 ==================
 

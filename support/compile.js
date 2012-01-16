@@ -88,6 +88,7 @@ function parseConditionals(js) {
 
 function compile() {
   var buf = '';
+  buf += '(function() {\n';
   buf += '\n// CommonJS require()\n\n';
   buf += browser.require + '\n\n';
   buf += 'require.modules = {};\n\n';
@@ -101,6 +102,8 @@ function compile() {
     buf += js;
     buf += '\n}); // module: ' + file + '\n';
   });
+  buf += '\nwindow.jade = require("jade");\n';
+  buf += '})();\n';
   fs.writeFile('jade.js', buf, function(err){
     if (err) throw err;
     console.log('  \033[90m create : \033[0m\033[36m%s\033[0m', 'jade.js');

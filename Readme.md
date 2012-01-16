@@ -1,4 +1,3 @@
-
  [![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
 
 # Jade - template engine
@@ -233,8 +232,7 @@ outputs:
         asdf
           asdfasdfaf
           asdf
-        asd
-        .
+        asd.
         </p>
 
 This however differs from a trailing '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
@@ -337,6 +335,31 @@ outputs:
         li: a(href='#') bar
         li.last: a(href='#') baz
 
+### Case
+
+ The case statement takes the following form:
+ 
+     html
+       body
+         friends = 10
+         case friends
+           when 0
+             p you have no friends
+           when 1
+             p you have a friend
+           default
+             p you have #{friends} friends
+
+ Block expansion may also be used:
+ 
+     friends = 5
+
+     html
+       body
+         case friends
+           when 0: p you have no friends
+           when 1: p you have a friend
+           default: p you have #{friends} friends
 
 ### Attributes
 
@@ -454,7 +477,9 @@ or
 
     doctype html
 
-doctypes are case-insensitive, so the following are equivalent:
+Will output the _html 5_ doctype.
+
+Doctypes are case-insensitive, so the following are equivalent:
 
     doctype Basic
     doctype basic
@@ -467,8 +492,7 @@ yielding:
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
 
-Will output the _html 5_ doctype. Below are the doctypes
-defined by default, which can easily be extended:
+Below are the doctypes defined by default, which can easily be extended:
 
 ```javascript
     var doctypes = exports.doctypes = {
@@ -652,7 +676,7 @@ JavaScript:
 
 ## Template inheritance
 
-  Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive.
+  Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive. To activate template inheritance in Express 2.x you must add: `app.set('view options', { layout: false });`.
   
   Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
 
@@ -740,7 +764,7 @@ append head
      ./layout.jade
      ./includes/
        ./head.jade
-       ./tail.jade
+       ./foot.jade
 
 and the following _layout.jade_:
 
@@ -804,6 +828,49 @@ html
     h1 test
 ```
 
+ You may also `yield` within an included template, allowing you to explicitly mark where the block given to `include` will be placed. Suppose for example you wish to prepend scripts rather than append, you might do the following:
+ 
+```
+head
+  yield
+  script(src='/jquery.js')
+  script(src='/jquery.ui.js')
+```
+
+ Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example support we have `user.jade` which utilizes a `user` variable.
+ 
+```
+h1= user.name
+p= user.occupation
+```
+
+We could then simply `include user` while iterating users, and since the `user` variable is already defined within the loop the included template will have access to it.
+
+```
+users = [{ name: 'Tobi', occupation: 'Ferret' }]
+
+each user in users
+  .user
+    include user
+```
+
+yielding:
+
+```html
+<div class="user">
+  <h1>Tobi</h1>
+  <p>Ferret</p>
+</div>
+```
+
+If we wanted to expose a different variable name as `user` since `user.jade` references that name, we could simply define a new variable as shown here with `user = person`:
+
+```
+each person in users
+  .user
+    user = person
+    include user
+```
 
 ## Mixins
 
