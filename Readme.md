@@ -5,6 +5,39 @@
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org).
 
+## README Contents
+
+- [Features](#a1)
+- [Implementations](#a2)
+- [Installation](#a3)
+- [Browser Support](#a4)
+- [Public API](#a5)
+- [Syntax](#a6)
+    - [Line Endings](#a6-1)
+    - [Tags](#a6-2)
+    - [Tag Text](#a6-3)
+    - [Comments](#a6-4)
+    - [Block Comments](#a6-5)
+    - [Nesting](#a6-6)
+    - [Block Expansion](#a6-7)
+    - [Case](#a6-8)
+    - [Attributes](#a6-9)
+    - [HTML](#a6-10)
+    - [Doctypes](#a6-11)
+- [Filters](#a7)
+- [Code](#a8)
+- [Iteration](#a9)
+- [Conditionals](#a10)
+- [Template inheritance](#a11)
+- [Block append / prepend](#a12)
+- [Includes](#a13)
+- [Mixins](#a14)
+- [Generated Output](#a15)
+- [Example Makefile](#a16)
+- [jade(1)](#a17)
+- [License](#a18)
+
+<a name="a1"/>
 ## Features
 
   - client-side support
@@ -41,6 +74,7 @@
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
   - [html2jade](https://github.com/donpark/html2jade) converter
 
+<a name="a2"/>
 ## Implementations
 
   - [php](http://github.com/everzet/jade.php)
@@ -48,24 +82,26 @@
   - [ruby](http://github.com/stonean/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
 
+<a name="a3"/>
 ## Installation
 
 via npm:
 
     npm install jade
 
+<a name="a4"/>
 ## Browser Support
 
  To compile jade to a single file compatible for client-side use simply execute:
- 
+
     $ make jade.js
 
  Alternatively, if uglifyjs is installed via npm (`npm install uglify-js`) you may execute the following which will create both files. However each release builds these for you.
- 
+
     $ make jade.min.js
 
   By default Jade instruments templates with line number statements such as `__.lineno = 3` for debugging purposes. When used in a browser it's useful to minimize this boiler plate, you can do so by passing the option `{ compileDebug: false }`. The following template
-  
+
     p Hello #{name}
 
  Can then be as small as the following generated function:
@@ -96,6 +132,7 @@ function anonymous(locals, attrs, escape, rethrow) {
 }
 ```
 
+<a name="a5"/>
 ## Public API
 
 ```javascript
@@ -115,12 +152,15 @@ function anonymous(locals, attrs, escape, rethrow) {
  - `compiler`  Compiler to replace jade's default
  - `compileDebug`  When `false` no debug instrumentation is compiled
 
+<a name="a6"/>
 ## Syntax
 
+<a name="a6-1"/>
 ### Line Endings
 
 **CRLF** and **CR** are converted to **LF** before parsing.
 
+<a name="a6-2"/>
 ### Tags
 
 A tag is simply a leading word:
@@ -156,6 +196,7 @@ which is syntactic sugar for what we have already been doing, and outputs:
 
     `<div id="foo"></div><div class="bar"></div>`
 
+<a name="a6-3"/>
 ### Tag Text
 
 Simply place some content after the tag:
@@ -238,7 +279,7 @@ outputs:
 This however differs from a trailing '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
 
     p .
-    
+
 outputs:
 
     <p>.</p>
@@ -253,6 +294,7 @@ use:
     p.
       foo\\bar
 
+<a name="a6-4"/>
 ### Comments
 
 Single line comments currently look the same as JavaScript comments,
@@ -279,6 +321,7 @@ outputting
     <p>foo</p>
     <p>bar</p>
 
+<a name="a6-5"/>
 ### Block Comments
 
  A block comment is legal as well:
@@ -312,7 +355,7 @@ outputs:
       <![endif]-->
     </body>
 
-
+<a name="a6-6"/>
 ### Nesting
 
  Jade supports nesting to define the tags in a natural way:
@@ -325,6 +368,7 @@ outputs:
       li.last
         a(href='#') baz
 
+<a name="a6-7"/>
 ### Block Expansion
 
  Block expansion allows you to create terse single-line nested tags,
@@ -335,10 +379,11 @@ outputs:
         li: a(href='#') bar
         li.last: a(href='#') baz
 
+<a name="a6-8"/>
 ### Case
 
  The case statement takes the following form:
- 
+
      html
        body
          friends = 10
@@ -351,7 +396,7 @@ outputs:
              p you have #{friends} friends
 
  Block expansion may also be used:
- 
+
      friends = 5
 
      html
@@ -361,6 +406,7 @@ outputs:
            when 1: p you have a friend
            default: p you have #{friends} friends
 
+<a name="a6-9"/>
 ### Attributes
 
 Jade currently supports '(' and ')' as attribute delimiters.
@@ -379,7 +425,7 @@ Boolean attributes are also supported:
 Boolean attributes with code will only output the attribute when `true`:
 
     input(type="checkbox", checked=someValue)
-    
+
 Multiple lines work too:
 
     input(type='checkbox',
@@ -420,9 +466,10 @@ allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` 
 
     body(class=bodyClasses)
 
+<a name="a6-10"/>
 ### HTML
 
- Inline html is fine, we can use the pipe syntax to 
+ Inline html is fine, we can use the pipe syntax to
  write arbitrary text, in this case some html:
 
 ```
@@ -459,6 +506,7 @@ html
     h1 User <em>#{name}</em>
 ```
 
+<a name="a6-11"/>
 ### Doctypes
 
 To add a doctype simply use `!!!`, or `doctype` followed by an optional value:
@@ -496,16 +544,16 @@ Below are the doctypes defined by default, which can easily be extended:
 
 ```javascript
     var doctypes = exports.doctypes = {
-	    '5': '<!DOCTYPE html>',
-	    'xml': '<?xml version="1.0" encoding="utf-8" ?>',
-	    'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-	    'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-	    'strict': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
-	    'frameset': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
-	    '1.1': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',
-	    'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
-	    'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
-	};
+        '5': '<!DOCTYPE html>',
+        'xml': '<?xml version="1.0" encoding="utf-8" ?>',
+        'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+        'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+        'strict': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+        'frameset': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
+        '1.1': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',
+        'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
+        'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
+    };
 ```
 
 To alter the default simply change:
@@ -514,6 +562,7 @@ To alter the default simply change:
     jade.doctypes.default = 'whatever you want';
 ```
 
+<a name="a7"/>
 ## Filters
 
 Filters are prefixed with `:`, for example `:markdown` and
@@ -529,6 +578,7 @@ Renders:
 
        <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
 
+<a name="a8"/>
 ## Code
 
 Jade currently supports three classifications of executable code. The first
@@ -568,7 +618,7 @@ buffer a return value, which is prefixed by `=`:
     = foo
     h1= foo
 
-Which outputs `bar<h1>bar</h1>`. Code buffered by `=` is escaped 
+Which outputs `bar<h1>bar</h1>`. Code buffered by `=` is escaped
 by default for security, however to output unescaped return values
 you may use `!=`:
 
@@ -577,7 +627,7 @@ you may use `!=`:
  Jade also has designer-friendly variants, making the literal JavaScript
  more expressive and declarative. For example the following assignments
  are equivalent, and the expression is still regular javascript:
- 
+
      - var foo = 'foo ' + 'bar'
      foo = 'foo ' + 'bar'
 
@@ -589,8 +639,9 @@ you may use `!=`:
          li foo
          li worked
      else
-       p oh no! didnt work  
+       p oh no! didnt work
 
+<a name="a9"/>
 ## Iteration
 
  Along with vanilla JavaScript Jade also supports a subset of
@@ -641,11 +692,12 @@ JavaScript:
         li= role
 
  You may also use `for` if you prefer:
- 
+
     for user in users
       for role in user.roles
         li= role
 
+<a name="a10"/>
 ## Conditionals
 
  Jade conditionals are equivalent to those using the code (`-`) prefix,
@@ -672,12 +724,13 @@ JavaScript:
        unless user.isAnonymous
          p
            | Click to view
-           a(href='/users/' + user.id)= user.name 
+           a(href='/users/' + user.id)= user.name
 
+<a name="a11"/>
 ## Template inheritance
 
   Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive. To activate template inheritance in Express 2.x you must add: `app.set('view options', { layout: false });`.
-  
+
   Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
 
 ```
@@ -722,6 +775,7 @@ block content
       p nothing
 ```
 
+<a name="a12"/>
 ## Block append / prepend
 
  Jade allows you to _replace_ (default), _prepend_, or _append_ blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on _every_ page, you might do this:
@@ -756,6 +810,7 @@ append head
   script(src='/game.js')
 ```
 
+<a name="a13"/>
 ## Includes
 
  Includes allow you to statically include chunks of Jade,
@@ -769,7 +824,7 @@ append head
 and the following _layout.jade_:
 
       html
-        include includes/head  
+        include includes/head
         body
           h1 My Site
           p Welcome to my super amazing site.
@@ -829,7 +884,7 @@ html
 ```
 
  You may also `yield` within an included template, allowing you to explicitly mark where the block given to `include` will be placed. Suppose for example you wish to prepend scripts rather than append, you might do the following:
- 
+
 ```
 head
   yield
@@ -838,7 +893,7 @@ head
 ```
 
  Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example support we have `user.jade` which utilizes a `user` variable.
- 
+
 ```
 h1= user.name
 p= user.occupation
@@ -872,6 +927,7 @@ each person in users
     include user
 ```
 
+<a name="a14"/>
 ## Mixins
 
  Mixins are converted to regular JavaScript functions in
@@ -885,7 +941,7 @@ each person in users
           li baz
 
   Utilizing a mixin without args looks similar, just without a block:
-  
+
       h2 Groceries
       mixin list
 
@@ -916,6 +972,7 @@ each person in users
 </div>
 ```
 
+<a name="a15"/>
 ## Generated Output
 
  Suppose we have the following Jade:
@@ -986,22 +1043,23 @@ function anonymous(locals) {
 }
 ```
 
+<a name="a16"/>
 ## Example Makefile
 
   Below is an example Makefile used to compile _pages/*.jade_
   into _pages/*.html_ files by simply executing `make`.
- 
+
 ```make
 JADE = $(shell find pages/*.jade)
 HTML = $(JADE:.jade=.html)
 
 all: $(HTML)
-	
+
 %.html: %.jade
-	jade < $< --path $< > $@
+    jade < $< --path $< > $@
 
 clean:
-	rm -f $(HTML)
+    rm -f $(HTML)
 
 .PHONY: clean
 ```
@@ -1011,6 +1069,7 @@ a watcher-like behaviour:
 
      $ watch make
 
+<a name="a17"/>
 ## jade(1)
 
 ```
@@ -1043,11 +1102,12 @@ Examples:
   $ echo "h1 Jade!" | jade
 
   # foo, bar dirs rendering to /tmp
-  $ jade foo bar --out /tmp 
+  $ jade foo bar --out /tmp
 
 ```
 
-## License 
+<a name="a18"/>
+## License
 
 (The MIT License)
 
