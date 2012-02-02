@@ -1,4 +1,9 @@
 
+0.20.1 / 2012-02-02 
+==================
+
+  * Fixed Block#includeBlock() with textOnly blocks
+
 0.20.0 / 2011-12-28 
 ==================
 
