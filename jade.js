@@ -641,7 +641,12 @@ module.exports = {
         try {
           md = require('markdown-js');
         } catch (err) {
-          throw new Error('Cannot find markdown library, install markdown or discount');
+          try {
+            md = require('marked');
+          } catch (err) {
+            throw new
+              Error('Cannot find markdown library, install markdown, discount, or marked.');
+          }
         }
       }
     }
@@ -695,7 +700,6 @@ module.exports = [
 }); // module: inline-tags.js
 
 require.register("jade.js", function(module, exports, require){
-
 /*!
  * Jade
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
@@ -715,7 +719,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.19.0';
+exports.version = '0.20.0';
 
 /**
  * Expose self closing tags.
@@ -813,6 +817,49 @@ function parse(str, options){
 }
 
 /**
+ * Precompile a string representation of the given jade `str`.
+ *
+ * Options:
+ * 
+ *   - `compileDebug` when `false` debugging code is stripped from the compiled template
+ *   - `client` when `true` the helper functions `escape()` etc will reference `jade.escape()`
+ *      for use with the Jade client-side runtime.js
+ *
+ * @param {String} str
+ * @param {Options} options
+ * @return {Function}
+ * @api public
+ */
+
+exports.precompile = function(str, options){
+  var options = options || {}
+    , client = options.client
+    , filename = options.filename
+      ? JSON.stringify(options.filename)
+      : 'undefined'
+    , fn;
+
+  if (options.compileDebug !== false) {
+    fn = [
+        'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
+      , 'try {'
+      , parse(String(str), options)
+      , '} catch (err) {'
+      , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
+      , '}'
+    ].join('\n');
+  } else {
+    fn = parse(String(str), options);
+  }
+
+  if (client) {
+    fn = 'var attrs = jade.attrs, escape = jade.escape, rethrow = jade.rethrow;\n' + fn;
+  }
+  
+  return fn;
+}
+
+/**
  * Compile a `Function` representation of the given jade `str`.
  *
  * Options:
@@ -829,30 +876,10 @@ function parse(str, options){
 
 exports.compile = function(str, options){
   var options = options || {}
-    , client = options.client
-    , filename = options.filename
-      ? JSON.stringify(options.filename)
-      : 'undefined'
-    , fn;
-
-  if (options.compileDebug !== false) {
-    fn = [
-        'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
-      , 'try {'
-      , parse(String(str), options || {})
-      , '} catch (err) {'
-      , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
-      , '}'
-    ].join('\n');
-  } else {
-    fn = parse(String(str), options || {});
-  }
-
-  if (client) {
-    fn = 'var attrs = jade.attrs, escape = jade.escape, rethrow = jade.rethrow;\n' + fn;
-  }
-
-  fn = new Function('locals, attrs, escape, rethrow', fn);
+    , client = options.client,
+    fn;
+  
+  fn = new Function('locals, attrs, escape, rethrow', exports.precompile(str, options));
 
   if (client) return fn;
 
@@ -1777,6 +1804,7 @@ Block.prototype.includeBlock = function(){
   for (var i = 0, len = this.nodes.length; i < len; ++i) {
     node = this.nodes[i];
     if (node.yield) return node;
+    else if (node.textOnly) continue;
     else if (node.includeBlock) ret = node.includeBlock();
     else if (node.block && !node.block.isEmpty()) ret = node.block.includeBlock();
   }
@@ -3034,25 +3062,30 @@ exports.escape = function escape(html){
 exports.rethrow = function rethrow(err, filename, lineno){
   if (!filename) throw err;
 
-  var context = 3
-    , str = require('fs').readFileSync(filename, 'utf8')
-    , lines = str.split('\n')
-    , start = Math.max(lineno - context, 0)
-    , end = Math.min(lines.length, lineno + context); 
+  // If we can't catch the context we still output line and file
+  try {
+    var context = 3
+      , str = require('fs').readFileSync(filename, 'utf8')
+      , lines = str.split('\n')
+      , start = Math.max(lineno - context, 0)
+      , end = Math.min(lines.length, lineno + context); 
 
-  // Error context
-  var context = lines.slice(start, end).map(function(line, i){
-    var curr = i + start + 1;
-    return (curr == lineno ? '  > ' : '    ')
-      + curr
-      + '| '
-      + line;
-  }).join('\n');
+    // Error context
+    var context = lines.slice(start, end).map(function(line, i){
+      var curr = i + start + 1;
+      return (curr == lineno ? '  > ' : '    ')
+        + curr
+        + '| '
+        + line;
+    }).join('\n') + '\n\n';
+  } catch(failure) {
+    var context = '';
+  }
 
   // Alter exception message
   err.path = filename;
   err.message = (filename || 'Jade') + ':' + lineno 
-    + '\n' + context + '\n\n' + err.message;
+    + '\n' + context + err.message;
   throw err;
 };
 
