@@ -1,4 +1,9 @@
 
+0.20.2 / 2012-02-16 
+==================
+
+  * Fixed `:stylus` import capabilities, pass .filename
+
 0.20.1 / 2012-02-02 
 ==================
 
