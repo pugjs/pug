@@ -234,6 +234,16 @@ will result in a literal script tag:
     - var html = "<script></script>"
     | !{html}
 
+In the case of a property that may or may not exist, we can use the ${optionalproperty} variant.  The following
+will result in <p></p>, if the property "doh" cannot be found.
+    p ${doh}
+
+Additionally, if you want to specify a default option for a non-existant property, you can do the following:
+    p #{doh|"Undefined"}
+    p !{doh|"<span>Ruh Roh!</span>"}
+
+In the above case, the line p #{doh|"Undefined"} and p ${doh|"Undefined"} would be equivalent.
+
 Nested tags that also contain text can optionally use a text block:
 
     label

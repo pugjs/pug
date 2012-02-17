@@ -3101,13 +3101,20 @@ require.register("utils.js", function(module, exports, require){
  */
 
 var interpolate = exports.interpolate = function(str){
-  return str.replace(/(\\)?([#!]){(.*?)}/g, function(str, escape, flag, code){
-    return escape
-      ? str
-      : "' + "
-        + ('!' == flag ? '' : 'escape')
-        + "((interp = " + code.replace(/\\'/g, "'")
-        + ") == null ? '' : interp) + '";
+  return str.replace(/(\\)?([#!$]){(.*?)}/g, function(str, escape, flag, code){
+    function unescaped() {
+        var split = code.replace(/\\'/g, "'").split('|', 2);
+        code = code[0];
+        var defaultVal = split.length == 2 ? split[1] : ('$' == flag ? '""' : undefined);
+        var opt = (defaultVal !== undefined
+            ? '("undefined" === typeof ' + code + ' ? ' + defaultVal + ' : ' + code + ')' 
+            : code);
+        return "' + "
+            + ('!' == flag ? '' : 'escape')
+            + "((interp = " + opt + ") == null ? '' : interp) + '";
+    }
+
+    return escape ? str : unescaped();
   });
 };
 
