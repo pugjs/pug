@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 	<head>
 		<title>Jade - Template Engine</title>
@@ -10,9 +11,10 @@
 				<h1>Jade</h1>
 				<div id="arrow"></div>
 				<span id="tagline">Node Template Engine</span>
+        <div id="apidocs"><a href="http://github.com/visionmedia/jade">Language Docs</a></div>
 				<pre id="jade">
 					<code>
-<span class="doctype">!!!</span> 5
+<span class="doctype">doctype</span> 5
 <span class="tag">html</span>(<span class="key">lang</span>=<span class="val">"en"</span>)
   <span class="tag">head</span>
     <span class="tag">title</span><span class="text">= pageTitle</span>
@@ -23,9 +25,9 @@
   <span class="tag">body</span>
     <span class="tag">h1</span> <span class="text">Jade - node template engine</span>
     <span class="tag">#container</span>
-      - if (youAreUsingJade)
+      if (youAreUsingJade)
         p <span class="text">You are amazing</span>
-      - else
+      else
         p <span class="text">Get on it!</span>
 					</code>
 				</pre>
