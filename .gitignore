@@ -2,3 +2,5 @@
 lib-cov
 testing
 node_modules
+lib-cov
+coverage.html

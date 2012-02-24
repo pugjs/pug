@@ -2,7 +2,8 @@
 TESTS = test/*.js
 SRC = $(shell find lib -name "*.js" -type f)
 UGLIFY = $(shell find node_modules -name "uglifyjs" -type f)
-UGLIFY_FLAGS = --no-mangle 
+UGLIFY_FLAGS = --no-mangle
+REPORTER = dot
 
 all: jade.min.js runtime.min.js
 
@@ -10,7 +11,14 @@ test:
 	@./node_modules/.bin/mocha \
 	  --ui exports \
 	  --globals name \
+	  --reporter $(REPORTER) \
 	  $(TESTS)
+
+test-cov: lib-cov
+	JADE_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
+
+lib-cov:
+	jscoverage lib lib-cov
 
 benchmark:
 	@node support/benchmark
@@ -37,4 +45,4 @@ clean:
 	rm -f runtime.js
 	rm -f runtime.min.js
 
-.PHONY: test benchmark clean
+.PHONY: test-cov test benchmark clean

@@ -2,3 +2,5 @@ test
 support
 benchmarks
 examples
+lib-cov
+coverage.html
