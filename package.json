@@ -18,6 +18,9 @@
     "uubench": "0.0.1",
     "uglify-js": ">= 1.0.7"
   },
-  "scripts" : { "prepublish" : "npm prune" },
+  "scripts": {
+    "prepublish": "npm prune",
+    "test": "mocha --ui exports --globals name test/jade.test.js"
+  },
   "engines": { "node": ">= 0.1.98" }
 }
