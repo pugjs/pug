@@ -30,7 +30,7 @@ require.register = function (path, fn){
 
 require.relative = function (parent) {
     return function(p){
-      if ('.' != p[0]) return require(p);
+      if ('.' != p.charAt(0)) return require(p);
       
       var path = parent.split('/')
         , segs = p.split('/');
@@ -120,7 +120,7 @@ Compiler.prototype = {
   
   compile: function(){
     this.buf = ['var interp;'];
-    this.lastBufferedIdx = -1
+    this.lastBufferedIdx = -1;
     this.visit(this.node);
     return this.buf.join('\n');
   },
@@ -380,6 +380,8 @@ Compiler.prototype = {
       this.buf.push(fn(filter.block, this, filter.attrs));
     } else {
       var text = filter.block.nodes.join('');
+      filter.attrs = filter.attrs || {};
+      filter.attrs.filename = this.options.filename;
       this.buffer(utils.text(fn(text, filter.attrs)));
     }
   },
@@ -719,7 +721,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.20.1';
+exports.version = '0.20.3';
 
 /**
  * Expose self closing tags.
@@ -1061,9 +1063,9 @@ Lexer.prototype = {
       , nend = 0
       , pos = 0;
     for (var i = 0, len = str.length; i < len; ++i) {
-      if (start == str[i]) {
+      if (start == str.charAt(i)) {
         ++nstart;
-      } else if (end == str[i]) {
+      } else if (end == str.charAt(i)) {
         if (++nend == nstart) {
           pos = i;
           break;
@@ -1184,7 +1186,7 @@ Lexer.prototype = {
    * Extends.
    */
   
-  extends: function() {
+  "extends": function() {
     return this.scan(/^extends +([^\n]+)/, 'extends');
   },
 
@@ -1256,7 +1258,7 @@ Lexer.prototype = {
    * Case.
    */
   
-  case: function() {
+  "case": function() {
     return this.scan(/^case +([^\n]+)/, 'case');
   },
 
@@ -1272,7 +1274,7 @@ Lexer.prototype = {
    * Default.
    */
   
-  default: function() {
+  "default": function() {
     return this.scan(/^default */, 'default');
   },
 
@@ -1330,7 +1332,7 @@ Lexer.prototype = {
    * While.
    */
   
-  while: function() {
+  "while": function() {
     var captures;
     if (captures = /^while +([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
@@ -1375,7 +1377,7 @@ Lexer.prototype = {
    */
   
   attrs: function() {
-    if ('(' == this.input[0]) {
+    if ('(' == this.input.charAt(0)) {
       var index = this.indexOfDelimiters('(', ')')
         , str = this.input.substr(1, index-1)
         , tok = this.tok('attrs')
@@ -1501,7 +1503,7 @@ Lexer.prototype = {
       }
 
       for (var i = 0; i < len; ++i) {
-        parse(str[i]);
+        parse(str.charAt(i));
       }
 
       parse(',');
@@ -1620,10 +1622,10 @@ Lexer.prototype = {
       || this.pipelessText()
       || this.yield()
       || this.doctype()
-      || this.case()
+      || this["case"]()
       || this.when()
-      || this.default()
-      || this.extends()
+      || this["default"]()
+      || this["extends"]()
       || this.append()
       || this.prepend()
       || this.block()
@@ -1631,7 +1633,7 @@ Lexer.prototype = {
       || this.mixin()
       || this.conditional()
       || this.each()
-      || this.while()
+      || this["while"]()
       || this.assignment()
       || this.tag()
       || this.filter()
@@ -2081,7 +2083,9 @@ var Node = require('./node');
 
 var Literal = module.exports = function Literal(str) {
   this.str = str
+    .replace(/\\/g, "\\\\")
     .replace(/\n/g, "\\n")
+    .replace(/\r/g, "\\r") 
     .replace(/'/g, "\\'");
 };
 
@@ -2900,7 +2904,7 @@ Parser.prototype = {
       case ':':
         this.advance();
         tag.block = new nodes.Block;
-        tag.block.push(this.parseTag());
+        tag.block.push(this.parseExpr());
         break;
     }
 

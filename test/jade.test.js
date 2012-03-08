@@ -944,6 +944,7 @@ module.exports = {
 
   'test include literal': function(){
     assert.render('include-html.jade', 'include-html.html')
+    assert.render('include-html-special-chars.jade', 'include-html-special-chars.html')
     assert.render('include-only-text.jade', 'include-only-text.html')
     assert.render('include-with-text.jade', 'include-with-text.html')
   },
