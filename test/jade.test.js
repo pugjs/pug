@@ -934,6 +934,8 @@ module.exports = {
   
   'test block append': function(){
     assert.render('append/page.jade', 'append/page.html');
+    // extend keyword compatibility
+    assert.render('append/extend.jade', 'append/page.html');
     assert.render('append-without-block/page.jade', 'append/page.html');
   },
   
