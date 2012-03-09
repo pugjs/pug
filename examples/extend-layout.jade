@@ -1,0 +1,10 @@
+html
+  head
+    h1 My Site - #{title}
+    block scripts
+      script(src='/jquery.js')
+  body
+    block content
+    block foot
+      #footer
+        p some footer content

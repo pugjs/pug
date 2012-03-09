@@ -1,0 +1,14 @@
+doctype xml
+rss(version='2.0')
+channel
+  title RSS Title
+  description Some description here
+  link http://google.com
+  lastBuildDate Mon, 06 Sep 2010 00:01:00 +0000
+  pubDate Mon, 06 Sep 2009 16:45:00 +0000
+
+  each item in items
+    item
+      title= item.title
+      description= item.description
+      link= item.link

@@ -4,89 +4,122 @@
  * Module dependencies.
  */
 
-var sys = require('sys'),
-    jade = require('jade'),
-    fs = require('fs');
+var fs = require('fs')
+  , program = require('commander')
+  , path = require('path')
+  , basename = path.basename
+  , dirname = path.dirname
+  , resolve = path.resolve
+  , join = path.join
+  , mkdirp = require('mkdirp')
+  , jade = require('../');
 
-/**
- * Arguments.
- */
-
-var args = process.argv.slice(2);
-
-/**
- * Output to stdout.
- */
-
-var pipe;
-
-/**
- * Options javascript.
- */
+// jade options
 
 var options = {};
 
-/**
- * Usage information.
- */
+// options
 
-var usage = ''
-    + '\x1b[1mUsage\x1b[0m: jade [options] <path ...>\n'
-    + '\n'
-    + '\x1b[1mOptions:\x1b[0m\n'
-    + '  -o, --options STR   JavaScript options object passed\n'
-    + '  -p, --pipe          Output to stdout instead of PATH.html\n'
-    + '  -h, --help          Output help information\n';
+program
+  .version(jade.version)
+  .usage('[options] [dir|file ...]')
+  .option('-o, --obj <str>', 'javascript options object')
+  .option('-O, --out <dir>', 'output the compiled html to <dir>')
+  .option('-p, --path <path>', 'filename used to resolve includes')
 
-// Parse arguments
+program.on('--help', function(){
+  console.log('  Examples:');
+  console.log('');
+  console.log('    # translate jade the templates dir');
+  console.log('    $ jade templates');
+  console.log('');
+  console.log('    # create {foo,bar}.html');
+  console.log('    $ jade {foo,bar}.jade');
+  console.log('');
+  console.log('    # jade over stdio');
+  console.log('    $ jade < my.jade > my.html');
+  console.log('');
+  console.log('    # jade over stdio');
+  console.log('    $ echo "h1 Jade!" | jade');
+  console.log('');
+  console.log('    # foo, bar dirs rendering to /tmp');
+  console.log('    $ jade foo bar --out /tmp ');
+  console.log('');
+});
 
-var arg,
-    files = [];
-while (args.length) {
-    arg = args.shift();
-    switch (arg) {
-        case '-h':
-        case '--help':
-            sys.puts(usage);
-            process.exit(1);
-            break;
-        case '-p':
-        case '--pipe':
-            pipe = true;
-            break;
-        case '-o':
-        case '--options':
-            var str = args.shift();
-            if (str) {
-                options = eval('(' + str + ')');
-            } else {
-                sys.error('-o, --options requires a string.');
-                process.exit(1);
-            }
-            break;
-        default:
-            files.push(arg);
-    }
-}
+program.parse(process.argv);
 
-// Render files
+// options given, parse them
+
+if (program.obj) options = eval('(' + program.obj + ')');
+
+// filename
+
+if (program.path) options.filename = program.path;
+
+// left-over args are file paths
+
+var files = program.args;
+
+// compile files
 
 if (files.length) {
-    files.forEach(function(file){
-        jade.renderFile(file, options, function(err, html){
-            if (err) throw err;
-            if (pipe) {
-                sys.puts(html);
-            }  else {
-                file = file.replace(/\.jade$/, '.html');
-                fs.writeFile(file, html, function(err){
-                    if (err) throw err;
-                    sys.error('  create : ' + file);
-                });
-            }
-        });
-    });
+  console.log();
+  files.forEach(renderFile);
+  process.on('exit', console.log);
+// stdio
 } else {
-    sys.error('files required.');
-    process.exit(1);
+  stdin();
+}
+
+/**
+ * Compile from stdin.
+ */
+
+function stdin() {
+  var buf = '';
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', function(chunk){ buf += chunk; });
+  process.stdin.on('end', function(){
+    var fn = jade.compile(buf, options);
+    process.stdout.write(fn(options));
+  }).resume();
+}
+
+/**
+ * Process the given path, compiling the jade files found.
+ * Always walk the subdirectories.
+ */
+
+function renderFile(path) {
+  var re = /\.jade$/;
+  fs.lstat(path, function(err, stat) {
+    if (err) throw err;
+    // Found jade file
+    if (stat.isFile() && re.test(path)) {
+      fs.readFile(path, 'utf8', function(err, str){
+        if (err) throw err;
+        options.filename = path;
+        var fn = jade.compile(str, options);
+        path = path.replace(re, '.html');
+        if (program.out) path = join(program.out, basename(path));
+        var dir = resolve(dirname(path));
+        mkdirp(dir, 0755, function(err){
+          if (err) throw err;
+          fs.writeFile(path, fn(options), function(err){
+            if (err) throw err;
+            console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+          });
+        });
+      });
+    // Found directory
+    } else if (stat.isDirectory()) {
+      fs.readdir(path, function(err, files) {
+        if (err) throw err;
+        files.map(function(filename) {
+          return path + '/' + filename;
+        }).forEach(renderFile);
+      });
+    }
+  });
 }

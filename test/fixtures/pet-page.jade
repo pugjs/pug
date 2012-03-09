@@ -1,0 +1,11 @@
+
+extends user-layout
+
+block head
+  title= name
+
+block content
+  if superCool
+    include super-pet
+  else
+    include pet

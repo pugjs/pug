@@ -1,4 +1,12 @@
-test
-support
-benchmarks
-examples
+.npmignore
+.gitmodules
+.travis.yml
+
+History.md
+Readme.md
+Makefile
+
+test/
+support/
+benchmarks/
+examples/

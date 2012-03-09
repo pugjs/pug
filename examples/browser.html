@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Jade</title>
+    <script src="../jade.js"></script>
+    <script>
+
+    $ = function(id){
+      return document.getElementById(id);
+    };
+
+    function template(name) {
+      return $(name + '-template').innerHTML.trim();
+    }
+
+    function render(name, obj) {
+      var html = template(name)
+        , fn = render[name] = render[name] || jade.compile(html)
+        , table = document.createElement('table')
+        , tbody = document.createElement('tbody');
+
+      table.appendChild(tbody);
+      tbody.innerHTML = fn(obj);
+      return tbody.firstChild;
+    }
+
+    var arr = []
+      , pets = [];
+
+    arr.push({ name: 'Tobi', species: 'Ferret', age: 2, siblings: ['Loki', 'Jane'] });
+    arr.push({ name: 'Loki', species: 'Ferret', age: 1, siblings: ['Tobi', 'Jane'] });
+    arr.push({ name: 'Jane', species: 'Ferret', age: 5, siblings: ['Tobi', 'Loki'] });
+
+    var n = 500;
+    while (n--) pets.push(arr[Math.random() * arr.length | 0]);
+
+    onload = function(){
+      var start = new Date
+        , table = $('pets');
+
+      pets.forEach(function(pet){
+        var el = render('pet', { pet: pet });
+        table.appendChild(el);
+      });
+
+      var duration = new Date - start;
+      $('duration').textContent = 'rendered ' + pets.length + ' in ' + duration + 'ms';
+    };
+    </script>
+    <style>
+      body {
+        padding: 60px;
+        font: 16px/1.6 "Helvetica Neue", Helvetica, Arial;
+      }
+      table td.name {
+        font-weight: bold;
+      }
+      table td.description,
+      table td.siblings {
+        font-weight: 200;
+        letter-spacing: 1px;
+      }
+      table ul {
+        margin: 0;
+        padding: 0;
+      }
+      table ul::before {
+        margin-left: 15px;
+        content: 'Siblings: ';
+        font-weight: bold;
+      }
+      table ul li {
+        display: inline-block;
+        list-style: none;
+        margin: 0 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <span id="duration"></span>
+    <table id="pets"></table>
+
+    <script id="pet-template" type="text/template">
+tr.pet
+  td.name= pet.name
+  td.description is a #{pet.age} year old #{pet.species}
+  td.siblings
+    ul
+      each sibling in pet.siblings
+        li= sibling
+    </script>
+  </body>
+</html>

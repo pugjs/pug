@@ -1,25 +1,40 @@
 
 TESTS = test/*.js
+SRC = $(shell find lib -name "*.js" -type f)
+UGLIFY = $(shell find node_modules -name "uglifyjs" -type f)
+UGLIFY_FLAGS = --no-mangle 
+
+all: jade.min.js runtime.min.js
 
 test:
-	@./support/expresso/bin/expresso \
-		-I lib \
-		-I support/coffee-script/lib \
-		-I support/markdown/lib \
-		-I support/sass/lib \
-		$(TESTS)
-
-api.html: lib/jade.js
-	@dox \
-		--private \
-		--title "Jade" \
-		--desc "Jade is a high performance template engine for [node](http://nodejs.org), inspired by [haml](http://haml-lang.com/), created by [TJ Holowaychuk](http://github.com/visionmedia)." \
-		 $< > $@
+	@./node_modules/.bin/mocha \
+	  --ui exports \
+	  --globals name \
+	  $(TESTS)
 
 benchmark:
-	@node benchmarks/jade.js && \
-	 node benchmarks/haml.js && \
-	 node benchmarks/haml2.js && \
-	 node benchmarks/ejs.js
+	@node support/benchmark
 
-.PHONY: test example benchmark
+jade.js: $(SRC)
+	@node support/compile.js $^
+
+jade.min.js: jade.js
+	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
+		&& du jade.min.js \
+		&& du jade.js
+
+runtime.js: lib/runtime.js
+	@cat support/head.js $< support/foot.js > $@
+
+runtime.min.js: runtime.js
+	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
+	  && du runtime.min.js \
+	  && du runtime.js
+
+clean:
+	rm -f jade.js
+	rm -f jade.min.js
+	rm -f runtime.js
+	rm -f runtime.min.js
+
+.PHONY: test benchmark clean

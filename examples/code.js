@@ -3,18 +3,14 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade');
+var jade = require('./../')
+  , path = __dirname + '/code.jade'
+  , str = require('fs').readFileSync(path, 'utf8')
+  , fn = jade.compile(str, { filename: path, pretty: true });
 
-var options = {
-    locals: {
-        users: {
-            tj: { age: 23, email: 'tj@vision-media.ca', isA: 'human' },
-            tobi: { age: 1, email: 'tobi@is-amazing.com', isA: 'ferret' }
-        }
-    }
+var users = {
+  tj: { age: 23, email: 'tj@vision-media.ca', isA: 'human' },
+  tobi: { age: 1, email: 'tobi@is-amazing.com', isA: 'ferret' }
 };
 
-jade.renderFile(__dirname + '/code.jade', options, function(err, html){
-    if (err) throw err;
-    console.log(html);
-});
+console.log(fn({ users: users }));

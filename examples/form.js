@@ -3,20 +3,16 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade');
+var jade = require('../')
+  , path = __dirname + '/form.jade'
+  , str = require('fs').readFileSync(path, 'utf8')
+  , fn = jade.compile(str, { filename: path, pretty: true });
 
-var options = {
-    locals: {
-        user: {
-            name: 'TJ',
-            email: 'tj@vision-media.ca',
-            city: 'Victoria',
-            province: 'BC'
-        }
-    }
+var user = {
+  name: 'TJ',
+  email: 'tj@vision-media.ca',
+  city: 'Victoria',
+  province: 'BC'
 };
 
-jade.renderFile(__dirname + '/form.jade', options, function(err, html){
-    if (err) throw err;
-    console.log(html);
-});
+console.log(fn({ user: user }));
