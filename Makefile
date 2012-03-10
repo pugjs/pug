@@ -8,8 +8,7 @@ all: jade.min.js runtime.min.js
 
 test:
 	@./node_modules/.bin/mocha \
-		--reporter $(REPORTER) \
-		--require should
+		--reporter $(REPORTER)
 
 test-cov: lib-cov
 	JADE_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
