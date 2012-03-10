@@ -12,11 +12,12 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "coffee-script": ">= 0.0.1",
-    "markdown": ">= 0.0.1",
-    "stylus": ">= 0.0.1",
-    "uubench": "0.0.1",
-    "uglify-js": ">= 1.0.7"
+    "coffee-script": "*",
+    "markdown": "*",
+    "stylus": "*",
+    "uubench": "*",
+    "should": "*",
+    "uglify-js": "*"
   },
   "scripts" : { "prepublish" : "npm prune" },
   "engines": { "node": ">= 0.1.98" }
