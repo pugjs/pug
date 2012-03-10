@@ -1,4 +1,12 @@
 
+0.21.0 / 2012-03-10 
+==================
+
+  * Added new input/output test suite using Mocha's string diffing
+  * Added alias `extend` -> `extends`. Closes #527 [guillermo]
+  * Fixed include escapes. Closes #513
+  * Fixed block-expansion with .foo and #foo short-hands. Closes #498
+
 0.20.3 / 2012-02-16 
 ==================
 
