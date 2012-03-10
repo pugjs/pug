@@ -17,6 +17,7 @@
     "stylus": "*",
     "uubench": "*",
     "should": "*",
+    "less": "*",
     "uglify-js": "*"
   },
   "scripts" : { "prepublish" : "npm prune" },
