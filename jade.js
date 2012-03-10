@@ -641,7 +641,12 @@ module.exports = {
         try {
           md = require('markdown-js');
         } catch (err) {
-          throw new Error('Cannot find markdown library, install markdown or discount');
+          try {
+            md = require('marked');
+          } catch (err) {
+            throw new
+              Error('Cannot find markdown library, install markdown, discount, or marked.');
+          }
         }
       }
     }
@@ -695,7 +700,6 @@ module.exports = [
 }); // module: inline-tags.js
 
 require.register("jade.js", function(module, exports, require){
-
 /*!
  * Jade
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
@@ -715,7 +719,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.19.0';
+exports.version = '0.20.1';
 
 /**
  * Expose self closing tags.
@@ -839,13 +843,13 @@ exports.compile = function(str, options){
     fn = [
         'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(String(str), options || {})
+      , parse(String(str), options)
       , '} catch (err) {'
       , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
       , '}'
     ].join('\n');
   } else {
-    fn = parse(String(str), options || {});
+    fn = parse(String(str), options);
   }
 
   if (client) {
@@ -1777,6 +1781,7 @@ Block.prototype.includeBlock = function(){
   for (var i = 0, len = this.nodes.length; i < len; ++i) {
     node = this.nodes[i];
     if (node.yield) return node;
+    else if (node.textOnly) continue;
     else if (node.includeBlock) ret = node.includeBlock();
     else if (node.block && !node.block.isEmpty()) ret = node.block.includeBlock();
   }

@@ -117,6 +117,7 @@ module.exports = {
   'test block-expansion': function(){
       assert.equal("<li><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li: a foo\nli: a bar\nli: a baz"));
       assert.equal("<li class=\"first\"><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li.first: a foo\nli: a bar\nli: a baz"));
+      assert.equal('<div class="foo"><div class="bar">baz</div></div>', render(".foo: .bar baz"));
   },
 
   'test case statement': function(){
