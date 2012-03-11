@@ -16,13 +16,14 @@
     <table id="pets"></table>
 
     <script id="pet-template" type="text/template">
-tr.pet
-  td.name= pet.name
-  td.description is a #{pet.age} year old #{pet.species}
-  td.siblings and has sibling(s)
-    ul
-      each sibling in pet.siblings
-        li= sibling
+tbody
+  tr.pet
+    td.name= pet.name
+    td.description is a #{pet.age} year old #{pet.species}
+    td.siblings and has sibling(s)
+      ul
+        each sibling in pet.siblings
+          li= sibling
     </script>
   </body>
 </html>
