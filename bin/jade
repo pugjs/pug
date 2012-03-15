@@ -28,6 +28,7 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-p, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile for client-side runtime.js')
+  .option('-D, --no-debug', 'compile without debugging (smaller functions)')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -55,15 +56,19 @@ program.parse(process.argv);
 
 if (program.obj) options = eval('(' + program.obj + ')');
 
-// filename
+// --filename
 
 if (program.path) options.filename = program.path;
 
-// client
+// --no-debug
+
+options.compileDebug = program.debug;
+
+// --client
 
 options.client = program.client;
 
-// pretty
+// --pretty
 
 options.pretty = program.pretty;
 
