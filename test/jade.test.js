@@ -14,10 +14,6 @@ var render = function(str, options){
   return fn(options);
 };
 
-function fixture(path) {
-  return fs.readFileSync(__dirname + '/fixtures/' + path, 'utf8');
-}
-
 describe('jade', function(){
   describe('.version', function(){
     it('should be valid version format', function(){
