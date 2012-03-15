@@ -101,12 +101,19 @@ function renderFile(path) {
         if (err) throw err;
         options.filename = path;
         var fn = jade.compile(str, options);
-        path = path.replace(re, '.html');
+        var extname = options.client ? '.js' : '.html';
+        path = path.replace(re, extname);
         if (program.out) path = join(program.out, basename(path));
         var dir = resolve(dirname(path));
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
-          fs.writeFile(path, fn(options), function(err){
+          var output;
+          if(options.client) {
+            output = fn.toString();
+          } else {
+            output = fn(options);
+          }
+          fs.writeFile(path, output, function(err){
             if (err) throw err;
             console.log('  \033[90mrendered \033[36m%s\033[0m', path);
           });
