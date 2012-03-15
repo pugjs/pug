@@ -335,12 +335,12 @@ describe('jade', function(){
     });
 
     it('should support pipe-less text', function(){
-    assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', render('pre\n  code\n    foo\n\n    bar'));
-    assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
-    assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
-    assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
-    assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
-    assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
+      assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', render('pre\n  code\n    foo\n\n    bar'));
+      assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
+      assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
+      assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
     });
 
     it('should support tag text', function(){
@@ -521,24 +521,24 @@ describe('jade', function(){
     });
 
     it('should support script text', function(){
-    var str = [
-      'script',
-      '  p foo',
-      '',
-      'script(type="text/template")',
-      '  p foo',
-      '',
-      'script(type="text/template").',
-      '  p foo'
-    ].join('\n');
+      var str = [
+        'script',
+        '  p foo',
+        '',
+        'script(type="text/template")',
+        '  p foo',
+        '',
+        'script(type="text/template").',
+        '  p foo'
+      ].join('\n');
 
-    var html = [
-      '<script>p foo\n\n</script>',
-      '<script type="text/template"><p>foo</p></script>',
-      '<script type="text/template">p foo\n</script>'
-    ].join('');
+      var html = [
+        '<script>p foo\n\n</script>',
+        '<script type="text/template"><p>foo</p></script>',
+        '<script type="text/template">p foo\n</script>'
+      ].join('');
 
-    assert.equal(html, render(str));
+      assert.equal(html, render(str));
     });
 
     it('should support comments', function(){
@@ -862,122 +862,122 @@ describe('jade', function(){
     });
 
     it('should support if', function(){
-    var str = [
-        '- var users = ["tobi", "loki", "jane"]',
-        'if users.length',
-        '  p users: #{users.length}',
-    ].join('\n');
+      var str = [
+          '- var users = ["tobi", "loki", "jane"]',
+          'if users.length',
+          '  p users: #{users.length}',
+      ].join('\n');
 
-    assert.equal('<p>users: 3</p>', render(str));
+      assert.equal('<p>users: 3</p>', render(str));
 
-    assert.equal('<iframe foo="bar"></iframe>', render('iframe(foo="bar")'));
+      assert.equal('<iframe foo="bar"></iframe>', render('iframe(foo="bar")'));
     });
 
     it('should support unless', function(){
-    var str = [
-        '- var users = ["tobi", "loki", "jane"]',
-        'unless users.length',
-        '  p no users',
-    ].join('\n');
+      var str = [
+          '- var users = ["tobi", "loki", "jane"]',
+          'unless users.length',
+          '  p no users',
+      ].join('\n');
 
-    assert.equal('', render(str));
+      assert.equal('', render(str));
 
-    var str = [
-        '- var users = []',
-        'unless users.length',
-        '  p no users',
-    ].join('\n');
+      var str = [
+          '- var users = []',
+          'unless users.length',
+          '  p no users',
+      ].join('\n');
 
-    assert.equal('<p>no users</p>', render(str));
+      assert.equal('<p>no users</p>', render(str));
     });
 
     it('should support else', function(){
-    var str = [
-        '- var users = []',
-        'if users.length',
-        '  p users: #{users.length}',
-        'else',
-        '  p users: none',
-    ].join('\n');
+      var str = [
+          '- var users = []',
+          'if users.length',
+          '  p users: #{users.length}',
+          'else',
+          '  p users: none',
+      ].join('\n');
 
-    assert.equal('<p>users: none</p>', render(str));
+      assert.equal('<p>users: none</p>', render(str));
     });
 
-  it('should else if', function(){
-    var str = [
-        '- var users = ["tobi", "jane", "loki"]',
-        'for user in users',
-        '  if user == "tobi"',
-        '    p awesome #{user}',
-        '  else if user == "jane"',
-        '    p lame #{user}',
-        '  else',
-        '    p #{user}',
-    ].join('\n');
+    it('should else if', function(){
+      var str = [
+          '- var users = ["tobi", "jane", "loki"]',
+          'for user in users',
+          '  if user == "tobi"',
+          '    p awesome #{user}',
+          '  else if user == "jane"',
+          '    p lame #{user}',
+          '  else',
+          '    p #{user}',
+      ].join('\n');
 
-    assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
+      assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
     });
 
     it('should include block', function(){
-    var str = [
-        'html',
-        '  head',
-        '    include fixtures/scripts',
-        '      scripts(src="/app.js")',
-    ].join('\n');
+      var str = [
+          'html',
+          '  head',
+          '    include fixtures/scripts',
+          '      scripts(src="/app.js")',
+      ].join('\n');
 
-    assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
+      assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
       , render(str, { filename: __dirname + '/jade.test.js' }));
     });
   });
 
   describe('.render()', function(){
-  it('should support .render(str, fn)', function(){
-    jade.render('p foo bar', function(err, str){
-      assert.ok(!err);
-      assert.equal('<p>foo bar</p>', str);
-    });
-  });
-
-  it('should support .render(str, options, fn)', function(){
-    jade.render('p #{foo}', { foo: 'bar' }, function(err, str){
-      assert.ok(!err);
-      assert.equal('<p>bar</p>', str);
-    });
-  });
-
-  it('should support .render(str, options, fn) cache', function(){
-    jade.render('p bar', { cache: true }, function(err, str){
-      assert.ok(/the "filename" option is required for caching/.test(err.message));
+    it('should support .render(str, fn)', function(){
+      jade.render('p foo bar', function(err, str){
+        assert.ok(!err);
+        assert.equal('<p>foo bar</p>', str);
+      });
     });
 
-    jade.render('p foo bar', { cache: true, filename: 'test' }, function(err, str){
-      assert.ok(!err);
-      assert.equal('<p>foo bar</p>', str);
+    it('should support .render(str, options, fn)', function(){
+      jade.render('p #{foo}', { foo: 'bar' }, function(err, str){
+        assert.ok(!err);
+        assert.equal('<p>bar</p>', str);
+      });
     });
-  });
 
-  it('should support .compile()', function(){
+    it('should support .render(str, options, fn) cache', function(){
+      jade.render('p bar', { cache: true }, function(err, str){
+        assert.ok(/the "filename" option is required for caching/.test(err.message));
+      });
+
+      jade.render('p foo bar', { cache: true, filename: 'test' }, function(err, str){
+        assert.ok(!err);
+        assert.equal('<p>foo bar</p>', str);
+      });
+    });
+
+    it('should support .compile()', function(){
       var fn = jade.compile('p foo');
       assert.equal('<p>foo</p>', fn());
-  });
+    });
 
-  it('should support .compile() locals', function(){
+    it('should support .compile() locals', function(){
       var fn = jade.compile('p= foo');
       assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
-  });
+    });
 
-  it('should support .compile() no debug', function(){
+    it('should support .compile() no debug', function(){
       var fn = jade.compile('p foo\np #{bar}', {compileDebug: false});
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
-  });
+    });
 
-  it('should support .compile() no debug and global helpers', function(){
+    it('should support .compile() no debug and global helpers', function(){
       var fn = jade.compile('p foo\np #{bar}', {compileDebug: false, helpers: 'global'});
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
-  });
+    });
 
-  it('should support null attrs on tag', function(){
+    it('should support null attrs on tag', function(){
       var tag = new jade.nodes.Tag('a'),
           name = 'href',
           val = '"/"';
@@ -985,17 +985,17 @@ describe('jade', function(){
       assert.equal(tag.getAttribute(name), val)
       tag.removeAttribute(name)
       assert.ok(!tag.getAttribute(name))
-  });
+    });
 
-  it('should support assignment', function(){
-    assert.equal('<div>5</div>', render('a = 5;\ndiv= a'));
-    assert.equal('<div>5</div>', render('a = 5\ndiv= a'));
-    assert.equal('<div>foo bar baz</div>', render('a = "foo bar baz"\ndiv= a'));
-    assert.equal('<div>5</div>', render('a = 5      \ndiv= a'));
-    assert.equal('<div>5</div>', render('a = 5      ; \ndiv= a'));
+    it('should support assignment', function(){
+      assert.equal('<div>5</div>', render('a = 5;\ndiv= a'));
+      assert.equal('<div>5</div>', render('a = 5\ndiv= a'));
+      assert.equal('<div>foo bar baz</div>', render('a = "foo bar baz"\ndiv= a'));
+      assert.equal('<div>5</div>', render('a = 5      \ndiv= a'));
+      assert.equal('<div>5</div>', render('a = 5      ; \ndiv= a'));
 
-    var fn = jade.compile('test = local\np=test');
-    assert.equal('<p>bar</p>', fn({ local: 'bar' }));
-  });
+      var fn = jade.compile('test = local\np=test');
+      assert.equal('<p>bar</p>', fn({ local: 'bar' }));
+    });
   });
 });
