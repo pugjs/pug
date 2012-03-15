@@ -458,7 +458,7 @@ we could use regular javascript concatenation:
 or we could use jade's interpolation, which I added because everyone
 using Ruby or CoffeeScript seems to think this is legal js..:
 
-   a(href='/user/#{user.id}')= user.name
+    a(href='/user/#{user.id}')= user.name
 
 The `class` attribute is special-cased when an array is given,
 allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` directly:
