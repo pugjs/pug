@@ -36,20 +36,25 @@ assert.render = function(jade, html, options){
   }
 };
 
-module.exports = {
-  'test .version': function(){
+describe('jade', function(){
+  describe('.version', function(){
+    it('should be valid version format', function(){
       assert.ok(/^\d+\.\d+\.\d+$/.test(jade.version), "Invalid version format");
-  },
-  
-  'test exports': function(){
+    });
+  });
+
+  describe('.properties', function(){
+    it('should have exports', function(){
       assert.equal('object', typeof jade.selfClosing, 'exports.selfClosing missing');
       assert.equal('object', typeof jade.doctypes, 'exports.doctypes missing');
       assert.equal('object', typeof jade.filters, 'exports.filters missing');
       assert.equal('object', typeof jade.utils, 'exports.utils missing');
       assert.equal('function', typeof jade.Compiler, 'exports.Compiler missing');
-  },
-  
-  'test doctypes': function(){
+    });
+  });
+
+  describe('.compile()', function(){
+    it('should support doctypes', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', render('!!! xml'));
       assert.equal('<!DOCTYPE html>', render('doctype html'));
       assert.equal('<!DOCTYPE foo bar baz>', render('doctype foo bar baz'));
@@ -58,13 +63,13 @@ module.exports = {
       assert.equal('<!DOCTYPE html>', render('!!! html', { doctype:'xml' }));
       assert.equal('<html></html>', render('html'));
       assert.equal('<!DOCTYPE html><html></html>', render('html', { doctype:'html' }));
-  },
-  
-  'test Buffers': function(){
+    });
+
+    it('should support Buffers', function(){
       assert.equal('<p>foo</p>', render(new Buffer('p foo')));
-  },
-  
-  'test line endings': function(){
+    });
+
+    it('should support line endings', function(){
       var str = [
           'p',
           'div',
@@ -106,26 +111,21 @@ module.exports = {
       ].join('');
           
       assert.equal(html, render(str, { doctype:'html' }));
-  },
-  
-  'test single quotes': function(){
+    });
+
+    it('should support single quotes', function(){
       assert.equal("<p>'foo'</p>", render("p 'foo'"));
       assert.equal("<p>'foo'\n</p>", render("p\n  | 'foo'"));
       assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
-  },
-  
-  'test block-expansion': function(){
+    });
+
+    it('should support block-expansion', function(){
       assert.equal("<li><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li: a foo\nli: a bar\nli: a baz"));
       assert.equal("<li class=\"first\"><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li.first: a foo\nli: a bar\nli: a baz"));
       assert.equal('<div class="foo"><div class="bar">baz</div></div>', render(".foo: .bar baz"));
-  },
+    });
 
-  'test case statement': function(){
-      assert.equal(fixture('case.html'), render(fixture('case.jade')));
-      assert.equal(fixture('case-blocks.html'), render(fixture('case-blocks.jade')));
-  },
-
-  'test tags': function(){
+    it('should support tags', function(){
       var str = [
           'p',
           'div',
@@ -158,9 +158,9 @@ module.exports = {
       assert.equal('<fb:user></fb:user>', render('fb:user'));
       assert.equal('<fb:user:role></fb:user:role>', render('fb:user:role'));
       assert.equal('<colgroup><col class="test"/></colgroup>', render('colgroup\n  col.test'));
-  },
-  
-  'test nested tags': function(){
+    });
+
+    it('should support nested tags', function(){
       var str = [
           'ul',
           '  li a',
@@ -210,9 +210,9 @@ module.exports = {
       ].join('');
       
       assert.equal(html, render(str));
-  },
+    });
   
-  'test variable length newlines': function(){
+    it('should support variable length newlines', function(){
       var str = [
           'ul',
           '  li a',
@@ -238,9 +238,9 @@ module.exports = {
       ].join('');
   
       assert.equal(html, render(str));
-  },
+    });
   
-  'test tab conversion': function(){
+    it('should support tab conversion', function(){
       var str = [
           'ul',
           '\tli a',
@@ -266,9 +266,9 @@ module.exports = {
       ].join('');
   
       assert.equal(html, render(str));
-  },
+    });
   
-  'test newlines': function(){
+    it('should support newlines', function(){
       var str = [
           'ul',
           '  li a',
@@ -322,9 +322,9 @@ module.exports = {
       assert.equal(html, render(str));
       assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
       assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
-  },
+    });
   
-  'test text': function(){
+    it('should support text', function(){
       assert.equal('foo\nbar\nbaz\n', render('| foo\n| bar\n| baz'));
       assert.equal('foo \nbar \nbaz\n', render('| foo \n| bar \n| baz'));
       assert.equal('(hey)\n', render('| (hey)'));
@@ -332,67 +332,67 @@ module.exports = {
       assert.equal('  foo\n', render('|   foo'));
       assert.equal('  foo  \n', render('|   foo  '));
       assert.equal('  foo  \n bar    \n', render('|   foo  \n|  bar    '));
-  },
+    });
   
-  'test pipe-less text': function(){
+    it('should support pipe-less text', function(){
     assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', render('pre\n  code\n    foo\n\n    bar'));
     assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
     assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
     assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
     assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
     assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
-  },
+    });
   
-  'test tag text': function(){
+    it('should support tag text', function(){
       assert.equal('<p>some random text</p>', render('p some random text'));
       assert.equal('<p>click\n<a>Google</a>.\n</p>', render('p\n  | click\n  a Google\n  | .'));
       assert.equal('<p>(parens)</p>', render('p (parens)'));
       assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
       assert.equal('<option value="">-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
-  },
+    });
   
-  'test tag text block': function(){
+    it('should support tag text block', function(){
       assert.equal('<p>foo \nbar \nbaz\n</p>', render('p\n  | foo \n  | bar \n  | baz'));
       assert.equal('<label>Password:\n<input/></label>', render('label\n  | Password:\n  input'));
       assert.equal('<label>Password:<input/></label>', render('label Password:\n  input'));
-  },
+    });
   
-  'test tag text interpolation': function(){
+    it('should support tag text interpolation', function(){
       assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { name: 'jade' }));
       assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { name: 'jade' }));
       assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { name: null }));
       assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { name: null }));
       assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { code: '<script>' }));
       assert.equal('foo <script> bar\n', render('| foo !{code} bar', { code: '<script>' }));
-  },
+    });
   
-  'test flexible indentation': function(){
+    it('should support flexible indentation', function(){
       assert.equal('<html><body><h1>Wahoo</h1><p>test</p></body></html>', render('html\n  body\n   h1 Wahoo\n   p test'));
-  },
+    });
   
-  'test interpolation values': function(){
+    it('should support interpolation values', function(){
       assert.equal('<p>Users: 15</p>', render('p Users: #{15}'));
       assert.equal('<p>Users: </p>', render('p Users: #{null}'));
       assert.equal('<p>Users: </p>', render('p Users: #{undefined}'));
       assert.equal('<p>Users: none</p>', render('p Users: #{undefined || "none"}'));
       assert.equal('<p>Users: 0</p>', render('p Users: #{0}'));
       assert.equal('<p>Users: false</p>', render('p Users: #{false}'));
-  },
+    });
   
-  'test html 5 mode': function(){
+    it('should support test html 5 mode', function(){
       assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
       assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked=true)'));
       assert.equal('<!DOCTYPE html><input type="checkbox">', render('!!! 5\ninput(type="checkbox", checked= false)'));
-  },
+    });
   
-  'test multi-line attrs': function(){
+    it('should support multi-line attrs', function(){
       assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\n  bar="baz"\n  checked) foo'));
       assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\nbar="baz"\nchecked) foo'));
       assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\n,bar="baz"\n,checked) foo'));
       assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar",\nbar="baz",\nchecked) foo'));
-  },
+    });
   
-  'test attrs': function(){
+    it('should support attrs', function(){
       assert.equal('<img src="&lt;script&gt;"/>', render('img(src="<script>")'), 'Test attr escaping');
       
       assert.equal('<a data-attr="bar"></a>', render('a(data-attr="bar")'));
@@ -453,17 +453,17 @@ module.exports = {
       assert.equal('<a data-obj="{ foo: \'bar\' }"></a>', render("a(data-obj= \"{ foo: 'bar' }\")"));
       
       assert.equal('<meta content="what\'s up? \'weee\'"/>', render('meta(content="what\'s up? \'weee\'")'));
-  },
+    });
   
-  'test colons option': function(){
+    it('should support colons option', function(){
       assert.equal('<a href="/bar"></a>', render('a(href:"/bar")', { colons: true }));
-  },
+    });
   
-  'test class attr array': function(){
+    it('should support class attr array', function(){
       assert.equal('<body class="foo bar baz"></body>', render('body(class=["foo", "bar", "baz"])'));
-  },
+    });
   
-  'test attr interpolation': function(){
+    it('should support attr interpolation', function(){
       // Test single quote interpolation
       assert.equal('<a href="/user/12">tj</a>'
         , render("a(href='/user/#{id}') #{name}", { name: 'tj', id: 12 }));
@@ -483,13 +483,13 @@ module.exports = {
   
       assert.equal('<a href="/user/&lt;script&gt;">ds</a>'
         , render('a(href="/user/#{id}") #{name}', { name: 'ds', id: '<script>' }));
-  },
+    });
   
-  'test attr parens': function(){
+    it('should support attr parens', function(){
       assert.equal('<p foo="bar">baz</p>', render('p(foo=((("bar"))))= ((("baz")))'));
-  },
+    });
   
-  'test code attrs': function(){
+    it('should support code attrs', function(){
       assert.equal('<p></p>', render('p(id= name)', { name: undefined }));
       assert.equal('<p></p>', render('p(id= name)', { name: null }));
       assert.equal('<p></p>', render('p(id= name)', { name: false }));
@@ -500,9 +500,9 @@ module.exports = {
       assert.equal('<p id="something"></p>', render("p(id = 'something')", { name: null }));
       assert.equal('<p id="foo"></p>', render("p(id= (true ? 'foo' : 'bar'))"));
       assert.equal('<option value="">Foo</option>', render("option(value='') Foo"));
-  },
+    });
   
-  'test code attrs class': function(){
+    it('should support code attrs class', function(){
       assert.equal('<p class="tj"></p>', render('p(class= name)', { name: 'tj' }));
       assert.equal('<p class="tj"></p>', render('p( class= name )', { name: 'tj' }));
       assert.equal('<p class="default"></p>', render('p(class= name || "default")', { name: null }));
@@ -511,16 +511,16 @@ module.exports = {
       assert.equal('<p id="default"></p>', render('p(id = name || "default")', { name: null }));
       assert.equal('<p id="user-1"></p>', render('p(id = "user-" + 1)'));
       assert.equal('<p class="user-1"></p>', render('p(class = "user-" + 1)'));
-  },
+    });
   
-  'test code buffering': function(){
+    it('should support code buffering', function(){
       assert.equal('<p></p>', render('p= null'));
       assert.equal('<p></p>', render('p= undefined'));
       assert.equal('<p>0</p>', render('p= 0'));
       assert.equal('<p>false</p>', render('p= false'));
-  },
+    });
 
-  'test script text': function(){
+    it('should support script text', function(){
     var str = [
       'script',
       '  p foo',
@@ -539,9 +539,9 @@ module.exports = {
     ].join('');
 
     assert.equal(html, render(str));
-  },
+    });
 
-  'test comments': function(){
+    it('should support comments', function(){
       // Regular
       var str = [
           '//foo',
@@ -590,9 +590,9 @@ module.exports = {
       var str = "<!-- script(src: '/js/validate.js') -->",
           js = "// script(src: '/js/validate.js') ";
       assert.equal(str, render(js));
-  },
+    });
   
-  'test unbuffered comments': function(){
+    it('should support unbuffered comments', function(){
       var str = [
           '//- foo',
           'p bar'
@@ -616,13 +616,13 @@ module.exports = {
       ].join('');
   
       assert.equal(html, render(str));
-  },
+    });
   
-  'test literal html': function(){
+    it('should support literal html', function(){
       assert.equal('<!--[if IE lt 9]>weeee<![endif]-->\n', render('<!--[if IE lt 9]>weeee<![endif]-->'));
-  },
+    });
   
-  'test code': function(){
+    it('should support code', function(){
       assert.equal('test', render('!= "test"'));
       assert.equal('test', render('= "test"'));
       assert.equal('test', render('- var foo = "test"\n=foo'));
@@ -734,9 +734,9 @@ module.exports = {
       ].join('');
   
       assert.equal(html, render(str));
-  },
+    });
   
-  'test - each': function(){
+    it('should support - each', function(){
       // Array
       var str = [
           '- var items = ["one", "two", "three"];',
@@ -859,9 +859,9 @@ module.exports = {
       ].join('');
   
       assert.equal(html, render(str));
-  },
+    });
   
-  'test if': function(){
+    it('should support if', function(){
     var str = [
         '- var users = ["tobi", "loki", "jane"]',
         'if users.length',
@@ -871,9 +871,9 @@ module.exports = {
     assert.equal('<p>users: 3</p>', render(str));
 
     assert.equal('<iframe foo="bar"></iframe>', render('iframe(foo="bar")'));
-  },
+    });
   
-  'test unless': function(){
+    it('should support unless', function(){
     var str = [
         '- var users = ["tobi", "loki", "jane"]',
         'unless users.length',
@@ -889,9 +889,9 @@ module.exports = {
     ].join('\n');
     
     assert.equal('<p>no users</p>', render(str));
-  },
+    });
   
-  'test else': function(){
+    it('should support else', function(){
     var str = [
         '- var users = []',
         'if users.length',
@@ -901,9 +901,9 @@ module.exports = {
     ].join('\n');
     
     assert.equal('<p>users: none</p>', render(str));
-  },
+    });
   
-  'test else if': function(){
+  it('should else if', function(){
     var str = [
         '- var users = ["tobi", "jane", "loki"]',
         'for user in users',
@@ -916,56 +916,9 @@ module.exports = {
     ].join('\n');
     
     assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
-  },
+    });
 
-  'test mixins': function(){
-    assert.render('mixins.jade', 'mixins.html');
-  },
-
-  'test conditional comments': function(){
-    assert.render('conditional-comment.jade', 'conditional-comment.html');
-  },
-
-  'test inheritance': function(){
-    assert.render('users.jade', 'users.html', { users: ['tobi', 'loki', 'jane'] });
-    assert.render('pet-page.jade', 'pet.html', { superCool: false, name: 'tobi', age: 1, species: 'ferret' });
-    assert.render('pet-page.jade', 'super-pet.html', { superCool: true, name: 'tobi', age: 1, species: 'ferret' });
-  },
-  
-  'test block append': function(){
-    assert.render('append/page.jade', 'append/page.html');
-    assert.render('append-without-block/page.jade', 'append/page.html');
-  },
-  
-  'test block prepend': function(){
-    assert.render('prepend/page.jade', 'prepend/page.html');
-    assert.render('prepend-without-block/page.jade', 'prepend/page.html');
-  },
-
-  'test include literal': function(){
-    assert.render('include-html.jade', 'include-html.html')
-    assert.render('include-only-text.jade', 'include-only-text.html')
-    assert.render('include-with-text.jade', 'include-with-text.html')
-  },
-  
-  'test yield': function(){
-    assert.render('yield.jade', 'yield.html')
-    assert.render('yield-title.jade', 'yield-title.html')
-    assert.render('yield-before-conditional.jade', 'yield-before-conditional.html')
-  },
-
-  'test include': function(){
-    var str = [
-        'html',
-        '  head',
-        '    include fixtures/test.css',
-    ].join('\n');
-    
-    assert.equal('<html><head>body {\n  color: black;\n}</head></html>'
-      , render(str, { filename: __dirname + '/jade.test.js' }));
-  },
-
-  'test include block': function(){
+    it('should include block', function(){
     var str = [
         'html',
         '  head',
@@ -975,23 +928,25 @@ module.exports = {
     
     assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
       , render(str, { filename: __dirname + '/jade.test.js' }));
-  },
+    });
+  });
 
-  'test .render(str, fn)': function(){
+  describe('.render()', function(){
+  it('should support .render(str, fn)', function(){
     jade.render('p foo bar', function(err, str){
       assert.ok(!err);
       assert.equal('<p>foo bar</p>', str);
     });
-  },
+  });
   
-  'test .render(str, options, fn)': function(){
+  it('should support .render(str, options, fn)', function(){
     jade.render('p #{foo}', { foo: 'bar' }, function(err, str){
       assert.ok(!err);
       assert.equal('<p>bar</p>', str);
     });
-  },
+  });
   
-  'test .render(str, options, fn) cache': function(){
+  it('should support .render(str, options, fn) cache', function(){
     jade.render('p bar', { cache: true }, function(err, str){
       assert.ok(/the "filename" option is required for caching/.test(err.message));
     });
@@ -1000,29 +955,29 @@ module.exports = {
       assert.ok(!err);
       assert.equal('<p>foo bar</p>', str);
     });
-  },
+  });
   
-  'test .compile()': function(){
+  it('should support .compile()', function(){
       var fn = jade.compile('p foo');
       assert.equal('<p>foo</p>', fn());
-  },
+  });
   
-  'test .compile() locals': function(){
+  it('should support .compile() locals', function(){
       var fn = jade.compile('p= foo');
       assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
-  },
+  });
   
-  'test .compile() no debug': function(){
+  it('should support .compile() no debug', function(){
       var fn = jade.compile('p foo\np #{bar}', {compileDebug: false});
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
-  },
+  });
   
-  'test .compile() no debug and global helpers': function(){
+  it('should support .compile() no debug and global helpers', function(){
       var fn = jade.compile('p foo\np #{bar}', {compileDebug: false, helpers: 'global'});
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
-  },
+  });
   
-  'test null attrs on tag': function(){
+  it('should support null attrs on tag', function(){
       var tag = new jade.nodes.Tag('a'),
           name = 'href',
           val = '"/"';
@@ -1030,9 +985,9 @@ module.exports = {
       assert.equal(tag.getAttribute(name), val)
       tag.removeAttribute(name)
       assert.ok(!tag.getAttribute(name))
-  },
+  });
 
-  'test assignment': function(){
+  it('should support assignment', function(){
     assert.equal('<div>5</div>', render('a = 5;\ndiv= a'));
     assert.equal('<div>5</div>', render('a = 5\ndiv= a'));
     assert.equal('<div>foo bar baz</div>', render('a = "foo bar baz"\ndiv= a'));
@@ -1041,6 +996,6 @@ module.exports = {
 
     var fn = jade.compile('test = local\np=test');
     assert.equal('<p>bar</p>', fn({ local: 'bar' }));
-  }
-
-};
+  });
+  });
+});
