@@ -26,6 +26,7 @@ program
   .option('-o, --obj <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
+  .option('-p, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile for client-side runtime.js')
 
 program.on('--help', function(){
@@ -60,7 +61,11 @@ if (program.path) options.filename = program.path;
 
 // client
 
-if (program.client) options.client = true;
+options.client = program.client;
+
+// pretty
+
+options.pretty = program.pretty;
 
 // left-over args are file paths
 
