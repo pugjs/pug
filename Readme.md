@@ -1078,10 +1078,13 @@ Usage: jade [options] [dir|file ...]
 Options:
 
   -h, --help         output usage information
-  -v, --version      output the version number
+  -V, --version      output the version number
   -o, --obj <str>    javascript options object
   -O, --out <dir>    output the compiled html to <dir>
-  -p, --path <path>  filename used to resolve includes over stdio
+  -p, --path <path>  filename used to resolve includes
+  -p, --pretty       compile pretty html output
+  -c, --client       compile for client-side runtime.js
+  -D, --no-debug     compile without debugging (smaller functions)
 
 Examples:
 
@@ -1093,9 +1096,6 @@ Examples:
 
   # jade over stdio
   $ jade < my.jade > my.html
-
-  # jade over stdio specifying filename to resolve include directives
-  $ jade < my.jade -p my.jade > my.html
 
   # jade over stdio
   $ echo "h1 Jade!" | jade
