@@ -1082,7 +1082,7 @@ Options:
   -o, --obj <str>    javascript options object
   -O, --out <dir>    output the compiled html to <dir>
   -p, --path <path>  filename used to resolve includes
-  -p, --pretty       compile pretty html output
+  -P, --pretty       compile pretty html output
   -c, --client       compile for client-side runtime.js
   -D, --no-debug     compile without debugging (smaller functions)
 

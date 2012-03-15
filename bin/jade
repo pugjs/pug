@@ -26,7 +26,7 @@ program
   .option('-o, --obj <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
-  .option('-p, --pretty', 'compile pretty html output')
+  .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
 
