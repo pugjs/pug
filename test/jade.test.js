@@ -18,24 +18,6 @@ function fixture(path) {
   return fs.readFileSync(__dirname + '/fixtures/' + path, 'utf8');
 }
 
-assert.render = function(jade, html, options){
-  var path = __dirname + '/fixtures/' + jade
-    , opts = { pretty: true, filename: path };
-  jade = fixture(jade);
-  html = fixture(html).trim();
-  for (var key in options) opts[key] = options[key];
-  var res = render(jade, opts).trim();
-  if (res !== html) {
-    console.error();
-    console.error(path);
-    console.error('\n\033[31mexpected:\033[m ');
-    console.error(html);
-    console.error('\n\033[31mgot:\033[m ');
-    console.error(res);
-    process.exit(1);
-  }
-};
-
 describe('jade', function(){
   describe('.version', function(){
     it('should be valid version format', function(){
