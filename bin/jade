@@ -82,7 +82,10 @@ function stdin() {
   process.stdin.on('data', function(chunk){ buf += chunk; });
   process.stdin.on('end', function(){
     var fn = jade.compile(buf, options);
-    process.stdout.write(fn(options));
+    var output = options.client
+        ? fn.toString()
+        : fn(options);
+    process.stdout.write(output);
   }).resume();
 }
 
@@ -107,12 +110,9 @@ function renderFile(path) {
         var dir = resolve(dirname(path));
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
-          var output;
-          if(options.client) {
-            output = fn.toString();
-          } else {
-            output = fn(options);
-          }
+          var output = options.client
+            ? fn.toString()
+            : fn(options);
           fs.writeFile(path, output, function(err){
             if (err) throw err;
             console.log('  \033[90mrendered \033[36m%s\033[0m', path);
