@@ -1,0 +1,514 @@
+.\" Generated with Ronnjs 0.3.8
+.\" http://github.com/kapouer/ronnjs/
+.
+.TH "JADE" "1" "March 2012" "" ""
+.
+.SH "NAME"
+\fBjade\fR \-\- jade template engine
+.
+.SH "Synopsis"
+   spot [\-h|\-\-help] [\-v|\-\-version] [\-o|\-\-obj STR]
+        [\-O|\-\-out DIR] [\-p|\-\-path PATH] [\-P|\-\-pretty]
+        [\-c|\-\-client] [\-D|\-\-no\-debug]
+.
+.SH "Examples"
+  translate jade the templates dir
+.
+.IP "" 4
+.
+.nf
+$ jade templates
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  create {foo,bar}\.html
+.
+.IP "" 4
+.
+.nf
+$ jade {foo,bar}\.jade
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  jade over stdio
+.
+.IP "" 4
+.
+.nf
+$ jade < my\.jade > my\.html
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  jade over s
+.
+.IP "" 4
+.
+.nf
+$ echo "h1 Jade!" | jade
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  foo, bar dirs rendering to /tmp
+.
+.IP "" 4
+.
+.nf
+$ jade foo bar \-\-out /tmp
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  compile client\-side templates without debugging
+  instrumentation, making the output javascript
+  very light\-weight\. This requires runtime\.js
+  in your projects\.
+.
+.IP "" 4
+.
+.nf
+ $ jade \-\-client \-\-no\-debug < my\.jade
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Tags"
+  Tags are simply nested via whitespace, closing
+  tags defined for you\. These indents are called "blocks"\.
+.
+.IP "" 4
+.
+.nf
+ul
+  li
+    a Foo
+  li
+    a Bar
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  You may have several tags in one "block":
+.
+.IP "" 4
+.
+.nf
+ul
+  li
+    a Foo
+    a Bar
+    a Baz
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Attributes"
+  Tag attributes look similar to HTML, however
+  the values are regular JavaScript, here are
+  some examples:
+.
+.IP "" 4
+.
+.nf
+a(href=\'google\.com\') Google
+a(class=\'button\', href=\'google\.com\') Google
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  As mentioned the attribute values are just JavaScript,
+  this means ternary operations and other JavaScript expressions
+  work just fine:
+.
+.IP "" 4
+.
+.nf
+body(class=user\.authenticated ? \'authenticated\' : \'anonymous\')
+a(href=user\.website || \'http://google\.com\')
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Multiple lines work too:
+.
+.IP "" 4
+.
+.nf
+  input(type=\'checkbox\',
+    name=\'agreement\',
+    checked)
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Multiple lines without the comma work fine:
+.
+.IP "" 4
+.
+.nf
+  input(type=\'checkbox\'
+    name=\'agreement\'
+    checked)
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Funky whitespace? fine:
+.
+.IP "" 4
+.
+.nf
+  input(
+    type=\'checkbox\'
+    name=\'agreement\'
+    checked)
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Boolean attributes"
+  Boolean attributes are mirrored by Jade, and accept
+  bools, aka \fItrue\fR or \fIfalse\fR\|\. When no value is specified
+  \fItrue\fR is assumed\. For example:
+.
+.IP "" 4
+.
+.nf
+input(type="checkbox", checked)
+// => "<input type="checkbox" checked="checked" />"
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  For example if the checkbox was for an agreement, perhaps \fBuser\.agreed\fR
+  was \fItrue\fR the following would also output \'checked="checked"\':
+.
+.IP "" 4
+.
+.nf
+ input(type="checkbox", checked=user\.agreed)
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Class attributes"
+  The \fIclass\fR attribute accepts an array of classes,
+  this can be handy when generated from a javascript
+  function etc:
+.
+.IP "" 4
+.
+.nf
+classes = [\'foo\', \'bar\', \'baz\']
+a(class=classes)
+// => "<a class="foo bar baz"></a>"
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Class literal"
+  Classes may be defined using a "\.CLASSNAME" syntax:
+.
+.IP "" 4
+.
+.nf
+ \.button
+ // => "<div class="button"></div>"
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Or chained:
+.
+.IP "" 4
+.
+.nf
+ \.large\.button
+ // => "<div class="large button"></div>"
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  The previous defaulted to divs, however you
+  may also specify the tag type:
+.
+.IP "" 4
+.
+.nf
+  h1\.title My Title
+  // => "<h1 class="title">My Title</h1>"
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Id literal"
+  Much like the class literal there\'s an id literal:
+.
+.IP "" 4
+.
+.nf
+#user\-1
+// => "<div id="user\-1"></div>"
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Again we may specify the tag as well:
+.
+.IP "" 4
+.
+.nf
+ul#menu
+  li: a(href=\'/home\') Home
+  li: a(href=\'/store\') Store
+  li: a(href=\'/contact\') Contact
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Finally all of these may be used in any combination,
+  the following are all valid tags:
+.
+.IP "" 4
+.
+.nf
+a\.button#contact(style: \'color: red\') Contact
+a\.button(style: \'color: red\')#contact Contact
+a(style: \'color: red\')\.button#contact Contact
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Block expansion"
+  Jade supports the concept of "block expansion", in which
+  using a trailing ":" after a tag will inject a block:
+.
+.IP "" 4
+.
+.nf
+ul
+  li: a Foo
+  li: a Bar
+  li: a Baz
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Text"
+   Arbitrary text may follow tags:
+.
+.IP "" 4
+.
+.nf
+ p Welcome to my site
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  yields:
+.
+.IP "" 4
+.
+.nf
+ <p>Welcome to my site</p>
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Pipe text"
+  Another form of text is "pipe" text\. Pipes act
+  as the text margin for large bodies of text\.
+.
+.IP "" 4
+.
+.nf
+p
+  | This is a large
+  | body of text for
+  | this tag\.
+  | 
+  | Nothing too
+  | exciting\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  yields:
+.
+.IP "" 4
+.
+.nf
+<p>This is a large
+body of text for
+this tag\.
+Nothing too
+exciting\.
+</p>
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Using pipes we can also specify regular Jade tags
+  within the text:
+.
+.IP "" 4
+.
+.nf
+p
+  | Click to visit
+  a(href=\'http://google\.com\') Google
+  | if you want\.
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Text only tags"
+  As an alternative to pipe text you may add
+  a trailing "\." to indicate that the block
+  contains nothing but plain\-text, no tags:
+.
+.IP "" 4
+.
+.nf
+p\.
+  This is a large
+  body of text for
+  this tag\.
+  Nothing too
+  exciting\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  Some tags are text\-only by default, for example
+  \fIscript\fR, \fItextarea\fR, and \fIstyle\fR tags do not
+  contain nested HTML so Jade implies the trailing "\.":
+.
+.IP "" 4
+.
+.nf
+script
+  if (foo) {
+    bar();
+  }
+style
+  body {
+    padding: 50px;
+    font: 14px Helvetica;
+  }
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Template script tags"
+  Sometimes it\'s useful to define HTML in script
+  tags using Jade, typically for client\-side templates\.
+.
+.P
+  To do this simply give the \fIscript\fR tag an arbitrary
+  \fItype\fR attribute such as \fItext/x\-template\fR:
+.
+.IP "" 4
+.
+.nf
+script(type=\'text/template\')
+  h1 Look!
+  p Jade still works in here!
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Interpolation"
+  Both plain\-text and piped\-text support interpolation,
+  which comes in two forms, escapes and non\-escaped\. The
+  following will output the \fIuser\.name\fR in the paragraph
+  but HTML within it will be escaped to prevent XSS attacks:
+.
+.IP "" 4
+.
+.nf
+p Welcome #{user\.name}
+.
+.fi
+.
+.IP "" 0
+.
+.P
+  The following syntax is identical however it will \fInot\fR escape
+  HTML, and should only be used with strings that you trust:
+.
+.IP "" 4
+.
+.nf
+ p Welcome !{user\.name}
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Inline HTML"
+  Sometimes constructing small inline snippets of HTML
+  in Jade can be annoying, luckily we can add plain
+  HTML as well:
+.
+.IP "" 4
+.
+.nf
+p Welcome <em>#{user\.name}</em>
+.
+.fi
+.
+.IP "" 0

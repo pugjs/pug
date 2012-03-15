@@ -6,6 +6,7 @@
   "repository": "git://github.com/visionmedia/jade",
   "main": "./index.js",
   "bin": { "jade": "./bin/jade" },
+  "man": "./jade.1",
   "dependencies": {
     "commander": "0.5.x",
     "mkdirp": ">= 0.0.7"

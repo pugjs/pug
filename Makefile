@@ -3,6 +3,7 @@ SRC = $(shell find lib -name "*.js" -type f)
 UGLIFY = $(shell find node_modules -name "uglifyjs" -type f)
 UGLIFY_FLAGS = --no-mangle
 REPORTER = dot
+MANTASTIC = http://mantastic.herokuapp.com
 
 all: jade.min.js runtime.min.js
 
@@ -15,6 +16,12 @@ test-cov: lib-cov
 
 lib-cov:
 	jscoverage lib lib-cov
+
+docs: jade.1
+	man ./$<
+
+jade.1: jade.md
+	curl -sF page=@$< $(MANTASTIC) > $@
 
 benchmark:
 	@node support/benchmark
@@ -41,4 +48,4 @@ clean:
 	rm -f runtime.js
 	rm -f runtime.min.js
 
-.PHONY: test-cov test benchmark clean
+.PHONY: docs test-cov test benchmark clean
