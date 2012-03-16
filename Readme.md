@@ -70,6 +70,7 @@
   - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
   - [html2jade](https://github.com/donpark/html2jade) converter
 
