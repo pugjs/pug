@@ -26,6 +26,9 @@ program
   .option('-o, --obj <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
+  .option('-P, --pretty', 'compile pretty html output')
+  .option('-c, --client', 'compile for client-side runtime.js')
+  .option('-D, --no-debug', 'compile without debugging (smaller functions)')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -53,9 +56,21 @@ program.parse(process.argv);
 
 if (program.obj) options = eval('(' + program.obj + ')');
 
-// filename
+// --filename
 
 if (program.path) options.filename = program.path;
+
+// --no-debug
+
+options.compileDebug = program.debug;
+
+// --client
+
+options.client = program.client;
+
+// --pretty
+
+options.pretty = program.pretty;
 
 // left-over args are file paths
 
@@ -82,7 +97,10 @@ function stdin() {
   process.stdin.on('data', function(chunk){ buf += chunk; });
   process.stdin.on('end', function(){
     var fn = jade.compile(buf, options);
-    process.stdout.write(fn(options));
+    var output = options.client
+        ? fn.toString()
+        : fn(options);
+    process.stdout.write(output);
   }).resume();
 }
 
@@ -101,12 +119,16 @@ function renderFile(path) {
         if (err) throw err;
         options.filename = path;
         var fn = jade.compile(str, options);
-        path = path.replace(re, '.html');
+        var extname = options.client ? '.js' : '.html';
+        path = path.replace(re, extname);
         if (program.out) path = join(program.out, basename(path));
         var dir = resolve(dirname(path));
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
-          fs.writeFile(path, fn(options), function(err){
+          var output = options.client
+            ? fn.toString()
+            : fn(options);
+          fs.writeFile(path, output, function(err){
             if (err) throw err;
             console.log('  \033[90mrendered \033[36m%s\033[0m', path);
           });

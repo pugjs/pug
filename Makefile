@@ -1,16 +1,27 @@
 
-TESTS = test/*.js
 SRC = $(shell find lib -name "*.js" -type f)
 UGLIFY = $(shell find node_modules -name "uglifyjs" -type f)
-UGLIFY_FLAGS = --no-mangle 
+UGLIFY_FLAGS = --no-mangle
+REPORTER = dot
+MANTASTIC = http://mantastic.herokuapp.com
 
 all: jade.min.js runtime.min.js
 
 test:
 	@./node_modules/.bin/mocha \
-	  --ui exports \
-	  --globals name \
-	  $(TESTS)
+		--reporter $(REPORTER)
+
+test-cov: lib-cov
+	JADE_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
+
+lib-cov:
+	jscoverage lib lib-cov
+
+docs: jade.1
+	man ./$<
+
+jade.1: jade.md
+	curl -sF page=@$< $(MANTASTIC) > $@
 
 benchmark:
 	@node support/benchmark
@@ -37,4 +48,4 @@ clean:
 	rm -f runtime.js
 	rm -f runtime.min.js
 
-.PHONY: test benchmark clean
+.PHONY: docs test-cov test benchmark clean

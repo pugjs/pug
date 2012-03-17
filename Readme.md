@@ -63,7 +63,6 @@
   - AST filters
   - filters
     - :stylus must have [stylus](http://github.com/LearnBoost/stylus) installed
-    - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
     - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
     - :cdata
@@ -71,6 +70,7 @@
   - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
   - [html2jade](https://github.com/donpark/html2jade) converter
 
@@ -459,7 +459,7 @@ we could use regular javascript concatenation:
 or we could use jade's interpolation, which I added because everyone
 using Ruby or CoffeeScript seems to think this is legal js..:
 
-   a(href='/user/#{user.id}')= user.name
+    a(href='/user/#{user.id}')= user.name
 
 The `class` attribute is special-cased when an array is given,
 allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` directly:
@@ -1079,10 +1079,13 @@ Usage: jade [options] [dir|file ...]
 Options:
 
   -h, --help         output usage information
-  -v, --version      output the version number
+  -V, --version      output the version number
   -o, --obj <str>    javascript options object
   -O, --out <dir>    output the compiled html to <dir>
-  -p, --path <path>  filename used to resolve includes over stdio
+  -p, --path <path>  filename used to resolve includes
+  -P, --pretty       compile pretty html output
+  -c, --client       compile for client-side runtime.js
+  -D, --no-debug     compile without debugging (smaller functions)
 
 Examples:
 
@@ -1095,9 +1098,6 @@ Examples:
   # jade over stdio
   $ jade < my.jade > my.html
 
-  # jade over stdio specifying filename to resolve include directives
-  $ jade < my.jade -p my.jade > my.html
-
   # jade over stdio
   $ echo "h1 Jade!" | jade
 
@@ -1105,6 +1105,10 @@ Examples:
   $ jade foo bar --out /tmp
 
 ```
+
+## Tutorials
+
+  - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bjade%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
 
 <a name="a18"/>
 ## License
