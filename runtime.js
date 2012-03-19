@@ -118,6 +118,8 @@ exports.rethrow = function rethrow(err, filename, lineno){
   throw err;
 };
 
+exports.templates = {};
+
   return exports;
 
 })({});
