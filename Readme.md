@@ -194,7 +194,7 @@ div div div sure is annoying, how about:
 
 which is syntactic sugar for what we have already been doing, and outputs:
 
-    `<div id="foo"></div><div class="bar"></div>`
+    <div id="foo"></div><div class="bar"></div>
 
 <a name="a6-3"/>
 ### Tag Text
@@ -258,7 +258,7 @@ need the leading `|` character, for example:
               baz();
             }
 
-Once again as an alternative, we may use a trailing '.' to indicate a text block, for example:
+Once again as an alternative, we may use a trailing `.` to indicate a text block, for example:
 
       p.
         foo asdf
@@ -276,7 +276,7 @@ outputs:
         asd.
         </p>
 
-This however differs from a trailing '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
+This however differs from a trailing `.` followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
 
     p .
 
@@ -287,7 +287,7 @@ outputs:
 
 It should be noted that text blocks should be doubled escaped.  For example if you desire the following output.
 
-    </p>foo\bar</p>
+    <p>foo\bar</p>
 
 use:
 
@@ -298,7 +298,7 @@ use:
 ### Comments
 
 Single line comments currently look the same as JavaScript comments,
-aka "//" and must be placed on their own line:
+aka `//` and must be placed on their own line:
 
     // just some paragraphs
     p foo
@@ -409,12 +409,12 @@ outputs:
 <a name="a6-9"/>
 ### Attributes
 
-Jade currently supports '(' and ')' as attribute delimiters.
+Jade currently supports `(` and `)` as attribute delimiters.
 
     a(href='/login', title='View login page') Login
 
 When a value is `undefined` or `null` the attribute is _not_ added,
-so this is fine, it will not compile 'something="null"'.
+so this is fine, it will not compile `something="null"`.
 
     div(something=null)
 
