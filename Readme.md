@@ -87,7 +87,8 @@
 
 via npm:
 
-    npm install jade
+    $ npm install jade
+    $ man jade
 
 <a name="a4"/>
 ## Browser Support

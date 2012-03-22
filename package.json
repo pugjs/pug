@@ -1,15 +1,15 @@
 {
   "name": "jade",
   "description": "Jade template engine",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "repository": "git://github.com/visionmedia/jade",
   "main": "./index.js",
   "bin": { "jade": "./bin/jade" },
   "man": "./jade.1",
   "dependencies": {
-    "commander": "0.5.x",
-    "mkdirp": ">= 0.0.7"
+    "commander": "0.5.2",
+    "mkdirp": "0.3.0"
   },
   "devDependencies": {
     "mocha": "*",

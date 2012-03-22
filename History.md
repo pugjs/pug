@@ -1,4 +1,14 @@
 
+0.22.0 / 2012-03-22 
+==================
+
+  * Added jade manpage (`man jade` after installation for docs)
+  * Added `-D, --no-debug` to jade(1)
+  * Added `-p, --pretty` to jade(1)
+  * Added `-c, --client` option to jade(1)
+  * Fixed `-o { client: true }` with stdin
+  * Fixed: skip blank lines in lexer (unless within pipeless text). Closes #399
+
 0.21.0 / 2012-03-10 
 ==================
 
