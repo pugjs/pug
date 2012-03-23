@@ -136,12 +136,12 @@ function anonymous(locals, attrs, escape, rethrow) {
 <a name="a5"/>
 ## Public API
 
-```javascript
-    var jade = require('jade');
+```js
+var jade = require('jade');
 
-    // Compile a function
-    var fn = jade.compile('string of jade', options);
-    fn(locals);
+// Compile a function
+var fn = jade.compile('string of jade', options);
+fn(locals);
 ```
 
 ### Options
@@ -195,7 +195,9 @@ div div div sure is annoying, how about:
 
 which is syntactic sugar for what we have already been doing, and outputs:
 
-    <div id="foo"></div><div class="bar"></div>
+```html
+<div id="foo"></div><div class="bar"></div>
+```
 
 <a name="a6-3"/>
 ### Tag Text
@@ -249,33 +251,35 @@ or immediate tag text:
 Tags that accept _only_ text such as `script` and `style` do not
 need the leading `|` character, for example:
 
-      html
-        head
-          title Example
-          script
-            if (foo) {
-              bar();
-            } else {
-              baz();
-            }
+    html
+      head
+        title Example
+        script
+          if (foo) {
+            bar();
+          } else {
+            baz();
+          }
 
 Once again as an alternative, we may use a trailing `.` to indicate a text block, for example:
 
-      p.
-        foo asdf
-        asdf
-         asdfasdfaf
-         asdf
-        asd.
+    p.
+      foo asdf
+      asdf
+       asdfasdfaf
+       asdf
+      asd.
 
 outputs:
 
-        <p>foo asdf
-        asdf
-          asdfasdfaf
-          asdf
-        asd.
-        </p>
+```html
+<p>foo asdf
+asdf
+  asdfasdfaf
+  asdf
+asd.
+</p>
+```
 
 This however differs from a trailing `.` followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
 
@@ -283,12 +287,15 @@ This however differs from a trailing `.` followed by a space, which although is 
 
 outputs:
 
-    <p>.</p>
-
+```html
+<p>.</p>
+```
 
 It should be noted that text blocks should be doubled escaped.  For example if you desire the following output.
 
-    <p>foo\bar</p>
+```html
+<p>foo\bar</p>
+```
 
 use:
 
@@ -307,9 +314,11 @@ aka `//` and must be placed on their own line:
 
 would output
 
-    <!-- just some paragraphs -->
-    <p>foo</p>
-    <p>bar</p>
+```html
+<!-- just some paragraphs -->
+<p>foo</p>
+<p>bar</p>
+```
 
 Jade also supports unbuffered comments, by simply adding a hyphen:
 
@@ -319,28 +328,32 @@ Jade also supports unbuffered comments, by simply adding a hyphen:
 
 outputting
 
-    <p>foo</p>
-    <p>bar</p>
+```html
+<p>foo</p>
+<p>bar</p>
+```
 
 <a name="a6-5"/>
 ### Block Comments
 
  A block comment is legal as well:
 
-      body
-        //
-          #content
-            h1 Example
+    body
+      //
+        #content
+          h1 Example
 
 outputting
 
-    <body>
-      <!--
-      <div id="content">
-        <h1>Example</h1>
-      </div>
-      -->
-    </body>
+```html
+<body>
+  <!--
+  <div id="content">
+    <h1>Example</h1>
+  </div>
+  -->
+</body>
+```
 
 Jade supports conditional-comments as well, for example:
 
@@ -350,11 +363,13 @@ Jade supports conditional-comments as well, for example:
 
 outputs:
 
-    <body>
-      <!--[if lt IE 8]>
-        <script src="/ie-sucks.js"></script>
-      <![endif]-->
-    </body>
+```html
+<body>
+  <!--[if lt IE 8]>
+    <script src="/ie-sucks.js"></script>
+  <![endif]-->
+</body>
+```
 
 <a name="a6-6"/>
 ### Nesting
@@ -375,37 +390,37 @@ outputs:
  Block expansion allows you to create terse single-line nested tags,
  the following example is equivalent to the nesting example above.
 
-      ul
-        li.first: a(href='#') foo
-        li: a(href='#') bar
-        li.last: a(href='#') baz
+    ul
+      li.first: a(href='#') foo
+      li: a(href='#') bar
+      li.last: a(href='#') baz
 
 <a name="a6-8"/>
 ### Case
 
  The case statement takes the following form:
 
-     html
-       body
-         friends = 10
-         case friends
-           when 0
-             p you have no friends
-           when 1
-             p you have a friend
-           default
-             p you have #{friends} friends
+    html
+      body
+        friends = 10
+        case friends
+          when 0
+            p you have no friends
+          when 1
+            p you have a friend
+          default
+            p you have #{friends} friends
 
  Block expansion may also be used:
 
-     friends = 5
+    friends = 5
 
-     html
-       body
-         case friends
-           when 0: p you have no friends
-           when 1: p you have a friend
-           default: p you have #{friends} friends
+    html
+      body
+        case friends
+          when 0: p you have no friends
+          when 1: p you have a friend
+          default: p you have #{friends} friends
 
 <a name="a6-9"/>
 ### Attributes
@@ -441,7 +456,6 @@ Multiple lines without the comma work fine:
 
 Funky whitespace? fine:
 
-
     input(
       type='checkbox'
       name='agreement'
@@ -473,26 +487,22 @@ allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` 
  Inline html is fine, we can use the pipe syntax to
  write arbitrary text, in this case some html:
 
-```
-html
-  body
-    | <h1>Title</h1>
-    | <p>foo bar baz</p>
-```
+    html
+      body
+        | <h1>Title</h1>
+        | <p>foo bar baz</p>
 
  Or we can use the trailing `.` to indicate to Jade that we
  only want text in this block, allowing us to omit the pipes:
 
-```
-html
-  body.
-    <h1>Title</h1>
-    <p>foo bar baz</p>
-```
+    html
+      body.
+        <h1>Title</h1>
+        <p>foo bar baz</p>
 
  Both of these examples yield the same result:
 
-```
+```html
 <html><body><h1>Title</h1>
 <p>foo bar baz</p>
 </body></html>
@@ -501,11 +511,9 @@ html
  The same rule applies for anywhere you can have text
  in jade, raw html is fine:
 
-```
-html
-  body
-    h1 User <em>#{name}</em>
-```
+    html
+      body
+        h1 User <em>#{name}</em>
 
 <a name="a6-11"/>
 ### Doctypes
@@ -539,28 +547,30 @@ it's also possible to simply pass a doctype literal:
 
 yielding:
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
+```
 
 Below are the doctypes defined by default, which can easily be extended:
 
-```javascript
-    var doctypes = exports.doctypes = {
-        '5': '<!DOCTYPE html>',
-        'xml': '<?xml version="1.0" encoding="utf-8" ?>',
-        'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-        'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
-        'strict': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
-        'frameset': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
-        '1.1': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',
-        'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
-        'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
-    };
+```js
+var doctypes = exports.doctypes = {
+  '5': '<!DOCTYPE html>',
+  'xml': '<?xml version="1.0" encoding="utf-8" ?>',
+  'default': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+  'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+  'strict': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+  'frameset': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
+  '1.1': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',
+  'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">',
+  'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
+};
 ```
 
 To alter the default simply change:
 
-```javascript
-    jade.doctypes.default = 'whatever you want';
+```js
+jade.doctypes.default = 'whatever you want';
 ```
 
 <a name="a7"/>
@@ -577,7 +587,9 @@ at the top of this document for available filters.
 
 Renders:
 
-       <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
+```html
+<body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
+```
 
 <a name="a8"/>
 ## Code
@@ -629,18 +641,18 @@ you may use `!=`:
  more expressive and declarative. For example the following assignments
  are equivalent, and the expression is still regular javascript:
 
-     - var foo = 'foo ' + 'bar'
-     foo = 'foo ' + 'bar'
+    - var foo = 'foo ' + 'bar'
+    foo = 'foo ' + 'bar'
 
   Likewise Jade has first-class `if`, `else if`, `else`, `until`, `while`, `unless` among others, however you must remember that the expressions are still regular javascript:
 
-     if foo == 'bar'
-       ul
-         li yay
-         li foo
-         li worked
-     else
-       p oh no! didnt work
+    if foo == 'bar'
+      ul
+        li yay
+        li foo
+        li worked
+    else
+      p oh no! didnt work
 
 <a name="a9"/>
 ## Iteration
@@ -659,9 +671,11 @@ An example iterating over an array:
 
 outputs:
 
-    <li>one</li>
-    <li>two</li>
-    <li>three</li>
+```html
+<li>one</li>
+<li>two</li>
+<li>three</li>
+```
 
 iterating an array with index:
 
@@ -671,9 +685,11 @@ iterating an array with index:
 
 outputs:
 
-    <li>one: 0</li>
-    <li>two: 1</li>
-    <li>three: 2</li>
+```html
+<li>one: 0</li>
+<li>two: 1</li>
+<li>three: 2</li>
+```
 
 iterating an object's keys and values:
 
@@ -713,19 +729,19 @@ JavaScript:
 
  is equivalent to the following using vanilla JavaScript literals:
 
-     for user in users
-       - if (user.role == 'admin')
-         p #{user.name} is an admin
-       - else
-         p= user.name
+    for user in users
+      - if (user.role == 'admin')
+        p #{user.name} is an admin
+      - else
+        p= user.name
 
   Jade also provides have `unless` which is equivalent to `if (!(expr))`:
 
-     for user in users
-       unless user.isAnonymous
-         p
-           | Click to view
-           a(href='/users/' + user.id)= user.name
+    for user in users
+      unless user.isAnonymous
+        p
+          | Click to view
+          a(href='/users/' + user.id)= user.name
 
 <a name="a11"/>
 ## Template inheritance
@@ -734,82 +750,70 @@ JavaScript:
 
   Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
 
-```
-html
-  head
-    h1 My Site - #{title}
-    block scripts
-      script(src='/jquery.js')
-  body
-    block content
-    block foot
-      #footer
-        p some footer content
-```
+    html
+      head
+        h1 My Site - #{title}
+        block scripts
+          script(src='/jquery.js')
+      body
+        block content
+        block foot
+          #footer
+            p some footer content
 
   Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".
 
-```
-extends layout
+    extends layout
 
-block scripts
-  script(src='/jquery.js')
-  script(src='/pets.js')
+    block scripts
+      script(src='/jquery.js')
+      script(src='/pets.js')
 
-block content
-  h1= title
-  each pet in pets
-    include pet
-```
+    block content
+      h1= title
+      each pet in pets
+        include pet
 
   It's also possible to override a block to provide additional blocks, as shown in the following example where `content` now exposes a `sidebar` and `primary` block for overriding, or the child template could override `content` all together.
 
-```
-extends regular-layout
+    extends regular-layout
 
-block content
-  .sidebar
-    block sidebar
-      p nothing
-  .primary
-    block primary
-      p nothing
-```
+    block content
+      .sidebar
+        block sidebar
+          p nothing
+      .primary
+        block primary
+          p nothing
 
 <a name="a12"/>
 ## Block append / prepend
 
  Jade allows you to _replace_ (default), _prepend_, or _append_ blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on _every_ page, you might do this:
 
-```
-html
-  head
-    block head
-      script(src='/vendor/jquery.js')
-      script(src='/vendor/caustic.js')
-    body
-      block content
-```
+    html
+      head
+        block head
+          script(src='/vendor/jquery.js')
+          script(src='/vendor/caustic.js')
+        body
+          block content
 
  Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
 
-```
-include layout
+    include layout
 
-block append head
-  script(src='/vendor/three.js')
-  script(src='/game.js')
-```
+    block append head
+      script(src='/vendor/three.js')
+      script(src='/game.js')
 
   When using `block append` or `block prepend` the `block` is optional:
 
-```
-include layout
+    include layout
 
-append head
-  script(src='/vendor/three.js')
-  script(src='/game.js')
-```
+    append head
+      script(src='/vendor/three.js')
+      script(src='/game.js')
 
 <a name="a13"/>
 ## Includes
@@ -817,19 +821,19 @@ append head
  Includes allow you to statically include chunks of Jade,
  or other content like css, or html which lives in separate files. The classical example is including a header and footer. Suppose we have the following directory structure:
 
-     ./layout.jade
-     ./includes/
-       ./head.jade
-       ./foot.jade
+    ./layout.jade
+    ./includes/
+      ./head.jade
+      ./foot.jade
 
 and the following _layout.jade_:
 
-      html
-        include includes/head
-        body
-          h1 My Site
-          p Welcome to my super amazing site.
-          include includes/foot
+    html
+      include includes/head
+      body
+        h1 My Site
+        p Welcome to my super amazing site.
+        include includes/foot
 
 both includes _includes/head_ and _includes/foot_ are
 read relative to the `filename` option given to _layout.jade_,
@@ -857,58 +861,46 @@ which should be an absolute path to this file, however Express does this for you
  assume that the file is Jade source and will include it as
  a literal:
 
-```
-html
-  body
-    include content.html
-```
+    html
+      body
+        include content.html
 
   Include directives may also accept a block, in which case the
   the given block will be appended to the _last_ block defined
   in the file. For example if `head.jade` contains:
 
-```
-head
-  script(src='/jquery.js')
-```
+    head
+      script(src='/jquery.js')
 
  We may append values by providing a block to `include head`
  as shown below, adding the two scripts.
 
-```
-html
-  include head
-    script(src='/foo.js')
-    script(src='/bar.js')
-  body
-    h1 test
-```
+    html
+      include head
+        script(src='/foo.js')
+        script(src='/bar.js')
+      body
+        h1 test
 
  You may also `yield` within an included template, allowing you to explicitly mark where the block given to `include` will be placed. Suppose for example you wish to prepend scripts rather than append, you might do the following:
 
-```
-head
-  yield
-  script(src='/jquery.js')
-  script(src='/jquery.ui.js')
-```
+    head
+      yield
+      script(src='/jquery.js')
+      script(src='/jquery.ui.js')
 
  Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example support we have `user.jade` which utilizes a `user` variable.
 
-```
-h1= user.name
-p= user.occupation
-```
+    h1= user.name
+    p= user.occupation
 
 We could then simply `include user` while iterating users, and since the `user` variable is already defined within the loop the included template will have access to it.
 
-```
-users = [{ name: 'Tobi', occupation: 'Ferret' }]
+    users = [{ name: 'Tobi', occupation: 'Ferret' }]
 
-each user in users
-  .user
-    include user
-```
+    each user in users
+      .user
+        include user
 
 yielding:
 
@@ -921,12 +913,10 @@ yielding:
 
 If we wanted to expose a different variable name as `user` since `user.jade` references that name, we could simply define a new variable as shown here with `user = person`:
 
-```
-each person in users
-  .user
-    user = person
-    include user
-```
+    each person in users
+      .user
+        user = person
+        include user
 
 <a name="a14"/>
 ## Mixins
@@ -935,29 +925,29 @@ each person in users
  the compiled template that Jade constructs. Mixins may
  take arguments, though not required:
 
-      mixin list
-        ul
-          li foo
-          li bar
-          li baz
+    mixin list
+      ul
+        li foo
+        li bar
+        li baz
 
   Utilizing a mixin without args looks similar, just without a block:
 
-      h2 Groceries
-      mixin list
+    h2 Groceries
+    mixin list
 
   Mixins may take one or more arguments as well, the arguments
   are regular javascripts expressions, so for example the following:
 
-      mixin pets(pets)
-        ul.pets
-          - each pet in pets
-            li= pet
+    mixin pets(pets)
+      ul.pets
+        - each pet in pets
+          li= pet
 
-      mixin profile(user)
-        .user
-          h2= user.name
-          mixin pets(user.pets)
+    mixin profile(user)
+      .user
+        h2= user.name
+        mixin pets(user.pets)
 
    Would yield something similar to the following html:
 
@@ -978,11 +968,9 @@ each person in users
 
  Suppose we have the following Jade:
 
-```
-- var title = 'yay'
-h1.title #{title}
-p Just an example
-```
+    - var title = 'yay'
+    h1.title #{title}
+    p Just an example
 
  When the `compileDebug` option is not explicitly `false`, Jade
  will compile the function instrumented with `__.lineno = n;`, which
@@ -1068,7 +1056,7 @@ clean:
 this can be combined with the `watch(1)` command to produce
 a watcher-like behaviour:
 
-     $ watch make
+    $ watch make
 
 <a name="a17"/>
 ## jade(1)
