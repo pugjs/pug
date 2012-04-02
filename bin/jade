@@ -24,18 +24,20 @@ program
   .version(jade.version)
   .usage('[options] [dir|file ...]')
   .option('-o, --obj <str>', 'javascript options object')
-  .option('-O, --out <dir>', 'output the compiled html to <dir>')
+  .option('-O, --out <path>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
-  .option('-p, --pretty', 'compile pretty html output')
+  .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
-  .option('-a, --all <path>', 'compile all javascript into one file')
 
 program.on('--help', function(){
   console.log('  Examples:');
   console.log('');
   console.log('    # translate jade the templates dir');
   console.log('    $ jade templates');
+  console.log('');
+  console.log('    # translate jade the templates dir to client templates');
+  console.log('    $ jade -c --out templates.js templates');
   console.log('');
   console.log('    # create {foo,bar}.html');
   console.log('    $ jade {foo,bar}.jade');
@@ -81,8 +83,9 @@ var files = program.args;
 
 if (files.length) {
   console.log();
-  if(program.all) {
+  if(program.client) {
     options.client = true;
+    program.root = resolve(program.path || files.length == 1 && files[0]);
     renderAlljsSync(files);
   } else {
     files.forEach(renderFile);
@@ -154,7 +157,7 @@ function renderFile(path) {
 
 function renderAlljsSync(files) {
     var output = renderFilesSync(files);
-    var path = program.all;
+    var path = program.out;
     var dir = resolve(dirname(path));
 
     mkdirp(dir, 0755, function(err){
@@ -172,21 +175,22 @@ function renderFileSync(path) {
 
   // Found jade file
   if (stat.isFile() && re.test(path)) {
+    abspath = resolve(path);
     var str = fs.readFileSync(path, 'utf8');
     options.filename = path;
     var fn = jade.compile(str, options);
     console.log('  \033[90mrendered \033[36m%s\033[0m', path);
-    return "jade.templates['" + path + "'] = " + fn;
+    return "jade.templates['" + (abspath.replace(program.root, '') || path) + "'] = " + fn;
     // Found directory
   } else if (stat.isDirectory()) {
     var files = fs.readdirSync(path);
 
     var results = files.map(function(filename) {
         return path + '/' + filename;
-    }).map(renderFileSync);
+    }).map(renderFileSync).filter(function(code){return code!=null});
     return results.join('\n');
   } else {
-    return '';
+    return null;
   }
 }
 
