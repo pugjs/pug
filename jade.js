@@ -66,7 +66,7 @@ var nodes = require('./nodes')
   , inlineTags = require('./inline-tags')
   , utils = require('./utils');
 
- 
+
  if (!Object.keys) {
    Object.keys = function(obj){
      var arr = [];
@@ -76,9 +76,9 @@ var nodes = require('./nodes')
        }
      }
      return arr;
-   } 
+   }
  }
- 
+
  if (!String.prototype.trimLeft) {
    String.prototype.trimLeft = function(){
      return this.replace(/^\s+/, '');
@@ -111,13 +111,13 @@ var Compiler = module.exports = function Compiler(node, options) {
  */
 
 Compiler.prototype = {
-  
+
   /**
    * Compile parse tree to JavaScript.
    *
    * @api public
    */
-  
+
   compile: function(){
     this.buf = ['var interp;'];
     this.lastBufferedIdx = -1;
@@ -133,7 +133,7 @@ Compiler.prototype = {
    * @param {string} name
    * @api public
    */
-  
+
   setDoctype: function(name){
     var doctype = doctypes[(name || 'default').toLowerCase()];
     doctype = doctype || '<!DOCTYPE ' + name + '>';
@@ -141,7 +141,7 @@ Compiler.prototype = {
     this.terse = '5' == name || 'html' == name;
     this.xml = 0 == this.doctype.indexOf('<?xml');
   },
-  
+
   /**
    * Buffer the given `str` optionally escaped.
    *
@@ -149,10 +149,10 @@ Compiler.prototype = {
    * @param {Boolean} esc
    * @api public
    */
-  
+
   buffer: function(str, esc){
     if (esc) str = utils.escape(str);
-    
+
     if (this.lastBufferedIdx == this.buf.length) {
       this.lastBuffered += str;
       this.buf[this.lastBufferedIdx - 1] = "buf.push('" + this.lastBuffered + "');"
@@ -160,16 +160,16 @@ Compiler.prototype = {
       this.buf.push("buf.push('" + str + "');");
       this.lastBuffered = str;
       this.lastBufferedIdx = this.buf.length;
-    }    
+    }
   },
-  
+
   /**
    * Visit `node`.
    *
    * @param {Node} node
    * @api public
    */
-  
+
   visit: function(node){
     var debug = this.debug;
 
@@ -192,14 +192,14 @@ Compiler.prototype = {
 
     if (debug) this.buf.push('__jade.shift();');
   },
-  
+
   /**
    * Visit `node`.
    *
    * @param {Node} node
    * @api public
    */
-  
+
   visitNode: function(node){
     var name = node.constructor.name
       || node.constructor.toString().match(/function ([^(\s]+)()/)[1];
@@ -221,7 +221,7 @@ Compiler.prototype = {
     this.buf.push('}');
     this.withinCase = _;
   },
-  
+
   /**
    * Visit when `node`.
    *
@@ -264,7 +264,7 @@ Compiler.prototype = {
       this.visit(block.nodes[i]);
     }
   },
-  
+
   /**
    * Visit `doctype`. Sets terse mode to `true` when html 5
    * is used, causing self-closing tags to end with ">" vs "/>",
@@ -273,7 +273,7 @@ Compiler.prototype = {
    * @param {Doctype} doctype
    * @api public
    */
-  
+
   visitDoctype: function(doctype){
     if (doctype && (doctype.val || !this.doctype)) {
       this.setDoctype(doctype.val || 'default');
@@ -296,7 +296,7 @@ Compiler.prototype = {
       , args = mixin.args || '';
 
     if (mixin.block) {
-      this.buf.push('var ' + name + ' = function(' + args + '){');
+      this.buf.push('function ' + name + '(' + args + '){');
       this.visit(mixin.block);
       this.buf.push('}');
     } else {
@@ -311,7 +311,7 @@ Compiler.prototype = {
    * @param {Tag} tag
    * @api public
    */
-  
+
   visitTag: function(tag){
     this.indents++;
     var name = tag.name;
@@ -357,14 +357,14 @@ Compiler.prototype = {
     }
     this.indents--;
   },
-  
+
   /**
    * Visit `filter`, throwing when the filter does not exist.
    *
    * @param {Filter} filter
    * @api public
    */
-  
+
   visitFilter: function(filter){
     var fn = filters[filter.name];
 
@@ -385,41 +385,41 @@ Compiler.prototype = {
       this.buffer(utils.text(fn(text, filter.attrs)));
     }
   },
-  
+
   /**
    * Visit `text` node.
    *
    * @param {Text} text
    * @api public
    */
-  
+
   visitText: function(text){
     text = utils.text(text.nodes.join(''));
     if (this.escape) text = escape(text);
     this.buffer(text);
     this.buffer('\\n');
   },
-  
+
   /**
    * Visit a `comment`, only buffering when the buffer flag is set.
    *
    * @param {Comment} comment
    * @api public
    */
-  
+
   visitComment: function(comment){
     if (!comment.buffer) return;
     if (this.pp) this.buffer('\\n' + Array(this.indents + 1).join('  '));
     this.buffer('<!--' + utils.escape(comment.val) + '-->');
   },
-  
+
   /**
    * Visit a `BlockComment`.
    *
    * @param {Comment} comment
    * @api public
    */
-  
+
   visitBlockComment: function(comment){
     if (!comment.buffer) return;
     if (0 == comment.val.trim().indexOf('if')) {
@@ -432,7 +432,7 @@ Compiler.prototype = {
       this.buffer('-->');
     }
   },
-  
+
   /**
    * Visit `code`, respecting buffer / escape flags.
    * If the code is followed by a block, wrap it in
@@ -441,7 +441,7 @@ Compiler.prototype = {
    * @param {Code} code
    * @api public
    */
-  
+
   visitCode: function(code){
     // Wrap code blocks with {}.
     // we only wrap unbuffered code blocks ATM
@@ -465,14 +465,14 @@ Compiler.prototype = {
       if (!code.buffer) this.buf.push('}');
     }
   },
-  
+
   /**
    * Visit `each` block.
    *
    * @param {Each} each
    * @api public
    */
-  
+
   visitEach: function(each){
     this.buf.push(''
       + '// iterate ' + each.obj + '\n'
@@ -496,14 +496,14 @@ Compiler.prototype = {
 
     this.buf.push('   }\n  }\n}).call(this);\n');
   },
-  
+
   /**
    * Visit `attrs`.
    *
    * @param {Array} attrs
    * @api public
    */
-  
+
   visitAttributes: function(attrs){
     var buf = []
       , classes = [];
@@ -663,7 +663,7 @@ module.exports = {
 
   coffeescript: function(str){
     str = str.replace(/\\n/g, '\n');
-    var js = require('coffee-script').compile(str).replace(/\n/g, '\\n');
+    var js = require('coffee-script').compile(str).replace(/\\/g, '\\\\').replace(/\n/g, '\\n');
     return '<script type="text/javascript">\\n' + js + '</script>';
   }
 };
@@ -721,7 +721,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.21.0';
+exports.version = '0.22.1';
 
 /**
  * Expose self closing tags.
@@ -3093,6 +3093,7 @@ module.exports = [
   , 'img'
   , 'link'
   , 'input'
+  , 'source'
   , 'area'
   , 'base'
   , 'col'

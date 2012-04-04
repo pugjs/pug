@@ -1,4 +1,10 @@
 
+0.22.1 / 2012-04-04 
+==================
+
+  * Fixed source tags. now self-closing. Closes #308
+  * Fixed: escape backslashes in coffeescript filter
+
 0.22.0 / 2012-03-22 
 ==================
 
