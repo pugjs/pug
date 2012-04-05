@@ -559,6 +559,13 @@ allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` 
 body(class=bodyClasses)
 ```
 
+The `data` attribute is special-cased when an object is given,
+allowing you to pass an object such as `dataObj = {'fullName': 'Foo Bar', 'age': 35, 'luckyNumbers': [1, 3, 7]}` directly:
+
+```jade
+div(data=dataObj)
+```
+
 <a name="a6-10"/>
 ### HTML
 
