@@ -3,7 +3,7 @@ jade(1) -- jade template engine
 
 ## Synopsis
 
-   spot [-h|--help] [-v|--version] [-o|--obj STR]
+   jade [-h|--help] [-v|--version] [-o|--obj STR]
         [-O|--out DIR] [-p|--path PATH] [-P|--pretty]
         [-c|--client] [-D|--no-debug]
 
