@@ -1,4 +1,12 @@
 
+0.23.0 / 2012-04-11 
+==================
+
+  * Added data-attr json stringification support. Closes #572
+  * Added unescaped attr support. Closes #198
+  * Fixed #1070, reverted mixin function statements
+  * Fixed jade.1 typo
+
 0.22.1 / 2012-04-04 
 ==================
 
