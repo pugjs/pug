@@ -36,34 +36,43 @@ if (!Object.keys) {
  * Render the given attributes object.
  *
  * @param {Object} obj
+ * @param {Object} escaped
  * @return {String}
  * @api private
  */
 
-exports.attrs = function attrs(obj){
+exports.attrs = function attrs(obj, escaped){
   var buf = []
     , terse = obj.terse;
+
   delete obj.terse;
   var keys = Object.keys(obj)
     , len = keys.length;
+
   if (len) {
     buf.push('');
     for (var i = 0; i < len; ++i) {
       var key = keys[i]
         , val = obj[key];
+
       if ('boolean' == typeof val || null == val) {
         if (val) {
           terse
             ? buf.push(key)
             : buf.push(key + '="' + key + '"');
         }
+      } else if (0 == key.indexOf('data') && 'string' != typeof val) {
+        buf.push(key + "='" + JSON.stringify(val) + "'");
       } else if ('class' == key && Array.isArray(val)) {
         buf.push(key + '="' + exports.escape(val.join(' ')) + '"');
-      } else {
+      } else if (escaped[key]) {
         buf.push(key + '="' + exports.escape(val) + '"');
+      } else {
+        buf.push(key + '="' + val + '"');
       }
     }
   }
+
   return buf.join(' ');
 };
 

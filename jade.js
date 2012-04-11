@@ -296,7 +296,7 @@ Compiler.prototype = {
       , args = mixin.args || '';
 
     if (mixin.block) {
-      this.buf.push('function ' + name + '(' + args + '){');
+      this.buf.push('var ' + name + ' = function(' + args + '){');
       this.visit(mixin.block);
       this.buf.push('}');
     } else {
@@ -506,11 +506,13 @@ Compiler.prototype = {
 
   visitAttributes: function(attrs){
     var buf = []
-      , classes = [];
+      , classes = []
+      , escaped = {};
 
     if (this.terse) buf.push('terse: true');
 
     attrs.forEach(function(attr){
+      escaped[attr.name] = attr.escaped;
       if (attr.name == 'class') {
         classes.push('(' + attr.val + ')');
       } else {
@@ -525,8 +527,7 @@ Compiler.prototype = {
     }
 
     buf = buf.join(', ').replace('class:', '"class":');
-
-    this.buf.push("buf.push(attrs({ " + buf + " }));");
+    this.buf.push("buf.push(attrs({ " + buf + " }, " + JSON.stringify(escaped) + "));");
   }
 };
 
@@ -1397,10 +1398,12 @@ Lexer.prototype = {
         , len = str.length
         , colons = this.colons
         , states = ['key']
+        , escapedAttr
         , key = ''
         , val = ''
         , quote
-        , c;
+        , c
+        , p;
 
       function state(){
         return states[states.length - 1];
@@ -1414,6 +1417,7 @@ Lexer.prototype = {
 
       this.consume(index + 1);
       tok.attrs = {};
+      tok.escaped = {};
 
       function parse(c) {
         var real = c;
@@ -1434,7 +1438,9 @@ Lexer.prototype = {
                 val = val.trim();
                 key = key.trim();
                 if ('' == key) return;
-                tok.attrs[key.replace(/^['"]|['"]$/g, '')] = '' == val
+                key = key.replace(/^['"]|['"]$/g, '');
+                tok.escaped[key] = escapedAttr;
+                tok.attrs[key] = '' == val
                   ? true
                   : interpolate(val);
                 key = val = '';
@@ -1453,6 +1459,7 @@ Lexer.prototype = {
                 val += real;
                 break;
               default:
+                escapedAttr = '!' != p;
                 states.push('val');
             }
             break;
@@ -1513,6 +1520,7 @@ Lexer.prototype = {
                 val += c;
             }
         }
+        p = c;
       }
 
       for (var i = 0; i < len; ++i) {
@@ -2213,12 +2221,13 @@ Tag.prototype.constructor = Tag;
  *
  * @param {String} name
  * @param {String} val
+ * @param {Boolean} escaped
  * @return {Tag} for chaining
  * @api public
  */
 
-Tag.prototype.setAttribute = function(name, val){
-  this.attrs.push({ name: name, val: val });
+Tag.prototype.setAttribute = function(name, val, escaped){
+  this.attrs.push({ name: name, val: val, escaped: escaped });
   return this;
 };
 
@@ -2887,12 +2896,15 @@ Parser.prototype = {
             tag.setAttribute(tok.type, "'" + tok.val + "'");
             continue;
           case 'attrs':
-            var obj = this.advance().attrs
+            var tok = this.advance()
+              , obj = tok.attrs
+              , escaped = tok.escaped
               , names = Object.keys(obj);
+
             for (var i = 0, len = names.length; i < len; ++i) {
               var name = names[i]
                 , val = obj[name];
-              tag.setAttribute(name, val);
+              tag.setAttribute(name, val, escaped[name]);
             }
             continue;
           default:
@@ -2996,34 +3008,43 @@ if (!Object.keys) {
  * Render the given attributes object.
  *
  * @param {Object} obj
+ * @param {Object} escaped
  * @return {String}
  * @api private
  */
 
-exports.attrs = function attrs(obj){
+exports.attrs = function attrs(obj, escaped){
   var buf = []
     , terse = obj.terse;
+
   delete obj.terse;
   var keys = Object.keys(obj)
     , len = keys.length;
+
   if (len) {
     buf.push('');
     for (var i = 0; i < len; ++i) {
       var key = keys[i]
         , val = obj[key];
+
       if ('boolean' == typeof val || null == val) {
         if (val) {
           terse
             ? buf.push(key)
             : buf.push(key + '="' + key + '"');
         }
+      } else if (0 == key.indexOf('data') && 'string' != typeof val) {
+        buf.push(key + "='" + JSON.stringify(val) + "'");
       } else if ('class' == key && Array.isArray(val)) {
         buf.push(key + '="' + exports.escape(val.join(' ')) + '"');
-      } else {
+      } else if (escaped[key]) {
         buf.push(key + '="' + exports.escape(val) + '"');
+      } else {
+        buf.push(key + '="' + val + '"');
       }
     }
   }
+
   return buf.join(' ');
 };
 
