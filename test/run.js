@@ -19,7 +19,7 @@ cases.forEach(function(test){
   it(name, function(){
     var path = 'test/cases/' + test + '.jade';
     var str = fs.readFileSync(path, 'utf8');
-    var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim();
+    var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
     var fn = jade.compile(str, { filename: path, pretty: true });
     var actual = fn({ title: 'Jade' });
     actual.trim().should.equal(html);
