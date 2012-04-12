@@ -2,6 +2,7 @@
 0.24.0 / 2012-04-12 
 ==================
 
+  * Fixed unescaped attribute compilation
   * Fixed pretty-printing of text-only tags (__Warning__: this may affect rendering) [chowey]
 
 0.23.0 / 2012-04-11 
