@@ -942,7 +942,7 @@ html
  Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
 
 ```jade
-include layout
+extends layout
 
 block append head
   script(src='/vendor/three.js')
@@ -952,7 +952,7 @@ block append head
   When using `block append` or `block prepend` the `block` is optional:
 
 ```jade
-include layout
+extends layout
 
 append head
   script(src='/vendor/three.js')
