@@ -13,7 +13,6 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "coffee-script": "*",
     "markdown": "*",
     "stylus": "*",
     "uubench": "*",
