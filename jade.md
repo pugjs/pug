@@ -1,11 +1,13 @@
-jade(1) -- jade template engine
-===========================================
+
+# Jade
+
+  The jade template engine for node.js
 
 ## Synopsis
 
-   jade [-h|--help] [-v|--version] [-o|--obj STR]
-        [-O|--out DIR] [-p|--path PATH] [-P|--pretty]
-        [-c|--client] [-D|--no-debug]
+    jade [-h|--help] [-v|--version] [-o|--obj STR]
+         [-O|--out DIR] [-p|--path PATH] [-P|--pretty]
+         [-c|--client] [-D|--no-debug]
 
 ## Examples
 
