@@ -81,6 +81,7 @@
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
   - [ruby](http://github.com/stonean/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
+  - [java](https://github.com/neuland/jade4j)
 
 <a name="a3"/>
 ## Installation
