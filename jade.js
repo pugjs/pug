@@ -103,6 +103,7 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.pp = options.pretty || false;
   this.debug = false !== options.compileDebug;
   this.indents = 0;
+  this.parentIndents = 0;
   if (options.doctype) this.setDoctype(options.doctype);
 };
 
@@ -120,6 +121,7 @@ Compiler.prototype = {
 
   compile: function(){
     this.buf = ['var interp;'];
+    if (this.pp) this.buf.push("var __indent = [];");
     this.lastBufferedIdx = -1;
     this.visit(this.node);
     return this.buf.join('\n');
@@ -297,10 +299,14 @@ Compiler.prototype = {
 
     if (mixin.block) {
       this.buf.push('var ' + name + ' = function(' + args + '){');
+      if (this.pp) this.parentIndents++;
       this.visit(mixin.block);
+      if (this.pp) this.parentIndents--;
       this.buf.push('}');
     } else {
+      if (this.pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
       this.buf.push(name + '(' + args + ');');
+      if (this.pp) this.buf.push("__indent.pop();")
     }
   },
 
@@ -326,6 +332,8 @@ Compiler.prototype = {
     // pretty print
     if (this.pp && inlineTags.indexOf(name) == -1) {
       this.buffer('\\n' + Array(this.indents).join('  '));
+      if (this.parentIndents)
+        this.buf.push("buf.push.apply(buf, __indent);");
     }
 
     if (~selfClosing.indexOf(name) && !this.xml) {
@@ -349,8 +357,10 @@ Compiler.prototype = {
       this.visit(tag.block);
 
       // pretty print
-      if (this.pp && !~inlineTags.indexOf(name) && !tag.textOnly) {
+      if (this.pp && !~inlineTags.indexOf(name) && !tag.textOnly && !tag.isText()) {
         this.buffer('\\n' + Array(this.indents).join('  '));
+        if (this.parentIndents)
+          this.buf.push("buf.push.apply(buf, __indent);");
       }
 
       this.buffer('</' + name + '>');
@@ -409,7 +419,11 @@ Compiler.prototype = {
 
   visitComment: function(comment){
     if (!comment.buffer) return;
-    if (this.pp) this.buffer('\\n' + Array(this.indents + 1).join('  '));
+    if (this.pp) {
+      this.buffer('\\n' + Array(this.indents + 1).join('  '));
+      if (this.parentIndents)
+          this.buf.push("buf.push.apply(buf, __indent);");
+    }
     this.buffer('<!--' + utils.escape(comment.val) + '-->');
   },
 
@@ -722,7 +736,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.22.1';
+exports.version = '0.24.0';
 
 /**
  * Expose self closing tags.
@@ -1438,7 +1452,7 @@ Lexer.prototype = {
                 val = val.trim();
                 key = key.trim();
                 if ('' == key) return;
-                key = key.replace(/^['"]|['"]$/g, '');
+                key = key.replace(/^['"]|['"]$/g, '').replace('!', '');
                 tok.escaped[key] = escapedAttr;
                 tok.attrs[key] = '' == val
                   ? true
@@ -2262,6 +2276,16 @@ Tag.prototype.getAttribute = function(name){
   }
 };
 
+/**
+ * Check if this tag's block contains only text nodes.  Used for pretty printing.
+ *
+ * @return {Boolean}
+ * @api private
+ */
+
+Tag.prototype.isText = function(){
+  return !this.block.nodes.length;
+};
 }); // module: nodes/tag.js
 
 require.register("nodes/text.js", function(module, exports, require){
