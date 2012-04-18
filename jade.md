@@ -368,3 +368,69 @@
       ul#letters
         for letter in ['a', 'b', 'c']
           li= letter
+
+## Mixins
+
+  Mixins provide a way to define jade "functions" which "mix in"
+  their contents when called. This is useful for abstracting
+  out large fragments of Jade.
+
+  The simplest possible mixin which accepts no arguments might
+  look like this:
+  
+      mixin hello
+        p Hello
+
+   You use a mixin by placing `+` before the name:
+
+      +hello
+
+   For something a little more dynamic, mixins can take
+   arguments, the mixin itself is converted to a javascript
+   function internally:
+   
+       mixin hello(user)
+         p Hello #{user}
+
+       +hello('Tobi')
+  
+   Yields:
+
+       <p>Hello Tobi</p>
+
+  Mixins may optionally take blocks, when a block is passed
+  its contents becomes the implicit `content` argument. For
+  example here is a mixin passed a block, and also invoked
+  without passing a block:
+
+      mixin article(title)
+        .article
+          .article-wrapper
+            h1= title
+            if content
+              != content
+            else
+              p No content provided
+      
+      +article('Hello world')
+      
+      +article('Hello world')
+        p This is my
+        p Amazing article
+
+   yields:
+   
+       <div class="article">
+         <div class="article-wrapper">
+           <h1>Hello world</h1>
+           <p>No content provided</p>
+         </div>
+       </div>
+
+       <div class="article">
+         <div class="article-wrapper">
+           <h1>Hello world</h1>
+           <p>This is my</p>
+           <p>Amazing article</p>
+         </div>
+       </div>
