@@ -59,4 +59,24 @@ suite.bench('small locals', function(next){
   next();
 });
 
+str = '\
+html\n\
+  body\n\
+    h1 Title\n\
+    ul#menu\n\
+      li: a(href="#") Home\n\
+      li: a(href="#") About Us\n\
+      li: a(href="#") Store\n\
+      li: a(href="#") FAQ\n\
+      li: a(href="#") Contact\n\
+';
+
+str = Array(100).join(str);
+var fn4 = jade.compile(str);
+
+suite.bench('large', function(next){
+  fn4();
+  next();
+});
+
 suite.run();
