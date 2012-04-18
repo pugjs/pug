@@ -1,4 +1,11 @@
 
+0.25.0 / 2012-04-18 
+==================
+
+  * Added preliminary mixin block support. Closes #310
+  * Fixed whitespace handling in various situations [chowey]
+  * Fixed indentation in various situations [chowey]
+
 0.24.0 / 2012-04-12 
 ==================
 
