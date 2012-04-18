@@ -16,13 +16,17 @@ var suite = new uubench.Suite({
   }
 });
 
-var str = 'html\n  body\n    h1 Title'
-  , fn = jade.compile(str);
+function setup(self) {
+  var suffix = self ? ' (self)' : ''
+    , options = { self: self };
 
-suite.bench('tiny', function(next){
-  fn();
-  next();
-});
+  var str = 'html\n  body\n    h1 Title'
+    , fn = jade.compile(str, options);
+
+  suite.bench('tiny' + suffix, function(next){
+    fn();
+    next();
+  });
 
 str = '\
 html\n\
@@ -36,12 +40,12 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-var fn2 = jade.compile(str);
+  var fn2 = jade.compile(str, options);
 
-suite.bench('small', function(next){
-  fn2();
-  next();
-});
+  suite.bench('small' + suffix, function(next){
+    fn2();
+    next();
+  });
 
 str = '\
 html\n\
@@ -52,12 +56,23 @@ html\n\
         li: a(href="#")= link\r\n\
 ';
 
-var fn3 = jade.compile(str);
+  if (self) {
+str = '\
+html\n\
+  body\n\
+    h1 #{self.title}\n\
+    ul#menu\n\
+      - each link in self.links\r\n\
+        li: a(href="#")= link\r\n\
+';
+  }
 
-suite.bench('small locals', function(next){
-  fn3({ title: 'Title', links: ['Home', 'About Us', 'Store', 'FAQ', 'Contact'] });
-  next();
-});
+  var fn3 = jade.compile(str, options);
+
+  suite.bench('small locals' + suffix, function(next){
+    fn3({ title: 'Title', links: ['Home', 'About Us', 'Store', 'FAQ', 'Contact'] });
+    next();
+  });
 
 str = '\
 html\n\
@@ -71,13 +86,13 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-str = Array(30).join(str);
-var fn4 = jade.compile(str);
+  str = Array(30).join(str);
+  var fn4 = jade.compile(str, options);
 
-suite.bench('medium', function(next){
-  fn4();
-  next();
-});
+  suite.bench('medium' + suffix, function(next){
+    fn4();
+    next();
+  });
 
 str = '\
 html\n\
@@ -91,19 +106,16 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-str = Array(100).join(str);
-var fn5 = jade.compile(str);
+  str = Array(100).join(str);
+  var fn5 = jade.compile(str, options);
 
-suite.bench('large', function(next){
-  fn5();
-  next();
-});
+  suite.bench('large' + suffix, function(next){
+    fn5();
+    next();
+  });
+}
 
-var fn6 = jade.compile(str, { self: true });
-
-suite.bench('large (self option)', function(next){
-  fn6();
-  next();
-});
+setup();
+setup(true);
 
 suite.run();
