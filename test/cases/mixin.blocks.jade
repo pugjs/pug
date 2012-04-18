@@ -1,0 +1,35 @@
+
+
+mixin form(method, action)
+  form(method=method, action=action)
+    csrf_token_from_somewhere = 'hey'
+    input(type='hidden', name='_csrf', value=csrf_token_from_somewhere)
+    != content
+
+html
+  body
+    +form('GET', '/search')
+      input(type='text', name='query', placeholder='Search')
+      input(type='submit', value='Search')
+
+html
+  body
+    +form('POST', '/search')
+      input(type='text', name='query', placeholder='Search')
+      input(type='submit', value='Search')
+
+html
+  body
+    +form('POST', '/search')
+
+mixin bar(html)
+  #bar!= html
+
+mixin foo()
+  #foo
+    +bar(content)
+
++foo
+  p one
+  p two
+  p three
