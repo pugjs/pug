@@ -99,4 +99,11 @@ suite.bench('large', function(next){
   next();
 });
 
+var fn6 = jade.compile(str, { self: true });
+
+suite.bench('large (self option)', function(next){
+  fn6();
+  next();
+});
+
 suite.run();
