@@ -4,7 +4,7 @@ mixin form(method, action)
   form(method=method, action=action)
     csrf_token_from_somewhere = 'hey'
     input(type='hidden', name='_csrf', value=csrf_token_from_somewhere)
-    != content
+    != block
 
 html
   body
@@ -27,7 +27,7 @@ mixin bar(html)
 
 mixin foo()
   #foo
-    +bar(content)
+    +bar(block)
 
 +foo
   p one
