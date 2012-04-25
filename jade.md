@@ -399,7 +399,7 @@
        <p>Hello Tobi</p>
 
   Mixins may optionally take blocks, when a block is passed
-  its contents becomes the implicit `content` argument. For
+  its contents becomes the implicit `block` argument. For
   example here is a mixin passed a block, and also invoked
   without passing a block:
 
@@ -407,8 +407,8 @@
         .article
           .article-wrapper
             h1= title
-            if content
-              != content
+            if block
+              block
             else
               p No content provided
       
