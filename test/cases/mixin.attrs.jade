@@ -1,0 +1,21 @@
+mixin centered(title)
+  div.centered(id=attributes.id)
+    - if (title)
+      h1(class=attributes.class)= title
+    block
+    - if (attributes.href)
+      .footer
+        a(href=attributes.href) Back
+
+mixin bottom
+  div.bottom(attributes)
+    block
+
+body
+  +centered#First Hello World
+  +centered('Section 1')#Second
+    p Some important content.
+  +centered('Section 2')#Third.foo(href='menu.html', class='bar')
+    p Even more important content.
+  +bottom.foo(class='bar', name='end', id='Last', data-attr='baz')
+    p Some final words.
