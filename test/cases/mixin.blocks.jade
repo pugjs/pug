@@ -22,12 +22,13 @@ html
   body
     +form('POST', '/search')
 
-mixin bar(html)
-  #bar!= html
+mixin bar()
+  #bar
+    block
 
 mixin foo()
   #foo
-    +bar(block)
+    +bar
 
 +foo
   p one
