@@ -1,0 +1,12 @@
+mixin foo
+  +bar.test(attributes)= block
+
+mixin bar
+  .container(attributes)
+    block
+
+body
+  +foo
+    p Hello world!
+  +foo#footer
+    p The end!
