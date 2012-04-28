@@ -398,10 +398,12 @@
 
        <p>Hello Tobi</p>
 
-  Mixins may optionally take blocks, when a block is passed
-  its contents becomes the implicit `block` argument. For
-  example here is a mixin passed a block, and also invoked
-  without passing a block:
+## Tag-style mixins
+  
+  Mixins may optionally take a block statement, just like a tag.
+  When a block is passed its contents are available with the
+  implicit `block` statement. For example here is a mixin passed
+  a block, and also invoked without passing a block:
 
       mixin article(title)
         .article
@@ -435,7 +437,7 @@
          </div>
        </div>
 
-  Mixins can even take attributes, just like tags. When
+  Mixins can even take attributes, just like a tag. When
   attributes are passed they become the implicit `attributes`
   argument. Individual attributes can be accessed just like
   normal object properties:

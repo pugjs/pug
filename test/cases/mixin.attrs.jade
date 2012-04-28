@@ -7,6 +7,11 @@ mixin centered(title)
       .footer
         a(href=attributes.href) Back
 
+mixin main(title)
+  div.stretch
+    +centered(title).highlight(attributes)
+      block
+
 mixin bottom
   div.bottom(attributes)
     block
@@ -17,5 +22,7 @@ body
     p Some important content.
   +centered('Section 2')#Third.foo(href='menu.html', class='bar')
     p Even more important content.
+  +main('Section 3')(href='#')
+    p Last content.
   +bottom.foo(class='bar', name='end', id='Last', data-attr='baz')
     p Some final words.
