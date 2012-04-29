@@ -398,10 +398,12 @@
 
        <p>Hello Tobi</p>
 
-  Mixins may optionally take blocks, when a block is passed
-  its contents becomes the implicit `block` argument. For
-  example here is a mixin passed a block, and also invoked
-  without passing a block:
+## Tag-style mixins
+  
+  Mixins may optionally take a block statement, just like a tag.
+  When a block is passed its contents are available with the
+  implicit `block` statement. For example here is a mixin passed
+  a block, and also invoked without passing a block:
 
       mixin article(title)
         .article
@@ -434,3 +436,63 @@
            <p>Amazing article</p>
          </div>
        </div>
+
+  Mixins can even take attributes, just like a tag. When
+  attributes are passed they become the implicit `attributes`
+  argument. Individual attributes can be accessed just like
+  normal object properties:
+  
+      mixin centered
+        .centered(class=attributes.class)
+          block
+      
+      +centered.bold Hello world
+      
+      +centered.red
+        p This is my
+        p Amazing article
+  
+   yields:
+   
+       <div class="centered bold">Hello world</div>
+       <div class="centered red">
+         <p>This is my</p>
+         <p>Amazing article</p>
+       </div>
+  
+   If you use `attributes` directly, *all* passed attributes
+   get used:
+   
+      mixin link
+        a.menu(attributes)
+          block
+      
+      +link.highlight(href='#top') Top
+      +link#sec1.plain(href='#section1') Section 1
+      +link#sec2.plain(href='#section2') Section 2
+  
+   yields:
+   
+       <a href="#top" class="highlight menu">Top</a>
+       <a id="sec1" href="#section1" class="plain menu">Section 1</a>
+       <a id="sec2" href="#section2" class="plain menu">Section 2</a>
+   
+   If you pass arguments, they must directly follow the mixin:
+   
+      mixin list(arr)
+        if block
+          .title
+            block
+        ul(attributes)
+          each item in arr
+            li= item
+      
+      +list(['foo', 'bar', 'baz'])(id='myList', class='bold')
+  
+   yields:
+   
+       <ul id="myList" class="bold">
+         <li>foo</li>
+         <li>bar</li>
+         <li>baz</li>
+       </ul>
