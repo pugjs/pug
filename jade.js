@@ -172,7 +172,7 @@ Compiler.prototype = {
    * @param {Boolean} newline
    * @api public
    */
-
+  
   prettyIndent: function(offset, newline){
     offset = offset || 0;
     newline = newline ? '\\n' : '';
@@ -280,24 +280,16 @@ Compiler.prototype = {
     var len = block.nodes.length
       , escape = this.escape
       , pp = this.pp
-
-    // Block keyword has a special meaning in mixins
-    if (this.parentIndents && block.mode) {
-      if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
-      this.buf.push('block && this.block();');
-      if (pp) this.buf.push("__indent.pop();")
-      return;
-    }
-
+    
     // Pretty print multi-line text
     if (pp && len > 1 && !escape && block.nodes[0].isText && block.nodes[1].isText)
       this.prettyIndent(1, true);
-
+    
     for (var i = 0; i < len; ++i) {
       // Pretty print text
       if (pp && i > 0 && !escape && block.nodes[i].isText && block.nodes[i-1].isText)
         this.prettyIndent(1, false);
-
+      
       this.visit(block.nodes[i]);
       // Multiple text nodes are separated by newlines
       if (block.nodes[i+1] && block.nodes[i].isText && block.nodes[i+1].isText)
@@ -333,42 +325,33 @@ Compiler.prototype = {
 
   visitMixin: function(mixin){
     var name = mixin.name.replace(/-/g, '_') + '_mixin'
-      , args = mixin.args || ''
-      , pp = this.pp;
+      , args = mixin.args || '';
 
     if (mixin.call) {
-      if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
+      if (this.pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
       if (mixin.block) {
-        this.buf.push(name + '.call({block: function(){');
-
-        // Render block with no indents, dynamically added when rendered
-        this.parentIndents++;
-        var _indents = this.indents;
-        this.indents = 0;
+        if (args) {
+          this.buf.push(name + '(' + args + ', function(){');
+        } else {
+          this.buf.push(name + '(function(){');
+        }
+        this.buf.push('var buf = [];');
         this.visit(mixin.block);
-        this.indents = _indents;
-        this.parentIndents--;
-
-        if (args) {
-          this.buf.push('}}, ' + args + ');');
-        } else {
-          this.buf.push('}});');
-        }
+        this.buf.push('return buf.join("");');
+        this.buf.push('}());\n');
       } else {
-        if (args) {
-          this.buf.push(name + '.call(this, ' + args + ');');
-        } else {
-          this.buf.push(name + '.call(this);');
-        }
+        this.buf.push(name + '(' + args + ');');
       }
-      if (pp) this.buf.push("__indent.pop();")
+      if (this.pp) this.buf.push("__indent.pop();")
     } else {
+      args = args
+        ? args.split(/ *, */).concat('content').join(', ')
+        : 'content';
       this.buf.push('var ' + name + ' = function(' + args + '){');
-      this.buf.push('var block = !!this.block;');
-      this.parentIndents++;
+      if (this.pp) this.parentIndents++;
       this.visit(mixin.block);
-      this.parentIndents--;
-      this.buf.push('};');
+      if (this.pp) this.parentIndents--;
+      this.buf.push('}');
     }
   },
 
@@ -382,8 +365,7 @@ Compiler.prototype = {
 
   visitTag: function(tag){
     this.indents++;
-    var name = tag.name
-      , pp = this.pp;
+    var name = tag.name;
 
     if (!this.hasCompiledTag) {
       if (!this.hasCompiledDoctype && 'html' == name) {
@@ -393,8 +375,9 @@ Compiler.prototype = {
     }
 
     // pretty print
-    if (pp && !tag.isInline())
+    if (this.pp && !tag.isInline()) {
       this.prettyIndent(0, true);
+    }
 
     if (~selfClosing.indexOf(name) && !this.xml) {
       this.buffer('<' + name);
@@ -416,8 +399,9 @@ Compiler.prototype = {
       this.visit(tag.block);
 
       // pretty print
-      if (pp && !tag.isInline() && 'pre' != tag.name && !tag.canInline())
+      if (this.pp && !tag.isInline() && 'pre' != tag.name && !tag.canInline()) {
         this.prettyIndent(0, true);
+      }
 
       this.buffer('</' + name + '>');
     }
@@ -611,7 +595,6 @@ function escape(html){
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
-
 }); // module: compiler.js
 
 require.register("doctypes.js", function(module, exports, require){
@@ -1307,12 +1290,11 @@ Lexer.prototype = {
   
   block: function() {
     var captures;
-    if (captures = /^block *(?:(prepend|append) +)?([^\n]*)/.exec(this.input)) {
+    if (captures = /^block +(?:(prepend|append) +)?([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var mode = captures[1] || 'replace'
         , name = captures[2]
         , tok = this.tok('block', name);
-
       tok.mode = mode;
       return tok;
     }
