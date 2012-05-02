@@ -1,5 +1,5 @@
 
-var jade = (function(exports){
+jade = (function(exports){
 /*!
  * Jade - runtime
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
@@ -31,6 +31,30 @@ if (!Object.keys) {
     return arr;
   } 
 }
+
+/**
+ * Merge two attribute objects. `b` attributes override `a` attributes.
+ * For "class" attributes, `b` attributes append to `a` attributes.
+ *
+ * @param {Object} `a` object
+ * @param {Object} `b` object
+ * @param {Boolean} `true` if these objects are `escaped` objects, not attributes
+ * @api private
+ */
+
+exports.merge = function merge(a, b, escaped) {
+  // Special treatment for "class" attribute
+  if (!escaped) {
+    var val;
+    (val = a['class']) && Array.isArray(val) && (a['class'] = val.join(' '));
+    (val = b['class']) && Array.isArray(val) && (b['class'] = val.join(' '));
+    a['class'] && b['class'] && (b['class'] += ' ' + a['class']);
+  }
+  
+  for (var key in b)
+    a[key] = b[key];
+  return a;
+};
 
 /**
  * Render the given attributes object.

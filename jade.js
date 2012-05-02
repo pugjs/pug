@@ -281,6 +281,14 @@ Compiler.prototype = {
       , escape = this.escape
       , pp = this.pp
     
+    // Block keyword has a special meaning in mixins
+    if (this.parentIndents && block.mode) {
+      if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
+      this.buf.push('block && block();');
+      if (pp) this.buf.push("__indent.pop();")
+      return;
+    }
+    
     // Pretty print multi-line text
     if (pp && len > 1 && !escape && block.nodes[0].isText && block.nodes[1].isText)
       this.prettyIndent(1, true);
@@ -325,33 +333,38 @@ Compiler.prototype = {
 
   visitMixin: function(mixin){
     var name = mixin.name.replace(/-/g, '_') + '_mixin'
-      , args = mixin.args || '';
+      , args = mixin.args || ''
+      , pp = this.pp;
 
     if (mixin.call) {
-      if (this.pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
+      if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
       if (mixin.block) {
-        if (args) {
-          this.buf.push(name + '(' + args + ', function(){');
-        } else {
-          this.buf.push(name + '(function(){');
-        }
-        this.buf.push('var buf = [];');
+        this.buf.push(name + '.call({block: function(){');
+        
+        // Render block with no indents, dynamically added when rendered
+        this.parentIndents++;
+        var _indents = this.indents;
+        this.indents = 0;
         this.visit(mixin.block);
-        this.buf.push('return buf.join("");');
-        this.buf.push('}());\n');
+        this.indents = _indents;
+        this.parentIndents--;
+        
+        if (args) {
+          this.buf.push('}}, ' + args + ');');
+        } else {
+          this.buf.push('}});');
+        }
       } else {
         this.buf.push(name + '(' + args + ');');
       }
-      if (this.pp) this.buf.push("__indent.pop();")
+      if (pp) this.buf.push("__indent.pop();")
     } else {
-      args = args
-        ? args.split(/ *, */).concat('content').join(', ')
-        : 'content';
       this.buf.push('var ' + name + ' = function(' + args + '){');
-      if (this.pp) this.parentIndents++;
+      this.buf.push('var block = this.block;');
+      this.parentIndents++;
       this.visit(mixin.block);
-      if (this.pp) this.parentIndents--;
-      this.buf.push('}');
+      this.parentIndents--;
+      this.buf.push('};');
     }
   },
 
@@ -365,7 +378,8 @@ Compiler.prototype = {
 
   visitTag: function(tag){
     this.indents++;
-    var name = tag.name;
+    var name = tag.name
+      , pp = this.pp;
 
     if (!this.hasCompiledTag) {
       if (!this.hasCompiledDoctype && 'html' == name) {
@@ -375,9 +389,8 @@ Compiler.prototype = {
     }
 
     // pretty print
-    if (this.pp && !tag.isInline()) {
+    if (pp && !tag.isInline())
       this.prettyIndent(0, true);
-    }
 
     if (~selfClosing.indexOf(name) && !this.xml) {
       this.buffer('<' + name);
@@ -399,9 +412,8 @@ Compiler.prototype = {
       this.visit(tag.block);
 
       // pretty print
-      if (this.pp && !tag.isInline() && 'pre' != tag.name && !tag.canInline()) {
+      if (pp && !tag.isInline() && 'pre' != tag.name && !tag.canInline())
         this.prettyIndent(0, true);
-      }
 
       this.buffer('</' + name + '>');
     }
@@ -1290,11 +1302,12 @@ Lexer.prototype = {
   
   block: function() {
     var captures;
-    if (captures = /^block +(?:(prepend|append) +)?([^\n]+)/.exec(this.input)) {
+    if (captures = /^block *(?:(prepend|append) +)?([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
       var mode = captures[1] || 'replace'
         , name = captures[2]
         , tok = this.tok('block', name);
+
       tok.mode = mode;
       return tok;
     }
@@ -2962,13 +2975,11 @@ Parser.prototype = {
     var tok = this.expect('call')
       , name = tok.val
       , args = tok.args
-      , mixin = this.mixins[name];
+      , mixin = new nodes.Mixin(name, args, new nodes.Block, true);
 
-    var block = 'indent' == this.peek().type
-      ? this.block()
-      : null;
-
-    return new nodes.Mixin(name, args, block, true);
+    this.tag(mixin);
+    if (mixin.block.isEmpty()) mixin.block = null;
+    return mixin;
   },
 
   /**
@@ -3058,11 +3069,8 @@ Parser.prototype = {
     }
 
     var name = this.advance().val
-      , tag = new nodes.Tag(name)
-      , dot;
-
-    tag.line = this.line();
-
+      , tag = new nodes.Tag(name);
+    
     // (attrs | class | id)*
     out:
       while (true) {
@@ -3088,6 +3096,14 @@ Parser.prototype = {
             break out;
         }
       }
+    
+    return this.tag(tag);
+  },
+  
+  tag: function(tag){
+    var dot;
+
+    tag.line = this.line();
 
     // check immediate '.'
     if ('.' == this.peek().val) {
@@ -3116,7 +3132,7 @@ Parser.prototype = {
     tag.textOnly = tag.textOnly || ~textOnly.indexOf(tag.name);
 
     // script special-case
-    if ('script' == tag.name) {
+    if ('script' == tag.name && tag.getAttribute) {
       var type = tag.getAttribute('type');
       if (!dot && type && 'text/javascript' != type.replace(/^['"]|['"]$/g, '')) {
         tag.textOnly = false;

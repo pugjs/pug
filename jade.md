@@ -57,6 +57,20 @@
         a Bar
         a Baz
 
+## Self-closing Tags
+
+  Some tags are flagged as self-closing by default, such
+  as `meta`, `link`, and so on. To explicitly self-close
+  a tag simply append the `/` character:
+
+     foo/
+     foo(bar='baz')/
+
+  Would yield:
+  
+     <foo/>
+     <foo bar="baz"/>
+
 ## Attributes
 
   Tag attributes look similar to HTML, however

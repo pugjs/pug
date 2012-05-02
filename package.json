@@ -20,6 +20,11 @@
     "less": "*",
     "uglify-js": "*"
   },
+  "component": {
+    "scripts": {
+      "jade": "runtime.js"
+    }
+  },
   "scripts" : { "prepublish" : "npm prune" },
   "engines": { "node": ">= 0.1.98" }
 }
