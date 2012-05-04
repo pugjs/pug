@@ -392,7 +392,7 @@ Compiler.prototype = {
     if (pp && !tag.isInline())
       this.prettyIndent(0, true);
 
-    if (~selfClosing.indexOf(name) && !this.xml) {
+    if ((~selfClosing.indexOf(name) || tag.selfClosing) && !this.xml) {
       this.buffer('<' + name);
       this.visitAttributes(tag.attrs);
       this.terse
@@ -2614,6 +2614,9 @@ Parser.prototype = {
       this.context(parser);
       var ast = parser.parse();
       this.context();
+      // hoist mixins
+      for (var name in this.mixins)
+        ast.unshift(this.mixins[name]);
       return ast;
     }
 
@@ -2954,6 +2957,8 @@ Parser.prototype = {
     var path = join(dir, path)
       , str = fs.readFileSync(path, 'utf8')
      , parser = new Parser(str, path, this.options);
+    parser.blocks = this.blocks;
+    parser.mixins = this.mixins;
 
     this.context(parser);
     var ast = parser.parse();
@@ -3096,7 +3101,13 @@ Parser.prototype = {
             break out;
         }
       }
-    
+
+    // self-closing
+    if ('/' == this.peek().val) {
+      this.advance();
+      tag.selfClosing = true;
+    }
+
     return this.tag(tag);
   },
   
