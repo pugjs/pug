@@ -1,0 +1,12 @@
+mixin test(arg)
+  div= arg
+
++test(
+  ')))))'
+  + '((((('
+)
++test(function() {
+  return '((';
+}())
++test('\')')
++test("\")")
