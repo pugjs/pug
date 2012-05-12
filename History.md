@@ -1,4 +1,13 @@
 
+0.26.0 / 2012-05-04 
+==================
+
+  * Added package.json __component__ support
+  * Added explicit self-closing tag support. Closes #605
+  * Added `block` statement
+  * Added mixin tag-like behaviour [chowey]
+  * Fixed mixins with extends [chowey]
+
 0.25.0 / 2012-04-18 
 ==================
 
