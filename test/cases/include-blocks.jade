@@ -14,3 +14,11 @@ include auxiliary/layout.include.jade
   
   h2 Footer
   p And "include" does it all
+
+include auxiliary/layout.include.jade
+
+  block head
+  block content
+  block window-content
+    h2 Small aside
+    p The head and content have been disabled
