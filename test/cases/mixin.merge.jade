@@ -1,0 +1,14 @@
+mixin foo
+  p.bar(attributes) One
+  p.baz.quux(attributes) Two
+  p(attributes) Three
+  p.bar(attributes, class="baz") Four
+
+body
+  +foo.hello
+  +foo#world
+  +foo.hello#world
+  +foo.hello.world
+  +foo(class="hello")
+  +foo.hello(class="world")
+  +foo
