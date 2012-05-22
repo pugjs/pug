@@ -33,28 +33,50 @@ if (!Object.keys) {
 }
 
 /**
- * Merge two attribute objects. `b` attributes override `a` attributes.
- * For "class" attributes, `b` attributes append to `a` attributes.
+ * Merge two attribute objects giving precedence
+ * to values in object `b`. Classes are special-cased
+ * allowing for arrays and merging/joining appropriately
+ * resulting in a string.
  *
- * @param {Object} `a` object
- * @param {Object} `b` object
- * @param {Boolean} `true` if these objects are `escaped` objects, not attributes
+ * @param {Object} a
+ * @param {Object} b
+ * @return {Object} a
  * @api private
  */
 
-exports.merge = function merge(a, b, escaped) {
-  // Special treatment for "class" attribute
-  if (!escaped) {
-    var val;
-    (val = a['class']) && Array.isArray(val) && (a['class'] = val.join(' '));
-    (val = b['class']) && Array.isArray(val) && (b['class'] = val.join(' '));
-    a['class'] && b['class'] && (b['class'] += ' ' + a['class']);
+exports.merge = function merge(a, b) {
+  var ac = a.class;
+  var bc = b.class;
+
+  if (ac || bc) {
+    ac = ac || [];
+    bc = bc || [];
+    if (!Array.isArray(ac)) ac = [ac];
+    if (!Array.isArray(bc)) bc = [bc];
+    ac = ac.filter(nulls);
+    bc = bc.filter(nulls);
+    a.class = ac.concat(bc).join(' ');
   }
-  
-  for (var key in b)
+
+  for (var key in b) {
+    if ('class' == key) continue;
     a[key] = b[key];
+  }
+
   return a;
 };
+
+/**
+ * Filter null `val`s.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function nulls(val) {
+  return val != null;
+}
 
 /**
  * Render the given attributes object.
@@ -110,7 +132,7 @@ exports.attrs = function attrs(obj, escaped){
 
 exports.escape = function escape(html){
   return String(html)
-    .replace(/&(?!\w+;)/g, '&amp;')
+    .replace(/&(?!(\w+|\#\d+);)/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
