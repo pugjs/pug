@@ -1,4 +1,14 @@
 
+0.26.1 / 2012-05-27 
+==================
+
+  * Changed default doctype to __html5__
+  * Performance: statically compile attrs when possible [chowey]
+  * Fixed some class attribute merging cases
+  * Fixed so `block` doesn't consume `blockquotes` tag [chowey]
+  * Fixed backslashes in text nodes [chowey]
+  * Fixed / in text. Closes #638
+
 0.26.0 / 2012-05-04 
 ==================
 
