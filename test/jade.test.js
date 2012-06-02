@@ -1021,7 +1021,21 @@ module.exports = {
       var fn = jade.compile('p foo\np #{bar}', {compileDebug: false, helpers: 'global'});
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
   },
-  
+
+  'test .compile() missing local no quiet': function(){
+      var fn = jade.compile('p= foo\np= bar');
+      try {
+        fn({ foo: 'foo' });
+      } catch (err) {
+        assert.throws(err);
+      }
+  },
+
+  'test .compile() missing local with quiet': function(){
+      var fn = jade.compile('p= foo\np= bar', {quiet: true});
+      assert.equal('<p>foo</p><p></p>', fn({ foo: 'foo' }));
+  },
+
   'test null attrs on tag': function(){
       var tag = new jade.nodes.Tag('a'),
           name = 'href',
