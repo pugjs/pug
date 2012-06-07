@@ -406,6 +406,8 @@ Compiler.prototype = {
     var name = tag.name
       , pp = this.pp;
 
+    if (tag.buffer) name = "' + (" + name + ") + '";
+
     if (!this.hasCompiledTag) {
       if (!this.hasCompiledDoctype && 'html' == name) {
         this.visitDoctype();
@@ -857,7 +859,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.26.0';
+exports.version = '0.26.1';
 
 /**
  * Expose self closing tags.
@@ -1269,7 +1271,19 @@ Lexer.prototype = {
       return tok;
     }
   },
-  
+
+  /**
+   * Interpolated tag.
+   */
+
+  interpolation: function() {
+    var captures;
+    if (captures = /^#\{(.*?)\}/.exec(this.input)) {
+      this.consume(captures[0].length);
+      return this.tok('interpolation', captures[1]);
+    }
+  },
+
   /**
    * Tag.
    */
@@ -1808,6 +1822,7 @@ Lexer.prototype = {
       || this.pipelessText()
       || this.yield()
       || this.doctype()
+      || this.interpolation()
       || this["case"]()
       || this.when()
       || this["default"]()
@@ -2789,6 +2804,7 @@ Parser.prototype = {
    * | yield
    * | id
    * | class
+   * | interpolation
    */
   
   parseExpr: function(){
@@ -2823,6 +2839,8 @@ Parser.prototype = {
         return this.parseCode();
       case 'call':
         return this.parseCall();
+      case 'interpolation':
+        return this.parseInterpolation();
       case 'yield':
         this.advance();
         var block = new nodes.Block;
@@ -3185,6 +3203,17 @@ Parser.prototype = {
   },
 
   /**
+   * interpolation (attrs | class | id)* (text | code | ':')? newline* block?
+   */
+  
+  parseInterpolation: function(){
+    var tok = this.advance();
+    var tag = new nodes.Tag(tok.val);
+    tag.buffer = true;
+    return this.tag(tag);
+  },
+
+  /**
    * tag (attrs | class | id)* (text | code | ':')? newline* block?
    */
   
@@ -3205,7 +3234,11 @@ Parser.prototype = {
 
     return this.tag(tag);
   },
-  
+
+  /**
+   * Parse tag.
+   */
+
   tag: function(tag){
     var dot;
 
@@ -3344,8 +3377,8 @@ if (!Object.keys) {
  */
 
 exports.merge = function merge(a, b) {
-  var ac = a.class;
-  var bc = b.class;
+  var ac = a['class'];
+  var bc = b['class'];
 
   if (ac || bc) {
     ac = ac || [];
@@ -3354,12 +3387,13 @@ exports.merge = function merge(a, b) {
     if (!Array.isArray(bc)) bc = [bc];
     ac = ac.filter(nulls);
     bc = bc.filter(nulls);
-    a.class = ac.concat(bc).join(' ');
+    a['class'] = ac.concat(bc).join(' ');
   }
 
   for (var key in b) {
-    if ('class' == key) continue;
-    a[key] = b[key];
+    if (key != 'class') {
+      a[key] = b[key];
+    }
   }
 
   return a;

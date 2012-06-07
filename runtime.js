@@ -1,3 +1,4 @@
+
 jade = (function(exports){
 /*!
  * Jade - runtime
@@ -57,9 +58,11 @@ exports.merge = function merge(a, b) {
     a['class'] = ac.concat(bc).join(' ');
   }
 
-  for (var key in b)
-    if (key !== 'class')
+  for (var key in b) {
+    if (key != 'class') {
       a[key] = b[key];
+    }
+  }
 
   return a;
 };
