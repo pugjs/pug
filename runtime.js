@@ -1,4 +1,3 @@
-
 jade = (function(exports){
 /*!
  * Jade - runtime
@@ -45,8 +44,8 @@ if (!Object.keys) {
  */
 
 exports.merge = function merge(a, b) {
-  var ac = a.class;
-  var bc = b.class;
+  var ac = a['class'];
+  var bc = b['class'];
 
   if (ac || bc) {
     ac = ac || [];
@@ -55,13 +54,12 @@ exports.merge = function merge(a, b) {
     if (!Array.isArray(bc)) bc = [bc];
     ac = ac.filter(nulls);
     bc = bc.filter(nulls);
-    a.class = ac.concat(bc).join(' ');
+    a['class'] = ac.concat(bc).join(' ');
   }
 
-  for (var key in b) {
-    if ('class' == key) continue;
-    a[key] = b[key];
-  }
+  for (var key in b)
+    if (key !== 'class')
+      a[key] = b[key];
 
   return a;
 };
