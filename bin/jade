@@ -23,7 +23,7 @@ var options = {};
 program
   .version(jade.version)
   .usage('[options] [dir|file ...]')
-  .option('-o, --obj <str>', 'javascript options object')
+  .option('-o, --options <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
@@ -54,7 +54,7 @@ program.parse(process.argv);
 
 // options given, parse them
 
-if (program.obj) options = eval('(' + program.obj + ')');
+if (program.options) options = eval('(' + program.options + ')');
 
 // --filename
 
