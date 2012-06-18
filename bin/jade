@@ -24,6 +24,7 @@ program
   .version(jade.version)
   .usage('[options] [dir|file ...]')
   .option('-o, --options <str>', 'javascript options object')
+  .option('-F, --obj <str>', 'javascript options object')
   .option('-O, --out <dir>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
@@ -51,6 +52,10 @@ program.on('--help', function(){
 });
 
 program.parse(process.argv);
+
+// backwards compat
+
+if (program.obj) program.options = program.obj;
 
 // options given, parse them
 
