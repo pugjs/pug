@@ -29,7 +29,7 @@ if (!Object.keys) {
       }
     }
     return arr;
-  } 
+  }
 }
 
 /**
@@ -112,7 +112,7 @@ exports.attrs = function attrs(obj, escaped){
         buf.push(key + "='" + JSON.stringify(val) + "'");
       } else if ('class' == key && Array.isArray(val)) {
         buf.push(key + '="' + exports.escape(val.join(' ')) + '"');
-      } else if (escaped[key]) {
+      } else if (escaped && escaped[key]) {
         buf.push(key + '="' + exports.escape(val) + '"');
       } else {
         buf.push(key + '="' + val + '"');
@@ -156,7 +156,7 @@ exports.rethrow = function rethrow(err, filename, lineno){
     , str = require('fs').readFileSync(filename, 'utf8')
     , lines = str.split('\n')
     , start = Math.max(lineno - context, 0)
-    , end = Math.min(lines.length, lineno + context); 
+    , end = Math.min(lines.length, lineno + context);
 
   // Error context
   var context = lines.slice(start, end).map(function(line, i){
@@ -169,7 +169,7 @@ exports.rethrow = function rethrow(err, filename, lineno){
 
   // Alter exception message
   err.path = filename;
-  err.message = (filename || 'Jade') + ':' + lineno 
+  err.message = (filename || 'Jade') + ':' + lineno
     + '\n' + context + '\n\n' + err.message;
   throw err;
 };
