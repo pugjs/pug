@@ -90,7 +90,6 @@ via npm:
 
 ```bash
 $ npm install jade
-$ man jade
 ```
 
 <a name="a4"/>
