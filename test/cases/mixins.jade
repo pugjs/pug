@@ -1,0 +1,25 @@
+
+mixin comment(title, str)
+  .comment
+    h2= title
+    p.body= str
+
+
+mixin comment (title, str)
+  .comment
+    h2= title
+    p.body= str
+
+#user
+  h1 Tobi
+  .comments
+    mixin comment('This', (('is regular, javascript')))
+
+mixin list()
+  ul
+    li foo
+    li bar
+    li baz
+
+body
+  mixin list()
