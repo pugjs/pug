@@ -1,4 +1,13 @@
 
+0.26.2 / 2012-06-22 
+==================
+
+  * Added --options alias of --obj
+  * Added reserved word conflict prevention in Google's Closure Compiler 
+  * Added tag interpolation. Closes #657
+  * Allow the compiled client to use it's own jade util functions [3rd-Eden]
+  * Fixed `attrs()` escape bug [caseywebdev]
+
 0.26.1 / 2012-05-27 
 ==================
 
