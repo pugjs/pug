@@ -59,7 +59,7 @@ if (program.obj) program.options = program.obj;
 
 // options given, parse them
 
-if (program.options) options = eval('(' + program.options + ')');
+if (program.options && typeof(program.options) == "string") options = eval('(' + program.options + ')');
 
 // --filename
 
