@@ -1,4 +1,9 @@
 
+0.26.3 / 2012-06-25 
+==================
+
+  * Update version of commander that supports node v0.8.
+
 0.26.2 / 2012-06-22 
 ==================
 
