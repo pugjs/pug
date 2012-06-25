@@ -8,7 +8,7 @@
   "bin": { "jade": "./bin/jade" },
   "man": "./jade.1",
   "dependencies": {
-    "commander": "0.5.2",
+    "commander": "0.6.1",
     "mkdirp": "0.3.0"
   },
   "devDependencies": {
