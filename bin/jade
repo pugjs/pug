@@ -81,7 +81,9 @@ var files = program.args;
 if (files.length) {
   console.log();
   files.forEach(renderFile);
-  process.on('exit', console.log);
+  process.on('exit', function () {
+    console.log();
+  });
 // stdio
 } else {
   stdin();
