@@ -29,6 +29,7 @@ program
   .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
+  .option('-w, --watch', 'watch files for changes and automatically re-render')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -72,6 +73,10 @@ options.client = program.client;
 
 options.pretty = program.pretty;
 
+// --watch
+
+options.watch = program.watch;
+
 // left-over args are file paths
 
 var files = program.args;
@@ -81,6 +86,15 @@ var files = program.args;
 if (files.length) {
   console.log();
   files.forEach(renderFile);
+  if (options.watch) {
+    files.forEach(function (file) {
+      fs.watchFile(file, {persistent: true, interval: 500}, function (prev, curr) {
+        if (prev.size !== curr.size && prev.mtime.getTime() !== curr.mtime.getTime()) {
+          renderFile(file);
+        }
+      });
+    });
+  }
   process.on('exit', function () {
     console.log();
   });
