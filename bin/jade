@@ -18,6 +18,10 @@ var fs = require('fs')
 
 var options = {};
 
+function regex(str) {
+  return new RegExp(str);
+}
+
 // options
 
 program
@@ -28,6 +32,7 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile for client-side runtime.js')
+  .option('-e, --exclude <regex>', 'exclude files matching regular expression', regex)
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
 
@@ -76,6 +81,10 @@ options.pretty = program.pretty;
 // --watch
 
 options.watch = program.watch;
+
+// -- exclude
+
+options.exclude = program.exclude
 
 // left-over args are file paths
 
@@ -126,7 +135,9 @@ function stdin() {
  */
 
 function renderFile(path) {
-  var re = /\.jade$/;
+  re = /\.jade$/
+  if (options.exclude.test(basename(path)))
+    return;
   fs.lstat(path, function(err, stat) {
     if (err) throw err;
     // Found jade file
