@@ -135,7 +135,7 @@ function stdin() {
  */
 
 function renderFile(path) {
-  re = /\.jade$/
+  re = /\.jade$/;
   if (options.exclude.test(basename(path)))
     return;
   fs.lstat(path, function(err, stat) {
