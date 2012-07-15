@@ -5,6 +5,10 @@
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
 
+## Test drive
+
+  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
+
 ## README Contents
 
 - [Features](#a1)
