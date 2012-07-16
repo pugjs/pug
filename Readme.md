@@ -408,7 +408,7 @@ outputting
 Jade supports conditional-comments as well, for example:
 
 ```jade
-head
+body
   //if lt IE 8
     script(src='/ie-sucks.js')
 ```
