@@ -10,6 +10,7 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
+  , exists = fs.existsSync || path.existsSync
   , join = path.join
   , mkdirp = require('mkdirp')
   , jade = require('../');
@@ -55,7 +56,13 @@ program.parse(process.argv);
 
 // options given, parse them
 
-if (program.obj) options = eval('(' + program.obj + ')');
+if (program.obj) {
+  if (exists(program.obj)) {
+    options = JSON.parse(fs.readFileSync(program.obj));
+  } else {
+    options = eval('(' + program.obj + ')');
+  }
+}
 
 // --filename
 
