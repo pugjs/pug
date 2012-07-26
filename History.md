@@ -1,4 +1,12 @@
 
+0.27.0 / 2012-07-26 
+==================
+
+  * added ability to pass in json file to `--obj`
+  * add preliminary `each` `else` support. Closes #716
+  * fix doctype bug overlooked in #712
+  * fix stripping of utf-8 BOMs
+
 0.26.3 / 2012-06-25 
 ==================
 
