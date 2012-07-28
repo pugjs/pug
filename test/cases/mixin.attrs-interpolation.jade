@@ -1,0 +1,9 @@
+mixin main(foo, bar)
+  h1= foo
+  h2= bar
+
+- var foovar = "foo"
+- var barvar = "bar"
+
++main('foo #{foovar}', 'bar #{barvar} bar #{barvar}')
+mixin main('foo #{foovar}', 'bar #{barvar} bar #{barvar}')
