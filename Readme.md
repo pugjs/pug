@@ -68,7 +68,7 @@
   - filters
     - :stylus must have [stylus](http://github.com/LearnBoost/stylus) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
-    - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
+    - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js), [node-discount](http://github.com/visionmedia/node-discount), or [marked](http://github.com/chjj/marked) installed
     - :cdata
     - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
   - [Emacs Mode](https://github.com/brianc/jade-mode)
