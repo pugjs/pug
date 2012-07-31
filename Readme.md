@@ -158,12 +158,13 @@ fn(locals);
 
 ### Options
 
- - `self`      Use a `self` namespace to hold the locals. _false by default_
+ - `self`      Use a `self` namespace to hold the locals _(false by default)_
  - `locals`    Local variable object
  - `filename`  Used in exceptions, and required when using includes
  - `debug`     Outputs tokens and function body generated
  - `compiler`  Compiler to replace jade's default
  - `compileDebug`  When `false` no debug instrumentation is compiled
+ - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
 
 <a name="a6"/>
 ## Syntax
