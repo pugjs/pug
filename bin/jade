@@ -31,6 +31,7 @@ program
   .option('-c, --client', 'compile function for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
+  .option('-h, --handlebars', 'output files as .hbs instead of .html')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -85,6 +86,8 @@ options.pretty = program.pretty;
 options.watch = program.watch;
 
 // left-over args are file paths
+
+options.handlebars = program.handlebars;
 
 var files = program.args;
 
@@ -142,7 +145,7 @@ function renderFile(path) {
         if (err) throw err;
         options.filename = path;
         var fn = jade.compile(str, options);
-        var extname = options.client ? '.js' : '.html';
+        var extname = options.client ? '.js' : options.handlebars ? '.hbs' : '.html';
         path = path.replace(re, extname);
         if (program.out) path = join(program.out, basename(path));
         var dir = resolve(dirname(path));
