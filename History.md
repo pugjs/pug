@@ -1,4 +1,10 @@
 
+0.27.1 / 2012-08-06 
+==================
+
+  * fix attribute interpolation escaping #731
+  * fix string interpolation escaping #731
+
 0.27.0 / 2012-07-26 
 ==================
 
