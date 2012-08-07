@@ -1,4 +1,9 @@
 
+0.27.2 / 2012-08-07 
+==================
+
+  * Revert "fixing string interpolation escaping #731", problems reported
+
 0.27.1 / 2012-08-06 
 ==================
 
