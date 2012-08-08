@@ -1,0 +1,24 @@
+
+include auxiliary/layout.include.jade
+
+  block head
+    script(src='jquery.js')
+
+  block content
+    h2 Page
+    p Some content
+
+  block window-content
+    h2 Awesome
+    p Now we can extend included blocks!
+  
+  h2 Footer
+  p And "include" does it all
+
+include auxiliary/layout.include.jade
+
+  block head
+  block content
+  block window-content
+    h2 Small aside
+    p The head and content have been disabled
