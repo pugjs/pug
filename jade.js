@@ -137,10 +137,9 @@ Compiler.prototype = {
    */
 
   setDoctype: function(name){
-    var doctype = doctypes[(name || 'default').toLowerCase()];
-    doctype = doctype || '<!DOCTYPE ' + name + '>';
-    this.doctype = doctype;
-    this.terse = '5' == name || 'html' == name;
+    name = (name && name.toLowerCase()) || 'default';
+    this.doctype = doctypes[name] || '<!DOCTYPE ' + name + '>';
+    this.terse = this.doctype.toLowerCase() == '<!doctype html>';
     this.xml = 0 == this.doctype.indexOf('<?xml');
   },
 
@@ -173,7 +172,7 @@ Compiler.prototype = {
    * @param {Boolean} newline
    * @api public
    */
-  
+
   prettyIndent: function(offset, newline){
     offset = offset || 0;
     newline = newline ? '\\n' : '';
@@ -220,8 +219,7 @@ Compiler.prototype = {
    */
 
   visitNode: function(node){
-    var name = node.constructor.name
-      || node.constructor.toString().match(/function ([^(\s]+)()/)[1];
+	var name = node.constructorName || node.constructor.name || node.constructor.toString().match(/function ([^(\s]+)()/)[1];
     return this['visit' + name](node);
   },
 
@@ -281,7 +279,7 @@ Compiler.prototype = {
     var len = block.nodes.length
       , escape = this.escape
       , pp = this.pp
-    
+
     // Block keyword has a special meaning in mixins
     if (this.parentIndents && block.mode) {
       if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
@@ -289,16 +287,16 @@ Compiler.prototype = {
       if (pp) this.buf.push("__indent.pop();")
       return;
     }
-    
+
     // Pretty print multi-line text
     if (pp && len > 1 && !escape && block.nodes[0].isText && block.nodes[1].isText)
       this.prettyIndent(1, true);
-    
+
     for (var i = 0; i < len; ++i) {
       // Pretty print text
       if (pp && i > 0 && !escape && block.nodes[i].isText && block.nodes[i-1].isText)
         this.prettyIndent(1, false);
-      
+
       this.visit(block.nodes[i]);
       // Multiple text nodes are separated by newlines
       if (block.nodes[i+1] && block.nodes[i].isText && block.nodes[i+1].isText)
@@ -342,12 +340,12 @@ Compiler.prototype = {
     if (mixin.call) {
       if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
       if (block || attrs.length) {
-        
+
         this.buf.push(name + '.call({');
-        
+
         if (block) {
           this.buf.push('block: function(){');
-          
+
           // Render block with no indents, dynamically added when rendered
           this.parentIndents++;
           var _indents = this.indents;
@@ -355,14 +353,14 @@ Compiler.prototype = {
           this.visit(mixin.block);
           this.indents = _indents;
           this.parentIndents--;
-          
+
           if (attrs.length) {
             this.buf.push('},');
           } else {
             this.buf.push('}');
           }
         }
-        
+
         if (attrs.length) {
           var val = this.attrs(attrs);
           if (val.inherits) {
@@ -372,13 +370,13 @@ Compiler.prototype = {
             this.buf.push('attributes: {' + val.buf + '}, escaped: ' + val.escaped);
           }
         }
-        
+
         if (args) {
           this.buf.push('}, ' + args + ');');
         } else {
           this.buf.push('});');
         }
-        
+
       } else {
         this.buf.push(name + '(' + args + ');');
       }
@@ -566,14 +564,27 @@ Compiler.prototype = {
     this.buf.push(''
       + '// iterate ' + each.obj + '\n'
       + ';(function(){\n'
-      + '  if (\'number\' == typeof ' + each.obj + '.length) {\n'
+      + '  if (\'number\' == typeof ' + each.obj + '.length) {\n');
+
+    if (each.alternative) {
+      this.buf.push('  if (' + each.obj + '.length) {');
+    }
+
+    this.buf.push(''
       + '    for (var ' + each.key + ' = 0, $$l = ' + each.obj + '.length; ' + each.key + ' < $$l; ' + each.key + '++) {\n'
       + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
 
     this.visit(each.block);
 
+    this.buf.push('    }\n');
+
+    if (each.alternative) {
+      this.buf.push('  } else {');
+      this.visit(each.alternative);
+      this.buf.push('  }');
+    }
+
     this.buf.push(''
-      + '    }\n'
       + '  } else {\n'
       + '    for (var ' + each.key + ' in ' + each.obj + ') {\n'
        + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
@@ -656,16 +667,16 @@ function isConstant(val){
   // Check strings/literals
   if (/^ *("([^"\\]*(\\.[^"\\]*)*)"|'([^'\\]*(\\.[^'\\]*)*)'|true|false|null|undefined) *$/i.test(val))
     return true;
-  
+
   // Check numbers
   if (!isNaN(Number(val)))
     return true;
-  
+
   // Check arrays
   var matches;
   if (matches = /^ *\[(.*)\] *$/.exec(val))
     return matches[1].split(',').every(isConstant);
-  
+
   return false;
 }
 
@@ -684,6 +695,7 @@ function escape(html){
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
 }); // module: compiler.js
 
 require.register("doctypes.js", function(module, exports, require){
@@ -808,6 +820,10 @@ module.exports = {
 
 }); // module: filters.js
 
+require.register("index.js", function(module, exports, require){
+jade.js
+}); // module: index.js
+
 require.register("inline-tags.js", function(module, exports, require){
 
 /*!
@@ -859,7 +875,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.26.1';
+exports.version = '0.27.2';
 
 /**
  * Expose self closing tags.
@@ -957,6 +973,20 @@ function parse(str, options){
 }
 
 /**
+ * Strip any UTF-8 BOM off of the start of `str`, if it exists.
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
+function stripBOM(str){
+  return 0xFEFF == str.charCodeAt(0)
+    ? str.substring(1)
+    : str;
+}
+
+/**
  * Compile a `Function` representation of the given jade `str`.
  *
  * Options:
@@ -979,17 +1009,19 @@ exports.compile = function(str, options){
       : 'undefined'
     , fn;
 
+  str = stripBOM(String(str));
+
   if (options.compileDebug !== false) {
     fn = [
         'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(String(str), options)
+      , parse(str, options)
       , '} catch (err) {'
       , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
       , '}'
     ].join('\n');
   } else {
-    fn = parse(String(str), options);
+    fn = parse(str, options);
   }
 
   if (client) {
@@ -1084,6 +1116,8 @@ require.register("lexer.js", function(module, exports, require){
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
  * MIT Licensed
  */
+
+var utils = require('./utils');
 
 /**
  * Initialize `Lexer` with the given `str`.
@@ -1971,6 +2005,8 @@ var BlockComment = module.exports = function BlockComment(val, block, buffer) {
 BlockComment.prototype = new Node;
 BlockComment.prototype.constructor = BlockComment;
 
+
+BlockComment.prototype.constructorName = 'BlockComment';
 }); // module: nodes/block-comment.js
 
 require.register("nodes/block.js", function(module, exports, require){
@@ -2012,6 +2048,7 @@ Block.prototype.constructor = Block;
  */
 
 Block.prototype.isBlock = true;
+Block.prototype.constructorName = 'Block';
 
 /**
  * Replace the nodes in `other` with the nodes
@@ -2513,6 +2550,8 @@ Tag.prototype = new Attrs;
 Tag.prototype.constructor = Tag;
 
 
+Tag.prototype.constructorName = 'Tag';
+
 /**
  * Clone this tag.
  *
@@ -2614,6 +2653,7 @@ Text.prototype.constructor = Text;
  */
 
 Text.prototype.isText = true;
+Text.prototype.constructorName = 'Text';
 }); // module: nodes/text.js
 
 require.register("parser.js", function(module, exports, require){
@@ -3004,6 +3044,10 @@ Parser.prototype = {
       , node = new nodes.Each(tok.code, tok.val, tok.key);
     node.line = this.line();
     node.block = this.block();
+    if (this.peek().type == 'code' && this.peek().val == 'else') {
+      this.advance();
+      node.alternative = this.block();
+    }
     return node;
   },
 
