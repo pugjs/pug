@@ -95,10 +95,8 @@ if (files.length) {
   files.forEach(renderFile);
   if (options.watch) {
     files.forEach(function (file) {
-      fs.watchFile(file, {persistent: true, interval: 500}, function (prev, curr) {
-        if (prev.size !== curr.size && prev.mtime.getTime() !== curr.mtime.getTime()) {
-          renderFile(file);
-        }
+      fs.watchFile(file, {interval: 100}, function (curr, prev) {
+        if (curr.mtime > prev.mtime) renderFile(file);
       });
     });
   }
