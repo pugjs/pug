@@ -28,7 +28,7 @@ jade.min.js: jade.js
 		&& du jade.js
 
 runtime.js: lib/runtime.js
-	@cat support/head.js $< support/foot.js > $@
+	@node support/compile_runtime.js
 
 runtime.min.js: runtime.js
 	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
