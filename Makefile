@@ -24,16 +24,14 @@ jade.js: $(SRC)
 
 jade.min.js: jade.js
 	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
-		&& du jade.min.js \
-		&& du jade.js
+		&& du -bh jade.js jade.min.js
 
 runtime.js: lib/runtime.js
 	@cat support/head.js $< support/foot.js > $@
 
 runtime.min.js: runtime.js
 	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
-	  && du runtime.min.js \
-	  && du runtime.js
+	  && du -bh runtime.js runtime.min.js
 
 clean:
 	rm -f jade.js
