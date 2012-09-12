@@ -92,16 +92,7 @@ var files = program.args;
 
 if (files.length) {
   console.log();
-  files.forEach(renderFile);
-  if (options.watch) {
-    files.forEach(function (file) {
-      fs.watchFile(file, {persistent: true, interval: 500}, function (prev, curr) {
-        if (prev.size !== curr.size && prev.mtime.getTime() !== curr.mtime.getTime()) {
-          renderFile(file);
-        }
-      });
-    });
-  }
+  files.forEach(compileFile);
   process.on('exit', function () {
     console.log();
   });
@@ -132,7 +123,7 @@ function stdin() {
  * Always walk the subdirectories.
  */
 
-function renderFile(path) {
+function renderFile(path, cb) {
   var re = /\.jade$/;
   fs.lstat(path, function(err, stat) {
     if (err) throw err;
@@ -141,7 +132,8 @@ function renderFile(path) {
       fs.readFile(path, 'utf8', function(err, str){
         if (err) throw err;
         options.filename = path;
-        var fn = jade.compile(str, options);
+        var parseInfo = {};
+        var fn = jade.compile(str, options, parseInfo);
         var extname = options.client ? '.js' : '.html';
         path = path.replace(re, extname);
         if (program.out) path = join(program.out, basename(path));
@@ -154,6 +146,7 @@ function renderFile(path) {
           fs.writeFile(path, output, function(err){
             if (err) throw err;
             console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+            cb(null, parseInfo.dependencies);
           });
         });
       });
@@ -161,10 +154,47 @@ function renderFile(path) {
     } else if (stat.isDirectory()) {
       fs.readdir(path, function(err, files) {
         if (err) throw err;
-        files.map(function(filename) {
+        renderFiles(files.map(function(filename) {
           return path + '/' + filename;
-        }).forEach(renderFile);
+        }), cb);
       });
+    }
+  });
+}
+
+function renderFiles(paths, cb) {
+  var dependencies = [];
+  paths.forEach(path, function(){
+    renderFile(path, function(err,incl){
+      dependencies = dependencies.concat(incl);
+    });
+  });
+  cb(null, dependencies);
+}
+
+function compileFile(file) {
+  renderFile(file, function(err,deps) {
+    if (options.watch) {
+      var watchedFiles = [];
+      watchWithDeps(deps);
+      function watchWithDeps(deps) {
+        watchedFiles.forEach(function(f) {
+          fs.unwatchFile(f);
+        });
+        watchedFiles=[];
+        watch(file);
+        deps.forEach(watch);
+        function watch(f) {
+          var w = fs.watchFile(f, {persistent: true, interval: 500}, function (prev, curr) {
+            if (prev.size !== curr.size && prev.mtime.getTime() !== curr.mtime.getTime()) {
+              renderFile(file, function(err, deps){
+                watchWithDeps(deps);
+              });
+            }
+          });
+          watchedFiles.push(f);
+        }
+      }
     }
   });
 }
