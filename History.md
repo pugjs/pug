@@ -1,4 +1,10 @@
 
+0.27.3 / 2012-09-18 
+==================
+
+  * fix escaping of interpolation. Closes #769
+  * loosen "mkdirp" version restriction [TooTallNate]
+
 0.27.2 / 2012-08-07 
 ==================
 
