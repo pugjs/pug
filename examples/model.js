@@ -1,5 +1,4 @@
 
-
 /**
  * Module dependencies.
  */
@@ -109,7 +108,7 @@ Visitor.prototype.visitTag = function(node){
             Visitor.prototype.visitCode.call(this, node);
             break;
         case 'buttons':
-            // Generate context sensative buttons which
+            // Generate context-sensitive buttons which
             // check the record's state.
             node = new nodes.Tag('input');
             node.setAttribute('type', '"submit"');
