@@ -1,4 +1,9 @@
 
+0.27.6 / 2012-10-05 
+==================
+
+  * Included templates can not override blocks of their parent. Closes #699
+
 0.27.5 / 2012-09-24 
 ==================
 
