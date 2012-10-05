@@ -137,10 +137,9 @@ Compiler.prototype = {
    */
 
   setDoctype: function(name){
-    var doctype = doctypes[(name || 'default').toLowerCase()];
-    doctype = doctype || '<!DOCTYPE ' + name + '>';
-    this.doctype = doctype;
-    this.terse = '5' == name || 'html' == name;
+    name = (name && name.toLowerCase()) || 'default';
+    this.doctype = doctypes[name] || '<!DOCTYPE ' + name + '>';
+    this.terse = this.doctype.toLowerCase() == '<!doctype html>';
     this.xml = 0 == this.doctype.indexOf('<?xml');
   },
 
@@ -173,7 +172,7 @@ Compiler.prototype = {
    * @param {Boolean} newline
    * @api public
    */
-  
+
   prettyIndent: function(offset, newline){
     offset = offset || 0;
     newline = newline ? '\\n' : '';
@@ -281,7 +280,7 @@ Compiler.prototype = {
     var len = block.nodes.length
       , escape = this.escape
       , pp = this.pp
-    
+
     // Block keyword has a special meaning in mixins
     if (this.parentIndents && block.mode) {
       if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
@@ -289,16 +288,16 @@ Compiler.prototype = {
       if (pp) this.buf.push("__indent.pop();")
       return;
     }
-    
+
     // Pretty print multi-line text
     if (pp && len > 1 && !escape && block.nodes[0].isText && block.nodes[1].isText)
       this.prettyIndent(1, true);
-    
+
     for (var i = 0; i < len; ++i) {
       // Pretty print text
       if (pp && i > 0 && !escape && block.nodes[i].isText && block.nodes[i-1].isText)
         this.prettyIndent(1, false);
-      
+
       this.visit(block.nodes[i]);
       // Multiple text nodes are separated by newlines
       if (block.nodes[i+1] && block.nodes[i].isText && block.nodes[i+1].isText)
@@ -342,12 +341,12 @@ Compiler.prototype = {
     if (mixin.call) {
       if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
       if (block || attrs.length) {
-        
+
         this.buf.push(name + '.call({');
-        
+
         if (block) {
           this.buf.push('block: function(){');
-          
+
           // Render block with no indents, dynamically added when rendered
           this.parentIndents++;
           var _indents = this.indents;
@@ -355,14 +354,14 @@ Compiler.prototype = {
           this.visit(mixin.block);
           this.indents = _indents;
           this.parentIndents--;
-          
+
           if (attrs.length) {
             this.buf.push('},');
           } else {
             this.buf.push('}');
           }
         }
-        
+
         if (attrs.length) {
           var val = this.attrs(attrs);
           if (val.inherits) {
@@ -372,13 +371,13 @@ Compiler.prototype = {
             this.buf.push('attributes: {' + val.buf + '}, escaped: ' + val.escaped);
           }
         }
-        
+
         if (args) {
           this.buf.push('}, ' + args + ');');
         } else {
           this.buf.push('});');
         }
-        
+
       } else {
         this.buf.push(name + '(' + args + ');');
       }
@@ -566,14 +565,27 @@ Compiler.prototype = {
     this.buf.push(''
       + '// iterate ' + each.obj + '\n'
       + ';(function(){\n'
-      + '  if (\'number\' == typeof ' + each.obj + '.length) {\n'
+      + '  if (\'number\' == typeof ' + each.obj + '.length) {\n');
+
+    if (each.alternative) {
+      this.buf.push('  if (' + each.obj + '.length) {');
+    }
+
+    this.buf.push(''
       + '    for (var ' + each.key + ' = 0, $$l = ' + each.obj + '.length; ' + each.key + ' < $$l; ' + each.key + '++) {\n'
       + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
 
     this.visit(each.block);
 
+    this.buf.push('    }\n');
+
+    if (each.alternative) {
+      this.buf.push('  } else {');
+      this.visit(each.alternative);
+      this.buf.push('  }');
+    }
+
     this.buf.push(''
-      + '    }\n'
       + '  } else {\n'
       + '    for (var ' + each.key + ' in ' + each.obj + ') {\n'
        + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
@@ -656,16 +668,16 @@ function isConstant(val){
   // Check strings/literals
   if (/^ *("([^"\\]*(\\.[^"\\]*)*)"|'([^'\\]*(\\.[^'\\]*)*)'|true|false|null|undefined) *$/i.test(val))
     return true;
-  
+
   // Check numbers
   if (!isNaN(Number(val)))
     return true;
-  
+
   // Check arrays
   var matches;
   if (matches = /^ *\[(.*)\] *$/.exec(val))
     return matches[1].split(',').every(isConstant);
-  
+
   return false;
 }
 
@@ -684,6 +696,7 @@ function escape(html){
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
 }); // module: compiler.js
 
 require.register("doctypes.js", function(module, exports, require){
@@ -859,7 +872,7 @@ var Parser = require('./parser')
  * Library version.
  */
 
-exports.version = '0.26.1';
+exports.version = '0.27.6';
 
 /**
  * Expose self closing tags.
@@ -957,6 +970,20 @@ function parse(str, options){
 }
 
 /**
+ * Strip any UTF-8 BOM off of the start of `str`, if it exists.
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
+function stripBOM(str){
+  return 0xFEFF == str.charCodeAt(0)
+    ? str.substring(1)
+    : str;
+}
+
+/**
  * Compile a `Function` representation of the given jade `str`.
  *
  * Options:
@@ -979,17 +1006,19 @@ exports.compile = function(str, options){
       : 'undefined'
     , fn;
 
+  str = stripBOM(String(str));
+
   if (options.compileDebug !== false) {
     fn = [
         'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(String(str), options)
+      , parse(str, options)
       , '} catch (err) {'
       , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
       , '}'
     ].join('\n');
   } else {
-    fn = parse(String(str), options);
+    fn = parse(str, options);
   }
 
   if (client) {
@@ -1078,12 +1107,13 @@ exports.__express = exports.renderFile;
 }); // module: jade.js
 
 require.register("lexer.js", function(module, exports, require){
-
 /*!
  * Jade - Lexer
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
  * MIT Licensed
  */
+
+var utils = require('./utils');
 
 /**
  * Initialize `Lexer` with the given `str`.
@@ -1553,8 +1583,8 @@ Lexer.prototype = {
       var flags = captures[1];
       captures[1] = captures[2];
       var tok = this.tok('code', captures[1]);
-      tok.escape = flags[0] === '=';
-      tok.buffer = flags[0] === '=' || flags[1] === '=';
+      tok.escape = flags.charAt(0) === '=';
+      tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
       return tok;
     }
   },
@@ -1583,8 +1613,10 @@ Lexer.prototype = {
       }
 
       function interpolate(attr) {
-        return attr.replace(/#\{([^}]+)\}/g, function(_, expr){
-          return quote + " + (" + expr + ") + " + quote;
+        return attr.replace(/(\\)?#\{([^}]+)\}/g, function(_, escape, expr){
+          return escape
+             ? _
+             : quote + " + (" + expr + ") + " + quote;
         });
       }
 
@@ -2077,6 +2109,7 @@ Block.prototype.includeBlock = function(){
     else if (node.textOnly) continue;
     else if (node.includeBlock) ret = node.includeBlock();
     else if (node.block && !node.block.isEmpty()) ret = node.block.includeBlock();
+    if (ret.yield) return ret;
   }
 
   return ret;
@@ -2629,7 +2662,8 @@ require.register("parser.js", function(module, exports, require){
  */
 
 var Lexer = require('./lexer')
-  , nodes = require('./nodes');
+  , nodes = require('./nodes')
+  , utils = require('./utils');
 
 /**
  * Initialize `Parser` with the given input `str` and `filename`.
@@ -3004,6 +3038,10 @@ Parser.prototype = {
       , node = new nodes.Each(tok.code, tok.val, tok.key);
     node.line = this.line();
     node.block = this.block();
+    if (this.peek().type == 'code' && this.peek().val == 'else') {
+      this.advance();
+      node.alternative = this.block();
+    }
     return node;
   },
 
@@ -3100,7 +3138,7 @@ Parser.prototype = {
     var path = join(dir, path)
       , str = fs.readFileSync(path, 'utf8')
      , parser = new Parser(str, path, this.options);
-    parser.blocks = this.blocks;
+    parser.blocks = utils.merge({}, this.blocks);
     parser.mixins = this.mixins;
 
     this.context(parser);
@@ -3549,7 +3587,7 @@ require.register("utils.js", function(module, exports, require){
 var interpolate = exports.interpolate = function(str){
   return str.replace(/(\\)?([#!]){(.*?)}/g, function(str, escape, flag, code){
     return escape
-      ? str
+      ? str.slice(1)
       : "' + "
         + ('!' == flag ? '' : 'escape')
         + "((interp = " + code.replace(/\\'/g, "'")
@@ -3580,6 +3618,22 @@ var escape = exports.escape = function(str) {
 exports.text = function(str){
   return interpolate(escape(str));
 };
+
+/**
+ * Merge `b` into `a`.
+ *
+ * @param {Object} a
+ * @param {Object} b
+ * @return {Object}
+ * @api public
+ */
+
+exports.merge = function(a, b) {
+  for (var key in b) a[key] = b[key];
+  return a;
+};
+
+
 }); // module: utils.js
 
 window.jade = require("jade");
