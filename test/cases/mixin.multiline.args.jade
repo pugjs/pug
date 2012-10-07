@@ -1,0 +1,13 @@
+mixin test(arg)
+  div= arg
+
++test(
+  ')))))'
+  + '((((('
+)
++test((((function() {
+  return 'There are lots of nested parentheses here!';
+}()))))
++test('\')')
++test("\")")
++test("class='hello'")
