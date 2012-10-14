@@ -1043,7 +1043,7 @@ head
   script(src='/jquery.ui.js')
 ```
 
- Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example support we have `user.jade` which utilizes a `user` variable.
+ Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example suppose we have `user.jade` which utilizes a `user` variable.
 
 ```jade
 h1= user.name
