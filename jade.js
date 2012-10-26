@@ -483,8 +483,9 @@ Compiler.prototype = {
    */
 
   visitText: function(text){
-    text = utils.text(text.val.replace(/\\/g, '\\\\'));
+    text = utils.text(text.val.replace(/\\/g, '_SLASH_'));
     if (this.escape) text = escape(text);
+    text = text.replace(/_SLASH_/g, '\\\\');
     this.buffer(text);
   },
 
@@ -965,7 +966,7 @@ function parse(str, options){
       + 'return buf.join("");';
   } catch (err) {
     parser = parser.context();
-    runtime.rethrow(err, parser.filename, parser.lexer.lineno);
+    runtime.rethrow(err, parser.filename, parser.lexer.lineno, str);
   }
 }
 
@@ -3519,11 +3520,13 @@ exports.escape = function escape(html){
  * @api private
  */
 
-exports.rethrow = function rethrow(err, filename, lineno){
-  if (!filename) throw err;
+exports.rethrow = function rethrow(err, filename, lineno, str){
+  if (!str) {
+    if (!filename) throw err;
+    str = require('fs').readFileSync(filename, 'utf8')
+  }
 
   var context = 3
-    , str = require('fs').readFileSync(filename, 'utf8')
     , lines = str.split('\n')
     , start = Math.max(lineno - context, 0)
     , end = Math.min(lines.length, lineno + context);
@@ -3585,12 +3588,16 @@ require.register("utils.js", function(module, exports, require){
  */
 
 var interpolate = exports.interpolate = function(str){
-  return str.replace(/(\\)?([#!]){(.*?)}/g, function(str, escape, flag, code){
+  return str.replace(/(_SLASH_)?([#!]){(.*?)}/g, function(str, escape, flag, code){
+    code = code
+      .replace(/\\'/g, "'")
+      .replace(/_SLASH_/g, '\\');
+
     return escape
-      ? str.slice(1)
+      ? str.slice(7)
       : "' + "
         + ('!' == flag ? '' : 'escape')
-        + "((interp = " + code.replace(/\\'/g, "'")
+        + "((interp = " + code
         + ") == null ? '' : interp) + '";
   });
 };
