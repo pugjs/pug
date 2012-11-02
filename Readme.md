@@ -65,7 +65,6 @@
   - transparent iteration over objects, arrays, and even non-enumerables via `each`
   - block comments
   - no tag prefix
-  - AST filters
   - filters
     - :stylus must have [stylus](http://github.com/LearnBoost/stylus) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
