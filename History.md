@@ -1,4 +1,11 @@
 
+0.27.7 / 2012-11-05 
+==================
+
+  * fix each/else clause for enumerated objects
+  * fix #764 (incorrect line number for error messages)
+  * fix double-escaping of interpolated js slashes. Closes #784
+
 0.27.6 / 2012-10-05 
 ==================
 

@@ -483,8 +483,9 @@ Compiler.prototype = {
    */
 
   visitText: function(text){
-    text = utils.text(text.val.replace(/\\/g, '\\\\'));
+    text = utils.text(text.val.replace(/\\/g, '_SLASH_'));
     if (this.escape) text = escape(text);
+    text = text.replace(/_SLASH_/g, '\\\\');
     this.buffer(text);
   },
 
@@ -587,7 +588,9 @@ Compiler.prototype = {
 
     this.buf.push(''
       + '  } else {\n'
+      + '    var $$l = 0;\n'
       + '    for (var ' + each.key + ' in ' + each.obj + ') {\n'
+      + '      $$l++;'
        + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
       + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
 
@@ -595,7 +598,13 @@ Compiler.prototype = {
 
      this.buf.push('      }\n');
 
-    this.buf.push('   }\n  }\n}).call(this);\n');
+    this.buf.push('    }\n');
+    if (each.alternative) {
+      this.buf.push('    if ($$l === 0) {');
+      this.visit(each.alternative);
+      this.buf.push('    }');
+    }
+    this.buf.push('  }\n}).call(this);\n');
   },
 
   /**
@@ -813,7 +822,6 @@ module.exports = {
    */
 
   coffeescript: function(str){
-    str = str.replace(/\\n/g, '\n');
     var js = require('coffee-script').compile(str).replace(/\\/g, '\\\\').replace(/\n/g, '\\n');
     return '<script type="text/javascript">\\n' + js + '</script>';
   }
@@ -1283,6 +1291,8 @@ Lexer.prototype = {
     var captures;
     if (captures = /^\n *\n/.exec(this.input)) {
       this.consume(captures[0].length - 1);
+
+      ++this.lineno;
       if (this.pipeless) return this.tok('text', '');
       return this.next();
     }
@@ -3585,12 +3595,16 @@ require.register("utils.js", function(module, exports, require){
  */
 
 var interpolate = exports.interpolate = function(str){
-  return str.replace(/(\\)?([#!]){(.*?)}/g, function(str, escape, flag, code){
+  return str.replace(/(_SLASH_)?([#!]){(.*?)}/g, function(str, escape, flag, code){
+    code = code
+      .replace(/\\'/g, "'")
+      .replace(/_SLASH_/g, '\\');
+
     return escape
-      ? str.slice(1)
+      ? str.slice(7)
       : "' + "
         + ('!' == flag ? '' : 'escape')
-        + "((interp = " + code.replace(/\\'/g, "'")
+        + "((interp = " + code
         + ") == null ? '' : interp) + '";
   });
 };
