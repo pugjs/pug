@@ -67,6 +67,9 @@ var nodes = require('./nodes')
   , utils = require('./utils');
 
 
+  var INDENT = 78;
+  var UNINDENT = -78;
+
  if (!Object.keys) {
    Object.keys = function(obj){
      var arr = [];
@@ -120,11 +123,40 @@ Compiler.prototype = {
    */
 
   compile: function(){
-    this.buf = ['var interp;'];
-    if (this.pp) this.buf.push("var __indent = [];");
+    if (this.options.coffee) {
+      this.buf = [];
+      if (this.pp) this.buf.push("__indent = [];");
+    } else {
+      this.buf = ['var interp;'];
+      if (this.pp) this.buf.push("var __indent = [];");
+    }
     this.lastBufferedIdx = -1;
     this.visit(this.node);
-    return this.buf.join('\n');
+    if (this.options.coffee) {
+      var content = '';
+      var indent = 0;
+      var indents = [''];
+
+      for(var i=0,l=this.buf.length; i < l; i++) {
+        var el = this.buf[i];
+        if (el === INDENT) {
+          indent++;
+          if (indent == indents.length) {
+            indents[indent] = indents[indent - 1] + '  ';
+          }
+        } else if (el === UNINDENT) {
+          indent--;
+        } else {
+          if (i > 0) {
+            content += "\n";
+          }
+          content += indents[indent] + el;
+        }
+      }
+      return content;
+    } else {
+      return this.buf.join('\n');
+    }
   },
 
   /**
@@ -151,14 +183,42 @@ Compiler.prototype = {
    * @api public
    */
 
+  buf_push: function(content){
+//    this.buf.push('buf.push(
+  },
+
+  pp_push: function(){
+    if (this.options.coffee) {
+      this.buf.push("__indent.push '" + Array(this.indents + 1).join('  ') + "'")
+    } else {
+      this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
+    }
+  },
+
+  pp_pop: function(){
+    if (this.options.coffee) {
+      this.buf.push("__indent.pop()");
+    } else {
+      this.buf.push("__indent.pop();");
+    }
+  },
+
   buffer: function(str, esc){
     if (esc) str = utils.escape(str);
 
     if (this.lastBufferedIdx == this.buf.length) {
       this.lastBuffered += str;
-      this.buf[this.lastBufferedIdx - 1] = "buf.push('" + this.lastBuffered + "');"
+      if (this.options.coffee) {
+        this.buf[this.lastBufferedIdx - 1] = "buf.push('" + this.lastBuffered + "')"
+      } else {
+        this.buf[this.lastBufferedIdx - 1] = "buf.push('" + this.lastBuffered + "');"
+      }
     } else {
-      this.buf.push("buf.push('" + str + "');");
+      if (this.options.coffee) {
+        this.buf.push("buf.push('" + str + "')");
+      } else {
+        this.buf.push("buf.push('" + str + "');");
+      }
       this.lastBuffered = str;
       this.lastBufferedIdx = this.buf.length;
     }
@@ -234,11 +294,18 @@ Compiler.prototype = {
   visitCase: function(node){
     var _ = this.withinCase;
     this.withinCase = true;
-    this.buf.push('switch (' + node.expr + '){');
-    this.visit(node.block);
-    this.buf.push('}');
+    if (this.options.coffee) {
+      this.buf.push('switch (' + node.expr + ')');
+      this.buf.push(INDENT);
+      this.visit(node.block);
+      this.buf.push(UNINDENT);
+    } else {
+      this.buf.push('switch (' + node.expr + '){');
+      this.visit(node.block);
+      this.buf.push('}');
+    }
     this.withinCase = _;
-  },
+   },
 
   /**
    * Visit when `node`.
@@ -248,13 +315,24 @@ Compiler.prototype = {
    */
 
   visitWhen: function(node){
-    if ('default' == node.expr) {
-      this.buf.push('default:');
+    if (this.options.coffee) {
+      if ('default' == node.expr) {
+        this.buf.push('else');
+      } else {
+        this.buf.push('when ' + node.expr);
+      }
+      this.buf.push(INDENT)
+      this.visit(node.block);
+      this.buf.push(UNINDENT);
     } else {
-      this.buf.push('case ' + node.expr + ':');
+      if ('default' == node.expr) {
+        this.buf.push('default:');
+      } else {
+        this.buf.push('case ' + node.expr + ':');
+      }
+      this.visit(node.block);
+      this.buf.push('  break;');
     }
-    this.visit(node.block);
-    this.buf.push('  break;');
   },
 
   /**
@@ -283,9 +361,9 @@ Compiler.prototype = {
 
     // Block keyword has a special meaning in mixins
     if (this.parentIndents && block.mode) {
-      if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
+      if (pp) this.pp_push();
       this.buf.push('block && block();');
-      if (pp) this.buf.push("__indent.pop();")
+      if (pp) this.pp_pop();
       return;
     }
 
@@ -339,13 +417,18 @@ Compiler.prototype = {
       , pp = this.pp;
 
     if (mixin.call) {
-      if (pp) this.buf.push("__indent.push('" + Array(this.indents + 1).join('  ') + "');")
+      if (pp) this.pp_push();
       if (block || attrs.length) {
 
         this.buf.push(name + '.call({');
 
         if (block) {
-          this.buf.push('block: function(){');
+          if (this.options.coffee) {
+            this.buf.push('block: (() ->')
+            this.buf.push(INDENT)
+          } else {
+            this.buf.push('block: function(){');
+          }
 
           // Render block with no indents, dynamically added when rendered
           this.parentIndents++;
@@ -355,10 +438,19 @@ Compiler.prototype = {
           this.indents = _indents;
           this.parentIndents--;
 
-          if (attrs.length) {
-            this.buf.push('},');
+          if (this.options.coffee) {
+            this.push(UNINDENT)
+            if (attrs.length) {
+              this.buf.push('),');
+            } else {
+              this.buf.push(')');
+            }
           } else {
-            this.buf.push('}');
+            if (attrs.length) {
+              this.buf.push('},');
+            } else {
+              this.buf.push('}');
+            }
           }
         }
 
@@ -372,23 +464,40 @@ Compiler.prototype = {
           }
         }
 
-        if (args) {
-          this.buf.push('}, ' + args + ');');
+        if (this.options.coffee) {
+          if (args) {
+            this.buf.push('), ' + args + ');');
+          } else {
+            this.buf.push('));');
+          }
         } else {
-          this.buf.push('});');
+          if (args) {
+            this.buf.push('}, ' + args + ');');
+          } else {
+            this.buf.push('});');
+          }
         }
 
       } else {
         this.buf.push(name + '(' + args + ');');
       }
-      if (pp) this.buf.push("__indent.pop();")
+      if (pp) this.pp_pop();
     } else {
-      this.buf.push('var ' + name + ' = function(' + args + '){');
-      this.buf.push('var block = this.block, attributes = this.attributes || {}, escaped = this.escaped || {};');
+      if (this.options.coffee) {
+        this.buf.push(name + ' = ((' + args + ') ->');
+        this.buf.push('block = @block, attributes = @attributes || {}, escaped = @escaped || {}');
+      } else {
+        this.buf.push('var ' + name + ' = function(' + args + '){');
+        this.buf.push('var block = this.block, attributes = this.attributes || {}, escaped = this.escaped || {};');
+      }
       this.parentIndents++;
       this.visit(block);
       this.parentIndents--;
-      this.buf.push('};');
+      if (this.options.coffee) {
+        this.buf.push(')');
+      } else {
+        this.buf.push('};');
+      }
     }
   },
 
@@ -404,6 +513,21 @@ Compiler.prototype = {
     this.indents++;
     var name = tag.name
       , pp = this.pp;
+
+    // Hack to support 'for val,key of obj' in CoffeeScript w/o changing the lexer+parser
+    if(
+      (tag.name == 'for')
+      && (tag.attrs.length == 0)
+      && (tag.block && tag.block.nodes && tag.block.nodes[0] && tag.block.nodes[0].val))
+    {
+      this.buf.push('for ' + tag.block.nodes[0].val)
+      this.buf.push(INDENT);
+      block = tag.block.clone();
+      block.nodes.shift();
+      this.visit(block);
+      this.buf.push(UNINDENT);
+      return;
+    }
 
     if (tag.buffer) name = "' + (" + name + ") + '";
 
@@ -539,19 +663,34 @@ Compiler.prototype = {
     // Buffer code
     if (code.buffer) {
       var val = code.val.trimLeft();
-      this.buf.push('var __val__ = ' + val);
-      val = 'null == __val__ ? "" : __val__';
+      if (this.options.coffee) {
+        this.buf.push('__val__ = ' + val);
+        val = 'if null == __val__ then "" else __val__';
+      } else {
+        this.buf.push('var __val__ = ' + val);
+        val = 'null == __val__ ? "" : __val__';
+      }
       if (code.escape) val = 'escape(' + val + ')';
-      this.buf.push("buf.push(" + val + ");");
+      if (this.options.coffee) {
+        this.buf.push("buf.push(" + val + ")");
+      } else {
+        this.buf.push("buf.push(" + val + ");");
+      }
     } else {
       this.buf.push(code.val);
     }
 
     // Block support
     if (code.block) {
-      if (!code.buffer) this.buf.push('{');
-      this.visit(code.block);
-      if (!code.buffer) this.buf.push('}');
+      if (this.options.coffee) {
+        if (!code.buffer) this.buf.push('WTFAAAAAAAAAAA');
+        this.visit(code.block);
+        if (!code.buffer) this.buf.push('WTFBBBBBBBBBBB');
+      } else {
+        if (!code.buffer) this.buf.push('{');
+        this.visit(code.block);
+        if (!code.buffer) this.buf.push('}');
+      }
     }
   },
 
@@ -563,40 +702,51 @@ Compiler.prototype = {
    */
 
   visitEach: function(each){
-    this.buf.push(''
-      + '// iterate ' + each.obj + '\n'
-      + ';(function(){\n'
-      + '  if (\'number\' == typeof ' + each.obj + '.length) {\n');
+    if (this.options.coffee) {
+      this.buf.push('for ' + each.val + ',' + each.key + ' in ' + each.obj)
+      this.buf.push(INDENT);
+      this.visit(each.block);
+      this.buf.push(UNINDENT);
+    } else {
+      this.buf.push(''
+        + '// iterate ' + each.obj + '\n'
+        + ';(function(){\n'
+        + '  if (\'number\' == typeof ' + each.obj + '.length) {\n');
 
-    if (each.alternative) {
-      this.buf.push('  if (' + each.obj + '.length) {');
+      if (each.alternative) {
+        if (this.options.coffee) {
+          this.buf.push('if (' + each.obj + '.length) {');
+        } else {
+          this.buf.push('  if (' + each.obj + '.length) {');
+        }
+      }
+
+      this.buf.push(''
+        + '    for (var ' + each.key + ' = 0, $$l = ' + each.obj + '.length; ' + each.key + ' < $$l; ' + each.key + '++) {\n'
+        + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
+
+      this.visit(each.block);
+
+      this.buf.push('    }\n');
+
+      if (each.alternative) {
+        this.buf.push('  } else {');
+        this.visit(each.alternative);
+        this.buf.push('  }');
+      }
+
+      this.buf.push(''
+        + '  } else {\n'
+        + '    for (var ' + each.key + ' in ' + each.obj + ') {\n'
+         + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
+        + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
+
+      this.visit(each.block);
+
+       this.buf.push('      }\n');
+
+      this.buf.push('   }\n  }\n}).call(this);\n');
     }
-
-    this.buf.push(''
-      + '    for (var ' + each.key + ' = 0, $$l = ' + each.obj + '.length; ' + each.key + ' < $$l; ' + each.key + '++) {\n'
-      + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
-
-    this.visit(each.block);
-
-    this.buf.push('    }\n');
-
-    if (each.alternative) {
-      this.buf.push('  } else {');
-      this.visit(each.alternative);
-      this.buf.push('  }');
-    }
-
-    this.buf.push(''
-      + '  } else {\n'
-      + '    for (var ' + each.key + ' in ' + each.obj + ') {\n'
-       + '      if (' + each.obj + '.hasOwnProperty(' + each.key + ')){'
-      + '      var ' + each.val + ' = ' + each.obj + '[' + each.key + '];\n');
-
-    this.visit(each.block);
-
-     this.buf.push('      }\n');
-
-    this.buf.push('   }\n  }\n}).call(this);\n');
   },
 
   /**
@@ -609,13 +759,22 @@ Compiler.prototype = {
   visitAttributes: function(attrs){
     var val = this.attrs(attrs);
     if (val.inherits) {
-      this.buf.push("buf.push(attrs(merge({ " + val.buf +
-          " }, attributes), merge(" + val.escaped + ", escaped, true)));");
+      if (this.options.coffee) {
+        this.buf.push("buf.push attrs merge({ " + val.buf +
+            " }, attributes), merge(" + val.escaped + ", escaped, true)");
+      } else {
+        this.buf.push("buf.push(attrs(merge({ " + val.buf +
+            " }, attributes), merge(" + val.escaped + ", escaped, true)));");
+      }
     } else if (val.constant) {
       eval('var buf={' + val.buf + '};');
       this.buffer(runtime.attrs(buf, JSON.parse(val.escaped)), true);
     } else {
-      this.buf.push("buf.push(attrs({ " + val.buf + " }, " + val.escaped + "));");
+      if (this.options.coffee) {
+        this.buf.push("buf.push attrs { " + val.buf + " }, " + val.escaped);
+      } else {
+        this.buf.push("buf.push(attrs({ " + val.buf + " }, " + val.escaped + "));");
+      }
     }
   },
 
@@ -958,12 +1117,23 @@ function parse(str, options){
       console.error('\nCompiled Function:\n\n\033[90m%s\033[0m', js.replace(/^/gm, '  '));
     }
 
-    return ''
-      + 'var buf = [];\n'
-      + (options.self
-        ? 'var self = locals || {};\n' + js
-        : 'with (locals || {}) {\n' + js + '\n}\n')
-      + 'return buf.join("");';
+    if (options.coffee) {
+      return ''
+        + 'buf = []\n'
+        + (options.inline ? js
+          : options.self ? 'self = locals || {}\n' + js
+          : '`with (locals || {}) {`\n' + js + '\n`}`')
+        + '\n'
+        + "return buf.join('')";
+    } else {
+      return ''
+        + 'var buf = [];\n'
+        + (options.inline ? js
+          : options.self ? 'var self = locals || {};\n' + js
+          : 'with (locals || {}) {\n' + js + '\n}')
+        + '\n'
+        + "return buf.join('');";
+    }
   } catch (err) {
     parser = parser.context();
     runtime.rethrow(err, parser.filename, parser.lexer.lineno, str);
@@ -1010,29 +1180,51 @@ exports.compile = function(str, options){
   str = stripBOM(String(str));
 
   if (options.compileDebug !== false) {
-    fn = [
-        'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
-      , 'try {'
-      , parse(str, options)
-      , '} catch (err) {'
-      , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
-      , '}'
-    ].join('\n');
+    if (options.coffee) {
+      fn = [
+          '__jade = [{ lineno: 1, filename: ' + filename + ' }];'
+        , 'try'
+        , parse(str, options).replace(/^/gm, '  ')
+        , 'catch (err)'
+        , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
+        , ''
+      ].join('\n');
+    } else {
+      fn = [
+          'var __jade = [{ lineno: 1, filename: ' + filename + ' }];'
+        , 'try {'
+        , parse(str, options)
+        , '} catch (err) {'
+        , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
+        , '}'
+      ].join('\n');
+    }
   } else {
     fn = parse(str, options);
   }
 
   if (client) {
-    fn = 'attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;\n' + fn;
+    if (options.coffee) {
+      fn = 'attrs ||= jade.attrs; escape ||= jade.escape; rethrow ||= jade.rethrow; merge ||= jade.merge\n' + fn;
+    } else {
+      fn = 'attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;\n' + fn;
+    }
   }
 
-  fn = new Function('locals, attrs, escape, rethrow, merge', fn);
-
-  if (client) return fn;
-
-  return function(locals){
-    return fn(locals, runtime.attrs, runtime.escape, runtime.rethrow, runtime.merge);
-  };
+  if (options.coffee) {
+    return [
+      '((locals, attrs, escape, rethrow, merge)->',
+      fn.replace(/^/gm, '  '),
+      ')'
+    ].join('\n');
+    // Coffee mode can't be run directly, only returned as a string
+  } else {
+    fn = new Function('locals, attrs, escape, rethrow, merge', fn);
+    if (client) return fn;
+    return function(locals){
+      return fn(locals, runtime.attrs, runtime.escape, runtime.rethrow, runtime.merge);
+    };
+  }
 };
 
 /**
