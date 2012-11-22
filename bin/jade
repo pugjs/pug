@@ -10,6 +10,7 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
+  , relative = path.relative
   , exists = fs.existsSync || path.existsSync
   , join = path.join
   , mkdirp = require('mkdirp')
@@ -92,7 +93,8 @@ var files = program.args;
 
 if (files.length) {
   console.log();
-  files.forEach(renderFile);
+  for (var i=0; i<files.length; i++)
+    renderFile(files[i]);
   if (options.watch) {
     files.forEach(function (file) {
       fs.watchFile(file, {interval: 100}, function (curr, prev) {
@@ -130,7 +132,7 @@ function stdin() {
  * Always walk the subdirectories.
  */
 
-function renderFile(path) {
+function renderFile(path, relativeFrom) {
   var re = /\.jade$/;
   fs.lstat(path, function(err, stat) {
     if (err) throw err;
@@ -142,7 +144,10 @@ function renderFile(path) {
         var fn = jade.compile(str, options);
         var extname = options.client ? '.js' : '.html';
         path = path.replace(re, extname);
-        if (program.out) path = join(program.out, basename(path));
+        if (program.out) {
+          path = relativeFrom ? relative(relativeFrom, path) : basename(path)
+          path = join(program.out, path);
+        }
         var dir = resolve(dirname(path));
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
@@ -159,9 +164,9 @@ function renderFile(path) {
     } else if (stat.isDirectory()) {
       fs.readdir(path, function(err, files) {
         if (err) throw err;
-        files.map(function(filename) {
-          return path + '/' + filename;
-        }).forEach(renderFile);
+        if (!relativeFrom) relativeFrom = path;
+        for (var i=0; i<files.length; i++)
+          renderFile(join(path,files[i]), relativeFrom)
       });
     }
   });
