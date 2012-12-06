@@ -26,11 +26,10 @@
   - AST filters
   - 过滤器
     - :sass [sass.js](http://github.com/visionmedia/sass.js) 必须已经安装
-    - :less must have [less.js](http://github.com/cloudhead/less.js) 必须已经安装
-installed
+    - :less [less.js](http://github.com/cloudhead/less.js) 必须已经安装
     - :markdown [markdown-js](http://github.com/evilstreak/markdown-js) 或者[node-discount](http://github.com/visionmedia/node-discount) 必须已经安装
     - :cdata
-    - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) 必须已经安装
+    - :coffeescript [coffee-script](http://jashkenas.github.com/coffee-script/) 必须已经安装
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
