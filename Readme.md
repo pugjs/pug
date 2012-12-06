@@ -12,24 +12,25 @@
   - 静态包含
   - 属性改写
   - 安全，默认代码是转义的
-  - contextual error reporting at compile &amp; run time
+  - 运行时和编译时上下文错误报告 
   - 命令行下编译jade模板
   - html 5 模式 (使用 _!!! 5_ 文档类型)
   - 可选的在内存缓存
-  - combine dynamic and static tag classes
-  - parse tree manipulation via _filters_
-  - template inheritance
-  - supports [Express JS](http://expressjs.com) out of the box
-  - transparent iteration over objects, arrays, and even non-enumerables via `each`
+  - 合并动态和静态标签类
+  - 可以通过 _filters_ 修改树
+  - 模板继承
+  - 原生支持 [Express JS](http://expressjs.com) 
+  - 通过 `each` 枚举对象、数组甚至是不能枚举的对象
   - 块注释
   - 没有前缀的标签
   - AST filters
   - 过滤器
-    - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
-    - :less must have [less.js](http://github.com/cloudhead/less.js) installed
-    - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
+    - :sass [sass.js](http://github.com/visionmedia/sass.js) 必须已经安装
+    - :less must have [less.js](http://github.com/cloudhead/less.js) 必须已经安装
+installed
+    - :markdown [markdown-js](http://github.com/evilstreak/markdown-js) 或者[node-discount](http://github.com/visionmedia/node-discount) 必须已经安装
     - :cdata
-    - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) installed
+    - :coffeescript must have [coffee-script](http://jashkenas.github.com/coffee-script/) 必须已经安装
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
@@ -151,13 +152,13 @@ which is syntactic sugar for what we have already been doing, and outputs:
 
 ### 标签文本 
 
-Simply place some content after the tag:
+只需要简单的把内容放在标签之后：
 
     p wahoo!
 
-renders `<p>wahoo!</p>`.
+它会被渲染为 `<p>wahoo!</p>`.
 
-well cool, but how about large bodies of text:
+很帅吧，但是大段的文本怎么办呢：
 
     p
       | foo bar baz
@@ -165,7 +166,7 @@ well cool, but how about large bodies of text:
       | super cool
       | go jade go
 
-renders `<p>foo bar baz rawr.....</p>`
+渲染为 `<p>foo bar baz rawr.....</p>`
 
 interpolation? yup! both types of text can utilize interpolation,
 if we passed `{ name: 'tj', email: 'tj@vision-media.ca' }` to the compiled function we can do the following:
