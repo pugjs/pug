@@ -1,31 +1,30 @@
 # Jade - template engine
 
- Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
- and implemented with JavaScript for [node](http://nodejs.org).
+ Jade 是一个高性能的模板引擎，它深受[Haml](http://haml-lang.com)影响，它是用javascript实现的,并且可以供[node](http://nodejs.org)使用.
 
-## Features
+## 特性
 
-  - client-side support
-  - great readability
-  - flexible indentation
-  - block-expansion
-  - mixins
-  - static includes
-  - attribute interpolation
-  - code is escaped by default for security
+  - 客户端支持
+  - 代码高可读
+  - 灵活的缩进
+  - 块展开
+  - 混合
+  - 静态包含
+  - 属性改写
+  - 安全，默认代码是转义的
   - contextual error reporting at compile &amp; run time
-  - executable for compiling jade templates via the command line
-  - html 5 mode (using the _!!! 5_ doctype)
-  - optional memory caching
+  - 命令行下编译jade模板
+  - html 5 模式 (使用 _!!! 5_ 文档类型)
+  - 可选的在内存缓存
   - combine dynamic and static tag classes
   - parse tree manipulation via _filters_
   - template inheritance
   - supports [Express JS](http://expressjs.com) out of the box
   - transparent iteration over objects, arrays, and even non-enumerables via `each`
-  - block comments
-  - no tag prefix
+  - 块注释
+  - 没有前缀的标签
   - AST filters
-  - filters
+  - 过滤器
     - :sass must have [sass.js](http://github.com/visionmedia/sass.js) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
     - :markdown must have [markdown-js](http://github.com/evilstreak/markdown-js) installed or [node-discount](http://github.com/visionmedia/node-discount)
@@ -34,27 +33,27 @@
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
-  - [html2jade](https://github.com/donpark/html2jade) converter
+  - [html2jade](https://github.com/donpark/html2jade) 转换器
 
-## Implementations
+## 其它实现
 
   - [php](http://github.com/everzet/jade.php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
   - [ruby](http://github.com/stonean/slim)
 
-## Installation
+## 安装
 
-via npm:
+通过 npm:
 
     npm install jade
 
-## Browser Support
+## 浏览器支持
 
- To compile jade to a single file compatible for client-side use simply execute:
+ 把jade编译为一个可供浏览器使用的单文件，只需要简单的执行:
  
     $ make jade.js
 
- Alternatively, if uglifyjs is installed via npm (`npm install uglify-js`) you may execute the following which will create both files. However each release builds these for you.
+ 如果你已经安装了uglifyjs (`npm install uglify-js`)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。 
  
     $ make jade.min.js
 
@@ -90,7 +89,7 @@ function anonymous(locals, attrs, escape, rethrow) {
 }
 ```
 
-## Public API
+## 公开API
 
 ```javascript
     var jade = require('jade');
@@ -100,7 +99,7 @@ function anonymous(locals, attrs, escape, rethrow) {
     fn(locals);
 ```
 
-### Options
+### 选项
 
  - `self`      Use a `self` namespace to hold the locals. _false by default_
  - `locals`    Local variable object
@@ -109,13 +108,13 @@ function anonymous(locals, attrs, escape, rethrow) {
  - `compiler`  Compiler to replace jade's default
  - `compileDebug`  When `false` no debug instrumentation is compiled
 
-## Syntax
+## 语法 
 
-### Line Endings
+### 行结束标志
 
-**CRLF** and **CR** are converted to **LF** before parsing.
+**CRLF** 和 **CR** 会在编译之前被转换为 **LF** 
 
-### Tags
+### 标签
 
 A tag is simply a leading word:
 
@@ -150,7 +149,7 @@ which is syntactic sugar for what we have already been doing, and outputs:
 
     `<div id="foo"></div><div class="bar"></div>`
 
-### Tag Text
+### 标签文本 
 
 Simply place some content after the tag:
 
@@ -878,7 +877,7 @@ function anonymous(locals) {
 }
 ```
 
-## Example Makefile
+##  Makefile的一个例子
 
   Below is an example Makefile used to compile _pages/*.jade_
   into _pages/*.html_ files by simply executing `make`.
