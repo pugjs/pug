@@ -170,12 +170,11 @@ function anonymous(locals, attrs, escape, rethrow) {
 
 渲染为 `<p>foo bar baz rawr.....</p>`
 
-interpolation? yup! both types of text can utilize interpolation,
-if we passed `{ name: 'tj', email: 'tj@vision-media.ca' }` to the compiled function we can do the following:
+怎么和数据结合起来？ 所有类型的文本展示都可以和数据结合起来，如果我们把`{ name: 'tj', email: 'tj@vision-media.ca' }` 传给编译函数，下面是模板上的写法:
 
     #user #{name} &lt;#{email}&gt;
 
-outputs `<div id="user">tj &lt;tj@vision-media.ca&gt;</div>`
+它会被渲染为 `<div id="user">tj &lt;tj@vision-media.ca&gt;</div>`
 
 当就是要输出`#{}` 的时候怎么办? 转义一下!
 
@@ -183,25 +182,23 @@ outputs `<div id="user">tj &lt;tj@vision-media.ca&gt;</div>`
 
 它会输出`<p>#{something}</p>`
 
-We can also utilize the unescaped variant `!{html}`, so the following
-will result in a literal script tag:
+同样可以使用非转义的变量`!{html}`, 下面的模板将直接输出一个script标签
 
     - var html = "<script></script>"
     | !{html}
 
-Nested tags that also contain text can optionally use a text block:
+内联标签同样可以使用文本块来包含文本：
 
     label
       | Username:
       input(name='user[name]')
 
-or immediate tag text:
+或者直接使用标签文本:
 
     label Username:
       input(name='user[name]')
 
-Tags that accept _only_ text such as `script`, `style`, and `textarea` do not
-need the leading `|` character, for example:
+_只_包含文本的标签，比如`script`, `style`, 和 `textarea` 不需要前缀`|` 字符, 比如:
 
       html
         head
@@ -213,7 +210,7 @@ need the leading `|` character, for example:
               baz();
             }
 
-Once again as an alternative, we may use a trailing '.' to indicate a text block, for example:
+这里还有一种选择，可以使用'.' 来开始一段文本块，比如：
 
       p.
         foo asdf
@@ -222,7 +219,7 @@ Once again as an alternative, we may use a trailing '.' to indicate a text block
          asdf
         asd.
 
-outputs:
+会被渲染为:
 
         <p>foo asdf
         asdf
@@ -232,60 +229,59 @@ outputs:
         .
         </p>
 
-This however differs from a trailing '.' followed by a space, which although is ignored by the Jade parser, tells Jade that this period is a literal:
+这和带一个空格的 '.' 是不一样的, 带空格的会被Jade的解析器忽略，当作一个普通的文字: 
 
     p .
     
-outputs:
+渲染为:
 
     <p>.</p>
 
 
-It should be noted that text blocks should be doubled escaped.  For example if you desire the following output.
+需要注意的是广西块需要两次转义。比如想要输出下面的文本：
 
     </p>foo\bar</p>
 
-use:
+使用:
 
     p.
       foo\\bar
 
-### Comments
+### 注释
 
-Single line comments currently look the same as JavaScript comments,
-aka "//" and must be placed on their own line:
+单行注释和JavaScript里是一样的，通过"//"来开始，并且必须单独一行：
 
     // just some paragraphs
     p foo
     p bar
 
-would output
+渲染为：
 
     <!-- just some paragraphs -->
     <p>foo</p>
     <p>bar</p>
 
-Jade also supports unbuffered comments, by simply adding a hyphen:
+Jade 同样支持不输出的注释，加一个短横线就行了：
 
     //- will not output within markup
     p foo
     p bar
 
-outputting
+渲染为：
 
     <p>foo</p>
     <p>bar</p>
 
-### Block Comments
+### 块注释
 
- A block comment is legal as well:
+ 块注释也是支持的：
 
       body
         //
           #content
             h1 Example
 
-outputting
+渲染为：
 
     <body>
       <!--
@@ -295,14 +291,14 @@ outputting
       -->
     </body>
 
-Jade supports conditional-comments as well, for example:
+Jade 同样很好的支持了条件注释：
 
     body
       //if IE
         a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
 
-outputs:
 
+渲染为：
     <body>
       <!--[if IE]>
         <a href="http://www.mozilla.com/en-US/firefox/">Get Firefox</a>
@@ -310,9 +306,9 @@ outputs:
     </body>
 
 
-### Nesting
+### 内联
 
- Jade supports nesting to define the tags in a natural way:
+ Jade 支持以自然的方式定义标签嵌套:
 
     ul
       li.first
@@ -322,10 +318,9 @@ outputs:
       li.last
         a(href='#') baz
 
-### Block Expansion
+### 块展开 
 
- Block expansion allows you to create terse single-line nested tags,
- the following example is equivalent to the nesting example above.
+   块展开可以帮助你在一行内创建嵌套的标签，下面的例子和上面的是一样的：
 
       ul
         li.first: a(href='#') foo
@@ -333,69 +328,64 @@ outputs:
         li.last: a(href='#') baz
 
 
-### Attributes
+### 属性
 
-Jade currently supports '(' and ')' as attribute delimiters.
+Jade 现在支持使用'(' 和 ')' 作为属性分隔符
 
     a(href='/login', title='View login page') Login
 
-When a value is `undefined` or `null` the attribute is _not_ added,
-so this is fine, it will not compile 'something="null"'.
+当一个值是 `undefined` 或者 `null` 属性_不_会被加上,
+所以呢，它不会编译出 'something="null"'.
 
     div(something=null)
 
-Boolean attributes are also supported:
+Boolean 属性也是支持的:
 
     input(type="checkbox", checked)
 
-Boolean attributes with code will only output the attribute when `true`:
+使用代码的Boolean 属性只有当属性为`true`时才会输出：
 
     input(type="checkbox", checked=someValue)
     
-Multiple lines work too:
+多行同样也是可用的：
 
     input(type='checkbox',
       name='agreement',
       checked)
 
-Multiple lines without the comma work fine:
+多行的时候可以不加逗号：
 
     input(type='checkbox'
       name='agreement'
       checked)
 
-Funky whitespace? fine:
-
+加点空格，格式好看一点？同样支持
 
     input(
       type='checkbox'
       name='agreement'
       checked)
 
-Colons work:
+冒号也是支持的:
 
     rss(xmlns:atom="atom")
 
-Suppose we have the `user` local `{ id: 12, name: 'tobi' }`
-and we wish to create an anchor tag with `href` pointing to "/user/12"
-we could use regular javascript concatenation:
+假如我有一个`user` 对象 `{ id: 12, name: 'tobi' }`
+我们希望创建一个指向"/user/12"的链接 `href`, 我们可以使用普通的javascript字符串连接，如下:
 
     a(href='/user/' + user.id)= user.name
 
-or we could use jade's interpolation, which I added because everyone
-using Ruby or CoffeeScript seems to think this is legal js..:
+或者我们使用jade的修改方式,这个我想很多使用Ruby或者 CoffeeScript的人会看起来像普通的js..:
 
    a(href='/user/#{user.id}')= user.name
 
-The `class` attribute is special-cased when an array is given,
-allowing you to pass an array such as `bodyClasses = ['user', 'authenticated']` directly:
+`class`属性是一个特殊的属性，你可以直接传递一个数组，比如`bodyClasses = ['user', 'authenticated']` :
 
     body(class=bodyClasses)
 
 ### HTML
 
- Inline html is fine, we can use the pipe syntax to 
- write arbitrary text, in this case some html:
+ 内联的html是可以的，我们可以使用管道定义一段文本 :
 
 ```
 html
@@ -404,8 +394,7 @@ html
     | <p>foo bar baz</p>
 ```
 
- Or we can use the trailing `.` to indicate to Jade that we
- only want text in this block, allowing us to omit the pipes:
+ 或者我们可以使用`.` 来告诉Jade我们需要一段文本：
 
 ```
 html
@@ -414,7 +403,7 @@ html
     <p>foo bar baz</p>
 ```
 
- Both of these examples yield the same result:
+ 上面的两个例子都会渲染成相同的结果：
 
 ```
 <html><body><h1>Title</h1>
@@ -422,8 +411,7 @@ html
 </body></html>
 ```
 
- The same rule applies for anywhere you can have text
- in jade, raw html is fine:
+ 这条规则适应于在jade里的任何文本：
 
 ```
 html
@@ -433,11 +421,11 @@ html
 
 ### Doctypes
 
-To add a doctype simply use `!!!`, or `doctype` followed by an optional value:
+添加文档类型只需要简单的使用 `!!!`, 或者 `doctype` 跟上下面的可选项:
 
     !!!
 
-Will output the _transitional_ doctype, however:
+会渲染出 _transitional_ 文档类型, 或者:
 
     !!! 5
 
@@ -449,21 +437,20 @@ or
 
     doctype html
 
-doctypes are case-insensitive, so the following are equivalent:
+doctypes 是大小写不敏感的, 所以下面两个是一样的:
 
     doctype Basic
     doctype basic
 
-it's also possible to simply pass a doctype literal:
+当然也是可以直接传递一段文档类型的文本：
 
     doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN
 
-yielding:
+渲染后:
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
 
-Will output the _html 5_ doctype. Below are the doctypes
-defined by default, which can easily be extended:
+会输出 _html 5_ 文档类型. 下面的默认的文档类型，可以很简单的扩展：
 
 ```javascript
     var doctypes = exports.doctypes = {
@@ -479,28 +466,26 @@ defined by default, which can easily be extended:
 	};
 ```
 
-To alter the default simply change:
+非常简单的改变默认的：
 
 ```javascript
     jade.doctypes.default = 'whatever you want';
 ```
 
-## Filters
+## 过滤器
 
-Filters are prefixed with `:`, for example `:markdown` and
-pass the following block of text to an arbitrary function for processing. View the _features_
-at the top of this document for available filters.
+过滤器前缀 `:`, 比如 `:markdown` 会把下面块里的文本交给专门的函数进行处理。查看顶部 _特性_ 里有哪些可用的过滤器。
 
     body
       :markdown
         Woah! jade _and_ markdown, very **cool**
         we can even link to [stuff](http://google.com)
 
-Renders:
+渲染为:
 
        <body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
 
-## Code
+## 代码
 
 Jade currently supports three classifications of executable code. The first
 is prefixed by `-`, and is not buffered:
@@ -909,19 +894,19 @@ a watcher-like behaviour:
 
 ```
 
-Usage: jade [options] [dir|file ...]
+使用: jade [options] [dir|file ...]
 
-Options:
+选项:
 
-  -h, --help         output usage information
-  -v, --version      output the version number
-  -o, --obj <str>    javascript options object
-  -O, --out <dir>    output the compiled html to <dir>
-  -p, --path <path>  filename used to resolve includes over stdio
+  -h, --help         输出帮助信息
+  -v, --version      输出版本号
+  -o, --obj <str>    javascript选项
+  -O, --out <dir>    输出编译后的html到<dir>
+  -p, --path <path>  在处理stdio时，查找包含文件时的查找路径
 
 Examples:
 
-  # translate jade the templates dir
+  # 编译整个目录
   $ jade templates
 
   # create {foo,bar}.html
