@@ -487,12 +487,11 @@ doctypes 是大小写不敏感的, 所以下面两个是一样的:
 
 ## 代码
 
-Jade currently supports three classifications of executable code. The first
-is prefixed by `-`, and is not buffered:
+Jade目前支持三种类型的可执行代码。第一种是前缀`-`， 这是不会被输出的：
 
     - var foo = 'bar';
 
-This can be used for conditionals, or iteration:
+这可以用在条件语句或者循环中：
 
     - for (var key in obj)
       p= obj[key]
