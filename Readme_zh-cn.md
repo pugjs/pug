@@ -78,8 +78,7 @@ function anonymous(locals, attrs, escape, rethrow) {
 }
 ```
 
-  Through the use of Jade's `./runtime.js` you may utilize these pre-compiled templates on the client-side _without_ Jade itself, all you need is the associated utility functions (in runtime.js), which are then available as `jade.attrs`, `jade.escape` etc. To enable this you should pass `{ client: true }` to `jade.compile()` to tell Jade to reference the helper functions
-  via `jade.attrs`, `jade.escape` etc.
+  通过使用Jade的 `./runtime.js`你可以在浏览器使用这些预编译的模板而不需要使用Jade, 你只需要使用runtime.js里的工具函数, 它们会放在`jade.attrs`, `jade.escape` 这些里。 把选项 `{ client: true }` 传递给 `jade.compile()`, Jade 会把这些帮助函数的引用放在`jade.attrs`, `jade.escape`.
 
 ```js
 function anonymous(locals, attrs, escape, rethrow) {
@@ -110,7 +109,7 @@ function anonymous(locals, attrs, escape, rethrow) {
  - `filename`  异常发生时使用，includes时必需
  - `debug`     输出token和翻译后的函数体
  - `compiler`  替换掉jade默认的编译器
- - `compileDebug`  When `false` no debug instrumentation is compiled
+ - `compileDebug`  `false`的时候调试的结构不会被输出
 
 ## 语法 
 
