@@ -496,7 +496,7 @@ Jade目前支持三种类型的可执行代码。第一种是前缀`-`， 这是
     - for (var key in obj)
       p= obj[key]
 
-Due to Jade's buffering techniques the following is valid as well:
+由于Jade的缓存技术，下面的代码也是可以的：
 
     - if (foo)
       ul
@@ -506,7 +506,7 @@ Due to Jade's buffering techniques the following is valid as well:
     - else
       p oh no! didnt work
 
-Hell, even verbose iteration:
+哈哈，甚至是很长的循环也是可以的：
 
     - if (items.length)
       ul
@@ -514,29 +514,24 @@ Hell, even verbose iteration:
           li= item
         - })
 
-Anything you want!
+所以你想要的！
 
-Next up we have _escaped_ buffered code, which is used to
-buffer a return value, which is prefixed by `=`:
+下一步我们要_转义_输出的代码，比如我们返回一个值，只要前缀一个`=`：   
 
     - var foo = 'bar'
     = foo
     h1= foo
 
-Which outputs `bar<h1>bar</h1>`. Code buffered by `=` is escaped 
-by default for security, however to output unescaped return values
-you may use `!=`:
+它会渲染为`bar<h1>bar</h1>`. 为了安全起见，使用`=`输出的代码默认是转义的,如果想直接输出不转义的值可以使用`!=`：
 
     p!= aVarContainingMoreHTML
 
- Jade also has designer-friendly variants, making the literal JavaScript
- more expressive and declarative. For example the following assignments
- are equivalent, and the expression is still regular javascript:
+Jade 同样是设计师友好的，它可以使javascript更直接更富表现力。比如下面的赋值语句是相等的，同时表达式还是通常的javascript：
  
      - var foo = 'foo ' + 'bar'
      foo = 'foo ' + 'bar'
 
-  Likewise Jade has first-class `if`, `else if`, `else`, `until`, `while`, `unless` among others, however you must remember that the expressions are still regular javascript:
+Jade会把 `if`, `else if`, `else`, `until`, `while`, `unless`同别的优先对待, 但是你得记住它们还是普通的javascript：
 
      if foo == 'bar'
        ul
@@ -546,66 +541,61 @@ you may use `!=`:
      else
        p oh no! didnt work  
 
-## Iteration
+## 循环
 
- Along with vanilla JavaScript Jade also supports a subset of
- constructs that allow you to create more designer-friendly templates,
- one of these constructs is `each`, taking the form:
+尽管已经支持JavaScript原生代码，Jade还是支持了一些特殊的标签，它们可以让模板更加易于理解，其中之一就是`each`, 这种形式：
 
     each VAL[, KEY] in OBJ
 
-An example iterating over an array:
+一个遍历数组的例子 ：
 
     - var items = ["one", "two", "three"]
     each item in items
       li= item
 
-outputs:
+渲染为:
 
     <li>one</li>
     <li>two</li>
     <li>three</li>
 
-iterating an array with index:
+遍历一个数组同时带上索引：
 
     items = ["one", "two", "three"]
     each item, i in items
       li #{item}: #{i}
 
-outputs:
+渲染为:
 
     <li>one: 0</li>
     <li>two: 1</li>
     <li>three: 2</li>
 
-iterating an object's keys and values:
+遍历一个数组的键值：
 
     obj = { foo: 'bar' }
     each val, key in obj
       li #{key}: #{val}
 
-would output `<li>foo: bar</li>`
+将会渲染为：`<li>foo: bar</li>`
 
-Internally Jade converts these statements to regular
-JavaScript loops such as `users.forEach(function(user){`,
-so lexical scope and nesting applies as it would with regular
-JavaScript:
+Jade在内部会把这些语句转换成原生的JavaScript语句，就像使用 `users.forEach(function(user){`,
+词法作用域和嵌套会像在普通的JavaScript中一样：
 
     each user in users
       each role in user.roles
         li= role
 
- You may also use `for` if you prefer:
+如果你喜欢，也可以使用`for` ：
  
     for user in users
       for role in user.roles
         li= role
 
-## Conditionals
+## 条件语句
 
- Jade conditionals are equivalent to those using the code (`-`) prefix,
- however allow you to ditch parenthesis to become more designer friendly,
- however keep in mind the expression given is _regular_ JavaScript:
+Jade 条件语句和使用了(`-`) 前缀的JavaScript语句是一致的,然后它允许你不使用圆括号，这样会看上去对设计师更友好一点，
+同时要在心里记住这个表达式渲染出的是_常规_Javascript：
 
     for user in users
       if user.role == 'admin'
@@ -613,7 +603,7 @@ JavaScript:
       else
         p= user.name
 
- is equivalent to the following using vanilla JavaScript literals:
+和下面的使用了常规JavaScript的代码是相等的：
 
      for user in users
        - if (user.role == 'admin')
@@ -621,7 +611,7 @@ JavaScript:
        - else
          p= user.name
 
-  Jade also provides have `unless` which is equivalent to `if (!(expr))`:
+Jade 同时支持`unless`, 这和`if (!(expr))`是等价的：
 
      for user in users
        unless user.isAnonymous
@@ -629,11 +619,11 @@ JavaScript:
            | Click to view
            a(href='/users/' + user.id)= user.name 
 
-## Template inheritance
+## 模板继承
 
-  Jade supports template inheritance via the `block` and `extends` keywords. A block is simply a "block" of Jade that may be replaced within a child template, this process is recursive.
+  Jade 支持通过 `block` 和 `extends` 关键字来实现模板继承。 一个块就是一个Jade的"block" ，它将在子模板中实现，同时是支持递归的。
   
-  Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
+  Jade 块支持默认内容，blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
 
 ```
 html
@@ -732,7 +722,8 @@ html
   the given block will be appended to the _last_ block defined
   in the file. For example if `head.jade` contains:
 
-```
+  
+  ```
 head
   script(src='/jquery.js')
 ```
@@ -794,7 +785,7 @@ html
 </div>
 ```
 
-## Generated Output
+## 产生输出 
 
  Suppose we have the following Jade:
 
