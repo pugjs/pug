@@ -2,7 +2,7 @@
 
  Jade 是一个高性能的模板引擎，它深受[Haml](http://haml-lang.com)影响，它是用javascript实现的,并且可以供[node](http://nodejs.org)使用.
 
- 翻译:草依山[博客](http://jser.me) &nbsp; [微博](http://weibo.com/ihubo) 
+ 翻译:草依山 &nbsp;[博客](http://jser.me) &nbsp; [微博](http://weibo.com/ihubo) 
 
 ## 特性
 
