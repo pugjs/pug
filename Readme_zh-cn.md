@@ -17,7 +17,7 @@
   - 运行时和编译时上下文错误报告 
   - 命令行下编译jade模板
   - html 5 模式 (使用 _!!! 5_ 文档类型)
-  - 可选的在内存缓存
+  - 在内存中缓存(可选)
   - 合并动态和静态标签类
   - 可以通过 _filters_ 修改树
   - 模板继承
@@ -27,11 +27,11 @@
   - 没有前缀的标签
   - AST filters
   - 过滤器
-    - :sass [sass.js](http://github.com/visionmedia/sass.js) 必须已经安装
-    - :less [less.js](http://github.com/cloudhead/less.js) 必须已经安装
-    - :markdown [markdown-js](http://github.com/evilstreak/markdown-js) 或者[node-discount](http://github.com/visionmedia/node-discount) 必须已经安装
+    - :sass 必须已经安装[sass.js](http://github.com/visionmedia/sass.js) 
+    - :less 必须已经安装[less.js](http://github.com/cloudhead/less.js) 
+    - :markdown 必须已经安装[markdown-js](http://github.com/evilstreak/markdown-js) 或者[node-discount](http://github.com/visionmedia/node-discount) 
     - :cdata
-    - :coffeescript [coffee-script](http://jashkenas.github.com/coffee-script/) 必须已经安装
+    - :coffeescript 必须已经安装[coffee-script](http://jashkenas.github.com/coffee-script/) 
   - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
