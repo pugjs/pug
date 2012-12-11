@@ -1,8 +1,8 @@
-# Jade - template engine
+# Jade - 模板引擎
 
  Jade 是一个高性能的模板引擎，它深受[Haml](http://haml-lang.com)影响，它是用javascript实现的,并且可以供[node](http://nodejs.org)使用.
 
- 翻译:草依山 &nbsp;[博客](http://jser.me) &nbsp; [微博](http://weibo.com/ihubo) 
+ 翻译:[草依山](http://jser.me) &nbsp; [翻译反馈](http://weibo.com/1826461472/z9jriDdmB#pl_profile_nav) &nbsp;[Fork me](https://github.com/jserme/jade/)
 
 ## 特性
 
