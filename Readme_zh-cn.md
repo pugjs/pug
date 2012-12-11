@@ -466,7 +466,7 @@ doctypes 是大小写不敏感的, 所以下面两个是一样的:
 	};
 ```
 
-非常简单的改变默认的：
+通过下面的代码可以很简单的改变默认的文档类型：
 
 ```javascript
     jade.doctypes.default = 'whatever you want';
@@ -623,7 +623,7 @@ Jade 同时支持`unless`, 这和`if (!(expr))`是等价的：
 
   Jade 支持通过 `block` 和 `extends` 关键字来实现模板继承。 一个块就是一个Jade的"block" ，它将在子模板中实现，同时是支持递归的。
   
-  Jade 块支持默认内容，blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
+  Jade 块如果没有内容，Jade会添加默认内容，下面的代码默认会输出`block scripts`, `block content`, 和 `block foot`.
 
 ```
 html
@@ -638,7 +638,7 @@ html
         p some footer content
 ```
 
-  Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".
+  现在我们来继承这个布局，简单创建一个新文件，像下面那样直接使用`extends`，给定路径（可以选择带.jade扩展名或者不带）. 你可以定义一个或者更多的块来覆盖父级块内容, 注意到这里的`foot`块_没有_定义，所以它还会输出父级的"some footer content"。
 
 ```
 extends extend-layout
@@ -653,7 +653,7 @@ block content
     include pet
 ```
 
-  It's also possible to override a block to provide additional blocks, as shown in the following example where `content` now exposes a `sidebar` and `primary` block for overriding, or the child template could override `content` all together.
+  同样可以在一个子块里添加块，就像下面实现的块`content`里又定义了两个可以被实现的块`sidebar`和`primary`，或者子模板直接实现`content`。
 
 ```
 extends regular-layout
@@ -667,17 +667,16 @@ block content
       p nothing
 ```
 
-## Includes
+## 包含
 
- Includes allow you to statically include chunks of Jade,
- or other content like css, or html which lives in separate files. The classical example is including a header and footer. Suppose we have the following directory structure:
+ Includes 允许你静态包含一段Jade, 或者别的存放在单个文件中的东西比如css, html。 非常常见的例子是包含头部和页脚。 假设我们有一个下面目录结构的文件夹：
 
      ./layout.jade
      ./includes/
        ./head.jade
        ./tail.jade
 
-and the following _layout.jade_:
+下面是 _layout.jade_ 的内容:
 
       html
         include includes/head  
@@ -686,9 +685,7 @@ and the following _layout.jade_:
           p Welcome to my super amazing site.
           include includes/foot
 
-both includes _includes/head_ and _includes/foot_ are
-read relative to the `filename` option given to _layout.jade_,
-which should be an absolute path to this file, however Express does this for you. Include then parses these files, and injects the AST produced to render what you would expect:
+这两个包含 _includes/head_ 和 _includes/foot_ 都会读取相对于给 _layout.jade_  参数`filename` 的路径的文件, 这是一个绝对路径，不用担心Express帮你搞定这些了。Include 会解析这些文件，并且插入到已经生成的语法树中，然后渲染为你期待的内容：
 
 ```html
 <html>
@@ -707,10 +704,7 @@ which should be an absolute path to this file, however Express does this for you
 </html>
 ```
 
- As mentioned `include` can be used to include other content
- such as html or css. By providing an extension Jade will not
- assume that the file is Jade source and will include it as
- a literal:
+ 前面已经提到，`include` 可以包含比如html或者css这样的内容。给定一个扩展名后，Jade不会把这个文件当作一个Jade源代码，并且会把它当作一个普通文本包含进来：
 
 ```
 html
@@ -718,9 +712,7 @@ html
     include content.html
 ```
 
-  Include directives may also accept a block, in which case the
-  the given block will be appended to the _last_ block defined
-  in the file. For example if `head.jade` contains:
+  Include 也可以接受块内容，给定的块将会附加到包含文件 _最后_ 的块里。 举个例子，`head.jade` 包含下面的内容：
 
   
   ```
@@ -728,8 +720,7 @@ head
   script(src='/jquery.js')
 ```
 
- We may append values by providing a block to `include head`
- as shown below, adding the two scripts.
+ 我们可以像下面给`include head`添加内容, 这里是添加两个脚本.
 
 ```
 html
@@ -743,9 +734,7 @@ html
 
 ## Mixins
 
- Mixins are converted to regular JavaScript functions in
- the compiled template that Jade constructs. Mixins may
- take arguments, though not required:
+ Mixins在编译的模板里会被Jade转换为普通的JavaScript函数。 Mixins 可以还参数，但不是必需的：
 
       mixin list
         ul
@@ -753,13 +742,12 @@ html
           li bar
           li baz
 
-  Utilizing a mixin without args looks similar, just without a block:
+  使用不带参数的mixin看上去非常简单，在一个块外：
   
       h2 Groceries
       mixin list
 
-  Mixins may take one or more arguments as well, the arguments
-  are regular javascripts expressions, so for example the following:
+  Mixins 也可以带一个或者多个参数，参数就是普通的javascripts表达式，比如下面的例子：
 
       mixin pets(pets)
         ul.pets
@@ -771,7 +759,7 @@ html
           h2= user.name
           mixin pets(user.pets)
 
-   Would yield something similar to the following html:
+   会输出像下面的html：
 
 ```html
 <div class="user">
@@ -787,7 +775,7 @@ html
 
 ## 产生输出 
 
- Suppose we have the following Jade:
+ 假设我们有下面的Jade源码：
 
 ```
 - var title = 'yay'
@@ -795,10 +783,7 @@ h1.title #{title}
 p Just an example
 ```
 
- When the `compileDebug` option is not explicitly `false`, Jade
- will compile the function instrumented with `__.lineno = n;`, which
- in the event of an exception is passed to `rethrow()` which constructs
- a useful message relative to the initial Jade input.
+ 当 `compileDebug` 选项不是`false`, Jade 会编译时会把函数里加上 `__.lineno = n;`, 这个参数会在编译出错时传递给`rethrow()`, 而这个函数会在Jade初始输出时给出一个有用的错误信息。
 
 ```js
 function anonymous(locals) {
@@ -829,11 +814,7 @@ function anonymous(locals) {
 }
 ```
 
-When the `compileDebug` option _is_ explicitly `false`, this instrumentation
-is stripped, which is very helpful for light-weight client-side templates. Combining Jade's options with the `./runtime.js` file in this repo allows you
-to toString() compiled templates and avoid running the entire Jade library on
-the client, increasing performance, and decreasing the amount of JavaScript
-required.
+当`compileDebug` 参数是`false`, 这个参数会被去掉，这样对于轻量级的浏览器端模板是非常有用的。结合Jade的参数和当前源码库里的 `./runtime.js` 文件，你可以通过toString()来编译模板而不需要在浏览器端运行整个Jade库，这样可以提高性能，也可以减少载入的JavaScript数量。
 
 ```js
 function anonymous(locals) {
@@ -857,8 +838,7 @@ function anonymous(locals) {
 
 ##  Makefile的一个例子
 
-  Below is an example Makefile used to compile _pages/*.jade_
-  into _pages/*.html_ files by simply executing `make`.
+  通过执行`make`， 下面的Makefile例子可以把 _pages/*.jade_ 编译为 _pages/*.html_ 。 
  
 ```make
 JADE = $(shell find pages/*.jade)
@@ -875,12 +855,11 @@ clean:
 .PHONY: clean
 ```
 
-this can be combined with the `watch(1)` command to produce
-a watcher-like behaviour:
+这个可以和`watch(1)` 命令起来产生像下面的行为： 
 
      $ watch make
 
-## jade(1)
+## 命令行的jade(1)
 
 ```
 
@@ -899,19 +878,19 @@ Examples:
   # 编译整个目录
   $ jade templates
 
-  # create {foo,bar}.html
+  # 生成 {foo,bar}.html
   $ jade {foo,bar}.jade
 
-  # jade over stdio
+  # 在标准IO下使用jade 
   $ jade < my.jade > my.html
 
-  # jade over stdio specifying filename to resolve include directives
+  # 在标准IO下使用jade, 同时指定用于查找包含的文件
   $ jade < my.jade -p my.jade > my.html
 
-  # jade over stdio
+  # 在标准IO下使用jade 
   $ echo "h1 Jade!" | jade
 
-  # foo, bar dirs rendering to /tmp
+  # foo, bar 目录渲染到 /tmp
   $ jade foo bar --out /tmp 
 
 ```
