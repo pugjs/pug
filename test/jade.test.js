@@ -964,6 +964,17 @@ module.exports = {
     assert.equal('<html><head>body {\n  color: black;\n}</head></html>'
       , render(str, { filename: __dirname + '/jade.test.js' }));
   },
+  
+  'test include markdown': function(){
+    var str = [
+        'html',
+        '  head',
+        '    include fixtures/test.md',
+    ].join('\n');
+    
+    assert.equal('<html><head><h1>foobar</h1></head></html>'
+      , render(str, { filename: __dirname + '/jade.test.js' }));
+  },
 
   'test include block': function(){
     var str = [
