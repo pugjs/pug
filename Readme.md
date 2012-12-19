@@ -1205,6 +1205,8 @@ function anonymous(locals) {
   Below is an example Makefile used to compile _pages/*.jade_
   into _pages/*.html_ files by simply executing `make`.
 
+_Note:_ If you try to run this snippet and `make` throws a `missing separator` error, you should make sure all indented lines use a tab for indentation instead of spaces. (For whatever reason, GitHub renders this code snippet with 4-space indentation although the actual README file uses tabs in this snippet.)
+
 ```make
 JADE = $(shell find pages/*.jade)
 HTML = $(JADE:.jade=.html)
