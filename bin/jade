@@ -160,8 +160,19 @@ function renderFile(path) {
       fs.readdir(path, function(err, files) {
         if (err) throw err;
         files.map(function(filename) {
-          return path + '/' + filename;
+          return join(path, filename);
         }).forEach(renderFile);
+        // Watch child files if needed
+        if (options.watch) {
+          files.forEach(function (file) {
+            if (re.test(file)){
+              filename = join(path, file);
+              fs.watchFile(filename, {interval: 100}, function (curr, prev) {
+                if (curr.mtime > prev.mtime) renderFile(filename);
+              });
+            }
+          });
+        }
       });
     }
   });
