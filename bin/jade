@@ -166,7 +166,7 @@ function renderFile(path) {
         if (options.watch) {
           files.forEach(function (file) {
             if (re.test(file)){
-              filename = join(path, file);
+              var filename = join(path, file);
               fs.watchFile(filename, {interval: 100}, function (curr, prev) {
                 if (curr.mtime > prev.mtime) renderFile(filename);
               });
