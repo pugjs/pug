@@ -3,7 +3,7 @@
   "description": "Jade template engine",
   "version": "0.28.0",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
-  "repository": "git://github.com/visionmedia/jade",
+  "repository": "git://github.com/snrmwg/jade",
   "main": "./index.js",
   "bin": {
     "jade": "./bin/jade"
