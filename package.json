@@ -12,7 +12,8 @@
   "dependencies": {
     "commander": "0.6.1",
     "mkdirp": "0.3.x",
-    "coffee-script": "~1.4.0"
+    "coffee-script": "~1.4.0",
+    "transformers": "~1.2.1"
   },
   "devDependencies": {
     "mocha": "*",
