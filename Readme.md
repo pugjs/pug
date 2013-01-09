@@ -864,7 +864,7 @@ for user in users
     p= user.name
 ```
 
-  Jade also provides have `unless` which is equivalent to `if (!(expr))`:
+  Jade also provides `unless` which is equivalent to `if (!(expr))`:
 
 ```jade
 for user in users
