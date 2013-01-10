@@ -97,7 +97,7 @@ describe('jade', function(){
 
     it('should support single quotes', function(){
       assert.equal("<p>'foo'</p>", render("p 'foo'"));
-      assert.equal("<p>'foo'\n</p>", render("p\n  | 'foo'"));
+      assert.equal("<p>'foo'</p>", render("p\n  | 'foo'"));
       assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
     });
 
@@ -172,7 +172,7 @@ describe('jade', function(){
           '  | baz'
       ].join('\n');
 
-      assert.equal('<a href="#">foo \nbar \nbaz\n</a>', render(str));
+      assert.equal('<a href="#">foo \nbar \nbaz</a>', render(str));
 
       var str = [
           'ul',
@@ -185,7 +185,7 @@ describe('jade', function(){
       var html = [
           '<ul>',
           '<li>one</li>',
-          '<ul>two\n',
+          '<ul>two',
           '<li>three</li>',
           '</ul>',
           '</ul>'
@@ -307,45 +307,45 @@ describe('jade', function(){
     });
 
     it('should support text', function(){
-      assert.equal('foo\nbar\nbaz\n', render('| foo\n| bar\n| baz'));
-      assert.equal('foo \nbar \nbaz\n', render('| foo \n| bar \n| baz'));
-      assert.equal('(hey)\n', render('| (hey)'));
-      assert.equal('some random text\n', render('| some random text'));
-      assert.equal('  foo\n', render('|   foo'));
-      assert.equal('  foo  \n', render('|   foo  '));
-      assert.equal('  foo  \n bar    \n', render('|   foo  \n|  bar    '));
+      assert.equal('foo\nbar\nbaz', render('| foo\n| bar\n| baz'));
+      assert.equal('foo \nbar \nbaz', render('| foo \n| bar \n| baz'));
+      assert.equal('(hey)', render('| (hey)'));
+      assert.equal('some random text', render('| some random text'));
+      assert.equal('  foo', render('|   foo'));
+      assert.equal('  foo  ', render('|   foo  '));
+      assert.equal('  foo  \n bar    ', render('|   foo  \n|  bar    '));
     });
 
     it('should support pipe-less text', function(){
       assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', render('pre\n  code\n    foo\n\n    bar'));
-      assert.equal('<p>foo\n\nbar\n</p>', render('p.\n  foo\n\n  bar'));
-      assert.equal('<p>foo\n\n\n\nbar\n</p>', render('p.\n  foo\n\n\n\n  bar'));
-      assert.equal('<p>foo\n  bar\nfoo\n</p>', render('p.\n  foo\n    bar\n  foo'));
-      assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
-      assert.equal('<script>s.parentNode.insertBefore(g,s)\n</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
+      assert.equal('<p>foo\n\nbar</p>', render('p.\n  foo\n\n  bar'));
+      assert.equal('<p>foo\n\n\n\nbar</p>', render('p.\n  foo\n\n\n\n  bar'));
+      assert.equal('<p>foo\n  bar\nfoo</p>', render('p.\n  foo\n    bar\n  foo'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
     });
 
     it('should support tag text', function(){
       assert.equal('<p>some random text</p>', render('p some random text'));
-      assert.equal('<p>click\n<a>Google</a>.\n</p>', render('p\n  | click\n  a Google\n  | .'));
+      assert.equal('<p>click<a>Google</a>.</p>', render('p\n  | click\n  a Google\n  | .'));
       assert.equal('<p>(parens)</p>', render('p (parens)'));
       assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
       assert.equal('<option value="">-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
     });
 
     it('should support tag text block', function(){
-      assert.equal('<p>foo \nbar \nbaz\n</p>', render('p\n  | foo \n  | bar \n  | baz'));
-      assert.equal('<label>Password:\n<input/></label>', render('label\n  | Password:\n  input'));
+      assert.equal('<p>foo \nbar \nbaz</p>', render('p\n  | foo \n  | bar \n  | baz'));
+      assert.equal('<label>Password:<input/></label>', render('label\n  | Password:\n  input'));
       assert.equal('<label>Password:<input/></label>', render('label Password:\n  input'));
     });
 
     it('should support tag text interpolation', function(){
-      assert.equal('yo, jade is cool\n', render('| yo, #{name} is cool\n', { name: 'jade' }));
+      assert.equal('yo, jade is cool', render('| yo, #{name} is cool\n', { name: 'jade' }));
       assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { name: 'jade' }));
-      assert.equal('yo, jade is cool\n', render('| yo, #{name || "jade"} is cool', { name: null }));
-      assert.equal('yo, \'jade\' is cool\n', render('| yo, #{name || "\'jade\'"} is cool', { name: null }));
-      assert.equal('foo &lt;script&gt; bar\n', render('| foo #{code} bar', { code: '<script>' }));
-      assert.equal('foo <script> bar\n', render('| foo !{code} bar', { code: '<script>' }));
+      assert.equal('yo, jade is cool', render('| yo, #{name || "jade"} is cool', { name: null }));
+      assert.equal('yo, \'jade\' is cool', render('| yo, #{name || "\'jade\'"} is cool', { name: null }));
+      assert.equal('foo &lt;script&gt; bar', render('| foo #{code} bar', { code: '<script>' }));
+      assert.equal('foo <script> bar', render('| foo !{code} bar', { code: '<script>' }));
     });
 
     it('should support flexible indentation', function(){
@@ -515,9 +515,9 @@ describe('jade', function(){
       ].join('\n');
 
       var html = [
-        '<script>p foo\n\n</script>',
+        '<script>p foo\n</script>',
         '<script type="text/template"><p>foo</p></script>',
-        '<script type="text/template">p foo\n</script>'
+        '<script type="text/template">p foo</script>'
       ].join('');
 
       assert.equal(html, render(str));
@@ -601,14 +601,14 @@ describe('jade', function(){
     });
 
     it('should support literal html', function(){
-      assert.equal('<!--[if IE lt 9]>weeee<![endif]-->\n', render('<!--[if IE lt 9]>weeee<![endif]-->'));
+      assert.equal('<!--[if IE lt 9]>weeee<![endif]-->', render('<!--[if IE lt 9]>weeee<![endif]-->'));
     });
 
     it('should support code', function(){
       assert.equal('test', render('!= "test"'));
       assert.equal('test', render('= "test"'));
       assert.equal('test', render('- var foo = "test"\n=foo'));
-      assert.equal('foo\n<em>test</em>bar\n', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
+      assert.equal('foo<em>test</em>bar', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
       assert.equal('test<h2>something</h2>', render('!= "test"\nh2 something'));
 
       var str = [
