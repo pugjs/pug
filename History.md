@@ -1,4 +1,10 @@
 
+0.28.1 / 2013-01-10 
+==================
+
+  * add passing of filename to include filters
+  * fix wrong new lines for include filters
+
 0.28.0 / 2013-01-08
 ==================
 
