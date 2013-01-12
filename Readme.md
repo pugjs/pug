@@ -1012,6 +1012,27 @@ html
     include content.html
 ```
 
+ `include` within a template using `extend` will only work within a block:
+
+```jade
+extends ../base
+
+block content
+  include ../listview
+```
+
+will include listview but
+
+```jade
+extends ../base
+
+include ../listview
+
+block content
+```
+
+will not.
+
   Include directives may also accept a block, in which case the
   the given block will be appended to the _last_ block defined
   in the file. For example if `head.jade` contains:
