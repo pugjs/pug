@@ -1012,24 +1012,23 @@ html
     include content.html
 ```
 
- `include` used within template that `extend`s will only work within a block:
+ `include` within a template using `extend` will only work within a block:
 
 ```jade
 extends ../base
 
 block content
   include ../listview
-  p foo
 ```
 
 will include listview but
 
 ```jade
 extends ../base
+
 include ../listview
 
 block content
-  p foo
 ```
 
 will not.
