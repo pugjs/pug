@@ -29,6 +29,7 @@
     }
   },
   "scripts": {
+    "test": "mocha -R spec",
     "prepublish": "npm prune"
   }
 }
