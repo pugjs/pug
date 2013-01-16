@@ -417,11 +417,11 @@ head
 outputs:
 
 ```html
-<body>
+<head>
   <!--[if lt IE 8]>
     <script src="/ie-sucks.js"></script>
   <![endif]-->
-</body>
+</head>
 ```
 
 <a name="a6-6"/>
