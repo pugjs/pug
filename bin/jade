@@ -138,22 +138,26 @@ function renderFile(path) {
     if (stat.isFile() && re.test(path)) {
       fs.readFile(path, 'utf8', function(err, str){
         if (err) throw err;
-        options.filename = path;
-        var fn = jade.compile(str, options);
-        var extname = options.client ? '.js' : '.html';
-        path = path.replace(re, extname);
-        if (program.out) path = join(program.out, basename(path));
-        var dir = resolve(dirname(path));
-        mkdirp(dir, 0755, function(err){
-          if (err) throw err;
-          var output = options.client
-            ? fn.toString()
-            : fn(options);
-          fs.writeFile(path, output, function(err){
+        try {
+          options.filename = path;
+          var fn = jade.compile(str, options);
+          var extname = options.client ? '.js' : '.html';
+          path = path.replace(re, extname);
+          if (program.out) path = join(program.out, basename(path));
+          var dir = resolve(dirname(path));
+          mkdirp(dir, 0755, function(err){
             if (err) throw err;
-            console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+            var output = options.client
+              ? fn.toString()
+              : fn(options);
+            fs.writeFile(path, output, function(err){
+              if (err) throw err;
+              console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+            });
           });
-        });
+        } catch(error) {
+          console.log(path, error.stack);
+        }
       });
     // Found directory
     } else if (stat.isDirectory()) {
