@@ -1022,7 +1022,7 @@ exports.compile = function(str, options){
       , 'try {'
       , parse(str, options)
       , '} catch (err) {'
-      , '  rethrow(err, __jade[0].filename, __jade[0].lineno);'
+      , '  rethrow(err, __jade[0].filename, __jade[0].lineno, '+JSON.stringify(str)+');'
       , '}'
     ].join('\n');
   } else {
@@ -1030,7 +1030,7 @@ exports.compile = function(str, options){
   }
 
   if (client) {
-    fn = 'attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;\n' + fn;
+    fn = 'attrs = attrs || jade.runtime.attrs; escape = escape || jade.runtime.escape; rethrow = rethrow || jade.runtime.rethrow; merge = merge || jade.runtime.merge;\n' + fn;
   }
 
   fn = new Function('locals, attrs, escape, rethrow, merge', fn);
@@ -3529,11 +3529,10 @@ exports.escape = function escape(html){
  * @api private
  */
 
-exports.rethrow = function rethrow(err, filename, lineno){
-  if (!filename) throw err;
+exports.rethrow = function rethrow(err, filename, lineno, str){
+  if (!str) throw err;
 
   var context = 3
-    , str = require('fs').readFileSync(filename, 'utf8')
     , lines = str.split('\n')
     , start = Math.max(lineno - context, 0)
     , end = Math.min(lines.length, lineno + context);
@@ -3548,7 +3547,7 @@ exports.rethrow = function rethrow(err, filename, lineno){
   }).join('\n');
 
   // Alter exception message
-  err.path = filename;
+  if (filename) err.path = filename;
   err.message = (filename || 'Jade') + ':' + lineno
     + '\n' + context + '\n\n' + err.message;
   throw err;
