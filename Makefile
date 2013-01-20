@@ -4,7 +4,7 @@ UGLIFY = $(shell find node_modules -name "uglifyjs" -type f)
 UGLIFY_FLAGS = --no-mangle
 REPORTER = dot
 
-all: jade.min.js runtime.min.js
+all: jade.min.js runtime.min.js runtime-amd.min.js
 
 test:
 	@./node_modules/.bin/mocha \
@@ -33,10 +33,20 @@ runtime.min.js: runtime.js
 	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
 	  && du -bh runtime.js runtime.min.js
 
+runtime-amd.js: lib/runtime.js
+	@cat support/head-amd.js $< support/foot-amd.js > $@
+
+runtime-amd.min.js: runtime-amd.js
+	@$(UGLIFY) $(UGLIFY_FLAGS) $< > $@ \
+	  && du runtime-amd.min.js \
+	  && du runtime-amd.js
+
 clean:
 	rm -f jade.js
 	rm -f jade.min.js
 	rm -f runtime.js
 	rm -f runtime.min.js
+	rm -f runtime-amd.js
+	rm -f runtime-amd.min.js
 
 .PHONY: test-cov test benchmark clean
