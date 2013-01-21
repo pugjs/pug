@@ -1,13 +1,19 @@
 extends ../fixtures/multi-append-prepend-block/redefine
 
 append content
-	p appended content 1
+	p.first.append Something appended to content
 
 prepend content
-	p prepended content 1
+	p.first.prepend Something prepended to content
 
 append content
-	p appended content 2
+	p.last.append Last append must be most last
 
 prepend content
-	p prepended content 2
+	p.first.prepend Last prepend must appear at top
+
+append head
+	script(src='jquery.js')
+
+prepend head
+	script(src='foo.js')
