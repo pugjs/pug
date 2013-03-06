@@ -7,7 +7,6 @@
   "dependencies": {},
   "development": {},
   "license": "MIT",
-  "scripts": [
-    "runtime.js"
-  ]
+  "scripts": ["runtime.js"],
+  "main": "runtime.js"
 }
