@@ -1,0 +1,13 @@
+{
+  "name": "jade",
+  "repo": "pgherveou/jade",
+  "description": "Jade template engine",
+  "version": "0.28.2",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "runtime.js"
+  ]
+}
