@@ -982,7 +982,9 @@ html
 
 both includes _includes/head_ and _includes/foot_ are
 read relative to the `filename` option given to _layout.jade_,
-which should be an absolute path to this file, however Express does this for you. Include then parses these files, and injects the AST produced to render what you would expect:
+which should be an absolute path to this file, however Express
+does this for you. Include then parses these files, and injects
+the AST produced to render what you would expect:
 
 ```html
 <html>
@@ -1001,14 +1003,23 @@ which should be an absolute path to this file, however Express does this for you
 </html>
 ```
 
- As mentioned `include` can be used to include other content
- such as html or css. By providing an extension Jade will not
- assume that the file is Jade source and will include it as
- a literal:
+As mentioned `include` can be used to include other content
+such as html or css. By providing an extension, Jade will
+read that file in, apply any [filter](#a7) matching the file's
+extension, and insert that content into the output.
 
 ```jade
 html
+  head
+    //- css and js have simple filters that wrap them in
+        <style> and <script> tags, respectively
+    include stylesheet.css
+    include script.js
   body
+    //- "markdown" files will use the "markdown" filter
+        to convert Markdown to HTML
+    include introduction.markdown
+    //- html files have no filter and are included verbatim
     include content.html
 ```
 
