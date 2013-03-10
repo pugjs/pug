@@ -934,8 +934,8 @@ html
     block head
       script(src='/vendor/jquery.js')
       script(src='/vendor/caustic.js')
-    body
-      block content
+  body
+    block content
 ```
 
  Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
