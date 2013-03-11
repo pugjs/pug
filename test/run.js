@@ -16,7 +16,7 @@ describe("compiled templates", function(){
   });
 
   cases.forEach(function(test){
-    var name = test.replace(/[-.]/g, ' ');
+    var name = test.replace(/[\-.]/g, ' ');
     it(name, function(){
       var path = 'test/cases/' + test + '.jade';
       var str = fs.readFileSync(path, 'utf8');
@@ -24,9 +24,9 @@ describe("compiled templates", function(){
       var fn = jade.compile(str, { filename: path, pretty: true });
       var actual = fn({ title: 'Jade' });
       actual.trim().should.equal(html);
-    })
+    });
   });
-})
+});
 
 describe("error handling", function(){
   var cases = fs.readdirSync('test/errors').filter(function(file){
@@ -36,17 +36,18 @@ describe("error handling", function(){
   });
 
   cases.forEach(function(test){
-    var name = test.replace(/[-.]/g, ' ');
-    it(name, function(done){
+    var name = test.replace(/[\-.]/g, ' ');
+    it(name, function(){
       var path = 'test/errors/' + test + '.jade';
       var str = fs.readFileSync(path, 'utf8');
-      var expected = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
-      var fn = jade.compile(str, { filename: path, pretty: true, debug: true });
+      var expected = fs.readFileSync('test/errors/' + test + '.txt', 'utf8').trim().replace(/\r/g, '');
       try{
-        fn({ title: 'Jade' });
+        var fn = jade.compile(str, { filename: path, pretty: true, debug: true });
+        var result = fn({ title: 'Jade' });
       } catch(err){
-        err.trim().should.equal(expected);
+        err.toString().trim().should.equal(expected);
       }
+      throw new Error("render returned: " + result);
     });
   });
-})
+});
