@@ -1,4 +1,4 @@
-module.exports = jade = (function(exports){
+module.exports = (function(exports){
 /*!
  * Jade - runtime
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
