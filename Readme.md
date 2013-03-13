@@ -1,6 +1,6 @@
- [![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
-
-# Jade - template engine
+# Jade - template engine 
+[![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
+[![Dependency Status](https://gemnasium.com/visionmedia/jade.png)](https://gemnasium.com/visionmedia/jade)
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
@@ -83,7 +83,7 @@
 
   - [php](http://github.com/everzet/jade.php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
-  - [ruby](http://github.com/stonean/slim)
+  - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
   - [java](https://github.com/neuland/jade4j)
 
@@ -934,8 +934,8 @@ html
     block head
       script(src='/vendor/jquery.js')
       script(src='/vendor/caustic.js')
-    body
-      block content
+  body
+    block content
 ```
 
  Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
@@ -982,7 +982,9 @@ html
 
 both includes _includes/head_ and _includes/foot_ are
 read relative to the `filename` option given to _layout.jade_,
-which should be an absolute path to this file, however Express does this for you. Include then parses these files, and injects the AST produced to render what you would expect:
+which should be an absolute path to this file, however Express
+does this for you. Include then parses these files, and injects
+the AST produced to render what you would expect:
 
 ```html
 <html>
@@ -1001,14 +1003,23 @@ which should be an absolute path to this file, however Express does this for you
 </html>
 ```
 
- As mentioned `include` can be used to include other content
- such as html or css. By providing an extension Jade will not
- assume that the file is Jade source and will include it as
- a literal:
+As mentioned `include` can be used to include other content
+such as html or css. By providing an extension, Jade will
+read that file in, apply any [filter](#a7) matching the file's
+extension, and insert that content into the output.
 
 ```jade
 html
+  head
+    //- css and js have simple filters that wrap them in
+        <style> and <script> tags, respectively
+    include stylesheet.css
+    include script.js
   body
+    //- "markdown" files will use the "markdown" filter
+        to convert Markdown to HTML
+    include introduction.markdown
+    //- html files have no filter and are included verbatim
     include content.html
 ```
 
@@ -1208,7 +1219,7 @@ function anonymous(locals) {
 _Note:_ If you try to run this snippet and `make` throws a `missing separator` error, you should make sure all indented lines use a tab for indentation instead of spaces. (For whatever reason, GitHub renders this code snippet with 4-space indentation although the actual README file uses tabs in this snippet.)
 
 ```make
-JADE = $(shell find -wholename './pages/*.jade')
+JADE = $(shell find . -wholename './pages/*.jade')
 HTML = $(JADE:.jade=.html)
 
 all: $(HTML)

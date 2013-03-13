@@ -1,7 +1,7 @@
 {
   "name": "jade",
   "description": "Jade template engine",
-  "version": "0.28.1",
+  "version": "0.28.2",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "repository": "git://github.com/visionmedia/jade",
   "main": "./index.js",
@@ -11,10 +11,10 @@
   "man": "./jade.1",
   "dependencies": {
     "commander": "0.6.1",
-    "mkdirp": "0.3.x",
-    "coffee-script": "~1.4.0"
+    "mkdirp": "0.3.x"
   },
   "devDependencies": {
+    "coffee-script": "*",
     "mocha": "*",
     "markdown": "*",
     "stylus": "*",
