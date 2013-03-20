@@ -363,6 +363,11 @@ describe('jade', function(){
       assert.equal('<!DOCTYPE html><input type="checkbox">', render('!!! 5\ninput(type="checkbox", checked= false)'));
     });
 
+    it('should support html 5 self-closing tags', function(){
+      assert.equal('<!DOCTYPE html><input type="checkbox" checked/>', render('!!! 5\ninput(type="checkbox", checked)',{selfClose:true}));
+      assert.equal('<!DOCTYPE html><br/><img src="img.jpg"/><dummy/>', render('!!! 5\nbr\nimg(src="img.jpg")\ndummy/',{selfClose:true}));
+    });
+
     it('should support multi-line attrs', function(){
       assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\n  bar="baz"\n  checked) foo'));
       assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\nbar="baz"\nchecked) foo'));
