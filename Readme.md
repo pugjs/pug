@@ -1240,6 +1240,8 @@ a watcher-like behaviour:
 $ watch make
 ```
 
+or you use the watch option below:
+
 <a name="a17"/>
 ## jade(1)
 
@@ -1255,8 +1257,9 @@ Options:
   -O, --out <dir>    output the compiled html to <dir>
   -p, --path <path>  filename used to resolve includes
   -P, --pretty       compile pretty html output
-  -c, --client       compile for client-side runtime.js
+  -c, --client       compile function for client-side runtime.js
   -D, --no-debug     compile without debugging (smaller functions)
+  -w, --watch        watch files for changes and automatically re-render
 
 Examples:
 
@@ -1273,7 +1276,7 @@ Examples:
   $ echo "h1 Jade!" | jade
 
   # foo, bar dirs rendering to /tmp
-  $ jade foo bar --out /tmp
+  $ jade foo bar --out /tmp 
 
 ```
 
