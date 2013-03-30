@@ -25,7 +25,7 @@ describe('jade', function(){
     it('should have exports', function(){
       assert.equal('object', typeof jade.selfClosing, 'exports.selfClosing missing');
       assert.equal('object', typeof jade.doctypes, 'exports.doctypes missing');
-      assert.equal('object', typeof jade.filters, 'exports.filters missing');
+      assert.equal('function', typeof jade.filters, 'exports.filters missing');
       assert.equal('object', typeof jade.utils, 'exports.utils missing');
       assert.equal('function', typeof jade.Compiler, 'exports.Compiler missing');
     });

@@ -11,7 +11,8 @@
   "man": "./jade.1",
   "dependencies": {
     "commander": "0.6.1",
-    "mkdirp": "0.3.x"
+    "mkdirp": "0.3.x",
+    "transformers": "~1.8.0"
   },
   "devDependencies": {
     "coffee-script": "*",
