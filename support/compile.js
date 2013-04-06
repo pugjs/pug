@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -88,7 +87,7 @@ function parseConditionals(js) {
 
 function compile() {
   var buf = '';
-  buf += '(function() {\n';
+  buf += 'var jade = (function() {\n';
   buf += '\n// CommonJS require()\n\n';
   buf += browser.require + '\n\n';
   buf += 'require.modules = {};\n\n';
@@ -102,7 +101,7 @@ function compile() {
     buf += js;
     buf += '\n}); // module: ' + file + '\n';
   });
-  buf += '\nwindow.jade = require("jade");\n';
+  buf += '\nreturn require("jade");\n';
   buf += '})();\n';
   fs.writeFile('jade.js', buf, function(err){
     if (err) throw err;

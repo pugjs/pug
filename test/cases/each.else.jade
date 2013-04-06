@@ -16,3 +16,19 @@ if users
       li= user.name
     else
       li no users!
+
+user = { name: 'tobi', age: 10 }
+
+ul
+  each val, key in user
+    li #{key}: #{val}
+  else
+    li user has no details!
+
+user = {}
+
+ul
+  each prop, key in user
+    li #{key}: #{val}
+  else
+    li user has no details!

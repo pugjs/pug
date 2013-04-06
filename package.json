@@ -1,17 +1,21 @@
 {
   "name": "jade",
   "description": "Jade template engine",
-  "version": "0.27.2",
+  "version": "0.28.2",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "repository": "git://github.com/visionmedia/jade",
   "main": "./index.js",
-  "bin": { "jade": "./bin/jade" },
+  "bin": {
+    "jade": "./bin/jade"
+  },
   "man": "./jade.1",
   "dependencies": {
     "commander": "0.6.1",
-    "mkdirp": "0.3.0"
+    "mkdirp": "0.3.x",
+    "transformers": "~1.8.0"
   },
   "devDependencies": {
+    "coffee-script": "*",
     "mocha": "*",
     "markdown": "*",
     "stylus": "*",
@@ -25,5 +29,8 @@
       "jade": "runtime.js"
     }
   },
-  "scripts" : { "prepublish" : "npm prune" }
+  "scripts": {
+    "test": "mocha -R spec",
+    "prepublish": "npm prune"
+  }
 }

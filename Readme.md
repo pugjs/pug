@@ -1,6 +1,6 @@
- [![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
-
-# Jade - template engine
+# Jade - template engine 
+[![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
+[![Dependency Status](https://gemnasium.com/visionmedia/jade.png)](https://gemnasium.com/visionmedia/jade)
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
@@ -39,7 +39,8 @@
 - [Generated Output](#a15)
 - [Example Makefile](#a16)
 - [jade(1)](#a17)
-- [License](#a18)
+- [Tutorials](#a18)
+- [License](#a19)
 
 <a name="a1"/>
 ## Features
@@ -64,7 +65,6 @@
   - transparent iteration over objects, arrays, and even non-enumerables via `each`
   - block comments
   - no tag prefix
-  - AST filters
   - filters
     - :stylus must have [stylus](http://github.com/LearnBoost/stylus) installed
     - :less must have [less.js](http://github.com/cloudhead/less.js) installed
@@ -83,7 +83,7 @@
 
   - [php](http://github.com/everzet/jade.php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
-  - [ruby](http://github.com/stonean/slim)
+  - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
   - [java](https://github.com/neuland/jade4j)
 
@@ -417,11 +417,11 @@ head
 outputs:
 
 ```html
-<body>
+<head>
   <!--[if lt IE 8]>
     <script src="/ie-sucks.js"></script>
   <![endif]-->
-</body>
+</head>
 ```
 
 <a name="a6-6"/>
@@ -864,7 +864,7 @@ for user in users
     p= user.name
 ```
 
-  Jade also provides have `unless` which is equivalent to `if (!(expr))`:
+  Jade also provides `unless` which is equivalent to `if (!(expr))`:
 
 ```jade
 for user in users
@@ -934,8 +934,8 @@ html
     block head
       script(src='/vendor/jquery.js')
       script(src='/vendor/caustic.js')
-    body
-      block content
+  body
+    block content
 ```
 
  Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
@@ -982,7 +982,9 @@ html
 
 both includes _includes/head_ and _includes/foot_ are
 read relative to the `filename` option given to _layout.jade_,
-which should be an absolute path to this file, however Express does this for you. Include then parses these files, and injects the AST produced to render what you would expect:
+which should be an absolute path to this file, however Express
+does this for you. Include then parses these files, and injects
+the AST produced to render what you would expect:
 
 ```html
 <html>
@@ -1001,14 +1003,23 @@ which should be an absolute path to this file, however Express does this for you
 </html>
 ```
 
- As mentioned `include` can be used to include other content
- such as html or css. By providing an extension Jade will not
- assume that the file is Jade source and will include it as
- a literal:
+As mentioned `include` can be used to include other content
+such as html or css. By providing an extension, Jade will
+read that file in, apply any [filter](#a7) matching the file's
+extension, and insert that content into the output.
 
 ```jade
 html
+  head
+    //- css and js have simple filters that wrap them in
+        <style> and <script> tags, respectively
+    include stylesheet.css
+    include script.js
   body
+    //- "markdown" files will use the "markdown" filter
+        to convert Markdown to HTML
+    include introduction.markdown
+    //- html files have no filter and are included verbatim
     include content.html
 ```
 
@@ -1042,7 +1053,7 @@ head
   script(src='/jquery.ui.js')
 ```
 
- Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example support we have `user.jade` which utilizes a `user` variable.
+ Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example suppose we have `user.jade` which utilizes a `user` variable.
 
 ```jade
 h1= user.name
@@ -1205,17 +1216,19 @@ function anonymous(locals) {
   Below is an example Makefile used to compile _pages/*.jade_
   into _pages/*.html_ files by simply executing `make`.
 
+_Note:_ If you try to run this snippet and `make` throws a `missing separator` error, you should make sure all indented lines use a tab for indentation instead of spaces. (For whatever reason, GitHub renders this code snippet with 4-space indentation although the actual README file uses tabs in this snippet.)
+
 ```make
-JADE = $(shell find pages/*.jade)
+JADE = $(shell find . -wholename './pages/*.jade')
 HTML = $(JADE:.jade=.html)
 
 all: $(HTML)
 
 %.html: %.jade
-    jade < $< --path $< > $@
+	jade < $< --path $< > $@
 
 clean:
-    rm -f $(HTML)
+	rm -f $(HTML)
 
 .PHONY: clean
 ```
@@ -1226,6 +1239,8 @@ a watcher-like behaviour:
 ```bash
 $ watch make
 ```
+
+or you use the watch option below:
 
 <a name="a17"/>
 ## jade(1)
@@ -1242,8 +1257,9 @@ Options:
   -O, --out <dir>    output the compiled html to <dir>
   -p, --path <path>  filename used to resolve includes
   -P, --pretty       compile pretty html output
-  -c, --client       compile for client-side runtime.js
+  -c, --client       compile function for client-side runtime.js
   -D, --no-debug     compile without debugging (smaller functions)
+  -w, --watch        watch files for changes and automatically re-render
 
 Examples:
 
@@ -1260,17 +1276,18 @@ Examples:
   $ echo "h1 Jade!" | jade
 
   # foo, bar dirs rendering to /tmp
-  $ jade foo bar --out /tmp
+  $ jade foo bar --out /tmp 
 
 ```
 
+<a name="a18"/>
 ## Tutorials
 
   - cssdeck interactive [Jade syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
   - cssdeck interactive [Jade logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bjade%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
 
-<a name="a18"/>
+<a name="a19"/>
 ## License
 
 (The MIT License)
