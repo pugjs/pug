@@ -424,6 +424,21 @@ outputs:
 </head>
 ```
 
+Jade supports generating [Knockout](http://knockoutjs.com/) virtual elements, for example:
+
+```jade
+//ko if: true
+  #test
+```
+
+outputs:
+
+```html
+<!-- ko if: true -->
+<div id="test"></div>
+<!-- /ko -->
+```
+
 <a name="a6-6"/>
 ### Nesting
 
