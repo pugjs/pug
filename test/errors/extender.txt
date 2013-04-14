@@ -1,0 +1,6 @@
+Error: test/errors/extender.jade:9
+    7|   #example
+    8|     | text
+  > 9|       #error
+
+unexpected token "indent"

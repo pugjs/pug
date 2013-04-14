@@ -1,0 +1,7 @@
+Error: test/errors/auxiliary/bad-base.jade:13
+    11|     footer
+    12|       | text
+  > 13|         #error
+    14|
+
+unexpected token "indent"
