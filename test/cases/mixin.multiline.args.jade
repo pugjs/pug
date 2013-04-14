@@ -1,0 +1,18 @@
+mixin test(obj)
+  ul
+    each val, key in obj
+      li #{key}: #{val}
+
++test({"Hello": "world"})
++test({
+  "first": "line",
+  "second": "line"
+})
++test(function(obj){
+  /* Swap the key/value pairs */
+  var nobj = {}
+  for (var key in obj) {
+    nobj[obj[key]] = key;
+  }
+  return nobj;
+}({"Hello": "world"}))
