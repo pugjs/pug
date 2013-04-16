@@ -32,3 +32,11 @@ ul
     li #{key}: #{val}
   else
     li user has no details!
+
+user = {}
+
+ul
+  - each prop, key in user
+    li #{key}: #{val}
+  - else
+    li user has no details!
