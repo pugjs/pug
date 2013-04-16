@@ -13,7 +13,8 @@
     "commander": "0.6.1",
     "mkdirp": "0.3.x",
     "transformers": "~1.8.0",
-    "character-parser": "~1.0.0"
+    "character-parser": "~1.0.0",
+    "monocle": "~0.1.43"
   },
   "devDependencies": {
     "coffee-script": "*",

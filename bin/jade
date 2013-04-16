@@ -12,6 +12,7 @@ var fs = require('fs')
   , resolve = path.resolve
   , exists = fs.existsSync || path.existsSync
   , join = path.join
+  , monocle = require('monocle')()
   , mkdirp = require('mkdirp')
   , jade = require('../');
 
@@ -94,10 +95,11 @@ if (files.length) {
   console.log();
   files.forEach(renderFile);
   if (options.watch) {
-    files.forEach(function (file) {
-      fs.watchFile(file, {interval: 100}, function (curr, prev) {
-        if (curr.mtime > prev.mtime) renderFile(file);
-      });
+    monocle.watchFiles({
+      files: files,
+      listener: function(file) {
+        renderFile(file.name);
+      }
     });
   }
   process.on('exit', function () {
