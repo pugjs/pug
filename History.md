@@ -1,10 +1,18 @@
 
-0.28.2 / 2013-03-04 
+0.29.0 / 2013-04-16
+==================
+
+  * add "monocle" for watcher that actually works...
+  * fix interpolation in blocks of text
+  * fix attribute interpolation
+  * move filters to an external library
+
+0.28.2 / 2013-03-04
 ==================
 
   * wtf coffeescript is not a dep
 
-0.28.1 / 2013-01-10 
+0.28.1 / 2013-01-10
 ==================
 
   * add passing of filename to include filters
