@@ -98,7 +98,8 @@ if (files.length) {
     monocle.watchFiles({
       files: files,
       listener: function(file) {
-        renderFile(file.name);
+        var filename = path.resolve(process.env.PWD, file.fullPath);
+        renderFile(filename);
       }
     });
   }
