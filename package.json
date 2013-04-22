@@ -12,7 +12,7 @@
   "dependencies": {
     "commander": "0.6.1",
     "mkdirp": "0.3.x",
-    "transformers": "~1.8.0",
+    "transformers": "~2.0.1",
     "character-parser": "~1.0.0",
     "monocle": "~0.1.43"
   },
