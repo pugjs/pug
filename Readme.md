@@ -1253,8 +1253,8 @@ Options:
 
   -h, --help         output usage information
   -V, --version      output the version number
-  -o, --obj <str>    javascript options object
-  -O, --out <dir>    output the compiled html to <dir>
+  -O, --obj <str>    javascript options object
+  -o, --out <dir>    output the compiled html to <dir>
   -p, --path <path>  filename used to resolve includes
   -P, --pretty       compile pretty html output
   -c, --client       compile function for client-side runtime.js
