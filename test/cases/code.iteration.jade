@@ -23,3 +23,9 @@ ul
   for l in letters
     for n in nums
       li #{n}: #{l}
+
+count = 1
+counter = function() { return [count++, count++, count++] }
+ul
+  for n in counter()
+    li #{n}
