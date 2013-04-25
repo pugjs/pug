@@ -1,4 +1,3 @@
-
 0.30.0 / 2013-04-25 
 ==================
 
@@ -16,6 +15,7 @@
   * fix interpolation in blocks of text
   * fix attribute interpolation
   * move filters to an external library
+  * fix JavaScript escaping corner cases
 
 0.28.2 / 2013-03-04
 ==================
