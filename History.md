@@ -1,4 +1,14 @@
 
+0.30.0 / 2013-04-25 
+==================
+
+  * add support for 'include' and 'extends' to use paths relative to basedir
+  * fix accidental calling of functions in iteration block. Closes #986
+  * fix: skip rethrow on client  
+  * fix each/else prefixed with `-`
+  * fix multi-block prepend/append
+  * swap -o and -O, set -o to --out
+
 0.29.0 / 2013-04-16
 ==================
 
