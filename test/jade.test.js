@@ -41,6 +41,7 @@ describe('jade', function(){
       assert.equal('<!DOCTYPE html>', render('!!! html', { doctype:'xml' }));
       assert.equal('<html></html>', render('html'));
       assert.equal('<!DOCTYPE html><html></html>', render('html', { doctype:'html' }));
+      assert.equal('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>', render('doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN'));
     });
 
     it('should support Buffers', function(){

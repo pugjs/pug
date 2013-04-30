@@ -637,13 +637,13 @@ doctype basic
 it's also possible to simply pass a doctype literal:
 
 ```jade
-doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN
+doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
 ```
 
 yielding:
 
 ```html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">
 ```
 
 Below are the doctypes defined by default, which can easily be extended:

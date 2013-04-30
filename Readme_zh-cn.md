@@ -444,11 +444,11 @@ doctypes 是大小写不敏感的, 所以下面两个是一样的:
 
 当然也是可以直接传递一段文档类型的文本：
 
-    doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN
+    doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
 
 渲染后:
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">
 
 会输出 _html 5_ 文档类型. 下面的默认的文档类型，可以很简单的扩展：
 
