@@ -39,9 +39,5 @@ clean:
 	rm -f runtime.js
 	rm -f runtime.min.js
 
-update:
-	git fetch upstream
-	git merge upstream/master
-
 .PHONY: test-cov test benchmark clean
 
