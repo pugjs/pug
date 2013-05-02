@@ -1,9 +1,9 @@
 {
   "name": "jade",
-  "repo": "pgherveou/jade",
-  "description": "Jade template engine",
-  "version": "0.28.2",
-  "keywords": [],
+  "repo": "visionmedia/jade",
+  "description": "Jade template runtime",
+  "version": "0.30.0",
+  "keywords": ["template"],
   "dependencies": {},
   "development": {},
   "license": "MIT",
