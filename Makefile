@@ -40,4 +40,3 @@ clean:
 	rm -f runtime.min.js
 
 .PHONY: test-cov test benchmark clean
-
