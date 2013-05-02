@@ -1,10 +1,28 @@
+0.30.0 / 2013-04-25 
+==================
 
-0.28.2 / 2013-03-04 
+  * add support for 'include' and 'extends' to use paths relative to basedir
+  * fix accidental calling of functions in iteration block. Closes #986
+  * fix: skip rethrow on client  
+  * fix each/else prefixed with `-`
+  * fix multi-block prepend/append
+  * swap -o and -O, set -o to --out
+
+0.29.0 / 2013-04-16
+==================
+
+  * add "monocle" for watcher that actually works...
+  * fix interpolation in blocks of text
+  * fix attribute interpolation
+  * move filters to an external library
+  * fix JavaScript escaping corner cases
+
+0.28.2 / 2013-03-04
 ==================
 
   * wtf coffeescript is not a dep
 
-0.28.1 / 2013-01-10 
+0.28.1 / 2013-01-10
 ==================
 
   * add passing of filename to include filters

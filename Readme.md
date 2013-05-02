@@ -83,7 +83,7 @@
 
   - [php](http://github.com/everzet/jade.php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
-  - [ruby](http://github.com/stonean/slim)
+  - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
   - [java](https://github.com/neuland/jade4j)
 
@@ -637,13 +637,13 @@ doctype basic
 it's also possible to simply pass a doctype literal:
 
 ```jade
-doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN
+doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
 ```
 
 yielding:
 
 ```html
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">
 ```
 
 Below are the doctypes defined by default, which can easily be extended:
@@ -934,8 +934,8 @@ html
     block head
       script(src='/vendor/jquery.js')
       script(src='/vendor/caustic.js')
-    body
-      block content
+  body
+    block content
 ```
 
  Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
@@ -982,7 +982,9 @@ html
 
 both includes _includes/head_ and _includes/foot_ are
 read relative to the `filename` option given to _layout.jade_,
-which should be an absolute path to this file, however Express does this for you. Include then parses these files, and injects the AST produced to render what you would expect:
+which should be an absolute path to this file, however Express
+does this for you. Include then parses these files, and injects
+the AST produced to render what you would expect:
 
 ```html
 <html>
@@ -1001,14 +1003,23 @@ which should be an absolute path to this file, however Express does this for you
 </html>
 ```
 
- As mentioned `include` can be used to include other content
- such as html or css. By providing an extension Jade will not
- assume that the file is Jade source and will include it as
- a literal:
+As mentioned `include` can be used to include other content
+such as html or css. By providing an extension, Jade will
+read that file in, apply any [filter](#a7) matching the file's
+extension, and insert that content into the output.
 
 ```jade
 html
+  head
+    //- css and js have simple filters that wrap them in
+        <style> and <script> tags, respectively
+    include stylesheet.css
+    include script.js
   body
+    //- "markdown" files will use the "markdown" filter
+        to convert Markdown to HTML
+    include introduction.markdown
+    //- html files have no filter and are included verbatim
     include content.html
 ```
 
@@ -1229,6 +1240,8 @@ a watcher-like behaviour:
 $ watch make
 ```
 
+or you use the watch option below:
+
 <a name="a17"/>
 ## jade(1)
 
@@ -1240,12 +1253,13 @@ Options:
 
   -h, --help         output usage information
   -V, --version      output the version number
-  -o, --obj <str>    javascript options object
-  -O, --out <dir>    output the compiled html to <dir>
+  -O, --obj <str>    javascript options object
+  -o, --out <dir>    output the compiled html to <dir>
   -p, --path <path>  filename used to resolve includes
   -P, --pretty       compile pretty html output
-  -c, --client       compile for client-side runtime.js
+  -c, --client       compile function for client-side runtime.js
   -D, --no-debug     compile without debugging (smaller functions)
+  -w, --watch        watch files for changes and automatically re-render
 
 Examples:
 
@@ -1262,7 +1276,7 @@ Examples:
   $ echo "h1 Jade!" | jade
 
   # foo, bar dirs rendering to /tmp
-  $ jade foo bar --out /tmp
+  $ jade foo bar --out /tmp 
 
 ```
 
