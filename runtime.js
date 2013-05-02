@@ -1,5 +1,5 @@
 
-jade = (function(exports){
+var jade = (function(exports){
 /*!
  * Jade - runtime
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
@@ -177,3 +177,12 @@ exports.rethrow = function rethrow(err, filename, lineno){
   return exports;
 
 })({});
+
+// Exporting
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = jade;
+} else {
+  window.jade = jade;
+}
+
