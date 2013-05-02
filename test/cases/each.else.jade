@@ -38,3 +38,12 @@ ul
     li #{key}: #{val}
   - else
     li user has no details!
+
+user = Object.create(null)
+- user.name = 'tobi'
+
+ul
+  each val, key in user
+    li #{key}: #{val}
+  else
+    li user has no details!
