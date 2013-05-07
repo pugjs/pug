@@ -24,7 +24,8 @@
     "uubench": "*",
     "should": "*",
     "less": "*",
-    "uglify-js": "*"
+    "uglify-js": "*",
+    "browserify": "~2.13.2"
   },
   "component": {
     "scripts": {
@@ -33,6 +34,16 @@
   },
   "scripts": {
     "test": "mocha -R spec",
-    "prepublish": "npm prune"
+    "prepublish": "npm prune",
+    "build": "npm run compile && npm run minify",
+    "compile": "npm run compile-full && npm run compile-runtime",
+    "compile-full": "browserify ./lib/jade.js --standalone jade -x ./node_modules/transformers > jade.js",
+    "compile-runtime": "browserify ./lib/runtime.js --standalone jade > runtime.js",
+    "minify": "npm run minify-full && npm run minify-runtime",
+    "minify-full": "uglifyjs < jade.js > jade.min.js",
+    "minify-runtime": "uglifyjs < runtime.js > runtime.min.js"
+  },
+  "browser": {
+    "./lib/filters.js": "./lib/filters-client.js"
   }
 }
