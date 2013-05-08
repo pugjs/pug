@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><style>#body {
+  background: white;
+  padding: 30px;
+}</style></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="tagline">Node Template Engine</div><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="http://github.com/visionmedia/jade#readme" class="nav-button">Documentation</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="body"><h2>Installation</h2>
+<p>via npm:</p>
+<pre><code>$ npm install jade</code></pre>
+<h2>Usage</h2>
+<pre><code class="lang-js"><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+
+<span class="comment">// Compile a function</span>
+<span class="keyword">var</span> fn = jade.compile(<span class="string">'string of jade'</span>, options);
+fn(locals);</code></pre>
+<h3>Options</h3>
+<ul>
+<li><code>self</code>      Use a <code>self</code> namespace to hold the locals <em>(false by default)</em></li>
+<li><code>locals</code>    Local variable object</li>
+<li><code>filename</code>  Used in exceptions, and required when using includes</li>
+<li><code>debug</code>     Outputs tokens and function body generated</li>
+<li><code>compiler</code>  Compiler to replace jade&#39;s default</li>
+<li><code>compileDebug</code>  When <code>false</code> no debug instrumentation is compiled</li>
+<li><code>pretty</code>    Add pretty-indentation whitespace to output <em>(false by default)</em></li>
+</ul>
+</div></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>

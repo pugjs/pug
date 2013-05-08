@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><style>#body {
+  background: white;
+  padding: 30px;
+}</style></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="tagline">Node Template Engine</div><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="http://github.com/visionmedia/jade#readme" class="nav-button">Documentation</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="body"><h2>Introduction</h2><p>This tutorial is a work in progress. Once it's finished it will become a fully interactive getting started guide.</p><p>Welcolme to the Jade templating engine.  Jade is designed primarily for server side templating in node.js, however it can be used in many other environments.  It is only intended to produce XML like documents (HTML, RSS etc.) so don't use it to create plain text/markdown/CSS/whatever documents.</p><p>This tutorial will take you through the basics:</p><ul><li>Creating simple tags</li><li>Putting text inside your tags</li><li>IDs and Classes</li><li>Attributes</li><li>Using JavaScript Variables</li><li>Escaping &amp; unescaping</li></ul><h2>Creating Simple Tags</h2><div class="interactive"><pre><code id="input"><span class="tag">div</span>
+  <span class="tag">address</span>
+  <span class="tag">i</span>
+  <span class="tag">strong</span></code></pre><pre><code id="output"><span class="tag">&lt;<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">address</span>&gt;</span><span class="tag">&lt;/<span class="title">address</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">i</span>&gt;</span><span class="tag">&lt;/<span class="title">i</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">strong</span>&gt;</span><span class="tag">&lt;/<span class="title">strong</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre></div><h2>Putting Text Inside your Tags</h2><div class="interactive"><pre><code id="input"><span class="tag">h1</span> Welcolme to Jade
+<span class="tag">p</span>
+  | Text can be included in a number of
+  | different ways.
+<span class="tag">p</span>.
+  This way is shortest if you need big
+  blocks of text spanning multiple
+  lines.</code></pre><pre><code id="output"><span class="tag">&lt;<span class="title">h1</span>&gt;</span>Welcolme to Jade<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+<span class="tag">&lt;<span class="title">p</span>&gt;</span>Text can be included in a number of
+   different ways.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;<span class="title">p</span>&gt;</span>This way is shortest if you need big
+   blocks of text spanning multiple
+   lines.<span class="tag">&lt;/<span class="title">p</span>&gt;</span></code></pre></div></div></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>

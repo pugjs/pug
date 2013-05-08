@@ -1,9 +1,0 @@
-[submodule "support/expresso"]
-	path = support/expresso
-	url = git://github.com/visionmedia/expresso.git
-[submodule "benchmarks/haml"]
-	path = benchmarks/haml
-	url = git://github.com/visionmedia/haml.js.git
-[submodule "benchmark/haml-js"]
-	path = benchmark/haml-js
-	url = http://github.com/creationix/haml-js.git

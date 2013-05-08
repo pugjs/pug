@@ -1,71 +1,48 @@
-<!doctype html>
-<html>
-	<head>
-		<title>Jade - Template Engine</title>
-		<link rel="stylesheet" href="public/stylesheets/style.css" />
-	</head>
-	<body>
-		<div id="container">
-			<a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-			<div id="header">
-				<h1>Jade</h1>
-				<div id="arrow"></div>
-				<span id="tagline">Node Template Engine</span>
-        <div id="apidocs"><a href="http://github.com/visionmedia/jade#readme">View Documentation</a></div>
-				<pre id="jade">
-					<code>
-<span class="doctype">doctype</span> 5
-<span class="tag">html</span>(<span class="key">lang</span>=<span class="val">"en"</span>)
+<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><link rel="stylesheet" href="public/stylesheets/home.css"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="tagline">Node Template Engine</div><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="http://github.com/visionmedia/jade#readme" class="nav-button">Documentation</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="conversion"><pre id="jade"><code><span class="doctype">doctype 5</span>
+<span class="tag">html</span>(<span class="attribute">lang</span>=<span class="string">"en"</span>)
   <span class="tag">head</span>
-    <span class="tag">title</span><span class="text">= pageTitle</span>
-    <span class="filter">script(type='text/javascript')</span>
-      <span class="text">if (foo) {
-         bar()
-      }</span>
-  <span class="tag">body</span>
-    <span class="tag">h1</span> <span class="text">Jade - node template engine</span>
-    <span class="tag">#container</span>
-      if youAreUsingJade
-        p <span class="text">You are amazing</span>
-      else
-        p <span class="text">Get on it!</span>
-					</code>
-				</pre>
-				<pre id="html">
-					<code>
-&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-  &lt;head&gt;
-    &lt;title&gt;Jade&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-      if (foo) {
-      	bar()
+    <span class="tag">title</span>= pageTitle
+    <span class="tag">script</span>(<span class="attribute">type</span>=<span class="string">'text/javascript'</span>)
+      <span class="keyword">if</span> (foo) {
+         <span class="tag">bar</span>()
       }
-    &lt;/script&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Jade - node template engine&lt;/h1&gt;
-    &lt;div id=&quot;container&quot;&gt;
-      &lt;p&gt;You are amazing&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;					
-					</code>
-				</pre>
-			</div>
-		</div>
-  	<script type="text/javascript">
+  <span class="tag">body</span>
+    <span class="tag">h1</span> Jade - node template engine
+    <span class="id">#container</span><span class="class">.col</span>
+      <span class="keyword">if</span> youAreUsingJade
+        <span class="tag">p</span> You are amazing
+      <span class="keyword">else</span>
+        <span class="tag">p</span> Get on it!
+      <span class="tag">p</span>.
+        Jade is a terse and simple
+        templating language with a
+        strong focus on performance
+        and powerful features.</code></pre><div id="arrow"></div><pre id="html"><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">title</span>&gt;</span>Jade<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+      <span class="keyword">if</span> (foo) {
+        bar()
+      }
+    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Jade - node template engine<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">p</span>&gt;</span>You are amazing<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">p</span>&gt;</span>Jade is a terse and simple
+         templating language with a
+         strong focus on performance
+         and powerful features.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre></div></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
 
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-25261536-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-	</body>
-</html>
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>

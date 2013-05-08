@@ -1,0 +1,62 @@
+extends ./layout.jade
+block style
+  style
+    #body {
+      background: white;
+      padding: 30px;
+    }
+block content
+  #body
+    h2 Introduction
+    p.
+      This tutorial is a work in progress. Once it's finished it will become a fully interactive getting started guide.
+    p.
+      Welcolme to the Jade templating engine.  Jade is designed primarily for server side templating in node.js, however it can be used in many other environments.  It is only intended to produce XML like documents (HTML, RSS etc.) so don't use it to create plain text/markdown/CSS/whatever documents.
+    p.
+      This tutorial will take you through the basics:
+    ul
+      li Creating simple tags
+      li Putting text inside your tags
+      li IDs and Classes
+      li Attributes
+      li Using JavaScript Variables
+      li Escaping &amp; unescaping
+    h2 Creating Simple Tags
+    .interactive
+      pre
+        code#input
+          :jadesrc
+            div
+              address
+              i
+              strong
+      pre
+        code#output
+          :htmlsrc
+            <div>
+              <address></address>
+              <i></i>
+              <strong></strong>
+            </div>
+    h2 Putting Text Inside your Tags
+    .interactive
+      pre
+        code#input
+          :jadesrc
+            h1 Welcolme to Jade
+            p
+              | Text can be included in a number of
+              | different ways.
+            p.
+              This way is shortest if you need big
+              blocks of text spanning multiple
+              lines.
+      pre
+        code#output
+          :htmlsrc
+            <h1>Welcolme to Jade</h1>
+            <p>Text can be included in a number of
+               different ways.</p>
+            <p>This way is shortest if you need big
+               blocks of text spanning multiple
+               lines.</p>

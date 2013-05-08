@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><style>#body {
+  background: white;
+  padding: 30px;
+}</style></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="tagline">Node Template Engine</div><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="http://github.com/visionmedia/jade#readme" class="nav-button">Documentation</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="body"><h2>Installation</h2>
+<p>via npm:</p>
+<pre><code>$ npm install jade --global</code></pre>
+<h2>Usage</h2>
+<pre><code>$ jade [options] [dir|file ...]</code></pre>
+<h3>Options</h3>
+<pre><code>-h, --help         output usage information
+-V, --version      output the version number
+-O, --obj &lt;str&gt;    javascript options object
+-o, --out &lt;dir&gt;    output the compiled html to &lt;dir&gt;
+-p, --path &lt;path&gt;  filename used to resolve includes
+-P, --pretty       compile pretty html output
+-c, --client       compile function for client-side runtime.js
+-D, --no-debug     compile without debugging (smaller functions)
+-w, --watch        watch files for changes and automatically re-render</code></pre>
+<h3>Examples</h3>
+<p>Translate jade the templates dir:</p>
+<pre><code>$ jade templates</code></pre>
+<p>Create {foo,bar}.html</p>
+<pre><code>$ jade {foo,bar}.jade</code></pre>
+<p>Jade over stdio</p>
+<pre><code>$ jade &lt; my.jade &gt; my.html</code></pre>
+<p>Jade over stdio</p>
+<pre><code>$ echo &quot;h1 Jade!&quot; | jade</code></pre>
+<p>foo, bar dirs rendering to /tmp</p>
+<pre><code>$ jade foo bar --out /tmp </code></pre>
+</div></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>

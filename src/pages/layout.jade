@@ -1,0 +1,14 @@
+!!! 5
+html
+  head
+    title Jade - Template Engine
+    link(rel='stylesheet', href='/public/stylesheets/all.css')
+    link(rel='stylesheet', href='/public/stylesheets/highlight.css')
+    block style
+  body
+    include ./ribbon.jade
+    #container
+      include ./header.jade
+      block content
+    block scripts
+    include ./ga.jade

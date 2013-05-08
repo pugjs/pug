@@ -3,7 +3,7 @@ html {
 }
 body {
     margin: 0;
-    font: 12px/1.4 "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
+    font: 16px/1.4 "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
     background: url(../images/top.png) 0 0 repeat-x;
     text-align: center;
 }
@@ -21,60 +21,64 @@ h1 {
     text-align: left;
 }
 #header {
-    position: relative;
     padding: 80px 0;
+    position: relative;
 }
 #tagline {
     position: absolute;
     top: 170px;
     left: 410px;
     opacity: 0.7;
+    font: 12px/1.4 "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
 }
-#arrow {
-    position: absolute;
-    top: 340px;
-    left: 400px;
-    z-index: 10;
-    width: 120px;
-    height: 130px;
-    background: url(../images/arrow.png);
-}
-#apidocs {
+
+#nav {
     text-align: center;
     margin-bottom: 40px;
 }
-#apidocs a {
+a.nav-button {
     color: #333;
     background: #eee;
     -webkit-border-radius: 5px;
     padding: 4px 8px 5px;
-    font-size: 11px;
     display: inline-block;
     box-shadow: 0 1px 2px rgba(0,0,0,.3);
     text-decoration: none;
+    margin: 5px;
 }
-#apidocs a:hover {
+a.nav-button:hover {
     color: #666;
 }
-#apidocs a:active {
+a.nav-button:active {
     box-shadow: 0 1px 2px rgba(150,20,20,.3);
     position: relative;
     top: 1px;
 }
-pre {
+
+.interactive:before {
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+.interactive:after {
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+.interactive pre {
     float: left;
     margin: 0 15px;
-    padding: 10px 64px;
-    width: 33%;
-    background: white;
+    padding: 0px;
+    width: 44%;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
-    -webkit-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
-    -moz-box-shadow: -1px -1px 1px rgba(0,0,0,0.2);
     white-space: pre-wrap;       /* css-3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;
-    color: #555;
 }
