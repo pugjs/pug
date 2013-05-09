@@ -1,0 +1,7 @@
+{
+  "es5": true,
+  "expr": true,
+  "maxerr": 10000,
+  "laxcomma": true,
+  "laxbreak": true
+}
