@@ -1,0 +1,50 @@
+for (var i = 0; i < @2; i++)
+  div(class=loop.first() && 'first') grand-grandparent loop
+    for (var i = 0; i < @2; i++)
+      div(class=loop.last() && 'last') grandparent loop
+        for (var i = 0; i < @2; i++)
+          div(class=loop.index() == 1 && 'first') parent loop
+            for (var i = 0; i < @2; i++)
+              div(class=loop.revindex() == 1 && 'last') child loop
+
+for (var i = 0; i < @1; i++)
+  div(class=loop.first() && 'first') element № #{i} expected with .first
+
+for (var i = 0; i < @1; i++)
+  div(class=loop.last() && 'first-as-last') element № #{i} expected with .first-as-last
+
+for (var i = 0; i < @5; i++)
+  div loop.index(), element 4 expected, element № #{i+1}
+    - if (loop.index() == 3)
+      |  marked
+
+for (var i = 0; i < @5; i++)
+  div loop.index0(), element 3 expected, element № #{i}
+    - if (loop.index0() == 3)
+      |  marked
+
+for (var i = 0; i < @5; i++)
+  div loop.revindex(), element 5 expected, element № #{i+1}
+    - if (loop.revindex() == 1)
+      |  marked
+
+for (var i = 0; i < @5; i++)
+  div loop.revindex0(), element 1 expected, element № #{i}
+    - if (loop.revindex0() == 3)
+      |  marked
+
+- length = 5
+for (var i = 0; i < @length; i++)
+  div(class=loop.index() == 2 && 'this-element') loop with length as variable
+
+- for (var i = 0; i < 5; i++)
+  div default loop test
+
+each user in ["Petya", "Masha", "Sveta"]
+  div #{user}
+    if (loop.first())
+      | - is man
+    if (loop.index() == 2)
+      | - is girl
+    if (loop.last())
+      | - is girl
