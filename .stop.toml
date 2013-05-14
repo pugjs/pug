@@ -1,0 +1,11 @@
+# This is a configuration file for stop
+# for more info see:
+#
+# https://github.com/ForbesLindesay/stop
+
+source="./src/server.js"
+destination="./"
+
+[options]
+minify-js=true
+minify-css=true

@@ -2,5 +2,19 @@
   "name": "jade-website",
   "description": "Jade template engine website",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "highlight.js": "~7.3.0",
+    "jade": "~0.30.0",
+    "transform": "~1.0.0",
+    "express": "~3.2.4",
+    "marked": "~0.2.8"
+  },
+  "devDependencies": {
+    "stop": "~2.0.0"
+  },
+  "scripts": {
+    "build": "stop",
+    "serve": "node src/server.js"
+  }
 }

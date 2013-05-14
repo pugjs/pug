@@ -1,10 +1,10 @@
-var isStatic = process.argv[2] === 'static';
+
 
 var hljs = require('highlight.js');
 var filters = require('jade').filters;
 var jade = require('transform')('jade');
-var stop = require('stop');
-var app = stop(isStatic);
+var express = require('express');
+var app = express();
 
 var marked = require('marked');
 
@@ -29,11 +29,13 @@ function escape(src) {
             .replace(/"/g, '&quot;');
 }
 
+app.use('/public', express.static(__dirname + '/public'));
+
 app.get('/', jade('./pages/index.jade'));
 app.get('/tutorial', jade('./pages/tutorial.jade'));
 app.get('/api', jade('./pages/api.jade'));
 app.get('/command-line', jade('./pages/command-line.jade'));
 
-app.directory('/public', './public');
+app.listen(3000);
 
-app.run(process.argv[3] || '../', process.argv[2] || 3000);
+if (!process.env.STOP) console.log('Server listening on localhost:3000')
