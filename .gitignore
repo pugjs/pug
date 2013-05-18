@@ -5,3 +5,4 @@ testing
 node_modules
 lib-cov
 coverage.html
+npm-debug.log
