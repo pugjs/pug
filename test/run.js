@@ -22,6 +22,10 @@ cases.forEach(function(test){
     var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
     var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
     var actual = fn({ title: 'Jade' });
+    if (/filter/.test(name)) {
+      actual = actual.replace(/\n/g, '');
+      html = html.replace(/\n/g, '');
+    }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   })
 });
