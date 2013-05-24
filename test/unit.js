@@ -20,21 +20,21 @@ describe('merge(a, b, escaped)', function(){
       .should.eql({ class: ['foo'] });
 
     merge({ class: ['foo'] }, { class: ['bar'] })
-      .should.eql({ class: [['foo'],['bar']] });
+      .should.eql({ class: ['foo','bar'] });
 
     merge({ class: ['foo', 'raz'] }, { class: ['bar', 'baz'] })
-      .should.eql({ class: [['foo', 'raz'], ['bar', 'baz']] });
+      .should.eql({ class: ['foo', 'raz', 'bar', 'baz'] });
 
     merge({ class: 'foo' }, { class: 'bar' })
       .should.eql({ class: ['foo', 'bar'] });
 
     merge({ class: 'foo' }, { class: ['bar', 'baz'] })
-      .should.eql({ class: ['foo', ['bar', 'baz']] });
+      .should.eql({ class: ['foo', 'bar', 'baz'] });
 
     merge({ class: ['foo', 'bar'] }, { class: 'baz' })
-      .should.eql({ class: [['foo', 'bar'], 'baz'] });
+      .should.eql({ class: ['foo', 'bar', 'baz'] });
 
     merge({ class: ['foo', null, 'bar'] }, { class: [undefined, null, 0, 'baz'] })
-      .should.eql({ class: [['foo', 'bar'], [0, 'baz']] });
+      .should.eql({ class: ['foo', 'bar', 0, 'baz'] });
   })
 })
