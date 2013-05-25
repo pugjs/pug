@@ -318,8 +318,8 @@ describe('jade', function(){
       assert.equal('<p>foo\n\nbar</p>', render('p.\n  foo\n\n  bar'));
       assert.equal('<p>foo\n\n\n\nbar</p>', render('p.\n  foo\n\n\n\n  bar'));
       assert.equal('<p>foo\n  bar\nfoo</p>', render('p.\n  foo\n    bar\n  foo'));
-      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script\n  s.parentNode.insertBefore(g,s)\n'));
-      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script\n  s.parentNode.insertBefore(g,s)'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script.\n  s.parentNode.insertBefore(g,s)\n'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script.\n  s.parentNode.insertBefore(g,s)'));
     });
 
     it('should support tag text', function(){
@@ -501,7 +501,7 @@ describe('jade', function(){
 
     it('should support script text', function(){
       var str = [
-        'script',
+        'script.',
         '  p foo',
         '',
         'script(type="text/template")',
