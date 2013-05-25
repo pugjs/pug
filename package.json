@@ -14,7 +14,8 @@
     "mkdirp": "0.3.x",
     "transformers": "~2.0.1",
     "character-parser": "~1.0.2",
-    "monocle": "~0.1.46"
+    "monocle": "~0.1.46",
+    "with": "~1.0.0"
   },
   "devDependencies": {
     "coffee-script": "*",
