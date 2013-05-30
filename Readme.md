@@ -5,6 +5,14 @@
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
 
+## Anouncment
+
+Jade version 0.31.0 deprecated implicit text only support for scripts and styles.  To fix this all you need to do is add a `.` character after the script or style tag.
+
+It is hoped that this change will make jade easier for newcommers to learn without affecting the power of the language or leading to excessive verboseness.
+
+If you have a lot of jade files that need fixing you can use [fix-jade](https://github.com/ForbesLindesay/fix-jade) to attempt to automate the process.
+
 ## Test drive
 
   You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
@@ -285,22 +293,7 @@ label Username:
   input(name='user[name]')
 ```
 
-Tags that accept _only_ text such as `script` and `style` do not
-need the leading `|` character, for example:
-
-```jade
-html
-  head
-    title Example
-    script
-      if (foo) {
-        bar();
-      } else {
-        baz();
-      }
-```
-
-Once again as an alternative, we may use a trailing `.` to indicate a text block, for example:
+As an alternative, we may use a trailing `.` to indicate a text block, for example:
 
 ```jade
 p.
