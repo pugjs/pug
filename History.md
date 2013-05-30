@@ -1,4 +1,21 @@
-0.30.0 / 2013-04-25 
+0.31.0 / 2013-05-30
+==================
+
+  * deprecate implicit text-only `script` and `style` tags
+  * make `with` at compile time using `lexical-scope`
+  * add `options.parser` that behaves exactly like `options.compiler`
+  * add "component.json" for component (runtime) support
+  * removed `hasOwnProperty` check in each loops
+  * removed .min files from the repository (people can just generate these themselves)
+  * use browserify to compile client side libraries
+  * fix buggy block extending should now be fixed
+  * fix preserve case of custom doctypes
+  * fix regexps in attributes sometimes not being accepted
+  * fix allow `$` sign in each loop variable names
+  * fix mixins with buffered code on the same line
+  * fix separate class names by ` ` rather than `,` (was sometimes incorrect)
+
+0.30.0 / 2013-04-25
 ==================
 
   * add support for 'include' and 'extends' to use paths relative to basedir

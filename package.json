@@ -1,7 +1,7 @@
 {
   "name": "jade",
   "description": "Jade template engine",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "repository": "git://github.com/visionmedia/jade",
   "main": "./index.js",
@@ -26,7 +26,7 @@
     "should": "*",
     "less": "*",
     "uglify-js": "*",
-    "browserify": "~2.13.2"
+    "browserify": "*"
   },
   "component": {
     "scripts": {

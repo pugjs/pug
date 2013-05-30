@@ -54,9 +54,7 @@ exports.merge = function merge(a, b) {
     bc = bc || [];
     if (!Array.isArray(ac)) ac = [ac];
     if (!Array.isArray(bc)) bc = [bc];
-    ac = ac.filter(nulls);
-    bc = bc.filter(nulls);
-    a['class'] = ac.concat(bc).join(' ');
+    a['class'] = ac.concat(bc).filter(nulls);
   }
 
   for (var key in b) {
@@ -71,13 +69,25 @@ exports.merge = function merge(a, b) {
 /**
  * Filter null `val`s.
  *
- * @param {Mixed} val
- * @return {Mixed}
+ * @param {*} val
+ * @return {Boolean}
  * @api private
  */
 
 function nulls(val) {
-  return val != null;
+  return val != null && val !== '';
+}
+
+/**
+ * join array as classes.
+ *
+ * @param {*} val
+ * @return {String}
+ * @api private
+ */
+
+function joinClasses(val) {
+  return Array.isArray(val) ? val.map(joinClasses).filter(nulls).join(' ') : val;
 }
 
 /**
@@ -111,8 +121,10 @@ exports.attrs = function attrs(obj, escaped){
         }
       } else if (0 == key.indexOf('data') && 'string' != typeof val) {
         buf.push(key + "='" + JSON.stringify(val) + "'");
-      } else if ('class' == key && Array.isArray(val)) {
-        buf.push(key + '="' + exports.escape(val.join(' ')) + '"');
+      } else if ('class' == key) {
+        if (val = exports.escape(joinClasses(val))) {
+          buf.push(key + '="' + val + '"');
+        }
       } else if (escaped && escaped[key]) {
         buf.push(key + '="' + exports.escape(val) + '"');
       } else {
