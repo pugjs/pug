@@ -1,6 +1,7 @@
 # Jade - template engine 
 [![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
 [![Dependency Status](https://gemnasium.com/visionmedia/jade.png)](https://gemnasium.com/visionmedia/jade)
+[![NPM version](https://badge.fury.io/js/jade.png)](http://badge.fury.io/js/jade)
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
