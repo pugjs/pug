@@ -1,3 +1,10 @@
+0.31.1 / 2013-05-31
+===================
+
+  * fix line endings for executable command
+  * fix `locals` variable being undefined
+  * fix an obscure bug that could occur if multiple mixins interact badly (see [substack/lexical-scope#13](https://github.com/substack/lexical-scope/issues/13))
+
 0.31.0 / 2013-05-30
 ==================
 
