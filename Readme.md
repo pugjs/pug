@@ -6,13 +6,13 @@
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
  and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
 
-## Anouncment
+## Announcement
 
 Jade version 0.31.0 deprecated implicit text only support for scripts and styles.  To fix this all you need to do is add a `.` character after the script or style tag.
 
-It is hoped that this change will make jade easier for newcommers to learn without affecting the power of the language or leading to excessive verboseness.
+It is hoped that this change will make Jade easier for newcomers to learn without affecting the power of the language or leading to excessive verboseness.
 
-If you have a lot of jade files that need fixing you can use [fix-jade](https://github.com/ForbesLindesay/fix-jade) to attempt to automate the process.
+If you have a lot of Jade files that need fixing you can use [fix-jade](https://github.com/ForbesLindesay/fix-jade) to attempt to automate the process.
 
 ## Test drive
 
