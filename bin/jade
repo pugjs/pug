@@ -95,8 +95,9 @@ if (files.length) {
   console.log();
   files.forEach(renderFile);
   if (options.watch) {
-    monocle.watchFiles({
-      files: files,
+    monocle.watchPathes({
+      path: files,
+      fileFilter: '*.jade',
       listener: function(file) {
         renderFile(file.absolutePath);
       }
