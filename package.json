@@ -14,7 +14,7 @@
     "mkdirp": "0.3.x",
     "transformers": "2.0.1",
     "character-parser": "1.0.2",
-    "monocle": "0.1.48",
+    "monocle": "0.1.50",
     "with": "1.0.4"
   },
   "devDependencies": {
