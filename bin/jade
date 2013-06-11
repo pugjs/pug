@@ -23,7 +23,7 @@ var options = {};
 // options
 
 program
-  .version(jade.version)
+  .version(require('../package.json').version)
   .usage('[options] [dir|file ...]')
   .option('-O, --obj <str>', 'javascript options object')
   .option('-o, --out <dir>', 'output the compiled html to <dir>')
