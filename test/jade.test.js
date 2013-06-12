@@ -15,11 +15,6 @@ var render = function(str, options){
 };
 
 describe('jade', function(){
-  describe('.version', function(){
-    it('should be valid version format', function(){
-      assert.ok(/^\d+\.\d+\.\d+$/.test(jade.version), "Invalid version format");
-    });
-  });
 
   describe('.properties', function(){
     it('should have exports', function(){
