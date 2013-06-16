@@ -14,6 +14,8 @@ var render = function(str, options){
   return fn(options);
 };
 
+var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
+
 describe('jade', function(){
 
   describe('.properties', function(){
@@ -971,5 +973,9 @@ describe('jade', function(){
       var fn = jade.compile('test = local\np=test');
       assert.equal('<p>bar</p>', fn({ local: 'bar' }));
     });
+
+    it('should be reasonably fast', function(){
+      jade.compile(perfTest, {})
+    })
   });
 });
