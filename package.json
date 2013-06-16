@@ -60,5 +60,8 @@
     "html",
     "template"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/visionmedia/jade/issues"
+  }
 }
