@@ -15,7 +15,7 @@
     "transformers": "2.0.1",
     "character-parser": "1.0.2",
     "monocle": "0.1.48",
-    "with": "1.0.4"
+    "with": "~1.1.0"
   },
   "devDependencies": {
     "coffee-script": "*",
