@@ -1247,8 +1247,8 @@ Options:
 
   -h, --help         output usage information
   -V, --version      output the version number
-  -O, --obj <str>    javascript options object
   -o, --out <dir>    output the compiled html to <dir>
+  -O, --obj <str>    javascript options object
   -p, --path <path>  filename used to resolve includes
   -P, --pretty       compile pretty html output
   -c, --client       compile function for client-side runtime.js
@@ -1273,6 +1273,8 @@ Examples:
   $ jade foo bar --out /tmp 
 
 ```
+
+*Notice: since `v0.31.0`, `-o` is preferred for `--out` where we used `-O` before.*
 
 <a name="a18"/>
 ## Tutorials
