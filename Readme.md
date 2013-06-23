@@ -878,7 +878,7 @@ for user in users
 ```jade
 html
   head
-    h1 My Site - #{title}
+    title My Site - #{title}
     block scripts
       script(src='/jquery.js')
   body
