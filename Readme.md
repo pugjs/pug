@@ -1,5 +1,5 @@
 # Jade - template engine 
-[![Build Status](https://secure.travis-ci.org/visionmedia/jade.png)](http://travis-ci.org/visionmedia/jade)
+[![Build Status](https://travis-ci.org/visionmedia/jade.png?branch=master)](https://travis-ci.org/visionmedia/jade)
 [![Dependency Status](https://gemnasium.com/visionmedia/jade.png)](https://gemnasium.com/visionmedia/jade)
 [![NPM version](https://badge.fury.io/js/jade.png)](http://badge.fury.io/js/jade)
 
