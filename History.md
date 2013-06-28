@@ -1,3 +1,11 @@
+0.32.0 / 2013-06-28
+===================
+
+  * remove `jade.version` and fix `jade --version`
+  * add file name and line number to deprecation warnings
+  * use constantinople for better constant detection
+  * update `with` for a massive performance upgrade at compile time
+
 0.31.2 / 2013-06-07
 ===================
 
