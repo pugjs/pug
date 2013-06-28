@@ -28,7 +28,7 @@
     "less": "*",
     "uglify-js": "*",
     "browserify": "*",
-    "win-spawn": "*"
+    "linify": "*"
   },
   "component": {
     "scripts": {
@@ -37,7 +37,7 @@
   },
   "scripts": {
     "test": "mocha -R spec",
-    "prepublish": "npm prune && cd bin && win-line-endings && cd ..",
+    "prepublish": "npm prune && linify transform bin",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
     "compile-full": "browserify ./lib/jade.js --standalone jade -x ./node_modules/transformers > jade.js",
