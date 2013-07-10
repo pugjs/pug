@@ -1284,6 +1284,13 @@ Examples:
   - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bjade%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
 
 <a name="a19"/>
+
+## Contributing
+
+If you would like to contribute to solve [an open issue](https://github.com/visionmedia/jade/issues), [fork](https://github.com/visionmedia/jade/fork) this repository, clone it to your local machine with `git clone git@github.com:YOUR_NAME/jade.git`, then `cd jade` and install dependencies with `npm install -d`.
+
+jade uses the [mocha](https://github.com/visionmedia/mocha) test framework to ensure nothing breaks with code changes. To install mocha, run `npm install -g mocha` and run the tests with the `mocha` command. It is recommended that you provide a new test case for your feature in test/cases (generate one .jade input file, and a .html output file of what the output should be) and be conscious of any existing tests breaking.
+
 ## License
 
 (The MIT License)
