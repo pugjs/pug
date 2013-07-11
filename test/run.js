@@ -29,3 +29,29 @@ cases.forEach(function(test){
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   })
 });
+
+
+// test cases
+
+var anti = fs.readdirSync('test/anti-cases').filter(function(file){
+  return ~file.indexOf('.jade');
+}).map(function(file){
+  return file.replace('.jade', '');
+});
+
+describe('certain syntax is not allowed and will throw a compile time error', function () {
+  anti.forEach(function(test){
+    var name = test.replace(/[-.]/g, ' ');
+    it(name, function(){
+      var path = 'test/anti-cases/' + test + '.jade';
+      var str = fs.readFileSync(path, 'utf8');
+      try {
+        var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/anti-cases' });
+      } catch (ex) {
+        ex.should.be.an.instanceof(Error);
+        return;
+      }
+      throw new Error(test + ' should have thrown an error');
+    })
+  });
+});
