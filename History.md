@@ -1,3 +1,11 @@
+0.33.0 / 2013-07-12
+===================
+
+  * Hugely more powerful error reporting (especially with `compileDebug` set explicitly to `true`)
+  * Add a warning for tags with multiple attributes
+  * be strict about requiring newlines after tags to fix some odd corner cases
+  * fix escaping of class to allow it to be unescaped (thanks to [@christiangenco](https://github.com/christiangenco))
+
 0.32.0 / 2013-06-28
 ===================
 

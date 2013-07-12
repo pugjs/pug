@@ -122,8 +122,14 @@ exports.attrs = function attrs(obj, escaped){
       } else if (0 == key.indexOf('data') && 'string' != typeof val) {
         buf.push(key + "='" + JSON.stringify(val) + "'");
       } else if ('class' == key) {
-        if (val = exports.escape(joinClasses(val))) {
-          buf.push(key + '="' + val + '"');
+        if (escaped && escaped[key]){
+          if (val = exports.escape(joinClasses(val))) {
+            buf.push(key + '="' + val + '"');
+          }
+        } else {
+          if (val = joinClasses(val)) {
+            buf.push(key + '="' + val + '"');
+          }
         }
       } else if (escaped && escaped[key]) {
         buf.push(key + '="' + exports.escape(val) + '"');
@@ -162,12 +168,18 @@ exports.escape = function escape(html){
  * @api private
  */
 
-exports.rethrow = function rethrow(err, filename, lineno){
-  if (!filename) throw err;
-  if (typeof window != 'undefined') throw err;
-
+exports.rethrow = function rethrow(err, filename, lineno, str){
+  if (!(err instanceof Error)) throw err;
+  if ((typeof window != 'undefined' || !filename) && !str) {
+    err.message += ' on line ' + lineno;
+    throw err;
+  }
+  try {
+    str =  str || require('fs').readFileSync(filename, 'utf8')
+  } catch (ex) {
+    rethrow(err, null, lineno)
+  }
   var context = 3
-    , str = require('fs').readFileSync(filename, 'utf8')
     , lines = str.split('\n')
     , start = Math.max(lineno - context, 0)
     , end = Math.min(lines.length, lineno + context);

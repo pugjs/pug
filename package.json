@@ -1,7 +1,7 @@
 {
   "name": "jade",
   "description": "Jade template engine",
-  "version": "0.32.0",
+  "version": "0.33.0",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "repository": "git://github.com/visionmedia/jade",
   "main": "./index.js",
@@ -37,7 +37,7 @@
   },
   "scripts": {
     "test": "mocha -R spec",
-    "prepublish": "npm prune && linify transform bin",
+    "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
     "compile-full": "browserify ./lib/jade.js --standalone jade -x ./node_modules/transformers > jade.js",
