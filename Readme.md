@@ -413,7 +413,7 @@ outputs:
 ```html
 <head>
   <!--[if lt IE 8]>
-    <script src="/ie-sucks.js"></script>
+  <script src="/ie-sucks.js"></script>
   <![endif]-->
 </head>
 ```
