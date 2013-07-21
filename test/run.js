@@ -4,7 +4,8 @@
  */
 
 var jade = require('../')
-  , fs = require('fs');
+  , fs = require('fs')
+  , uglify = require('uglify-js');
 
 // test cases
 
@@ -13,6 +14,13 @@ var cases = fs.readdirSync('test/cases').filter(function(file){
 }).map(function(file){
   return file.replace('.jade', '');
 });
+try {
+  fs.mkdirSync(__dirname + '/output');
+} catch (ex) {
+  if (ex.code !== 'EEXIST') {
+    throw ex;
+  }
+}
 
 cases.forEach(function(test){
   var name = test.replace(/[-.]/g, ' ');
@@ -22,6 +30,16 @@ cases.forEach(function(test){
     var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
     var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
     var actual = fn({ title: 'Jade' });
+
+    fs.writeFileSync(__dirname + '/output/' + test + '.html', actual)
+    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(jade.compile(str, {
+      filename: path,
+      pretty: false,
+      compileDebug: false,
+      client: true,
+      basedir: 'test/cases'
+    }).toString(), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code)
+
     if (/filter/.test(name)) {
       actual = actual.replace(/\n/g, '');
       html = html.replace(/\n/g, '');

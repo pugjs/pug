@@ -6,3 +6,4 @@ node_modules
 lib-cov
 coverage.html
 npm-debug.log
+/test/output
