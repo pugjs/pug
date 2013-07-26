@@ -4,7 +4,7 @@ block content
   #body
     h2 Introduction
     p.
-      This tutorial is a work in progress. Once it's finished it will become a fully interactive getting started guide.
+      This tutorial is a work in progress. Once it's finished it will become a fully row getting started guide.
     p.
       Welcolme to the Jade templating engine.  Jade is designed primarily for server side templating in node.js, however it can be used in many other environments.  It is only intended to produce XML like documents (HTML, RSS etc.) so don't use it to create plain text/markdown/CSS/whatever documents.
     p.
@@ -33,79 +33,87 @@ block content
     h3 Creating Simple Tags
     p.
       Jade is whitespace sensitive, so there's no need to close your tags, jade does that for you.  You can also nest tags within other tags just by indenting them.
-    .interactive
-      pre
-        code.input
-          :jadesrc
-            div
-              address
-              i
-              strong
-      pre
-        code.output
-          :htmlsrc
-            <div>
-              <address></address>
-              <i></i>
-              <strong></strong>
-            </div>
+    .row
+      .col
+        pre
+          code.input
+            :jadesrc
+              div
+                address
+                i
+                strong
+      .col
+        pre
+          code.output
+            :htmlsrc
+              <div>
+                <address></address>
+                <i></i>
+                <strong></strong>
+              </div>
     h3 Putting Text Inside your Tags
     p.
       By default, the content of a tag is parsed as more jade.  There are three ways to put plain text inside a tag.
-    .interactive
-      pre
-        code.input
-          :jadesrc
-            h1 Welcolme to Jade
-            p
-              | Text can be included in a number of
-              | different ways.
-            p.
-              This way is shortest if you need big
-              blocks of text spanning multiple
-              lines.
-      pre
-        code.output
-          :htmlsrc
-            <h1>Welcolme to Jade</h1>
-            <p>Text can be included in a number of
-               different ways.</p>
-            <p>This way is shortest if you need big
-               blocks of text spanning multiple
-               lines.</p>
+    .row
+      .col
+        pre
+          code.input
+            :jadesrc
+              h1 Welcolme to Jade
+              p
+                | Text can be included in a number of
+                | different ways.
+              p.
+                This way is shortest if you need big
+                blocks of text spanning multiple
+                lines.
+      .col
+        pre
+          code.output
+            :htmlsrc
+              <h1>Welcolme to Jade</h1>
+              <p>Text can be included in a number of
+                 different ways.</p>
+              <p>This way is shortest if you need big
+                 blocks of text spanning multiple
+                 lines.</p>
     h3 Adding Attributes to your Tags
     p.
       To add attributes you put them in brackets after the tag name, note that they must be seperated by a comma.
-    .interactive
-      pre
-        code.input
-          :jadesrc
-            h1(id="title") Welcolme to Jade
-            button(class="btn", data-action="bea").
-              Be Awesome
-      pre
-        code.output
-          :htmlsrc
-            <h1 id="title">Welcolme to Jade</h1>
-            <button class="btn" data-action="bea">
-              Be Awesome
-            </button>
+    .row
+      .col
+        pre
+          code.input
+            :jadesrc
+              h1(id="title") Welcolme to Jade
+              button(class="btn", data-action="bea").
+                Be Awesome
+      .col
+        pre
+          code.output
+            :htmlsrc
+              <h1 id="title">Welcolme to Jade</h1>
+              <button class="btn" data-action="bea">
+                Be Awesome
+              </button>
     h3 IDs and Classes
     p.
       Adding IDs and Classes is supper common, so we made it supper easy to do by adding a simple short hand.  The syntax is just like that of CSS selectors:
-    .interactive
-      pre
-        code.input
-          :jadesrc
-            h1#title Welcolme to Jade
-            button.btn(data-action="bea") Awesome
-      pre
-        code.output
-          :htmlsrc
-            <h1 id="title">Welcolme to Jade</h1>
-            <button class="btn" data-action="bea">
-              Awesome
-            </button>
+    .row
+      .col
+        pre
+          code.input
+            :jadesrc
+              h1#title Welcolme to Jade
+              button.btn(data-action="bea") Awesome
+      .col
+        pre
+          code.output
+            :htmlsrc
+              <h1 id="title">Welcolme to Jade</h1>
+              <button class="btn" data-action="bea">
+                Awesome
+              </button>
 
     h2 JavaScript
     p Jade is much more than just a short hand for HTML.  It also has features that let you build dynamic templates.
@@ -124,70 +132,74 @@ block content
               blog: 'forbeslindesay.co.uk'
             }
           })
-    .interactive
-      pre
-        code.input
-          :jadesrc
-            h1
-              | Maintainer:
-              = ' ' + maintainer.name
-            table
-              tr
-                td Twitter
-                td= maintainer.twitter
-              tr
-                td Blog
-                td= maintainer.blog
-      pre
-        code.output
-          :htmlsrc
-            <h1>Maintainer: Forbes Lindesay</h1>
-            <table>
-              <tr>
-                <td>Twitter</td>
-                <td>@ForbesLindesay</td>
-              </tr>
-              <tr>
-                <td>Blog</td>
-                <td>forbeslindesay.co.uk</td>
-              </tr>
-            </table>
+    .row
+      .col
+        pre
+          code.input
+            :jadesrc
+              h1
+                | Maintainer:
+                = ' ' + maintainer.name
+              table
+                tr
+                  td Twitter
+                  td= maintainer.twitter
+                tr
+                  td Blog
+                  td= maintainer.blog
+      .col
+        pre
+          code.output
+            :htmlsrc
+              <h1>Maintainer: Forbes Lindesay</h1>
+              <table>
+                <tr>
+                  <td>Twitter</td>
+                  <td>@ForbesLindesay</td>
+                </tr>
+                <tr>
+                  <td>Blog</td>
+                  <td>forbeslindesay.co.uk</td>
+                </tr>
+              </table>
 
       h3 Setting Attributes
       p Setting attributes to JavaScript values requires no extra work:
 
-    .interactive
-      pre
-        code.input
-          :jadesrc
-            h1(name=maintainer.name)
-              | Maintainer:
-              = ' ' + maintainer.name
-            table
-              tr
-                td(style='width: '+(100/2)+'%').
-                  Twitter
-                td= maintainer.twitter
-              tr
-                td(style='width: '+(100/2)+'%').
-                  Blog
-                td= maintainer.blog
-      pre
-        code.output
-          :htmlsrc
-            <h1 name="Forbes Lindesay">
-              Maintainer: Forbes Lindesay
-            </h1>
-            <table>
-              <tr>
-                <td style="width: 50%">Twitter</td>
-                <td>@ForbesLindesay</td>
-              </tr>
-              <tr>
-                <td style="width: 50%">Blog</td>
-                <td>forbeslindesay.co.uk</td>
-              </tr>
-            </table>
+    .row
+      .col
+        pre
+          code.input
+            :jadesrc
+              h1(name=maintainer.name)
+                | Maintainer:
+                = ' ' + maintainer.name
+              table
+                tr
+                  td(style='width: '+(100/2)+'%').
+                    Twitter
+                  td= maintainer.twitter
+                tr
+                  td(style='width: '+(100/2)+'%').
+                    Blog
+                  td= maintainer.blog
+      .col
+        pre
+          code.output
+            :htmlsrc
+              <h1 name="Forbes Lindesay">
+                Maintainer: Forbes Lindesay
+              </h1>
+              <table>
+                <tr>
+                  <td style="width: 50%">Twitter</td>
+                  <td>@ForbesLindesay</td>
+                </tr>
+                <tr>
+                  <td style="width: 50%">Blog</td>
+                  <td>forbeslindesay.co.uk</td>
+                </tr>
+              </table>
 
     h3 Loops and Conditionals
 

@@ -85,23 +85,25 @@ pre, .code {
         box-shadow: 1px 1px 1px 2px rgba(0,0,0,0.2);
     }
 
-    .interactive:before {
+    .row:before {
        content: "."; 
        visibility: hidden; 
        display: block; 
        height: 0; 
        clear: both;
     }
-    .interactive:after {
+    .row:after {
        content: "."; 
        visibility: hidden; 
        display: block; 
        height: 0; 
        clear: both;
     }
-    .interactive pre {
+
+    .row .col {
         float: left;
-        width: 48%;
+        width: 50%;
+        margin: 0px;
     }
 }
 
