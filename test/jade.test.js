@@ -7,13 +7,6 @@ var jade = require('../')
   , assert = require('assert')
   , fs = require('fs');
 
-// Shortcut
-
-var render = function(str, options){
-  var fn = jade.compile(str, options);
-  return fn(options);
-};
-
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
 describe('jade', function(){
@@ -30,19 +23,19 @@ describe('jade', function(){
 
   describe('.compile()', function(){
     it('should support doctypes', function(){
-      assert.equal('<?xml version="1.0" encoding="utf-8" ?>', render('!!! xml'));
-      assert.equal('<!DOCTYPE html>', render('doctype html'));
-      assert.equal('<!DOCTYPE foo bar baz>', render('doctype foo bar baz'));
-      assert.equal('<!DOCTYPE html>', render('!!! 5'));
-      assert.equal('<!DOCTYPE html>', render('!!!', { doctype:'html' }));
-      assert.equal('<!DOCTYPE html>', render('!!! html', { doctype:'xml' }));
-      assert.equal('<html></html>', render('html'));
-      assert.equal('<!DOCTYPE html><html></html>', render('html', { doctype:'html' }));
-      assert.equal('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>', render('doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN'));
+      assert.equal('<?xml version="1.0" encoding="utf-8" ?>', jade.render('!!! xml'));
+      assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
+      assert.equal('<!DOCTYPE foo bar baz>', jade.render('doctype foo bar baz'));
+      assert.equal('<!DOCTYPE html>', jade.render('!!! 5'));
+      assert.equal('<!DOCTYPE html>', jade.render('!!!', { doctype:'html' }));
+      assert.equal('<!DOCTYPE html>', jade.render('!!! html', { doctype:'xml' }));
+      assert.equal('<html></html>', jade.render('html'));
+      assert.equal('<!DOCTYPE html><html></html>', jade.render('html', { doctype:'html' }));
+      assert.equal('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>', jade.render('doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN'));
     });
 
     it('should support Buffers', function(){
-      assert.equal('<p>foo</p>', render(new Buffer('p foo')));
+      assert.equal('<p>foo</p>', jade.render(new Buffer('p foo')));
     });
 
     it('should support line endings', function(){
@@ -58,7 +51,7 @@ describe('jade', function(){
           '<img/>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'p',
@@ -72,7 +65,7 @@ describe('jade', function(){
           '<img/>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'p',
@@ -86,19 +79,19 @@ describe('jade', function(){
           '<img>'
       ].join('');
 
-      assert.equal(html, render(str, { doctype:'html' }));
+      assert.equal(html, jade.render(str, { doctype:'html' }));
     });
 
     it('should support single quotes', function(){
-      assert.equal("<p>'foo'</p>", render("p 'foo'"));
-      assert.equal("<p>'foo'</p>", render("p\n  | 'foo'"));
-      assert.equal('<a href="/foo"></a>', render("- var path = 'foo';\na(href='/' + path)"));
+      assert.equal("<p>'foo'</p>", jade.render("p 'foo'"));
+      assert.equal("<p>'foo'</p>", jade.render("p\n  | 'foo'"));
+      assert.equal('<a href="/foo"></a>', jade.render("- var path = 'foo';\na(href='/' + path)"));
     });
 
     it('should support block-expansion', function(){
-      assert.equal("<li><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li: a foo\nli: a bar\nli: a baz"));
-      assert.equal("<li class=\"first\"><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", render("li.first: a foo\nli: a bar\nli: a baz"));
-      assert.equal('<div class="foo"><div class="bar">baz</div></div>', render(".foo: .bar baz"));
+      assert.equal("<li><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", jade.render("li: a foo\nli: a bar\nli: a baz"));
+      assert.equal("<li class=\"first\"><a>foo</a></li><li><a>bar</a></li><li><a>baz</a></li>", jade.render("li.first: a foo\nli: a bar\nli: a baz"));
+      assert.equal('<div class="foo"><div class="bar">baz</div></div>', jade.render(".foo: .bar baz"));
     });
 
     it('should support tags', function(){
@@ -114,26 +107,26 @@ describe('jade', function(){
           '<img/>'
       ].join('');
 
-      assert.equal(html, render(str), 'Test basic tags');
-      assert.equal('<fb:foo-bar></fb:foo-bar>', render('fb:foo-bar'), 'Test hyphens');
-      assert.equal('<div class="something"></div>', render('div.something'), 'Test classes');
-      assert.equal('<div id="something"></div>', render('div#something'), 'Test ids');
-      assert.equal('<div class="something"></div>', render('.something'), 'Test stand-alone classes');
-      assert.equal('<div id="something"></div>', render('#something'), 'Test stand-alone ids');
-      assert.equal('<div id="foo" class="bar"></div>', render('#foo.bar'));
-      assert.equal('<div id="foo" class="bar"></div>', render('.bar#foo'));
-      assert.equal('<div id="foo" class="bar"></div>', render('div#foo(class="bar")'));
-      assert.equal('<div id="foo" class="bar"></div>', render('div(class="bar")#foo'));
-      assert.equal('<div id="bar" class="foo"></div>', render('div(id="bar").foo'));
-      assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar.baz'));
-      assert.equal('<div class="foo bar baz"></div>', render('div(class="foo").bar.baz'));
-      assert.equal('<div class="foo bar baz"></div>', render('div.foo(class="bar").baz'));
-      assert.equal('<div class="foo bar baz"></div>', render('div.foo.bar(class="baz")'));
-      assert.equal('<div class="a-b2"></div>', render('div.a-b2'));
-      assert.equal('<div class="a_b2"></div>', render('div.a_b2'));
-      assert.equal('<fb:user></fb:user>', render('fb:user'));
-      assert.equal('<fb:user:role></fb:user:role>', render('fb:user:role'));
-      assert.equal('<colgroup><col class="test"/></colgroup>', render('colgroup\n  col.test'));
+      assert.equal(html, jade.render(str), 'Test basic tags');
+      assert.equal('<fb:foo-bar></fb:foo-bar>', jade.render('fb:foo-bar'), 'Test hyphens');
+      assert.equal('<div class="something"></div>', jade.render('div.something'), 'Test classes');
+      assert.equal('<div id="something"></div>', jade.render('div#something'), 'Test ids');
+      assert.equal('<div class="something"></div>', jade.render('.something'), 'Test stand-alone classes');
+      assert.equal('<div id="something"></div>', jade.render('#something'), 'Test stand-alone ids');
+      assert.equal('<div id="foo" class="bar"></div>', jade.render('#foo.bar'));
+      assert.equal('<div id="foo" class="bar"></div>', jade.render('.bar#foo'));
+      assert.equal('<div id="foo" class="bar"></div>', jade.render('div#foo(class="bar")'));
+      assert.equal('<div id="foo" class="bar"></div>', jade.render('div(class="bar")#foo'));
+      assert.equal('<div id="bar" class="foo"></div>', jade.render('div(id="bar").foo'));
+      assert.equal('<div class="foo bar baz"></div>', jade.render('div.foo.bar.baz'));
+      assert.equal('<div class="foo bar baz"></div>', jade.render('div(class="foo").bar.baz'));
+      assert.equal('<div class="foo bar baz"></div>', jade.render('div.foo(class="bar").baz'));
+      assert.equal('<div class="foo bar baz"></div>', jade.render('div.foo.bar(class="baz")'));
+      assert.equal('<div class="a-b2"></div>', jade.render('div.a-b2'));
+      assert.equal('<div class="a_b2"></div>', jade.render('div.a_b2'));
+      assert.equal('<fb:user></fb:user>', jade.render('fb:user'));
+      assert.equal('<fb:user:role></fb:user:role>', jade.render('fb:user:role'));
+      assert.equal('<colgroup><col class="test"/></colgroup>', jade.render('colgroup\n  col.test'));
     });
 
     it('should support nested tags', function(){
@@ -157,7 +150,7 @@ describe('jade', function(){
           '</ul>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'a(href="#")',
@@ -166,7 +159,7 @@ describe('jade', function(){
           '  | baz'
       ].join('\n');
 
-      assert.equal('<a href="#">foo \nbar \nbaz</a>', render(str));
+      assert.equal('<a href="#">foo \nbar \nbaz</a>', jade.render(str));
 
       var str = [
           'ul',
@@ -185,7 +178,7 @@ describe('jade', function(){
           '</ul>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support variable length newlines', function(){
@@ -213,7 +206,7 @@ describe('jade', function(){
           '</ul>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support tab conversion', function(){
@@ -241,7 +234,7 @@ describe('jade', function(){
           '</ul>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support newlines', function(){
@@ -273,7 +266,7 @@ describe('jade', function(){
           '</ul>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'html',
@@ -295,205 +288,205 @@ describe('jade', function(){
           '</html>'
       ].join('');
 
-      assert.equal(html, render(str));
-      assert.equal('<foo></foo>something<bar></bar>', render('foo\n= "something"\nbar'));
-      assert.equal('<foo></foo>something<bar></bar>else', render('foo\n= "something"\nbar\n= "else"'));
+      assert.equal(html, jade.render(str));
+      assert.equal('<foo></foo>something<bar></bar>', jade.render('foo\n= "something"\nbar'));
+      assert.equal('<foo></foo>something<bar></bar>else', jade.render('foo\n= "something"\nbar\n= "else"'));
     });
 
     it('should support text', function(){
-      assert.equal('foo\nbar\nbaz', render('| foo\n| bar\n| baz'));
-      assert.equal('foo \nbar \nbaz', render('| foo \n| bar \n| baz'));
-      assert.equal('(hey)', render('| (hey)'));
-      assert.equal('some random text', render('| some random text'));
-      assert.equal('  foo', render('|   foo'));
-      assert.equal('  foo  ', render('|   foo  '));
-      assert.equal('  foo  \n bar    ', render('|   foo  \n|  bar    '));
+      assert.equal('foo\nbar\nbaz', jade.render('| foo\n| bar\n| baz'));
+      assert.equal('foo \nbar \nbaz', jade.render('| foo \n| bar \n| baz'));
+      assert.equal('(hey)', jade.render('| (hey)'));
+      assert.equal('some random text', jade.render('| some random text'));
+      assert.equal('  foo', jade.render('|   foo'));
+      assert.equal('  foo  ', jade.render('|   foo  '));
+      assert.equal('  foo  \n bar    ', jade.render('|   foo  \n|  bar    '));
     });
 
     it('should support pipe-less text', function(){
-      assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', render('pre\n  code\n    foo\n\n    bar'));
-      assert.equal('<p>foo\n\nbar</p>', render('p.\n  foo\n\n  bar'));
-      assert.equal('<p>foo\n\n\n\nbar</p>', render('p.\n  foo\n\n\n\n  bar'));
-      assert.equal('<p>foo\n  bar\nfoo</p>', render('p.\n  foo\n    bar\n  foo'));
-      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script.\n  s.parentNode.insertBefore(g,s)\n'));
-      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', render('script.\n  s.parentNode.insertBefore(g,s)'));
+      assert.equal('<pre><code><foo></foo><bar></bar></code></pre>', jade.render('pre\n  code\n    foo\n\n    bar'));
+      assert.equal('<p>foo\n\nbar</p>', jade.render('p.\n  foo\n\n  bar'));
+      assert.equal('<p>foo\n\n\n\nbar</p>', jade.render('p.\n  foo\n\n\n\n  bar'));
+      assert.equal('<p>foo\n  bar\nfoo</p>', jade.render('p.\n  foo\n    bar\n  foo'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', jade.render('script.\n  s.parentNode.insertBefore(g,s)\n'));
+      assert.equal('<script>s.parentNode.insertBefore(g,s)</script>', jade.render('script.\n  s.parentNode.insertBefore(g,s)'));
     });
 
     it('should support tag text', function(){
-      assert.equal('<p>some random text</p>', render('p some random text'));
-      assert.equal('<p>click<a>Google</a>.</p>', render('p\n  | click\n  a Google\n  | .'));
-      assert.equal('<p>(parens)</p>', render('p (parens)'));
-      assert.equal('<p foo="bar">(parens)</p>', render('p(foo="bar") (parens)'));
-      assert.equal('<option value="">-- (optional) foo --</option>', render('option(value="") -- (optional) foo --'));
+      assert.equal('<p>some random text</p>', jade.render('p some random text'));
+      assert.equal('<p>click<a>Google</a>.</p>', jade.render('p\n  | click\n  a Google\n  | .'));
+      assert.equal('<p>(parens)</p>', jade.render('p (parens)'));
+      assert.equal('<p foo="bar">(parens)</p>', jade.render('p(foo="bar") (parens)'));
+      assert.equal('<option value="">-- (optional) foo --</option>', jade.render('option(value="") -- (optional) foo --'));
     });
 
     it('should support tag text block', function(){
-      assert.equal('<p>foo \nbar \nbaz</p>', render('p\n  | foo \n  | bar \n  | baz'));
-      assert.equal('<label>Password:<input/></label>', render('label\n  | Password:\n  input'));
-      assert.equal('<label>Password:<input/></label>', render('label Password:\n  input'));
+      assert.equal('<p>foo \nbar \nbaz</p>', jade.render('p\n  | foo \n  | bar \n  | baz'));
+      assert.equal('<label>Password:<input/></label>', jade.render('label\n  | Password:\n  input'));
+      assert.equal('<label>Password:<input/></label>', jade.render('label Password:\n  input'));
     });
 
     it('should support tag text interpolation', function(){
-      assert.equal('yo, jade is cool', render('| yo, #{name} is cool\n', { name: 'jade' }));
-      assert.equal('<p>yo, jade is cool</p>', render('p yo, #{name} is cool', { name: 'jade' }));
-      assert.equal('yo, jade is cool', render('| yo, #{name || "jade"} is cool', { name: null }));
-      assert.equal('yo, \'jade\' is cool', render('| yo, #{name || "\'jade\'"} is cool', { name: null }));
-      assert.equal('foo &lt;script&gt; bar', render('| foo #{code} bar', { code: '<script>' }));
-      assert.equal('foo <script> bar', render('| foo !{code} bar', { code: '<script>' }));
+      assert.equal('yo, jade is cool', jade.render('| yo, #{name} is cool\n', { name: 'jade' }));
+      assert.equal('<p>yo, jade is cool</p>', jade.render('p yo, #{name} is cool', { name: 'jade' }));
+      assert.equal('yo, jade is cool', jade.render('| yo, #{name || "jade"} is cool', { name: null }));
+      assert.equal('yo, \'jade\' is cool', jade.render('| yo, #{name || "\'jade\'"} is cool', { name: null }));
+      assert.equal('foo &lt;script&gt; bar', jade.render('| foo #{code} bar', { code: '<script>' }));
+      assert.equal('foo <script> bar', jade.render('| foo !{code} bar', { code: '<script>' }));
     });
 
     it('should support flexible indentation', function(){
-      assert.equal('<html><body><h1>Wahoo</h1><p>test</p></body></html>', render('html\n  body\n   h1 Wahoo\n   p test'));
+      assert.equal('<html><body><h1>Wahoo</h1><p>test</p></body></html>', jade.render('html\n  body\n   h1 Wahoo\n   p test'));
     });
 
     it('should support interpolation values', function(){
-      assert.equal('<p>Users: 15</p>', render('p Users: #{15}'));
-      assert.equal('<p>Users: </p>', render('p Users: #{null}'));
-      assert.equal('<p>Users: </p>', render('p Users: #{undefined}'));
-      assert.equal('<p>Users: none</p>', render('p Users: #{undefined || "none"}'));
-      assert.equal('<p>Users: 0</p>', render('p Users: #{0}'));
-      assert.equal('<p>Users: false</p>', render('p Users: #{false}'));
+      assert.equal('<p>Users: 15</p>', jade.render('p Users: #{15}'));
+      assert.equal('<p>Users: </p>', jade.render('p Users: #{null}'));
+      assert.equal('<p>Users: </p>', jade.render('p Users: #{undefined}'));
+      assert.equal('<p>Users: none</p>', jade.render('p Users: #{undefined || "none"}'));
+      assert.equal('<p>Users: 0</p>', jade.render('p Users: #{0}'));
+      assert.equal('<p>Users: false</p>', jade.render('p Users: #{false}'));
     });
 
     it('should support test html 5 mode', function(){
-      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked)'));
-      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', render('!!! 5\ninput(type="checkbox", checked=true)'));
-      assert.equal('<!DOCTYPE html><input type="checkbox">', render('!!! 5\ninput(type="checkbox", checked= false)'));
+      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('!!! 5\ninput(type="checkbox", checked)'));
+      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('!!! 5\ninput(type="checkbox", checked=true)'));
+      assert.equal('<!DOCTYPE html><input type="checkbox">', jade.render('!!! 5\ninput(type="checkbox", checked= false)'));
     });
 
     it('should support multi-line attrs', function(){
-      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\n  bar="baz"\n  checked) foo'));
-      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\nbar="baz"\nchecked) foo'));
-      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar"\n,bar="baz"\n,checked) foo'));
-      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', render('a(foo="bar",\nbar="baz",\nchecked) foo'));
+      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', jade.render('a(foo="bar"\n  bar="baz"\n  checked) foo'));
+      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', jade.render('a(foo="bar"\nbar="baz"\nchecked) foo'));
+      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', jade.render('a(foo="bar"\n,bar="baz"\n,checked) foo'));
+      assert.equal('<a foo="bar" bar="baz" checked="checked">foo</a>', jade.render('a(foo="bar",\nbar="baz",\nchecked) foo'));
     });
 
     it('should support attrs', function(){
-      assert.equal('<img src="&lt;script&gt;"/>', render('img(src="<script>")'), 'Test attr escaping');
+      assert.equal('<img src="&lt;script&gt;"/>', jade.render('img(src="<script>")'), 'Test attr escaping');
 
-      assert.equal('<a data-attr="bar"></a>', render('a(data-attr="bar")'));
-      assert.equal('<a data-attr="bar" data-attr-2="baz"></a>', render('a(data-attr="bar", data-attr-2="baz")'));
+      assert.equal('<a data-attr="bar"></a>', jade.render('a(data-attr="bar")'));
+      assert.equal('<a data-attr="bar" data-attr-2="baz"></a>', jade.render('a(data-attr="bar", data-attr-2="baz")'));
 
-      assert.equal('<a title="foo,bar"></a>', render('a(title= "foo,bar")'));
-      assert.equal('<a title="foo,bar" href="#"></a>', render('a(title= "foo,bar", href="#")'));
+      assert.equal('<a title="foo,bar"></a>', jade.render('a(title= "foo,bar")'));
+      assert.equal('<a title="foo,bar" href="#"></a>', jade.render('a(title= "foo,bar", href="#")'));
 
-      assert.equal('<p class="foo"></p>', render("p(class='foo')"), 'Test single quoted attrs');
-      assert.equal('<input type="checkbox" checked="checked"/>', render('input( type="checkbox", checked )'));
-      assert.equal('<input type="checkbox" checked="checked"/>', render('input( type="checkbox", checked = true )'));
-      assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= false)'));
-      assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= null)'));
-      assert.equal('<input type="checkbox"/>', render('input(type="checkbox", checked= undefined)'));
+      assert.equal('<p class="foo"></p>', jade.render("p(class='foo')"), 'Test single quoted attrs');
+      assert.equal('<input type="checkbox" checked="checked"/>', jade.render('input( type="checkbox", checked )'));
+      assert.equal('<input type="checkbox" checked="checked"/>', jade.render('input( type="checkbox", checked = true )'));
+      assert.equal('<input type="checkbox"/>', jade.render('input(type="checkbox", checked= false)'));
+      assert.equal('<input type="checkbox"/>', jade.render('input(type="checkbox", checked= null)'));
+      assert.equal('<input type="checkbox"/>', jade.render('input(type="checkbox", checked= undefined)'));
 
-      assert.equal('<img src="/foo.png"/>', render('img(src="/foo.png")'), 'Test attr =');
-      assert.equal('<img src="/foo.png"/>', render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
-      assert.equal('<img src="/foo.png"/>', render('img(src="/foo.png")'), 'Test attr :');
-      assert.equal('<img src="/foo.png"/>', render('img(src  =  "/foo.png")'), 'Test attr : whitespace');
+      assert.equal('<img src="/foo.png"/>', jade.render('img(src="/foo.png")'), 'Test attr =');
+      assert.equal('<img src="/foo.png"/>', jade.render('img(src  =  "/foo.png")'), 'Test attr = whitespace');
+      assert.equal('<img src="/foo.png"/>', jade.render('img(src="/foo.png")'), 'Test attr :');
+      assert.equal('<img src="/foo.png"/>', jade.render('img(src  =  "/foo.png")'), 'Test attr : whitespace');
 
-      assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src="/foo.png", alt="just some foo")'));
-      assert.equal('<img src="/foo.png" alt="just some foo"/>', render('img(src = "/foo.png", alt = "just some foo")'));
+      assert.equal('<img src="/foo.png" alt="just some foo"/>', jade.render('img(src="/foo.png", alt="just some foo")'));
+      assert.equal('<img src="/foo.png" alt="just some foo"/>', jade.render('img(src = "/foo.png", alt = "just some foo")'));
 
-      assert.equal('<p class="foo,bar,baz"></p>', render('p(class="foo,bar,baz")'));
-      assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', render('a(href= "http://google.com", title= "Some : weird = title")'));
-      assert.equal('<label for="name"></label>', render('label(for="name")'));
-      assert.equal('<meta name="viewport" content="width=device-width"/>', render("meta(name= 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
-      assert.equal('<div style="color= white"></div>', render("div(style='color= white')"));
-      assert.equal('<div style="color: white"></div>', render("div(style='color: white')"));
-      assert.equal('<p class="foo"></p>', render("p('class'='foo')"), 'Test keys with single quotes');
-      assert.equal('<p class="foo"></p>', render("p(\"class\"= 'foo')"), 'Test keys with double quotes');
+      assert.equal('<p class="foo,bar,baz"></p>', jade.render('p(class="foo,bar,baz")'));
+      assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', jade.render('a(href= "http://google.com", title= "Some : weird = title")'));
+      assert.equal('<label for="name"></label>', jade.render('label(for="name")'));
+      assert.equal('<meta name="viewport" content="width=device-width"/>', jade.render("meta(name= 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
+      assert.equal('<div style="color= white"></div>', jade.render("div(style='color= white')"));
+      assert.equal('<div style="color: white"></div>', jade.render("div(style='color: white')"));
+      assert.equal('<p class="foo"></p>', jade.render("p('class'='foo')"), 'Test keys with single quotes');
+      assert.equal('<p class="foo"></p>', jade.render("p(\"class\"= 'foo')"), 'Test keys with double quotes');
 
-      assert.equal('<p data-lang="en"></p>', render('p(data-lang = "en")'));
-      assert.equal('<p data-dynamic="true"></p>', render('p("data-dynamic"= "true")'));
-      assert.equal('<p data-dynamic="true" class="name"></p>', render('p("class"= "name", "data-dynamic"= "true")'));
-      assert.equal('<p data-dynamic="true"></p>', render('p(\'data-dynamic\'= "true")'));
-      assert.equal('<p data-dynamic="true" class="name"></p>', render('p(\'class\'= "name", \'data-dynamic\'= "true")'));
-      assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', render('p(\'class\'= "name", \'data-dynamic\'= "true", yay)'));
+      assert.equal('<p data-lang="en"></p>', jade.render('p(data-lang = "en")'));
+      assert.equal('<p data-dynamic="true"></p>', jade.render('p("data-dynamic"= "true")'));
+      assert.equal('<p data-dynamic="true" class="name"></p>', jade.render('p("class"= "name", "data-dynamic"= "true")'));
+      assert.equal('<p data-dynamic="true"></p>', jade.render('p(\'data-dynamic\'= "true")'));
+      assert.equal('<p data-dynamic="true" class="name"></p>', jade.render('p(\'class\'= "name", \'data-dynamic\'= "true")'));
+      assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', jade.render('p(\'class\'= "name", \'data-dynamic\'= "true", yay)'));
 
-      assert.equal('<input checked="checked" type="checkbox"/>', render('input(checked, type="checkbox")'));
+      assert.equal('<input checked="checked" type="checkbox"/>', jade.render('input(checked, type="checkbox")'));
 
-      assert.equal('<a data-foo="{ foo: \'bar\', bar= \'baz\' }"></a>', render('a(data-foo  = "{ foo: \'bar\', bar= \'baz\' }")'));
+      assert.equal('<a data-foo="{ foo: \'bar\', bar= \'baz\' }"></a>', jade.render('a(data-foo  = "{ foo: \'bar\', bar= \'baz\' }")'));
 
-      assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', render('meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")'));
+      assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', jade.render('meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")'));
 
-      assert.equal('<div style="background: url(/images/test.png)">Foo</div>', render("div(style= 'background: url(/images/test.png)') Foo"));
-      assert.equal('<div style="background = url(/images/test.png)">Foo</div>', render("div(style= 'background = url(/images/test.png)') Foo"));
-      assert.equal('<div style="foo">Foo</div>', render("div(style= ['foo', 'bar'][0]) Foo"));
-      assert.equal('<div style="bar">Foo</div>', render("div(style= { foo: 'bar', baz: 'raz' }['foo']) Foo"));
-      assert.equal('<a href="def">Foo</a>', render("a(href='abcdefg'.substr(3,3)) Foo"));
-      assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,3)) Foo"));
-      assert.equal('<a href="def">Foo</a>', render("a(href={test: 'abcdefg'}.test.substr(3,[0,3][1])) Foo"));
+      assert.equal('<div style="background: url(/images/test.png)">Foo</div>', jade.render("div(style= 'background: url(/images/test.png)') Foo"));
+      assert.equal('<div style="background = url(/images/test.png)">Foo</div>', jade.render("div(style= 'background = url(/images/test.png)') Foo"));
+      assert.equal('<div style="foo">Foo</div>', jade.render("div(style= ['foo', 'bar'][0]) Foo"));
+      assert.equal('<div style="bar">Foo</div>', jade.render("div(style= { foo: 'bar', baz: 'raz' }['foo']) Foo"));
+      assert.equal('<a href="def">Foo</a>', jade.render("a(href='abcdefg'.substr(3,3)) Foo"));
+      assert.equal('<a href="def">Foo</a>', jade.render("a(href={test: 'abcdefg'}.test.substr(3,3)) Foo"));
+      assert.equal('<a href="def">Foo</a>', jade.render("a(href={test: 'abcdefg'}.test.substr(3,[0,3][1])) Foo"));
 
-      assert.equal('<rss xmlns:atom="atom"></rss>', render("rss(xmlns:atom=\"atom\")"));
-      assert.equal('<rss xmlns:atom="atom"></rss>', render("rss('xmlns:atom'=\"atom\")"));
-      assert.equal('<rss xmlns:atom="atom"></rss>', render("rss(\"xmlns:atom\"='atom')"));
-      assert.equal('<rss xmlns:atom="atom" foo="bar"></rss>', render("rss('xmlns:atom'=\"atom\", 'foo'= 'bar')"));
-      assert.equal('<a data-obj="{ foo: \'bar\' }"></a>', render("a(data-obj= \"{ foo: 'bar' }\")"));
+      assert.equal('<rss xmlns:atom="atom"></rss>', jade.render("rss(xmlns:atom=\"atom\")"));
+      assert.equal('<rss xmlns:atom="atom"></rss>', jade.render("rss('xmlns:atom'=\"atom\")"));
+      assert.equal('<rss xmlns:atom="atom"></rss>', jade.render("rss(\"xmlns:atom\"='atom')"));
+      assert.equal('<rss xmlns:atom="atom" foo="bar"></rss>', jade.render("rss('xmlns:atom'=\"atom\", 'foo'= 'bar')"));
+      assert.equal('<a data-obj="{ foo: \'bar\' }"></a>', jade.render("a(data-obj= \"{ foo: 'bar' }\")"));
 
-      assert.equal('<meta content="what\'s up? \'weee\'"/>', render('meta(content="what\'s up? \'weee\'")'));
+      assert.equal('<meta content="what\'s up? \'weee\'"/>', jade.render('meta(content="what\'s up? \'weee\'")'));
     });
 
     it('should support colons option', function(){
-      assert.equal('<a href="/bar"></a>', render('a(href:"/bar")', { colons: true }));
+      assert.equal('<a href="/bar"></a>', jade.render('a(href:"/bar")', { colons: true }));
     });
 
     it('should support class attr array', function(){
-      assert.equal('<body class="foo bar baz"></body>', render('body(class=["foo", "bar", "baz"])'));
+      assert.equal('<body class="foo bar baz"></body>', jade.render('body(class=["foo", "bar", "baz"])'));
     });
 
     it('should support attr interpolation', function(){
       // Test single quote interpolation
       assert.equal('<a href="/user/12">tj</a>'
-        , render("a(href='/user/#{id}') #{name}", { name: 'tj', id: 12 }));
+        , jade.render("a(href='/user/#{id}') #{name}", { name: 'tj', id: 12 }));
 
       assert.equal('<a href="/user/12-tj">tj</a>'
-        , render("a(href='/user/#{id}-#{name}') #{name}", { name: 'tj', id: 12 }));
+        , jade.render("a(href='/user/#{id}-#{name}') #{name}", { name: 'tj', id: 12 }));
 
       assert.equal('<a href="/user/&lt;script&gt;">tj</a>'
-        , render("a(href='/user/#{id}') #{name}", { name: 'tj', id: '<script>' }));
+        , jade.render("a(href='/user/#{id}') #{name}", { name: 'tj', id: '<script>' }));
 
       // Test double quote interpolation
       assert.equal('<a href="/user/13">ds</a>'
-        , render('a(href="/user/#{id}") #{name}', { name: 'ds', id: 13 }));
+        , jade.render('a(href="/user/#{id}") #{name}', { name: 'ds', id: 13 }));
 
       assert.equal('<a href="/user/13-ds">ds</a>'
-        , render('a(href="/user/#{id}-#{name}") #{name}', { name: 'ds', id: 13 }));
+        , jade.render('a(href="/user/#{id}-#{name}") #{name}', { name: 'ds', id: 13 }));
 
       assert.equal('<a href="/user/&lt;script&gt;">ds</a>'
-        , render('a(href="/user/#{id}") #{name}', { name: 'ds', id: '<script>' }));
+        , jade.render('a(href="/user/#{id}") #{name}', { name: 'ds', id: '<script>' }));
     });
 
     it('should support attr parens', function(){
-      assert.equal('<p foo="bar">baz</p>', render('p(foo=((("bar"))))= ((("baz")))'));
+      assert.equal('<p foo="bar">baz</p>', jade.render('p(foo=((("bar"))))= ((("baz")))'));
     });
 
     it('should support code attrs', function(){
-      assert.equal('<p></p>', render('p(id= name)', { name: undefined }));
-      assert.equal('<p></p>', render('p(id= name)', { name: null }));
-      assert.equal('<p></p>', render('p(id= name)', { name: false }));
-      assert.equal('<p id=""></p>', render('p(id= name)', { name: '' }));
-      assert.equal('<p id="tj"></p>', render('p(id= name)', { name: 'tj' }));
-      assert.equal('<p id="default"></p>', render('p(id= name || "default")', { name: null }));
-      assert.equal('<p id="something"></p>', render("p(id= 'something')", { name: null }));
-      assert.equal('<p id="something"></p>', render("p(id = 'something')", { name: null }));
-      assert.equal('<p id="foo"></p>', render("p(id= (true ? 'foo' : 'bar'))"));
-      assert.equal('<option value="">Foo</option>', render("option(value='') Foo"));
+      assert.equal('<p></p>', jade.render('p(id= name)', { name: undefined }));
+      assert.equal('<p></p>', jade.render('p(id= name)', { name: null }));
+      assert.equal('<p></p>', jade.render('p(id= name)', { name: false }));
+      assert.equal('<p id=""></p>', jade.render('p(id= name)', { name: '' }));
+      assert.equal('<p id="tj"></p>', jade.render('p(id= name)', { name: 'tj' }));
+      assert.equal('<p id="default"></p>', jade.render('p(id= name || "default")', { name: null }));
+      assert.equal('<p id="something"></p>', jade.render("p(id= 'something')", { name: null }));
+      assert.equal('<p id="something"></p>', jade.render("p(id = 'something')", { name: null }));
+      assert.equal('<p id="foo"></p>', jade.render("p(id= (true ? 'foo' : 'bar'))"));
+      assert.equal('<option value="">Foo</option>', jade.render("option(value='') Foo"));
     });
 
     it('should support code attrs class', function(){
-      assert.equal('<p class="tj"></p>', render('p(class= name)', { name: 'tj' }));
-      assert.equal('<p class="tj"></p>', render('p( class= name )', { name: 'tj' }));
-      assert.equal('<p class="default"></p>', render('p(class= name || "default")', { name: null }));
-      assert.equal('<p class="foo default"></p>', render('p.foo(class= name || "default")', { name: null }));
-      assert.equal('<p class="default foo"></p>', render('p(class= name || "default").foo', { name: null }));
-      assert.equal('<p id="default"></p>', render('p(id = name || "default")', { name: null }));
-      assert.equal('<p id="user-1"></p>', render('p(id = "user-" + 1)'));
-      assert.equal('<p class="user-1"></p>', render('p(class = "user-" + 1)'));
+      assert.equal('<p class="tj"></p>', jade.render('p(class= name)', { name: 'tj' }));
+      assert.equal('<p class="tj"></p>', jade.render('p( class= name )', { name: 'tj' }));
+      assert.equal('<p class="default"></p>', jade.render('p(class= name || "default")', { name: null }));
+      assert.equal('<p class="foo default"></p>', jade.render('p.foo(class= name || "default")', { name: null }));
+      assert.equal('<p class="default foo"></p>', jade.render('p(class= name || "default").foo', { name: null }));
+      assert.equal('<p id="default"></p>', jade.render('p(id = name || "default")', { name: null }));
+      assert.equal('<p id="user-1"></p>', jade.render('p(id = "user-" + 1)'));
+      assert.equal('<p class="user-1"></p>', jade.render('p(class = "user-" + 1)'));
     });
 
     it('should support code buffering', function(){
-      assert.equal('<p></p>', render('p= null'));
-      assert.equal('<p></p>', render('p= undefined'));
-      assert.equal('<p>0</p>', render('p= 0'));
-      assert.equal('<p>false</p>', render('p= false'));
+      assert.equal('<p></p>', jade.render('p= null'));
+      assert.equal('<p></p>', jade.render('p= undefined'));
+      assert.equal('<p>0</p>', jade.render('p= 0'));
+      assert.equal('<p>false</p>', jade.render('p= false'));
     });
 
     it('should support script text', function(){
@@ -514,7 +507,7 @@ describe('jade', function(){
         '<script type="text/template">p foo</script>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support comments', function(){
@@ -529,7 +522,7 @@ describe('jade', function(){
           '<p>bar</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Arbitrary indentation
 
@@ -543,7 +536,7 @@ describe('jade', function(){
           '<p>bar</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Between tags
 
@@ -559,13 +552,13 @@ describe('jade', function(){
           '<p>baz</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Quotes
 
       var str = "<!-- script(src: '/js/validate.js') -->",
           js = "// script(src: '/js/validate.js') ";
-      assert.equal(str, render(js));
+      assert.equal(str, jade.render(js));
     });
 
     it('should support unbuffered comments', function(){
@@ -578,7 +571,7 @@ describe('jade', function(){
           '<p>bar</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'p foo',
@@ -591,19 +584,19 @@ describe('jade', function(){
           '<p>baz</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support literal html', function(){
-      assert.equal('<!--[if IE lt 9]>weeee<![endif]-->', render('<!--[if IE lt 9]>weeee<![endif]-->'));
+      assert.equal('<!--[if IE lt 9]>weeee<![endif]-->', jade.render('<!--[if IE lt 9]>weeee<![endif]-->'));
     });
 
     it('should support code', function(){
-      assert.equal('test', render('!= "test"'));
-      assert.equal('test', render('= "test"'));
-      assert.equal('test', render('- var foo = "test"\n=foo'));
-      assert.equal('foo<em>test</em>bar', render('- var foo = "test"\n| foo\nem= foo\n| bar'));
-      assert.equal('test<h2>something</h2>', render('!= "test"\nh2 something'));
+      assert.equal('test', jade.render('!= "test"'));
+      assert.equal('test', jade.render('= "test"'));
+      assert.equal('test', jade.render('- var foo = "test"\n=foo'));
+      assert.equal('foo<em>test</em>bar', jade.render('- var foo = "test"\n| foo\nem= foo\n| bar'));
+      assert.equal('test<h2>something</h2>', jade.render('!= "test"\nh2 something'));
 
       var str = [
           '- var foo = "<script>";',
@@ -616,7 +609,7 @@ describe('jade', function(){
           '<script>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           '- var foo = "<script>";',
@@ -628,7 +621,7 @@ describe('jade', function(){
           '<p>&lt;script&gt;</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           '- var foo = "<script>";',
@@ -640,7 +633,7 @@ describe('jade', function(){
           '<p><script></p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           '- var foo;',
@@ -654,7 +647,7 @@ describe('jade', function(){
           '<p class="noFoo">no foo</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           '- var foo;',
@@ -670,7 +663,7 @@ describe('jade', function(){
           '<p>kinda foo</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'p foo',
@@ -681,7 +674,7 @@ describe('jade', function(){
           '<p>foo</p>bar'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'title foo',
@@ -693,7 +686,7 @@ describe('jade', function(){
           '<title>foo</title><p>something</p>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           'foo',
@@ -709,7 +702,7 @@ describe('jade', function(){
           '</foo>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support - each', function(){
@@ -726,7 +719,7 @@ describe('jade', function(){
           '<li>three</li>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Any enumerable (length property)
       var str = [
@@ -741,7 +734,7 @@ describe('jade', function(){
           '<li>3</li>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Empty array
       var str = [
@@ -750,7 +743,7 @@ describe('jade', function(){
           '  li= item'
       ].join('\n');
 
-      assert.equal('', render(str));
+      assert.equal('', jade.render(str));
 
       // Object
       var str = [
@@ -764,7 +757,7 @@ describe('jade', function(){
           '<li>raz</li>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Complex
       var str = [
@@ -778,7 +771,7 @@ describe('jade', function(){
           '<li>baz</li>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Keys
       var str = [
@@ -792,7 +785,7 @@ describe('jade', function(){
           '<li>baz: raz</li>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       // Nested
       var str = [
@@ -806,7 +799,7 @@ describe('jade', function(){
           '<li>name tj</li>'
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           '- var users = ["tobi", "loki", "jane"]',
@@ -820,7 +813,7 @@ describe('jade', function(){
           '<li>jane</li>',
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
 
       var str = [
           '- var users = ["tobi", "loki", "jane"]',
@@ -834,7 +827,7 @@ describe('jade', function(){
           '<li>jane</li>',
       ].join('');
 
-      assert.equal(html, render(str));
+      assert.equal(html, jade.render(str));
     });
 
     it('should support if', function(){
@@ -844,9 +837,9 @@ describe('jade', function(){
           '  p users: #{users.length}',
       ].join('\n');
 
-      assert.equal('<p>users: 3</p>', render(str));
+      assert.equal('<p>users: 3</p>', jade.render(str));
 
-      assert.equal('<iframe foo="bar"></iframe>', render('iframe(foo="bar")'));
+      assert.equal('<iframe foo="bar"></iframe>', jade.render('iframe(foo="bar")'));
     });
 
     it('should support unless', function(){
@@ -856,7 +849,7 @@ describe('jade', function(){
           '  p no users',
       ].join('\n');
 
-      assert.equal('', render(str));
+      assert.equal('', jade.render(str));
 
       var str = [
           '- var users = []',
@@ -864,7 +857,7 @@ describe('jade', function(){
           '  p no users',
       ].join('\n');
 
-      assert.equal('<p>no users</p>', render(str));
+      assert.equal('<p>no users</p>', jade.render(str));
     });
 
     it('should support else', function(){
@@ -876,7 +869,7 @@ describe('jade', function(){
           '  p users: none',
       ].join('\n');
 
-      assert.equal('<p>users: none</p>', render(str));
+      assert.equal('<p>users: none</p>', jade.render(str));
     });
 
     it('should else if', function(){
@@ -891,7 +884,7 @@ describe('jade', function(){
           '    p #{user}',
       ].join('\n');
 
-      assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', render(str));
+      assert.equal('<p>awesome tobi</p><p>lame jane</p><p>loki</p>', jade.render(str));
     });
 
     it('should include block', function(){
@@ -903,26 +896,26 @@ describe('jade', function(){
       ].join('\n');
 
       assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
-      , render(str, { filename: __dirname + '/jade.test.js' }));
+      , jade.render(str, { filename: __dirname + '/jade.test.js' }));
     });
   });
 
-  describe('.render()', function(){
-    it('should support .render(str, fn)', function(){
+  describe('.jade.render()', function(){
+    it('should support .jade.render(str, fn)', function(){
       jade.render('p foo bar', function(err, str){
         assert.ok(!err);
         assert.equal('<p>foo bar</p>', str);
       });
     });
 
-    it('should support .render(str, options, fn)', function(){
+    it('should support .jade.render(str, options, fn)', function(){
       jade.render('p #{foo}', { foo: 'bar' }, function(err, str){
         assert.ok(!err);
         assert.equal('<p>bar</p>', str);
       });
     });
 
-    it('should support .render(str, options, fn) cache', function(){
+    it('should support .jade.render(str, options, fn) cache', function(){
       jade.render('p bar', { cache: true }, function(err, str){
         assert.ok(/the "filename" option is required for caching/.test(err.message));
       });
@@ -964,11 +957,11 @@ describe('jade', function(){
     });
 
     it('should support assignment', function(){
-      assert.equal('<div>5</div>', render('a = 5;\ndiv= a'));
-      assert.equal('<div>5</div>', render('a = 5\ndiv= a'));
-      assert.equal('<div>foo bar baz</div>', render('a = "foo bar baz"\ndiv= a'));
-      assert.equal('<div>5</div>', render('a = 5      \ndiv= a'));
-      assert.equal('<div>5</div>', render('a = 5      ; \ndiv= a'));
+      assert.equal('<div>5</div>', jade.render('a = 5;\ndiv= a'));
+      assert.equal('<div>5</div>', jade.render('a = 5\ndiv= a'));
+      assert.equal('<div>foo bar baz</div>', jade.render('a = "foo bar baz"\ndiv= a'));
+      assert.equal('<div>5</div>', jade.render('a = 5      \ndiv= a'));
+      assert.equal('<div>5</div>', jade.render('a = 5      ; \ndiv= a'));
 
       var fn = jade.compile('test = local\np=test');
       assert.equal('<p>bar</p>', fn({ local: 'bar' }));
