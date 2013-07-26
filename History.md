@@ -1,3 +1,12 @@
+0.34.0 / 2013-07-26
+===================
+
+  * callbacks only called once for async methods even if they throw (reported by [@davidcornu](https://github.com/davidcornu))
+  * HTML comments are pretty printed better (thanks to [@eddiemonge](https://github.com/eddiemonge))
+  * callbacks are optional and leaving them out results in synchronous operation (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * empty filter nodes are now permitted (thanks to [@coderanger](https://github.com/coderanger))
+  * overhaul website and documentation (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/)), much more of this to come.
+
 0.33.0 / 2013-07-12
 ===================
 
