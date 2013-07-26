@@ -1,12 +1,7 @@
-<p>bar</p>
-<body><p>:)</p><script>
-  console.log("foo\nbar")
-</script><script type="text/javascript">
 var STRING_SUBSTITUTIONS = {    // table of character substitutions
   '\t': '\\t',
   '\r': '\\r',
   '\n': '\\n',
   '"' : '\\"',
   '\\': '\\\\'
-};</script>
-</body>
+};
