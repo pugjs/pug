@@ -1,3 +1,8 @@
+0.34.1 / 2013-07-26
+===================
+
+  * fix render file not working when called with callback (reported by [@xieren58](https://github.com/xieren58))
+
 0.34.0 / 2013-07-26
 ===================
 
