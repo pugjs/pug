@@ -16,6 +16,7 @@ module.exports = highlightJade;
 function highlightJade(jade) {
   var lexer = new Lexer(jade);
  
+  var format = ''
   var last = null;
   var tok = {};
   var buf = [];
@@ -31,32 +32,54 @@ function highlightJade(jade) {
     if (textMode) {
       textMode = false;
       textIndent = 0;
-      buf.push(escape(textBuf));
+      if (format === 'javascript') {
+        buf.push(highlightJavaScript(textBuf))
+      } else {
+        buf.push(escape(textBuf));
+      }
     }
   }
- 
   while (tok.type !== 'eos') {
     last = tok;
     var before = lexer.input;
     tok = lexer.next();
     var after = lexer.input;
     var src = before.substr(0, before.length - after.length);
-    if (textIndent && tok.type != 'outdent') {
-      buf.push(escape(src));
+    if (textMode && tok.type != 'outdent') {
+      textBuf += escape(src);
     } else {
+      if (tok.type === 'tag') {
+        switch (tok.val) {
+          case 'script':
+            format = 'javascript';
+            break;
+          case 'style':
+            format = 'css';
+            break;
+          default:
+            format = '';
+            break;
+        }
+      }
       switch (tok.type) {
         case 'text':
-          if (tok.val === '.') enterTextMode();
-          buf.push(escape(src));
+          if (tok.val === '.' && !textMode) {
+            buf.push(escape(src));
+            enterTextMode();
+          } else if (textMode) {
+            textBuf += src;
+          } else {
+            buf.push(escape(src));
+          }
           break;
         case 'newline':
           buf.push(escape(src));
           if (textIndent <= 0) exitTextMode();
           break;
         case 'outdent':
-          buf.push(escape(src));
           if (textMode) textIndent--;
-          if (textIndent <= 0) exitTextMode();
+          if (textIndent < 0) exitTextMode();
+          buf.push(escape(src));
           break;
         case 'indent':
           buf.push(escape(src));
@@ -76,7 +99,7 @@ function highlightJade(jade) {
               return '(<span class="attribute">' + begin.substr(1, begin.length - 2) + '</span>='
             }
             if (mid) {
-              return ',<span class="attribute">' + mid.substr(1, begin.length - 2) + '</span>='
+              return ',<span class="attribute">' + mid.substr(1, mid.length - 2) + '</span>='
             }
           }));
           break;

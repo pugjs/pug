@@ -1,35 +1,165 @@
 extends ./layout.jade
-block style
-  style
-    #body {
-      background: white;
-      padding: 30px;
-    }
+
 block content
   #body
-    :markdown
-      ## Installation
+    h2 API Documentation
 
-      via npm:
+    p This page details how to render jade using the JavaScript API in node.js
 
-          $ npm install jade
+    h3 Installation
 
-      ## Usage
+    p via npm:
 
-      ```js
-      var jade = require('jade');
+    pre
+      code <span style="color:#C07474">$</span> <span style="color:#2B2BAD">npm</span> <span style="color:#B62EB6">install</span> <span style="color:#4A7B6F">jade</span>
 
-      // Compile a function
-      var fn = jade.compile('string of jade', options);
-      fn(locals);
-      ```
+    h3 Usage
 
-      ### Options
+    h4 options
 
-       - `self`      Use a `self` namespace to hold the locals _(false by default)_
-       - `locals`    Local variable object
-       - `filename`  Used in exceptions, and required when using includes
-       - `debug`     Outputs tokens and function body generated
-       - `compiler`  Compiler to replace jade's default
-       - `compileDebug`  When `false` no debug instrumentation is compiled
-       - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
+    p All API methods take the following set of options:
+
+    .code
+      div {
+      dl
+        dt filename:
+        dd.type.string string
+        dd.description Used in exceptions, and required for relative includes and extends
+        dt pretty:
+        dd.type.boolean boolean
+        dd.description Adds whitespace to the resulting html to make it easier for a human to read
+        dt self:
+        dd.type.boolean boolean
+        dd.description Use a `self` namespace to hold the locals _(false by default)_
+        dt debug:
+        dd.type.boolean boolean
+        dd.description If set to true, the tokens and function body is logged to stdout
+        dt compileDebug:
+        dd.type.boolean boolean
+        dd.description Set this to false to disable debugging instrumentation (recommended in production).  Set it to true to include the function source in the compiled template for better error messages (sometimes useful in development).
+        dt compiler:
+        dd.type.function class
+        dd.description Override the default compiler
+      div }
+
+    h4 jade.compile(source, options)
+
+    p Compile some jade source to a function which can be rendered multiple times with different locals.
+
+    dl
+      dt source
+      dd.type.string string
+      dd.description The source jade to compile
+      dt options
+      dd.type.object options
+      dd.description An options object (see above)
+    dl.returns
+      dt returns
+      dd.type.function function
+      dd.description A function to generate the html from an object containing locals
+
+    pre
+      code
+        :jssrc
+          var jade = require('jade');
+
+          // Compile a function
+          var fn = jade.compile('string of jade', options);
+
+          // Render the function
+          var html = fn(locals);
+          // => '<string>of jade</string>'
+
+    h4 jade.render(source, options, callback)
+
+    p Render some jade source to HTML with given options and locals.
+
+    dl
+      dt source
+      dd.type.string string
+      dd.description The source jade to render
+      dt options
+      dd.type.object options
+      dd.description An options object (see above), also used as the locals object
+      dt callback
+      dd.type.function function
+      dd.description Node style callback function which is passed error and result as its arguments
+
+    pre
+      code
+        :jssrc
+          var jade = require('jade');
+
+          jade.render('string of jade', options, function (err, html) {
+            if (err) throw err;
+            // html => '<string>of jade</string>'
+          });
+
+    p or
+
+    dl
+      dt source
+      dd.type.string string
+      dd.description The source jade to render
+      dt options
+      dd.type.object options
+      dd.description An options object (see above), also used as the locals object
+    dl.returns
+      dt returns
+      dd.type.string string
+      dd.description The resulting html string
+
+    pre
+      code
+        :jssrc
+          var jade = require('jade');
+
+          var html = jade.render('string of jade', options);
+          // => '<string>of jade</string>'
+
+    h4 jade.renderFile(filename, options, callback)
+
+    p Render a jade file to HTML with given options and locals.
+
+    dl
+      dt filename
+      dd.type.string string
+      dd.description The path to the jade file to render
+      dt options
+      dd.type.object options
+      dd.description An options object (see above), also used as the locals object
+      dt callback
+      dd.type.function function
+      dd.description Node style callback function which is passed error and result as its arguments
+
+    pre
+      code
+        :jssrc
+          var jade = require('jade');
+
+          jade.renderFile('path/to/file.jade', options, function (err, html) {
+            if (err) throw err;
+            // ...
+          });
+
+    p or
+
+    dl
+      dt filename
+      dd.type.string string
+      dd.description The path to the jade file to render
+      dt options
+      dd.type.object options
+      dd.description An options object (see above), also used as the locals object
+    dl.returns
+      dt returns
+      dd.type.string string
+      dd.description The resulting html string
+
+    pre
+      code
+        :jssrc
+          var jade = require('jade');
+
+          var html = jade.renderFile('path/to/file.jade', options);
+          // ...

@@ -1,5 +1,6 @@
+'use strict'
 
-
+var browserify = require('browserify-middleware');
 var hljs = require('highlight.js');
 var filters = require('jade').filters;
 var jade = require('transform')('jade');
@@ -7,6 +8,8 @@ var express = require('express');
 var app = express();
 
 var marked = require('marked');
+
+browserify.settings('basedir', require('path').resolve(__dirname, '../'));
 
 marked.setOptions({
   highlight: function (code, lang) {
@@ -22,12 +25,9 @@ filters.jadesrc = require('./highlight-jade');
 filters.htmlsrc = function (html) {
   return hljs.highlight('xml', html).value;
 };
-function escape(src) {
-  return src.replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
-}
+filters.jssrc = function (js) {
+  return hljs.highlight('javascript', js).value;
+};
 
 app.use('/public', express.static(__dirname + '/public'));
 
@@ -35,6 +35,7 @@ app.get('/', jade('./pages/index.jade'));
 app.get('/tutorial', jade('./pages/tutorial.jade'));
 app.get('/api', jade('./pages/api.jade'));
 app.get('/command-line', jade('./pages/command-line.jade'));
+app.get('/client.js', browserify('./client/index.js'))
 
 app.listen(3000);
 

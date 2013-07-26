@@ -1,10 +1,10 @@
-<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><link rel="stylesheet" href="public/stylesheets/home.css"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="tagline">Node Template Engine</div><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="http://github.com/visionmedia/jade#readme" class="nav-button">Documentation</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="conversion"><pre id="jade"><code><span class="doctype">doctype 5</span>
+<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><link rel="stop" href="/public/images/tile.png"><link rel="stop" href="/public/images/top.png"><link rel="stop" href="/public/images/logo.png"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div class="interactive"><pre id="jade"><code><span class="doctype">doctype 5</span>
 <span class="tag">html</span>(<span class="attribute">lang</span>=<span class="string">"en"</span>)
   <span class="tag">head</span>
     <span class="tag">title</span>= pageTitle
-    <span class="tag">script</span>(<span class="attribute">type</span>=<span class="string">'text/javascript'</span>)
+    <span class="tag">script</span>(<span class="attribute">type</span>=<span class="string">'text/javascript'</span>).
       <span class="keyword">if</span> (foo) {
-         <span class="tag">bar</span>()
+         bar(<span class="number">1</span> + <span class="number">5</span>)
       }
   <span class="tag">body</span>
     <span class="tag">h1</span> Jade - node template engine
@@ -17,13 +17,13 @@
         Jade is a terse and simple
         templating language with a
         strong focus on performance
-        and powerful features.</code></pre><div id="arrow"></div><pre id="html"><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+        and powerful features.</code></pre><pre id="html"><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">head</span>&gt;</span>
     <span class="tag">&lt;<span class="title">title</span>&gt;</span>Jade<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
     <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
       <span class="keyword">if</span> (foo) {
-        bar()
+        bar(<span class="number">1</span> + <span class="number">5</span>)
       }
     </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">head</span>&gt;</span>
@@ -37,7 +37,7 @@
          and powerful features.<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
     <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">body</span>&gt;</span>
-<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre></div></div><script>var _gaq = _gaq || [];
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span></code></pre></div></div><script src="/client.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-25261536-1']);
 _gaq.push(['_trackPageview']);
 

@@ -1,26 +1,31 @@
-<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><style>#body {
-  background: white;
-  padding: 30px;
-}</style></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="tagline">Node Template Engine</div><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="http://github.com/visionmedia/jade#readme" class="nav-button">Documentation</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="body"><h2>Installation</h2>
-<p>via npm:</p>
-<pre><code>$ npm install jade</code></pre>
-<h2>Usage</h2>
-<pre><code class="lang-js"><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+<!DOCTYPE html><html><head><title>Jade - Template Engine</title><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><link rel="stop" href="/public/images/tile.png"><link rel="stop" href="/public/images/top.png"><link rel="stop" href="/public/images/logo.png"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="body"><h2>API Documentation</h2><p>This page details how to render jade using the JavaScript API in node.js</p><h3>Installation</h3><p>via npm:</p><pre><code><span style="color:#C07474">$</span> <span style="color:#2B2BAD">npm</span> <span style="color:#B62EB6">install</span> <span style="color:#4A7B6F">jade</span></code></pre><h3>Usage</h3><h4>options</h4><p>All API methods take the following set of options:</p><div class="code"><div>{</div><dl><dt>filename:</dt><dd class="type string">string</dd><dd class="description">Used in exceptions, and required for relative includes and extends</dd><dt>pretty:</dt><dd class="type boolean">boolean</dd><dd class="description">Adds whitespace to the resulting html to make it easier for a human to read</dd><dt>self:</dt><dd class="type boolean">boolean</dd><dd class="description">Use a `self` namespace to hold the locals _(false by default)_</dd><dt>debug:</dt><dd class="type boolean">boolean</dd><dd class="description">If set to true, the tokens and function body is logged to stdout</dd><dt>compileDebug:</dt><dd class="type boolean">boolean</dd><dd class="description">Set this to false to disable debugging instrumentation (recommended in production).  Set it to true to include the function source in the compiled template for better error messages (sometimes useful in development).</dd><dt>compiler:</dt><dd class="type function">class</dd><dd class="description">Override the default compiler</dd></dl><div>}</div></div><h4>jade.compile(source, options)</h4><p>Compile some jade source to a function which can be rendered multiple times with different locals.</p><dl><dt>source</dt><dd class="type string">string</dd><dd class="description">The source jade to compile</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above)</dd></dl><dl class="returns"><dt>returns</dt><dd class="type function">function</dd><dd class="description">A function to generate the html from an object containing locals</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
 
 <span class="comment">// Compile a function</span>
 <span class="keyword">var</span> fn = jade.compile(<span class="string">'string of jade'</span>, options);
-fn(locals);</code></pre>
-<h3>Options</h3>
-<ul>
-<li><code>self</code>      Use a <code>self</code> namespace to hold the locals <em>(false by default)</em></li>
-<li><code>locals</code>    Local variable object</li>
-<li><code>filename</code>  Used in exceptions, and required when using includes</li>
-<li><code>debug</code>     Outputs tokens and function body generated</li>
-<li><code>compiler</code>  Compiler to replace jade&#39;s default</li>
-<li><code>compileDebug</code>  When <code>false</code> no debug instrumentation is compiled</li>
-<li><code>pretty</code>    Add pretty-indentation whitespace to output <em>(false by default)</em></li>
-</ul>
-</div></div><script>var _gaq = _gaq || [];
+
+<span class="comment">// Render the function</span>
+<span class="keyword">var</span> html = fn(locals);
+<span class="comment">// =&gt; '&lt;string&gt;of jade&lt;/string&gt;'</span>
+</code></pre><h4>jade.render(source, options, callback)</h4><p>Render some jade source to HTML with given options and locals.</p><dl><dt>source</dt><dd class="type string">string</dd><dd class="description">The source jade to render</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above), also used as the locals object</dd><dt>callback</dt><dd class="type function">function</dd><dd class="description">Node style callback function which is passed error and result as its arguments</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+
+jade.render(<span class="string">'string of jade'</span>, options, <span class="function"><span class="keyword">function</span> <span class="params">(err, html)</span> {</span>
+  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;
+  <span class="comment">// html =&gt; '&lt;string&gt;of jade&lt;/string&gt;'</span>
+});
+</code></pre><p>or</p><dl><dt>source</dt><dd class="type string">string</dd><dd class="description">The source jade to render</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above), also used as the locals object</dd></dl><dl class="returns"><dt>returns</dt><dd class="type string">string</dd><dd class="description">The resulting html string</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+
+<span class="keyword">var</span> html = jade.render(<span class="string">'string of jade'</span>, options);
+<span class="comment">// =&gt; '&lt;string&gt;of jade&lt;/string&gt;'</span>
+</code></pre><h4>jade.renderFile(filename, options, callback)</h4><p>Render a jade file to HTML with given options and locals.</p><dl><dt>filename</dt><dd class="type string">string</dd><dd class="description">The path to the jade file to render</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above), also used as the locals object</dd><dt>callback</dt><dd class="type function">function</dd><dd class="description">Node style callback function which is passed error and result as its arguments</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+
+jade.renderFile(<span class="string">'path/to/file.jade'</span>, options, <span class="function"><span class="keyword">function</span> <span class="params">(err, html)</span> {</span>
+  <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;
+  <span class="comment">// ...</span>
+});
+</code></pre><p>or</p><dl><dt>filename</dt><dd class="type string">string</dd><dd class="description">The path to the jade file to render</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above), also used as the locals object</dd></dl><dl class="returns"><dt>returns</dt><dd class="type string">string</dd><dd class="description">The resulting html string</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+
+<span class="keyword">var</span> html = jade.renderFile(<span class="string">'path/to/file.jade'</span>, options);
+<span class="comment">// ...</span></code></pre></div></div><script src="/client.js"></script><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-25261536-1']);
 _gaq.push(['_trackPageview']);
 

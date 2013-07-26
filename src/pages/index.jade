@@ -1,8 +1,7 @@
 extends ./layout.jade
-block style
-  link(rel='stylesheet', href='public/stylesheets/home.css')
+
 block content
-  #conversion
+  .interactive
     pre#jade
       code
         :jadesrc
@@ -12,7 +11,7 @@ block content
               title= pageTitle
               script(type='text/javascript').
                 if (foo) {
-                   bar()
+                   bar(1 + 5)
                 }
             body
               h1 Jade - node template engine
@@ -26,7 +25,6 @@ block content
                   templating language with a
                   strong focus on performance
                   and powerful features.
-    #arrow
     pre#html
       code
         :htmlsrc
@@ -36,7 +34,7 @@ block content
               <title>Jade</title>
               <script type="text/javascript">
                 if (foo) {
-                  bar()
+                  bar(1 + 5)
                 }
               </script>
             </head>

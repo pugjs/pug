@@ -4,11 +4,13 @@ html
     title Jade - Template Engine
     link(rel='stylesheet', href='/public/stylesheets/all.css')
     link(rel='stylesheet', href='/public/stylesheets/highlight.css')
-    block style
+    link(rel='stop',href='/public/images/tile.png')
+    link(rel='stop',href='/public/images/top.png')
+    link(rel='stop',href='/public/images/logo.png')
   body
     include ./ribbon.jade
     #container
       include ./header.jade
       block content
-    block scripts
+    script(src='/client.js')
     include ./ga.jade
