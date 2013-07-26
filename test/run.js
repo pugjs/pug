@@ -40,10 +40,6 @@ cases.forEach(function(test){
       basedir: 'test/cases'
     }).toString(), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code)
 
-    if (/filter/.test(name)) {
-      actual = actual.replace(/\n/g, '');
-      html = html.replace(/\n/g, '');
-    }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   })
 });
