@@ -30,9 +30,16 @@ h1 {
     text-indent: -999999px; /*Remove Raw Text to make way for image*/
     outline: none;
 }
+h2 {
+    text-align: center;
+    margin-bottom: 4em;
+}
+h3 {
+    border-bottom: 1px solid #EEE;
+}
 #container {
     margin: 0 auto;
-    max-width: 950px;
+    max-width: 1200px;
     text-align: left;
 }
 #header {
@@ -204,4 +211,20 @@ pre::-webkit-scrollbar-thumb:horizontal {
     width: 50px;
     background-color: rgba(0, 0, 0, 0.2);
     -webkit-border-radius: 4px;
+}
+
+/*Stability*/
+
+.stability {
+    padding: 1em 1.6em 1em 1.2em;
+    vertical-align: top;
+    background: #F8F8F8;
+    border: 1px solid #E8E8E8;
+    border-width: 1px 1px 1px 6px;
+    margin: 1em 0;
+    overflow-x: auto;
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+}
+.stability-2 {
+    border-color: #FFD700;
 }

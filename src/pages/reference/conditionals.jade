@@ -1,0 +1,41 @@
+h3 Conditionals
+
+p Jade's first-class conditional syntax allows for optional parenthesis, and you may now omit the leading <code>-</code> otherwise it's identical, still just regular javascript:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          - var user = { description: 'foo bar baz' }
+          #user
+            if user.description
+              h2 Description
+              p.description= user.description
+            else
+              h1 Description
+              p.description User has no description
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <div id="user">
+            <h2>Description</h2>
+            <p class="description">foo bar baz</p>
+          </div>
+
+p Jade also provides a negated version <code>unless</code> (the following are therefore equivallent):
+
+.row
+  .col
+    pre
+      code
+        :jadesrc
+          unless user.isAnonymous
+            p You're logged in as \#{user.name}
+  .col
+    pre
+      code
+        :jadesrc
+          if !user.isAnonymous
+            p You're logged in as \#{user.name}

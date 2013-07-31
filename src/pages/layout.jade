@@ -9,10 +9,11 @@ html
     link(rel='stop',href='/public/images/tile.png')
     link(rel='stop',href='/public/images/top.png')
     link(rel='stop',href='/public/images/logo.png')
+    include ./includes/stability.jade
   body
-    include ./ribbon.jade
+    include ./includes/ribbon.jade
     #container
-      include ./header.jade
+      include ./includes/header.jade
       block content
     script(src='/client.js')
-    include ./ga.jade
+    include ./includes/ga.jade

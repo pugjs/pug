@@ -1,0 +1,37 @@
+h3 doctype
+
+p To add a doctype use <code>doctype</code> (or <code>!!!</code> for short) followed by an optional value (which defaults to <code>html</code>)
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          doctype html
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <!DOCTYPE html>
+
+p There are shortcuts for commonly used doctypes:
+
+dl
+  each doctype, key in doctypes
+    if (key != '5' && key != 'default')
+      dt= key
+      dd.description= doctype
+
+p You can also use your own literal custom doctype:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">

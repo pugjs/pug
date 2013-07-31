@@ -1,0 +1,138 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><link rel="stop" href="/public/images/tile.png"><link rel="stop" href="/public/images/top.png"><link rel="stop" href="/public/images/logo.png"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="nav"><a href="/" class="nav-button">Home</a><a href="/tutorial" class="nav-button">Tutorial</a><a href="/reference" class="nav-button">Language Reference</a><a href="/api" class="nav-button">API</a><a href="/command-line" class="nav-button">Command Line</a><a href="http://cssdeck.com/labs/msoldezp" class="nav-button">Online Demo</a></div></div><div id="body"><h2>Language Reference</h2><h3>doctype</h3><p>To add a doctype use <code>doctype</code> (or <code>!!!</code> for short) followed by an optional value (which defaults to <code>html</code>)</p><div class="row"><div class="col"><pre><code class="input"><span class="doctype">doctype html</span></code></pre></div><div class="col"><pre><code class="output"><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+</code></pre></div></div><p>There are shortcuts for commonly used doctypes:</p><dl><dt>xml</dt><dd class="description">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</dd><dt>transitional</dt><dd class="description">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</dd><dt>strict</dt><dd class="description">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</dd><dt>frameset</dt><dd class="description">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;&gt;</dd><dt>1.1</dt><dd class="description">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;</dd><dt>basic</dt><dd class="description">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML Basic 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd&quot;&gt;</dd><dt>mobile</dt><dd class="description">&lt;!DOCTYPE html PUBLIC &quot;-//WAPFORUM//DTD XHTML Mobile 1.2//EN&quot; &quot;http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd&quot;&gt;</dd></dl><p>You can also use your own literal custom doctype:</p><div class="row"><div class="col"><pre><code class="input"><span class="doctype">doctype html PUBLIC &quot;-//W3C//DTD XHTML Basic 1.1//EN&quot;</span></code></pre></div><div class="col"><pre><code class="output"><span class="doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"&gt;</span></code></pre></div></div><h3>Code</h3><p>Jade makes it possible to write inline JavaScript code in your templates.  There are three types of code.</p><h4>Unbuffered Code</h4><p>Unbuffered code starts with <code>-</code> does not add any output directly, e.g.</p><div class="row"><div class="col"><pre><code class="input">- <span class="keyword">for</span> (<span class="keyword">var</span> x = <span class="number">0</span>; x &lt; <span class="number">3</span>; x++)
+  <span class="tag">li</span> item</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">li</span>&gt;</span>item<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;<span class="title">li</span>&gt;</span>item<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;<span class="title">li</span>&gt;</span>item<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+</code></pre></div></div><h4>Buffered Code</h4><p>Buffered code starts with <code>=</code> and outputs the result of evaluating the JavaScript expression in the template.  For security, it is first HTML escaped:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">p</span>
+  = <span class="string">'This code is &lt;escaped&gt;!'</span></code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">p</span>&gt;</span>This code is &amp;lt;escaped&amp;gt;!<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre></div></div><p>It can also be written inline with attributes, and supports the full range of JavaScript expressions:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">p</span>= <span class="string">'This code is'</span> + <span class="string">' &lt;escaped&gt;!'</span></code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">p</span>&gt;</span>This code is &amp;lt;escaped&amp;gt;!<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre></div></div><h4>Unescaped Buffered Code</h4><p>Unescaped buffered code starts with <code>!=</code> and outputs the result of evaluating the JavaScript expression in the template.  This does not do any escaping, so is not safe for user input:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">p</span>
+  != <span class="string">'This code is &lt;strong&gt;not&lt;/strong&gt; escaped!'</span></code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">p</span>&gt;</span>This code is <span class="tag">&lt;<span class="title">strong</span>&gt;</span>not<span class="tag">&lt;/<span class="title">strong</span>&gt;</span> escaped!<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre></div></div><p>It can also be written inline with attributes, and supports the full range of JavaScript expressions:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">p</span>!= <span class="string">'This code is &lt;strong&gt;not&lt;/strong&gt; escaped!'</span></code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">p</span>&gt;</span>This code is <span class="tag">&lt;<span class="title">strong</span>&gt;</span>not<span class="tag">&lt;/<span class="title">strong</span>&gt;</span> escaped!<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre></div></div><h3>Comments</h3><p>Single line comments look the same as JavaScript comments and must be placed on their own line:</p><div class="row"><div class="col"><pre><code class="input"><span class="comment">// just some paragraphs</span>
+<span class="tag">p</span> foo
+<span class="tag">p</span> bar</code></pre></div><div class="col"><pre><code class="output"><span class="comment">&lt;!-- just some paragraphs --&gt;</span>
+<span class="tag">&lt;<span class="title">p</span>&gt;</span>foo<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;<span class="title">p</span>&gt;</span>bar<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre></div></div><p>Jade also supports unbuffered comments, by simply adding a hyphen</p><div class="row"><div class="col"><pre><code class="input"><span class="comment">//- will not output within markup</span>
+<span class="tag">p</span> foo
+<span class="tag">p</span> bar</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">p</span>&gt;</span>foo<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;<span class="title">p</span>&gt;</span>bar<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre></div></div><h4>Block Comments</h4><div class="stability stability-2">Stability: 2 - Unstable</div><p>A block comment is currently legal as well:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">body</span>
+  <span class="comment">//</span>
+    <span class="id">#content</span>
+      <span class="tag">h1</span> Example</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="comment">&lt;!--
+  &lt;div id="content"&gt;
+    &lt;h1&gt;Example&lt;/h1&gt;
+  &lt;/div&gt;
+  --&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+</code></pre></div></div><p>Jade also currently has special support for conditional comments</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">head</span>
+  <span class="comment">//if lt IE 8</span>
+    <span class="tag">script</span>(<span class="attribute">src</span>=<span class="string">'/ie-sucks.js'</span>)</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="comment">&lt;!--[if lt IE 8]&gt;
+  &lt;script src="/ie-sucks.js"&gt;&lt;/script&gt;
+  &lt;![endif]--&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span></code></pre></div></div><h3>Conditionals</h3><p>Jade's first-class conditional syntax allows for optional parenthesis, and you may now omit the leading <code>-</code> otherwise it's identical, still just regular javascript:</p><div class="row"><div class="col"><pre><code class="input">- <span class="keyword">var</span> user = { description: <span class="string">'foo bar baz'</span> }
+<span class="id">#user</span>
+  <span class="keyword">if</span> user.description
+    <span class="tag">h2</span> Description
+    <span class="tag">p</span><span class="class">.description</span>= user.description
+  <span class="keyword">else</span>
+    <span class="tag">h1</span> Description
+    <span class="tag">p</span><span class="class">.description</span> User has no description</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"user"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Description<span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">"description"</span>&gt;</span>foo bar baz<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre></div></div><p>Jade also provides a negated version <code>unless</code> (the following are therefore equivallent):</p><div class="row"><div class="col"><pre><code>unless user.isAnonymous
+  <span class="tag">p</span> You're logged in as #{user.name}</code></pre></div><div class="col"><pre><code><span class="keyword">if</span> !user.isAnonymous
+  <span class="tag">p</span> You're logged in as #{user.name}</code></pre></div></div><h3>Iteration</h3><p>Jade's first-class iteration syntax makes it easier to iterate over arrays and objects within a template:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">ul</span>
+  <span class="each">each val in [1, 2, 3, 4, 5]</span>
+    <span class="tag">li</span>= val</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>1<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>2<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>3<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>4<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>5<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></div></div><p>You can also get the index as you iterate:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">ul</span>
+  <span class="each">each val, index in ['one', 'two', 'three']</span>
+    <span class="tag">li</span>= index + <span class="string">': '</span> + val</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>1: one<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>2: two<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>3: three<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></div></div><p>Jade also lets you iterate over the keys in an object:</p><div class="row"><div class="col"><pre><code class="input"><span class="tag">ul</span>
+  <span class="each">each val, index in {1: 'one', 2: 'two', 3: 'three'}</span>
+    <span class="tag">li</span>= index + <span class="string">': '</span> + val</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>1: one<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>2: two<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>3: three<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></div></div><p>The object or array to iterate over is just plain JavaScript so it can be a variable or the result of a function call as well.</p><h3>Mixins</h3><p>Mixins allow you to create reusable blocks of jade.</p><div class="row"><div class="col"><pre><code class="input"><span class="comment">//- Declaration</span>
+<span class="keyword">mixin</span> list
+  <span class="tag">ul</span>
+    <span class="tag">li</span> foo
+    <span class="tag">li</span> bar
+    <span class="tag">li</span> baz
+<span class="comment">//- Use</span>
+<span class="keyword">+</span>list()
+<span class="keyword">+</span>list()</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>foo<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>bar<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>baz<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>foo<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>bar<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>baz<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></div></div><p>They are compiled to functions and can take arguments:</p><div class="row"><div class="col"><pre><code class="input"><span class="keyword">mixin</span> pets(pets)
+  <span class="tag">ul</span><span class="class">.pets</span>
+    <span class="each">- each pet in pets</span>
+      <span class="tag">li</span>= pet
+<span class="keyword">+</span>pets([<span class="string">'cat'</span>, <span class="string">'dog'</span>, <span class="string">'pig'</span>])</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">class</span>=<span class="value">"pets"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>cat<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>dog<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span>&gt;</span>pig<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre></div></div><p>Mixins can also take a block of jade to act as the content:</p><div class="row"><div class="col"><pre><code class="input"><span class="keyword">mixin</span> article(title)
+  <span class="class">.article</span>
+    <span class="class">.article-wrapper</span>
+      <span class="tag">h1</span>= title
+      <span class="keyword">if</span> block
+        <span class="keyword">block</span>
+      <span class="keyword">else</span>
+        <span class="tag">p</span> No content provided
+        
+<span class="keyword">+</span>article(<span class="string">'Hello world'</span>)
+
+<span class="keyword">+</span>article(<span class="string">'Hello world'</span>)
+  <span class="tag">p</span> This is my
+  <span class="tag">p</span> Amazing article</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"article"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"article-wrapper"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Hello world<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>No content provided<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"article"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"article-wrapper"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Hello world<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>This is my<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>Amazing article<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre></div></div><h4>Mixin Attributes</h4><div class="stability stability-2">Stability: 2 - Unstable</div><p>Mixins currently also get an implicit attributes argument taken from the attributes passed to the mixin:</p><div class="row"><div class="col"><pre><code class="input"><span class="keyword">mixin</span> link(href, name)
+  <span class="tag">a</span>(<span class="attribute">class</span>=attributes.class,<span class="attribute"> href</span>=href)= name
+  
+<span class="keyword">+</span>link(<span class="string">'/foo'</span>, <span class="string">'foo'</span>)(<span class="attribute">class</span>=<span class="string">"btn"</span>)</code></pre></div><div class="col"><pre><code class="output"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">class</span>=<span class="value">"btn"</span> <span class="attribute">href</span>=<span class="value">"/foo"</span>&gt;</span>foo<span class="tag">&lt;/<span class="title">a</span>&gt;</span></code></pre></div></div></div></div><script src="/client.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>

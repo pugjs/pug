@@ -1,0 +1,83 @@
+h3 Comments
+
+p Single line comments look the same as JavaScript comments and must be placed on their own line:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          // just some paragraphs
+          p foo
+          p bar
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <!-- just some paragraphs -->
+          <p>foo</p>
+          <p>bar</p>
+
+p Jade also supports unbuffered comments, by simply adding a hyphen
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          //- will not output within markup
+          p foo
+          p bar
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <p>foo</p>
+          <p>bar</p>
+
+h4 Block Comments
+
++unstable()
+
+p A block comment is currently legal as well:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          body
+            //
+              #content
+                h1 Example
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <body>
+            <!--
+            <div id="content">
+              <h1>Example</h1>
+            </div>
+            -->
+          </body>
+
+p Jade also currently has special support for conditional comments
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          head
+            //if lt IE 8
+              script(src='/ie-sucks.js')
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <head>
+            <!--[if lt IE 8]>
+            <script src="/ie-sucks.js"></script>
+            <![endif]-->
+          </head>

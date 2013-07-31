@@ -1,0 +1,115 @@
+h3 Mixins
+
+p Mixins allow you to create reusable blocks of jade.
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          //- Declaration
+          mixin list
+            ul
+              li foo
+              li bar
+              li baz
+          //- Use
+          +list()
+          +list()
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <ul>
+            <li>foo</li>
+            <li>bar</li>
+            <li>baz</li>
+          </ul>
+          <ul>
+            <li>foo</li>
+            <li>bar</li>
+            <li>baz</li>
+          </ul>
+
+p They are compiled to functions and can take arguments:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          mixin pets(pets)
+            ul.pets
+              - each pet in pets
+                li= pet
+          +pets(['cat', 'dog', 'pig'])
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <ul class="pets">
+            <li>cat</li>
+            <li>dog</li>
+            <li>pig</li>
+          </ul>
+
+p Mixins can also take a block of jade to act as the content:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          mixin article(title)
+            .article
+              .article-wrapper
+                h1= title
+                if block
+                  block
+                else
+                  p No content provided
+
+          +article('Hello world')
+
+          +article('Hello world')
+            p This is my
+            p Amazing article
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <div class="article">
+            <div class="article-wrapper">
+              <h1>Hello world</h1>
+              <p>No content provided</p>
+            </div>
+          </div>
+
+          <div class="article">
+            <div class="article-wrapper">
+              <h1>Hello world</h1>
+              <p>This is my</p>
+              <p>Amazing article</p>
+            </div>
+          </div>
+
+h4 Mixin Attributes
+
++unstable()
+
+p Mixins currently also get an implicit attributes argument taken from the attributes passed to the mixin:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          mixin link(href, name)
+            a(class=attributes.class, href=href)= name
+
+          +link('/foo', 'foo')(class="btn")
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <a class="btn" href="/foo">foo</a>

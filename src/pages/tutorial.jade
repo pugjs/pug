@@ -2,7 +2,9 @@ extends ./layout.jade
 
 block content
   #body
-    h2 Introduction
+    h2 Tutorial
+
+    h3 Introduction
     p.
       This tutorial is a work in progress. Once it's finished it will become a fully row getting started guide.
     p.
@@ -28,9 +30,9 @@ block content
           li Mixins
           li Filters
 
-    h2 The Basics
+    h3 The Basics
     p Jade can be used just as a short hand for HTML.  This section covers everything you need to know to do that.
-    h3 Creating Simple Tags
+    h4 Creating Simple Tags
     p.
       Jade is whitespace sensitive, so there's no need to close your tags, jade does that for you.  You can also nest tags within other tags just by indenting them.
     .row
@@ -51,7 +53,7 @@ block content
                 <i></i>
                 <strong></strong>
               </div>
-    h3 Putting Text Inside your Tags
+    h4 Putting Text Inside your Tags
     p.
       By default, the content of a tag is parsed as more jade.  There are three ways to put plain text inside a tag.
     .row
@@ -77,7 +79,7 @@ block content
               <p>This way is shortest if you need big
                  blocks of text spanning multiple
                  lines.</p>
-    h3 Adding Attributes to your Tags
+    h4 Adding Attributes to your Tags
     p.
       To add attributes you put them in brackets after the tag name, note that they must be seperated by a comma.
     .row
@@ -96,7 +98,7 @@ block content
               <button class="btn" data-action="bea">
                 Be Awesome
               </button>
-    h3 IDs and Classes
+    h4 IDs and Classes
     p.
       Adding IDs and Classes is supper common, so we made it supper easy to do by adding a simple short hand.  The syntax is just like that of CSS selectors:
     .row
@@ -115,10 +117,10 @@ block content
                 Awesome
               </button>
 
-    h2 JavaScript
+    h3 JavaScript
     p Jade is much more than just a short hand for HTML.  It also has features that let you build dynamic templates.
 
-    h3 Outputing Text
+    h4 Outputing Text
     p You can output raw text from JavaScript variables.  Jade will also helpfully filter the text for you so it's safe from nasty html injection attacks.
     pre
       code
@@ -163,7 +165,7 @@ block content
                 </tr>
               </table>
 
-      h3 Setting Attributes
+      h4 Setting Attributes
       p Setting attributes to JavaScript values requires no extra work:
 
     .row
@@ -201,7 +203,7 @@ block content
                 </tr>
               </table>
 
-    h3 Loops and Conditionals
+    h4 Loops and Conditionals
 
     p To Be Continued....
 
