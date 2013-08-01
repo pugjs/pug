@@ -12,7 +12,7 @@
     "browserify-middleware": "~1.16.0"
   },
   "devDependencies": {
-    "stop": "~2.0.0"
+    "stop": "~2.1.1"
   },
   "scripts": {
     "build": "stop",

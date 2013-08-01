@@ -1,0 +1,44 @@
+h3 Case
+
+p The case statement is a shorthand for JavaScript's <code>switch</code> statement and takes the following form:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          - var friends = 10
+          case friends
+            when 0
+              p you have no friends
+            when 1
+              p you have a friend
+            default
+              p you have \#{friends} friends
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <p>you have 10 friends</p>
+
+h4 Block Expansion
+
++unstable()
+
+p Block expansion may also be used:
+
+.row
+  .col
+    pre
+      code.input
+        :jadesrc
+          - var friends = 1
+          case friends
+            when 0: p you have no friends
+            when 1: p you have a friend
+            default: p you have \#{friends} friends
+  .col
+    pre
+      code.output
+        :htmlsrc
+          <p>you have a friend</p>

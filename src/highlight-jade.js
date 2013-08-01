@@ -45,8 +45,11 @@ function highlightJade(jade) {
     tok = lexer.next();
     var after = lexer.input;
     var src = before.substr(0, before.length - after.length);
-    if (textMode && tok.type != 'outdent') {
+    if (textMode) {
       textBuf += escape(src);
+      if (tok.type === 'indent') textIndent++;
+      if (tok.type === 'outdent') textIndent--;
+      if (textIndent <= 0) exitTextMode();
     } else {
       if (tok.type === 'tag') {
         switch (tok.val) {
@@ -63,11 +66,9 @@ function highlightJade(jade) {
       }
       switch (tok.type) {
         case 'text':
-          if (tok.val === '.' && !textMode) {
+          if (tok.val === '.') {
             buf.push(escape(src));
             enterTextMode();
-          } else if (textMode) {
-            textBuf += src;
           } else {
             buf.push(escape(src));
           }
@@ -77,17 +78,14 @@ function highlightJade(jade) {
           if (textIndent <= 0) exitTextMode();
           break;
         case 'outdent':
-          if (textMode) textIndent--;
-          if (textIndent < 0) exitTextMode();
           buf.push(escape(src));
           break;
         case 'indent':
           buf.push(escape(src));
-          if (textMode) textIndent++;
           break;
         case 'filter':
           buf.push('<span class="keyword">' + escape(src) + '</span>');
-          textMode = true;
+          enterTextMode();
           break;
         case 'code':
           buf.push(highlightJavaScript(src));
@@ -104,10 +102,10 @@ function highlightJade(jade) {
           }));
           break;
         case 'include':
-          buf.push('<span class="keyword">include</span><span class="string">' + escape(src.replace(/^include/, '')) + '</span>');
+          buf.push('<span class="keyword">include</span> <span class="string">' + escape(src.replace(/^include /, '')) + '</span>');
           break;
         case 'extends':
-          buf.push('<span class="keyword">extends</span><span class="string">' + escape(src.replace(/^extends/, '')) + '</span>');
+          buf.push('<span class="keyword">extends</span> <span class="string">' + escape(src.replace(/^extends /, '')) + '</span>');
           break;
         case 'block':
           buf.push('<span class="keyword">block</span>' + escape(src.replace(/^block/, '')));
@@ -117,6 +115,9 @@ function highlightJade(jade) {
           break;
         case 'call':
           buf.push('<span class="keyword">+</span>' + highlightJavaScript(src.replace(/^\+/, '')));
+          break;
+        case 'yield':
+          buf.push('<span class="keyword">' + escape(src) + '</span>');
           break;
         case 'eos':
           break;
