@@ -7,5 +7,5 @@ source="./src/server.js"
 destination="./"
 
 [options]
-minify-js=true
+minify-js=false
 minify-css=true
