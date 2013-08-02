@@ -5,7 +5,7 @@ html
     textarea#input(placeholder='write jade here', style='width: 100%; min-height: 400px;').
       p
         author
-          != name
+          != myName
     pre(style='background: #ECECEC;width: 100%; min-height: 400px;')
       code#output
     script(src='../../jade.js')
@@ -13,7 +13,7 @@ html
       var input = document.getElementById('input');
       var output = document.getElementById('output');
       setInterval(function () {
-        jade.render(input.value, {name: 'Forbes Lindesay', pretty: true}, function (err, res) {
+        jade.render(input.value, {myName: 'Forbes Lindesay', pretty: true}, function (err, res) {
           if (err) throw err;
           output.textContent = res;
         })
