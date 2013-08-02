@@ -2,32 +2,32 @@ h3 Attributes
 
 p Tag attributes look similar to html, however their values are just regular JavaScript.
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           a(href='google.com') Google
           a(class='button', href='google.com') Google
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <a href="google.com">Google</a>
           <a class="button" href="google.com">Google</a>
 
 p All the normal JavaScript expressions work fine too:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
-          - var authenticated = true}
+          - var authenticated = true
           body(class=authenticated?'authed':'anon')
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <body class="authed"></body>
 
@@ -35,18 +35,18 @@ h4 Boolean Attributes
 
 p Boolean attributes are mirrored by Jade, and accept bools, aka <code>true</code> or <code>false</code>. When no value is specified true is assumed.
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           input(type='checkbox', checked)
           input(type='checkbox', checked=true)
           input(type='checkbox', checked=false)
           input(type='checkbox', checked=true.toString())
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <input type="checkbox" checked="checked" />
           <input type="checkbox" checked="checked" />
@@ -57,16 +57,16 @@ h4 Class Attributes
 
 p The <code>class</code> attribute can be a string (like any normal attribute) but it can also be an array of class names, which is handy when generated from JavaScript.
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           - var classes = ['foo', 'bar', 'baz']
           a(class=classes)
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <a class="foo bar baz"></a>
 
@@ -75,29 +75,29 @@ h4 Class Literal
 Classes may be defined using a <code>.classname</code> syntax:
 
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           a.button
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <a class="button"></a>
 
 Since div's are such a common choice of tag, it is the default if you omit the tag name:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           .content
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <div class="content"></div>
 
@@ -106,28 +106,28 @@ h4 ID Literal
 Classes may be defined using a <code>#idname</code> syntax:
 
 
-.row
+.row(data-control='interactive')
   .col
-    pre
+    pre(data-control='input-jade')
       code.input
         :jadesrc
           a#main-link
   .col
-    pre
+    pre(data-control='output-html')
       code.output
         :htmlsrc
           <a id="main-link"></a>
 
 Since div's are such a common choice of tag, it is the default if you omit the tag name:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           #content
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <div id="content"></div>

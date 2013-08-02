@@ -35,18 +35,18 @@ block content
     h4 Creating Simple Tags
     p.
       Jade is whitespace sensitive, so there's no need to close your tags, jade does that for you.  You can also nest tags within other tags just by indenting them.
-    .row
+    .row(data-control='interactive')
       .col
-        pre
-          code.input
+        pre(data-control='input-jade')
+          code
             :jadesrc
               div
                 address
                 i
                 strong
       .col
-        pre
-          code.output
+        pre(data-control='output-html')
+          code
             :htmlsrc
               <div>
                 <address></address>
@@ -56,10 +56,10 @@ block content
     h4 Putting Text Inside your Tags
     p.
       By default, the content of a tag is parsed as more jade.  There are three ways to put plain text inside a tag.
-    .row
+    .row(data-control='interactive')
       .col
-        pre
-          code.input
+        pre(data-control='input-jade')
+          code
             :jadesrc
               h1 Welcolme to Jade
               p
@@ -82,17 +82,17 @@ block content
     h4 Adding Attributes to your Tags
     p.
       To add attributes you put them in brackets after the tag name, note that they must be seperated by a comma.
-    .row
+    .row(data-control='interactive')
       .col
-        pre
-          code.input
+        pre(data-control='input-jade')
+          code
             :jadesrc
               h1(id="title") Welcolme to Jade
               button(class="btn", data-action="bea").
                 Be Awesome
       .col
-        pre
-          code.output
+        pre(data-control='output-html')
+          code
             :htmlsrc
               <h1 id="title">Welcolme to Jade</h1>
               <button class="btn" data-action="bea">
@@ -101,16 +101,16 @@ block content
     h4 IDs and Classes
     p.
       Adding IDs and Classes is supper common, so we made it supper easy to do by adding a simple short hand.  The syntax is just like that of CSS selectors:
-    .row
+    .row(data-control='interactive')
       .col
-        pre
-          code.input
+        pre(data-control='input-jade')
+          code
             :jadesrc
               h1#title Welcolme to Jade
               button.btn(data-action="bea") Awesome
       .col
-        pre
-          code.output
+        pre(data-control='output-html')
+          code
             :htmlsrc
               <h1 id="title">Welcolme to Jade</h1>
               <button class="btn" data-action="bea">
@@ -122,56 +122,58 @@ block content
 
     h4 Outputing Text
     p You can output raw text from JavaScript variables.  Jade will also helpfully filter the text for you so it's safe from nasty html injection attacks.
-    pre
-      code
-        :jssrc
-          var jade = require('jade');
-          var fn = jade.compile(jadeTemplate);
-          var htmlOutput = fn({
-            maintainer: {
-              name: 'Forbes Lindesay',
-              twitter: '@ForbesLindesay',
-              blog: 'forbeslindesay.co.uk'
-            }
-          })
+
+    div
+      pre
+        code
+          :jssrc
+            var jade = require('jade');
+            var fn = jade.compile(jadeTemplate);
+            var htmlOutput = fn({
+              maintainer: {
+                name: 'Forbes Lindesay',
+                twitter: '@ForbesLindesay',
+                blog: 'forbeslindesay.co.uk'
+              }
+            })
+      .row
+        .col
+          pre
+            code
+              :jadesrc
+                h1
+                  | Maintainer:
+                  = ' ' + maintainer.name
+                table
+                  tr
+                    td Twitter
+                    td= maintainer.twitter
+                  tr
+                    td Blog
+                    td= maintainer.blog
+        .col
+          pre
+            code
+              :htmlsrc
+                <h1>Maintainer: Forbes Lindesay</h1>
+                <table>
+                  <tr>
+                    <td>Twitter</td>
+                    <td>@ForbesLindesay</td>
+                  </tr>
+                  <tr>
+                    <td>Blog</td>
+                    <td>forbeslindesay.co.uk</td>
+                  </tr>
+                </table>
+
+    h4 Setting Attributes
+    p Setting attributes to JavaScript values requires no extra work:
+
     .row
       .col
         pre
-          code.input
-            :jadesrc
-              h1
-                | Maintainer:
-                = ' ' + maintainer.name
-              table
-                tr
-                  td Twitter
-                  td= maintainer.twitter
-                tr
-                  td Blog
-                  td= maintainer.blog
-      .col
-        pre
-          code.output
-            :htmlsrc
-              <h1>Maintainer: Forbes Lindesay</h1>
-              <table>
-                <tr>
-                  <td>Twitter</td>
-                  <td>@ForbesLindesay</td>
-                </tr>
-                <tr>
-                  <td>Blog</td>
-                  <td>forbeslindesay.co.uk</td>
-                </tr>
-              </table>
-
-      h4 Setting Attributes
-      p Setting attributes to JavaScript values requires no extra work:
-
-    .row
-      .col
-        pre
-          code.input
+          code
             :jadesrc
               h1(name=maintainer.name)
                 | Maintainer:
@@ -187,7 +189,7 @@ block content
                   td= maintainer.blog
       .col
         pre
-          code.output
+          code
             :htmlsrc
               <h1 name="Forbes Lindesay">
                 Maintainer: Forbes Lindesay

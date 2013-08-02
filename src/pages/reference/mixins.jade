@@ -2,10 +2,10 @@ h3 Mixins
 
 p Mixins allow you to create reusable blocks of jade.
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           //- Declaration
           mixin list
@@ -17,8 +17,8 @@ p Mixins allow you to create reusable blocks of jade.
           +list()
           +list()
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <ul>
             <li>foo</li>
@@ -33,10 +33,10 @@ p Mixins allow you to create reusable blocks of jade.
 
 p They are compiled to functions and can take arguments:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           mixin pets(pets)
             ul.pets
@@ -44,8 +44,8 @@ p They are compiled to functions and can take arguments:
                 li= pet
           +pets(['cat', 'dog', 'pig'])
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <ul class="pets">
             <li>cat</li>
@@ -55,10 +55,10 @@ p They are compiled to functions and can take arguments:
 
 p Mixins can also take a block of jade to act as the content:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           mixin article(title)
             .article
@@ -75,8 +75,8 @@ p Mixins can also take a block of jade to act as the content:
             p This is my
             p Amazing article
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <div class="article">
             <div class="article-wrapper">
@@ -99,17 +99,17 @@ h4 Mixin Attributes
 
 p Mixins currently also get an implicit attributes argument taken from the attributes passed to the mixin:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           mixin link(href, name)
             a(class=attributes.class, href=href)= name
 
           +link('/foo', 'foo')(class="btn")
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <a class="btn" href="/foo">foo</a>

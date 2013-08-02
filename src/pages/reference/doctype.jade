@@ -2,15 +2,15 @@ h3 doctype
 
 p To add a doctype use <code>doctype</code> (or <code>!!!</code> for short) followed by an optional value (which defaults to <code>html</code>)
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           doctype html
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <!DOCTYPE html>
 
@@ -24,14 +24,14 @@ dl
 
 p You can also use your own literal custom doctype:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">

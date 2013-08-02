@@ -2,17 +2,17 @@ h3 Comments
 
 p Single line comments look the same as JavaScript comments and must be placed on their own line:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           // just some paragraphs
           p foo
           p bar
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <!-- just some paragraphs -->
           <p>foo</p>
@@ -20,17 +20,17 @@ p Single line comments look the same as JavaScript comments and must be placed o
 
 p Jade also supports unbuffered comments, by simply adding a hyphen
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           //- will not output within markup
           p foo
           p bar
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <p>foo</p>
           <p>bar</p>
@@ -41,18 +41,18 @@ h4 Block Comments
 
 p A block comment is currently legal as well:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           body
             //
               #content
                 h1 Example
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <body>
             <!--
@@ -64,17 +64,17 @@ p A block comment is currently legal as well:
 
 p Jade also currently has special support for conditional comments
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           head
             //if lt IE 8
               script(src='/ie-sucks.js')
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <head>
             <!--[if lt IE 8]>

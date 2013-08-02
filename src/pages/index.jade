@@ -1,9 +1,9 @@
 extends ./layout.jade
 
 block content
-  .row
+  .row(data-control='interactive')
     .col
-      pre#jade
+      pre(data-control='input-jade')
         code
           :jadesrc
             doctype 5
@@ -27,7 +27,7 @@ block content
                     strong focus on performance
                     and powerful features.
     .col
-      pre#html
+      pre(data-control='output-html')
         code
           :htmlsrc
             <!DOCTYPE html>

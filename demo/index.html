@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/public/stylesheets/all.css"><link rel="stylesheet" href="/public/stylesheets/highlight.css"><link rel="stop" href="/public/images/tile.png"><link rel="stop" href="/public/images/top.png"><link rel="stop" href="/public/images/logo.png"></head><body><a href="http://github.com/visionmedia/jade"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 50" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a><div id="container"><div id="header"><h1>Jade</h1><div id="nav"><a href="/">Home</a><a href="/tutorial">Tutorial</a><a href="/reference">Language Reference</a><a href="/api">API</a><a href="/command-line">Command Line</a><a href="/demo">Online Demo</a></div></div><div id="body" data-control="interactive"><h2>Demo</h2><h3>Inputs</h3><p>Click to edit</p><div class="row"><div class="col"><h4>Jade Input</h4><pre data-control="input-jade"><code><span class="doctype">doctype 5</span>
+<span class="tag">html</span>(<span class="attribute">lang</span>=<span class="string">"en"</span>)
+  <span class="tag">head</span>
+    <span class="tag">title</span>= pageTitle
+    <span class="tag">script</span>(<span class="attribute">type</span>=<span class="string">'text/javascript'</span>).
+      <span class="keyword">if</span> (foo) {
+         bar(<span class="number">1</span> + <span class="number">5</span>)
+      }
+  <span class="tag">body</span>
+    <span class="tag">h1</span> Jade - node template engine
+    <span class="id">#container</span><span class="class">.col</span>
+      <span class="keyword">if</span> youAreUsingJade
+        <span class="tag">p</span> You are amazing
+      <span class="keyword">else</span>
+        <span class="tag">p</span> Get on it!
+      <span class="tag">p</span>.
+        Jade is a terse and simple
+        templating language with a
+        strong focus on performance
+        and powerful features.</code></pre></div><div class="col"><h4>Locals</h4><pre data-control="input-js"><code>{
+  pageTitle: <span class="string">'Jade Demo'</span>,
+  youAreUsingJade: <span class="literal">true</span>
+}</code></pre></div></div><h3>Outputs</h3><div class="row"><div class="col"><h4>Compiled Template</h4><pre data-control="output-js"></pre></div><div class="col"><h4>HTML Output</h4><pre data-control="output-html"></pre></div></div></div></div><script src="/client.js"></script><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script></body></html>

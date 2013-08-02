@@ -2,17 +2,17 @@ h3 Iteration
 
 p Jade's first-class iteration syntax makes it easier to iterate over arrays and objects within a template:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           ul
             each val in [1, 2, 3, 4, 5]
               li= val
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <ul>
             <li>1</li>
@@ -24,17 +24,17 @@ p Jade's first-class iteration syntax makes it easier to iterate over arrays and
 
 p You can also get the index as you iterate:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           ul
             each val, index in ['one', 'two', 'three']
               li= index + ': ' + val
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <ul>
             <li>1: one</li>
@@ -44,17 +44,17 @@ p You can also get the index as you iterate:
 
 p Jade also lets you iterate over the keys in an object:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           ul
             each val, index in {1: 'one', 2: 'two', 3: 'three'}
               li= index + ': ' + val
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <ul>
             <li>1: one</li>

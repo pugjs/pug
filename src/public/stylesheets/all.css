@@ -40,6 +40,13 @@ h2 {
 h3 {
     border-bottom: 2px solid #EEE;
 }
+textarea {
+    display: block;
+    overflow: auto;
+    width: 100%;
+    resize: vertical;
+    min-height: 25em;
+}
 #container {
     margin: 0 auto;
     max-width: 1200px;

@@ -2,10 +2,10 @@ h3 Conditionals
 
 p Jade's first-class conditional syntax allows for optional parenthesis, and you may now omit the leading <code>-</code> otherwise it's identical, still just regular javascript:
 
-.row
+.row(data-control='interactive')
   .col
-    pre
-      code.input
+    pre(data-control='input-jade')
+      code
         :jadesrc
           - var user = { description: 'foo bar baz' }
           #user
@@ -16,8 +16,8 @@ p Jade's first-class conditional syntax allows for optional parenthesis, and you
               h1 Description
               p.description User has no description
   .col
-    pre
-      code.output
+    pre(data-control='output-html')
+      code
         :htmlsrc
           <div id="user">
             <h2>Description</h2>

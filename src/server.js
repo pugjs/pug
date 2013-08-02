@@ -36,6 +36,7 @@ app.get('/tutorial', jade('./pages/tutorial.jade'));
 app.get('/api', jade('./pages/api.jade'));
 app.get('/reference', jade('./pages/reference.jade', {doctypes: require('jade/lib/doctypes')}));
 app.get('/command-line', jade('./pages/command-line.jade'));
+app.get('/demo', jade('./pages/demo.jade'));
 app.get('/client.js', browserify('./client/index.js'))
 
 app.listen(3000);
