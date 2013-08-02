@@ -39,7 +39,10 @@ cases.forEach(function(test){
       client: true,
       basedir: 'test/cases'
     }).toString(), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code)
-
+    if (/filter/.test(test)) {
+      actual = actual.replace(/\n| /g, '')
+      html = html.replace(/\n| /g, '')
+    }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   })
 });
