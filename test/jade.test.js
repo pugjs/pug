@@ -452,6 +452,12 @@ describe('jade', function(){
 
       assert.equal('<a href="/user/&lt;script&gt;">ds</a>'
         , jade.render('a(href="/user/#{id}") #{name}', { name: 'ds', id: '<script>' }));
+
+      // Test escaping the interpolation
+      assert.equal('<a href="/user/#{id}">#{name}</a>'
+        , jade.render('a(href="/user/\\#{id}") \\#{name}', {}));
+      assert.equal('<a href="/user/#{id}">ds</a>'
+        , jade.render('a(href="/user/\\#{id}") #{name}', {name: 'ds'}));
     });
 
     it('should support attr parens', function(){
