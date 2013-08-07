@@ -13,7 +13,7 @@
     "commander": "2.0.0",
     "mkdirp": "0.3.x",
     "transformers": "2.1.0",
-    "character-parser": "1.0.2",
+    "character-parser": "1.1.0",
     "monocle": "1.1.50",
     "with": "~1.1.0",
     "constantinople": "~1.0.1"
