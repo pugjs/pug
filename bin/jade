@@ -32,6 +32,7 @@ program
   .option('-c, --client', 'compile function for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
+  .option('--coffee', 'compile all code as CoffeeScript');
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -84,6 +85,10 @@ options.pretty = program.pretty;
 // --watch
 
 options.watch = program.watch;
+
+// --coffee
+
+options.coffee = program.coffee;
 
 // left-over args are file paths
 
