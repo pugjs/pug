@@ -16,7 +16,10 @@ jade.render(<span class="string">'string of jade'</span>, options, <span class="
 
 <span class="keyword">var</span> html = jade.render(<span class="string">'string of jade'</span>, options);
 <span class="comment">// =&gt; '&lt;string&gt;of jade&lt;/string&gt;'</span>
-</code></pre><h4>jade.renderFile(filename, options, callback)</h4><p>Render a jade file to HTML with given options and locals.</p><dl><dt>filename</dt><dd class="type string">string</dd><dd class="description">The path to the jade file to render</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above), also used as the locals object</dd><dt>callback</dt><dd class="type function">function</dd><dd class="description">Node style callback function which is passed error and result as its arguments</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
+</code></pre>
+<p>errors from this synchronous call will be thrown</p>
+
+<h4>jade.renderFile(filename, options, callback)</h4><p>Render a jade file to HTML with given options and locals.</p><dl><dt>filename</dt><dd class="type string">string</dd><dd class="description">The path to the jade file to render</dd><dt>options</dt><dd class="type object">options</dd><dd class="description">An options object (see above), also used as the locals object</dd><dt>callback</dt><dd class="type function">function</dd><dd class="description">Node style callback function which is passed error and result as its arguments</dd></dl><pre><code><span class="keyword">var</span> jade = require(<span class="string">'jade'</span>);
 
 jade.renderFile(<span class="string">'path/to/file.jade'</span>, options, <span class="function"><span class="keyword">function</span> <span class="params">(err, html)</span> {</span>
   <span class="keyword">if</span> (err) <span class="keyword">throw</span> err;
