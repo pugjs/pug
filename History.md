@@ -1,3 +1,10 @@
+0.35.0 / 2013-08-21
+===================
+
+  * Add support for space separated attributes (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add earlier errors for invalid JavaScript expressions (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix parsing files with UTF8 BOMs when they are includes or parent/layout templates (thanks to [@kiinoo](https://github.com/kiinoo))
+
 0.34.1 / 2013-07-26
 ===================
 
