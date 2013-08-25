@@ -11,8 +11,15 @@ var jade = require('../')
 
 function getError(str, options){
   try {
-    var fn = jade.compile(str, options);
-    fn(options);
+    jade.render(str, options);
+  } catch (ex) {
+    return ex;
+  }
+  throw new Error('Input was supposed to result in an error.');
+}
+function getFileError(name, options){
+  try {
+    jade.renderFile(name, options);
   } catch (ex) {
     return ex;
   }
@@ -33,6 +40,20 @@ describe('error reporting', function () {
       it('includes detail of where the error was thrown including the filename', function () {
         var err = getError('foo(', {filename: 'test.jade'})
         assert(/test\.jade:1/.test(err.message))
+        assert(/foo\(/.test(err.message))
+      });
+    });
+    describe('with a layout', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/compile.with.layout.error.jade', {})
+        assert(/layout.error.jade:2/.test(err.message))
+        assert(/foo\(/.test(err.message))
+      });
+    });
+    describe('with a include', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/compile.with.include.error.jade', {})
+        assert(/include.error.jade:2/.test(err.message))
         assert(/foo\(/.test(err.message))
       });
     });
