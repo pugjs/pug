@@ -85,7 +85,7 @@
   <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Description<span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
   <span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">"description"</span>&gt;</span>foo bar baz<span class="tag">&lt;/<span class="title">p</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
-</code></pre></div></div><p>Jade also provides a negated version <code>unless</code> (the following are therefore equivallent):</p><div class="row"><div class="col"><pre><code>unless user.isAnonymous
+</code></pre></div></div><p>Jade also provides a negated version <code>unless</code> (the following are therefore equivalent):</p><div class="row"><div class="col"><pre><code>unless user.isAnonymous
   <span class="tag">p</span> You're logged in as #{user.name}</code></pre></div><div class="col"><pre><code><span class="keyword">if</span> !user.isAnonymous
   <span class="tag">p</span> You're logged in as #{user.name}</code></pre></div></div><h3>Iteration</h3><p>Jade's first-class iteration syntax makes it easier to iterate over arrays and objects within a template:</p><div data-control="interactive" class="row"><div class="col"><pre data-control="input-jade"><code><span class="tag">ul</span>
   <span class="each">each val in [1, 2, 3, 4, 5]</span>
