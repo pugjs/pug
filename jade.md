@@ -130,7 +130,7 @@
     a(class=classes)
     // => "<a class="foo bar baz"></a>"
 
-## Class attributes
+## Raw attribute strings
 
   Unescaped non key-value attribute strings can be
   appended to the tag:
