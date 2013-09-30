@@ -130,6 +130,20 @@
     a(class=classes)
     // => "<a class="foo bar baz"></a>"
 
+## Raw attribute strings
+
+  Unescaped non key-value attribute strings can be
+  appended to the tag:
+
+    div{bar}
+    // => "<div bar></div>"
+
+  When the brackets are doubled, both are included
+  in the output:
+
+    div{{bind-attr class="isCompleted:completed"}}
+    // => "<div {{bind-attr class="isCompleted:completed"}}></div>"
+
 ## Class literal
 
   Classes may be defined using a ".CLASSNAME" syntax:
