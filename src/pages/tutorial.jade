@@ -5,32 +5,35 @@ block content
     h2 Tutorial
 
     h3 Introduction
-    p.
-      This tutorial is a work in progress. Once it's finished it will become a fully grown getting started guide.
+    p.note.
+      This tutorial is a work in progress. Once it's finished it will become a fully fledged getting started guide.
     p.
       Welcome to the Jade templating engine.  Jade is designed primarily for server side templating in node.js, however it can be used in many other environments.  It is only intended to produce XML like documents (HTML, RSS etc.) so don't use it to create plain text/markdown/CSS/whatever documents.
     p.
       This tutorial will take you through:
     ul
-      li The Basics
+      li
+        a(href="#Basics") The Basics
         ul
           li Creating simple tags
           li Putting text inside your tags
           li Attributes
           li IDs and Classes
-      li JavaScript
+      li
+        a(href="#Javascript") JavaScript
         ul
           li Outputing Text
           li Setting Attributes
           li Loops and Conditionals
-      li Advanced Templating
+      li
+        a(href="#Advanced") Advanced Templating
         ul
           li Extends & Blocks
           li Includes
           li Mixins
           li Filters
 
-    h3 The Basics
+    h3#Basics The Basics
     p Jade can be used just as a short hand for HTML.  This section covers everything you need to know to do that.
     h4 Creating Simple Tags
     p.
@@ -117,7 +120,7 @@ block content
                 Awesome
               </button>
 
-    h3 JavaScript
+    h3#Javascript JavaScript
     p Jade is much more than just a short hand for HTML.  It also has features that let you build dynamic templates.
 
     h4 Outputing Text
@@ -167,6 +170,8 @@ block content
                   </tr>
                 </table>
 
+    p.note If you <em>don't</em> want jade to filter your output, use <code>!=</code> instead of <code>=</code>.
+
     h4 Setting Attributes
     p Setting attributes to JavaScript values requires no extra work:
 
@@ -206,6 +211,55 @@ block content
               </table>
 
     h4 Loops and Conditionals
+    p You can use if statements to decide what to display depending on various factors - maybe a user is logged in or not, or some content exists or not, or a combination of factors.
+
+    p Jade's if statements are almost exactly like those present in javascript, except the parantheses are optional, and you don't need braces!
+
+    .row
+      .col
+        pre
+          code
+            :jadesrc
+              - var user = { name: 'John' }
+              if user
+                div.welcomebox
+                  // Filtered inline output
+                  p.
+                    Welcome, \#{user.name}
+              else
+                div.loginbox
+                  form(name="login", action="/login", method="post")
+                    input(type="text", name="user")
+                    input(type="password", name="pass")
+                    input(type="submit", value="login")
+      .col
+        .row
+          pre
+            code
+              :htmlsrc
+                <div class="loginbox">
+                  <form name="login" action="/login" method="post">
+                    <input type="text" name="user">
+                    <input type="password" name="pass">
+                    <input type="submit" value="login">
+                  </form>
+                </div>
+        p(style="text-align: center") or
+        .row
+          pre
+            code
+              :htmlsrc
+                <div class="welcomebox">
+                  <!-- Filtered inline output-->
+                  <p>Welcome, John</p>
+                </div>
+
+    h3#Advanced Advanced Templating
+
+    h4 Extends & Blocks
+    h4 Includes
+    h4 Mixins
+    h4 Filters
 
     p To Be Continued....
 
