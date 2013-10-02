@@ -11,7 +11,6 @@ This document outlines what features can be expected to change before jade gets 
 ## 0.36.0
 
  - Ability to specify per-filter options (#949)
- - Fix `element <space>.` (#1112 #1116)
  - Allow passing a `terse` option when rendering fragments (#1180)
 
 ## 1.0.0
