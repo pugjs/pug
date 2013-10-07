@@ -15,7 +15,7 @@
     "transformers": "2.1.0",
     "character-parser": "1.2.0",
     "monocle": "1.1.50",
-    "with": "~1.1.1",
+    "with": "~2.0.0",
     "constantinople": "~1.0.2"
   },
   "devDependencies": {
