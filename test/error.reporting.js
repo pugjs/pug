@@ -90,5 +90,19 @@ describe('error reporting', function () {
         assert(/-foo\(\)/.test(err.message))
       });
     });
+    describe('in a mixin', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/runtime.with.mixin.error.jade', {})
+        assert(/\/mixin.error.jade:2/.test(err.message))
+        assert(/Cannot read property 'length' of null/.test(err.message))
+      });
+    });
+    describe('in a layout', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/runtime.layout.error.jade', {})
+        assert(/layout.with.runtime.error.jade:3/.test(err.message))
+        assert(/Cannot read property 'length' of undefined/.test(err.message))
+      });
+    });
   });
 });
