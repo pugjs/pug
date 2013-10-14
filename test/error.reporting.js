@@ -86,14 +86,14 @@ describe('error reporting', function () {
         var sentinel = new Error('sentinel');
         var path = __dirname + '/fixtures/runtime.error.jade'
         var err = getError(fs.readFileSync(path, 'utf8'), {foo: function () { throw sentinel; }, filename: path})
-        assert(/fixtures\/runtime.error.jade:1/.test(err.message))
+        assert(/fixtures[\\\/]runtime\.error\.jade:1/.test(err.message))
         assert(/-foo\(\)/.test(err.message))
       });
     });
     describe('in a mixin', function () {
       it('includes detail of where the error was thrown including the filename', function () {
         var err = getFileError(__dirname + '/fixtures/runtime.with.mixin.error.jade', {})
-        assert(/\/mixin.error.jade:2/.test(err.message))
+        assert(/mixin.error.jade:2/.test(err.message))
         assert(/Cannot read property 'length' of null/.test(err.message))
       });
     });
