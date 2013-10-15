@@ -14,7 +14,9 @@ var fs = require('fs')
   , join = path.join
   , monocle = require('monocle')()
   , mkdirp = require('mkdirp')
-  , jade = require('../');
+  , jade = require('../')
+  , normalize = path.normalize;
+
 
 // jade options
 
@@ -89,23 +91,26 @@ options.watch = program.watch;
 
 var files = program.args;
 
-// compile files
-
 if (files.length) {
+  
   console.log();
+
   files.forEach(renderFile);
+  
   if (options.watch) {
-    monocle.watchFiles({
-      files: files,
+    monocle.watchDirectory({
+      root: files[0],
+      fileFilter:'*.jade',
       listener: function(file) {
-        renderFile(file.absolutePath);
+        renderFile( files[0] );
       }
-    });
+    });          
   }
+
   process.on('exit', function () {
-    console.log();
+      console.log();
   });
-// stdio
+  // stdio
 } else {
   stdin();
 }
@@ -134,9 +139,11 @@ function stdin() {
 
 function renderFile(path) {
   var re = /\.jade$/;
+
   fs.lstat(path, function(err, stat) {
     if (err) throw err;
     // Found jade file
+
     if (stat.isFile() && re.test(path)) {
       fs.readFile(path, 'utf8', function(err, str){
         if (err) throw err;
@@ -152,10 +159,14 @@ function renderFile(path) {
             var output = options.client
               ? fn.toString()
               : fn(options);
-            fs.writeFile(path, output, function(err){
-              if (err) throw err;
-              console.log('  \033[90mrendered \033[36m%s\033[0m', path);
-            });
+	    
+            fileName = path.split("/").slice(-1)[0]; 
+            if( fileName[0] != "_" ){
+                fs.writeFile(path, output, function(err){
+            		  if (err) throw err;
+                  console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+                });
+      	     }
           } catch (e) {
             if (options.watch) {
               console.error(e.stack || e.message || e);
