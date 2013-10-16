@@ -21,6 +21,61 @@ describe('jade', function(){
     });
   });
 
+  describe('.resolve()', function() {
+    it('should return the same function as compile as part of its output', function() {
+      var str = [
+        'p',
+        '  strong testing 1..2..3..',
+      ].join('\r\n');
+      var fn1 = jade.resolve(str).fn;
+      var fn2 = jade.compile(str);
+      assert.equal(fn1(str),fn2(str));
+    });
+    it('should list the filename of the template referenced by extends', function(){
+      var filename = __dirname+"/dependencies/extends1.jade";
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.resolve(str,{filename:filename});
+      var dependencies = {};
+      var childDependencies = {};
+      childDependencies[__dirname+"/dependencies/dependency1.jade"] = {};
+      dependencies[filename] = childDependencies;
+      assert.deepEqual(dependencies,info.dependencies);
+    });
+    it('should list the filename of the template referenced by an include', function() {
+      var filename = __dirname+"/dependencies/include1.jade";
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.resolve(str,{filename:filename});
+      var dependencies = {};
+      var childDependencies = {};
+      childDependencies[__dirname+"/dependencies/dependency1.jade"] = {};
+      dependencies[filename] = childDependencies;
+      assert.deepEqual(dependencies,info.dependencies);
+    });
+    it('should list the dependencies of extends dependencies', function() {
+      var filename = __dirname+"/dependencies/extends2.jade";
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.resolve(str,{filename:filename});
+      var dependencies = {};
+      var child1Deps = {};
+      var child2Deps = {};
+      child2Deps[__dirname+"/dependencies/dependency3.jade"] = {};
+      child1Deps[__dirname+"/dependencies/dependency2.jade"] = child2Deps;
+      dependencies[filename] = child1Deps;
+      assert.deepEqual(dependencies,info.dependencies);
+    });
+    it('should list the dependencies of include dependencies', function() {
+      var filename = __dirname+"/dependencies/include2.jade";
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.resolve(str,{filename:filename});
+      var dependencies = {};
+      var child1Deps = {};
+      var child2Deps = {};
+      child2Deps[__dirname+"/dependencies/dependency3.jade"] = {};
+      child1Deps[__dirname+"/dependencies/dependency2.jade"] = child2Deps;
+      dependencies[filename] = child1Deps;
+      assert.deepEqual(dependencies,info.dependencies);
+    });
+  });
   describe('.compile()', function(){
     it('should support doctypes', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', jade.render('!!! xml'));
