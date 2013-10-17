@@ -96,6 +96,11 @@ var html = jade.render('string of jade', merge(options, locals));
 
 // renderFile
 var html = jade.renderFile('filename.jade', merge(options, locals));
+
+// resolve
+var info = jade.resolve('string of jade', options);
+var html = info.fn(locals);
+var dependencies = info.dependencies;
 ```
 
 ### Options
