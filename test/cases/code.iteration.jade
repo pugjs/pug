@@ -6,7 +6,7 @@ ul
     li= item
   - })
 
-items = [1,2,3]
+- var items = [1,2,3]
 
 ul
   for item, i in items
@@ -20,16 +20,16 @@ ul
   each $item in items
     li= $item
 
-nums = [1, 2, 3]
-letters = ['a', 'b', 'c']
+- var nums = [1, 2, 3]
+- var letters = ['a', 'b', 'c']
 
 ul
   for l in letters
     for n in nums
       li #{n}: #{l}
 
-count = 1
-counter = function() { return [count++, count++, count++] }
+- var count = 1
+- var counter = function() { return [count++, count++, count++] }
 ul
   for n in counter()
     li #{n}
