@@ -962,17 +962,6 @@ describe('jade', function(){
       assert.ok(!tag.getAttribute(name))
     });
 
-    it('should support assignment', function(){
-      assert.equal('<div>5</div>', jade.render('a = 5;\ndiv= a'));
-      assert.equal('<div>5</div>', jade.render('a = 5\ndiv= a'));
-      assert.equal('<div>foo bar baz</div>', jade.render('a = "foo bar baz"\ndiv= a'));
-      assert.equal('<div>5</div>', jade.render('a = 5      \ndiv= a'));
-      assert.equal('<div>5</div>', jade.render('a = 5      ; \ndiv= a'));
-
-      var fn = jade.compile('test = local\np=test');
-      assert.equal('<p>bar</p>', fn({ local: 'bar' }));
-    });
-
     it('should be reasonably fast', function(){
       jade.compile(perfTest, {})
     })
