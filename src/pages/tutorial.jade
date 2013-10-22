@@ -15,8 +15,8 @@ block content
       li
         a(href="#Basics") The Basics
         ul
-          li Creating simple tags
-          li Putting text inside your tags
+          li Creating Simple Tags
+          li Putting Text Inside your Tags
           li Attributes
           li IDs and Classes
       li
@@ -37,7 +37,7 @@ block content
     p Jade can be used just as a short hand for HTML.  This section covers everything you need to know to do that.
     h4 Creating Simple Tags
     p.
-      Jade is whitespace sensitive, so there's no need to close your tags, jade does that for you.  You can also nest tags within other tags just by indenting them.
+      Jade is whitespace sensitive, so there's no need to close your tags; Jade does that for you.  You can also nest tags within other tags just by indenting them.
     .row(data-control='interactive')
       .col
         pre(data-control='input-jade')
@@ -124,7 +124,7 @@ block content
     p Jade is much more than just a short hand for HTML.  It also has features that let you build dynamic templates.
 
     h4 Outputing Text
-    p You can output raw text from JavaScript variables.  Jade will also helpfully filter the text for you so it's safe from nasty html injection attacks.
+    p You can output raw text from JavaScript variables.  Jade will also helpfully filter the text for you so it's safe from nasty HTML injection attacks.
 
     div
       pre
@@ -138,7 +138,7 @@ block content
                 twitter: '@ForbesLindesay',
                 blog: 'forbeslindesay.co.uk'
               }
-            })
+            });
       .row
         .col
           pre
@@ -170,7 +170,7 @@ block content
                   </tr>
                 </table>
 
-    p.note If you <em>don't</em> want jade to filter your output, use <code>!=</code> instead of <code>=</code>.
+    p.note If you <em>don't</em> want Jade to filter your output, use <code>!=</code> instead of <code>=</code>.
 
     h4 Setting Attributes
     p Setting attributes to JavaScript values requires no extra work:
@@ -213,7 +213,7 @@ block content
     h4 Loops and Conditionals
     p You can use if statements to decide what to display depending on various factors - maybe a user is logged in or not, or some content exists or not, or a combination of factors.
 
-    p Jade's if statements are almost exactly like those present in javascript, except the parentheses are optional, and you don't need braces!
+    p Jade's if statements are almost exactly like those present in JavaScript, except the parentheses are optional, and you don't need braces!
 
     .row
       .col
