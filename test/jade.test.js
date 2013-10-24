@@ -26,7 +26,7 @@ describe('jade', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', jade.render('doctype xml'));
       assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
       assert.equal('<!DOCTYPE foo bar baz>', jade.render('doctype foo bar baz'));
-      assert.equal('<!DOCTYPE html>', jade.render('doctype 5'));
+      assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
       assert.equal('<!DOCTYPE html>', jade.render('doctype', { doctype:'html' }));
       assert.equal('<!DOCTYPE html>', jade.render('doctype html', { doctype:'xml' }));
       assert.equal('<html></html>', jade.render('html'));
@@ -349,9 +349,9 @@ describe('jade', function(){
     });
 
     it('should support test html 5 mode', function(){
-      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('doctype 5\ninput(type="checkbox", checked)'));
-      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('doctype 5\ninput(type="checkbox", checked=true)'));
-      assert.equal('<!DOCTYPE html><input type="checkbox">', jade.render('doctype 5\ninput(type="checkbox", checked= false)'));
+      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('doctype html\ninput(type="checkbox", checked)'));
+      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('doctype html\ninput(type="checkbox", checked=true)'));
+      assert.equal('<!DOCTYPE html><input type="checkbox">', jade.render('doctype html\ninput(type="checkbox", checked= false)'));
     });
 
     it('should support multi-line attrs', function(){
