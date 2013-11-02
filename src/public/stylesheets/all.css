@@ -74,6 +74,10 @@ textarea {
     color: #666;
 }
 
+#footer {
+    margin-top: 80px;
+}
+
 pre, .code {
     padding: 4px 4px;
     -webkit-border-radius: 4px;
