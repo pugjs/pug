@@ -424,10 +424,6 @@ describe('jade', function(){
       assert.equal('<meta content="what\'s up? \'weee\'"/>', jade.render('meta(content="what\'s up? \'weee\'")'));
     });
 
-    it('should support colons option', function(){
-      assert.equal('<a href="/bar"></a>', jade.render('a(href:"/bar")', { colons: true }));
-    });
-
     it('should support class attr array', function(){
       assert.equal('<body class="foo bar baz"></body>', jade.render('body(class=["foo", "bar", "baz"])'));
     });
