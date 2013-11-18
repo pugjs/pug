@@ -102,6 +102,7 @@ var html = jade.renderFile('filename.jade', merge(options, locals));
 
  - `filename`  Used in exceptions, and required when using includes
  - `compileDebug`  When `false` no debug instrumentation is compiled
+ - `client` Render javascript to be used browser (client) side (see [browser support](#browser-support) below)
  - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
 
 ## Browser Support
