@@ -237,21 +237,22 @@ block content
           pre
             code
               :htmlsrc
+                <div class="welcomebox">
+                  <!-- Filtered inline output-->
+                  <p>Welcome, John</p>
+                </div>
+              
+        p(style="text-align: center") or
+        .row
+          pre
+            code
+              :htmlsrc
                 <div class="loginbox">
                   <form name="login" action="/login" method="post">
                     <input type="text" name="user">
                     <input type="password" name="pass">
                     <input type="submit" value="login">
                   </form>
-                </div>
-        p(style="text-align: center") or
-        .row
-          pre
-            code
-              :htmlsrc
-                <div class="welcomebox">
-                  <!-- Filtered inline output-->
-                  <p>Welcome, John</p>
                 </div>
 
     h3#Advanced Advanced Templating
