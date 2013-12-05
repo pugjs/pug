@@ -24,3 +24,9 @@ mixin list
 
 body
   mixin list()
+
+mixin foobar(str)
+  div#interpolation= str + 'interpolated'
+
+- var suffix = "bar"
++#{'foo' + suffix}('This is ')
