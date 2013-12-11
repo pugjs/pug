@@ -613,13 +613,13 @@ html
 !!! 5
 ```
 
-or
+或
 
 ```jade
 !!! html
 ```
 
-or
+或
 
 ```jade
 doctype html
