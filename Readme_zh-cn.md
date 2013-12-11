@@ -2,7 +2,7 @@
 
 Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 影响，它是用 JavaScript 实现的, 并且可以供 [Node](http://nodejs.org) 使用.
 
-翻译: [草依山](http://jser.me)
+翻译: [草依山](http://jser.me) 等
 
 ## 声明
 
@@ -1018,7 +1018,7 @@ html
 ```
 
 
-You may also `yield` within an included template, allowing you to explicitly mark where the block given to `include` will be placed. Suppose for example you wish to prepend scripts rather than append, you might do the following:
+在被包含的模板中，你也可以使用`yield`语句。`yield`语句允许你明确地标明`include`的代码块的放置位置。比如，假设你希望把代码块放在scripts之前，而不是附加在scripts之后：
 
 ```jade
 head
@@ -1027,14 +1027,17 @@ head
   script(src='/jquery.ui.js')
 ```
 
-Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example suppose we have `user.jade` which utilizes a `user` variable.
+由于被包含的Jade会按字面解析并合并到AST中，词法范围的变量的效果和直接写在同一个文件中的相同。这就意味着`include`可以用作partial的替代，例如，假设我们有一个引用了`user`变量的user.jade`文件：
+
 
 ```jade
 h1= user.name
 p= user.occupation
 ```
 
-We could then simply `include user` while iterating users, and since the `user` variable is already defined within the loop the included template will have access to it.
+接着，当我们迭代users的时候，只需简单地加上`include user`。因为在循环中`user`变量已经被定义了，被包含的模板可以访问它。
+
+
 
 ```jade
 users = [{ name: 'Tobi', occupation: 'Ferret' }]
@@ -1044,7 +1047,7 @@ each user in users
     include user
 ```
 
-yielding:
+以上代码会生成：
 
 ```html
 <div class="user">
@@ -1053,7 +1056,7 @@ yielding:
 </div>
 ```
 
-If we wanted to expose a different variable name as `user` since `user.jade` references that name, we could simply define a new variable as shown here with `user = person`:
+`user.jade`引用了`user`变量，如果我们希望使用一个不同的变量`user`，那么我们可以直接定义一个新变量`user = person`，如下所示：
 
 ```jade
 each person in users
@@ -1061,6 +1064,7 @@ each person in users
     user = person
     include user
 ```
+
 
 <a name="a14"/>
 ## Mixins
