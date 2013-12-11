@@ -906,9 +906,11 @@ block content
 ```
 
 <a name="a12"/>
-## Block append / prepend
 
-Jade allows you to _replace_ (default), _prepend_, or _append_ blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on _every_ page, you might do this:
+## 前置、追加代码块
+
+Jade允许你 _替换_ （默认）、 _前置_ 和 _追加_ blocks. 比如，假设你希望在 _所有_ 页面的头部都加上默认的脚本，你可以这么做：
+
 
 ```jade
 html
@@ -920,7 +922,8 @@ html
     block content
 ```
 
-Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
+现在假设你有一个Javascript游戏的页面，你希望在默认的脚本之外添加一些游戏相关的脚本，你可以直接`append`上代码块：
+
 
 ```jade
 extends layout
