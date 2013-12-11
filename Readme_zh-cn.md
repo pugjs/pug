@@ -99,7 +99,7 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
 
 通过 NPM:
 
-```bash
+```sh
 npm install jade
 ```
 
@@ -108,21 +108,21 @@ npm install jade
 
 把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:
 
-```bash 
+```sh 
 $ make jade.js
 ```
 
 如果你已经安装了 uglifyjs (`npm install uglify-js`)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。 
  
-```bash
-$ make jade.min.js
+```sh
+make jade.min.js
 ```
 
 默认情况下，为了方便调试Jade会把模板组织成带有形如 `__.lineno = 3` 的行号的形式。 
 在浏览器里使用的时候，你可以通过传递一个选项 `{ compileDebug: false }` 来去掉这个。
 下面的模板
 
-```bash
+```sh
 p Hello #{name}
 ```
 
@@ -1197,7 +1197,7 @@ clean:
 
 这个可以和 `watch(1)` 命令起来产生像下面的行为： 
 
-```bash
+```sh
 $ watch make
 ```
 
