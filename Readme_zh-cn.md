@@ -1006,7 +1006,7 @@ head
   script(src='/jquery.js')
 ```
 
- 我们可以像下面给`include head`添加内容, 这里是添加两个脚本.
+我们可以像下面给`include head`添加内容, 这里是添加两个脚本.
 
 ```
 html
