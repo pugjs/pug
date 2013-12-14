@@ -9,11 +9,11 @@ mixin centered(title)
 
 mixin main(title)
   div.stretch
-    +centered(title).highlight(attributes)
+    +centered(title).highlight&attributes(attributes)
       block
 
 mixin bottom
-  div.bottom(attributes)
+  div.bottom&attributes(attributes)
     block
 
 body
@@ -29,6 +29,6 @@ body
   +bottom(class=['class1', 'class2'])
 
 mixin foo
-  div.thing(attr1='foo', attr2='bar', attributes)
+  div.thing(attr1='foo', attr2='bar')&attributes(attributes)
 
 +foo(attr3='baz').thunk
