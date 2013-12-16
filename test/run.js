@@ -32,13 +32,13 @@ cases.forEach(function(test){
     var actual = fn({ title: 'Jade' });
 
     fs.writeFileSync(__dirname + '/output/' + test + '.html', actual)
-    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(jade.compile(str, {
+    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(jade.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
       client: true,
       basedir: 'test/cases'
-    }).toString(), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code)
+    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code)
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '')
       html = html.replace(/\n| /g, '')

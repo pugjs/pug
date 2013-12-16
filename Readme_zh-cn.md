@@ -2,7 +2,7 @@
 
 Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 影响，它是用 JavaScript 实现的, 并且可以供 [Node](http://nodejs.org) 使用.
 
-翻译: [草依山](http://jser.me)
+翻译: [草依山](http://jser.me) 等
 
 ## 声明
 
@@ -99,7 +99,7 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
 
 通过 NPM:
 
-```bash
+```sh
 npm install jade
 ```
 
@@ -108,21 +108,21 @@ npm install jade
 
 把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:
 
-```bash 
+```sh 
 $ make jade.js
 ```
 
 如果你已经安装了 uglifyjs (`npm install uglify-js`)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。 
  
-```bash
-$ make jade.min.js
+```sh
+make jade.min.js
 ```
 
 默认情况下，为了方便调试Jade会把模板组织成带有形如 `__.lineno = 3` 的行号的形式。 
 在浏览器里使用的时候，你可以通过传递一个选项 `{ compileDebug: false }` 来去掉这个。
 下面的模板
 
-```bash
+```sh
 p Hello #{name}
 ```
 
@@ -613,13 +613,13 @@ html
 !!! 5
 ```
 
-or
+或
 
 ```jade
 !!! html
 ```
 
-or
+或
 
 ```jade
 doctype html
@@ -906,9 +906,11 @@ block content
 ```
 
 <a name="a12"/>
-## Block append / prepend
 
-Jade allows you to _replace_ (default), _prepend_, or _append_ blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on _every_ page, you might do this:
+## 前置、追加代码块
+
+Jade允许你 _替换_ （默认）、 _前置_ 和 _追加_ blocks. 比如，假设你希望在 _所有_ 页面的头部都加上默认的脚本，你可以这么做：
+
 
 ```jade
 html
@@ -920,7 +922,8 @@ html
     block content
 ```
 
-Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
+现在假设你有一个Javascript游戏的页面，你希望在默认的脚本之外添加一些游戏相关的脚本，你可以直接`append`上代码块：
+
 
 ```jade
 extends layout
@@ -1006,7 +1009,7 @@ head
   script(src='/jquery.js')
 ```
 
- 我们可以像下面给`include head`添加内容, 这里是添加两个脚本.
+我们可以像下面给`include head`添加内容, 这里是添加两个脚本.
 
 ```
 html
@@ -1018,7 +1021,7 @@ html
 ```
 
 
-You may also `yield` within an included template, allowing you to explicitly mark where the block given to `include` will be placed. Suppose for example you wish to prepend scripts rather than append, you might do the following:
+在被包含的模板中，你也可以使用`yield`语句。`yield`语句允许你明确地标明`include`的代码块的放置位置。比如，假设你希望把代码块放在scripts之前，而不是附加在scripts之后：
 
 ```jade
 head
@@ -1027,14 +1030,17 @@ head
   script(src='/jquery.ui.js')
 ```
 
-Since included Jade is parsed and literally merges the AST, lexically scoped variables function as if the included Jade was written right in the same file. This means `include` may be used as sort of partial, for example suppose we have `user.jade` which utilizes a `user` variable.
+由于被包含的Jade会按字面解析并合并到AST中，词法范围的变量的效果和直接写在同一个文件中的相同。这就意味着`include`可以用作partial的替代，例如，假设我们有一个引用了`user`变量的user.jade`文件：
+
 
 ```jade
 h1= user.name
 p= user.occupation
 ```
 
-We could then simply `include user` while iterating users, and since the `user` variable is already defined within the loop the included template will have access to it.
+接着，当我们迭代users的时候，只需简单地加上`include user`。因为在循环中`user`变量已经被定义了，被包含的模板可以访问它。
+
+
 
 ```jade
 users = [{ name: 'Tobi', occupation: 'Ferret' }]
@@ -1044,7 +1050,7 @@ each user in users
     include user
 ```
 
-yielding:
+以上代码会生成：
 
 ```html
 <div class="user">
@@ -1053,7 +1059,7 @@ yielding:
 </div>
 ```
 
-If we wanted to expose a different variable name as `user` since `user.jade` references that name, we could simply define a new variable as shown here with `user = person`:
+`user.jade`引用了`user`变量，如果我们希望使用一个不同的变量`user`，那么我们可以直接定义一个新变量`user = person`，如下所示：
 
 ```jade
 each person in users
@@ -1061,6 +1067,7 @@ each person in users
     user = person
     include user
 ```
+
 
 <a name="a14"/>
 ## Mixins
@@ -1197,7 +1204,7 @@ clean:
 
 这个可以和 `watch(1)` 命令起来产生像下面的行为： 
 
-```bash
+```sh
 $ watch make
 ```
 
