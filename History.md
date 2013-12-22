@@ -1,3 +1,30 @@
+1.0.0 / 2013-12-22
+==================
+
+  * No longer support node@0.8 ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix error reporting in layouts & includes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow a list of 'globals' to be passed as an array at compile time & don't automatically expose all globals ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Escape apostrophes in data attributes (@qualiabyte)
+  * Fix mixin/block interaction ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) & [@paulyoung](https://github.com/paulyoung))
+  * Ignore trailing space after mixin declaration ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Make literal `.` work as expected ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove implicit text only for script/style ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Stop parsing comments and remove support for conditional comments ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Make filtering includes explicit ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove special assignment syntax ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove `!!!` shortcut for `doctype` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove `5` shorcut for `html` doctype ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove `colons` option from the distant past ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add a sepatate `compileClient` and `compileFileClient` to replace the `client` option ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove polyfills for supporting old browsers ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow interpolation for mixin names ([@jeromew](https://github.com/jeromew)
+  * Use `node.type` instead of `node.constructor.name` so it can be minified ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow hyphens in filter names ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Throw an error if a self closing tag has content ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support inline tags ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Replace `attributes` magic attribute with `&attributes(attributes)` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove automatic tag wrapping for filters, you can just put the tags in yourself now ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 0.35.0 / 2013-08-21
 ===================
 
