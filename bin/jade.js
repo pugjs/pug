@@ -119,10 +119,13 @@ function stdin() {
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', function(chunk){ buf += chunk; });
   process.stdin.on('end', function(){
-    var fn = jade.compile(buf, options);
-    var output = options.client
-        ? fn.toString()
-        : fn(options);
+    var output;
+    if (options.client) {
+      output = jade.compileClient(buf, options);
+    } else {
+      var fn = jade.compile(buf, options);
+      var output = fn(options);
+    }
     process.stdout.write(output);
   }).resume();
 }
@@ -141,7 +144,7 @@ function renderFile(path) {
       fs.readFile(path, 'utf8', function(err, str){
         if (err) throw err;
         options.filename = path;
-        var fn = jade.compile(str, options);
+        var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
         var extname = options.client ? '.js' : '.html';
         path = path.replace(re, extname);
         if (program.out) path = join(program.out, basename(path));
@@ -149,9 +152,7 @@ function renderFile(path) {
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
           try {
-            var output = options.client
-              ? fn.toString()
-              : fn(options);
+            var output = options.client ? fn : fn(options);
             fs.writeFile(path, output, function(err){
               if (err) throw err;
               console.log('  \033[90mrendered \033[36m%s\033[0m', path);
