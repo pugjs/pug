@@ -1,4 +1,4 @@
-h3 Attributes
+h3#attributes Attributes
 
 p Tag attributes look similar to html, however their values are just regular JavaScript.
 
@@ -31,7 +31,7 @@ p All the normal JavaScript expressions work fine too:
         :htmlsrc
           <body class="authed"></body>
 
-h4 Boolean Attributes
+h4#booleanattribs Boolean Attributes
 
 p Boolean attributes are mirrored by Jade, and accept bools, aka <code>true</code> or <code>false</code>. When no value is specified true is assumed.
 
@@ -53,7 +53,7 @@ p Boolean attributes are mirrored by Jade, and accept bools, aka <code>true</cod
           <input type="checkbox" />
           <input type="checkbox" checked="true" />
 
-h4 Class Attributes
+h4#classattribs Class Attributes
 
 p The <code>class</code> attribute can be a string (like any normal attribute) but it can also be an array of class names, which is handy when generated from JavaScript.
 
@@ -70,7 +70,7 @@ p The <code>class</code> attribute can be a string (like any normal attribute) b
         :htmlsrc
           <a class="foo bar baz"></a>
 
-h4 Class Literal
+h4#classliteral Class Literal
 
 Classes may be defined using a <code>.classname</code> syntax:
 
@@ -101,7 +101,7 @@ Since div's are such a common choice of tag, it is the default if you omit the t
         :htmlsrc
           <div class="content"></div>
 
-h4 ID Literal
+h4#idliteral ID Literal
 
 Classes may be defined using a <code>#idname</code> syntax:
 

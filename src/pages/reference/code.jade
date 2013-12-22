@@ -1,8 +1,8 @@
-h3 Code
+h3#code Code
 
 p Jade makes it possible to write inline JavaScript code in your templates.  There are three types of code.
 
-h4 Unbuffered Code
+h4#unbufferedcode Unbuffered Code
 
 p Unbuffered code starts with <code>-</code> does not add any output directly, e.g.
 
@@ -21,7 +21,7 @@ p Unbuffered code starts with <code>-</code> does not add any output directly, e
           <li>item</li>
           <li>item</li>
 
-h4 Buffered Code
+h4#bufferedcode Buffered Code
 
 p Buffered code starts with <code>=</code> and outputs the result of evaluating the JavaScript expression in the template.  For security, it is first HTML escaped:
 
@@ -53,7 +53,7 @@ p It can also be written inline with attributes, and supports the full range of 
         :htmlsrc
           <p>This code is &lt;escaped&gt;!</p>
 
-h4 Unescaped Buffered Code
+h4#unescapedbufferedcode Unescaped Buffered Code
 
 p Unescaped buffered code starts with <code>!=</code> and outputs the result of evaluating the JavaScript expression in the template.  This does not do any escaping, so is not safe for user input:
 
