@@ -7,19 +7,17 @@ h4#unbufferedcode Unbuffered Code
 p Unbuffered code starts with <code>-</code> does not add any output directly, e.g.
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          - for (var x = 0; x < 3; x++)
-            li item
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <li>item</li>
-          <li>item</li>
-          <li>item</li>
+  .col-md-6
+    +jade
+      :jadesrc
+        - for (var x = 0; x < 3; x++)
+          li item
+  .col-md-6
+    +html
+      :htmlsrc
+        <li>item</li>
+        <li>item</li>
+        <li>item</li>
 
 h4#bufferedcode Buffered Code
 
@@ -27,31 +25,27 @@ p Buffered code starts with <code>=</code> and outputs the result of evaluating 
 
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          p
-            = 'This code is <escaped>!'
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <p>This code is &lt;escaped&gt;!</p>
+  .col-md-6
+    +jade
+      :jadesrc
+        p
+          = 'This code is <escaped>!'
+  .col-md-6
+    +html
+      :htmlsrc
+        <p>This code is &lt;escaped&gt;!</p>
 
 p It can also be written inline with attributes, and supports the full range of JavaScript expressions:
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          p= 'This code is' + ' <escaped>!'
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <p>This code is &lt;escaped&gt;!</p>
+  .col-md-6
+    +jade
+      :jadesrc
+        p= 'This code is' + ' <escaped>!'
+  .col-md-6
+    +html
+      :htmlsrc
+        <p>This code is &lt;escaped&gt;!</p>
 
 h4#unescapedbufferedcode Unescaped Buffered Code
 
@@ -59,29 +53,25 @@ p Unescaped buffered code starts with <code>!=</code> and outputs the result of 
 
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          p
-            != 'This code is <strong>not</strong> escaped!'
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <p>This code is <strong>not</strong> escaped!</p>
+  .col-md-6
+    +jade
+      :jadesrc
+        p
+          != 'This code is <strong>not</strong> escaped!'
+  .col-md-6
+    +html
+      :htmlsrc
+        <p>This code is <strong>not</strong> escaped!</p>
 
 p It can also be written inline with attributes, and supports the full range of JavaScript expressions:
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          p!= 'This code is <strong>not</strong> escaped!'
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <p>This code is <strong>not</strong> escaped!</p>
+  .col-md-6
+    +jade
+      :jadesrc
+        p!= 'This code is <strong>not</strong> escaped!'
+  .col-md-6
+    +html
+      :htmlsrc
+        <p>This code is <strong>not</strong> escaped!</p>
 

@@ -3,48 +3,45 @@ h3#includes Includes
 p Includes allow you to insert the contents of one jade file into another.
 
 .row
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          // index.jade
-          doctype html
-          html
-          include includes/head  
-          body
-            h1 My Site
-            p Welcome to my super lame site.
-            include includes/foot
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          // includes/head.jade
-          head
-            title My Site
-            script(src='/javascripts/jquery.js')
-            script(src='/javascripts/app.js')
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          // includes/foot.jade
-          #footer
-            p Copyright (c) foobar
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <!doctype html>
-          <html>
-            <head>
-              <title>My Site</title>
-              <script src='/javascripts/jquery.js'></script>
-              <script src='/javascripts/app.js'></script>
-            </head>
-            <body>
-              <h1>My Site</h1>
-              <p>Welcome to my super lame site.</p>
-              <div id="footer">
-                <p>Copyright (c) foobar</p>
-              </div>
-            </body>
-          </html>
+  .col-md-6
+    +jade
+      :jadesrc
+        // index.jade
+        doctype html
+        html
+          include includes/head
+        body
+          h1 My Site
+          p Welcome to my super lame site.
+          include includes/foot
+    +jade
+      :jadesrc
+        // includes/head.jade
+        head
+          title My Site
+          script(src='/javascripts/jquery.js')
+          script(src='/javascripts/app.js')
+
+    +jade
+      :jadesrc
+        // includes/foot.jade
+        #footer
+          p Copyright (c) foobar
+  .col-md-6
+    +html
+      :htmlsrc
+        <!doctype html>
+        <html>
+          <head>
+            <title>My Site</title>
+            <script src='/javascripts/jquery.js'></script>
+            <script src='/javascripts/app.js'></script>
+          </head>
+          <body>
+            <h1>My Site</h1>
+            <p>Welcome to my super lame site.</p>
+            <div id="footer">
+              <p>Copyright (c) foobar</p>
+            </div>
+          </body>
+        </html>

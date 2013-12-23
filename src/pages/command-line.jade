@@ -1,52 +1,53 @@
 extends ./layout.jade
 
 block content
-  #body
-    :markdown
-      ## Command Line
-
-      ### Installation
-
-      via npm:
-
-          $ npm install jade --global
-
-      ### Usage
-
-          $ jade [options] [dir|file ...]
-
-      #### Options
-
-      ```
-      -h, --help         output usage information
-      -V, --version      output the version number
-      -O, --obj <str>    javascript options object
-      -o, --out <dir>    output the compiled html to <dir>
-      -p, --path <path>  filename used to resolve includes
-      -P, --pretty       compile pretty html output
-      -c, --client       compile function for client-side runtime.js
-      -D, --no-debug     compile without debugging (smaller functions)
-      -w, --watch        watch files for changes and automatically re-render
-      ```
-
-      #### Examples
-
-      Translate jade the templates dir:
-
-          $ jade templates
-
-      Create {foo,bar}.html
-
-          $ jade {foo,bar}.jade
-
-      Jade over stdio
-
-          $ jade < my.jade > my.html
-
-      Jade over stdio
-      
-          $ echo "h1 Jade!" | jade
-
-      foo, bar dirs rendering to /tmp
-
-          $ jade foo bar --out /tmp 
+  .container
+    #body
+      :markdown
+        ## Command Line
+  
+        ### Installation
+  
+        via npm:
+  
+            $ npm install jade --global
+  
+        ### Usage
+  
+            $ jade [options] [dir|file ...]
+  
+        #### Options
+  
+        ```
+        -h, --help         output usage information
+        -V, --version      output the version number
+        -O, --obj <str>    javascript options object
+        -o, --out <dir>    output the compiled html to <dir>
+        -p, --path <path>  filename used to resolve includes
+        -P, --pretty       compile pretty html output
+        -c, --client       compile function for client-side runtime.js
+        -D, --no-debug     compile without debugging (smaller functions)
+        -w, --watch        watch files for changes and automatically re-render
+        ```
+  
+        #### Examples
+  
+        Translate jade the templates dir:
+  
+            $ jade templates
+  
+        Create {foo,bar}.html
+  
+            $ jade {foo,bar}.jade
+  
+        Jade over stdio
+  
+            $ jade < my.jade > my.html
+  
+        Jade over stdio
+        
+            $ echo "h1 Jade!" | jade
+  
+        foo, bar dirs rendering to /tmp
+  
+            $ jade foo bar --out /tmp 

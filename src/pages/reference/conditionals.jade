@@ -3,39 +3,35 @@ h3#conditionals Conditionals
 p Jade's first-class conditional syntax allows for optional parenthesis, and you may now omit the leading <code>-</code> otherwise it's identical, still just regular javascript:
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          - var user = { description: 'foo bar baz' }
-          #user
-            if user.description
-              h2 Description
-              p.description= user.description
-            else
-              h1 Description
-              p.description User has no description
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <div id="user">
-            <h2>Description</h2>
-            <p class="description">foo bar baz</p>
-          </div>
+  .col-md-6
+    +jade
+      :jadesrc
+        - var user = { description: 'foo bar baz' }
+        #user
+          if user.description
+            h2 Description
+            p.description= user.description
+          else
+            h1 Description
+            p.description User has no description
+  .col-md-6
+    +html
+      :htmlsrc
+        <div id="user">
+          <h2>Description</h2>
+          <p class="description">foo bar baz</p>
+        </div>
 
 p Jade also provides a negated version <code>unless</code> (the following are therefore equivalent):
 
 .row
-  .col
-    pre
-      code
-        :jadesrc
-          unless user.isAnonymous
-            p You're logged in as \#{user.name}
-  .col
-    pre
-      code
-        :jadesrc
-          if !user.isAnonymous
-            p You're logged in as \#{user.name}
+  .col-md-6
+    +jade
+      :jadesrc
+        unless user.isAnonymous
+          p You're logged in as \#{user.name}
+  .col-md-6
+    +jade
+      :jadesrc
+        if !user.isAnonymous
+          p You're logged in as \#{user.name}

@@ -9,7 +9,11 @@
     "express": "~3.2.4",
     "marked": "~0.2.8",
     "browserify-middleware": "~1.16.0",
-    "jade": "~0.34.1"
+    "jade": "~1.0.0",
+    "jade-highlighter": "~1.0.0",
+    "highlight-codemirror": "~3.20.0",
+    "jade-code-mirror": "~1.0.3",
+    "code-mirror": "~3.20.0"
   },
   "devDependencies": {
     "stop": "~2.1.1"

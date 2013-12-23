@@ -1,24 +1,21 @@
 h3#filters Filters
 
-+unstable()
-
 p Filters let you use other languages within a jade template.  They take a block of plain text as an input.
 
 .row
-  .col
-    pre
-      code.input
-        :jadesrc
-          :markdown
-            # Markdown
+  .col-lg-6
+    +jade
+      :jadesrc
+        :markdown
+          # Markdown
 
-            I often like including markdown documents in my jade templates.
+          I often like including markdown documents.
+        script
           :coffee
             console.log 'This is coffee script'
-  .col
-    pre
-      code.output
-        :htmlsrc
-          <h1>Markdown</h1>
-          <p>I often like including markdown documents in my jade templates.</p>
-          <script>console.log('This is coffee script')</script>
+  .col-lg-6
+    +html
+      :htmlsrc
+        <h1>Markdown</h1>
+        <p>I often like including markdown documents.</p>
+        <script>console.log('This is coffee script')</script>

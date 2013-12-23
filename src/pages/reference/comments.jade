@@ -3,81 +3,52 @@ h3#comments Comments
 p Single line comments look the same as JavaScript comments and must be placed on their own line:
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          // just some paragraphs
-          p foo
-          p bar
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <!-- just some paragraphs -->
-          <p>foo</p>
-          <p>bar</p>
+  .col-md-6
+    +jade
+      :jadesrc
+        // just some paragraphs
+        p foo
+        p bar
+  .col-md-6
+    +html
+      :htmlsrc
+        <!-- just some paragraphs -->
+        <p>foo</p>
+        <p>bar</p>
 
 p Jade also supports unbuffered comments, by simply adding a hyphen
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          //- will not output within markup
-          p foo
-          p bar
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <p>foo</p>
-          <p>bar</p>
+  .col-md-6
+    +jade
+      :jadesrc
+        //- will not output within markup
+        p foo
+        p bar
+  .col-md-6
+    +html
+      :htmlsrc
+        <p>foo</p>
+        <p>bar</p>
 
 h4#blockcomments Block Comments
 
-+unstable()
-
-p A block comment is currently legal as well:
+p A block comment is legal as well:
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          body
-            //
-              #content
-                h1 Example
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <body>
-            <!--
-            <div id="content">
-              <h1>Example</h1>
-            </div>
-            -->
-          </body>
-
-p Jade also currently has special support for conditional comments
-
-.row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          head
-            //if lt IE 8
-              script(src='/ie-sucks.js')
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <head>
-            <!--[if lt IE 8]>
-            <script src="/ie-sucks.js"></script>
-            <![endif]-->
-          </head>
+  .col-md-6
+    +jade
+      :jadesrc
+        body
+          //
+            As much text as you want
+            can go here.
+  .col-md-6
+    +html
+      :htmlsrc
+        <body>
+          <!--
+          As much text as you want
+          can go here.
+          -->
+        </body>

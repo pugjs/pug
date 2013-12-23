@@ -3,52 +3,44 @@ h3#tags Tags
 p By default, text at the start of a line (or after only white space) represents an html tag.  Indented tags are nested, creating the tree like structure of html.
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          ul
-            li
-            li
-            li
-  .col
-    pre(data-control='output-html')
-      code.output
-        :htmlsrc
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
+  .col-md-6
+    +jade
+      :jadesrc
+        ul
+          li Item A
+          li Item B
+          li Item C
+  .col-md-6
+    +html
+      :htmlsrc
+        <ul>
+          <li>Item A</li>
+          <li>Item B</li>
+          <li>Item C</li>
+        </ul>
 
 p Jade also knows which elements are self closing:
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          img
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <img>
+  .col-md-6
+    +jade
+      :jadesrc
+        img
+  .col-md-6
+    +html
+      :htmlsrc
+        <img/>
 
 h4#expansion Block Expansion
-
-+unstable()
 
 p To save space, jade provides an inline syntax for nested tags.
 
 .row(data-control='interactive')
-  .col
-    pre(data-control='input-jade')
-      code
-        :jadesrc
-          a: img
-  .col
-    pre(data-control='output-html')
-      code
-        :htmlsrc
-          <a><img></a>
+  .col-md-6
+    +jade
+      :jadesrc
+        a: img
+  .col-md-6
+    +html
+      :htmlsrc
+        <a><img/></a>

@@ -1,17 +1,17 @@
 extends ./layout.jade
 
 block content
-  #body(data-control='interactive')
-    h2 Demo
-    h3 Inputs
-    p Click to edit
-    .row
-      .col
-        h4 Jade Input
-        pre(data-control='input-jade')
-          code
+  .container
+    #body(data-control='interactive')
+      h2 Demo
+      h3 Inputs
+      p Click to edit
+      .row
+        .col-md-6
+          h4 Jade Input
+          +jade
             :jadesrc
-              doctype 5
+              doctype html
               html(lang="en")
                 head
                   title= pageTitle
@@ -31,20 +31,19 @@ block content
                       templating language with a
                       strong focus on performance
                       and powerful features.
-      .col
-        h4 Locals
-        pre(data-control='input-js')
-          code
+        .col-md-6
+          h4 Locals
+          +js
             :jssrc
               {
                 pageTitle: 'Jade Demo',
                 youAreUsingJade: true
               }
-    h3 Outputs
-    .row
-      .col
-        h4 Compiled Template
-        pre(data-control='output-js')
-      .col
-        h4 HTML Output
-        pre(data-control='output-html')
+      h3 Outputs
+      .row
+        .col-md-6
+          h4 Compiled Template
+          pre(data-control='output-js')
+        .col-md-6
+          h4 HTML Output
+          +html

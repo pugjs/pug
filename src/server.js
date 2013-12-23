@@ -1,7 +1,7 @@
 'use strict'
 
 var browserify = require('browserify-middleware');
-var hljs = require('highlight.js');
+var CodeMirror = require('highlight-codemirror');
 var filters = require('jade').filters;
 var jade = require('transform')('jade');
 var express = require('express');
@@ -21,12 +21,16 @@ marked.setOptions({
   }
 })
 
-filters.jadesrc = require('./highlight-jade');
+CodeMirror.loadMode('xml');//dep of htmlmixed
+CodeMirror.loadMode('htmlmixed');
+CodeMirror.loadMode('javascript');
+
+filters.jadesrc = require('jade-highlighter');
 filters.htmlsrc = function (html) {
-  return hljs.highlight('xml', html).value;
+  return CodeMirror.highlight(html, {name: 'htmlmixed'});
 };
 filters.jssrc = function (js) {
-  return hljs.highlight('javascript', js).value;
+  return CodeMirror.highlight(js, {name: 'javascript'});
 };
 
 app.use('/public', express.static(__dirname + '/public'));
