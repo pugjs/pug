@@ -27,15 +27,15 @@ p You can also get the index as you iterate:
     +jade
       :jadesrc
         ul
-          each val, index in ['one', 'two', 'three']
+          each val, index in ['zero', 'one', 'two']
             li= index + ': ' + val
   .col-md-6
     +html
       :htmlsrc
         <ul>
+          <li>0: zero</li>
           <li>1: one</li>
           <li>2: two</li>
-          <li>3: three</li>
         </ul>
 
 p Jade also lets you iterate over the keys in an object:
