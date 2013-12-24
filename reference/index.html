@@ -101,11 +101,11 @@
   <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>5<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
 <span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
 </code></pre></div></div><p>You can also get the index as you iterate:</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">ul</span>
-<span class="cm-indent">  </span><span class="cm-keyword">each</span><span class="cm-variable"> val, index</span><span class="cm-keyword"> in</span> [<span class="cm-string">&#39;one&#39;</span>, <span class="cm-string">&#39;two&#39;</span>, <span class="cm-string">&#39;three&#39;</span>]
+<span class="cm-indent">  </span><span class="cm-keyword">each</span><span class="cm-variable"> val, index</span><span class="cm-keyword"> in</span> [<span class="cm-string">&#39;zero&#39;</span>, <span class="cm-string">&#39;one&#39;</span>, <span class="cm-string">&#39;two&#39;</span>]
 <span class="cm-indent">    </span><span class="cm-tag">li</span><span class="cm-punctuation">=</span> <span class="cm-variable">index</span> + <span class="cm-string">&#39;: &#39;</span> + <span class="cm-variable">val</span></code></pre></div><div class="col-md-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>0: zero<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
   <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>1: one<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
   <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>2: two<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>3: three<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
 <span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
 </code></pre></div></div><p>Jade also lets you iterate over the keys in an object:</p><div data-control="interactive" class="row"><div class="col-md-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">ul</span>
 <span class="cm-indent">  </span><span class="cm-keyword">each</span><span class="cm-variable"> val, index</span><span class="cm-keyword"> in</span> {<span class="cm-number">1</span>:<span class="cm-string">&#39;one&#39;</span>,<span class="cm-number">2</span>:<span class="cm-string">&#39;two&#39;</span>,<span class="cm-number">3</span>:<span class="cm-string">&#39;three&#39;</span>}
