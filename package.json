@@ -23,7 +23,6 @@
     "mocha": "*",
     "markdown": "*",
     "stylus": "*",
-    "uubench": "*",
     "should": "*",
     "less": "*",
     "uglify-js": "*",
