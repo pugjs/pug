@@ -3,6 +3,7 @@ html {
 }
 body {
     background: url(../images/top.png) 0 0 repeat-x;
+    padding: 50px 0;
 }
 h1 {
     margin: 0 auto 55px auto;
