@@ -24,6 +24,7 @@
   * Support inline tags ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Replace `attributes` magic attribute with `&attributes(attributes)` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Remove automatic tag wrapping for filters, you can just put the tags in yourself now ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove whitespace from tags nested inside pre tags ([@markdalgleish](http://markdalgleish.com))
 
 0.35.0 / 2013-08-21
 ===================
