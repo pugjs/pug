@@ -817,9 +817,9 @@ the AST produced to render what you would expect:
 ```
 
 As mentioned `include` can be used to include other content
-such as html or css. By providing an extension, Jade will
-read that file in, apply any [filter](#a7) matching the file's
-extension, and insert that content into the output.
+such as html or css. By providing an explicit filter name
+with `include:`, Jade will read that file in, apply the
+[filter](#a7), and insert that content into the output.
 
 ```jade
 html
