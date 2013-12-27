@@ -829,9 +829,8 @@ html
     include stylesheet.css
     include script.js
   body
-    //- "markdown" files will use the "markdown" filter
-        to convert Markdown to HTML
-    include introduction.markdown
+    //- use the "markdown" filter to convert Markdown to HTML
+    include:markdown introduction.markdown
     //- html files have no filter and are included verbatim
     include content.html
 ```
