@@ -526,20 +526,6 @@ describe('jade', function(){
 
       assert.equal(html, jade.render(str));
 
-      // Arbitrary indentation
-
-      var str = [
-          '     //foo',
-          'p bar'
-      ].join('\n');
-
-      var html = [
-          '<!--foo-->',
-          '<p>bar</p>'
-      ].join('');
-
-      assert.equal(html, jade.render(str));
-
       // Between tags
 
       var str = [
