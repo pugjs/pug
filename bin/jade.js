@@ -29,6 +29,7 @@ program
   .option('-o, --out <dir>', 'output the compiled html to <dir>')
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
+  .option('--prefix <name>', 'custom name for client-side template function')
   .option('-c, --client', 'compile function for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
@@ -80,6 +81,10 @@ options.client = program.client;
 // --pretty
 
 options.pretty = program.pretty;
+
+// --prefix
+
+options.prefix = program.prefix;
 
 // --watch
 
