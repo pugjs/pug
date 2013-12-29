@@ -1,3 +1,10 @@
+1.0.1 / 2013-12-29
+==================
+
+  * Allow self closing tags to contian whitespace ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow tags to have a single white space after them ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support text bodies of tags that begin with `//` rather than treating them as comments ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.0.0 / 2013-12-22
 ==================
 

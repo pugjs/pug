@@ -431,7 +431,9 @@ Compiler.prototype = {
       this.terse
         ? this.buffer('>')
         : this.buffer('/>');
-      if (tag.block && !(tag.block.type === 'Block' && tag.block.nodes.length === 0)) {
+      // if it is non-empty throw an error
+      if (tag.block && !(tag.block.type === 'Block' && tag.block.nodes.length === 0)
+      &&  tag.block.nodes.some(function (tag) { return tag.type !== 'Text' || !/^\s*$/.test(tag.val)})) {
         throw new Error(name + ' is self closing and should not have content.');
       }
     } else {
@@ -851,7 +853,7 @@ function parse(str, options){
       + 'var jade_mixins = {};\n'
       + (options.self
         ? 'var self = locals || {};\n' + js
-        : addWith('locals || {}', js, globals)) + ';'
+        : addWith('locals || {}', '\n' + js, globals)) + ';'
       + 'return buf.join("");';
   } catch (err) {
     parser = parser.context();
@@ -1245,7 +1247,7 @@ Lexer.prototype = {
 
   comment: function() {
     var captures;
-    if (captures = /^ *\/\/(-)?([^\n]*)/.exec(this.input)) {
+    if (captures = /^\/\/(-)?([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
@@ -1333,10 +1335,15 @@ Lexer.prototype = {
    */
 
   text: function() {
-    if (/^([^\.\<][^\n]+)/.test(this.input) && !/^(?:\| ?| )([^\n]+)/.test(this.input)) {
+    return this.scan(/^(?:\| ?| )([^\n]+)/, 'text') || this.scan(/^(<[^\n]*)/, 'text');
+  },
+
+  textFail: function () {
+    var tok;
+    if (tok = this.scan(/^([^\.\n][^\n]+)/, 'text')) {
       console.warn('Warning: missing space before text for line ' + this.lineno + ' of jade file.');
+      return tok;
     }
-    return this.scan(/^(?:\| ?| )([^\n]+)/, 'text') || this.scan(/^([^\.][^\n]+)/, 'text');
   },
 
   /**
@@ -1844,6 +1851,10 @@ Lexer.prototype = {
   },
 
   fail: function () {
+    if (/^ ($|\n)/.test(this.input)) {
+      this.consume(1);
+      return this.next();
+    }
     throw new Error('unexpected text ' + this.input.substr(0, 5));
   },
 
@@ -1898,10 +1909,11 @@ Lexer.prototype = {
       || this.attrs()
       || this.attributesBlock()
       || this.indent()
+      || this.text()
       || this.comment()
       || this.colon()
-      || this.text()
       || this.dot()
+      || this.textFail()
       || this.fail();
   }
 };
