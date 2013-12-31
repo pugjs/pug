@@ -1,3 +1,8 @@
+1.0.2 / 2013-12-31
+==================
+
+  * Fix a bug when `&attributes` is combined with dynamic attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.0.1 / 2013-12-29
 ==================
 

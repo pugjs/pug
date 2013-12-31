@@ -650,7 +650,7 @@ Compiler.prototype = {
         if (buffer) {
           this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + JSON.stringify(escaped) + ', ' + JSON.stringify(this.terse) + ')');
         } else {
-          var val = JSON.stringify(attr.val);
+          var val = attr.val;
           if (escaped && !(key.indexOf('data') === 0)) {
             val = 'jade.escape(' + val + ')';
           } else if (escaped) {
