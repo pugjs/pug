@@ -89,6 +89,9 @@ options.watch = program.watch;
 
 var files = program.args;
 
+// Add path from "path"-Option to files
+files[files.length] = program.path;
+
 // compile files
 
 if (files.length) {
