@@ -27,7 +27,6 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
   this.debug = false !== options.compileDebug;
-  this.inMixin = false;
   this.indents = 0;
   this.parentIndents = 0;
   this.terse = false;
@@ -65,9 +64,6 @@ Compiler.prototype = {
 
   setDoctype: function(name){
     name = name || 'default';
-    if (name.toLowerCase() === '5') {
-      throw new Error('`doctype 5` is deprecated, you must now use `doctype html`');
-    }
     this.doctype = doctypes[name.toLowerCase()] || '<!DOCTYPE ' + name + '>';
     this.terse = this.doctype.toLowerCase() == '<!doctype html>';
     this.xml = 0 == this.doctype.indexOf('<?xml');
@@ -291,9 +287,6 @@ Compiler.prototype = {
    */
 
   visitMixinBlock: function(block){
-    if (!this.inMixin) {
-      throw new Error('Anonymous blocks are not allowed unless they are part of a mixin.');
-    }
     if (this.pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');");
     this.buf.push('block && block();');
     if (this.pp) this.buf.push("jade.indent.pop();");
@@ -384,9 +377,7 @@ Compiler.prototype = {
       this.buf.push(name + ' = function(' + args + '){');
       this.buf.push('var block = (this && this.block), attributes = (this && this.attributes) || {};');
       this.parentIndents++;
-      this.inMixin = true;
       this.visit(block);
-      this.inMixin = false;
       this.parentIndents--;
       this.buf.push('};');
     }
@@ -624,14 +615,10 @@ Compiler.prototype = {
     var buf = [];
     var classes = [];
     var classEscaping = [];
-    var visited = [];
 
     attrs.forEach(function(attr){
       var key = attr.name;
       var escaped = attr.escaped;
-
-      if (key !== 'class' && visited.indexOf(key) !== -1) throw new Error('Duplicate key "' + key + '" is not allowed.');
-      visited.push(key);
 
       if (key === 'class') {
         classes.push(attr.val);
@@ -1311,7 +1298,11 @@ Lexer.prototype = {
     if (this.scan(/^!!! *([^\n]+)?/, 'doctype')) {
       throw new Error('`!!!` is deprecated, you must now use `doctype`');
     }
-    return this.scan(/^(?:doctype) *([^\n]+)?/, 'doctype');
+    var node = this.scan(/^(?:doctype) *([^\n]+)?/, 'doctype');
+    if (node && node.val && node.val.trim() === '5') {
+      throw new Error('`doctype 5` is deprecated, you must now use `doctype html`');
+    }
+    return node;
   },
 
   /**
@@ -1417,7 +1408,7 @@ Lexer.prototype = {
 
   mixinBlock: function() {
     var captures;
-    if (captures = /^block\s*\n/.exec(this.input)) {
+    if (captures = /^block\s*(\n|$)/.exec(this.input)) {
       this.consume(captures[0].length - 1);
       return this.tok('mixin-block');
     }
@@ -1933,6 +1924,7 @@ var Block = require('./block');
  */
 
 var Attrs = module.exports = function Attrs() {
+  this.attributeNames = [];
   this.attrs = [];
   this.attributeBlocks = [];
 };
@@ -1956,6 +1948,11 @@ Attrs.prototype.type = 'Attrs';
  */
 
 Attrs.prototype.setAttribute = function(name, val, escaped){
+  this.attributeNames = this.attributeNames || [];
+  if (name !== 'class' && this.attributeNames.indexOf(name) !== -1) {
+    throw new Error('Duplicate attribute "' + name + '" is not allowed.');
+  }
+  this.attributeNames.push(name);
   this.attrs.push({ name: name, val: val, escaped: escaped });
   return this;
 };
@@ -2553,6 +2550,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
   this.mixins = {};
   this.options = options;
   this.contexts = [this];
+  this.inMixin = false;
 };
 
 /**
@@ -3015,6 +3013,9 @@ Parser.prototype = {
 
   parseMixinBlock: function () {
     var block = this.expect('mixin-block');
+    if (!this.inMixin) {
+      throw new Error('Anonymous blocks are not allowed unless they are part of a mixin.');
+    }
     return new nodes.MixinBlock();
   },
 
@@ -3090,8 +3091,10 @@ Parser.prototype = {
 
     // definition
     if ('indent' == this.peek().type) {
+      this.inMixin = true;
       mixin = new nodes.Mixin(name, args, this.block(), false);
       this.mixins[name] = mixin;
+      this.inMixin = false;
       return mixin;
     // call
     } else {
@@ -3254,6 +3257,12 @@ Parser.prototype = {
     if ('dot' == this.peek().type) {
       tag.textOnly = true;
       this.advance();
+    }
+    
+    if (tag.selfClosing
+        && ['newline', 'outdent', 'eos'].indexOf(this.peek().type) === -1
+        && (this.peek().type !== 'text' || /^\s*$/.text(this.peek().val))) {
+      throw new Error(name + ' is self closing and should not have content.');
     }
 
     // (text | code | ':')?

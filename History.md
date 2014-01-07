@@ -1,3 +1,11 @@
+1.1.0 / 2014-01-07
+==================
+
+  * Fix class merging to work as documented ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Throw an error when the same attribute is duplicated multiple times ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Move more errors into the parser/lexer so they have more info about line numbers ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support mixin blocks at the end of files ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.0.2 / 2013-12-31
 ==================
 
