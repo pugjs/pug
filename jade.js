@@ -1647,8 +1647,7 @@ Lexer.prototype = {
       }
 
       this.consume(index + 1);
-      tok.attrs = {};
-      tok.escaped = {};
+      tok.attrs = [];
 
       var escapedAttr = true
       var key = '';
@@ -1692,8 +1691,11 @@ Lexer.prototype = {
           if (val) assertExpression(val)
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
-          tok.escaped[key] = escapedAttr;
-          tok.attrs[key] = '' == val ? true : val;
+          tok.attrs.push({
+            name: key,
+            val: '' == val ? true : val,
+            escaped: escapedAttr
+          });
           key = val = '';
           loc = 'key';
           escapedAttr = false;
@@ -2529,6 +2531,7 @@ var nodes = require('./nodes');
 var utils = require('./utils');
 var filters = require('./filters');
 var path = require('path');
+var constantinople = require('constantinople');
 var parseJSExpression = require('character-parser').parseMax;
 var extname = path.extname;
 
@@ -2889,9 +2892,18 @@ Parser.prototype = {
       this.lexer.pipeless = true;
       block = this.parseTextBlock();
       this.lexer.pipeless = false;
-    } else block = new nodes.Block;
+    } else {
+      block = new nodes.Block;
+    }
 
-    var node = new nodes.Filter(tok.val, block, attrs && attrs.attrs);
+    var options = {};
+    if (attrs) {
+      attrs.attrs.forEach(function (attribute) {
+        options[attribute.name] = constantinople.toConstant(attribute.val);
+      });
+    }
+
+    var node = new nodes.Filter(tok.val, block, options);
     node.line = this.line();
     return node;
   },
@@ -3190,10 +3202,6 @@ Parser.prototype = {
    */
 
   parseTag: function(){
-    // ast-filter look-ahead
-    var i = 2;
-    if ('attrs' == this.lookahead(i).type) ++i;
-
     var tok = this.advance();
     var tag = new nodes.Tag(tok.val);
 
@@ -3224,17 +3232,13 @@ Parser.prototype = {
               console.warn('You should not have jade tags with multiple attributes.');
             }
             seenAttrs = true;
-            var tok = this.advance()
-              , obj = tok.attrs
-              , escaped = tok.escaped
-              , names = Object.keys(obj);
+            var tok = this.advance();
+            var attrs = tok.attrs;
 
             if (tok.selfClosing) tag.selfClosing = true;
 
-            for (var i = 0, len = names.length; i < len; ++i) {
-              var name = names[i]
-                , val = obj[name];
-              tag.setAttribute(name, val, escaped[name]);
+            for (var i = 0; i < attrs.length; i++) {
+              tag.setAttribute(attrs[i].name, attrs[i].val, attrs[i].escaped);
             }
             continue;
           case '&attributes':
@@ -3299,7 +3303,7 @@ Parser.prototype = {
   }
 };
 
-},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":26,"character-parser":33,"fs":27,"path":30}],24:[function(require,module,exports){
+},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":26,"character-parser":33,"constantinople":34,"fs":27,"path":30}],24:[function(require,module,exports){
 'use strict';
 
 /**
