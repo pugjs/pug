@@ -10,11 +10,11 @@
   },
   "man": "./jade.1",
   "dependencies": {
-    "commander": "2.0.0",
+    "commander": "2.1.0",
     "mkdirp": "~0.3.5",
     "transformers": "2.1.0",
     "character-parser": "1.2.0",
-    "monocle": "1.1.50",
+    "monocle": "1.1.51",
     "with": "~2.0.0",
     "constantinople": "~1.0.2"
   },
