@@ -1,3 +1,8 @@
+1.1.4 / 2014-01-09
+==================
+
+  * Fix a corner case where a mixin was called with `&attributes` but no other attributes and a block ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.1.3 / 2014-01-09
 ==================
 
