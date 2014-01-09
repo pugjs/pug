@@ -1,3 +1,8 @@
+1.1.3 / 2014-01-09
+==================
+
+  * Fix failure of npm prepublish not running
+
 1.1.2 / 2014-01-09
 ==================
 
@@ -127,7 +132,7 @@
 
   * add support for 'include' and 'extends' to use paths relative to basedir
   * fix accidental calling of functions in iteration block. Closes #986
-  * fix: skip rethrow on client  
+  * fix: skip rethrow on client
   * fix each/else prefixed with `-`
   * fix multi-block prepend/append
   * swap -o and -O, set -o to --out

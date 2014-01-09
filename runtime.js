@@ -152,11 +152,13 @@ exports.attrs = function attrs(obj, terse){
  */
 
 exports.escape = function escape(html){
-  return String(html)
+  var result = String(html)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+  if (result === '' + html) return html;
+  else return result;
 };
 
 /**
@@ -203,6 +205,11 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
 
 },{"fs":2}],2:[function(require,module,exports){
 
+// not implemented
+// The reason for having an empty file and not throwing is to allow
+// untraditional implementation of this module.
+
 },{}]},{},[1])
 (1)
 });
+;
