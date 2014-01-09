@@ -1,3 +1,8 @@
+1.1.1 / 2014-01-09
+==================
+
+* Fix a bug when `&attributes` is combined with static attributes that evaluate to `false` or `null` or `undefined` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.1.0 / 2014-01-07
 ==================
 
