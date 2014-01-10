@@ -1061,11 +1061,13 @@ var characterParser = require('character-parser');
  * Initialize `Lexer` with the given `str`.
  *
  * @param {String} str
+ * @param {String} filename
  * @api private
  */
 
-var Lexer = module.exports = function Lexer(str) {
+var Lexer = module.exports = function Lexer(str, filename) {
   this.input = str.replace(/\r\n|\r/g, '\n');
+  this.filename = filename;
   this.deferredTokens = [];
   this.lastIndents = 0;
   this.lineno = 1;
@@ -1332,7 +1334,8 @@ Lexer.prototype = {
   textFail: function () {
     var tok;
     if (tok = this.scan(/^([^\.\n][^\n]+)/, 'text')) {
-      console.warn('Warning: missing space before text for line ' + this.lineno + ' of jade file.');
+      console.warn('Warning: missing space before text for line ' + this.lineno + 
+          ' of jade file "' + this.filename + '"');
       return tok;
     }
   },
@@ -2544,7 +2547,7 @@ var extname = path.extname;
 var Parser = exports = module.exports = function Parser(str, filename, options){
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   this.input = str.replace(/^\uFEFF/, '');
-  this.lexer = new Lexer(this.input);
+  this.lexer = new Lexer(this.input, filename);
   this.filename = filename;
   this.blocks = {};
   this.mixins = {};
