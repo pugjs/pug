@@ -1,4 +1,4 @@
-!function(e){"object"==typeof exports?module.exports=e():"function"==typeof define&&define.amd?define(e):"undefined"!=typeof window?window.jade=e():"undefined"!=typeof global?global.jade=e():"undefined"!=typeof self&&(self.jade=e())}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 var nodes = require('./nodes');
@@ -27,7 +27,6 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
   this.debug = false !== options.compileDebug;
-  this.inMixin = false;
   this.indents = 0;
   this.parentIndents = 0;
   this.terse = false;
@@ -65,9 +64,6 @@ Compiler.prototype = {
 
   setDoctype: function(name){
     name = name || 'default';
-    if (name.toLowerCase() === '5') {
-      throw new Error('`doctype 5` is deprecated, you must now use `doctype html`');
-    }
     this.doctype = doctypes[name.toLowerCase()] || '<!DOCTYPE ' + name + '>';
     this.terse = this.doctype.toLowerCase() == '<!doctype html>';
     this.xml = 0 == this.doctype.indexOf('<?xml');
@@ -291,9 +287,6 @@ Compiler.prototype = {
    */
 
   visitMixinBlock: function(block){
-    if (!this.inMixin) {
-      throw new Error('Anonymous blocks are not allowed unless they are part of a mixin.');
-    }
     if (this.pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');");
     this.buf.push('block && block();');
     if (this.pp) this.buf.push("jade.indent.pop();");
@@ -352,7 +345,7 @@ Compiler.prototype = {
           this.indents = _indents;
           this.parentIndents--;
 
-          if (attrs.length) {
+          if (attrs.length || attrsBlocks.length) {
             this.buf.push('},');
           } else {
             this.buf.push('}');
@@ -384,9 +377,7 @@ Compiler.prototype = {
       this.buf.push(name + ' = function(' + args + '){');
       this.buf.push('var block = (this && this.block), attributes = (this && this.attributes) || {};');
       this.parentIndents++;
-      this.inMixin = true;
       this.visit(block);
-      this.inMixin = false;
       this.parentIndents--;
       this.buf.push('};');
     }
@@ -431,7 +422,9 @@ Compiler.prototype = {
       this.terse
         ? this.buffer('>')
         : this.buffer('/>');
-      if (tag.block && !(tag.block.type === 'Block' && tag.block.nodes.length === 0)) {
+      // if it is non-empty throw an error
+      if (tag.block && !(tag.block.type === 'Block' && tag.block.nodes.length === 0)
+      &&  tag.block.nodes.some(function (tag) { return tag.type !== 'Text' || !/^\s*$/.test(tag.val)})) {
         throw new Error(name + ' is self closing and should not have content.');
       }
     } else {
@@ -622,14 +615,10 @@ Compiler.prototype = {
     var buf = [];
     var classes = [];
     var classEscaping = [];
-    var visited = [];
 
     attrs.forEach(function(attr){
       var key = attr.name;
       var escaped = attr.escaped;
-
-      if (key !== 'class' && visited.indexOf(key) !== -1) throw new Error('Duplicate key "' + key + '" is not allowed.');
-      visited.push(key);
 
       if (key === 'class') {
         classes.push(attr.val);
@@ -648,7 +637,7 @@ Compiler.prototype = {
         if (buffer) {
           this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + JSON.stringify(escaped) + ', ' + JSON.stringify(this.terse) + ')');
         } else {
-          var val = JSON.stringify(attr.val);
+          var val = attr.val;
           if (escaped && !(key.indexOf('data') === 0)) {
             val = 'jade.escape(' + val + ')';
           } else if (escaped) {
@@ -851,7 +840,7 @@ function parse(str, options){
       + 'var jade_mixins = {};\n'
       + (options.self
         ? 'var self = locals || {};\n' + js
-        : addWith('locals || {}', js, globals)) + ';'
+        : addWith('locals || {}', '\n' + js, globals)) + ';'
       + 'return buf.join("");';
   } catch (err) {
     parser = parser.context();
@@ -1072,11 +1061,13 @@ var characterParser = require('character-parser');
  * Initialize `Lexer` with the given `str`.
  *
  * @param {String} str
+ * @param {String} filename
  * @api private
  */
 
-var Lexer = module.exports = function Lexer(str) {
+var Lexer = module.exports = function Lexer(str, filename) {
   this.input = str.replace(/\r\n|\r/g, '\n');
+  this.filename = filename;
   this.deferredTokens = [];
   this.lastIndents = 0;
   this.lineno = 1;
@@ -1245,7 +1236,7 @@ Lexer.prototype = {
 
   comment: function() {
     var captures;
-    if (captures = /^ *\/\/(-)?([^\n]*)/.exec(this.input)) {
+    if (captures = /^\/\/(-)?([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
@@ -1309,7 +1300,11 @@ Lexer.prototype = {
     if (this.scan(/^!!! *([^\n]+)?/, 'doctype')) {
       throw new Error('`!!!` is deprecated, you must now use `doctype`');
     }
-    return this.scan(/^(?:doctype) *([^\n]+)?/, 'doctype');
+    var node = this.scan(/^(?:doctype) *([^\n]+)?/, 'doctype');
+    if (node && node.val && node.val.trim() === '5') {
+      throw new Error('`doctype 5` is deprecated, you must now use `doctype html`');
+    }
+    return node;
   },
 
   /**
@@ -1333,10 +1328,16 @@ Lexer.prototype = {
    */
 
   text: function() {
-    if (/^([^\.\<][^\n]+)/.test(this.input) && !/^(?:\| ?| )([^\n]+)/.test(this.input)) {
-      console.warn('Warning: missing space before text for line ' + this.lineno + ' of jade file.');
+    return this.scan(/^(?:\| ?| )([^\n]+)/, 'text') || this.scan(/^(<[^\n]*)/, 'text');
+  },
+
+  textFail: function () {
+    var tok;
+    if (tok = this.scan(/^([^\.\n][^\n]+)/, 'text')) {
+      console.warn('Warning: missing space before text for line ' + this.lineno + 
+          ' of jade file "' + this.filename + '"');
+      return tok;
     }
-    return this.scan(/^(?:\| ?| )([^\n]+)/, 'text') || this.scan(/^([^\.][^\n]+)/, 'text');
   },
 
   /**
@@ -1410,7 +1411,7 @@ Lexer.prototype = {
 
   mixinBlock: function() {
     var captures;
-    if (captures = /^block\s*\n/.exec(this.input)) {
+    if (captures = /^block\s*(\n|$)/.exec(this.input)) {
       this.consume(captures[0].length - 1);
       return this.tok('mixin-block');
     }
@@ -1640,8 +1641,7 @@ Lexer.prototype = {
       }
 
       this.consume(index + 1);
-      tok.attrs = {};
-      tok.escaped = {};
+      tok.attrs = [];
 
       var escapedAttr = true
       var key = '';
@@ -1685,8 +1685,11 @@ Lexer.prototype = {
           if (val) assertExpression(val)
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
-          tok.escaped[key] = escapedAttr;
-          tok.attrs[key] = '' == val ? true : val;
+          tok.attrs.push({
+            name: key,
+            val: '' == val ? true : val,
+            escaped: escapedAttr
+          });
           key = val = '';
           loc = 'key';
           escapedAttr = false;
@@ -1844,6 +1847,10 @@ Lexer.prototype = {
   },
 
   fail: function () {
+    if (/^ ($|\n)/.test(this.input)) {
+      this.consume(1);
+      return this.next();
+    }
     throw new Error('unexpected text ' + this.input.substr(0, 5));
   },
 
@@ -1898,10 +1905,11 @@ Lexer.prototype = {
       || this.attrs()
       || this.attributesBlock()
       || this.indent()
+      || this.text()
       || this.comment()
       || this.colon()
-      || this.text()
       || this.dot()
+      || this.textFail()
       || this.fail();
   }
 };
@@ -1919,6 +1927,7 @@ var Block = require('./block');
  */
 
 var Attrs = module.exports = function Attrs() {
+  this.attributeNames = [];
   this.attrs = [];
   this.attributeBlocks = [];
 };
@@ -1942,6 +1951,11 @@ Attrs.prototype.type = 'Attrs';
  */
 
 Attrs.prototype.setAttribute = function(name, val, escaped){
+  this.attributeNames = this.attributeNames || [];
+  if (name !== 'class' && this.attributeNames.indexOf(name) !== -1) {
+    throw new Error('Duplicate attribute "' + name + '" is not allowed.');
+  }
+  this.attributeNames.push(name);
   this.attrs.push({ name: name, val: val, escaped: escaped });
   return this;
 };
@@ -2517,6 +2531,7 @@ var nodes = require('./nodes');
 var utils = require('./utils');
 var filters = require('./filters');
 var path = require('path');
+var constantinople = require('constantinople');
 var parseJSExpression = require('character-parser').parseMax;
 var extname = path.extname;
 
@@ -2532,12 +2547,13 @@ var extname = path.extname;
 var Parser = exports = module.exports = function Parser(str, filename, options){
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   this.input = str.replace(/^\uFEFF/, '');
-  this.lexer = new Lexer(this.input);
+  this.lexer = new Lexer(this.input, filename);
   this.filename = filename;
   this.blocks = {};
   this.mixins = {};
   this.options = options;
   this.contexts = [this];
+  this.inMixin = false;
 };
 
 /**
@@ -2877,9 +2893,18 @@ Parser.prototype = {
       this.lexer.pipeless = true;
       block = this.parseTextBlock();
       this.lexer.pipeless = false;
-    } else block = new nodes.Block;
+    } else {
+      block = new nodes.Block;
+    }
 
-    var node = new nodes.Filter(tok.val, block, attrs && attrs.attrs);
+    var options = {};
+    if (attrs) {
+      attrs.attrs.forEach(function (attribute) {
+        options[attribute.name] = constantinople.toConstant(attribute.val);
+      });
+    }
+
+    var node = new nodes.Filter(tok.val, block, options);
     node.line = this.line();
     return node;
   },
@@ -2991,6 +3016,9 @@ Parser.prototype = {
 
   parseMixinBlock: function () {
     var block = this.expect('mixin-block');
+    if (!this.inMixin) {
+      throw new Error('Anonymous blocks are not allowed unless they are part of a mixin.');
+    }
     return new nodes.MixinBlock();
   },
 
@@ -3066,8 +3094,10 @@ Parser.prototype = {
 
     // definition
     if ('indent' == this.peek().type) {
+      this.inMixin = true;
       mixin = new nodes.Mixin(name, args, this.block(), false);
       this.mixins[name] = mixin;
+      this.inMixin = false;
       return mixin;
     // call
     } else {
@@ -3178,10 +3208,6 @@ Parser.prototype = {
    */
 
   parseTag: function(){
-    // ast-filter look-ahead
-    var i = 2;
-    if ('attrs' == this.lookahead(i).type) ++i;
-
     var tok = this.advance();
     var tag = new nodes.Tag(tok.val);
 
@@ -3212,17 +3238,13 @@ Parser.prototype = {
               console.warn('You should not have jade tags with multiple attributes.');
             }
             seenAttrs = true;
-            var tok = this.advance()
-              , obj = tok.attrs
-              , escaped = tok.escaped
-              , names = Object.keys(obj);
+            var tok = this.advance();
+            var attrs = tok.attrs;
 
             if (tok.selfClosing) tag.selfClosing = true;
 
-            for (var i = 0, len = names.length; i < len; ++i) {
-              var name = names[i]
-                , val = obj[name];
-              tag.setAttribute(name, val, escaped[name]);
+            for (var i = 0; i < attrs.length; i++) {
+              tag.setAttribute(attrs[i].name, attrs[i].val, attrs[i].escaped);
             }
             continue;
           case '&attributes':
@@ -3238,6 +3260,12 @@ Parser.prototype = {
     if ('dot' == this.peek().type) {
       tag.textOnly = true;
       this.advance();
+    }
+    
+    if (tag.selfClosing
+        && ['newline', 'outdent', 'eos'].indexOf(this.peek().type) === -1
+        && (this.peek().type !== 'text' || /^\s*$/.text(this.peek().val))) {
+      throw new Error(name + ' is self closing and should not have content.');
     }
 
     // (text | code | ':')?
@@ -3287,7 +3315,7 @@ Parser.prototype = {
   }
 };
 
-},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":26,"character-parser":33,"fs":27,"path":30}],24:[function(require,module,exports){
+},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":26,"character-parser":33,"constantinople":34,"fs":27,"path":30}],24:[function(require,module,exports){
 'use strict';
 
 /**
@@ -3441,11 +3469,13 @@ exports.attrs = function attrs(obj, terse){
  */
 
 exports.escape = function escape(html){
-  return String(html)
+  var result = String(html)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+  if (result === '' + html) return html;
+  else return result;
 };
 
 /**
@@ -3578,7 +3608,8 @@ process.nextTick = (function () {
     if (canPost) {
         var queue = [];
         window.addEventListener('message', function (ev) {
-            if (ev.source === window && ev.data === 'process-tick') {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
                 ev.stopPropagation();
                 if (queue.length > 0) {
                     var fn = queue.shift();

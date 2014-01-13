@@ -11,3 +11,7 @@ a(href  =  '/user/' + id class  =  'button')
 meta(key='answer' value=answer())
 a(class = ['class1', 'class2'])
 a.tag-class(class = ['class1', 'class2'])
+
+div(id=id)&attributes({foo: 'bar'})
+- var bar = null
+div(foo=null bar=bar)&attributes({baz: 'baz'})

@@ -1,4 +1,44 @@
-1.0.0-optionalTags2 / 2013-12-24
+1.1.4 / 2014-01-09
+==================
+
+  * Fix a corner case where a mixin was called with `&attributes` but no other attributes and a block ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.3 / 2014-01-09
+==================
+
+  * Fix failure of npm prepublish not running
+
+1.1.2 / 2014-01-09
+==================
+
+  * Fix same interaction of `&attributes` with `false` `null` or `undefined` but combined with dynamic attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.1 / 2014-01-09
+==================
+
+  * Fix a bug when `&attributes` is combined with static attributes that evaluate to `false` or `null` or `undefined` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.0 / 2014-01-07
+==================
+
+  * Fix class merging to work as documented ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Throw an error when the same attribute is duplicated multiple times ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Move more errors into the parser/lexer so they have more info about line numbers ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support mixin blocks at the end of files ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.0.2 / 2013-12-31
+==================
+
+  * Fix a bug when `&attributes` is combined with dynamic attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.0.1 / 2013-12-29
+==================
+
+  * Allow self closing tags to contian whitespace ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow tags to have a single white space after them ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support text bodies of tags that begin with `//` rather than treating them as comments ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.0.0 / 2013-12-22
 ==================
 
   * No longer support node@0.8 ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
@@ -97,7 +137,7 @@
 
   * add support for 'include' and 'extends' to use paths relative to basedir
   * fix accidental calling of functions in iteration block. Closes #986
-  * fix: skip rethrow on client  
+  * fix: skip rethrow on client
   * fix each/else prefixed with `-`
   * fix multi-block prepend/append
   * swap -o and -O, set -o to --out

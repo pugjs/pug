@@ -38,7 +38,7 @@ $ npm install jade
 Jade is a clean, whitespace sensitive syntax for writing html.  Here is a simple example:
 
 ```jade
-doctype 5
+doctype html
 html(lang="en")
   head
     title= pageTitle
