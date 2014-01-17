@@ -43,17 +43,45 @@ describe('error reporting', function () {
         assert(/foo\(/.test(err.message))
       });
     });
-    describe('with a layout', function () {
+    describe('with a layout without block declaration (syntax)', function () {
       it('includes detail of where the error was thrown including the filename', function () {
-        var err = getFileError(__dirname + '/fixtures/compile.with.layout.error.jade', {})
-        assert(/layout.error.jade:2/.test(err.message))
+        var err = getFileError(__dirname + '/fixtures/compile.with.layout.syntax.error.jade', {})
+        assert(/[\\\/]layout.syntax.error.jade:2/.test(err.message))
         assert(/foo\(/.test(err.message))
       });
     });
-    describe('with a include', function () {
+    describe('with a layout without block declaration (locals)', function () {
       it('includes detail of where the error was thrown including the filename', function () {
-        var err = getFileError(__dirname + '/fixtures/compile.with.include.error.jade', {})
-        assert(/include.error.jade:2/.test(err.message))
+        var err = getFileError(__dirname + '/fixtures/compile.with.layout.locals.error.jade', {})
+        assert(/[\\\/]layout.locals.error.jade:2/.test(err.message))
+        assert(/undefined is not a function/.test(err.message))
+      });
+    });
+    describe('with a include (syntax)', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/compile.with.include.syntax.error.jade', {})
+        assert(/[\\\/]include.syntax.error.jade:2/.test(err.message))
+        assert(/foo\(/.test(err.message))
+      });
+    });
+    describe('with a include (locals)', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/compile.with.include.locals.error.jade', {})
+        assert(/[\\\/]include.locals.error.jade:2/.test(err.message))
+        assert(/foo\(/.test(err.message))
+      });
+    });
+    describe('with a layout (without block) with an include (syntax)', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/compile.with.layout.with.include.syntax.error.jade', {})
+        assert(/[\\\/]include.syntax.error.jade:2/.test(err.message))
+        assert(/foo\(/.test(err.message))
+      });
+    });
+    describe('with a layout (without block) with an include (locals)', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/compile.with.layout.with.include.locals.error.jade', {})
+        assert(/[\\\/]include.locals.error.jade:2/.test(err.message))
         assert(/foo\(/.test(err.message))
       });
     });
