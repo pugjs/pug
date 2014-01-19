@@ -1,3 +1,10 @@
+1.1.5 / 2014-01-19
+==================
+
+  * Add filename to and fix line numbers for missing space before text warning (@ijin82)
+  * Fix filenames for some error reporting in extends/includes (@doublerebel)
+  * Fix a corner case where a mixin was called with `&attributes` but no other attributes and a block that was supposed to be fixed in 1.1.4 ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.1.4 / 2014-01-09
 ==================
 
