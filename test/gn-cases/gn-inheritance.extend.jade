@@ -1,0 +1,9 @@
+
+extend auxiliary/layout
+
+block head
+  script(src=(yield (message))+'.js')
+
+block content
+  h2= yield (message)
+  p Some content

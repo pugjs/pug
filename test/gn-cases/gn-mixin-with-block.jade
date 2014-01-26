@@ -1,0 +1,6 @@
+mixin test_mixin(prefix)
+  h1
+    = prefix
+    block
++test_mixin('this is ')
+  = yield (message)
