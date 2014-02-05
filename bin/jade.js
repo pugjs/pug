@@ -128,6 +128,13 @@ function stdin() {
     }
     process.stdout.write(output);
   }).resume();
+  
+  process.on('SIGINT', function() {
+    process.stdout.write('\n');
+    process.stdin.emit('end');
+    process.stdout.write('\n');
+    process.exit();
+  })
 }
 
 /**
