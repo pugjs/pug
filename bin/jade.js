@@ -57,6 +57,9 @@ program.parse(process.argv);
 
 // options given, parse them
 
+if (!program.args || program.args.length === 0)
+  program.help();
+
 if (program.obj) {
   if (exists(program.obj)) {
     options = JSON.parse(fs.readFileSync(program.obj));
