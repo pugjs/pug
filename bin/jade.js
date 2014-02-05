@@ -46,7 +46,7 @@ program.on('--help', function(){
   console.log('    $ jade < my.jade > my.html');
   console.log('');
   console.log('    # jade over stdio');
-  console.log('    $ echo "h1 Jade!" | jade');
+  console.log('    $ echo \'h1 Jade!\' | jade');
   console.log('');
   console.log('    # foo, bar dirs rendering to /tmp');
   console.log('    $ jade foo bar --out /tmp ');
