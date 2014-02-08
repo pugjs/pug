@@ -7,6 +7,10 @@ var jade = require('../')
   , fs = require('fs')
   , vm = require('vm');
 
+var jadeRuntime = fs.readFileSync(__dirname + '../runtime.js', 'utf8')
+
+console.log('jadeRuntime: ' + jadeRuntime)
+
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
 describe('jade', function(){
@@ -948,7 +952,7 @@ describe('jade', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
       var sandbox = {addValue: 0};
       console.log('******1: ' + fn.toString());
-      var val = vm.runInNewContext(fn.toString() + '; var test = template({bar: \'foo\'});', sandbox);
+      var val = vm.runInNewContext(jadeRuntime + '\n\n' + fn.toString() + '; var test = template({bar: \'foo\'});', sandbox);
       console.log('******1: ' + val);
     });
     
@@ -956,7 +960,7 @@ describe('jade', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
       var sandbox = {addValue: 0};
       console.log('******2: ' + fn.toString());
-      var val = vm.runInNewContext(fn.toString() + '; var test = myTemplate({bar: \'foo\'});', sandbox);
+      var val = vm.runInNewContext(jadeRuntime + '\n\n' + fn.toString() + '; var test = myTemplate({bar: \'foo\'});', sandbox);
       console.log('******2: ' + val);
     });
 
