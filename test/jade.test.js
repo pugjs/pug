@@ -7,7 +7,7 @@ var jade = require('../')
   , fs = require('fs')
   , vm = require('vm');
 
-var jadeRuntime = fs.readFileSync(__dirname + '../runtime.js', 'utf8')
+var jadeRuntime = fs.readFileSync(__dirname + '/../runtime.js', 'utf8')
 
 console.log('jadeRuntime: ' + jadeRuntime)
 
