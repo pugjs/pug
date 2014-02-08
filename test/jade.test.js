@@ -947,14 +947,16 @@ describe('jade', function(){
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
       var sandbox = {addValue: 0};
-      var val = vm.runInNewContext(bundled.contents.toString('utf8') + '; var test = template({bar: \'foo\'});', sandbox);
+      console.log('******1: ' + fn.toString());
+      var val = vm.runInNewContext(fn.toString() + '; var test = template({bar: \'foo\'});', sandbox);
       console.log('******1: ' + val);
     });
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
       var sandbox = {addValue: 0};
-      var val = vm.runInNewContext(bundled.contents.toString('utf8') + '; var test = myTemplate({bar: \'foo\'});', sandbox);
+      console.log('******2: ' + fn.toString());
+      var val = vm.runInNewContext(fn.toString() + '; var test = myTemplate({bar: \'foo\'});', sandbox);
       console.log('******2: ' + val);
     });
 
