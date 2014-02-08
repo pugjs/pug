@@ -949,20 +949,20 @@ describe('jade', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
       var sandbox = {test: ''};
       var context = vm.createContext(sandbox);
-      console.log('******1: ' + fn.toString());
+      //console.log('******1: ' + fn.toString());
       var val = vm.runInContext(jadeRuntime + '\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context);
-      console.log('******1: ' + val);
       console.log(util.inspect(context));
+      console.log('******1: ' + val);
     });
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
       var sandbox = {test: ''};
       var context = vm.createContext(sandbox);
-      console.log('******2: ' + fn.toString());
+      //console.log('******2: ' + fn.toString());
       var val = vm.runInContext(jadeRuntime + '\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context);
-      console.log('******2: ' + val);
       console.log(util.inspect(context));
+      console.log('******2: ' + val);
     });
 
     it('should be reasonably fast', function(){
