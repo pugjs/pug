@@ -952,13 +952,24 @@ describe('jade', function(){
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
       console.log('******1: ' + fn.toString());
-      assert.equal('<p>foo bar</p>', fn.toString());
+      assert.equal('function template(locals) {\
+var buf = [];\
+var jade_mixins = {};\
+var jade_interp;\
+var locals_ = (locals || {}),bar = locals_.bar;\
+buf.push("<p>foo</p><p>" + (jade.escape((jade_interp = bar) == null ? \'\' : jade_interp)) + "</p>");;return buf.join("");
+}', fn.toString());
     });
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
       console.log('******2: ' + fn.toString());
-      assert.equal('<p>foo bar</p>', fn.toString());
+      assert.equal('function myTemplate(locals) {\
+var buf = [];\
+var jade_mixins = {};\
+var jade_interp;\
+var locals_ = (locals || {}),bar = locals_.bar;\
+buf.push("<p>foo</p><p>" + (jade.escape((jade_interp = bar) == null ? \'\' : jade_interp)) + "</p>");;return buf.join("");', fn.toString());
     });
   });
 });
