@@ -947,7 +947,7 @@ describe('jade', function(){
     
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
-      var sandbox = {test: ''};
+      var sandbox = {test: '', global: {}};
       var context = vm.createContext(sandbox);
       //console.log('******1: ' + fn.toString());
       var val = vm.runInContext(jadeRuntime + '\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context);
@@ -957,7 +957,7 @@ describe('jade', function(){
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
-      var sandbox = {test: ''};
+      var sandbox = {test: '', global: {}};
       var context = vm.createContext(sandbox);
       //console.log('******2: ' + fn.toString());
       var val = vm.runInContext(jadeRuntime + '\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context);
