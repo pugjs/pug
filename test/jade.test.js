@@ -944,13 +944,19 @@ describe('jade', function(){
       tag.removeAttribute(name)
       assert.ok(!tag.getAttribute(name))
     });
-    
+
+    it('should be reasonably fast', function(){
+      jade.compile(perfTest, {})
+    })
+  });
+  
+  describe('.jade.compileClient()', function(){
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
       var sandbox = {test: '', global: {}};
       var context = vm.createContext(sandbox);
       //console.log('******1: ' + fn.toString());
-      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jade;\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context);
+      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jade;\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context, 'myfile.js');
       console.log(util.inspect(context));
       console.log('******1: ' + val);
     });
@@ -960,13 +966,9 @@ describe('jade', function(){
       var sandbox = {test: '', global: {}};
       var context = vm.createContext(sandbox);
       //console.log('******2: ' + fn.toString());
-      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jade;\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context);
+      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jade;\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context, context, 'myfile.js');
       console.log(util.inspect(context));
       console.log('******2: ' + val);
     });
-
-    it('should be reasonably fast', function(){
-      jade.compile(perfTest, {})
-    })
   });
 });
