@@ -4,10 +4,8 @@
 
 var jade = require('../')
   , assert = require('assert')
-  , fs = require('fs')
-  , vm = require('vm');
+  , fs = require('fs');
 
-var jadeRuntime = fs.readFileSync(__dirname + '/../runtime.js', 'utf8')
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
 describe('jade', function(){
@@ -953,22 +951,14 @@ describe('jade', function(){
   describe('.jade.compileClient()', function(){
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
-      var sandbox = {test: '', global: {}};
-      var context = vm.createContext(sandbox);
-      //console.log('******1: ' + fn.toString());
-      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jade;\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context, 'myfile.js');
-      console.log(util.inspect(context));
-      console.log('******1: ' + val);
+      console.log('******1: ' + fn.toString());
+      assert.equal('<p>foo bar</p>', str);
     });
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
-      var sandbox = {test: '', global: {}};
-      var context = vm.createContext(sandbox);
-      //console.log('******2: ' + fn.toString());
-      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jade;\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context, context, 'myfile.js');
-      console.log(util.inspect(context));
-      console.log('******2: ' + val);
+      console.log('******2: ' + fn.toString());
+      assert.equal('<p>foo bar</p>', str);
     });
   });
 });
