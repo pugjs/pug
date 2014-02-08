@@ -950,7 +950,7 @@ describe('jade', function(){
       var sandbox = {test: '', global: {}};
       var context = vm.createContext(sandbox);
       //console.log('******1: ' + fn.toString());
-      var val = vm.runInContext(jadeRuntime + '\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context);
+      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jode;\n\n' + fn.toString() + '; test = template({bar: \'foo\'});', context);
       console.log(util.inspect(context));
       console.log('******1: ' + val);
     });
@@ -960,7 +960,7 @@ describe('jade', function(){
       var sandbox = {test: '', global: {}};
       var context = vm.createContext(sandbox);
       //console.log('******2: ' + fn.toString());
-      var val = vm.runInContext(jadeRuntime + '\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context);
+      var val = vm.runInContext(jadeRuntime + '\n\njade = global.jode;\n\n' + fn.toString() + '; test = myTemplate({bar: \'foo\'});', context);
       console.log(util.inspect(context));
       console.log('******2: ' + val);
     });
