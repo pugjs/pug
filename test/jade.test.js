@@ -952,13 +952,13 @@ describe('jade', function(){
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
       console.log('******1: ' + fn.toString());
-      assert.equal('<p>foo bar</p>', str);
+      assert.equal('<p>foo bar</p>', fn.toString());
     });
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
       console.log('******2: ' + fn.toString());
-      assert.equal('<p>foo bar</p>', str);
+      assert.equal('<p>foo bar</p>', fn.toString());
     });
   });
 });
