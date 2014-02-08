@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -942,6 +941,16 @@ describe('jade', function(){
       assert.equal(tag.getAttribute(name), val)
       tag.removeAttribute(name)
       assert.ok(!tag.getAttribute(name))
+    });
+    
+    it('should support client compilation', function(){
+      var fn = jade.compile('p foo\np #{bar}', {compileDebug: false, client: true});
+      console.log('******1: ' + fn)
+    });
+    
+    it('should support client compilation with an exposed template name', function(){
+      var fn = jade.compile('p foo\np #{bar}', {compileDebug: false, client: true, expose: 'myTemplate'});
+      console.log('******2: ' + fn)
     });
 
     it('should be reasonably fast', function(){
