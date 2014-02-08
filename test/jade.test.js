@@ -4,7 +4,8 @@
 
 var jade = require('../')
   , assert = require('assert')
-  , fs = require('fs');
+  , fs = require('fs')
+  , vm = require('vm');
 
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
@@ -945,12 +946,16 @@ describe('jade', function(){
     
     it('should support client compilation', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
-      console.log('******1: ' + fn)
+      var sandbox = {addValue: 0};
+      var val = vm.runInNewContext(bundled.contents.toString('utf8') + '; var test = template({bar: \'foo\'});', sandbox);
+      console.log('******1: ' + val);
     });
     
     it('should support client compilation with an exposed template name', function(){
       var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
-      console.log('******2: ' + fn)
+      var sandbox = {addValue: 0};
+      var val = vm.runInNewContext(bundled.contents.toString('utf8') + '; var test = myTemplate({bar: \'foo\'});', sandbox);
+      console.log('******2: ' + val);
     });
 
     it('should be reasonably fast', function(){
