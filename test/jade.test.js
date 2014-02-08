@@ -957,8 +957,7 @@ var buf = [];\
 var jade_mixins = {};\
 var jade_interp;\
 var locals_ = (locals || {}),bar = locals_.bar;\
-buf.push("<p>foo</p><p>" + (jade.escape((jade_interp = bar) == null ? \'\' : jade_interp)) + "</p>");;return buf.join("");
-}', fn.toString());
+buf.push("<p>foo</p><p>" + (jade.escape((jade_interp = bar) == null ? \'\' : jade_interp)) + "</p>");;return buf.join("");}', fn.toString());
     });
     
     it('should support client compilation with an exposed template name', function(){
