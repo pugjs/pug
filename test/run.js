@@ -76,6 +76,8 @@ describe('certain syntax is not allowed and will throw a compile time error', fu
         var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/anti-cases' });
       } catch (ex) {
         ex.should.be.an.instanceof(Error);
+        ex.message.replace(/\\/g, '/').should.startWith(path);
+        ex.message.replace(/\\/g, '/').should.match(/:\d+$/m);
         return;
       }
       throw new Error(test + ' should have thrown an error');
