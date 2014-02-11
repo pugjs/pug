@@ -1,0 +1,11 @@
+ul
+  - var dirs = yield readdir('test/gn-cases/samples')
+  for file in dirs
+    - var stats = yield stat('test/gn-cases/samples/' + file)
+    if stats.isFile()
+      li= file + " is a file"
+    if stats.isDirectory()
+      li= file + " is a directory"
+
+
+    
