@@ -22,6 +22,7 @@
   "devDependencies": {
     "coffee-script": "*",
     "mocha": "*",
+    "istanbul": "*",
     "markdown": "*",
     "stylus": "*",
     "should": "*",
@@ -37,6 +38,7 @@
   },
   "scripts": {
     "test": "mocha -R spec",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
     "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
