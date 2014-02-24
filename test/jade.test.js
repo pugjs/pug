@@ -888,7 +888,7 @@ describe('jade', function(){
     });
   });
 
-  describe('.jade.render()', function(){
+  describe('.render()', function(){
     it('should support .jade.render(str, fn)', function(){
       jade.render('p foo bar', function(err, str){
         assert.ok(!err);
@@ -947,5 +947,35 @@ describe('jade', function(){
     it('should be reasonably fast', function(){
       jade.compile(perfTest, {})
     })
+  });
+
+  describe('.renderFile()', function () {
+    it('will synchronously return a string', function () {
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      var actual = jade.renderFile(__dirname + '/cases/basic.jade', {name: 'foo'}).replace(/\s/g, '');
+      assert(actual === expected);
+    });
+    it('when given a callback, it calls that rather than returning', function (done) {
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      jade.renderFile(__dirname + '/cases/basic.jade', {name: 'foo'}, function (err, actual) {
+        if (err) return done(err);
+        assert(actual.replace(/\s/g, '') === expected);
+        done();
+      });
+    });
+    it('when given a callback, it calls that rather than returning even if there are no options', function (done) {
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      jade.renderFile(__dirname + '/cases/basic.jade', function (err, actual) {
+        if (err) return done(err);
+        assert(actual.replace(/\s/g, '') === expected);
+        done();
+      });
+    });
+    it('when given a callback, it calls that with any errors', function (done) {
+      jade.renderFile(__dirname + '/fixtures/runtime.error.jade', function (err, actual) {
+        assert.ok(err);
+        done();
+      });
+    });
   });
 });

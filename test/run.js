@@ -8,6 +8,12 @@ var assert = require('assert');
 var jade = require('../');
 var uglify = require('uglify-js');
 
+jade.filters['custom-filter'] = function (str, options) {
+  assert(str === 'foo bar');
+  assert(options.foo === 'bar');
+  return 'bar baz';
+};
+
 // test cases
 
 var cases = fs.readdirSync('test/cases').filter(function(file){
