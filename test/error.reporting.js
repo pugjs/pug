@@ -145,4 +145,18 @@ describe('error reporting', function () {
       assert(/`doctype 5` is deprecated, you must now use `doctype html`/.test(err.message))
     });
   });
+  describe('if you throw something that isn\'t an error', function () {
+    it('just rethrows without modification', function () {
+      var err = getError('- throw "foo"');
+      assert(err === 'foo');
+    });
+  });
+  describe('import without a filename for a basedir', function () {
+    it('throws an error', function () {
+      var err = getError('include foo.jade');
+      assert(/the "filename" option is required to use/.test(err.message));
+      var err = getError('include /foo.jade');
+      assert(/the "basedir" option is required to use/.test(err.message));
+    })
+  });
 });

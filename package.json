@@ -17,11 +17,12 @@
     "character-parser": "1.2.0",
     "monocle": "1.1.51",
     "with": "~2.0.0",
-    "constantinople": "~1.0.2"
+    "constantinople": "~2.0.0"
   },
   "devDependencies": {
     "coffee-script": "*",
     "mocha": "*",
+    "istanbul": "*",
     "markdown": "*",
     "stylus": "*",
     "should": "*",
@@ -37,6 +38,7 @@
   },
   "scripts": {
     "test": "mocha -R spec",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
     "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
