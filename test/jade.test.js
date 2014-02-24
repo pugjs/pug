@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -947,5 +946,17 @@ describe('jade', function(){
     it('should be reasonably fast', function(){
       jade.compile(perfTest, {})
     })
+  });
+  
+  describe('.jade.compileClient()', function(){
+    it('should support client compilation', function(){
+      var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false});
+      assert.equal('function template(locals) {\nvar buf = [];\nvar jade_mixins = {};\nvar jade_interp;\nvar locals_ = (locals || {}),bar = locals_.bar;\nbuf.push("<p>foo</p><p>" + (jade.escape((jade_interp = bar) == null ? \'\' : jade_interp)) + "</p>");;return buf.join("");\n}', fn.toString());
+    });
+    
+    it('should support client compilation with an exposed template name', function(){
+      var fn = jade.compileClient('p foo\np #{bar}', {compileDebug: false, expose: 'myTemplate'});
+      assert.equal('function myTemplate(locals) {\nvar buf = [];\nvar jade_mixins = {};\nvar jade_interp;\nvar locals_ = (locals || {}),bar = locals_.bar;\nbuf.push("<p>foo</p><p>" + (jade.escape((jade_interp = bar) == null ? \'\' : jade_interp)) + "</p>");;return buf.join("");\n}', fn.toString());
+    });
   });
 });

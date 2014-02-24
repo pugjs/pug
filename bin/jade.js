@@ -30,6 +30,7 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile function for client-side runtime.js')
+  .option('-e, --expose <NAME>', 'The name the client-side compiled function is exposed as. Default is: template.')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
 
@@ -76,6 +77,11 @@ options.compileDebug = program.debug;
 // --client
 
 options.client = program.client;
+
+// --expose
+
+options.expose = program.expose;
+
 
 // --pretty
 
