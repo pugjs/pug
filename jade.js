@@ -330,7 +330,7 @@ Compiler.prototype = {
 
     if (mixin.call) {
       if (pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');")
-      if (block || attrs.length) {
+      if (block || attrs.length || attrsBlocks.length) {
 
         this.buf.push(name + '.call({');
 
@@ -1679,6 +1679,9 @@ Lexer.prototype = {
           }
         }
       }
+
+      this.lineno += str.split("\n").length - 1;
+
       for (var i = 0; i <= str.length; i++) {
         if (isEndOfAttribute(i)) {
           val = val.trim();
@@ -2655,7 +2658,7 @@ Parser.prototype = {
       } else {
         var next = this.peek();
         var expr = this.parseExpr();
-        expr.filename = this.options.filename;
+        expr.filename = expr.filename || this.filename;
         expr.line = next.line;
         block.push(expr);
       }

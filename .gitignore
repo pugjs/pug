@@ -4,6 +4,6 @@ lib-cov
 testing
 node_modules
 lib-cov
-coverage.html
+coverage
 npm-debug.log
 /test/output

@@ -3,9 +3,10 @@
  * Module dependencies.
  */
 
-var jade = require('../')
-  , fs = require('fs')
-  , uglify = require('uglify-js');
+var fs = require('fs');
+var assert = require('assert');
+var jade = require('../');
+var uglify = require('uglify-js');
 
 // test cases
 
@@ -22,6 +23,7 @@ try {
   }
 }
 
+var mixinsUnusedTestRan = false;
 cases.forEach(function(test){
   var name = test.replace(/[-.]/g, ' ');
   it(name, function(){
@@ -32,21 +34,29 @@ cases.forEach(function(test){
     var actual = fn({ title: 'Jade' });
 
     fs.writeFileSync(__dirname + '/output/' + test + '.html', actual)
-    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(jade.compileClient(str, {
+    var clientCode = uglify.minify(jade.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
       client: true,
       basedir: 'test/cases'
-    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code)
+    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
+    fs.writeFileSync(__dirname + '/output/' + test + '.js', clientCode);
     if (/filter/.test(test)) {
-      actual = actual.replace(/\n| /g, '')
-      html = html.replace(/\n| /g, '')
+      actual = actual.replace(/\n| /g, '');
+      html = html.replace(/\n| /g, '');
+    }
+    if (/mixins-unused/.test(test)) {
+      mixinsUnusedTestRan = true;
+      assert(/never-called/.test(str), 'never-called is in the jade file for mixins-unused');
+      assert(!/never-called/.test(clientCode), 'never-called should be removed from the code');
     }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   })
 });
-
+after(function () {
+  assert(mixinsUnusedTestRan, 'mixins-unused test should run');
+})
 
 // test cases
 
@@ -66,6 +76,8 @@ describe('certain syntax is not allowed and will throw a compile time error', fu
         var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/anti-cases' });
       } catch (ex) {
         ex.should.be.an.instanceof(Error);
+        ex.message.replace(/\\/g, '/').should.startWith(path);
+        ex.message.replace(/\\/g, '/').should.match(/:\d+$/m);
         return;
       }
       throw new Error(test + ' should have thrown an error');

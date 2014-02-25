@@ -31,4 +31,6 @@ body
 mixin foo
   div.thing(attr1='foo', attr2='bar')&attributes(attributes)
 
-+foo(attr3='baz').thunk
+- var val = '<biz>'
+- var classes = ['foo', 'bar']
++foo(attr3='baz' data-foo=val data-bar!=val class=classes).thunk
