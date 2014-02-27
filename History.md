@@ -3,7 +3,7 @@
 
   * Use variables instead of properties of jade, improving performance and reliability with nested templates ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Support compiling templates from stdin via a user typing ([@yorkie](https://github.com/yorkie))
-  * Lazilly add mixins ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Lazily add mixins ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Fix case fall-through ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Earlier errors for `when` without `case` and `else` without `if` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Allow `if`/`else` etc. to not have a block.
