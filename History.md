@@ -1,7 +1,7 @@
 1.2.0 / 2014-02-26
 ==================
 
-  * Use varialbes instead of properties of jade, improving performance and reliability with nested templates ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Use variables instead of properties of jade, improving performance and reliability with nested templates ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Support compiling templates from stdin via a user typing ([@yorkie](https://github.com/yorkie))
   * Lazilly add mixins ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
   * Fix case fall-through ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
