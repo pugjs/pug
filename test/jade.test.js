@@ -1,11 +1,8 @@
+'use strict';
 
-/**
- * Module dependencies.
- */
-
-var jade = require('../')
-  , assert = require('assert')
-  , fs = require('fs');
+var jade = require('../');
+var assert = require('assert');
+var fs = require('fs');
 
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
@@ -975,6 +972,34 @@ describe('jade', function(){
       jade.renderFile(__dirname + '/fixtures/runtime.error.jade', function (err, actual) {
         assert.ok(err);
         done();
+      });
+    });
+  });
+
+  describe('.compileFileClient(path, options)', function () {
+    it('returns a string form of a function called `template`', function () {
+      var src = jade.compileFileClient(__dirname + '/cases/basic.jade');
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      var fn = Function('jade', src + '\nreturn template;')(jade.runtime);
+      var actual = fn({name: 'foo'}).replace(/\s/g, '');
+      assert(actual === expected);
+    });
+  });
+
+  describe('.runtime', function () {
+    describe('.merge', function () {
+      it('merges two attribute objects, giving precedensce to the second object', function () {
+        assert.deepEqual(jade.runtime.merge({}, {'class': ['foo', 'bar'], 'foo': 'bar'}), {'class': ['foo', 'bar'], 'foo': 'bar'});
+        assert.deepEqual(jade.runtime.merge({'class': ['foo'], 'foo': 'baz'}, {'class': ['bar'], 'foo': 'bar'}), {'class': ['foo', 'bar'], 'foo': 'bar'});
+        assert.deepEqual(jade.runtime.merge({'class': ['foo', 'bar'], 'foo': 'bar'}, {}), {'class': ['foo', 'bar'], 'foo': 'bar'});
+      });
+    });
+    describe('.attrs', function () {
+      it('Renders the given attributes object', function () {
+        assert.equal(jade.runtime.attrs({}), '');
+        assert.equal(jade.runtime.attrs({'class': []}), '');
+        assert.equal(jade.runtime.attrs({'class': ['foo']}), ' class="foo"');
+        assert.equal(jade.runtime.attrs({'class': ['foo'], 'id': 'bar'}), ' class="foo" id="bar"');
       });
     });
   });
