@@ -931,16 +931,6 @@ describe('jade', function(){
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
     });
 
-    it('should support null attrs on tag', function(){
-      var tag = new jade.nodes.Tag('a'),
-          name = 'href',
-          val = '"/"';
-      tag.setAttribute(name, val)
-      assert.equal(tag.getAttribute(name), val)
-      tag.removeAttribute(name)
-      assert.ok(!tag.getAttribute(name))
-    });
-
     it('should be reasonably fast', function(){
       jade.compile(perfTest, {})
     })
