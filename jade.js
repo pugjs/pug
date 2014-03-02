@@ -62,9 +62,11 @@ Compiler.prototype = {
       var mixinNames = Object.keys(this.mixins);
       for (var i = 0; i < mixinNames.length; i++) {
         var mixin = this.mixins[mixinNames[i]];
-        for (var x = 0; x < mixin.length; x++) {
-          for (var y = mixin[x].start; y < mixin[x].end; y++) {
-            this.buf[y] = '';
+        if (!mixin.used) {
+          for (var x = 0; x < mixin.instances.length; x++) {
+            for (var y = mixin.instances[x].start; y < mixin.instances[x].end; y++) {
+              this.buf[y] = '';
+            }
           }
         }
       }
@@ -341,13 +343,9 @@ Compiler.prototype = {
     if (dynamic) this.dynamicMixins = true;
     name += (dynamic ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
 
+    this.mixins[key] = this.mixins[key] || {used: false, instances: []};
     if (mixin.call) {
-      if (this.mixins[key]) {
-        // clear list of mixins with this key so they are not removed
-        this.mixins[key] = [];
-      } else {
-        // todo: throw error for calling a mixin that's not defined
-      }
+      this.mixins[key].used = true;
       if (pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join('  ') + "');")
       if (block || attrs.length || attrsBlocks.length) {
 
@@ -401,8 +399,7 @@ Compiler.prototype = {
       this.parentIndents--;
       this.buf.push('};');
       var mixin_end = this.buf.length;
-      this.mixins[key] = this.mixins[key] || [];
-      this.mixins[key].push({start: mixin_start, end: mixin_end});
+      this.mixins[key].instances.push({start: mixin_start, end: mixin_end});
     }
   },
 
@@ -842,7 +839,7 @@ function parse(str, options){
       console.error('\nCompiled Function:\n\n\u001b[90m%s\u001b[0m', js.replace(/^/gm, '  '));
     }
 
-    var globals = options.globals && Array.isArray(options.globals) ? options.globals : [];
+    var globals = [];
 
     globals.push('jade');
     globals.push('jade_mixins');
@@ -1998,6 +1995,9 @@ Attrs.prototype.setAttribute = function(name, val, escaped){
  */
 
 Attrs.prototype.removeAttribute = function(name){
+  var err = new Error('attrs.removeAttribute is deprecated and will be removed in v2.0.0');
+  console.warn(err.stack);
+
   for (var i = 0, len = this.attrs.length; i < len; ++i) {
     if (this.attrs[i] && this.attrs[i].name == name) {
       delete this.attrs[i];
@@ -2014,6 +2014,9 @@ Attrs.prototype.removeAttribute = function(name){
  */
 
 Attrs.prototype.getAttribute = function(name){
+  var err = new Error('attrs.getAttribute is deprecated and will be removed in v2.0.0');
+  console.warn(err.stack);
+
   for (var i = 0, len = this.attrs.length; i < len; ++i) {
     if (this.attrs[i] && this.attrs[i].name == name) {
       return this.attrs[i].val;
@@ -2089,11 +2092,14 @@ Block.prototype.isBlock = true;
  */
 
 Block.prototype.replace = function(other){
+  var err = new Error('block.replace is deprecated and will be removed in v2.0.0');
+  console.warn(err.stack);
+
   other.nodes = this.nodes;
 };
 
 /**
- * Pust the given `node`.
+ * Push the given `node`.
  *
  * @param {Node} node
  * @return {Number}
@@ -2158,6 +2164,9 @@ Block.prototype.includeBlock = function(){
  */
 
 Block.prototype.clone = function(){
+  var err = new Error('block.clone is deprecated and will be removed in v2.0.0');
+  console.warn(err.stack);
+
   var clone = new Block;
   for (var i = 0, len = this.nodes.length; i < len; ++i) {
     clone.push(this.nodes[i].clone());
@@ -2429,6 +2438,8 @@ var Node = module.exports = function Node(){};
  */
 
 Node.prototype.clone = function(){
+  var err = new Error('node.clone is deprecated and will be removed in v2.0.0');
+  console.warn(err.stack);
   return this;
 };
 
@@ -2469,6 +2480,9 @@ Tag.prototype.type = 'Tag';
  */
 
 Tag.prototype.clone = function(){
+  var err = new Error('tag.clone is deprecated and will be removed in v2.0.0');
+  console.warn(err.stack);
+
   var clone = new Tag(this.name, this.block.clone());
   clone.line = this.line;
   clone.attrs = this.attrs;
@@ -2535,8 +2549,7 @@ var Node = require('./node');
  */
 
 var Text = module.exports = function Text(line) {
-  this.val = '';
-  if ('string' == typeof line) this.val = line;
+  this.val = line;
 };
 
 // Inherit from `Node`.
@@ -3291,7 +3304,7 @@ Parser.prototype = {
             continue;
           case 'attrs':
             if (seenAttrs) {
-              console.warn('You should not have jade tags with multiple attributes.');
+              console.warn(this.filename + ', line ' + this.peek().line + ':\nYou should not have jade tags with multiple attributes.');
             }
             seenAttrs = true;
             var tok = this.advance();
@@ -14579,53 +14592,119 @@ exports.describe_ast = function () {
     return out + "";
 };
 },{"source-map":35,"util":32}],46:[function(require,module,exports){
+'use strict';
+
 var uglify = require('uglify-js')
-var globalVars = require('./vars')
 
 module.exports = addWith
 
-function addWith(obj, src, exclude, environments) {
-  environments = environments || ['reservedVars', 'ecmaIdentifiers', 'nonstandard', 'node']
+/**
+ * Mimic `with` as far as possible but at compile time
+ *
+ * @param {String} obj The object part of a with expression
+ * @param {String} src The body of the with expression
+ * @param {Array.<String>} exclude A list of variable names to explicitly exclude
+ */
+function addWith(obj, src, exclude) {
+  obj = obj + ''
+  src = src + ''
   exclude = exclude || []
   exclude = exclude.concat(detect(obj))
-  var vars = detect('(function () {' + src + '}())')//allows the `return` keyword
+  var vars = detect(src)
     .filter(function (v) {
-      for (var i = 0; i < environments.length; i++) {
-        if (v in globalVars[environments[i]]) {
-          return false;
-        }
-      }
       return exclude.indexOf(v) === -1
     })
 
   if (vars.length === 0) return src
 
   var declareLocal = ''
-  var local = 'locals'
+  var local = 'locals_for_with'
+  var result = 'result_of_with'
   if (/^[a-zA-Z0-9$_]+$/.test(obj)) {
     local = obj
   } else {
     while (vars.indexOf(local) != -1 || exclude.indexOf(local) != -1) {
       local += '_'
     }
-    declareLocal = local + ' = (' + obj + '),'
+    declareLocal = 'var ' + local + ' = (' + obj + ')'
   }
-  return 'var ' + declareLocal + vars
-    .map(function (v) {
-      return v + ' = ' + local + '.' + v
-    }).join(',') + ';' + src
+  while (vars.indexOf(result) != -1 || exclude.indexOf(result) != -1) {
+    result += '_'
+  }
+
+  var inputVars = vars.map(function (v) {
+    return JSON.stringify(v) + ' in ' + local + '?' +
+      local + '.' + v + ':' +
+      'typeof ' + v + '!=="undefined"?' + v + ':undefined'
+  })
+
+  src = '(function (' + vars.join(', ') + ') {' +
+    src +
+    '}(' + inputVars.join(',') + '))'
+
+  return ';' + declareLocal + ';' + unwrapReturns(src, result) + ';'
 }
 
+/**
+ * Detect, and return a list of, any global variables in a function
+ *
+ * @param {String} src Some JavaScript code
+ */
 function detect(src) {
-    var ast = uglify.parse(src.toString())
+    var ast = uglify.parse('(function () {' + src + '}())') // allow return keyword
     ast.figure_out_scope()
     var globals = ast.globals
         .map(function (node, name) {
             return name
         })
-    return globals;
+    return globals
 }
-},{"./vars":58,"uglify-js":57}],47:[function(require,module,exports){
+
+/**
+ * Take a self calling function, and unwrap it such that return inside the function
+ * results in return outside the function
+ *
+ * @param {String} src    Some JavaScript code representing a self-calling function
+ * @param {String} result A temporary variable to store the result in
+ */
+function unwrapReturns(src, result) {
+  var originalSource = src
+  var hasReturn = false
+  var ast = uglify.parse(src)
+  src = src.split('')
+
+  if (ast.body.length !== 1 || ast.body[0].TYPE !== 'SimpleStatement' ||
+      ast.body[0].body.TYPE !== 'Call' || ast.body[0].body.expression.TYPE !== 'Function')
+    throw new Error('AST does not seem to represent a self-calling function')
+  var fn = ast.body[0].body.expression
+
+  var walker = new uglify.TreeWalker(visitor)
+  function visitor(node, descend) {
+    if (node !== fn && (node.TYPE === 'Defun' || node.TYPE === 'Function')) {
+      return true //don't descend into functions
+    }
+    if (node.TYPE === 'Return') {
+      descend()
+      hasReturn = true
+      replace(node, 'return {value: ' + source(node.value) + '};')
+      return true //don't descend again
+    }
+  }
+  function source(node) {
+    return src.slice(node.start.pos, node.end.endpos).join('')
+  }
+  function replace(node, str) {
+    for (var i = node.start.pos; i < node.end.endpos; i++) {
+      src[i] = ''
+    }
+    src[node.start.pos] = str
+  }
+  ast.walk(walker)
+  if (!hasReturn) return originalSource
+  else return 'var ' + result + '=' + src.join('') + ';if (' + result + ') return ' + result + '.value'
+}
+
+},{"uglify-js":57}],47:[function(require,module,exports){
 arguments[4][35][0].apply(exports,arguments)
 },{"./source-map/source-map-consumer":52,"./source-map/source-map-generator":53,"./source-map/source-node":54}],48:[function(require,module,exports){
 arguments[4][36][0].apply(exports,arguments)
@@ -14636,13 +14715,1577 @@ arguments[4][38][0].apply(exports,arguments)
 },{"amdefine":56}],51:[function(require,module,exports){
 arguments[4][39][0].apply(exports,arguments)
 },{"amdefine":56}],52:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module, require);
+}
+define(function (require, exports, module) {
+
+  var util = require('./util');
+  var binarySearch = require('./binary-search');
+  var ArraySet = require('./array-set').ArraySet;
+  var base64VLQ = require('./base64-vlq');
+
+  /**
+   * A SourceMapConsumer instance represents a parsed source map which we can
+   * query for information about the original file positions by giving it a file
+   * position in the generated source.
+   *
+   * The only parameter is the raw source map (either as a JSON string, or
+   * already parsed to an object). According to the spec, source maps have the
+   * following attributes:
+   *
+   *   - version: Which version of the source map spec this map is following.
+   *   - sources: An array of URLs to the original source files.
+   *   - names: An array of identifiers which can be referrenced by individual mappings.
+   *   - sourceRoot: Optional. The URL root from which all sources are relative.
+   *   - sourcesContent: Optional. An array of contents of the original source files.
+   *   - mappings: A string of base64 VLQs which contain the actual mappings.
+   *   - file: Optional. The generated file this source map is associated with.
+   *
+   * Here is an example source map, taken from the source map spec[0]:
+   *
+   *     {
+   *       version : 3,
+   *       file: "out.js",
+   *       sourceRoot : "",
+   *       sources: ["foo.js", "bar.js"],
+   *       names: ["src", "maps", "are", "fun"],
+   *       mappings: "AA,AB;;ABCDE;"
+   *     }
+   *
+   * [0]: https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit?pli=1#
+   */
+  function SourceMapConsumer(aSourceMap) {
+    var sourceMap = aSourceMap;
+    if (typeof aSourceMap === 'string') {
+      sourceMap = JSON.parse(aSourceMap.replace(/^\)\]\}'/, ''));
+    }
+
+    var version = util.getArg(sourceMap, 'version');
+    var sources = util.getArg(sourceMap, 'sources');
+    // Sass 3.3 leaves out the 'names' array, so we deviate from the spec (which
+    // requires the array) to play nice here.
+    var names = util.getArg(sourceMap, 'names', []);
+    var sourceRoot = util.getArg(sourceMap, 'sourceRoot', null);
+    var sourcesContent = util.getArg(sourceMap, 'sourcesContent', null);
+    var mappings = util.getArg(sourceMap, 'mappings');
+    var file = util.getArg(sourceMap, 'file', null);
+
+    // Once again, Sass deviates from the spec and supplies the version as a
+    // string rather than a number, so we use loose equality checking here.
+    if (version != this._version) {
+      throw new Error('Unsupported version: ' + version);
+    }
+
+    // Pass `true` below to allow duplicate names and sources. While source maps
+    // are intended to be compressed and deduplicated, the TypeScript compiler
+    // sometimes generates source maps with duplicates in them. See Github issue
+    // #72 and bugzil.la/889492.
+    this._names = ArraySet.fromArray(names, true);
+    this._sources = ArraySet.fromArray(sources, true);
+
+    this.sourceRoot = sourceRoot;
+    this.sourcesContent = sourcesContent;
+    this._mappings = mappings;
+    this.file = file;
+  }
+
+  /**
+   * Create a SourceMapConsumer from a SourceMapGenerator.
+   *
+   * @param SourceMapGenerator aSourceMap
+   *        The source map that will be consumed.
+   * @returns SourceMapConsumer
+   */
+  SourceMapConsumer.fromSourceMap =
+    function SourceMapConsumer_fromSourceMap(aSourceMap) {
+      var smc = Object.create(SourceMapConsumer.prototype);
+
+      smc._names = ArraySet.fromArray(aSourceMap._names.toArray(), true);
+      smc._sources = ArraySet.fromArray(aSourceMap._sources.toArray(), true);
+      smc.sourceRoot = aSourceMap._sourceRoot;
+      smc.sourcesContent = aSourceMap._generateSourcesContent(smc._sources.toArray(),
+                                                              smc.sourceRoot);
+      smc.file = aSourceMap._file;
+
+      smc.__generatedMappings = aSourceMap._mappings.slice()
+        .sort(util.compareByGeneratedPositions);
+      smc.__originalMappings = aSourceMap._mappings.slice()
+        .sort(util.compareByOriginalPositions);
+
+      return smc;
+    };
+
+  /**
+   * The version of the source mapping spec that we are consuming.
+   */
+  SourceMapConsumer.prototype._version = 3;
+
+  /**
+   * The list of original sources.
+   */
+  Object.defineProperty(SourceMapConsumer.prototype, 'sources', {
+    get: function () {
+      return this._sources.toArray().map(function (s) {
+        return this.sourceRoot ? util.join(this.sourceRoot, s) : s;
+      }, this);
+    }
+  });
+
+  // `__generatedMappings` and `__originalMappings` are arrays that hold the
+  // parsed mapping coordinates from the source map's "mappings" attribute. They
+  // are lazily instantiated, accessed via the `_generatedMappings` and
+  // `_originalMappings` getters respectively, and we only parse the mappings
+  // and create these arrays once queried for a source location. We jump through
+  // these hoops because there can be many thousands of mappings, and parsing
+  // them is expensive, so we only want to do it if we must.
+  //
+  // Each object in the arrays is of the form:
+  //
+  //     {
+  //       generatedLine: The line number in the generated code,
+  //       generatedColumn: The column number in the generated code,
+  //       source: The path to the original source file that generated this
+  //               chunk of code,
+  //       originalLine: The line number in the original source that
+  //                     corresponds to this chunk of generated code,
+  //       originalColumn: The column number in the original source that
+  //                       corresponds to this chunk of generated code,
+  //       name: The name of the original symbol which generated this chunk of
+  //             code.
+  //     }
+  //
+  // All properties except for `generatedLine` and `generatedColumn` can be
+  // `null`.
+  //
+  // `_generatedMappings` is ordered by the generated positions.
+  //
+  // `_originalMappings` is ordered by the original positions.
+
+  SourceMapConsumer.prototype.__generatedMappings = null;
+  Object.defineProperty(SourceMapConsumer.prototype, '_generatedMappings', {
+    get: function () {
+      if (!this.__generatedMappings) {
+        this.__generatedMappings = [];
+        this.__originalMappings = [];
+        this._parseMappings(this._mappings, this.sourceRoot);
+      }
+
+      return this.__generatedMappings;
+    }
+  });
+
+  SourceMapConsumer.prototype.__originalMappings = null;
+  Object.defineProperty(SourceMapConsumer.prototype, '_originalMappings', {
+    get: function () {
+      if (!this.__originalMappings) {
+        this.__generatedMappings = [];
+        this.__originalMappings = [];
+        this._parseMappings(this._mappings, this.sourceRoot);
+      }
+
+      return this.__originalMappings;
+    }
+  });
+
+  /**
+   * Parse the mappings in a string in to a data structure which we can easily
+   * query (the ordered arrays in the `this.__generatedMappings` and
+   * `this.__originalMappings` properties).
+   */
+  SourceMapConsumer.prototype._parseMappings =
+    function SourceMapConsumer_parseMappings(aStr, aSourceRoot) {
+      var generatedLine = 1;
+      var previousGeneratedColumn = 0;
+      var previousOriginalLine = 0;
+      var previousOriginalColumn = 0;
+      var previousSource = 0;
+      var previousName = 0;
+      var mappingSeparator = /^[,;]/;
+      var str = aStr;
+      var mapping;
+      var temp;
+
+      while (str.length > 0) {
+        if (str.charAt(0) === ';') {
+          generatedLine++;
+          str = str.slice(1);
+          previousGeneratedColumn = 0;
+        }
+        else if (str.charAt(0) === ',') {
+          str = str.slice(1);
+        }
+        else {
+          mapping = {};
+          mapping.generatedLine = generatedLine;
+
+          // Generated column.
+          temp = base64VLQ.decode(str);
+          mapping.generatedColumn = previousGeneratedColumn + temp.value;
+          previousGeneratedColumn = mapping.generatedColumn;
+          str = temp.rest;
+
+          if (str.length > 0 && !mappingSeparator.test(str.charAt(0))) {
+            // Original source.
+            temp = base64VLQ.decode(str);
+            mapping.source = this._sources.at(previousSource + temp.value);
+            previousSource += temp.value;
+            str = temp.rest;
+            if (str.length === 0 || mappingSeparator.test(str.charAt(0))) {
+              throw new Error('Found a source, but no line and column');
+            }
+
+            // Original line.
+            temp = base64VLQ.decode(str);
+            mapping.originalLine = previousOriginalLine + temp.value;
+            previousOriginalLine = mapping.originalLine;
+            // Lines are stored 0-based
+            mapping.originalLine += 1;
+            str = temp.rest;
+            if (str.length === 0 || mappingSeparator.test(str.charAt(0))) {
+              throw new Error('Found a source and line, but no column');
+            }
+
+            // Original column.
+            temp = base64VLQ.decode(str);
+            mapping.originalColumn = previousOriginalColumn + temp.value;
+            previousOriginalColumn = mapping.originalColumn;
+            str = temp.rest;
+
+            if (str.length > 0 && !mappingSeparator.test(str.charAt(0))) {
+              // Original name.
+              temp = base64VLQ.decode(str);
+              mapping.name = this._names.at(previousName + temp.value);
+              previousName += temp.value;
+              str = temp.rest;
+            }
+          }
+
+          this.__generatedMappings.push(mapping);
+          if (typeof mapping.originalLine === 'number') {
+            this.__originalMappings.push(mapping);
+          }
+        }
+      }
+
+      this.__generatedMappings.sort(util.compareByGeneratedPositions);
+      this.__originalMappings.sort(util.compareByOriginalPositions);
+    };
+
+  /**
+   * Find the mapping that best matches the hypothetical "needle" mapping that
+   * we are searching for in the given "haystack" of mappings.
+   */
+  SourceMapConsumer.prototype._findMapping =
+    function SourceMapConsumer_findMapping(aNeedle, aMappings, aLineName,
+                                           aColumnName, aComparator) {
+      // To return the position we are searching for, we must first find the
+      // mapping for the given position and then return the opposite position it
+      // points to. Because the mappings are sorted, we can use binary search to
+      // find the best mapping.
+
+      if (aNeedle[aLineName] <= 0) {
+        throw new TypeError('Line must be greater than or equal to 1, got '
+                            + aNeedle[aLineName]);
+      }
+      if (aNeedle[aColumnName] < 0) {
+        throw new TypeError('Column must be greater than or equal to 0, got '
+                            + aNeedle[aColumnName]);
+      }
+
+      return binarySearch.search(aNeedle, aMappings, aComparator);
+    };
+
+  /**
+   * Returns the original source, line, and column information for the generated
+   * source's line and column positions provided. The only argument is an object
+   * with the following properties:
+   *
+   *   - line: The line number in the generated source.
+   *   - column: The column number in the generated source.
+   *
+   * and an object is returned with the following properties:
+   *
+   *   - source: The original source file, or null.
+   *   - line: The line number in the original source, or null.
+   *   - column: The column number in the original source, or null.
+   *   - name: The original identifier, or null.
+   */
+  SourceMapConsumer.prototype.originalPositionFor =
+    function SourceMapConsumer_originalPositionFor(aArgs) {
+      var needle = {
+        generatedLine: util.getArg(aArgs, 'line'),
+        generatedColumn: util.getArg(aArgs, 'column')
+      };
+
+      var mapping = this._findMapping(needle,
+                                      this._generatedMappings,
+                                      "generatedLine",
+                                      "generatedColumn",
+                                      util.compareByGeneratedPositions);
+
+      if (mapping && mapping.generatedLine === needle.generatedLine) {
+        var source = util.getArg(mapping, 'source', null);
+        if (source && this.sourceRoot) {
+          source = util.join(this.sourceRoot, source);
+        }
+        return {
+          source: source,
+          line: util.getArg(mapping, 'originalLine', null),
+          column: util.getArg(mapping, 'originalColumn', null),
+          name: util.getArg(mapping, 'name', null)
+        };
+      }
+
+      return {
+        source: null,
+        line: null,
+        column: null,
+        name: null
+      };
+    };
+
+  /**
+   * Returns the original source content. The only argument is the url of the
+   * original source file. Returns null if no original source content is
+   * availible.
+   */
+  SourceMapConsumer.prototype.sourceContentFor =
+    function SourceMapConsumer_sourceContentFor(aSource) {
+      if (!this.sourcesContent) {
+        return null;
+      }
+
+      if (this.sourceRoot) {
+        aSource = util.relative(this.sourceRoot, aSource);
+      }
+
+      if (this._sources.has(aSource)) {
+        return this.sourcesContent[this._sources.indexOf(aSource)];
+      }
+
+      var url;
+      if (this.sourceRoot
+          && (url = util.urlParse(this.sourceRoot))) {
+        // XXX: file:// URIs and absolute paths lead to unexpected behavior for
+        // many users. We can help them out when they expect file:// URIs to
+        // behave like it would if they were running a local HTTP server. See
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=885597.
+        var fileUriAbsPath = aSource.replace(/^file:\/\//, "");
+        if (url.scheme == "file"
+            && this._sources.has(fileUriAbsPath)) {
+          return this.sourcesContent[this._sources.indexOf(fileUriAbsPath)]
+        }
+
+        if ((!url.path || url.path == "/")
+            && this._sources.has("/" + aSource)) {
+          return this.sourcesContent[this._sources.indexOf("/" + aSource)];
+        }
+      }
+
+      throw new Error('"' + aSource + '" is not in the SourceMap.');
+    };
+
+  /**
+   * Returns the generated line and column information for the original source,
+   * line, and column positions provided. The only argument is an object with
+   * the following properties:
+   *
+   *   - source: The filename of the original source.
+   *   - line: The line number in the original source.
+   *   - column: The column number in the original source.
+   *
+   * and an object is returned with the following properties:
+   *
+   *   - line: The line number in the generated source, or null.
+   *   - column: The column number in the generated source, or null.
+   */
+  SourceMapConsumer.prototype.generatedPositionFor =
+    function SourceMapConsumer_generatedPositionFor(aArgs) {
+      var needle = {
+        source: util.getArg(aArgs, 'source'),
+        originalLine: util.getArg(aArgs, 'line'),
+        originalColumn: util.getArg(aArgs, 'column')
+      };
+
+      if (this.sourceRoot) {
+        needle.source = util.relative(this.sourceRoot, needle.source);
+      }
+
+      var mapping = this._findMapping(needle,
+                                      this._originalMappings,
+                                      "originalLine",
+                                      "originalColumn",
+                                      util.compareByOriginalPositions);
+
+      if (mapping) {
+        return {
+          line: util.getArg(mapping, 'generatedLine', null),
+          column: util.getArg(mapping, 'generatedColumn', null)
+        };
+      }
+
+      return {
+        line: null,
+        column: null
+      };
+    };
+
+  SourceMapConsumer.GENERATED_ORDER = 1;
+  SourceMapConsumer.ORIGINAL_ORDER = 2;
+
+  /**
+   * Iterate over each mapping between an original source/line/column and a
+   * generated line/column in this source map.
+   *
+   * @param Function aCallback
+   *        The function that is called with each mapping.
+   * @param Object aContext
+   *        Optional. If specified, this object will be the value of `this` every
+   *        time that `aCallback` is called.
+   * @param aOrder
+   *        Either `SourceMapConsumer.GENERATED_ORDER` or
+   *        `SourceMapConsumer.ORIGINAL_ORDER`. Specifies whether you want to
+   *        iterate over the mappings sorted by the generated file's line/column
+   *        order or the original's source/line/column order, respectively. Defaults to
+   *        `SourceMapConsumer.GENERATED_ORDER`.
+   */
+  SourceMapConsumer.prototype.eachMapping =
+    function SourceMapConsumer_eachMapping(aCallback, aContext, aOrder) {
+      var context = aContext || null;
+      var order = aOrder || SourceMapConsumer.GENERATED_ORDER;
+
+      var mappings;
+      switch (order) {
+      case SourceMapConsumer.GENERATED_ORDER:
+        mappings = this._generatedMappings;
+        break;
+      case SourceMapConsumer.ORIGINAL_ORDER:
+        mappings = this._originalMappings;
+        break;
+      default:
+        throw new Error("Unknown order of iteration.");
+      }
+
+      var sourceRoot = this.sourceRoot;
+      mappings.map(function (mapping) {
+        var source = mapping.source;
+        if (source && sourceRoot) {
+          source = util.join(sourceRoot, source);
+        }
+        return {
+          source: source,
+          generatedLine: mapping.generatedLine,
+          generatedColumn: mapping.generatedColumn,
+          originalLine: mapping.originalLine,
+          originalColumn: mapping.originalColumn,
+          name: mapping.name
+        };
+      }).forEach(aCallback, context);
+    };
+
+  exports.SourceMapConsumer = SourceMapConsumer;
+
+});
+
 },{"./array-set":48,"./base64-vlq":49,"./binary-search":51,"./util":55,"amdefine":56}],53:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module, require);
+}
+define(function (require, exports, module) {
+
+  var base64VLQ = require('./base64-vlq');
+  var util = require('./util');
+  var ArraySet = require('./array-set').ArraySet;
+
+  /**
+   * An instance of the SourceMapGenerator represents a source map which is
+   * being built incrementally. You may pass an object with the following
+   * properties:
+   *
+   *   - file: The filename of the generated source.
+   *   - sourceRoot: A root for all relative URLs in this source map.
+   */
+  function SourceMapGenerator(aArgs) {
+    if (!aArgs) {
+      aArgs = {};
+    }
+    this._file = util.getArg(aArgs, 'file', null);
+    this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
+    this._sources = new ArraySet();
+    this._names = new ArraySet();
+    this._mappings = [];
+    this._sourcesContents = null;
+  }
+
+  SourceMapGenerator.prototype._version = 3;
+
+  /**
+   * Creates a new SourceMapGenerator based on a SourceMapConsumer
+   *
+   * @param aSourceMapConsumer The SourceMap.
+   */
+  SourceMapGenerator.fromSourceMap =
+    function SourceMapGenerator_fromSourceMap(aSourceMapConsumer) {
+      var sourceRoot = aSourceMapConsumer.sourceRoot;
+      var generator = new SourceMapGenerator({
+        file: aSourceMapConsumer.file,
+        sourceRoot: sourceRoot
+      });
+      aSourceMapConsumer.eachMapping(function (mapping) {
+        var newMapping = {
+          generated: {
+            line: mapping.generatedLine,
+            column: mapping.generatedColumn
+          }
+        };
+
+        if (mapping.source) {
+          newMapping.source = mapping.source;
+          if (sourceRoot) {
+            newMapping.source = util.relative(sourceRoot, newMapping.source);
+          }
+
+          newMapping.original = {
+            line: mapping.originalLine,
+            column: mapping.originalColumn
+          };
+
+          if (mapping.name) {
+            newMapping.name = mapping.name;
+          }
+        }
+
+        generator.addMapping(newMapping);
+      });
+      aSourceMapConsumer.sources.forEach(function (sourceFile) {
+        var content = aSourceMapConsumer.sourceContentFor(sourceFile);
+        if (content) {
+          generator.setSourceContent(sourceFile, content);
+        }
+      });
+      return generator;
+    };
+
+  /**
+   * Add a single mapping from original source line and column to the generated
+   * source's line and column for this source map being created. The mapping
+   * object should have the following properties:
+   *
+   *   - generated: An object with the generated line and column positions.
+   *   - original: An object with the original line and column positions.
+   *   - source: The original source file (relative to the sourceRoot).
+   *   - name: An optional original token name for this mapping.
+   */
+  SourceMapGenerator.prototype.addMapping =
+    function SourceMapGenerator_addMapping(aArgs) {
+      var generated = util.getArg(aArgs, 'generated');
+      var original = util.getArg(aArgs, 'original', null);
+      var source = util.getArg(aArgs, 'source', null);
+      var name = util.getArg(aArgs, 'name', null);
+
+      this._validateMapping(generated, original, source, name);
+
+      if (source && !this._sources.has(source)) {
+        this._sources.add(source);
+      }
+
+      if (name && !this._names.has(name)) {
+        this._names.add(name);
+      }
+
+      this._mappings.push({
+        generatedLine: generated.line,
+        generatedColumn: generated.column,
+        originalLine: original != null && original.line,
+        originalColumn: original != null && original.column,
+        source: source,
+        name: name
+      });
+    };
+
+  /**
+   * Set the source content for a source file.
+   */
+  SourceMapGenerator.prototype.setSourceContent =
+    function SourceMapGenerator_setSourceContent(aSourceFile, aSourceContent) {
+      var source = aSourceFile;
+      if (this._sourceRoot) {
+        source = util.relative(this._sourceRoot, source);
+      }
+
+      if (aSourceContent !== null) {
+        // Add the source content to the _sourcesContents map.
+        // Create a new _sourcesContents map if the property is null.
+        if (!this._sourcesContents) {
+          this._sourcesContents = {};
+        }
+        this._sourcesContents[util.toSetString(source)] = aSourceContent;
+      } else {
+        // Remove the source file from the _sourcesContents map.
+        // If the _sourcesContents map is empty, set the property to null.
+        delete this._sourcesContents[util.toSetString(source)];
+        if (Object.keys(this._sourcesContents).length === 0) {
+          this._sourcesContents = null;
+        }
+      }
+    };
+
+  /**
+   * Applies the mappings of a sub-source-map for a specific source file to the
+   * source map being generated. Each mapping to the supplied source file is
+   * rewritten using the supplied source map. Note: The resolution for the
+   * resulting mappings is the minimium of this map and the supplied map.
+   *
+   * @param aSourceMapConsumer The source map to be applied.
+   * @param aSourceFile Optional. The filename of the source file.
+   *        If omitted, SourceMapConsumer's file property will be used.
+   * @param aSourceMapPath Optional. The dirname of the path to the source map
+   *        to be applied. If relative, it is relative to the SourceMapConsumer.
+   *        This parameter is needed when the two source maps aren't in the same
+   *        directory, and the source map to be applied contains relative source
+   *        paths. If so, those relative source paths need to be rewritten
+   *        relative to the SourceMapGenerator.
+   */
+  SourceMapGenerator.prototype.applySourceMap =
+    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile, aSourceMapPath) {
+      // If aSourceFile is omitted, we will use the file property of the SourceMap
+      if (!aSourceFile) {
+        if (!aSourceMapConsumer.file) {
+          throw new Error(
+            'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
+            'or the source map\'s "file" property. Both were omitted.'
+          );
+        }
+        aSourceFile = aSourceMapConsumer.file;
+      }
+      var sourceRoot = this._sourceRoot;
+      // Make "aSourceFile" relative if an absolute Url is passed.
+      if (sourceRoot) {
+        aSourceFile = util.relative(sourceRoot, aSourceFile);
+      }
+      // Applying the SourceMap can add and remove items from the sources and
+      // the names array.
+      var newSources = new ArraySet();
+      var newNames = new ArraySet();
+
+      // Find mappings for the "aSourceFile"
+      this._mappings.forEach(function (mapping) {
+        if (mapping.source === aSourceFile && mapping.originalLine) {
+          // Check if it can be mapped by the source map, then update the mapping.
+          var original = aSourceMapConsumer.originalPositionFor({
+            line: mapping.originalLine,
+            column: mapping.originalColumn
+          });
+          if (original.source !== null) {
+            // Copy mapping
+            mapping.source = original.source;
+            if (aSourceMapPath) {
+              mapping.source = util.join(aSourceMapPath, mapping.source)
+            }
+            if (sourceRoot) {
+              mapping.source = util.relative(sourceRoot, mapping.source);
+            }
+            mapping.originalLine = original.line;
+            mapping.originalColumn = original.column;
+            if (original.name !== null && mapping.name !== null) {
+              // Only use the identifier name if it's an identifier
+              // in both SourceMaps
+              mapping.name = original.name;
+            }
+          }
+        }
+
+        var source = mapping.source;
+        if (source && !newSources.has(source)) {
+          newSources.add(source);
+        }
+
+        var name = mapping.name;
+        if (name && !newNames.has(name)) {
+          newNames.add(name);
+        }
+
+      }, this);
+      this._sources = newSources;
+      this._names = newNames;
+
+      // Copy sourcesContents of applied map.
+      aSourceMapConsumer.sources.forEach(function (sourceFile) {
+        var content = aSourceMapConsumer.sourceContentFor(sourceFile);
+        if (content) {
+          if (sourceRoot) {
+            sourceFile = util.relative(sourceRoot, sourceFile);
+          }
+          this.setSourceContent(sourceFile, content);
+        }
+      }, this);
+    };
+
+  /**
+   * A mapping can have one of the three levels of data:
+   *
+   *   1. Just the generated position.
+   *   2. The Generated position, original position, and original source.
+   *   3. Generated and original position, original source, as well as a name
+   *      token.
+   *
+   * To maintain consistency, we validate that any new mapping being added falls
+   * in to one of these categories.
+   */
+  SourceMapGenerator.prototype._validateMapping =
+    function SourceMapGenerator_validateMapping(aGenerated, aOriginal, aSource,
+                                                aName) {
+      if (aGenerated && 'line' in aGenerated && 'column' in aGenerated
+          && aGenerated.line > 0 && aGenerated.column >= 0
+          && !aOriginal && !aSource && !aName) {
+        // Case 1.
+        return;
+      }
+      else if (aGenerated && 'line' in aGenerated && 'column' in aGenerated
+               && aOriginal && 'line' in aOriginal && 'column' in aOriginal
+               && aGenerated.line > 0 && aGenerated.column >= 0
+               && aOriginal.line > 0 && aOriginal.column >= 0
+               && aSource) {
+        // Cases 2 and 3.
+        return;
+      }
+      else {
+        throw new Error('Invalid mapping: ' + JSON.stringify({
+          generated: aGenerated,
+          source: aSource,
+          original: aOriginal,
+          name: aName
+        }));
+      }
+    };
+
+  /**
+   * Serialize the accumulated mappings in to the stream of base 64 VLQs
+   * specified by the source map format.
+   */
+  SourceMapGenerator.prototype._serializeMappings =
+    function SourceMapGenerator_serializeMappings() {
+      var previousGeneratedColumn = 0;
+      var previousGeneratedLine = 1;
+      var previousOriginalColumn = 0;
+      var previousOriginalLine = 0;
+      var previousName = 0;
+      var previousSource = 0;
+      var result = '';
+      var mapping;
+
+      // The mappings must be guaranteed to be in sorted order before we start
+      // serializing them or else the generated line numbers (which are defined
+      // via the ';' separators) will be all messed up. Note: it might be more
+      // performant to maintain the sorting as we insert them, rather than as we
+      // serialize them, but the big O is the same either way.
+      this._mappings.sort(util.compareByGeneratedPositions);
+
+      for (var i = 0, len = this._mappings.length; i < len; i++) {
+        mapping = this._mappings[i];
+
+        if (mapping.generatedLine !== previousGeneratedLine) {
+          previousGeneratedColumn = 0;
+          while (mapping.generatedLine !== previousGeneratedLine) {
+            result += ';';
+            previousGeneratedLine++;
+          }
+        }
+        else {
+          if (i > 0) {
+            if (!util.compareByGeneratedPositions(mapping, this._mappings[i - 1])) {
+              continue;
+            }
+            result += ',';
+          }
+        }
+
+        result += base64VLQ.encode(mapping.generatedColumn
+                                   - previousGeneratedColumn);
+        previousGeneratedColumn = mapping.generatedColumn;
+
+        if (mapping.source) {
+          result += base64VLQ.encode(this._sources.indexOf(mapping.source)
+                                     - previousSource);
+          previousSource = this._sources.indexOf(mapping.source);
+
+          // lines are stored 0-based in SourceMap spec version 3
+          result += base64VLQ.encode(mapping.originalLine - 1
+                                     - previousOriginalLine);
+          previousOriginalLine = mapping.originalLine - 1;
+
+          result += base64VLQ.encode(mapping.originalColumn
+                                     - previousOriginalColumn);
+          previousOriginalColumn = mapping.originalColumn;
+
+          if (mapping.name) {
+            result += base64VLQ.encode(this._names.indexOf(mapping.name)
+                                       - previousName);
+            previousName = this._names.indexOf(mapping.name);
+          }
+        }
+      }
+
+      return result;
+    };
+
+  SourceMapGenerator.prototype._generateSourcesContent =
+    function SourceMapGenerator_generateSourcesContent(aSources, aSourceRoot) {
+      return aSources.map(function (source) {
+        if (!this._sourcesContents) {
+          return null;
+        }
+        if (aSourceRoot) {
+          source = util.relative(aSourceRoot, source);
+        }
+        var key = util.toSetString(source);
+        return Object.prototype.hasOwnProperty.call(this._sourcesContents,
+                                                    key)
+          ? this._sourcesContents[key]
+          : null;
+      }, this);
+    };
+
+  /**
+   * Externalize the source map.
+   */
+  SourceMapGenerator.prototype.toJSON =
+    function SourceMapGenerator_toJSON() {
+      var map = {
+        version: this._version,
+        file: this._file,
+        sources: this._sources.toArray(),
+        names: this._names.toArray(),
+        mappings: this._serializeMappings()
+      };
+      if (this._sourceRoot) {
+        map.sourceRoot = this._sourceRoot;
+      }
+      if (this._sourcesContents) {
+        map.sourcesContent = this._generateSourcesContent(map.sources, map.sourceRoot);
+      }
+
+      return map;
+    };
+
+  /**
+   * Render the source map being generated to a string.
+   */
+  SourceMapGenerator.prototype.toString =
+    function SourceMapGenerator_toString() {
+      return JSON.stringify(this);
+    };
+
+  exports.SourceMapGenerator = SourceMapGenerator;
+
+});
+
 },{"./array-set":48,"./base64-vlq":49,"./util":55,"amdefine":56}],54:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module, require);
+}
+define(function (require, exports, module) {
+
+  var SourceMapGenerator = require('./source-map-generator').SourceMapGenerator;
+  var util = require('./util');
+
+  /**
+   * SourceNodes provide a way to abstract over interpolating/concatenating
+   * snippets of generated JavaScript source code while maintaining the line and
+   * column information associated with the original source code.
+   *
+   * @param aLine The original line number.
+   * @param aColumn The original column number.
+   * @param aSource The original source's filename.
+   * @param aChunks Optional. An array of strings which are snippets of
+   *        generated JS, or other SourceNodes.
+   * @param aName The original identifier.
+   */
+  function SourceNode(aLine, aColumn, aSource, aChunks, aName) {
+    this.children = [];
+    this.sourceContents = {};
+    this.line = aLine === undefined ? null : aLine;
+    this.column = aColumn === undefined ? null : aColumn;
+    this.source = aSource === undefined ? null : aSource;
+    this.name = aName === undefined ? null : aName;
+    if (aChunks != null) this.add(aChunks);
+  }
+
+  /**
+   * Creates a SourceNode from generated code and a SourceMapConsumer.
+   *
+   * @param aGeneratedCode The generated code
+   * @param aSourceMapConsumer The SourceMap for the generated code
+   */
+  SourceNode.fromStringWithSourceMap =
+    function SourceNode_fromStringWithSourceMap(aGeneratedCode, aSourceMapConsumer) {
+      // The SourceNode we want to fill with the generated code
+      // and the SourceMap
+      var node = new SourceNode();
+
+      // The generated code
+      // Processed fragments are removed from this array.
+      var remainingLines = aGeneratedCode.split('\n');
+
+      // We need to remember the position of "remainingLines"
+      var lastGeneratedLine = 1, lastGeneratedColumn = 0;
+
+      // The generate SourceNodes we need a code range.
+      // To extract it current and last mapping is used.
+      // Here we store the last mapping.
+      var lastMapping = null;
+
+      aSourceMapConsumer.eachMapping(function (mapping) {
+        if (lastMapping !== null) {
+          // We add the code from "lastMapping" to "mapping":
+          // First check if there is a new line in between.
+          if (lastGeneratedLine < mapping.generatedLine) {
+            var code = "";
+            // Associate first line with "lastMapping"
+            addMappingWithCode(lastMapping, remainingLines.shift() + "\n");
+            lastGeneratedLine++;
+            lastGeneratedColumn = 0;
+            // The remaining code is added without mapping
+          } else {
+            // There is no new line in between.
+            // Associate the code between "lastGeneratedColumn" and
+            // "mapping.generatedColumn" with "lastMapping"
+            var nextLine = remainingLines[0];
+            var code = nextLine.substr(0, mapping.generatedColumn -
+                                          lastGeneratedColumn);
+            remainingLines[0] = nextLine.substr(mapping.generatedColumn -
+                                                lastGeneratedColumn);
+            lastGeneratedColumn = mapping.generatedColumn;
+            addMappingWithCode(lastMapping, code);
+            // No more remaining code, continue
+            lastMapping = mapping;
+            return;
+          }
+        }
+        // We add the generated code until the first mapping
+        // to the SourceNode without any mapping.
+        // Each line is added as separate string.
+        while (lastGeneratedLine < mapping.generatedLine) {
+          node.add(remainingLines.shift() + "\n");
+          lastGeneratedLine++;
+        }
+        if (lastGeneratedColumn < mapping.generatedColumn) {
+          var nextLine = remainingLines[0];
+          node.add(nextLine.substr(0, mapping.generatedColumn));
+          remainingLines[0] = nextLine.substr(mapping.generatedColumn);
+          lastGeneratedColumn = mapping.generatedColumn;
+        }
+        lastMapping = mapping;
+      }, this);
+      // We have processed all mappings.
+      if (remainingLines.length > 0) {
+        if (lastMapping) {
+          // Associate the remaining code in the current line with "lastMapping"
+          var lastLine = remainingLines.shift();
+          if (remainingLines.length > 0) lastLine += "\n";
+          addMappingWithCode(lastMapping, lastLine);
+        }
+        // and add the remaining lines without any mapping
+        node.add(remainingLines.join("\n"));
+      }
+
+      // Copy sourcesContent into SourceNode
+      aSourceMapConsumer.sources.forEach(function (sourceFile) {
+        var content = aSourceMapConsumer.sourceContentFor(sourceFile);
+        if (content) {
+          node.setSourceContent(sourceFile, content);
+        }
+      });
+
+      return node;
+
+      function addMappingWithCode(mapping, code) {
+        if (mapping === null || mapping.source === undefined) {
+          node.add(code);
+        } else {
+          node.add(new SourceNode(mapping.originalLine,
+                                  mapping.originalColumn,
+                                  mapping.source,
+                                  code,
+                                  mapping.name));
+        }
+      }
+    };
+
+  /**
+   * Add a chunk of generated JS to this source node.
+   *
+   * @param aChunk A string snippet of generated JS code, another instance of
+   *        SourceNode, or an array where each member is one of those things.
+   */
+  SourceNode.prototype.add = function SourceNode_add(aChunk) {
+    if (Array.isArray(aChunk)) {
+      aChunk.forEach(function (chunk) {
+        this.add(chunk);
+      }, this);
+    }
+    else if (aChunk instanceof SourceNode || typeof aChunk === "string") {
+      if (aChunk) {
+        this.children.push(aChunk);
+      }
+    }
+    else {
+      throw new TypeError(
+        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
+      );
+    }
+    return this;
+  };
+
+  /**
+   * Add a chunk of generated JS to the beginning of this source node.
+   *
+   * @param aChunk A string snippet of generated JS code, another instance of
+   *        SourceNode, or an array where each member is one of those things.
+   */
+  SourceNode.prototype.prepend = function SourceNode_prepend(aChunk) {
+    if (Array.isArray(aChunk)) {
+      for (var i = aChunk.length-1; i >= 0; i--) {
+        this.prepend(aChunk[i]);
+      }
+    }
+    else if (aChunk instanceof SourceNode || typeof aChunk === "string") {
+      this.children.unshift(aChunk);
+    }
+    else {
+      throw new TypeError(
+        "Expected a SourceNode, string, or an array of SourceNodes and strings. Got " + aChunk
+      );
+    }
+    return this;
+  };
+
+  /**
+   * Walk over the tree of JS snippets in this node and its children. The
+   * walking function is called once for each snippet of JS and is passed that
+   * snippet and the its original associated source's line/column location.
+   *
+   * @param aFn The traversal function.
+   */
+  SourceNode.prototype.walk = function SourceNode_walk(aFn) {
+    var chunk;
+    for (var i = 0, len = this.children.length; i < len; i++) {
+      chunk = this.children[i];
+      if (chunk instanceof SourceNode) {
+        chunk.walk(aFn);
+      }
+      else {
+        if (chunk !== '') {
+          aFn(chunk, { source: this.source,
+                       line: this.line,
+                       column: this.column,
+                       name: this.name });
+        }
+      }
+    }
+  };
+
+  /**
+   * Like `String.prototype.join` except for SourceNodes. Inserts `aStr` between
+   * each of `this.children`.
+   *
+   * @param aSep The separator.
+   */
+  SourceNode.prototype.join = function SourceNode_join(aSep) {
+    var newChildren;
+    var i;
+    var len = this.children.length;
+    if (len > 0) {
+      newChildren = [];
+      for (i = 0; i < len-1; i++) {
+        newChildren.push(this.children[i]);
+        newChildren.push(aSep);
+      }
+      newChildren.push(this.children[i]);
+      this.children = newChildren;
+    }
+    return this;
+  };
+
+  /**
+   * Call String.prototype.replace on the very right-most source snippet. Useful
+   * for trimming whitespace from the end of a source node, etc.
+   *
+   * @param aPattern The pattern to replace.
+   * @param aReplacement The thing to replace the pattern with.
+   */
+  SourceNode.prototype.replaceRight = function SourceNode_replaceRight(aPattern, aReplacement) {
+    var lastChild = this.children[this.children.length - 1];
+    if (lastChild instanceof SourceNode) {
+      lastChild.replaceRight(aPattern, aReplacement);
+    }
+    else if (typeof lastChild === 'string') {
+      this.children[this.children.length - 1] = lastChild.replace(aPattern, aReplacement);
+    }
+    else {
+      this.children.push(''.replace(aPattern, aReplacement));
+    }
+    return this;
+  };
+
+  /**
+   * Set the source content for a source file. This will be added to the SourceMapGenerator
+   * in the sourcesContent field.
+   *
+   * @param aSourceFile The filename of the source file
+   * @param aSourceContent The content of the source file
+   */
+  SourceNode.prototype.setSourceContent =
+    function SourceNode_setSourceContent(aSourceFile, aSourceContent) {
+      this.sourceContents[util.toSetString(aSourceFile)] = aSourceContent;
+    };
+
+  /**
+   * Walk over the tree of SourceNodes. The walking function is called for each
+   * source file content and is passed the filename and source content.
+   *
+   * @param aFn The traversal function.
+   */
+  SourceNode.prototype.walkSourceContents =
+    function SourceNode_walkSourceContents(aFn) {
+      for (var i = 0, len = this.children.length; i < len; i++) {
+        if (this.children[i] instanceof SourceNode) {
+          this.children[i].walkSourceContents(aFn);
+        }
+      }
+
+      var sources = Object.keys(this.sourceContents);
+      for (var i = 0, len = sources.length; i < len; i++) {
+        aFn(util.fromSetString(sources[i]), this.sourceContents[sources[i]]);
+      }
+    };
+
+  /**
+   * Return the string representation of this source node. Walks over the tree
+   * and concatenates all the various snippets together to one string.
+   */
+  SourceNode.prototype.toString = function SourceNode_toString() {
+    var str = "";
+    this.walk(function (chunk) {
+      str += chunk;
+    });
+    return str;
+  };
+
+  /**
+   * Returns the string representation of this source node along with a source
+   * map.
+   */
+  SourceNode.prototype.toStringWithSourceMap = function SourceNode_toStringWithSourceMap(aArgs) {
+    var generated = {
+      code: "",
+      line: 1,
+      column: 0
+    };
+    var map = new SourceMapGenerator(aArgs);
+    var sourceMappingActive = false;
+    var lastOriginalSource = null;
+    var lastOriginalLine = null;
+    var lastOriginalColumn = null;
+    var lastOriginalName = null;
+    this.walk(function (chunk, original) {
+      generated.code += chunk;
+      if (original.source !== null
+          && original.line !== null
+          && original.column !== null) {
+        if(lastOriginalSource !== original.source
+           || lastOriginalLine !== original.line
+           || lastOriginalColumn !== original.column
+           || lastOriginalName !== original.name) {
+          map.addMapping({
+            source: original.source,
+            original: {
+              line: original.line,
+              column: original.column
+            },
+            generated: {
+              line: generated.line,
+              column: generated.column
+            },
+            name: original.name
+          });
+        }
+        lastOriginalSource = original.source;
+        lastOriginalLine = original.line;
+        lastOriginalColumn = original.column;
+        lastOriginalName = original.name;
+        sourceMappingActive = true;
+      } else if (sourceMappingActive) {
+        map.addMapping({
+          generated: {
+            line: generated.line,
+            column: generated.column
+          }
+        });
+        lastOriginalSource = null;
+        sourceMappingActive = false;
+      }
+      chunk.split('').forEach(function (ch, idx, array) {
+        if (ch === '\n') {
+          generated.line++;
+          generated.column = 0;
+          // Mappings end at eol
+          if (idx + 1 === array.length) {
+            lastOriginalSource = null;
+            sourceMappingActive = false;
+          } else if (sourceMappingActive) {
+            map.addMapping({
+              source: original.source,
+              original: {
+                line: original.line,
+                column: original.column
+              },
+              generated: {
+                line: generated.line,
+                column: generated.column
+              },
+              name: original.name
+            });
+          }
+        } else {
+          generated.column++;
+        }
+      });
+    });
+    this.walkSourceContents(function (sourceFile, sourceContent) {
+      map.setSourceContent(sourceFile, sourceContent);
+    });
+
+    return { code: generated.code, map: map };
+  };
+
+  exports.SourceNode = SourceNode;
+
+});
+
 },{"./source-map-generator":53,"./util":55,"amdefine":56}],55:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
+/* -*- Mode: js; js-indent-level: 2; -*- */
+/*
+ * Copyright 2011 Mozilla Foundation and contributors
+ * Licensed under the New BSD license. See LICENSE or:
+ * http://opensource.org/licenses/BSD-3-Clause
+ */
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module, require);
+}
+define(function (require, exports, module) {
+
+  /**
+   * This is a helper function for getting values from parameter/options
+   * objects.
+   *
+   * @param args The object we are extracting values from
+   * @param name The name of the property we are getting.
+   * @param defaultValue An optional value to return if the property is missing
+   * from the object. If this is not specified and the property is missing, an
+   * error will be thrown.
+   */
+  function getArg(aArgs, aName, aDefaultValue) {
+    if (aName in aArgs) {
+      return aArgs[aName];
+    } else if (arguments.length === 3) {
+      return aDefaultValue;
+    } else {
+      throw new Error('"' + aName + '" is a required argument.');
+    }
+  }
+  exports.getArg = getArg;
+
+  var urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.]*)(?::(\d+))?(\S*)$/;
+  var dataUrlRegexp = /^data:.+\,.+$/;
+
+  function urlParse(aUrl) {
+    var match = aUrl.match(urlRegexp);
+    if (!match) {
+      return null;
+    }
+    return {
+      scheme: match[1],
+      auth: match[2],
+      host: match[3],
+      port: match[4],
+      path: match[5]
+    };
+  }
+  exports.urlParse = urlParse;
+
+  function urlGenerate(aParsedUrl) {
+    var url = '';
+    if (aParsedUrl.scheme) {
+      url += aParsedUrl.scheme + ':';
+    }
+    url += '//';
+    if (aParsedUrl.auth) {
+      url += aParsedUrl.auth + '@';
+    }
+    if (aParsedUrl.host) {
+      url += aParsedUrl.host;
+    }
+    if (aParsedUrl.port) {
+      url += ":" + aParsedUrl.port
+    }
+    if (aParsedUrl.path) {
+      url += aParsedUrl.path;
+    }
+    return url;
+  }
+  exports.urlGenerate = urlGenerate;
+
+  /**
+   * Normalizes a path, or the path portion of a URL:
+   *
+   * - Replaces consequtive slashes with one slash.
+   * - Removes unnecessary '.' parts.
+   * - Removes unnecessary '<dir>/..' parts.
+   *
+   * Based on code in the Node.js 'path' core module.
+   *
+   * @param aPath The path or url to normalize.
+   */
+  function normalize(aPath) {
+    var path = aPath;
+    var url = urlParse(aPath);
+    if (url) {
+      if (!url.path) {
+        return aPath;
+      }
+      path = url.path;
+    }
+    var isAbsolute = (path.charAt(0) === '/');
+
+    var parts = path.split(/\/+/);
+    for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
+      part = parts[i];
+      if (part === '.') {
+        parts.splice(i, 1);
+      } else if (part === '..') {
+        up++;
+      } else if (up > 0) {
+        if (part === '') {
+          // The first part is blank if the path is absolute. Trying to go
+          // above the root is a no-op. Therefore we can remove all '..' parts
+          // directly after the root.
+          parts.splice(i + 1, up);
+          up = 0;
+        } else {
+          parts.splice(i, 2);
+          up--;
+        }
+      }
+    }
+    path = parts.join('/');
+
+    if (path === '') {
+      path = isAbsolute ? '/' : '.';
+    }
+
+    if (url) {
+      url.path = path;
+      return urlGenerate(url);
+    }
+    return path;
+  }
+  exports.normalize = normalize;
+
+  /**
+   * Joins two paths/URLs.
+   *
+   * @param aRoot The root path or URL.
+   * @param aPath The path or URL to be joined with the root.
+   *
+   * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
+   *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
+   *   first.
+   * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
+   *   is updated with the result and aRoot is returned. Otherwise the result
+   *   is returned.
+   *   - If aPath is absolute, the result is aPath.
+   *   - Otherwise the two paths are joined with a slash.
+   * - Joining for example 'http://' and 'www.example.com' is also supported.
+   */
+  function join(aRoot, aPath) {
+    var aPathUrl = urlParse(aPath);
+    var aRootUrl = urlParse(aRoot);
+    if (aRootUrl) {
+      aRoot = aRootUrl.path || '/';
+    }
+
+    // `join(foo, '//www.example.org')`
+    if (aPathUrl && !aPathUrl.scheme) {
+      if (aRootUrl) {
+        aPathUrl.scheme = aRootUrl.scheme;
+      }
+      return urlGenerate(aPathUrl);
+    }
+
+    if (aPathUrl || aPath.match(dataUrlRegexp)) {
+      return aPath;
+    }
+
+    // `join('http://', 'www.example.com')`
+    if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
+      aRootUrl.host = aPath;
+      return urlGenerate(aRootUrl);
+    }
+
+    var joined = aPath.charAt(0) === '/'
+      ? aPath
+      : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
+
+    if (aRootUrl) {
+      aRootUrl.path = joined;
+      return urlGenerate(aRootUrl);
+    }
+    return joined;
+  }
+  exports.join = join;
+
+  /**
+   * Because behavior goes wacky when you set `__proto__` on objects, we
+   * have to prefix all the strings in our set with an arbitrary character.
+   *
+   * See https://github.com/mozilla/source-map/pull/31 and
+   * https://github.com/mozilla/source-map/issues/30
+   *
+   * @param String aStr
+   */
+  function toSetString(aStr) {
+    return '$' + aStr;
+  }
+  exports.toSetString = toSetString;
+
+  function fromSetString(aStr) {
+    return aStr.substr(1);
+  }
+  exports.fromSetString = fromSetString;
+
+  function relative(aRoot, aPath) {
+    aRoot = aRoot.replace(/\/$/, '');
+
+    var url = urlParse(aRoot);
+    if (aPath.charAt(0) == "/" && url && url.path == "/") {
+      return aPath.slice(1);
+    }
+
+    return aPath.indexOf(aRoot + '/') === 0
+      ? aPath.substr(aRoot.length + 1)
+      : aPath;
+  }
+  exports.relative = relative;
+
+  function strcmp(aStr1, aStr2) {
+    var s1 = aStr1 || "";
+    var s2 = aStr2 || "";
+    return (s1 > s2) - (s1 < s2);
+  }
+
+  /**
+   * Comparator between two mappings where the original positions are compared.
+   *
+   * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+   * mappings with the same original source/line/column, but different generated
+   * line and column the same. Useful when searching for a mapping with a
+   * stubbed out mapping.
+   */
+  function compareByOriginalPositions(mappingA, mappingB, onlyCompareOriginal) {
+    var cmp;
+
+    cmp = strcmp(mappingA.source, mappingB.source);
+    if (cmp) {
+      return cmp;
+    }
+
+    cmp = mappingA.originalLine - mappingB.originalLine;
+    if (cmp) {
+      return cmp;
+    }
+
+    cmp = mappingA.originalColumn - mappingB.originalColumn;
+    if (cmp || onlyCompareOriginal) {
+      return cmp;
+    }
+
+    cmp = strcmp(mappingA.name, mappingB.name);
+    if (cmp) {
+      return cmp;
+    }
+
+    cmp = mappingA.generatedLine - mappingB.generatedLine;
+    if (cmp) {
+      return cmp;
+    }
+
+    return mappingA.generatedColumn - mappingB.generatedColumn;
+  };
+  exports.compareByOriginalPositions = compareByOriginalPositions;
+
+  /**
+   * Comparator between two mappings where the generated positions are
+   * compared.
+   *
+   * Optionally pass in `true` as `onlyCompareGenerated` to consider two
+   * mappings with the same generated line and column, but different
+   * source/name/original line and column the same. Useful when searching for a
+   * mapping with a stubbed out mapping.
+   */
+  function compareByGeneratedPositions(mappingA, mappingB, onlyCompareGenerated) {
+    var cmp;
+
+    cmp = mappingA.generatedLine - mappingB.generatedLine;
+    if (cmp) {
+      return cmp;
+    }
+
+    cmp = mappingA.generatedColumn - mappingB.generatedColumn;
+    if (cmp || onlyCompareGenerated) {
+      return cmp;
+    }
+
+    cmp = strcmp(mappingA.source, mappingB.source);
+    if (cmp) {
+      return cmp;
+    }
+
+    cmp = mappingA.originalLine - mappingB.originalLine;
+    if (cmp) {
+      return cmp;
+    }
+
+    cmp = mappingA.originalColumn - mappingB.originalColumn;
+    if (cmp) {
+      return cmp;
+    }
+
+    return strcmp(mappingA.name, mappingB.name);
+  };
+  exports.compareByGeneratedPositions = compareByGeneratedPositions;
+
+});
+
 },{"amdefine":56}],56:[function(require,module,exports){
 var process=require("__browserify_process"),__filename="/../node_modules/with/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js";/** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -15032,8 +16675,15 @@ function repeat_string(str, i) {
 };
 
 function DefaultsError(msg, defs) {
+    Error.call(this, msg);
     this.msg = msg;
     this.defs = defs;
+};
+DefaultsError.prototype = Object.create(Error.prototype);
+DefaultsError.prototype.constructor = DefaultsError;
+
+DefaultsError.croak = function(msg, defs) {
+    throw new DefaultsError(msg, defs);
 };
 
 function defaults(args, defs, croak) {
@@ -15041,7 +16691,7 @@ function defaults(args, defs, croak) {
         args = {};
     var ret = args || {};
     if (croak) for (var i in ret) if (ret.hasOwnProperty(i) && !defs.hasOwnProperty(i))
-        throw new DefaultsError("`" + i + "` is not a supported option", defs);
+        DefaultsError.croak("`" + i + "` is not a supported option", defs);
     for (var i in defs) if (defs.hasOwnProperty(i)) {
         ret[i] = (args && args.hasOwnProperty(i)) ? args[i] : defs[i];
     }
@@ -15443,6 +17093,10 @@ var AST_LabeledStatement = DEFNODE("LabeledStatement", "label", {
     }
 }, AST_StatementWithBody);
 
+var AST_IterationStatement = DEFNODE("IterationStatement", null, {
+    $documentation: "Internal class.  All loops inherit from it."
+}, AST_StatementWithBody);
+
 var AST_DWLoop = DEFNODE("DWLoop", "condition", {
     $documentation: "Base class for do/while statements",
     $propdoc: {
@@ -15454,7 +17108,7 @@ var AST_DWLoop = DEFNODE("DWLoop", "condition", {
             this.body._walk(visitor);
         });
     }
-}, AST_StatementWithBody);
+}, AST_IterationStatement);
 
 var AST_Do = DEFNODE("Do", null, {
     $documentation: "A `do` statement",
@@ -15479,7 +17133,7 @@ var AST_For = DEFNODE("For", "init condition step", {
             this.body._walk(visitor);
         });
     }
-}, AST_StatementWithBody);
+}, AST_IterationStatement);
 
 var AST_ForIn = DEFNODE("ForIn", "init name object", {
     $documentation: "A `for ... in` statement",
@@ -15495,7 +17149,7 @@ var AST_ForIn = DEFNODE("ForIn", "init name object", {
             this.body._walk(visitor);
         });
     }
-}, AST_StatementWithBody);
+}, AST_IterationStatement);
 
 var AST_With = DEFNODE("With", "expression", {
     $documentation: "A `with` statement",
@@ -15613,7 +17267,7 @@ var AST_Lambda = DEFNODE("Lambda", "name argnames uses_arguments", {
 }, AST_Scope);
 
 var AST_Accessor = DEFNODE("Accessor", null, {
-    $documentation: "A setter/getter function"
+    $documentation: "A setter/getter function.  The `name` property is always null."
 }, AST_Lambda);
 
 var AST_Function = DEFNODE("Function", null, {
@@ -15740,12 +17394,6 @@ var AST_Try = DEFNODE("Try", "bcatch bfinally", {
     }
 }, AST_Block);
 
-// XXX: this is wrong according to ECMA-262 (12.4).  the catch block
-// should introduce another scope, as the argname should be visible
-// only inside the catch block.  However, doing it this way because of
-// IE which simply introduces the name in the surrounding scope.  If
-// we ever want to fix this then AST_Catch should inherit from
-// AST_Scope.
 var AST_Catch = DEFNODE("Catch", "argname", {
     $documentation: "A `catch` node; only makes sense as part of a `try` statement",
     $propdoc: {
@@ -15998,7 +17646,7 @@ var AST_Object = DEFNODE("Object", "properties", {
 var AST_ObjectProperty = DEFNODE("ObjectProperty", "key value", {
     $documentation: "Base class for literal object properties",
     $propdoc: {
-        key: "[string] the property name; it's always a plain string in our AST, no matter if it was a string, number or identifier in original code",
+        key: "[string] the property name converted to a string for ObjectKeyVal.  For setters and getters this is an arbitrary AST_Node.",
         value: "[AST_Node] property value.  For setters and getters this is an AST_Function."
     },
     _walk: function(visitor) {
@@ -16067,7 +17715,11 @@ var AST_SymbolCatch = DEFNODE("SymbolCatch", null, {
 var AST_Label = DEFNODE("Label", "references", {
     $documentation: "Symbol naming a label (declaration)",
     $propdoc: {
-        references: "[AST_LabelRef*] a list of nodes referring to this label"
+        references: "[AST_LoopControl*] a list of nodes referring to this label"
+    },
+    initialize: function() {
+        this.references = [];
+        this.thedef = this;
     }
 }, AST_Symbol);
 
@@ -16214,21 +17866,15 @@ TreeWalker.prototype = {
     },
     loopcontrol_target: function(label) {
         var stack = this.stack;
-        if (label) {
-            for (var i = stack.length; --i >= 0;) {
-                var x = stack[i];
-                if (x instanceof AST_LabeledStatement && x.label.name == label.name) {
-                    return x.body;
-                }
+        if (label) for (var i = stack.length; --i >= 0;) {
+            var x = stack[i];
+            if (x instanceof AST_LabeledStatement && x.label.name == label.name) {
+                return x.body;
             }
-        } else {
-            for (var i = stack.length; --i >= 0;) {
-                var x = stack[i];
-                if (x instanceof AST_Switch
-                    || x instanceof AST_For
-                    || x instanceof AST_ForIn
-                    || x instanceof AST_DWLoop) return x;
-            }
+        } else for (var i = stack.length; --i >= 0;) {
+            var x = stack[i];
+            if (x instanceof AST_Switch || x instanceof AST_IterationStatement)
+                return x;
         }
     }
 };
@@ -16281,7 +17927,7 @@ TreeWalker.prototype = {
 
 var KEYWORDS = 'break case catch const continue debugger default delete do else finally for function if in instanceof new return switch throw try typeof var void while with';
 var KEYWORDS_ATOM = 'false null true';
-var RESERVED_WORDS = 'abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized this throws transient volatile'
+var RESERVED_WORDS = 'abstract boolean byte char class double enum export extends final float goto implements import int interface long native package private protected public short static super synchronized this throws transient volatile yield'
     + " " + KEYWORDS_ATOM + " " + KEYWORDS;
 var KEYWORDS_BEFORE_EXPRESSION = 'return new delete throw else case';
 
@@ -16405,7 +18051,7 @@ function is_identifier_char(ch) {
 function is_identifier_string(str){
     var i = str.length;
     if (i == 0) return false;
-    if (is_digit(str.charCodeAt(0))) return false;
+    if (!is_identifier_start(str.charCodeAt(0))) return false;
     while (--i >= 0) {
         if (!is_identifier_char(str.charAt(i)))
             return false;
@@ -16445,7 +18091,7 @@ function is_token(token, type, val) {
 
 var EX_EOF = {};
 
-function tokenizer($TEXT, filename) {
+function tokenizer($TEXT, filename, html5_comments) {
 
     var S = {
         text            : $TEXT.replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/\uFEFF/g, ''),
@@ -16477,6 +18123,14 @@ function tokenizer($TEXT, filename) {
         return ch;
     };
 
+    function forward(i) {
+        while (i-- > 0) next();
+    };
+
+    function looking_at(str) {
+        return S.text.substr(S.pos, str.length) == str;
+    };
+
     function find(what, signal_eof) {
         var pos = S.text.indexOf(what, S.pos);
         if (signal_eof && pos == -1) throw EX_EOF;
@@ -16489,10 +18143,12 @@ function tokenizer($TEXT, filename) {
         S.tokpos = S.pos;
     };
 
+    var prev_was_dot = false;
     function token(type, value, is_comment) {
         S.regex_allowed = ((type == "operator" && !UNARY_POSTFIX(value)) ||
                            (type == "keyword" && KEYWORDS_BEFORE_EXPRESSION(value)) ||
                            (type == "punc" && PUNC_BEFORE_EXPRESSION(value)));
+        prev_was_dot = (type == "punc" && value == ".");
         var ret = {
             type   : type,
             value  : value,
@@ -16614,8 +18270,8 @@ function tokenizer($TEXT, filename) {
         return token("string", ret);
     });
 
-    function read_line_comment() {
-        next();
+    function skip_line_comment(type) {
+        var regex_allowed = S.regex_allowed;
         var i = find("\n"), ret;
         if (i == -1) {
             ret = S.text.substr(S.pos);
@@ -16624,11 +18280,13 @@ function tokenizer($TEXT, filename) {
             ret = S.text.substring(S.pos, i);
             S.pos = i;
         }
-        return token("comment1", ret, true);
+        S.comments_before.push(token(type, ret, true));
+        S.regex_allowed = regex_allowed;
+        return next_token();
     };
 
-    var read_multiline_comment = with_eof_error("Unterminated multiline comment", function(){
-        next();
+    var skip_multiline_comment = with_eof_error("Unterminated multiline comment", function(){
+        var regex_allowed = S.regex_allowed;
         var i = find("*/", true);
         var text = S.text.substring(S.pos, i);
         var a = text.split("\n"), n = a.length;
@@ -16638,8 +18296,11 @@ function tokenizer($TEXT, filename) {
         if (n > 1) S.col = a[n - 1].length;
         else S.col += a[n - 1].length;
         S.col += 2;
-        S.newline_before = S.newline_before || text.indexOf("\n") >= 0;
-        return token("comment2", text, true);
+        var nlb = S.newline_before = S.newline_before || text.indexOf("\n") >= 0;
+        S.comments_before.push(token("comment2", text, true));
+        S.regex_allowed = regex_allowed;
+        S.newline_before = nlb;
+        return next_token();
     });
 
     function read_name() {
@@ -16703,16 +18364,13 @@ function tokenizer($TEXT, filename) {
 
     function handle_slash() {
         next();
-        var regex_allowed = S.regex_allowed;
         switch (peek()) {
           case "/":
-            S.comments_before.push(read_line_comment());
-            S.regex_allowed = regex_allowed;
-            return next_token();
+            next();
+            return skip_line_comment("comment1");
           case "*":
-            S.comments_before.push(read_multiline_comment());
-            S.regex_allowed = regex_allowed;
-            return next_token();
+            next();
+            return skip_multiline_comment();
         }
         return S.regex_allowed ? read_regexp("") : read_operator("/");
     };
@@ -16726,6 +18384,7 @@ function tokenizer($TEXT, filename) {
 
     function read_word() {
         var word = read_name();
+        if (prev_was_dot) return token("name", word);
         return KEYWORDS_ATOM(word) ? token("atom", word)
             : !KEYWORDS(word) ? token("name", word)
             : OPERATORS(word) ? token("operator", word)
@@ -16748,6 +18407,16 @@ function tokenizer($TEXT, filename) {
             return read_regexp(force_regexp);
         skip_whitespace();
         start_token();
+        if (html5_comments) {
+            if (looking_at("<!--")) {
+                forward(4);
+                return skip_line_comment("comment3");
+            }
+            if (looking_at("-->") && S.newline_before) {
+                forward(3);
+                return skip_line_comment("comment4");
+            }
+        }
         var ch = peek();
         if (!ch) return token("eof");
         var code = ch.charCodeAt(0);
@@ -16791,10 +18460,10 @@ var UNARY_POSTFIX = makePredicate([ "--", "++" ]);
 var ASSIGNMENT = makePredicate([ "=", "+=", "-=", "/=", "*=", "%=", ">>=", "<<=", ">>>=", "|=", "^=", "&=" ]);
 
 var PRECEDENCE = (function(a, ret){
-    for (var i = 0, n = 1; i < a.length; ++i, ++n) {
+    for (var i = 0; i < a.length; ++i) {
         var b = a[i];
         for (var j = 0; j < b.length; ++j) {
-            ret[b[j]] = n;
+            ret[b[j]] = i + 1;
         }
     }
     return ret;
@@ -16814,7 +18483,7 @@ var PRECEDENCE = (function(a, ret){
     {}
 );
 
-var STATEMENTS_WITH_LABELS = array_to_hash([ "for", "do", "while", "switch" ]);
+var STATEMENTS_WITH_LABELS = array_to_hash([ "fo" + "r", "do", "while", "switch" ]);
 
 var ATOMIC_START_TOKEN = array_to_hash([ "atom", "num", "string", "regexp", "name" ]);
 
@@ -16823,14 +18492,18 @@ var ATOMIC_START_TOKEN = array_to_hash([ "atom", "num", "string", "regexp", "nam
 function parse($TEXT, options) {
 
     options = defaults(options, {
-        strict     : false,
-        filename   : null,
-        toplevel   : null,
-        expression : false
+        strict         : false,
+        filename       : null,
+        toplevel       : null,
+        expression     : false,
+        html5_comments : true,
     });
 
     var S = {
-        input         : typeof $TEXT == "string" ? tokenizer($TEXT, options.filename) : $TEXT,
+        input         : (typeof $TEXT == "string"
+                         ? tokenizer($TEXT, options.filename,
+                                     options.html5_comments)
+                         : $TEXT),
         token         : null,
         prev          : null,
         peeked        : null,
@@ -16923,12 +18596,16 @@ function parse($TEXT, options) {
         };
     };
 
-    var statement = embed_tokens(function() {
-        var tmp;
+    function handle_regexp() {
         if (is("operator", "/") || is("operator", "/=")) {
             S.peeked = null;
             S.token = S.input(S.token.value.substr(1)); // force regexp
         }
+    };
+
+    var statement = embed_tokens(function() {
+        var tmp;
+        handle_regexp();
         switch (S.token.type) {
           case "string":
             var dir = S.in_directives, stat = simple_statement();
@@ -16989,11 +18666,11 @@ function parse($TEXT, options) {
                     body      : in_loop(statement)
                 });
 
-              case "for":
+              case "fo" + "r":
                 return for_();
 
               case "function":
-                return function_(true);
+                return function_(AST_Defun);
 
               case "if":
                 return if_();
@@ -17056,6 +18733,18 @@ function parse($TEXT, options) {
         S.labels.push(label);
         var stat = statement();
         S.labels.pop();
+        if (!(stat instanceof AST_IterationStatement)) {
+            // check for `continue` that refers to this label.
+            // those should be reported as syntax errors.
+            // https://github.com/mishoo/UglifyJS2/issues/287
+            label.references.forEach(function(ref){
+                if (ref instanceof AST_Continue) {
+                    ref = ref.label.start;
+                    croak("Continue label `" + label.name + "` refers to non-IterationStatement.",
+                          ref.line, ref.col, ref.pos);
+                }
+            });
+        }
         return new AST_LabeledStatement({ body: stat, label: label });
     };
 
@@ -17064,18 +18753,22 @@ function parse($TEXT, options) {
     };
 
     function break_cont(type) {
-        var label = null;
+        var label = null, ldef;
         if (!can_insert_semicolon()) {
             label = as_symbol(AST_LabelRef, true);
         }
         if (label != null) {
-            if (!find_if(function(l){ return l.name == label.name }, S.labels))
+            ldef = find_if(function(l){ return l.name == label.name }, S.labels);
+            if (!ldef)
                 croak("Undefined label " + label.name);
+            label.thedef = ldef;
         }
         else if (S.in_loop == 0)
             croak(type.TYPE + " not inside a loop or switch");
         semicolon();
-        return new type({ label: label });
+        var stat = new type({ label: label });
+        if (ldef) ldef.references.push(stat);
+        return stat;
     };
 
     function for_() {
@@ -17121,19 +18814,12 @@ function parse($TEXT, options) {
         });
     };
 
-    var function_ = function(in_statement, ctor) {
-        var is_accessor = ctor === AST_Accessor;
-        var name = (is("name") ? as_symbol(in_statement
-                                           ? AST_SymbolDefun
-                                           : is_accessor
-                                           ? AST_SymbolAccessor
-                                           : AST_SymbolLambda)
-                    : is_accessor && (is("string") || is("num")) ? as_atom_node()
-                    : null);
+    var function_ = function(ctor) {
+        var in_statement = ctor === AST_Defun;
+        var name = is("name") ? as_symbol(in_statement ? AST_SymbolDefun : AST_SymbolLambda) : null;
         if (in_statement && !name)
             unexpected();
         expect("(");
-        if (!ctor) ctor = in_statement ? AST_Defun : AST_Function;
         return new ctor({
             name: name,
             argnames: (function(first, a){
@@ -17304,7 +18990,9 @@ function parse($TEXT, options) {
         var tok = S.token, ret;
         switch (tok.type) {
           case "name":
-            return as_symbol(AST_SymbolRef);
+          case "keyword":
+            ret = _make_symbol(AST_SymbolRef);
+            break;
           case "num":
             ret = new AST_Number({ start: tok, end: tok, value: tok.value });
             break;
@@ -17355,7 +19043,7 @@ function parse($TEXT, options) {
         }
         if (is("keyword", "function")) {
             next();
-            var func = function_(false);
+            var func = function_(AST_Function);
             func.start = start;
             func.end = prev();
             return subscripts(func, allow_calls);
@@ -17403,8 +19091,8 @@ function parse($TEXT, options) {
                 if (name == "get") {
                     a.push(new AST_ObjectGetter({
                         start : start,
-                        key   : name,
-                        value : function_(false, AST_Accessor),
+                        key   : as_atom_node(),
+                        value : function_(AST_Accessor),
                         end   : prev()
                     }));
                     continue;
@@ -17412,8 +19100,8 @@ function parse($TEXT, options) {
                 if (name == "set") {
                     a.push(new AST_ObjectSetter({
                         start : start,
-                        key   : name,
-                        value : function_(false, AST_Accessor),
+                        key   : as_atom_node(),
+                        value : function_(AST_Accessor),
                         end   : prev()
                     }));
                     continue;
@@ -17461,17 +19149,21 @@ function parse($TEXT, options) {
         }
     };
 
+    function _make_symbol(type) {
+        var name = S.token.value;
+        return new (name == "this" ? AST_This : type)({
+            name  : String(name),
+            start : S.token,
+            end   : S.token
+        });
+    };
+
     function as_symbol(type, noerror) {
         if (!is("name")) {
             if (!noerror) croak("Name expected");
             return null;
         }
-        var name = S.token.value;
-        var sym = new (name == "this" ? AST_This : type)({
-            name  : String(S.token.value),
-            start : S.token,
-            end   : S.token
-        });
+        var sym = _make_symbol(type);
         next();
         return sym;
     };
@@ -17514,6 +19206,7 @@ function parse($TEXT, options) {
         var start = S.token;
         if (is("operator") && UNARY_PREFIX(start.value)) {
             next();
+            handle_regexp();
             var ex = make_unary(AST_UnaryPrefix, start.value, maybe_unary(allow_calls));
             ex.start = start;
             ex.end = prev();
@@ -17569,7 +19262,7 @@ function parse($TEXT, options) {
                 condition   : expr,
                 consequent  : yes,
                 alternative : expression(false, no_in),
-                end         : peek()
+                end         : prev()
             });
         }
         return expr;
@@ -17929,38 +19622,41 @@ SymbolDef.prototype = {
     mangle: function(options) {
         if (!this.mangled_name && !this.unmangleable(options)) {
             var s = this.scope;
-            if (this.orig[0] instanceof AST_SymbolLambda && !options.screw_ie8)
+            if (!options.screw_ie8 && this.orig[0] instanceof AST_SymbolLambda)
                 s = s.parent_scope;
-            this.mangled_name = s.next_mangled(options);
+            this.mangled_name = s.next_mangled(options, this);
         }
     }
 };
 
-AST_Toplevel.DEFMETHOD("figure_out_scope", function(){
-    // This does what ast_add_scope did in UglifyJS v1.
-    //
-    // Part of it could be done at parse time, but it would complicate
-    // the parser (and it's already kinda complex).  It's also worth
-    // having it separated because we might need to call it multiple
-    // times on the same tree.
+AST_Toplevel.DEFMETHOD("figure_out_scope", function(options){
+    options = defaults(options, {
+        screw_ie8: false
+    });
 
     // pass 1: setup scope chaining and handle definitions
     var self = this;
     var scope = self.parent_scope = null;
-    var labels = new Dictionary();
+    var defun = null;
     var nesting = 0;
     var tw = new TreeWalker(function(node, descend){
+        if (options.screw_ie8 && node instanceof AST_Catch) {
+            var save_scope = scope;
+            scope = new AST_Scope(node);
+            scope.init_scope_vars(nesting);
+            scope.parent_scope = save_scope;
+            descend();
+            scope = save_scope;
+            return true;
+        }
         if (node instanceof AST_Scope) {
             node.init_scope_vars(nesting);
             var save_scope = node.parent_scope = scope;
-            var save_labels = labels;
-            ++nesting;
-            scope = node;
-            labels = new Dictionary();
-            descend();
-            labels = save_labels;
+            var save_defun = defun;
+            defun = scope = node;
+            ++nesting; descend(); --nesting;
             scope = save_scope;
-            --nesting;
+            defun = save_defun;
             return true;        // don't descend again in TreeWalker
         }
         if (node instanceof AST_Directive) {
@@ -17973,24 +19669,11 @@ AST_Toplevel.DEFMETHOD("figure_out_scope", function(){
                 s.uses_with = true;
             return;
         }
-        if (node instanceof AST_LabeledStatement) {
-            var l = node.label;
-            if (labels.has(l.name))
-                throw new Error(string_template("Label {name} defined twice", l));
-            labels.set(l.name, l);
-            descend();
-            labels.del(l.name);
-            return true;        // no descend again
-        }
         if (node instanceof AST_Symbol) {
             node.scope = scope;
         }
-        if (node instanceof AST_Label) {
-            node.thedef = node;
-            node.init_scope_vars();
-        }
         if (node instanceof AST_SymbolLambda) {
-            scope.def_function(node);
+            defun.def_function(node);
         }
         else if (node instanceof AST_SymbolDefun) {
             // Careful here, the scope where this should be defined is
@@ -17998,31 +19681,17 @@ AST_Toplevel.DEFMETHOD("figure_out_scope", function(){
             // scope when we encounter the AST_Defun node (which is
             // instanceof AST_Scope) but we get to the symbol a bit
             // later.
-            (node.scope = scope.parent_scope).def_function(node);
+            (node.scope = defun.parent_scope).def_function(node);
         }
         else if (node instanceof AST_SymbolVar
                  || node instanceof AST_SymbolConst) {
-            var def = scope.def_variable(node);
+            var def = defun.def_variable(node);
             def.constant = node instanceof AST_SymbolConst;
             def.init = tw.parent().value;
         }
         else if (node instanceof AST_SymbolCatch) {
-            // XXX: this is wrong according to ECMA-262 (12.4).  the
-            // `catch` argument name should be visible only inside the
-            // catch block.  For a quick fix AST_Catch should inherit
-            // from AST_Scope.  Keeping it this way because of IE,
-            // which doesn't obey the standard. (it introduces the
-            // identifier in the enclosing scope)
-            scope.def_variable(node);
-        }
-        if (node instanceof AST_LabelRef) {
-            var sym = labels.get(node.name);
-            if (!sym) throw new Error(string_template("Undefined label {name} [{line},{col}]", {
-                name: node.name,
-                line: node.start.line,
-                col: node.start.col
-            }));
-            node.thedef = sym;
+            (options.screw_ie8 ? scope : defun)
+                .def_variable(node);
         }
     });
     self.walk(tw);
@@ -18036,10 +19705,6 @@ AST_Toplevel.DEFMETHOD("figure_out_scope", function(){
             func = node;
             descend();
             func = prev_func;
-            return true;
-        }
-        if (node instanceof AST_LabelRef) {
-            node.reference();
             return true;
         }
         if (node instanceof AST_SymbolRef) {
@@ -18060,7 +19725,7 @@ AST_Toplevel.DEFMETHOD("figure_out_scope", function(){
                     for (var s = node.scope; s && !s.uses_eval; s = s.parent_scope)
                         s.uses_eval = true;
                 }
-                if (name == "arguments") {
+                if (func && name == "arguments") {
                     func.uses_arguments = true;
                 }
             } else {
@@ -18106,14 +19771,6 @@ AST_SymbolRef.DEFMETHOD("reference", function() {
     this.frame = this.scope.nesting - def.scope.nesting;
 });
 
-AST_Label.DEFMETHOD("init_scope_vars", function(){
-    this.references = [];
-});
-
-AST_LabelRef.DEFMETHOD("reference", function(){
-    this.thedef.references.push(this);
-});
-
 AST_Scope.DEFMETHOD("find_variable", function(name){
     if (name instanceof AST_Symbol) name = name.name;
     return this.variables.get(name)
@@ -18147,6 +19804,11 @@ AST_Scope.DEFMETHOD("next_mangled", function(options){
     out: while (true) {
         var m = base54(++this.cname);
         if (!is_identifier(m)) continue; // skip over "do"
+
+        // https://github.com/mishoo/UglifyJS2/issues/242 -- do not
+        // shadow a name excepted from mangling.
+        if (options.except.indexOf(m) >= 0) continue;
+
         // we must ensure that the mangled name does not shadow a name
         // from some parent scope that is referenced in this or in
         // inner scopes.
@@ -18156,6 +19818,19 @@ AST_Scope.DEFMETHOD("next_mangled", function(options){
             if (m == name) continue out;
         }
         return m;
+    }
+});
+
+AST_Function.DEFMETHOD("next_mangled", function(options, def){
+    // #179, #326
+    // in Safari strict mode, something like (function x(x){...}) is a syntax error;
+    // a function expression's argument cannot shadow the function expression's name
+
+    var tricky_def = def.orig[0] instanceof AST_SymbolFunarg && this.name && this.name.definition();
+    while (true) {
+        var name = AST_Lambda.prototype.next_mangled.call(this, options, def);
+        if (!(tricky_def && tricky_def.mangled_name == name))
+            return name;
     }
 });
 
@@ -18285,7 +19960,7 @@ AST_Toplevel.DEFMETHOD("compute_char_frequency", function(options){
         else if (node instanceof AST_Lambda)
             base54.consider("function");
         else if (node instanceof AST_For)
-            base54.consider("for");
+            base54.consider("fo" + "r");
         else if (node instanceof AST_ForIn)
             base54.consider("for in");
         else if (node instanceof AST_Switch)
@@ -18493,21 +20168,23 @@ AST_Toplevel.DEFMETHOD("scope_warnings", function(options){
 function OutputStream(options) {
 
     options = defaults(options, {
-        indent_start  : 0,
-        indent_level  : 4,
-        quote_keys    : false,
-        space_colon   : true,
-        ascii_only    : false,
-        inline_script : false,
-        width         : 80,
-        max_line_len  : 32000,
-        beautify      : false,
-        source_map    : null,
-        bracketize    : false,
-        semicolons    : true,
-        comments      : false,
-        preserve_line : false,
-        screw_ie8     : false,
+        indent_start     : 0,
+        indent_level     : 4,
+        quote_keys       : false,
+        space_colon      : true,
+        ascii_only       : false,
+        unescape_regexps : false,
+        inline_script    : false,
+        width            : 80,
+        max_line_len     : 32000,
+        beautify         : false,
+        source_map       : null,
+        bracketize       : false,
+        semicolons       : true,
+        comments         : false,
+        preserve_line    : false,
+        screw_ie8        : false,
+        preamble         : null,
     }, true);
 
     var indentation = 0;
@@ -18746,6 +20423,10 @@ function OutputStream(options) {
         return OUTPUT;
     };
 
+    if (options.preamble) {
+        print(options.preamble.replace(/\r\n?|[\n\u2028\u2029]|\s*$/g, "\n"));
+    }
+
     var stack = [];
     return {
         get             : get,
@@ -18825,15 +20506,23 @@ function OutputStream(options) {
             var start = self.start;
             if (start && !start._comments_dumped) {
                 start._comments_dumped = true;
-                var comments = start.comments_before;
+                var comments = start.comments_before || [];
 
                 // XXX: ugly fix for https://github.com/mishoo/UglifyJS2/issues/112
-                //      if this node is `return` or `throw`, we cannot allow comments before
-                //      the returned or thrown value.
-                if (self instanceof AST_Exit &&
-                    self.value && self.value.start.comments_before.length > 0) {
-                    comments = (comments || []).concat(self.value.start.comments_before);
-                    self.value.start.comments_before = [];
+                //               and https://github.com/mishoo/UglifyJS2/issues/372
+                if (self instanceof AST_Exit && self.value) {
+                    self.value.walk(new TreeWalker(function(node){
+                        if (node.start && node.start.comments_before) {
+                            comments = comments.concat(node.start.comments_before);
+                            node.start.comments_before = [];
+                        }
+                        if (node instanceof AST_Function ||
+                            node instanceof AST_Array ||
+                            node instanceof AST_Object)
+                        {
+                            return true; // don't go inside.
+                        }
+                    }));
                 }
 
                 if (c.test) {
@@ -18846,7 +20535,7 @@ function OutputStream(options) {
                     });
                 }
                 comments.forEach(function(c){
-                    if (c.type == "comment1") {
+                    if (/comment[134]/.test(c.type)) {
                         output.print("//" + c.value + "\n");
                         output.indent();
                     }
@@ -18897,7 +20586,7 @@ function OutputStream(options) {
             || p instanceof AST_Unary            // !(foo, bar, baz)
             || p instanceof AST_Binary           // 1 + (2, 3) + 4 ==> 8
             || p instanceof AST_VarDef           // var a = (1, 2), b = a + a; ==> b == 4
-            || p instanceof AST_Dot              // (1, {foo:2}).foo ==> 2
+            || p instanceof AST_PropAccess       // (1, {foo:2}).foo or (1, {foo:2})["foo"] ==> 2
             || p instanceof AST_Array            // [ 1, (2, 3), 4 ] ==> [ 1, 3, 4 ]
             || p instanceof AST_ObjectProperty   // { foo: (1, 2) }.foo ==> 2
             || p instanceof AST_Conditional      /* (false, true) ? (a = 10, b = 20) : (c = 30)
@@ -18922,11 +20611,7 @@ function OutputStream(options) {
             var so = this.operator, sp = PRECEDENCE[so];
             if (pp > sp
                 || (pp == sp
-                    && this === p.right
-                    && !(so == po &&
-                         (so == "*" ||
-                          so == "&&" ||
-                          so == "||")))) {
+                    && this === p.right)) {
                 return true;
             }
         }
@@ -18953,8 +20638,17 @@ function OutputStream(options) {
     });
 
     PARENS(AST_Call, function(output){
-        var p = output.parent();
-        return p instanceof AST_New && p.expression === this;
+        var p = output.parent(), p1;
+        if (p instanceof AST_New && p.expression === this)
+            return true;
+
+        // workaround for Safari bug.
+        // https://bugs.webkit.org/show_bug.cgi?id=123506
+        return this.expression instanceof AST_Function
+            && p instanceof AST_PropAccess
+            && p.expression === this
+            && (p1 = output.parent(1)) instanceof AST_Assign
+            && p1.left === p;
     });
 
     PARENS(AST_New, function(output){
@@ -19081,7 +20775,7 @@ function OutputStream(options) {
         self._do_print_body(output);
     });
     DEFPRINT(AST_For, function(self, output){
-        output.print("for");
+        output.print("fo" + "r");
         output.space();
         output.with_parens(function(){
             if (self.init) {
@@ -19110,7 +20804,7 @@ function OutputStream(options) {
         self._do_print_body(output);
     });
     DEFPRINT(AST_ForIn, function(self, output){
-        output.print("for");
+        output.print("fo" + "r");
         output.space();
         output.with_parens(function(){
             self.init.print(output);
@@ -19436,7 +21130,18 @@ function OutputStream(options) {
         self.left.print(output);
         output.space();
         output.print(self.operator);
-        output.space();
+        if (self.operator == "<"
+            && self.right instanceof AST_UnaryPrefix
+            && self.right.operator == "!"
+            && self.right.expression instanceof AST_UnaryPrefix
+            && self.right.expression.operator == "--") {
+            // space is mandatory to avoid outputting <!--
+            // http://javascript.spec.whatwg.org/#comment-syntax
+            output.print(" ");
+        } else {
+            // the space is optional depending on "beautify"
+            output.space();
+        }
         self.right.print(output);
     });
     DEFPRINT(AST_Conditional, function(self, output){
@@ -19500,10 +21205,14 @@ function OutputStream(options) {
     });
     DEFPRINT(AST_ObjectSetter, function(self, output){
         output.print("set");
+        output.space();
+        self.key.print(output);
         self.value._do_print(output, true);
     });
     DEFPRINT(AST_ObjectGetter, function(self, output){
         output.print("get");
+        output.space();
+        self.key.print(output);
         self.value._do_print(output, true);
     });
     DEFPRINT(AST_Symbol, function(self, output){
@@ -19532,10 +21241,47 @@ function OutputStream(options) {
     DEFPRINT(AST_Number, function(self, output){
         output.print(make_num(self.getValue()));
     });
+
+    function regexp_safe_literal(code) {
+        return [
+            0x5c   , // \
+            0x2f   , // /
+            0x2e   , // .
+            0x2b   , // +
+            0x2a   , // *
+            0x3f   , // ?
+            0x28   , // (
+            0x29   , // )
+            0x5b   , // [
+            0x5d   , // ]
+            0x7b   , // {
+            0x7d   , // }
+            0x24   , // $
+            0x5e   , // ^
+            0x3a   , // :
+            0x7c   , // |
+            0x21   , // !
+            0x0a   , // \n
+            0x0d   , // \r
+            0x00   , // \0
+            0xfeff , // Unicode BOM
+            0x2028 , // unicode "line separator"
+            0x2029 , // unicode "paragraph separator"
+        ].indexOf(code) < 0;
+    };
+
     DEFPRINT(AST_RegExp, function(self, output){
         var str = self.getValue().toString();
-        if (output.option("ascii_only"))
+        if (output.option("ascii_only")) {
             str = output.to_ascii(str);
+        } else if (output.option("unescape_regexps")) {
+            str = str.split("\\\\").map(function(str){
+                return str.replace(/\\u[0-9a-fA-F]{4}|\\x[0-9a-fA-F]{2}/g, function(s){
+                    var code = parseInt(s.substr(2), 16);
+                    return regexp_safe_literal(code) ? String.fromCharCode(code) : s;
+                });
+            }).join("\\\\");
+        }
         output.print(str);
         var p = output.parent();
         if (p instanceof AST_Binary && /^in/.test(p.operator) && p.left === self)
@@ -19743,8 +21489,12 @@ function Compressor(options, false_by_default) {
         join_vars     : !false_by_default,
         cascade       : !false_by_default,
         side_effects  : !false_by_default,
+        pure_getters  : false,
+        pure_funcs    : null,
         negate_iife   : !false_by_default,
         screw_ie8     : false,
+        drop_console  : false,
+        angular       : false,
 
         warnings      : true,
         global_defs   : {}
@@ -19760,22 +21510,16 @@ merge(Compressor.prototype, {
     },
     before: function(node, descend, in_list) {
         if (node._squeezed) return node;
+        var was_scope = false;
         if (node instanceof AST_Scope) {
-            node.drop_unused(this);
             node = node.hoist_declarations(this);
+            was_scope = true;
         }
         descend(node, this);
         node = node.optimize(this);
-        if (node instanceof AST_Scope) {
-            // dead code removal might leave further unused declarations.
-            // this'll usually save very few bytes, but the performance
-            // hit seems negligible so I'll just drop it here.
-
-            // no point to repeat warnings.
-            var save_warnings = this.options.warnings;
-            this.options.warnings = false;
+        if (was_scope && node instanceof AST_Scope) {
             node.drop_unused(this);
-            this.options.warnings = save_warnings;
+            descend(node, this);
         }
         node._squeezed = true;
         return node;
@@ -19878,6 +21622,9 @@ merge(Compressor.prototype, {
         var CHANGED;
         do {
             CHANGED = false;
+            if (compressor.option("angular")) {
+                statements = process_for_angular(statements);
+            }
             statements = eliminate_spurious_blocks(statements);
             if (compressor.option("dead_code")) {
                 statements = eliminate_dead_code(statements, compressor);
@@ -19898,6 +21645,50 @@ merge(Compressor.prototype, {
         }
 
         return statements;
+
+        function process_for_angular(statements) {
+            function make_injector(func, name) {
+                return make_node(AST_SimpleStatement, func, {
+                    body: make_node(AST_Assign, func, {
+                        operator: "=",
+                        left: make_node(AST_Dot, name, {
+                            expression: make_node(AST_SymbolRef, name, name),
+                            property: "$inject"
+                        }),
+                        right: make_node(AST_Array, func, {
+                            elements: func.argnames.map(function(sym){
+                                return make_node(AST_String, sym, { value: sym.name });
+                            })
+                        })
+                    })
+                });
+            }
+            return statements.reduce(function(a, stat){
+                a.push(stat);
+                var token = stat.start;
+                var comments = token.comments_before;
+                if (comments && comments.length > 0) {
+                    var last = comments.pop();
+                    if (/@ngInject/.test(last.value)) {
+                        // case 1: defun
+                        if (stat instanceof AST_Defun) {
+                            a.push(make_injector(stat, stat.name));
+                        }
+                        else if (stat instanceof AST_Definitions) {
+                            stat.definitions.forEach(function(def){
+                                if (def.value && def.value instanceof AST_Lambda) {
+                                    a.push(make_injector(def.value, def.name));
+                                }
+                            });
+                        }
+                        else {
+                            compressor.warn("Unknown statement marked with @ngInject [{file}:{line},{col}]", token);
+                        }
+                    }
+                }
+                return a;
+            }, []);
+        }
 
         function eliminate_spurious_blocks(statements) {
             var seen_dirs = [];
@@ -20001,7 +21792,7 @@ merge(Compressor.prototype, {
                                || (ab instanceof AST_Continue && self === loop_body(lct))
                                || (ab instanceof AST_Break && lct instanceof AST_BlockStatement && self === lct))) {
                         if (ab.label) {
-                            remove(ab.label.thedef.references, ab.label);
+                            remove(ab.label.thedef.references, ab);
                         }
                         CHANGED = true;
                         var body = as_statement_array(stat.body).slice(0, -1);
@@ -20023,7 +21814,7 @@ merge(Compressor.prototype, {
                                || (ab instanceof AST_Continue && self === loop_body(lct))
                                || (ab instanceof AST_Break && lct instanceof AST_BlockStatement && self === lct))) {
                         if (ab.label) {
-                            remove(ab.label.thedef.references, ab.label);
+                            remove(ab.label.thedef.references, ab);
                         }
                         CHANGED = true;
                         stat = stat.clone();
@@ -20062,7 +21853,7 @@ merge(Compressor.prototype, {
                              && loop_body(lct) === self) || (stat instanceof AST_Continue
                                                              && loop_body(lct) === self)) {
                             if (stat.label) {
-                                remove(stat.label.thedef.references, stat.label);
+                                remove(stat.label.thedef.references, stat);
                             }
                         } else {
                             a.push(stat);
@@ -20307,14 +22098,14 @@ merge(Compressor.prototype, {
         // elements.  If the node has been successfully reduced to a
         // constant, then the second element tells us the value;
         // otherwise the second element is missing.  The first element
-        // of the array is always an AST_Node descendant; when
+        // of the array is always an AST_Node descendant; if
         // evaluation was successful it's a node that represents the
-        // constant; otherwise it's the original node.
+        // constant; otherwise it's the original or a replacement node.
         AST_Node.DEFMETHOD("evaluate", function(compressor){
             if (!compressor.option("evaluate")) return [ this ];
             try {
-                var val = this._eval(), ast = make_node_from_constant(compressor, val, this);
-                return [ best_of(ast, this), val ];
+                var val = this._eval(compressor);
+                return [ best_of(make_node_from_constant(compressor, val, this), this), val ];
             } catch(ex) {
                 if (ex !== def) throw ex;
                 return [ this ];
@@ -20330,8 +22121,10 @@ merge(Compressor.prototype, {
             // places too. :-( Wish JS had multiple inheritance.
             throw def;
         });
-        function ev(node) {
-            return node._eval();
+        function ev(node, compressor) {
+            if (!compressor) throw new Error("Compressor must be passed");
+
+            return node._eval(compressor);
         };
         def(AST_Node, function(){
             throw def;          // not constant
@@ -20339,69 +22132,69 @@ merge(Compressor.prototype, {
         def(AST_Constant, function(){
             return this.getValue();
         });
-        def(AST_UnaryPrefix, function(){
+        def(AST_UnaryPrefix, function(compressor){
             var e = this.expression;
             switch (this.operator) {
-              case "!": return !ev(e);
+              case "!": return !ev(e, compressor);
               case "typeof":
                 // Function would be evaluated to an array and so typeof would
                 // incorrectly return 'object'. Hence making is a special case.
                 if (e instanceof AST_Function) return typeof function(){};
 
-                e = ev(e);
+                e = ev(e, compressor);
 
                 // typeof <RegExp> returns "object" or "function" on different platforms
                 // so cannot evaluate reliably
                 if (e instanceof RegExp) throw def;
 
                 return typeof e;
-              case "void": return void ev(e);
-              case "~": return ~ev(e);
+              case "void": return void ev(e, compressor);
+              case "~": return ~ev(e, compressor);
               case "-":
-                e = ev(e);
+                e = ev(e, compressor);
                 if (e === 0) throw def;
                 return -e;
-              case "+": return +ev(e);
+              case "+": return +ev(e, compressor);
             }
             throw def;
         });
-        def(AST_Binary, function(){
+        def(AST_Binary, function(c){
             var left = this.left, right = this.right;
             switch (this.operator) {
-              case "&&"         : return ev(left) &&         ev(right);
-              case "||"         : return ev(left) ||         ev(right);
-              case "|"          : return ev(left) |          ev(right);
-              case "&"          : return ev(left) &          ev(right);
-              case "^"          : return ev(left) ^          ev(right);
-              case "+"          : return ev(left) +          ev(right);
-              case "*"          : return ev(left) *          ev(right);
-              case "/"          : return ev(left) /          ev(right);
-              case "%"          : return ev(left) %          ev(right);
-              case "-"          : return ev(left) -          ev(right);
-              case "<<"         : return ev(left) <<         ev(right);
-              case ">>"         : return ev(left) >>         ev(right);
-              case ">>>"        : return ev(left) >>>        ev(right);
-              case "=="         : return ev(left) ==         ev(right);
-              case "==="        : return ev(left) ===        ev(right);
-              case "!="         : return ev(left) !=         ev(right);
-              case "!=="        : return ev(left) !==        ev(right);
-              case "<"          : return ev(left) <          ev(right);
-              case "<="         : return ev(left) <=         ev(right);
-              case ">"          : return ev(left) >          ev(right);
-              case ">="         : return ev(left) >=         ev(right);
-              case "in"         : return ev(left) in         ev(right);
-              case "instanceof" : return ev(left) instanceof ev(right);
+              case "&&"         : return ev(left, c) &&         ev(right, c);
+              case "||"         : return ev(left, c) ||         ev(right, c);
+              case "|"          : return ev(left, c) |          ev(right, c);
+              case "&"          : return ev(left, c) &          ev(right, c);
+              case "^"          : return ev(left, c) ^          ev(right, c);
+              case "+"          : return ev(left, c) +          ev(right, c);
+              case "*"          : return ev(left, c) *          ev(right, c);
+              case "/"          : return ev(left, c) /          ev(right, c);
+              case "%"          : return ev(left, c) %          ev(right, c);
+              case "-"          : return ev(left, c) -          ev(right, c);
+              case "<<"         : return ev(left, c) <<         ev(right, c);
+              case ">>"         : return ev(left, c) >>         ev(right, c);
+              case ">>>"        : return ev(left, c) >>>        ev(right, c);
+              case "=="         : return ev(left, c) ==         ev(right, c);
+              case "==="        : return ev(left, c) ===        ev(right, c);
+              case "!="         : return ev(left, c) !=         ev(right, c);
+              case "!=="        : return ev(left, c) !==        ev(right, c);
+              case "<"          : return ev(left, c) <          ev(right, c);
+              case "<="         : return ev(left, c) <=         ev(right, c);
+              case ">"          : return ev(left, c) >          ev(right, c);
+              case ">="         : return ev(left, c) >=         ev(right, c);
+              case "in"         : return ev(left, c) in         ev(right, c);
+              case "instanceof" : return ev(left, c) instanceof ev(right, c);
             }
             throw def;
         });
-        def(AST_Conditional, function(){
-            return ev(this.condition)
-                ? ev(this.consequent)
-                : ev(this.alternative);
+        def(AST_Conditional, function(compressor){
+            return ev(this.condition, compressor)
+                ? ev(this.consequent, compressor)
+                : ev(this.alternative, compressor);
         });
-        def(AST_SymbolRef, function(){
+        def(AST_SymbolRef, function(compressor){
             var d = this.definition();
-            if (d && d.constant && d.init) return ev(d.init);
+            if (d && d.constant && d.init) return ev(d.init, compressor);
             throw def;
         });
     })(function(node, func){
@@ -20477,70 +22270,78 @@ merge(Compressor.prototype, {
 
     // determine if expression has side effects
     (function(def){
-        def(AST_Node, function(){ return true });
+        def(AST_Node, function(compressor){ return true });
 
-        def(AST_EmptyStatement, function(){ return false });
-        def(AST_Constant, function(){ return false });
-        def(AST_This, function(){ return false });
+        def(AST_EmptyStatement, function(compressor){ return false });
+        def(AST_Constant, function(compressor){ return false });
+        def(AST_This, function(compressor){ return false });
 
-        def(AST_Block, function(){
+        def(AST_Call, function(compressor){
+            var pure = compressor.option("pure_funcs");
+            if (!pure) return true;
+            return pure.indexOf(this.expression.print_to_string()) < 0;
+        });
+
+        def(AST_Block, function(compressor){
             for (var i = this.body.length; --i >= 0;) {
-                if (this.body[i].has_side_effects())
+                if (this.body[i].has_side_effects(compressor))
                     return true;
             }
             return false;
         });
 
-        def(AST_SimpleStatement, function(){
-            return this.body.has_side_effects();
+        def(AST_SimpleStatement, function(compressor){
+            return this.body.has_side_effects(compressor);
         });
-        def(AST_Defun, function(){ return true });
-        def(AST_Function, function(){ return false });
-        def(AST_Binary, function(){
-            return this.left.has_side_effects()
-                || this.right.has_side_effects();
+        def(AST_Defun, function(compressor){ return true });
+        def(AST_Function, function(compressor){ return false });
+        def(AST_Binary, function(compressor){
+            return this.left.has_side_effects(compressor)
+                || this.right.has_side_effects(compressor);
         });
-        def(AST_Assign, function(){ return true });
-        def(AST_Conditional, function(){
-            return this.condition.has_side_effects()
-                || this.consequent.has_side_effects()
-                || this.alternative.has_side_effects();
+        def(AST_Assign, function(compressor){ return true });
+        def(AST_Conditional, function(compressor){
+            return this.condition.has_side_effects(compressor)
+                || this.consequent.has_side_effects(compressor)
+                || this.alternative.has_side_effects(compressor);
         });
-        def(AST_Unary, function(){
+        def(AST_Unary, function(compressor){
             return this.operator == "delete"
                 || this.operator == "++"
                 || this.operator == "--"
-                || this.expression.has_side_effects();
+                || this.expression.has_side_effects(compressor);
         });
-        def(AST_SymbolRef, function(){ return false });
-        def(AST_Object, function(){
+        def(AST_SymbolRef, function(compressor){ return false });
+        def(AST_Object, function(compressor){
             for (var i = this.properties.length; --i >= 0;)
-                if (this.properties[i].has_side_effects())
+                if (this.properties[i].has_side_effects(compressor))
                     return true;
             return false;
         });
-        def(AST_ObjectProperty, function(){
-            return this.value.has_side_effects();
+        def(AST_ObjectProperty, function(compressor){
+            return this.value.has_side_effects(compressor);
         });
-        def(AST_Array, function(){
+        def(AST_Array, function(compressor){
             for (var i = this.elements.length; --i >= 0;)
-                if (this.elements[i].has_side_effects())
+                if (this.elements[i].has_side_effects(compressor))
                     return true;
             return false;
         });
-        // def(AST_Dot, function(){
-        //     return this.expression.has_side_effects();
-        // });
-        // def(AST_Sub, function(){
-        //     return this.expression.has_side_effects()
-        //         || this.property.has_side_effects();
-        // });
-        def(AST_PropAccess, function(){
-            return true;
+        def(AST_Dot, function(compressor){
+            if (!compressor.option("pure_getters")) return true;
+            return this.expression.has_side_effects(compressor);
         });
-        def(AST_Seq, function(){
-            return this.car.has_side_effects()
-                || this.cdr.has_side_effects();
+        def(AST_Sub, function(compressor){
+            if (!compressor.option("pure_getters")) return true;
+            return this.expression.has_side_effects(compressor)
+                || this.property.has_side_effects(compressor);
+        });
+        def(AST_PropAccess, function(compressor){
+            return !compressor.option("pure_getters");
+        });
+        def(AST_Seq, function(compressor){
+            return this.car.has_side_effects(compressor)
+                || this.cdr.has_side_effects(compressor);
         });
     })(function(node, func){
         node.DEFMETHOD("has_side_effects", func);
@@ -20624,7 +22425,7 @@ merge(Compressor.prototype, {
                         node.definitions.forEach(function(def){
                             if (def.value) {
                                 initializations.add(def.name.name, def.value);
-                                if (def.value.has_side_effects()) {
+                                if (def.value.has_side_effects(compressor)) {
                                     def.value.walk(tw);
                                 }
                             }
@@ -20701,7 +22502,7 @@ merge(Compressor.prototype, {
                                 line : def.name.start.line,
                                 col  : def.name.start.col
                             };
-                            if (def.value && def.value.has_side_effects()) {
+                            if (def.value && def.value.has_side_effects(compressor)) {
                                 def._unused_side_effects = true;
                                 compressor.warn("Side effects in initialization of unused variable {name} [{file}:{line},{col}]", w);
                                 return true;
@@ -20755,18 +22556,23 @@ merge(Compressor.prototype, {
                         }
                         return node;
                     }
-                    if (node instanceof AST_For && node.init instanceof AST_BlockStatement) {
+                    if (node instanceof AST_For) {
                         descend(node, this);
-                        // certain combination of unused name + side effect leads to:
-                        //    https://github.com/mishoo/UglifyJS2/issues/44
-                        // that's an invalid AST.
-                        // We fix it at this stage by moving the `var` outside the `for`.
-                        var body = node.init.body.slice(0, -1);
-                        node.init = node.init.body.slice(-1)[0].body;
-                        body.push(node);
-                        return in_list ? MAP.splice(body) : make_node(AST_BlockStatement, node, {
-                            body: body
-                        });
+
+                        if (node.init instanceof AST_BlockStatement) {
+                            // certain combination of unused name + side effect leads to:
+                            //    https://github.com/mishoo/UglifyJS2/issues/44
+                            // that's an invalid AST.
+                            // We fix it at this stage by moving the `var` outside the `for`.
+
+                            var body = node.init.body.slice(0, -1);
+                            node.init = node.init.body.slice(-1)[0].body;
+                            body.push(node);
+
+                            return in_list ? MAP.splice(body) : make_node(AST_BlockStatement, node, {
+                                body: body
+                            });
+                        }
                     }
                     if (node instanceof AST_Scope && node !== self)
                         return node;
@@ -20903,7 +22709,7 @@ merge(Compressor.prototype, {
 
     OPT(AST_SimpleStatement, function(self, compressor){
         if (compressor.option("side_effects")) {
-            if (!self.body.has_side_effects()) {
+            if (!self.body.has_side_effects(compressor)) {
                 compressor.warn("Dropping side-effect-free statement [{file}:{line},{col}]", self.start);
                 return make_node(AST_EmptyStatement, self);
             }
@@ -21287,7 +23093,7 @@ merge(Compressor.prototype, {
                     if (self.args.length != 1) {
                         return make_node(AST_Array, self, {
                             elements: self.args
-                        });
+                        }).transform(compressor);
                     }
                     break;
                   case "Object":
@@ -21301,11 +23107,30 @@ merge(Compressor.prototype, {
                     if (self.args.length == 0) return make_node(AST_String, self, {
                         value: ""
                     });
-                    return make_node(AST_Binary, self, {
+                    if (self.args.length <= 1) return make_node(AST_Binary, self, {
                         left: self.args[0],
                         operator: "+",
                         right: make_node(AST_String, self, { value: "" })
+                    }).transform(compressor);
+                    break;
+                  case "Number":
+                    if (self.args.length == 0) return make_node(AST_Number, self, {
+                        value: 0
                     });
+                    if (self.args.length == 1) return make_node(AST_UnaryPrefix, self, {
+                        expression: self.args[0],
+                        operator: "+"
+                    }).transform(compressor);
+                  case "Boolean":
+                    if (self.args.length == 0) return make_node(AST_False, self);
+                    if (self.args.length == 1) return make_node(AST_UnaryPrefix, self, {
+                        expression: make_node(AST_UnaryPrefix, null, {
+                            expression: self.args[0],
+                            operator: "!"
+                        }),
+                        operator: "!"
+                    }).transform(compressor);
+                    break;
                   case "Function":
                     if (all(self.args, function(x){ return x instanceof AST_String })) {
                         // quite a corner-case, but we can handle it:
@@ -21316,12 +23141,22 @@ merge(Compressor.prototype, {
                                 return arg.value;
                             }).join(",") + "){" + self.args[self.args.length - 1].value + "})()";
                             var ast = parse(code);
-                            ast.figure_out_scope();
+                            ast.figure_out_scope({ screw_ie8: compressor.option("screw_ie8") });
                             var comp = new Compressor(compressor.options);
                             ast = ast.transform(comp);
-                            ast.figure_out_scope();
+                            ast.figure_out_scope({ screw_ie8: compressor.option("screw_ie8") });
                             ast.mangle_names();
-                            var fun = ast.body[0].body.expression;
+                            var fun;
+                            try {
+                                ast.walk(new TreeWalker(function(node){
+                                    if (node instanceof AST_Lambda) {
+                                        fun = node;
+                                        throw ast;
+                                    }
+                                }));
+                            } catch(ex) {
+                                if (ex !== ast) throw ex;
+                            };
                             var args = fun.argnames.map(function(arg, i){
                                 return make_node(AST_String, self.args[i], {
                                     value: arg.print_to_string()
@@ -21341,6 +23176,7 @@ merge(Compressor.prototype, {
                                 compressor.warn(ex.toString());
                             } else {
                                 console.log(ex);
+                                throw ex;
                             }
                         }
                     }
@@ -21354,15 +23190,70 @@ merge(Compressor.prototype, {
                     right: exp.expression
                 }).transform(compressor);
             }
+            else if (exp instanceof AST_Dot && exp.expression instanceof AST_Array && exp.property == "join") EXIT: {
+                var separator = self.args.length == 0 ? "," : self.args[0].evaluate(compressor)[1];
+                if (separator == null) break EXIT; // not a constant
+                var elements = exp.expression.elements.reduce(function(a, el){
+                    el = el.evaluate(compressor);
+                    if (a.length == 0 || el.length == 1) {
+                        a.push(el);
+                    } else {
+                        var last = a[a.length - 1];
+                        if (last.length == 2) {
+                            // it's a constant
+                            var val = "" + last[1] + separator + el[1];
+                            a[a.length - 1] = [ make_node_from_constant(compressor, val, last[0]), val ];
+                        } else {
+                            a.push(el);
+                        }
+                    }
+                    return a;
+                }, []);
+                if (elements.length == 0) return make_node(AST_String, self, { value: "" });
+                if (elements.length == 1) return elements[0][0];
+                if (separator == "") {
+                    var first;
+                    if (elements[0][0] instanceof AST_String
+                        || elements[1][0] instanceof AST_String) {
+                        first = elements.shift()[0];
+                    } else {
+                        first = make_node(AST_String, self, { value: "" });
+                    }
+                    return elements.reduce(function(prev, el){
+                        return make_node(AST_Binary, el[0], {
+                            operator : "+",
+                            left     : prev,
+                            right    : el[0],
+                        });
+                    }, first).transform(compressor);
+                }
+                // need this awkward cloning to not affect original element
+                // best_of will decide which one to get through.
+                var node = self.clone();
+                node.expression = node.expression.clone();
+                node.expression.expression = node.expression.expression.clone();
+                node.expression.expression.elements = elements.map(function(el){
+                    return el[0];
+                });
+                return best_of(self, node);
+            }
         }
         if (compressor.option("side_effects")) {
             if (self.expression instanceof AST_Function
                 && self.args.length == 0
-                && !AST_Block.prototype.has_side_effects.call(self.expression)) {
+                && !AST_Block.prototype.has_side_effects.call(self.expression, compressor)) {
                 return make_node(AST_Undefined, self).transform(compressor);
             }
         }
-        return self;
+        if (compressor.option("drop_console")) {
+            if (self.expression instanceof AST_PropAccess &&
+                self.expression.expression instanceof AST_SymbolRef &&
+                self.expression.expression.name == "console" &&
+                self.expression.expression.undeclared()) {
+                return make_node(AST_Undefined, self).transform(compressor);
+            }
+        }
+        return self.evaluate(compressor)[0];
     });
 
     OPT(AST_New, function(self, compressor){
@@ -21385,7 +23276,7 @@ merge(Compressor.prototype, {
     OPT(AST_Seq, function(self, compressor){
         if (!compressor.option("side_effects"))
             return self;
-        if (!self.car.has_side_effects()) {
+        if (!self.car.has_side_effects(compressor)) {
             // we shouldn't compress (1,eval)(something) to
             // eval(something) because that changes the meaning of
             // eval (becomes lexical instead of global).
@@ -21400,15 +23291,33 @@ merge(Compressor.prototype, {
         }
         if (compressor.option("cascade")) {
             if (self.car instanceof AST_Assign
-                && !self.car.left.has_side_effects()
-                && self.car.left.equivalent_to(self.cdr)) {
-                return self.car;
+                && !self.car.left.has_side_effects(compressor)) {
+                if (self.car.left.equivalent_to(self.cdr)) {
+                    return self.car;
+                }
+                if (self.cdr instanceof AST_Call
+                    && self.cdr.expression.equivalent_to(self.car.left)) {
+                    self.cdr.expression = self.car;
+                    return self.cdr;
+                }
             }
-            if (!self.car.has_side_effects()
-                && !self.cdr.has_side_effects()
+            if (!self.car.has_side_effects(compressor)
+                && !self.cdr.has_side_effects(compressor)
                 && self.car.equivalent_to(self.cdr)) {
                 return self.car;
             }
+        }
+        if (self.cdr instanceof AST_UnaryPrefix
+            && self.cdr.operator == "void"
+            && !self.cdr.expression.has_side_effects(compressor)) {
+            self.cdr.operator = self.car;
+            return self.cdr;
+        }
+        if (self.cdr instanceof AST_Undefined) {
+            return make_node(AST_UnaryPrefix, self, {
+                operator   : "void",
+                expression : self.car
+            });
         }
         return self;
     });
@@ -21455,6 +23364,14 @@ merge(Compressor.prototype, {
         return self.evaluate(compressor)[0];
     });
 
+    function has_side_effects_or_prop_access(node, compressor) {
+        var save_pure_getters = compressor.option("pure_getters");
+        compressor.options.pure_getters = false;
+        var ret = node.has_side_effects(compressor);
+        compressor.options.pure_getters = save_pure_getters;
+        return ret;
+    }
+
     AST_Binary.DEFMETHOD("lift_sequences", function(compressor){
         if (compressor.option("sequences")) {
             if (this.left instanceof AST_Seq) {
@@ -21466,8 +23383,8 @@ merge(Compressor.prototype, {
                 return seq;
             }
             if (this.right instanceof AST_Seq
-                && !(this.operator == "||" || this.operator == "&&")
-                && !this.left.has_side_effects()) {
+                && this instanceof AST_Assign
+                && !has_side_effects_or_prop_access(this.left, compressor)) {
                 var seq = this.right;
                 var x = seq.to_array();
                 this.right = x.pop();
@@ -21484,7 +23401,7 @@ merge(Compressor.prototype, {
     OPT(AST_Binary, function(self, compressor){
         var reverse = compressor.has_directive("use asm") ? noop
             : function(op, force) {
-                if (force || !(self.left.has_side_effects() || self.right.has_side_effects())) {
+                if (force || !(self.left.has_side_effects(compressor) || self.right.has_side_effects(compressor))) {
                     if (op) self.operator = op;
                     var tmp = self.left;
                     self.left = self.right;
@@ -21497,7 +23414,37 @@ merge(Compressor.prototype, {
                 // if right is a constant, whatever side effects the
                 // left side might have could not influence the
                 // result.  hence, force switch.
-                reverse(null, true);
+
+                if (!(self.left instanceof AST_Binary
+                      && PRECEDENCE[self.left.operator] >= PRECEDENCE[self.operator])) {
+                    reverse(null, true);
+                }
+            }
+            if (/^[!=]==?$/.test(self.operator)) {
+                if (self.left instanceof AST_SymbolRef && self.right instanceof AST_Conditional) {
+                    if (self.right.consequent instanceof AST_SymbolRef
+                        && self.right.consequent.definition() === self.left.definition()) {
+                        if (/^==/.test(self.operator)) return self.right.condition;
+                        if (/^!=/.test(self.operator)) return self.right.condition.negate(compressor);
+                    }
+                    if (self.right.alternative instanceof AST_SymbolRef
+                        && self.right.alternative.definition() === self.left.definition()) {
+                        if (/^==/.test(self.operator)) return self.right.condition.negate(compressor);
+                        if (/^!=/.test(self.operator)) return self.right.condition;
+                    }
+                }
+                if (self.right instanceof AST_SymbolRef && self.left instanceof AST_Conditional) {
+                    if (self.left.consequent instanceof AST_SymbolRef
+                        && self.left.consequent.definition() === self.right.definition()) {
+                        if (/^==/.test(self.operator)) return self.left.condition;
+                        if (/^!=/.test(self.operator)) return self.left.condition.negate(compressor);
+                    }
+                    if (self.left.alternative instanceof AST_SymbolRef
+                        && self.left.alternative.definition() === self.right.definition()) {
+                        if (/^==/.test(self.operator)) return self.left.condition.negate(compressor);
+                        if (/^!=/.test(self.operator)) return self.left.condition;
+                    }
+                }
             }
         }
         self = self.lift_sequences(compressor);
@@ -21564,11 +23511,6 @@ merge(Compressor.prototype, {
             }
             break;
         }
-        var exp = self.evaluate(compressor);
-        if (exp.length > 1) {
-            if (best_of(exp[0], self) !== self)
-                return exp[0];
-        }
         if (compressor.option("comparisons")) {
             if (!(compressor.parent() instanceof AST_Binary)
                 || compressor.parent() instanceof AST_Assign) {
@@ -21588,7 +23530,76 @@ merge(Compressor.prototype, {
             && self.left.operator == "+" && self.left.is_string(compressor)) {
             return self.left;
         }
-        return self;
+        if (compressor.option("evaluate")) {
+            if (self.operator == "+") {
+                if (self.left instanceof AST_Constant
+                    && self.right instanceof AST_Binary
+                    && self.right.operator == "+"
+                    && self.right.left instanceof AST_Constant
+                    && self.right.is_string(compressor)) {
+                    self = make_node(AST_Binary, self, {
+                        operator: "+",
+                        left: make_node(AST_String, null, {
+                            value: "" + self.left.getValue() + self.right.left.getValue(),
+                            start: self.left.start,
+                            end: self.right.left.end
+                        }),
+                        right: self.right.right
+                    });
+                }
+                if (self.right instanceof AST_Constant
+                    && self.left instanceof AST_Binary
+                    && self.left.operator == "+"
+                    && self.left.right instanceof AST_Constant
+                    && self.left.is_string(compressor)) {
+                    self = make_node(AST_Binary, self, {
+                        operator: "+",
+                        left: self.left.left,
+                        right: make_node(AST_String, null, {
+                            value: "" + self.left.right.getValue() + self.right.getValue(),
+                            start: self.left.right.start,
+                            end: self.right.end
+                        })
+                    });
+                }
+                if (self.left instanceof AST_Binary
+                    && self.left.operator == "+"
+                    && self.left.is_string(compressor)
+                    && self.left.right instanceof AST_Constant
+                    && self.right instanceof AST_Binary
+                    && self.right.operator == "+"
+                    && self.right.left instanceof AST_Constant
+                    && self.right.is_string(compressor)) {
+                    self = make_node(AST_Binary, self, {
+                        operator: "+",
+                        left: make_node(AST_Binary, self.left, {
+                            operator: "+",
+                            left: self.left.left,
+                            right: make_node(AST_String, null, {
+                                value: "" + self.left.right.getValue() + self.right.left.getValue(),
+                                start: self.left.right.start,
+                                end: self.right.left.end
+                            })
+                        }),
+                        right: self.right.right
+                    });
+                }
+            }
+        }
+        // x * (y * z)  ==>  x * y * z
+        if (self.right instanceof AST_Binary
+            && self.right.operator == self.operator
+            && (self.operator == "*" || self.operator == "&&" || self.operator == "||"))
+        {
+            self.left = make_node(AST_Binary, self.left, {
+                operator : self.operator,
+                left     : self.left,
+                right    : self.right.left
+            });
+            self.right = self.right.right;
+            return self.transform(compressor);
+        }
+        return self.evaluate(compressor)[0];
     });
 
     OPT(AST_SymbolRef, function(self, compressor){
@@ -21679,7 +23690,7 @@ merge(Compressor.prototype, {
              * ==>
              * exp = foo ? something : something_else;
              */
-            self = make_node(AST_Assign, self, {
+            return make_node(AST_Assign, self, {
                 operator: consequent.operator,
                 left: consequent.left,
                 right: make_node(AST_Conditional, self, {
@@ -21688,6 +23699,25 @@ merge(Compressor.prototype, {
                     alternative: alternative.right
                 })
             });
+        }
+        if (consequent instanceof AST_Call
+            && alternative.TYPE === consequent.TYPE
+            && consequent.args.length == alternative.args.length
+            && consequent.expression.equivalent_to(alternative.expression)) {
+            if (consequent.args.length == 0) {
+                return make_node(AST_Seq, self, {
+                    car: self.condition,
+                    cdr: consequent
+                });
+            }
+            if (consequent.args.length == 1) {
+                consequent.args[0] = make_node(AST_Conditional, self, {
+                    condition: self.condition,
+                    consequent: consequent.args[0],
+                    alternative: alternative.args[0]
+                });
+                return consequent;
+            }
         }
         return self;
     });
@@ -21726,6 +23756,12 @@ merge(Compressor.prototype, {
                 return make_node(AST_Dot, self, {
                     expression : self.expression,
                     property   : prop
+                });
+            }
+            var v = parseFloat(prop);
+            if (!isNaN(v) && v.toString() == prop) {
+                self.property = make_node(AST_Number, self.property, {
+                    value: v
                 });
             }
         }
@@ -21795,6 +23831,9 @@ function SourceMap(options) {
         file : null,
         root : null,
         orig : null,
+
+        orig_line_diff : 0,
+        dest_line_diff : 0,
     });
     var generator = new MOZ_SourceMap.SourceMapGenerator({
         file       : options.file,
@@ -21813,8 +23852,8 @@ function SourceMap(options) {
             name = info.name;
         }
         generator.addMapping({
-            generated : { line: gen_line, column: gen_col },
-            original  : { line: orig_line, column: orig_col },
+            generated : { line: gen_line + options.dest_line_diff, column: gen_col },
+            original  : { line: orig_line + options.orig_line_diff, column: orig_col },
             source    : source,
             name      : name
         });
@@ -22131,6 +24170,7 @@ exports.AST_BlockStatement = AST_BlockStatement;
 exports.AST_EmptyStatement = AST_EmptyStatement;
 exports.AST_StatementWithBody = AST_StatementWithBody;
 exports.AST_LabeledStatement = AST_LabeledStatement;
+exports.AST_IterationStatement = AST_IterationStatement;
 exports.AST_DWLoop = AST_DWLoop;
 exports.AST_Do = AST_Do;
 exports.AST_While = AST_While;
@@ -22254,6 +24294,7 @@ exports.AST_Node.warn_function = function (txt) { if (typeof console != "undefin
 
 exports.minify = function (files, options) {
     options = UglifyJS.defaults(options, {
+        spidermonkey : false,
         outSourceMap : null,
         sourceRoot   : null,
         inSourceMap  : null,
@@ -22263,22 +24304,26 @@ exports.minify = function (files, options) {
         output       : null,
         compress     : {}
     });
-    if (typeof files == "string")
-        files = [ files ];
-
     UglifyJS.base54.reset();
 
     // 1. parse
     var toplevel = null;
-    files.forEach(function(file){
-        var code = options.fromString
-            ? file
-            : fs.readFileSync(file, "utf8");
-        toplevel = UglifyJS.parse(code, {
-            filename: options.fromString ? "?" : file,
-            toplevel: toplevel
+
+    if (options.spidermonkey) {
+        toplevel = UglifyJS.AST_Node.from_mozilla_ast(files);
+    } else {
+        if (typeof files == "string")
+            files = [ files ];
+        files.forEach(function(file){
+            var code = options.fromString
+                ? file
+                : fs.readFileSync(file, "utf8");
+            toplevel = UglifyJS.parse(code, {
+                filename: options.fromString ? "?" : file,
+                toplevel: toplevel
+            });
         });
-    });
+    }
 
     // 2. compress
     if (options.compress) {
@@ -22354,595 +24399,6 @@ exports.describe_ast = function () {
     doitem(UglifyJS.AST_Node);
     return out + "";
 };
-},{"source-map":47,"util":32}],58:[function(require,module,exports){
-// jshint -W001
-
-"use strict";
-
-// Identifiers provided by the ECMAScript standard.
-
-exports.reservedVars = {
-  arguments : false,
-  NaN       : false
-};
-
-exports.ecmaIdentifiers = {
-  Array              : false,
-  Boolean            : false,
-  Date               : false,
-  decodeURI          : false,
-  decodeURIComponent : false,
-  encodeURI          : false,
-  encodeURIComponent : false,
-  Error              : false,
-  "eval"             : false,
-  EvalError          : false,
-  Function           : false,
-  hasOwnProperty     : false,
-  isFinite           : false,
-  isNaN              : false,
-  JSON               : false,
-  Math               : false,
-  Map                : false,
-  Number             : false,
-  Object             : false,
-  parseInt           : false,
-  parseFloat         : false,
-  RangeError         : false,
-  ReferenceError     : false,
-  RegExp             : false,
-  Set                : false,
-  String             : false,
-  SyntaxError        : false,
-  TypeError          : false,
-  URIError           : false,
-  WeakMap            : false
-};
-
-// Global variables commonly provided by a web browser environment.
-
-exports.browser = {
-  Audio                : false,
-  Blob                 : false,
-  addEventListener     : false,
-  applicationCache     : false,
-  atob                 : false,
-  blur                 : false,
-  btoa                 : false,
-  clearInterval        : false,
-  clearTimeout         : false,
-  close                : false,
-  closed               : false,
-  CustomEvent          : false,
-  DOMParser            : false,
-  defaultStatus        : false,
-  document             : false,
-  Element              : false,
-  ElementTimeControl   : false,
-  event                : false,
-  FileReader           : false,
-  FormData             : false,
-  focus                : false,
-  frames               : false,
-  getComputedStyle     : false,
-  HTMLElement          : false,
-  HTMLAnchorElement    : false,
-  HTMLBaseElement      : false,
-  HTMLBlockquoteElement: false,
-  HTMLBodyElement      : false,
-  HTMLBRElement        : false,
-  HTMLButtonElement    : false,
-  HTMLCanvasElement    : false,
-  HTMLDirectoryElement : false,
-  HTMLDivElement       : false,
-  HTMLDListElement     : false,
-  HTMLFieldSetElement  : false,
-  HTMLFontElement      : false,
-  HTMLFormElement      : false,
-  HTMLFrameElement     : false,
-  HTMLFrameSetElement  : false,
-  HTMLHeadElement      : false,
-  HTMLHeadingElement   : false,
-  HTMLHRElement        : false,
-  HTMLHtmlElement      : false,
-  HTMLIFrameElement    : false,
-  HTMLImageElement     : false,
-  HTMLInputElement     : false,
-  HTMLIsIndexElement   : false,
-  HTMLLabelElement     : false,
-  HTMLLayerElement     : false,
-  HTMLLegendElement    : false,
-  HTMLLIElement        : false,
-  HTMLLinkElement      : false,
-  HTMLMapElement       : false,
-  HTMLMenuElement      : false,
-  HTMLMetaElement      : false,
-  HTMLModElement       : false,
-  HTMLObjectElement    : false,
-  HTMLOListElement     : false,
-  HTMLOptGroupElement  : false,
-  HTMLOptionElement    : false,
-  HTMLParagraphElement : false,
-  HTMLParamElement     : false,
-  HTMLPreElement       : false,
-  HTMLQuoteElement     : false,
-  HTMLScriptElement    : false,
-  HTMLSelectElement    : false,
-  HTMLStyleElement     : false,
-  HTMLTableCaptionElement: false,
-  HTMLTableCellElement : false,
-  HTMLTableColElement  : false,
-  HTMLTableElement     : false,
-  HTMLTableRowElement  : false,
-  HTMLTableSectionElement: false,
-  HTMLTextAreaElement  : false,
-  HTMLTitleElement     : false,
-  HTMLUListElement     : false,
-  HTMLVideoElement     : false,
-  history              : false,
-  Image                : false,
-  length               : false,
-  localStorage         : false,
-  location             : false,
-  MessageChannel       : false,
-  MessageEvent         : false,
-  MessagePort          : false,
-  MouseEvent           : false,
-  moveBy               : false,
-  moveTo               : false,
-  MutationObserver     : false,
-  name                 : false,
-  Node                 : false,
-  NodeFilter           : false,
-  navigator            : false,
-  onbeforeunload       : true,
-  onblur               : true,
-  onerror              : true,
-  onfocus              : true,
-  onload               : true,
-  onresize             : true,
-  onunload             : true,
-  open                 : false,
-  openDatabase         : false,
-  opener               : false,
-  Option               : false,
-  parent               : false,
-  print                : false,
-  removeEventListener  : false,
-  resizeBy             : false,
-  resizeTo             : false,
-  screen               : false,
-  scroll               : false,
-  scrollBy             : false,
-  scrollTo             : false,
-  sessionStorage       : false,
-  setInterval          : false,
-  setTimeout           : false,
-  SharedWorker         : false,
-  status               : false,
-  SVGAElement          : false,
-  SVGAltGlyphDefElement: false,
-  SVGAltGlyphElement   : false,
-  SVGAltGlyphItemElement: false,
-  SVGAngle             : false,
-  SVGAnimateColorElement: false,
-  SVGAnimateElement    : false,
-  SVGAnimateMotionElement: false,
-  SVGAnimateTransformElement: false,
-  SVGAnimatedAngle     : false,
-  SVGAnimatedBoolean   : false,
-  SVGAnimatedEnumeration: false,
-  SVGAnimatedInteger   : false,
-  SVGAnimatedLength    : false,
-  SVGAnimatedLengthList: false,
-  SVGAnimatedNumber    : false,
-  SVGAnimatedNumberList: false,
-  SVGAnimatedPathData  : false,
-  SVGAnimatedPoints    : false,
-  SVGAnimatedPreserveAspectRatio: false,
-  SVGAnimatedRect      : false,
-  SVGAnimatedString    : false,
-  SVGAnimatedTransformList: false,
-  SVGAnimationElement  : false,
-  SVGCSSRule           : false,
-  SVGCircleElement     : false,
-  SVGClipPathElement   : false,
-  SVGColor             : false,
-  SVGColorProfileElement: false,
-  SVGColorProfileRule  : false,
-  SVGComponentTransferFunctionElement: false,
-  SVGCursorElement     : false,
-  SVGDefsElement       : false,
-  SVGDescElement       : false,
-  SVGDocument          : false,
-  SVGElement           : false,
-  SVGElementInstance   : false,
-  SVGElementInstanceList: false,
-  SVGEllipseElement    : false,
-  SVGExternalResourcesRequired: false,
-  SVGFEBlendElement    : false,
-  SVGFEColorMatrixElement: false,
-  SVGFEComponentTransferElement: false,
-  SVGFECompositeElement: false,
-  SVGFEConvolveMatrixElement: false,
-  SVGFEDiffuseLightingElement: false,
-  SVGFEDisplacementMapElement: false,
-  SVGFEDistantLightElement: false,
-  SVGFEFloodElement    : false,
-  SVGFEFuncAElement    : false,
-  SVGFEFuncBElement    : false,
-  SVGFEFuncGElement    : false,
-  SVGFEFuncRElement    : false,
-  SVGFEGaussianBlurElement: false,
-  SVGFEImageElement    : false,
-  SVGFEMergeElement    : false,
-  SVGFEMergeNodeElement: false,
-  SVGFEMorphologyElement: false,
-  SVGFEOffsetElement   : false,
-  SVGFEPointLightElement: false,
-  SVGFESpecularLightingElement: false,
-  SVGFESpotLightElement: false,
-  SVGFETileElement     : false,
-  SVGFETurbulenceElement: false,
-  SVGFilterElement     : false,
-  SVGFilterPrimitiveStandardAttributes: false,
-  SVGFitToViewBox      : false,
-  SVGFontElement       : false,
-  SVGFontFaceElement   : false,
-  SVGFontFaceFormatElement: false,
-  SVGFontFaceNameElement: false,
-  SVGFontFaceSrcElement: false,
-  SVGFontFaceUriElement: false,
-  SVGForeignObjectElement: false,
-  SVGGElement          : false,
-  SVGGlyphElement      : false,
-  SVGGlyphRefElement   : false,
-  SVGGradientElement   : false,
-  SVGHKernElement      : false,
-  SVGICCColor          : false,
-  SVGImageElement      : false,
-  SVGLangSpace         : false,
-  SVGLength            : false,
-  SVGLengthList        : false,
-  SVGLineElement       : false,
-  SVGLinearGradientElement: false,
-  SVGLocatable         : false,
-  SVGMPathElement      : false,
-  SVGMarkerElement     : false,
-  SVGMaskElement       : false,
-  SVGMatrix            : false,
-  SVGMetadataElement   : false,
-  SVGMissingGlyphElement: false,
-  SVGNumber            : false,
-  SVGNumberList        : false,
-  SVGPaint             : false,
-  SVGPathElement       : false,
-  SVGPathSeg           : false,
-  SVGPathSegArcAbs     : false,
-  SVGPathSegArcRel     : false,
-  SVGPathSegClosePath  : false,
-  SVGPathSegCurvetoCubicAbs: false,
-  SVGPathSegCurvetoCubicRel: false,
-  SVGPathSegCurvetoCubicSmoothAbs: false,
-  SVGPathSegCurvetoCubicSmoothRel: false,
-  SVGPathSegCurvetoQuadraticAbs: false,
-  SVGPathSegCurvetoQuadraticRel: false,
-  SVGPathSegCurvetoQuadraticSmoothAbs: false,
-  SVGPathSegCurvetoQuadraticSmoothRel: false,
-  SVGPathSegLinetoAbs  : false,
-  SVGPathSegLinetoHorizontalAbs: false,
-  SVGPathSegLinetoHorizontalRel: false,
-  SVGPathSegLinetoRel  : false,
-  SVGPathSegLinetoVerticalAbs: false,
-  SVGPathSegLinetoVerticalRel: false,
-  SVGPathSegList       : false,
-  SVGPathSegMovetoAbs  : false,
-  SVGPathSegMovetoRel  : false,
-  SVGPatternElement    : false,
-  SVGPoint             : false,
-  SVGPointList         : false,
-  SVGPolygonElement    : false,
-  SVGPolylineElement   : false,
-  SVGPreserveAspectRatio: false,
-  SVGRadialGradientElement: false,
-  SVGRect              : false,
-  SVGRectElement       : false,
-  SVGRenderingIntent   : false,
-  SVGSVGElement        : false,
-  SVGScriptElement     : false,
-  SVGSetElement        : false,
-  SVGStopElement       : false,
-  SVGStringList        : false,
-  SVGStylable          : false,
-  SVGStyleElement      : false,
-  SVGSwitchElement     : false,
-  SVGSymbolElement     : false,
-  SVGTRefElement       : false,
-  SVGTSpanElement      : false,
-  SVGTests             : false,
-  SVGTextContentElement: false,
-  SVGTextElement       : false,
-  SVGTextPathElement   : false,
-  SVGTextPositioningElement: false,
-  SVGTitleElement      : false,
-  SVGTransform         : false,
-  SVGTransformList     : false,
-  SVGTransformable     : false,
-  SVGURIReference      : false,
-  SVGUnitTypes         : false,
-  SVGUseElement        : false,
-  SVGVKernElement      : false,
-  SVGViewElement       : false,
-  SVGViewSpec          : false,
-  SVGZoomAndPan        : false,
-  TimeEvent            : false,
-  top                  : false,
-  WebSocket            : false,
-  window               : false,
-  Worker               : false,
-  XMLHttpRequest       : false,
-  XMLSerializer        : false,
-  XPathEvaluator       : false,
-  XPathException       : false,
-  XPathExpression      : false,
-  XPathNamespace       : false,
-  XPathNSResolver      : false,
-  XPathResult          : false
-};
-
-exports.devel = {
-  alert  : false,
-  confirm: false,
-  console: false,
-  Debug  : false,
-  opera  : false,
-  prompt : false
-};
-
-exports.worker = {
-  importScripts: true,
-  postMessage  : true,
-  self         : true
-};
-
-// Widely adopted global names that are not part of ECMAScript standard
-exports.nonstandard = {
-  escape  : false,
-  unescape: false
-};
-
-// Globals provided by popular JavaScript environments.
-
-exports.couch = {
-  "require" : false,
-  respond   : false,
-  getRow    : false,
-  emit      : false,
-  send      : false,
-  start     : false,
-  sum       : false,
-  log       : false,
-  exports   : false,
-  module    : false,
-  provides  : false
-};
-
-exports.node = {
-  __filename    : false,
-  __dirname     : false,
-  Buffer        : false,
-  console       : false,
-  exports       : true,  // In Node it is ok to exports = module.exports = foo();
-  GLOBAL        : false,
-  global        : false,
-  module        : false,
-  process       : false,
-  require       : false,
-  setTimeout    : false,
-  clearTimeout  : false,
-  setInterval   : false,
-  clearInterval : false,
-  setImmediate  : false, // v0.9.1+
-  clearImmediate: false  // v0.9.1+
-};
-
-exports.phantom = {
-  phantom      : true,
-  require      : true,
-  WebPage      : true,
-  console      : true, // in examples, but undocumented
-  exports      : true  // v1.7+
-};
-
-exports.rhino = {
-  defineClass  : false,
-  deserialize  : false,
-  gc           : false,
-  help         : false,
-  importPackage: false,
-  "java"       : false,
-  load         : false,
-  loadClass    : false,
-  print        : false,
-  quit         : false,
-  readFile     : false,
-  readUrl      : false,
-  runCommand   : false,
-  seal         : false,
-  serialize    : false,
-  spawn        : false,
-  sync         : false,
-  toint32      : false,
-  version      : false
-};
-
-exports.shelljs = {
-  target       : false,
-  echo         : false,
-  exit         : false,
-  cd           : false,
-  pwd          : false,
-  ls           : false,
-  find         : false,
-  cp           : false,
-  rm           : false,
-  mv           : false,
-  mkdir        : false,
-  test         : false,
-  cat          : false,
-  sed          : false,
-  grep         : false,
-  which        : false,
-  dirs         : false,
-  pushd        : false,
-  popd         : false,
-  env          : false,
-  exec         : false,
-  chmod        : false,
-  config       : false,
-  error        : false,
-  tempdir      : false
-};
-
-exports.typed = {
-  ArrayBuffer         : false,
-  ArrayBufferView     : false,
-  DataView            : false,
-  Float32Array        : false,
-  Float64Array        : false,
-  Int16Array          : false,
-  Int32Array          : false,
-  Int8Array           : false,
-  Uint16Array         : false,
-  Uint32Array         : false,
-  Uint8Array          : false,
-  Uint8ClampedArray   : false
-};
-
-exports.wsh = {
-  ActiveXObject            : true,
-  Enumerator               : true,
-  GetObject                : true,
-  ScriptEngine             : true,
-  ScriptEngineBuildVersion : true,
-  ScriptEngineMajorVersion : true,
-  ScriptEngineMinorVersion : true,
-  VBArray                  : true,
-  WSH                      : true,
-  WScript                  : true,
-  XDomainRequest           : true
-};
-
-// Globals provided by popular JavaScript libraries.
-
-exports.dojo = {
-  dojo     : false,
-  dijit    : false,
-  dojox    : false,
-  define   : false,
-  "require": false
-};
-
-exports.jquery = {
-  "$"    : false,
-  jQuery : false
-};
-
-exports.mootools = {
-  "$"           : false,
-  "$$"          : false,
-  Asset         : false,
-  Browser       : false,
-  Chain         : false,
-  Class         : false,
-  Color         : false,
-  Cookie        : false,
-  Core          : false,
-  Document      : false,
-  DomReady      : false,
-  DOMEvent      : false,
-  DOMReady      : false,
-  Drag          : false,
-  Element       : false,
-  Elements      : false,
-  Event         : false,
-  Events        : false,
-  Fx            : false,
-  Group         : false,
-  Hash          : false,
-  HtmlTable     : false,
-  Iframe        : false,
-  IframeShim    : false,
-  InputValidator: false,
-  instanceOf    : false,
-  Keyboard      : false,
-  Locale        : false,
-  Mask          : false,
-  MooTools      : false,
-  Native        : false,
-  Options       : false,
-  OverText      : false,
-  Request       : false,
-  Scroller      : false,
-  Slick         : false,
-  Slider        : false,
-  Sortables     : false,
-  Spinner       : false,
-  Swiff         : false,
-  Tips          : false,
-  Type          : false,
-  typeOf        : false,
-  URI           : false,
-  Window        : false
-};
-
-exports.prototypejs = {
-  "$"               : false,
-  "$$"              : false,
-  "$A"              : false,
-  "$F"              : false,
-  "$H"              : false,
-  "$R"              : false,
-  "$break"          : false,
-  "$continue"       : false,
-  "$w"              : false,
-  Abstract          : false,
-  Ajax              : false,
-  Class             : false,
-  Enumerable        : false,
-  Element           : false,
-  Event             : false,
-  Field             : false,
-  Form              : false,
-  Hash              : false,
-  Insertion         : false,
-  ObjectRange       : false,
-  PeriodicalExecuter: false,
-  Position          : false,
-  Prototype         : false,
-  Selector          : false,
-  Template          : false,
-  Toggle            : false,
-  Try               : false,
-  Autocompleter     : false,
-  Builder           : false,
-  Control           : false,
-  Draggable         : false,
-  Draggables        : false,
-  Droppables        : false,
-  Effect            : false,
-  Sortable          : false,
-  SortableObserver  : false,
-  Sound             : false,
-  Scriptaculous     : false
-};
-
-exports.yui = {
-  YUI       : false,
-  Y         : false,
-  YUI_config: false
-};
-
-},{}]},{},[5])
+},{"source-map":47,"util":32}]},{},[5])
 (5)
 });
