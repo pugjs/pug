@@ -8,6 +8,12 @@ var assert = require('assert');
 var jade = require('../');
 var uglify = require('uglify-js');
 
+jade.filters['custom-filter'] = function (str, options) {
+  assert(str === 'foo bar');
+  assert(options.foo === 'bar');
+  return 'bar baz';
+};
+
 // test cases
 
 var cases = fs.readdirSync('test/cases').filter(function(file){
@@ -33,15 +39,25 @@ cases.forEach(function(test){
     var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
     var actual = fn({ title: 'Jade' });
 
-    fs.writeFileSync(__dirname + '/output/' + test + '.html', actual)
+    fs.writeFileSync(__dirname + '/output/' + test + '.html', actual);
     var clientCode = uglify.minify(jade.compileClient(str, {
+      filename: path,
+      pretty: true,
+      compileDebug: false,
+      basedir: 'test/cases'
+    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
+    var clientCodeDebug = uglify.minify(jade.compileClient(str, {
+      filename: path,
+      pretty: true,
+      compileDebug: true,
+      basedir: 'test/cases'
+    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
+    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(jade.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
-      client: true,
       basedir: 'test/cases'
-    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
-    fs.writeFileSync(__dirname + '/output/' + test + '.js', clientCode);
+    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code);
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '');
       html = html.replace(/\n| /g, '');
@@ -50,6 +66,16 @@ cases.forEach(function(test){
       mixinsUnusedTestRan = true;
       assert(/never-called/.test(str), 'never-called is in the jade file for mixins-unused');
       assert(!/never-called/.test(clientCode), 'never-called should be removed from the code');
+    }
+    JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
+    actual = Function('jade', clientCode + '\nreturn template;')(jade.runtime)({ title: 'Jade' });
+    if (/filter/.test(test)) {
+      actual = actual.replace(/\n| /g, '');
+    }
+    JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
+    actual = Function('jade', clientCodeDebug + '\nreturn template;')(jade.runtime)({ title: 'Jade' });
+    if (/filter/.test(test)) {
+      actual = actual.replace(/\n| /g, '');
     }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   })

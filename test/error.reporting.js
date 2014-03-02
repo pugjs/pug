@@ -144,5 +144,42 @@ describe('error reporting', function () {
       assert(/test\.jade:1/.test(err.message))
       assert(/`doctype 5` is deprecated, you must now use `doctype html`/.test(err.message))
     });
+    it('warns about element-with-multiple-attributes', function () {
+      var consoleWarn = console.warn;
+      var log = '';
+      console.warn = function (str) {
+        log += str;
+      };
+      var res = jade.renderFile(__dirname + '/fixtures/element-with-multiple-attributes.jade');
+      console.warn = consoleWarn;
+      assert(/element-with-multiple-attributes.jade, line 1:/.test(log));
+      assert(/You should not have jade tags with multiple attributes/.test(log));
+      assert(res === '<div attr="val" foo="bar"></div>');
+    });
+    it('warns about missing space at the start of a line', function () {
+      var consoleWarn = console.warn;
+      var log = '';
+      console.warn = function (str) {
+        log += str;
+      };
+      var res = jade.render('%This line is plain text, but it should not be', {filename: 'foo.jade'});
+      console.warn = consoleWarn;
+      assert(log === 'Warning: missing space before text for line 1 of jade file "foo.jade"');
+      assert(res === '%This line is plain text, but it should not be');
+    });
+  });
+  describe('if you throw something that isn\'t an error', function () {
+    it('just rethrows without modification', function () {
+      var err = getError('- throw "foo"');
+      assert(err === 'foo');
+    });
+  });
+  describe('import without a filename for a basedir', function () {
+    it('throws an error', function () {
+      var err = getError('include foo.jade');
+      assert(/the "filename" option is required to use/.test(err.message));
+      var err = getError('include /foo.jade');
+      assert(/the "basedir" option is required to use/.test(err.message));
+    })
   });
 });

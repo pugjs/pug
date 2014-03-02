@@ -4,12 +4,17 @@
 var nodes = require('./nodes');
 var filters = require('./filters');
 var doctypes = require('./doctypes');
-var selfClosing = require('./self-closing');
 var runtime = require('./runtime');
 var utils = require('./utils');
 var parseJSExpression = require('character-parser').parseMax;
-var isConstant = require('constantinople');
-var toConstant = require('constantinople').toConstant;
+var constantinople = require('constantinople');
+
+function isConstant(src) {
+  return constantinople(src, {jade: runtime, 'jade_interp': undefined});
+}
+function toConstant(src) {
+  return constantinople.toConstant(src, {jade: runtime, 'jade_interp': undefined});
+}
 
 
 /**
@@ -30,6 +35,8 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.indents = 0;
   this.parentIndents = 0;
   this.terse = false;
+  this.mixins = {};
+  this.dynamicMixins = false;
   if (options.doctype) this.setDoctype(options.doctype);
 };
 
@@ -47,9 +54,21 @@ Compiler.prototype = {
 
   compile: function(){
     this.buf = [];
-    if (this.pp) this.buf.push("jade.indent = [];");
+    if (this.pp) this.buf.push("var jade_indent = [];");
     this.lastBufferedIdx = -1;
     this.visit(this.node);
+    if (!this.dynamicMixins) {
+      // if there are no dynamic mixins we can remove any un-used mixins
+      var mixinNames = Object.keys(this.mixins);
+      for (var i = 0; i < mixinNames.length; i++) {
+        var mixin = this.mixins[mixinNames[i]];
+        for (var x = 0; x < mixin.length; x++) {
+          for (var y = mixin[x].start; y < mixin[x].end; y++) {
+            this.buf[y] = '';
+          }
+        }
+      }
+    }
     return this.buf.join('\n');
   },
 
@@ -63,7 +82,6 @@ Compiler.prototype = {
    */
 
   setDoctype: function(name){
-    name = name || 'default';
     this.doctype = doctypes[name.toLowerCase()] || '<!DOCTYPE ' + name + '>';
     this.terse = this.doctype.toLowerCase() == '<!doctype html>';
     this.xml = 0 == this.doctype.indexOf('<?xml');
@@ -88,17 +106,9 @@ Compiler.prototype = {
           this.buffer(match[3], true);
           return;
         } else {
-          try {
-            var rest = match[3];
-            var range = parseJSExpression(rest);
-            var code = ('!' == match[2] ? '' : 'jade.escape') + "((jade.interp = " + range.src + ") == null ? '' : jade.interp)";
-          } catch (ex) {
-            throw ex;
-            //didn't match, just as if escaped
-            this.buffer(match[2] + '{', false);
-            this.buffer(match[3], true);
-            return;
-          }
+          var rest = match[3];
+          var range = parseJSExpression(rest);
+          var code = ('!' == match[2] ? '' : 'jade.escape') + "((jade_interp = " + range.src + ") == null ? '' : jade_interp)";
           this.bufferExpression(code);
           this.buffer(rest.substr(range.end + 1), true);
           return;
@@ -131,9 +141,8 @@ Compiler.prototype = {
    */
 
   bufferExpression: function (src) {
-    var fn = Function('', 'return (' + src + ');');
     if (isConstant(src)) {
-      return this.buffer(fn(), false)
+      return this.buffer(toConstant(src) + '', false)
     }
     if (this.lastBufferedIdx == this.buf.length) {
       if (this.lastBufferedType === 'text') this.lastBuffered += '"';
@@ -163,7 +172,7 @@ Compiler.prototype = {
     newline = newline ? '\n' : '';
     this.buffer(newline + Array(this.indents + offset).join('  '));
     if (this.parentIndents)
-      this.buf.push("buf.push.apply(buf, jade.indent);");
+      this.buf.push("buf.push.apply(buf, jade_indent);");
   },
 
   /**
@@ -236,8 +245,10 @@ Compiler.prototype = {
     } else {
       this.buf.push('case ' + node.expr + ':');
     }
-    this.visit(node.block);
-    this.buf.push('  break;');
+    if (node.block) {
+      this.visit(node.block);
+      this.buf.push('  break;');
+    }
   },
 
   /**
@@ -287,9 +298,9 @@ Compiler.prototype = {
    */
 
   visitMixinBlock: function(block){
-    if (this.pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');");
+    if (this.pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join('  ') + "');");
     this.buf.push('block && block();');
-    if (this.pp) this.buf.push("jade.indent.pop();");
+    if (this.pp) this.buf.push("jade_indent.pop();");
   },
 
   /**
@@ -325,11 +336,19 @@ Compiler.prototype = {
     var attrs = mixin.attrs;
     var attrsBlocks = mixin.attributeBlocks;
     var pp = this.pp;
-
-    name += (mixin.name[0]=='#' ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
+    var dynamic = mixin.name[0]==='#';
+    var key = mixin.name;
+    if (dynamic) this.dynamicMixins = true;
+    name += (dynamic ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
 
     if (mixin.call) {
-      if (pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');")
+      if (this.mixins[key]) {
+        // clear list of mixins with this key so they are not removed
+        this.mixins[key] = [];
+      } else {
+        // todo: throw error for calling a mixin that's not defined
+      }
+      if (pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join('  ') + "');")
       if (block || attrs.length || attrsBlocks.length) {
 
         this.buf.push(name + '.call({');
@@ -372,14 +391,18 @@ Compiler.prototype = {
       } else {
         this.buf.push(name + '(' + args + ');');
       }
-      if (pp) this.buf.push("jade.indent.pop();")
+      if (pp) this.buf.push("jade_indent.pop();")
     } else {
+      var mixin_start = this.buf.length;
       this.buf.push(name + ' = function(' + args + '){');
       this.buf.push('var block = (this && this.block), attributes = (this && this.attributes) || {};');
       this.parentIndents++;
       this.visit(block);
       this.parentIndents--;
       this.buf.push('};');
+      var mixin_end = this.buf.length;
+      this.mixins[key] = this.mixins[key] || [];
+      this.mixins[key].push({start: mixin_start, end: mixin_end});
     }
   },
 
@@ -415,18 +438,13 @@ Compiler.prototype = {
     if (pp && !tag.isInline())
       this.prettyIndent(0, true);
 
-    if ((~selfClosing.indexOf(name) || tag.selfClosing) && !this.xml) {
+    if (tag.selfClosing && !this.xml) {
       this.buffer('<');
       bufferName();
       this.visitAttributes(tag.attrs, tag.attributeBlocks);
       this.terse
         ? this.buffer('>')
         : this.buffer('/>');
-      // if it is non-empty throw an error
-      if (tag.block && !(tag.block.type === 'Block' && tag.block.nodes.length === 0)
-      &&  tag.block.nodes.some(function (tag) { return tag.type !== 'Text' || !/^\s*$/.test(tag.val)})) {
-        throw new Error(name + ' is self closing and should not have content.');
-      }
     } else {
       // Optimize attributes buffering
       this.buffer('<');
@@ -461,7 +479,6 @@ Compiler.prototype = {
     var text = filter.block.nodes.map(
       function(node){ return node.val; }
     ).join('\n');
-    filter.attrs = filter.attrs || {};
     filter.attrs.filename = this.options.filename;
     this.buffer(filters(filter.name, text, filter.attrs), true);
   },
@@ -523,7 +540,7 @@ Compiler.prototype = {
     // Buffer code
     if (code.buffer) {
       var val = code.val.trimLeft();
-      val = 'null == (jade.interp = '+val+') ? "" : jade.interp';
+      val = 'null == (jade_interp = '+val+') ? "" : jade_interp';
       if (code.escape) val = 'jade.escape(' + val + ')';
       this.bufferExpression(val);
     } else {
@@ -641,7 +658,7 @@ Compiler.prototype = {
           if (escaped && !(key.indexOf('data') === 0)) {
             val = 'jade.escape(' + val + ')';
           } else if (escaped) {
-            val = '(typeof (jade.interp = ' + val + ') == "string" ? jade.escape(jade.interp) : jade.interp)"';
+            val = '(typeof (jade_interp = ' + val + ') == "string" ? jade.escape(jade_interp) : jade_interp)';
           }
           buf.push(JSON.stringify(key) + ': ' + val);
         }
@@ -653,15 +670,15 @@ Compiler.prototype = {
       } else {
         this.bufferExpression('jade.cls([' + classes.join(',') + '], ' + JSON.stringify(classEscaping) + ')');
       }
-    } else {
+    } else if (classes.length) {
       if (classes.every(isConstant)) {
         classes = JSON.stringify(runtime.joinClasses(classes.map(toConstant).map(runtime.joinClasses).map(function (cls, i) {
           return classEscaping[i] ? runtime.escape(cls) : cls;
         })));
-      } else if (classes.length) {
-        classes = '(jade.interp = ' + JSON.stringify(classEscaping) + ',' +
+      } else {
+        classes = '(jade_interp = ' + JSON.stringify(classEscaping) + ',' +
           ' jade.joinClasses([' + classes.join(',') + '].map(jade.joinClasses).map(function (cls, i) {' +
-          '   return jade.interp[i] ? jade.escape(cls) : cls' +
+          '   return jade_interp[i] ? jade.escape(cls) : cls' +
           ' }))' +
           ')';
       }
@@ -672,7 +689,7 @@ Compiler.prototype = {
   }
 };
 
-},{"./doctypes":2,"./filters":3,"./nodes":16,"./runtime":24,"./self-closing":25,"./utils":26,"character-parser":33,"constantinople":34}],2:[function(require,module,exports){
+},{"./doctypes":2,"./filters":3,"./nodes":16,"./runtime":24,"./utils":26,"character-parser":33,"constantinople":34}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -697,9 +714,6 @@ function filter(name, str, options) {
   }
   return res;
 }
-filter.exists = function (name, str, options) {
-  return typeof filter[name] === 'function';
-};
 
 },{}],4:[function(require,module,exports){
 'use strict';
@@ -832,12 +846,14 @@ function parse(str, options){
 
     globals.push('jade');
     globals.push('jade_mixins');
+    globals.push('jade_interp');
     globals.push('jade_debug');
     globals.push('buf');
 
     return ''
       + 'var buf = [];\n'
       + 'var jade_mixins = {};\n'
+      + 'var jade_interp;\n'
       + (options.self
         ? 'var self = locals || {};\n' + js
         : addWith('locals || {}', '\n' + js, globals)) + ';'
@@ -1055,6 +1071,7 @@ exports.__express = exports.renderFile;
 
 var utils = require('./utils');
 var characterParser = require('character-parser');
+var selfClosing = require('./self-closing');
 
 
 /**
@@ -1279,7 +1296,7 @@ Lexer.prototype = {
       } else {
         tok = this.tok('tag', name);
       }
-      tok.selfClosing = !! captures[2];
+      tok.selfClosing = !!captures[2] || selfClosing.indexOf(name) !== -1;
       return tok;
     }
   },
@@ -1334,7 +1351,7 @@ Lexer.prototype = {
   textFail: function () {
     var tok;
     if (tok = this.scan(/^([^\.\n][^\n]+)/, 'text')) {
-      console.warn('Warning: missing space before text for line ' + this.lineno + 
+      console.warn('Warning: missing space before text for line ' + this.lineno +
           ' of jade file "' + this.filename + '"');
       return tok;
     }
@@ -1539,30 +1556,40 @@ Lexer.prototype = {
     if (captures = /^(if|unless|else if|else)\b([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
       var type = captures[1]
-        , js = captures[2];
+      var js = captures[2];
+      var isIf = false;
+      var isElse = false;
 
       switch (type) {
         case 'if':
           assertExpression(js)
           js = 'if (' + js + ')';
+          isIf = true;
           break;
         case 'unless':
           assertExpression(js)
           js = 'if (!(' + js + '))';
+          isIf = true;
           break;
         case 'else if':
           assertExpression(js)
           js = 'else if (' + js + ')';
+          isIf = true;
+          isElse = true;
           break;
         case 'else':
           if (js && js.trim()) {
             throw new Error('`else` cannot have a condition, perhaps you meant `else if`');
           }
           js = 'else';
+          isElse = true;
           break;
       }
-
-      return this.tok('code', js);
+      var tok = this.tok('code', js);
+      tok.isElse = isElse;
+      tok.isIf = isIf;
+      tok.requiresBlock = true;
+      return tok;
     }
   },
 
@@ -1575,7 +1602,9 @@ Lexer.prototype = {
     if (captures = /^while +([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       assertExpression(captures[1])
-      return this.tok('code', 'while (' + captures[1] + ')');
+      var tok = this.tok('code', 'while (' + captures[1] + ')');
+      tok.requiresBlock = true;
+      return tok;
     }
   },
 
@@ -1703,7 +1732,7 @@ Lexer.prototype = {
                 loc = 'key';
                 if (i + 1 < str.length && [' ', ',', '!', '=', '\n'].indexOf(str[i + 1]) === -1)
                   throw new Error('Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `,`, `!` or `=`');
-              } else if (loc === 'key-char') {
+              } else {
                 key += str[i];
               }
               break;
@@ -1917,11 +1946,10 @@ Lexer.prototype = {
   }
 };
 
-},{"./utils":26,"character-parser":33}],7:[function(require,module,exports){
+},{"./self-closing":25,"./utils":26,"character-parser":33}],7:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
-var Block = require('./block');
 
 /**
  * Initialize a `Attrs` node.
@@ -1954,7 +1982,6 @@ Attrs.prototype.type = 'Attrs';
  */
 
 Attrs.prototype.setAttribute = function(name, val, escaped){
-  this.attributeNames = this.attributeNames || [];
   if (name !== 'class' && this.attributeNames.indexOf(name) !== -1) {
     throw new Error('Duplicate attribute "' + name + '" is not allowed.');
   }
@@ -1998,7 +2025,7 @@ Attrs.prototype.addAttributes = function (src) {
   this.attributeBlocks.push(src);
 };
 
-},{"./block":9,"./node":20}],8:[function(require,module,exports){
+},{"./node":20}],8:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2278,8 +2305,7 @@ Each.prototype.type = 'Each';
 },{"./node":20}],15:[function(require,module,exports){
 'use strict';
 
-var Node = require('./node')
-var Block = require('./block');
+var Node = require('./node');
 
 /**
  * Initialize a `Filter` node with the given
@@ -2302,7 +2328,7 @@ Filter.prototype.constructor = Filter;
 
 Filter.prototype.type = 'Filter';
 
-},{"./block":9,"./node":20}],16:[function(require,module,exports){
+},{"./node":20}],16:[function(require,module,exports){
 'use strict';
 
 exports.Node = require('./node');
@@ -2377,11 +2403,10 @@ var Attrs = require('./attrs');
  */
 
 var Mixin = module.exports = function Mixin(name, args, block, call){
+  Attrs.call(this);
   this.name = name;
   this.args = args;
   this.block = block;
-  this.attrs = [];
-  this.attributeBlocks = [];
   this.call = call;
 };
 
@@ -2425,9 +2450,8 @@ var inlineTags = require('../inline-tags');
  */
 
 var Tag = module.exports = function Tag(name, block) {
+  Attrs.call(this);
   this.name = name;
-  this.attrs = [];
-  this.attributeBlocks = [];
   this.block = block || new Block;
 };
 
@@ -2596,17 +2620,6 @@ Parser.prototype = {
   },
 
   /**
-   * Skip `n` tokens.
-   *
-   * @param {Number} n
-   * @api private
-   */
-
-  skip: function(n){
-    while (n--) this.advance();
-  },
-
-  /**
    * Single token lookahead.
    *
    * @return {Object}
@@ -2734,10 +2747,6 @@ Parser.prototype = {
         return this.parseMixinBlock();
       case 'case':
         return this.parseCase();
-      case 'when':
-        return this.parseWhen();
-      case 'default':
-        return this.parseDefault();
       case 'extends':
         return this.parseExtends();
       case 'include':
@@ -2811,7 +2820,31 @@ Parser.prototype = {
     var val = this.expect('case').val;
     var node = new nodes.Case(val);
     node.line = this.line();
-    node.block = this.block();
+
+    var block = new nodes.Block;
+    block.line = this.line();
+    block.filename = this.filename;
+    this.expect('indent');
+    while ('outdent' != this.peek().type) {
+      switch (this.peek().type) {
+        case 'newline':
+          this.advance();
+          break;
+        case 'when':
+          block.push(this.parseWhen());
+          break;
+        case 'default':
+          block.push(this.parseDefault());
+          break;
+        default:
+          throw new Error('Unexpected token "' + this.peek().type
+                          + '", expected "when", "default" or "newline"');
+      }
+    }
+    this.expect('outdent');
+
+    node.block = block;
+
     return node;
   },
 
@@ -2820,8 +2853,11 @@ Parser.prototype = {
    */
 
   parseWhen: function(){
-    var val = this.expect('when').val
-    return new nodes.Case.When(val, this.parseBlockExpansion());
+    var val = this.expect('when').val;
+    if (this.peek().type !== 'newline')
+      return new nodes.Case.When(val, this.parseBlockExpansion());
+    else
+      return new nodes.Case.When(val);
   },
 
   /**
@@ -2837,18 +2873,35 @@ Parser.prototype = {
    * code
    */
 
-  parseCode: function(){
+  parseCode: function(afterIf){
     var tok = this.expect('code');
     var node = new nodes.Code(tok.val, tok.buffer, tok.escape);
     var block;
-    var i = 1;
     node.line = this.line();
-    while (this.lookahead(i) && 'newline' == this.lookahead(i).type) ++i;
-    block = 'indent' == this.lookahead(i).type;
+
+    // throw an error if an else does not have an if
+    if (tok.isElse && !tok.hasIf) {
+      throw new Error('Unexpected else without if');
+    }
+
+    // handle block
+    block = 'indent' == this.peek().type;
     if (block) {
-      this.skip(i-1);
       node.block = this.block();
     }
+
+    // handle missing block
+    if (tok.requiresBlock && !block) {
+      node.block = new nodes.Block();
+    }
+
+    // mark presense of if for future elses
+    if (tok.isIf && this.peek().isElse) {
+      this.peek().hasIf = true;
+    } else if (tok.isIf && this.peek().type === 'newline' && this.lookahead(2).isElse) {
+      this.lookahead(2).hasIf = true;
+    }
+
     return node;
   },
 
@@ -3264,10 +3317,10 @@ Parser.prototype = {
       tag.textOnly = true;
       this.advance();
     }
-    
+
     if (tag.selfClosing
         && ['newline', 'outdent', 'eos'].indexOf(this.peek().type) === -1
-        && (this.peek().type !== 'text' || /^\s*$/.text(this.peek().val))) {
+        && (this.peek().type !== 'text' || !/^\s*$/.test(this.peek().val))) {
       throw new Error(name + ' is self closing and should not have content.');
     }
 
@@ -3304,12 +3357,8 @@ Parser.prototype = {
         this.lexer.pipeless = false;
       } else {
         var block = this.block();
-        if (tag.block) {
-          for (var i = 0, len = block.nodes.length; i < len; ++i) {
-            tag.block.push(block.nodes[i]);
-          }
-        } else {
-          tag.block = block;
+        for (var i = 0, len = block.nodes.length; i < len; ++i) {
+          tag.block.push(block.nodes[i]);
         }
       }
     }
@@ -4694,14 +4743,17 @@ var uglify = require('uglify-js')
 
 var lastSRC = '(null)'
 var lastRes = true
+var lastConstants = undefined;
 
 module.exports = isConstant
-function isConstant(src) {
+function isConstant(src, constants) {
   src = '(' + src + ')'
-  if (lastSRC === src) return lastRes
+  if (lastSRC === src && lastConstants === constants) return lastRes
   lastSRC = src
   try {
-    return lastRes = (detect(src).length === 0)
+    return lastRes = (detect(src).filter(function (key) {
+      return !constants || !(key in constants)
+    }).length === 0)
   } catch (ex) {
     return lastRes = false
   }
@@ -4709,9 +4761,11 @@ function isConstant(src) {
 isConstant.isConstant = isConstant
 
 isConstant.toConstant = toConstant
-function toConstant(src) {
-  if (!isConstant(src)) throw new Error(JSON.stringify(src) + ' is not constant.')
-  return Function('return (' + src + ')')()
+function toConstant(src, constants) {
+  if (!isConstant(src, constants)) throw new Error(JSON.stringify(src) + ' is not constant.')
+  return Function(Object.keys(constants || {}).join(','), 'return (' + src + ')').apply(null, Object.keys(constants || {}).map(function (key) {
+    return constants[key];
+  }));
 }
 
 function detect(src) {
