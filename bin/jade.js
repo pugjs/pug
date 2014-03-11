@@ -32,6 +32,7 @@ program
   .option('-c, --client', 'compile function for client-side runtime.js')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
+  .option('-E, --extension <extension>', 'specify the file extension')
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -68,6 +69,9 @@ if (program.obj) {
 // --filename
 
 if (program.path) options.filename = program.path;
+
+// --extension
+if (program.extension) options.extension = program.extension;
 
 // --no-debug
 
@@ -153,6 +157,9 @@ function renderFile(path) {
         options.filename = path;
         var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
         var extname = options.client ? '.js' : '.html';
+        
+        if(options.extension) extname='.'+options.extension;
+
         path = path.replace(re, extname);
         if (program.out) path = join(program.out, basename(path));
         var dir = resolve(dirname(path));
