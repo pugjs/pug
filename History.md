@@ -1,3 +1,9 @@
+1.3.1 / 2014-04-04
+==================
+
+  * Fix error with tags in xml that are self-closing in html ([@ForbesLindesay](http://www.forbeslindesay.co.uk/)
+  * Fix error message for inline tags with content ([@hiddentao](https://github.com/hiddentao))
+
 1.3.0 / 2014-03-02
 ==================
 
