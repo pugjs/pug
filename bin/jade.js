@@ -30,6 +30,7 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile function for client-side runtime.js')
+  .option('-n, --named', 'name templates according to their filenames')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
 
@@ -76,6 +77,10 @@ options.compileDebug = program.debug;
 // --client
 
 options.client = program.client;
+
+// --named
+
+options.named = program.named;
 
 // --pretty
 
@@ -128,7 +133,7 @@ function stdin() {
     }
     process.stdout.write(output);
   }).resume();
-  
+
   process.on('SIGINT', function() {
     process.stdout.write('\n');
     process.stdin.emit('end');
