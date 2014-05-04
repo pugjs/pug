@@ -2,4 +2,4 @@ html
   head
     title Dynamic Inline JavaScript
     script.
-      var users = !{JSON.stringify(users)}
+      var users = !{JSON.stringify(users).replace(/<\//g, "<\\/")}

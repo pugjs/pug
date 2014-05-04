@@ -36,11 +36,11 @@ describe('jade', function(){
     });
 
     it('should support line endings', function(){
-      var str = [
+      var src = [
           'p',
           'div',
           'img'
-      ].join('\r\n');
+      ];
 
       var html = [
           '<p></p>',
@@ -48,35 +48,19 @@ describe('jade', function(){
           '<img/>'
       ].join('');
 
-      assert.equal(html, jade.render(str));
+      assert.equal(html, jade.render(src.join('\n')));
+      assert.equal(html, jade.render(src.join('\r')));
+      assert.equal(html, jade.render(src.join('\r\n')));
 
-      var str = [
-          'p',
-          'div',
-          'img'
-      ].join('\r');
-
-      var html = [
-          '<p></p>',
-          '<div></div>',
-          '<img/>'
-      ].join('');
-
-      assert.equal(html, jade.render(str));
-
-      var str = [
-          'p',
-          'div',
-          'img'
-      ].join('\r\n');
-
-      var html = [
+      html = [
           '<p></p>',
           '<div></div>',
           '<img>'
       ].join('');
 
-      assert.equal(html, jade.render(str, { doctype:'html' }));
+      assert.equal(html, jade.render(src.join('\n'), { doctype:'html' }));
+      assert.equal(html, jade.render(src.join('\r'), { doctype:'html' }));
+      assert.equal(html, jade.render(src.join('\r\n'), { doctype:'html' }));
     });
 
     it('should support single quotes', function(){

@@ -7,23 +7,9 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
 
- [![Build Status](https://travis-ci.org/visionmedia/jade.png?branch=master)](https://travis-ci.org/visionmedia/jade)
- [![Dependency Status](https://gemnasium.com/visionmedia/jade.png)](https://gemnasium.com/visionmedia/jade)
- [![NPM version](https://badge.fury.io/js/jade.png)](http://badge.fury.io/js/jade)
-
-## Announcements
-
-**Deprecation of implicit script/style text-only:**
-
- Jade version 0.31.0 deprecated implicit text only support for scripts and styles.  To fix this all you need to do is add a `.` character after the script or style tag.
-
- It is hoped that this change will make Jade easier for newcomers to learn without affecting the power of the language or leading to excessive verboseness.
-
- If you have a lot of Jade files that need fixing you can use [fix-jade](https://github.com/ForbesLindesay/fix-jade) to attempt to automate the process.
-
-**Command line option change:**
-
-since `v0.31.0`, `-o` is preferred for `--out` where we used `-O` before.
+ [![Build Status](https://img.shields.io/travis/visionmedia/jade/master.svg)](https://travis-ci.org/visionmedia/jade)
+ [![Dependency Status](https://img.shields.io/gemnasium/visionmedia/jade.svg)](https://gemnasium.com/visionmedia/jade)
+ [![NPM version](https://img.shields.io/npm/v/jade.svg)](http://badge.fury.io/js/jade)
 
 ## Installation
 
@@ -136,7 +122,7 @@ Tutorials:
 
   - cssdeck interactive [Jade syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
   - cssdeck interactive [Jade logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
-  - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bjade%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
+  - [Jade について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
 
 
 Implementations in other languages:

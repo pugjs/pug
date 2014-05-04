@@ -1,3 +1,17 @@
+1.3.1 / 2014-04-04
+==================
+
+  * Fix error with tags in xml that are self-closing in html ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix error message for inline tags with content ([@hiddentao](https://github.com/hiddentao))
+
+1.3.0 / 2014-03-02
+==================
+
+  * Fix a bug where sometimes mixins were removed by an optimisation even though they were being called ([@ForbesLindesay](http://www.forbeslindesay.co.uk/), reported by [@leider](https://github.com/leider))
+  * Updated with to support automatically detecting when a value is "global" and removed redundant `options.globals` option ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Improve warnings for tags with multiple attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Deprecate (with a warning) `node.clone`, `block.replace`, `attrs.removeAttribute`, `attrs.getAttribute` - these are all internal APIs for the AST ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.2.0 / 2014-02-26
 ==================
 
