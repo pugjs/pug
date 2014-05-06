@@ -46,7 +46,7 @@ becomes
 
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Jade</title>

@@ -21,13 +21,13 @@ describe('jade', function(){
   describe('.compile()', function(){
     it('should support doctypes', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', jade.render('doctype xml'));
-      assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
+      assert.equal('<!doctype html>', jade.render('doctype html'));
       assert.equal('<!DOCTYPE foo bar baz>', jade.render('doctype foo bar baz'));
-      assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
-      assert.equal('<!DOCTYPE html>', jade.render('doctype', { doctype:'html' }));
-      assert.equal('<!DOCTYPE html>', jade.render('doctype html', { doctype:'xml' }));
+      assert.equal('<!doctype html>', jade.render('doctype html'));
+      assert.equal('<!doctype html>', jade.render('doctype', { doctype:'html' }));
+      assert.equal('<!doctype html>', jade.render('doctype html', { doctype:'xml' }));
       assert.equal('<html></html>', jade.render('html'));
-      assert.equal('<!DOCTYPE html><html></html>', jade.render('html', { doctype:'html' }));
+      assert.equal('<!doctype html><html></html>', jade.render('html', { doctype:'html' }));
       assert.equal('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN>', jade.render('doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN'));
     });
 
@@ -330,9 +330,9 @@ describe('jade', function(){
     });
 
     it('should support test html 5 mode', function(){
-      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('doctype html\ninput(type="checkbox", checked)'));
-      assert.equal('<!DOCTYPE html><input type="checkbox" checked>', jade.render('doctype html\ninput(type="checkbox", checked=true)'));
-      assert.equal('<!DOCTYPE html><input type="checkbox">', jade.render('doctype html\ninput(type="checkbox", checked= false)'));
+      assert.equal('<!doctype html><input type="checkbox" checked>', jade.render('doctype html\ninput(type="checkbox", checked)'));
+      assert.equal('<!doctype html><input type="checkbox" checked>', jade.render('doctype html\ninput(type="checkbox", checked=true)'));
+      assert.equal('<!doctype html><input type="checkbox">', jade.render('doctype html\ninput(type="checkbox", checked= false)'));
     });
 
     it('should support multi-line attrs', function(){

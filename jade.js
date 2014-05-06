@@ -707,7 +707,7 @@ Compiler.prototype = {
 'use strict';
 
 module.exports = {
-    'default': '<!DOCTYPE html>'
+    'default': '<!doctype html>'
   , 'xml': '<?xml version="1.0" encoding="utf-8" ?>'
   , 'transitional': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
   , 'strict': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
@@ -2293,7 +2293,7 @@ Comment.prototype.type = 'Comment';
 var Node = _dereq_('./node');
 
 /**
- * Initialize a `Doctype` with the given `val`. 
+ * Initialize a `Doctype` with the given `val`.
  *
  * @param {String} val
  * @api public
