@@ -30,6 +30,7 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile function for client-side runtime.js')
+  .option('-C, --commonjs', 'compile as a common.js module (needs --client)')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
 
@@ -76,6 +77,10 @@ options.compileDebug = program.debug;
 // --client
 
 options.client = program.client;
+
+// --common-js
+
+options.commonjs = program.commonjs;
 
 // --pretty
 
@@ -159,7 +164,7 @@ function renderFile(path) {
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
           try {
-            var output = options.client ? fn : fn(options);
+            var output = options.client ? options.commonjs ? 'module.exports=' + fn : fn : fn(options);
             fs.writeFile(path, output, function(err){
               if (err) throw err;
               console.log('  \033[90mrendered \033[36m%s\033[0m', path);
