@@ -102,6 +102,8 @@ $ jade --client --no-debug filename.jade
 
 which will produce `filename.js` containing the compiled template.
 
+ You can also use the `--commonjs` option if you need the template to get exported.
+
 ## Command Line
 
 After installing the latest version of [node](http://nodejs.org/), install with:
