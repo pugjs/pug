@@ -977,4 +977,33 @@ describe('jade', function(){
       });
     });
   });
+
+  describe('filter indentation', function () {
+    it('is maintained', function () {
+      jade.filters.indents = function(str){
+        return str.split(/\n/).map(function (line) { return line.match(/^ */)[0].length; }).join(",");
+      };
+
+      var indents = [
+        ':indents',
+        '  x',
+        '   x',
+        '    x',
+        '     x',
+        '  x',
+        '      x',
+        '      x',
+        '     x',
+        '     x',
+        '      x',
+        '    x',
+        '  x',
+        '    x',
+        '  x',
+        '   x'
+      ].join('\n');
+
+      assert.equal(jade.render(indents), '0,1,2,3,0,4,4,3,3,4,2,0,2,0,1');
+    });
+  });
 });
