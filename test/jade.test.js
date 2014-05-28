@@ -867,6 +867,34 @@ describe('jade', function(){
       assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
       , jade.render(str, { filename: __dirname + '/jade.test.js' }));
     });
+
+    it('should support virtual filesystem in include/extends', function(){
+      var files = {
+        "includes/header.jade":
+          ".header example header",
+        "layouts/main.jade":
+          "include ../includes/header\n" +
+          "block content\n" +
+          "  p default content",
+        "vfs-test.jade":
+          "extends layouts/main\n" +
+          "block content\n" +
+          "  p example content"
+      };
+
+      var objectVFSHandler = function(name) {
+        if (Object.hasOwnProperty.call(files, name)) {
+          return files[name];
+        } else {
+          var err = new Error("ENOENT, no such file or directory '" + name + "'");
+          err.code = "ENOENT";
+          throw err;
+        }
+      };
+
+      var result = jade.render(files["vfs-test.jade"], { filename: "vfs-test.jade", readFileSync: objectVFSHandler });
+      assert.equal('<div class="header">example header</div><p>example content</p>', result);
+    });
   });
 
   describe('.render()', function(){
