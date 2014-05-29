@@ -1,8 +1,9 @@
 'use strict';
 
-var jade = require('../');
 var assert = require('assert');
 var fs = require('fs');
+var path = require('path');
+var jade = require('../');
 
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
@@ -1004,6 +1005,43 @@ describe('jade', function(){
       ].join('\n');
 
       assert.equal(jade.render(indents), '0,1,2,3,0,4,4,3,3,4,2,0,2,0,1');
+    });
+  });
+
+  describe('.compile().dependencies', function() {
+    it('should list the filename of the template referenced by extends', function(){
+      var filename = __dirname + '/dependencies/extends1.jade';
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.compile(str, {filename: filename});
+      assert.deepEqual([
+        path.resolve(__dirname + '/dependencies/dependency1.jade')
+      ], info.dependencies);
+    });
+    it('should list the filename of the template referenced by an include', function() {
+      var filename = __dirname + '/dependencies/include1.jade';
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.compile(str, {filename: filename});
+      assert.deepEqual([
+        path.resolve(__dirname + '/dependencies/dependency1.jade')
+      ], info.dependencies);
+    });
+    it('should list the dependencies of extends dependencies', function() {
+      var filename = __dirname + '/dependencies/extends2.jade';
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.compile(str, {filename: filename});
+      assert.deepEqual([
+        path.resolve(__dirname + '/dependencies/dependency2.jade'),
+        path.resolve(__dirname + '/dependencies/dependency3.jade')
+      ], info.dependencies);
+    });
+    it('should list the dependencies of include dependencies', function() {
+      var filename = __dirname + '/dependencies/include2.jade';
+      var str = fs.readFileSync(filename, 'utf8');
+      var info = jade.compile(str, {filename: filename});
+      assert.deepEqual([
+        path.resolve(__dirname + '/dependencies/dependency2.jade'),
+        path.resolve(__dirname + '/dependencies/dependency3.jade')
+      ],info.dependencies);
     });
   });
 });
