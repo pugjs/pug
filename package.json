@@ -9,7 +9,6 @@
   "bin": {
     "jade": "./bin/jade.js"
   },
-  "man": "./jade.1",
   "dependencies": {
     "commander": "2.1.0",
     "mkdirp": "~0.3.5",
