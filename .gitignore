@@ -7,3 +7,6 @@ lib-cov
 coverage
 npm-debug.log
 /test/output
+
+/jade.js
+/runtime.js
