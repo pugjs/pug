@@ -93,14 +93,20 @@ var files = program.args;
 
 if (files.length) {
   console.log();
-  files.forEach(renderFile);
   if (options.watch) {
+    // keep watching when error occured.
+    process.on('uncaughtException', function(err) {
+      console.error(err);
+    });
+    files.forEach(renderFile);
     monocle.watchFiles({
       files: files,
       listener: function(file) {
         renderFile(file.absolutePath);
       }
     });
+  } else {
+    files.forEach(renderFile);    
   }
   process.on('exit', function () {
     console.log();
