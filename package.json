@@ -9,7 +9,10 @@
     "jbnicolai <joshua@jbna.nl>"
   ],
   "license": "MIT",
-  "repository": "git://github.com/visionmedia/jade",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/visionmedia/jade"
+  },
   "main": "./index.js",
   "bin": {
     "jade": "./bin/jade.js"
