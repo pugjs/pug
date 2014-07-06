@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade'),
+var jade = require('../'),
     Compiler = jade.Compiler,
     nodes = jade.nodes;
 
