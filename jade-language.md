@@ -73,6 +73,19 @@ p
 
 renders `<p>foo bar baz rawr.....</p>`
 
+To surround text with whitespace, use `'` (a single quote) instead of `|`:
+
+```jade
+p
+  ' Here is a
+  a(href='#') link
+  ' and here is
+  a(href='#') another one
+  | .
+```
+
+renders `Here is a <a href='#'>link</a> and here is <a href='#'>another one</a>.`
+
 interpolation? yup! both types of text can utilize interpolation,
 if we passed `{ name: 'tj', email: 'tj@vision-media.ca' }` to the compiled function we can do the following:
 

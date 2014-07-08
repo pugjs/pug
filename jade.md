@@ -220,6 +220,23 @@
       a(href='http://google.com') Google
       | if you want.
 
+## Spaced text
+
+  In the example above, there is no space around the
+  link, leading to rendered output that looks like
+  this:
+
+    Click to visitGoogleif you want.
+
+  To correct this problem, replace the pipe character
+  with a single quote `'`, which surrounds the text
+  body with whitespace:
+
+    p
+      ' Click to visit
+      a(href='http://google.com') Google
+      ' if you want.
+
 ## Text only tags
 
   As an alternative to pipe text you may add
