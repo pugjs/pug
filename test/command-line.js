@@ -30,12 +30,12 @@ describe('command line', function () {
       done();
     });
   });
-  it('jade --no-debug --client --name-after-file input.jade', function (done) {
-    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
-    fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
-    run('--no-debug --client --name-after-file input.jade', function (err, stdout, stderr) {
+  it('jade --no-debug --client --name-after-file input-file.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written");');
+    run('--no-debug --client --name-after-file input-file.jade', function (err, stdout, stderr) {
       if (err) return done(err);
-      var template = Function('', fs.readFileSync(__dirname + '/temp/input.js', 'utf8') + ';return inputTemplate;')();
+      var template = Function('', fs.readFileSync(__dirname + '/temp/input-file.js', 'utf8') + ';return inputFileTemplate;')();
       assert(template() === '<div class="foo">bar</div>');
       return done();
     });
