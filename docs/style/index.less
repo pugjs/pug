@@ -1,0 +1,47 @@
+@import (npm) "twbs";
+
+@jade: #00a86b;
+@brand-primary: @jade;
+@grid-float-breakpoint: @screen-md-min;
+
+@media (min-width: 1500px) {
+  .container {
+    width: 1450px + @grid-gutter-width;
+  }
+}
+@media (max-width: @grid-float-breakpoint) {
+  .navbar .container {
+    width: auto;
+  }
+  .navbar.navbar-default .navbar-header {
+    background: @jade;
+    .navbar-brand {
+      color: white;
+    }
+    .icon-bar {
+      background-color: white;
+    }
+    .navbar-toggle:hover, .navbar-toggle:focus {
+      background: inherit;
+    }
+  }
+  .logo-container {
+    display: none;
+  }
+}
+
+@import "./footer.less";
+@import "./highlighting.less";
+@import "./parameter-lists.less";
+
+
+.logo-container {
+  text-align: center;
+  background-color: @jade;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+p {
+  font-size: 1.2em;
+}

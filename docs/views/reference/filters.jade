@@ -1,0 +1,33 @@
+extends ../reference.jade
+
+block documentation
+  h2 Filters
+
+  p.
+    Filters let you use other languages within a jade template.
+    They take a block of plain text as an input.
+
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          :markdown
+            # Markdown
+
+            I often like including markdown documents.
+          script
+            :coffee
+              console.log 'This is coffee script'
+    .col-lg-6
+      +html
+        :htmlsrc
+          <h1>Markdown</h1>
+          <p>I often like including markdown documents.</p>
+          <script>console.log('This is coffee script')</script>
+  .panel.panel-warning
+    .panel-heading Warning
+    .panel-body
+      p Filters are compile time.  This makes them fast but means they cannot support dynamic content.
+      p.
+        Built in filters are not available in the browser as they would not all work.
+        Providing you compile your templates server side, they will still work fine though.

@@ -838,7 +838,7 @@ exports.cache = {};
  *
  * @param {String} str
  * @param {Object} options
- * @return {String}
+ * @return {Object}
  * @api private
  */
 
@@ -878,7 +878,7 @@ function parse(str, options){
   globals.push('jade_debug');
   globals.push('buf');
 
-  return ''
+  var body = ''
     + 'var buf = [];\n'
     + 'var jade_mixins = {};\n'
     + 'var jade_interp;\n'
@@ -886,6 +886,7 @@ function parse(str, options){
       ? 'var self = locals || {};\n' + js
       : addWith('locals || {}', '\n' + js, globals)) + ';'
     + 'return buf.join("");';
+  return {body: body, dependencies: parser.dependencies};
 }
 
 /**
@@ -913,27 +914,30 @@ exports.compile = function(str, options){
 
   str = String(str);
 
+  var parsed = parse(str, options);
   if (options.compileDebug !== false) {
     fn = [
         'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(str, options)
+      , parsed.body
       , '} catch (err) {'
       , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno' + (options.compileDebug === true ? ',' + JSON.stringify(str) : '') + ');'
       , '}'
     ].join('\n');
   } else {
-    fn = parse(str, options);
+    fn = parsed.body;
   }
   fn = new Function('locals, jade', fn)
   var res = function(locals){ return fn(locals, Object.create(runtime)) };
   if (options.client) {
     res.toString = function () {
-      var err = new Error('The `client` option is deprecated, use `jade.compileClient`');
+      var err = new Error('The `client` option is deprecated, use the `jade.compileClient` method instead');
+      err.name = 'Warning';
       console.error(err.stack || err.message);
       return exports.compileClient(str, options);
     };
   }
+  res.dependencies = parsed.dependencies;
   return res;
 };
 
@@ -943,8 +947,9 @@ exports.compile = function(str, options){
  * Options:
  *
  *   - `compileDebug` When it is `true`, the source code is included in
-       the compiled template for better error messages.
+ *     the compiled template for better error messages.
  *   - `filename` used to improve errors when `compileDebug` is not `true` and to resolve imports/extends
+ *   - `name` the name of the resulting function (defaults to "template")
  *
  * @param {String} str
  * @param {Options} options
@@ -953,11 +958,10 @@ exports.compile = function(str, options){
  */
 
 exports.compileClient = function(str, options){
-  var options = options || {}
-    , filename = options.filename
-      ? JSON.stringify(options.filename)
-      : 'undefined'
-    , fn;
+  var options = options || {};
+  var name = options.name || 'template';
+  var filename = options.filename ? JSON.stringify(options.filename) : 'undefined';
+  var fn;
 
   str = String(str);
 
@@ -966,17 +970,17 @@ exports.compileClient = function(str, options){
     fn = [
         'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(str, options)
+      , parse(str, options).body
       , '} catch (err) {'
       , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + JSON.stringify(str) + ');'
       , '}'
     ].join('\n');
   } else {
     options.compileDebug = false;
-    fn = parse(str, options);
+    fn = parse(str, options).body;
   }
 
-  return 'function template(locals) {\n' + fn + '\n}';
+  return 'function ' + name + '(locals) {\n' + fn + '\n}';
 };
 
 
@@ -1280,6 +1284,7 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
+      this.pipeless = true;
       return tok;
     }
   },
@@ -1329,7 +1334,11 @@ Lexer.prototype = {
    */
 
   filter: function() {
-    return this.scan(/^:([\w\-]+)/, 'filter');
+    var tok = this.scan(/^:([\w\-]+)/, 'filter');
+    if (tok) {
+      this.pipeless = true;
+      return tok;
+    }
   },
 
   /**
@@ -1385,6 +1394,7 @@ Lexer.prototype = {
    */
 
   dot: function() {
+    this.pipeless = true;
     return this.scan(/^\./, 'dot');
   },
 
@@ -1479,12 +1489,22 @@ Lexer.prototype = {
 
   includeFiltered: function() {
     var captures;
-    if (captures = /^include:([\w\-]+) +([^\n]+)/.exec(this.input)) {
-      this.consume(captures[0].length);
+    if (captures = /^include:([\w\-]+)([\( ])/.exec(this.input)) {
+      this.consume(captures[0].length - 1);
       var filter = captures[1];
-      var path = captures[2];
+      var attrs = captures[2] === '(' ? this.attrs() : null;
+      if (!(captures[2] === ' ' || this.input[0] === ' ')) {
+        throw new Error('expected space after include:filter but got ' + JSON.stringify(this.input[0]));
+      }
+      captures = /^ *([^\n]+)/.exec(this.input);
+      if (!captures) {
+        throw new Error('missing path for include:filter');
+      }
+      this.consume(captures[0].length);
+      var path = captures[1];
       var tok = this.tok('include', path);
       tok.filter = filter;
+      tok.attrs = attrs;
       return tok;
     }
   },
@@ -1543,7 +1563,7 @@ Lexer.prototype = {
       if (captures = /^ *\(/.exec(this.input)) {
         try {
           var range = this.bracketExpression(captures[0].length - 1);
-          if (!/^ *[-\w]+ *=/.test(range.src)) { // not attributes
+          if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
             this.consume(range.end + 1);
             tok.args = range.src;
           }
@@ -1855,7 +1875,10 @@ Lexer.prototype = {
       }
 
       // blank line
-      if ('\n' == this.input[0]) return this.tok('newline');
+      if ('\n' == this.input[0]) {
+        this.pipeless = false;
+        return this.tok('newline');
+      }
 
       // outdent
       if (this.indentStack.length && indents < this.indentStack[0]) {
@@ -1873,6 +1896,7 @@ Lexer.prototype = {
         tok = this.tok('newline');
       }
 
+      this.pipeless = false;
       return tok;
     }
   },
@@ -1883,13 +1907,48 @@ Lexer.prototype = {
    */
 
   pipelessText: function() {
-    if (this.pipeless) {
-      if ('\n' == this.input[0]) return;
-      var i = this.input.indexOf('\n');
-      if (-1 == i) i = this.input.length;
-      var str = this.input.substr(0, i);
-      this.consume(str.length);
-      return this.tok('text', str);
+    if (!this.pipeless) return;
+    var captures, re;
+
+    // established regexp
+    if (this.indentRe) {
+      captures = this.indentRe.exec(this.input);
+    // determine regexp
+    } else {
+      // tabs
+      re = /^\n(\t*) */;
+      captures = re.exec(this.input);
+
+      // spaces
+      if (captures && !captures[1].length) {
+        re = /^\n( *)/;
+        captures = re.exec(this.input);
+      }
+
+      // established
+      if (captures && captures[1].length) this.indentRe = re;
+    }
+
+    var indents = captures && captures[1].length;
+    if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+      var indent = captures[1];
+      var line;
+      var tokens = [];
+      var isMatch;
+      do {
+        // text has `\n` as a prefix
+        var i = this.input.substr(1).indexOf('\n');
+        if (-1 == i) i = this.input.length - 1;
+        var str = this.input.substr(1, i);
+        isMatch = str.substr(0, indent.length) === indent || !str.trim();
+        if (isMatch) {
+          // consume test along with `\n` prefix if match
+          this.consume(str.length + 1);
+          tokens.push(str.substr(indent.length));
+        }
+      } while(this.input.length && isMatch);
+      while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
+      return this.tok('pipeless-text', tokens);
     }
   },
 
@@ -2620,6 +2679,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
   this.options = options;
   this.contexts = [this];
   this.inMixin = false;
+  this.dependencies = [];
 };
 
 /**
@@ -2727,6 +2787,27 @@ Parser.prototype = {
       return ast;
     }
 
+    if (!this.extending && !this.included && Object.keys(this.blocks).length){
+      var blocks = [];
+      utils.walkAST(block, function (node) {
+        if (node.type === 'Block' && node.name) {
+          blocks.push(node.name);
+        }
+      });
+      Object.keys(this.blocks).forEach(function (name) {
+        if (blocks.indexOf(name) === -1) {
+          console.warn('Warning: Unexpected block "'
+                       + name
+                       + '" '
+                       + ' on line '
+                       + this.blocks[name].line
+                       + ' of '
+                       + (this.blocks[name].filename)
+                       + '. This block is never used. This warning will be an error in v2.0.0');
+        }
+      }.bind(this));
+    }
+
     return block;
   },
 
@@ -2828,7 +2909,7 @@ Parser.prototype = {
 
   parseText: function(){
     var tok = this.expect('text');
-    var tokens = this.parseTextWithInlineTags(tok.val);
+    var tokens = this.parseInlineTagsInText(tok.val);
     if (tokens.length === 1) return tokens[0];
     var node = new nodes.Block;
     for (var i = 0; i < tokens.length; i++) {
@@ -2952,10 +3033,9 @@ Parser.prototype = {
     var tok = this.expect('comment');
     var node;
 
-    if ('indent' == this.peek().type) {
-      this.lexer.pipeless = true;
-      node = new nodes.BlockComment(tok.val, this.parseTextBlock(), tok.buffer);
-      this.lexer.pipeless = false;
+    var block;
+    if (block = this.parseTextBlock()) {
+      node = new nodes.BlockComment(tok.val, block, tok.buffer);
     } else {
       node = new nodes.Comment(tok.val, tok.buffer);
     }
@@ -2984,13 +3064,7 @@ Parser.prototype = {
     var attrs = this.accept('attrs');
     var block;
 
-    if ('indent' == this.peek().type) {
-      this.lexer.pipeless = true;
-      block = this.parseTextBlock();
-      this.lexer.pipeless = false;
-    } else {
-      block = new nodes.Block;
-    }
+    block = this.parseTextBlock() || new nodes.Block();
 
     var options = {};
     if (attrs) {
@@ -3059,8 +3133,10 @@ Parser.prototype = {
     var path = this.resolvePath(this.expect('extends').val.trim(), 'extends');
     if ('.jade' != path.substr(-5)) path += '.jade';
 
+    this.dependencies.push(path);
     var str = fs.readFileSync(path, 'utf8');
     var parser = new this.constructor(str, path, this.options);
+    parser.dependencies = this.dependencies;
 
     parser.blocks = this.blocks;
     parser.contexts = this.contexts;
@@ -3082,6 +3158,7 @@ Parser.prototype = {
     block = 'indent' == this.peek().type
       ? this.block()
       : new nodes.Block(new nodes.Literal(''));
+    block.name = name;
 
     var prev = this.blocks[name] || {prepended: [], appended: []}
     if (prev.mode === 'replace') return this.blocks[name] = prev;
@@ -3126,11 +3203,17 @@ Parser.prototype = {
     var tok = this.expect('include');
 
     var path = this.resolvePath(tok.val.trim(), 'include');
-
+    this.dependencies.push(path);
     // has-filter
     if (tok.filter) {
       var str = fs.readFileSync(path, 'utf8').replace(/\r/g, '');
-      str = filters(tok.filter, str, { filename: path });
+      var options = {filename: path};
+      if (tok.attrs) {
+        tok.attrs.attrs.forEach(function (attribute) {
+          options[attribute.name] = constantinople.toConstant(attribute.val);
+        });
+      }
+      str = filters(tok.filter, str, options);
       return new nodes.Literal(str);
     }
 
@@ -3142,7 +3225,10 @@ Parser.prototype = {
 
     var str = fs.readFileSync(path, 'utf8');
     var parser = new this.constructor(str, path, this.options);
+    parser.dependencies = this.dependencies;
+
     parser.blocks = utils.merge({}, this.blocks);
+    parser.included = true;
 
     parser.mixins = this.mixins;
 
@@ -3200,7 +3286,7 @@ Parser.prototype = {
     }
   },
 
-  parseTextWithInlineTags: function (str) {
+  parseInlineTagsInText: function (str) {
     var line = this.line();
 
     var match = /(\\)?#\[((?:.|\n)*)$/.exec(str);
@@ -3208,7 +3294,7 @@ Parser.prototype = {
       if (match[1]) { // escape
         var text = new nodes.Text(str.substr(0, match.index) + '#[');
         text.line = line;
-        var rest = this.parseTextWithInlineTags(match[2]);
+        var rest = this.parseInlineTagsInText(match[2]);
         if (rest[0].type === 'Text') {
           text.val += rest[0].val;
           rest.shift();
@@ -3222,7 +3308,7 @@ Parser.prototype = {
         var range = parseJSExpression(rest);
         var inner = new Parser(range.src, this.filename, this.options);
         buffer.push(inner.parse());
-        return buffer.concat(this.parseTextWithInlineTags(rest.substr(range.end + 1)));
+        return buffer.concat(this.parseInlineTagsInText(rest.substr(range.end + 1)));
       }
     } else {
       var text = new nodes.Text(str);
@@ -3238,30 +3324,12 @@ Parser.prototype = {
   parseTextBlock: function(){
     var block = new nodes.Block;
     block.line = this.line();
-    var spaces = this.expect('indent').val;
-    if (null == this._spaces) this._spaces = spaces;
-    var indent = Array(spaces - this._spaces + 1).join(' ');
-    while ('outdent' != this.peek().type) {
-      switch (this.peek().type) {
-        case 'newline':
-          this.advance();
-          break;
-        case 'indent':
-          this.parseTextBlock(true).nodes.forEach(function(node){
-            block.push(node);
-          });
-          break;
-        default:
-          var texts = this.parseTextWithInlineTags(indent + this.advance().val);
-          texts.forEach(function (text) {
-            block.push(text);
-          });
-      }
-    }
-
-    if (spaces == this._spaces) this._spaces = null;
-    this.expect('outdent');
-
+    var body = this.peek();
+    if (body.type !== 'pipeless-text') return;
+    this.advance();
+    block.nodes = body.val.reduce(function (accumulator, text) {
+      return accumulator.concat(this.parseInlineTagsInText(text));
+    }.bind(this), []);
     return block;
   },
 
@@ -3374,6 +3442,7 @@ Parser.prototype = {
       case 'indent':
       case 'outdent':
       case 'eos':
+      case 'pipeless-text':
         break;
       default:
         throw new Error('Unexpected token `' + this.peek().type + '` expected `text`, `code`, `:`, `newline` or `eos`')
@@ -3383,16 +3452,12 @@ Parser.prototype = {
     while ('newline' == this.peek().type) this.advance();
 
     // block?
-    if ('indent' == this.peek().type) {
-      if (tag.textOnly) {
-        this.lexer.pipeless = true;
-        tag.block = this.parseTextBlock();
-        this.lexer.pipeless = false;
-      } else {
-        var block = this.block();
-        for (var i = 0, len = block.nodes.length; i < len; ++i) {
-          tag.block.push(block.nodes[i]);
-        }
+    if (tag.textOnly) {
+      tag.block = this.parseTextBlock();
+    } else if ('indent' == this.peek().type) {
+      var block = this.block();
+      for (var i = 0, len = block.nodes.length; i < len; ++i) {
+        tag.block.push(block.nodes[i]);
       }
     }
 
@@ -3580,7 +3645,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
     throw err;
   }
   try {
-    str =  str || _dereq_('fs').readFileSync(filename, 'utf8')
+    str = str || _dereq_('fs').readFileSync(filename, 'utf8')
   } catch (ex) {
     rethrow(err, null, lineno)
   }
@@ -3646,7 +3711,37 @@ exports.merge = function(a, b) {
   return a;
 };
 
-
+exports.walkAST = function walkAST(ast, before, after) {
+  before && before(ast);
+  switch (ast.type) {
+    case 'Block':
+      ast.nodes.forEach(function (node) {
+        walkAST(node, before, after);
+      });
+      break;
+    case 'Case':
+    case 'Each':
+    case 'Mixin':
+    case 'Tag':
+    case 'When':
+      ast.block && walkAST(ast.block, before, after);
+      break;
+    case 'Attrs':
+    case 'BlockComment':
+    case 'Code':
+    case 'Comment':
+    case 'Doctype':
+    case 'Filter':
+    case 'Literal':
+    case 'MixinBlock':
+    case 'Text':
+      break;
+    default:
+      throw new Error('Unexpected node type ' + ast.type);
+      break;
+  }
+  after && after(ast);
+};
 },{}],27:[function(_dereq_,module,exports){
 
 },{}],28:[function(_dereq_,module,exports){
@@ -3956,8 +4051,8 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
-},{"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29}],31:[function(_dereq_,module,exports){
+}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"))
+},{"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":29}],31:[function(_dereq_,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
@@ -4553,8 +4648,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":31,"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29,"inherits":28}],33:[function(_dereq_,module,exports){
+}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":31,"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":29,"inherits":28}],33:[function(_dereq_,module,exports){
 exports = (module.exports = parse);
 exports.parse = parse;
 function parse(src, state, options) {
@@ -5228,7 +5323,7 @@ define(function (_dereq_, exports, module) {
    *   - sourceRoot: Optional. The URL root from which all sources are relative.
    *   - sourcesContent: Optional. An array of contents of the original source files.
    *   - mappings: A string of base64 VLQs which contain the actual mappings.
-   *   - file: Optional. The generated file this source map is associated with.
+   *   - file: The generated file this source map is associated with.
    *
    * Here is an example source map, taken from the source map spec[0]:
    *
@@ -5456,7 +5551,6 @@ define(function (_dereq_, exports, module) {
         }
       }
 
-      this.__generatedMappings.sort(util.compareByGeneratedPositions);
       this.__originalMappings.sort(util.compareByOriginalPositions);
     };
 
@@ -5512,7 +5606,7 @@ define(function (_dereq_, exports, module) {
                                       "generatedColumn",
                                       util.compareByGeneratedPositions);
 
-      if (mapping && mapping.generatedLine === needle.generatedLine) {
+      if (mapping) {
         var source = util.getArg(mapping, 'source', null);
         if (source && this.sourceRoot) {
           source = util.join(this.sourceRoot, source);
@@ -5694,17 +5788,14 @@ define(function (_dereq_, exports, module) {
 
   /**
    * An instance of the SourceMapGenerator represents a source map which is
-   * being built incrementally. You may pass an object with the following
-   * properties:
+   * being built incrementally. To create a new one, you must pass an object
+   * with the following properties:
    *
    *   - file: The filename of the generated source.
-   *   - sourceRoot: A root for all relative URLs in this source map.
+   *   - sourceRoot: An optional root for all URLs in this source map.
    */
   function SourceMapGenerator(aArgs) {
-    if (!aArgs) {
-      aArgs = {};
-    }
-    this._file = util.getArg(aArgs, 'file', null);
+    this._file = util.getArg(aArgs, 'file');
     this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
     this._sources = new ArraySet();
     this._names = new ArraySet();
@@ -5834,23 +5925,11 @@ define(function (_dereq_, exports, module) {
    * @param aSourceMapConsumer The source map to be applied.
    * @param aSourceFile Optional. The filename of the source file.
    *        If omitted, SourceMapConsumer's file property will be used.
-   * @param aSourceMapPath Optional. The dirname of the path to the source map
-   *        to be applied. If relative, it is relative to the SourceMapConsumer.
-   *        This parameter is needed when the two source maps aren't in the same
-   *        directory, and the source map to be applied contains relative source
-   *        paths. If so, those relative source paths need to be rewritten
-   *        relative to the SourceMapGenerator.
    */
   SourceMapGenerator.prototype.applySourceMap =
-    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile, aSourceMapPath) {
+    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile) {
       // If aSourceFile is omitted, we will use the file property of the SourceMap
       if (!aSourceFile) {
-        if (!aSourceMapConsumer.file) {
-          throw new Error(
-            'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
-            'or the source map\'s "file" property. Both were omitted.'
-          );
-        }
         aSourceFile = aSourceMapConsumer.file;
       }
       var sourceRoot = this._sourceRoot;
@@ -5873,12 +5952,10 @@ define(function (_dereq_, exports, module) {
           });
           if (original.source !== null) {
             // Copy mapping
-            mapping.source = original.source;
-            if (aSourceMapPath) {
-              mapping.source = util.join(aSourceMapPath, mapping.source)
-            }
             if (sourceRoot) {
-              mapping.source = util.relative(sourceRoot, mapping.source);
+              mapping.source = util.relative(sourceRoot, original.source);
+            } else {
+              mapping.source = original.source;
             }
             mapping.originalLine = original.line;
             mapping.originalColumn = original.column;
@@ -5948,7 +6025,7 @@ define(function (_dereq_, exports, module) {
         throw new Error('Invalid mapping: ' + JSON.stringify({
           generated: aGenerated,
           source: aSource,
-          original: aOriginal,
+          orginal: aOriginal,
           name: aName
         }));
       }
@@ -6137,16 +6214,41 @@ define(function (_dereq_, exports, module) {
       var lastMapping = null;
 
       aSourceMapConsumer.eachMapping(function (mapping) {
-        if (lastMapping !== null) {
+        if (lastMapping === null) {
+          // We add the generated code until the first mapping
+          // to the SourceNode without any mapping.
+          // Each line is added as separate string.
+          while (lastGeneratedLine < mapping.generatedLine) {
+            node.add(remainingLines.shift() + "\n");
+            lastGeneratedLine++;
+          }
+          if (lastGeneratedColumn < mapping.generatedColumn) {
+            var nextLine = remainingLines[0];
+            node.add(nextLine.substr(0, mapping.generatedColumn));
+            remainingLines[0] = nextLine.substr(mapping.generatedColumn);
+            lastGeneratedColumn = mapping.generatedColumn;
+          }
+        } else {
           // We add the code from "lastMapping" to "mapping":
           // First check if there is a new line in between.
           if (lastGeneratedLine < mapping.generatedLine) {
             var code = "";
-            // Associate first line with "lastMapping"
-            addMappingWithCode(lastMapping, remainingLines.shift() + "\n");
-            lastGeneratedLine++;
-            lastGeneratedColumn = 0;
-            // The remaining code is added without mapping
+            // Associate full lines with "lastMapping"
+            do {
+              code += remainingLines.shift() + "\n";
+              lastGeneratedLine++;
+              lastGeneratedColumn = 0;
+            } while (lastGeneratedLine < mapping.generatedLine);
+            // When we reached the correct line, we add code until we
+            // reach the correct column too.
+            if (lastGeneratedColumn < mapping.generatedColumn) {
+              var nextLine = remainingLines[0];
+              code += nextLine.substr(0, mapping.generatedColumn);
+              remainingLines[0] = nextLine.substr(mapping.generatedColumn);
+              lastGeneratedColumn = mapping.generatedColumn;
+            }
+            // Create the SourceNode.
+            addMappingWithCode(lastMapping, code);
           } else {
             // There is no new line in between.
             // Associate the code between "lastGeneratedColumn" and
@@ -6158,37 +6260,14 @@ define(function (_dereq_, exports, module) {
                                                 lastGeneratedColumn);
             lastGeneratedColumn = mapping.generatedColumn;
             addMappingWithCode(lastMapping, code);
-            // No more remaining code, continue
-            lastMapping = mapping;
-            return;
           }
-        }
-        // We add the generated code until the first mapping
-        // to the SourceNode without any mapping.
-        // Each line is added as separate string.
-        while (lastGeneratedLine < mapping.generatedLine) {
-          node.add(remainingLines.shift() + "\n");
-          lastGeneratedLine++;
-        }
-        if (lastGeneratedColumn < mapping.generatedColumn) {
-          var nextLine = remainingLines[0];
-          node.add(nextLine.substr(0, mapping.generatedColumn));
-          remainingLines[0] = nextLine.substr(mapping.generatedColumn);
-          lastGeneratedColumn = mapping.generatedColumn;
         }
         lastMapping = mapping;
       }, this);
       // We have processed all mappings.
-      if (remainingLines.length > 0) {
-        if (lastMapping) {
-          // Associate the remaining code in the current line with "lastMapping"
-          var lastLine = remainingLines.shift();
-          if (remainingLines.length > 0) lastLine += "\n";
-          addMappingWithCode(lastMapping, lastLine);
-        }
-        // and add the remaining lines without any mapping
-        node.add(remainingLines.join("\n"));
-      }
+      // Associate the remaining code in the current line with "lastMapping"
+      // and add the remaining lines without any mapping
+      addMappingWithCode(lastMapping, remainingLines.join("\n"));
 
       // Copy sourcesContent into SourceNode
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
@@ -6426,28 +6505,10 @@ define(function (_dereq_, exports, module) {
         lastOriginalSource = null;
         sourceMappingActive = false;
       }
-      chunk.split('').forEach(function (ch, idx, array) {
+      chunk.split('').forEach(function (ch) {
         if (ch === '\n') {
           generated.line++;
           generated.column = 0;
-          // Mappings end at eol
-          if (idx + 1 === array.length) {
-            lastOriginalSource = null;
-            sourceMappingActive = false;
-          } else if (sourceMappingActive) {
-            map.addMapping({
-              source: original.source,
-              original: {
-                line: original.line,
-                column: original.column
-              },
-              generated: {
-                line: generated.line,
-                column: generated.column
-              },
-              name: original.name
-            });
-          }
         } else {
           generated.column++;
         }
@@ -6497,8 +6558,8 @@ define(function (_dereq_, exports, module) {
   }
   exports.getArg = getArg;
 
-  var urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.]*)(?::(\d+))?(\S*)$/;
-  var dataUrlRegexp = /^data:.+\,.+$/;
+  var urlRegexp = /([\w+\-.]+):\/\/((\w+:\w+)@)?([\w.]+)?(:(\d+))?(\S+)?/;
+  var dataUrlRegexp = /^data:.+\,.+/;
 
   function urlParse(aUrl) {
     var match = aUrl.match(urlRegexp);
@@ -6507,22 +6568,18 @@ define(function (_dereq_, exports, module) {
     }
     return {
       scheme: match[1],
-      auth: match[2],
-      host: match[3],
-      port: match[4],
-      path: match[5]
+      auth: match[3],
+      host: match[4],
+      port: match[6],
+      path: match[7]
     };
   }
   exports.urlParse = urlParse;
 
   function urlGenerate(aParsedUrl) {
-    var url = '';
-    if (aParsedUrl.scheme) {
-      url += aParsedUrl.scheme + ':';
-    }
-    url += '//';
+    var url = aParsedUrl.scheme + "://";
     if (aParsedUrl.auth) {
-      url += aParsedUrl.auth + '@';
+      url += aParsedUrl.auth + "@"
     }
     if (aParsedUrl.host) {
       url += aParsedUrl.host;
@@ -6537,112 +6594,19 @@ define(function (_dereq_, exports, module) {
   }
   exports.urlGenerate = urlGenerate;
 
-  /**
-   * Normalizes a path, or the path portion of a URL:
-   *
-   * - Replaces consequtive slashes with one slash.
-   * - Removes unnecessary '.' parts.
-   * - Removes unnecessary '<dir>/..' parts.
-   *
-   * Based on code in the Node.js 'path' core module.
-   *
-   * @param aPath The path or url to normalize.
-   */
-  function normalize(aPath) {
-    var path = aPath;
-    var url = urlParse(aPath);
-    if (url) {
-      if (!url.path) {
-        return aPath;
-      }
-      path = url.path;
-    }
-    var isAbsolute = (path.charAt(0) === '/');
-
-    var parts = path.split(/\/+/);
-    for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
-      part = parts[i];
-      if (part === '.') {
-        parts.splice(i, 1);
-      } else if (part === '..') {
-        up++;
-      } else if (up > 0) {
-        if (part === '') {
-          // The first part is blank if the path is absolute. Trying to go
-          // above the root is a no-op. Therefore we can remove all '..' parts
-          // directly after the root.
-          parts.splice(i + 1, up);
-          up = 0;
-        } else {
-          parts.splice(i, 2);
-          up--;
-        }
-      }
-    }
-    path = parts.join('/');
-
-    if (path === '') {
-      path = isAbsolute ? '/' : '.';
-    }
-
-    if (url) {
-      url.path = path;
-      return urlGenerate(url);
-    }
-    return path;
-  }
-  exports.normalize = normalize;
-
-  /**
-   * Joins two paths/URLs.
-   *
-   * @param aRoot The root path or URL.
-   * @param aPath The path or URL to be joined with the root.
-   *
-   * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
-   *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
-   *   first.
-   * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
-   *   is updated with the result and aRoot is returned. Otherwise the result
-   *   is returned.
-   *   - If aPath is absolute, the result is aPath.
-   *   - Otherwise the two paths are joined with a slash.
-   * - Joining for example 'http://' and 'www.example.com' is also supported.
-   */
   function join(aRoot, aPath) {
-    var aPathUrl = urlParse(aPath);
-    var aRootUrl = urlParse(aRoot);
-    if (aRootUrl) {
-      aRoot = aRootUrl.path || '/';
-    }
+    var url;
 
-    // `join(foo, '//www.example.org')`
-    if (aPathUrl && !aPathUrl.scheme) {
-      if (aRootUrl) {
-        aPathUrl.scheme = aRootUrl.scheme;
-      }
-      return urlGenerate(aPathUrl);
-    }
-
-    if (aPathUrl || aPath.match(dataUrlRegexp)) {
+    if (aPath.match(urlRegexp) || aPath.match(dataUrlRegexp)) {
       return aPath;
     }
 
-    // `join('http://', 'www.example.com')`
-    if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
-      aRootUrl.host = aPath;
-      return urlGenerate(aRootUrl);
+    if (aPath.charAt(0) === '/' && (url = urlParse(aRoot))) {
+      url.path = aPath;
+      return urlGenerate(url);
     }
 
-    var joined = aPath.charAt(0) === '/'
-      ? aPath
-      : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
-
-    if (aRootUrl) {
-      aRootUrl.path = joined;
-      return urlGenerate(aRootUrl);
-    }
-    return joined;
+    return aRoot.replace(/\/$/, '') + '/' + aPath;
   }
   exports.join = join;
 
@@ -7070,8 +7034,8 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),"/../node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29,"path":30}],45:[function(_dereq_,module,exports){
+}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"),"/..\\node_modules\\uglify-js\\node_modules\\source-map\\node_modules\\amdefine\\amdefine.js")
+},{"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":29,"path":30}],45:[function(_dereq_,module,exports){
 var sys = _dereq_("util");
 var MOZ_SourceMap = _dereq_("source-map");
 var UglifyJS = exports;
@@ -10407,10 +10371,6 @@ AST_Toplevel.DEFMETHOD("mangle_names", function(options){
             node.mangled_name = name;
             return true;
         }
-        if (options.screw_ie8 && node instanceof AST_SymbolCatch) {
-            to_mangle.push(node.definition());
-            return;
-        }
     });
     this.walk(tw);
     to_mangle.forEach(function(def){ def.mangle(options) });
@@ -11972,7 +11932,6 @@ function Compressor(options, false_by_default) {
         loops         : !false_by_default,
         unused        : !false_by_default,
         hoist_funs    : !false_by_default,
-        keep_fargs    : false,
         hoist_vars    : false,
         if_return     : !false_by_default,
         join_vars     : !false_by_default,
@@ -12288,7 +12247,7 @@ merge(Compressor.prototype, {
                         stat = stat.clone();
                         stat.condition = stat.condition.negate(compressor);
                         stat.body = make_node(AST_BlockStatement, stat, {
-                            body: as_statement_array(stat.alternative).concat(ret)
+                            body: ret
                         });
                         stat.alternative = make_node(AST_BlockStatement, stat, {
                             body: body
@@ -12956,20 +12915,18 @@ merge(Compressor.prototype, {
             var tt = new TreeTransformer(
                 function before(node, descend, in_list) {
                     if (node instanceof AST_Lambda && !(node instanceof AST_Accessor)) {
-                        if (!compressor.option("keep_fargs")) {
-                            for (var a = node.argnames, i = a.length; --i >= 0;) {
-                                var sym = a[i];
-                                if (sym.unreferenced()) {
-                                    a.pop();
-                                    compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
-                                        name : sym.name,
-                                        file : sym.start.file,
-                                        line : sym.start.line,
-                                        col  : sym.start.col
-                                    });
-                                }
-                                else break;
+                        for (var a = node.argnames, i = a.length; --i >= 0;) {
+                            var sym = a[i];
+                            if (sym.unreferenced()) {
+                                a.pop();
+                                compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
+                                    name : sym.name,
+                                    file : sym.start.file,
+                                    line : sym.start.line,
+                                    col  : sym.start.col
+                                });
                             }
+                            else break;
                         }
                     }
                     if (node instanceof AST_Defun && node !== self) {
@@ -14210,19 +14167,6 @@ merge(Compressor.prototype, {
                 return consequent;
             }
         }
-        // x?y?z:a:a --> x&&y?z:a
-        if (consequent instanceof AST_Conditional
-            && consequent.alternative.equivalent_to(alternative)) {
-            return make_node(AST_Conditional, self, {
-                condition: make_node(AST_Binary, self, {
-                    left: self.condition,
-                    operator: "&&",
-                    right: consequent.condition
-                }),
-                consequent: consequent.consequent,
-                alternative: alternative
-            });
-        }
         return self;
     });
 
@@ -14350,9 +14294,6 @@ function SourceMap(options) {
                 line: orig_line,
                 column: orig_col
             });
-            if (info.source === null) {
-                return;
-            }
             source = info.source;
             orig_line = info.line;
             orig_col = info.column;
@@ -14814,8 +14755,7 @@ exports.minify = function (files, options) {
     UglifyJS.base54.reset();
 
     // 1. parse
-    var toplevel = null,
-        sourcesContent = {};
+    var toplevel = null;
 
     if (options.spidermonkey) {
         toplevel = UglifyJS.AST_Node.from_mozilla_ast(files);
@@ -14826,7 +14766,6 @@ exports.minify = function (files, options) {
             var code = options.fromString
                 ? file
                 : fs.readFileSync(file, "utf8");
-            sourcesContent[file] = code;
             toplevel = UglifyJS.parse(code, {
                 filename: options.fromString ? "?" : file,
                 toplevel: toplevel
@@ -14862,14 +14801,6 @@ exports.minify = function (files, options) {
             orig: inMap,
             root: options.sourceRoot
         });
-        if (options.sourceMapIncludeSources) {
-            for (var file in sourcesContent) {
-                if (sourcesContent.hasOwnProperty(file)) {
-                    options.source_map.get().setSourceContent(file, sourcesContent[file]);
-                }
-            }
-        }
-
     }
     if (options.output) {
         UglifyJS.merge(output, options.output);
