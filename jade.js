@@ -4051,8 +4051,8 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"))
-},{"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":29}],31:[function(_dereq_,module,exports){
+}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
+},{"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29}],31:[function(_dereq_,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
@@ -4648,8 +4648,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":31,"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":29,"inherits":28}],33:[function(_dereq_,module,exports){
+}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":31,"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29,"inherits":28}],33:[function(_dereq_,module,exports){
 exports = (module.exports = parse);
 exports.parse = parse;
 function parse(src, state, options) {
@@ -5323,7 +5323,7 @@ define(function (_dereq_, exports, module) {
    *   - sourceRoot: Optional. The URL root from which all sources are relative.
    *   - sourcesContent: Optional. An array of contents of the original source files.
    *   - mappings: A string of base64 VLQs which contain the actual mappings.
-   *   - file: The generated file this source map is associated with.
+   *   - file: Optional. The generated file this source map is associated with.
    *
    * Here is an example source map, taken from the source map spec[0]:
    *
@@ -5551,6 +5551,7 @@ define(function (_dereq_, exports, module) {
         }
       }
 
+      this.__generatedMappings.sort(util.compareByGeneratedPositions);
       this.__originalMappings.sort(util.compareByOriginalPositions);
     };
 
@@ -5606,7 +5607,7 @@ define(function (_dereq_, exports, module) {
                                       "generatedColumn",
                                       util.compareByGeneratedPositions);
 
-      if (mapping) {
+      if (mapping && mapping.generatedLine === needle.generatedLine) {
         var source = util.getArg(mapping, 'source', null);
         if (source && this.sourceRoot) {
           source = util.join(this.sourceRoot, source);
@@ -5788,14 +5789,17 @@ define(function (_dereq_, exports, module) {
 
   /**
    * An instance of the SourceMapGenerator represents a source map which is
-   * being built incrementally. To create a new one, you must pass an object
-   * with the following properties:
+   * being built incrementally. You may pass an object with the following
+   * properties:
    *
    *   - file: The filename of the generated source.
-   *   - sourceRoot: An optional root for all URLs in this source map.
+   *   - sourceRoot: A root for all relative URLs in this source map.
    */
   function SourceMapGenerator(aArgs) {
-    this._file = util.getArg(aArgs, 'file');
+    if (!aArgs) {
+      aArgs = {};
+    }
+    this._file = util.getArg(aArgs, 'file', null);
     this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
     this._sources = new ArraySet();
     this._names = new ArraySet();
@@ -5925,11 +5929,23 @@ define(function (_dereq_, exports, module) {
    * @param aSourceMapConsumer The source map to be applied.
    * @param aSourceFile Optional. The filename of the source file.
    *        If omitted, SourceMapConsumer's file property will be used.
+   * @param aSourceMapPath Optional. The dirname of the path to the source map
+   *        to be applied. If relative, it is relative to the SourceMapConsumer.
+   *        This parameter is needed when the two source maps aren't in the same
+   *        directory, and the source map to be applied contains relative source
+   *        paths. If so, those relative source paths need to be rewritten
+   *        relative to the SourceMapGenerator.
    */
   SourceMapGenerator.prototype.applySourceMap =
-    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile) {
+    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile, aSourceMapPath) {
       // If aSourceFile is omitted, we will use the file property of the SourceMap
       if (!aSourceFile) {
+        if (!aSourceMapConsumer.file) {
+          throw new Error(
+            'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
+            'or the source map\'s "file" property. Both were omitted.'
+          );
+        }
         aSourceFile = aSourceMapConsumer.file;
       }
       var sourceRoot = this._sourceRoot;
@@ -5952,10 +5968,12 @@ define(function (_dereq_, exports, module) {
           });
           if (original.source !== null) {
             // Copy mapping
+            mapping.source = original.source;
+            if (aSourceMapPath) {
+              mapping.source = util.join(aSourceMapPath, mapping.source)
+            }
             if (sourceRoot) {
-              mapping.source = util.relative(sourceRoot, original.source);
-            } else {
-              mapping.source = original.source;
+              mapping.source = util.relative(sourceRoot, mapping.source);
             }
             mapping.originalLine = original.line;
             mapping.originalColumn = original.column;
@@ -6025,7 +6043,7 @@ define(function (_dereq_, exports, module) {
         throw new Error('Invalid mapping: ' + JSON.stringify({
           generated: aGenerated,
           source: aSource,
-          orginal: aOriginal,
+          original: aOriginal,
           name: aName
         }));
       }
@@ -6214,41 +6232,16 @@ define(function (_dereq_, exports, module) {
       var lastMapping = null;
 
       aSourceMapConsumer.eachMapping(function (mapping) {
-        if (lastMapping === null) {
-          // We add the generated code until the first mapping
-          // to the SourceNode without any mapping.
-          // Each line is added as separate string.
-          while (lastGeneratedLine < mapping.generatedLine) {
-            node.add(remainingLines.shift() + "\n");
-            lastGeneratedLine++;
-          }
-          if (lastGeneratedColumn < mapping.generatedColumn) {
-            var nextLine = remainingLines[0];
-            node.add(nextLine.substr(0, mapping.generatedColumn));
-            remainingLines[0] = nextLine.substr(mapping.generatedColumn);
-            lastGeneratedColumn = mapping.generatedColumn;
-          }
-        } else {
+        if (lastMapping !== null) {
           // We add the code from "lastMapping" to "mapping":
           // First check if there is a new line in between.
           if (lastGeneratedLine < mapping.generatedLine) {
             var code = "";
-            // Associate full lines with "lastMapping"
-            do {
-              code += remainingLines.shift() + "\n";
-              lastGeneratedLine++;
-              lastGeneratedColumn = 0;
-            } while (lastGeneratedLine < mapping.generatedLine);
-            // When we reached the correct line, we add code until we
-            // reach the correct column too.
-            if (lastGeneratedColumn < mapping.generatedColumn) {
-              var nextLine = remainingLines[0];
-              code += nextLine.substr(0, mapping.generatedColumn);
-              remainingLines[0] = nextLine.substr(mapping.generatedColumn);
-              lastGeneratedColumn = mapping.generatedColumn;
-            }
-            // Create the SourceNode.
-            addMappingWithCode(lastMapping, code);
+            // Associate first line with "lastMapping"
+            addMappingWithCode(lastMapping, remainingLines.shift() + "\n");
+            lastGeneratedLine++;
+            lastGeneratedColumn = 0;
+            // The remaining code is added without mapping
           } else {
             // There is no new line in between.
             // Associate the code between "lastGeneratedColumn" and
@@ -6260,14 +6253,37 @@ define(function (_dereq_, exports, module) {
                                                 lastGeneratedColumn);
             lastGeneratedColumn = mapping.generatedColumn;
             addMappingWithCode(lastMapping, code);
+            // No more remaining code, continue
+            lastMapping = mapping;
+            return;
           }
+        }
+        // We add the generated code until the first mapping
+        // to the SourceNode without any mapping.
+        // Each line is added as separate string.
+        while (lastGeneratedLine < mapping.generatedLine) {
+          node.add(remainingLines.shift() + "\n");
+          lastGeneratedLine++;
+        }
+        if (lastGeneratedColumn < mapping.generatedColumn) {
+          var nextLine = remainingLines[0];
+          node.add(nextLine.substr(0, mapping.generatedColumn));
+          remainingLines[0] = nextLine.substr(mapping.generatedColumn);
+          lastGeneratedColumn = mapping.generatedColumn;
         }
         lastMapping = mapping;
       }, this);
       // We have processed all mappings.
-      // Associate the remaining code in the current line with "lastMapping"
-      // and add the remaining lines without any mapping
-      addMappingWithCode(lastMapping, remainingLines.join("\n"));
+      if (remainingLines.length > 0) {
+        if (lastMapping) {
+          // Associate the remaining code in the current line with "lastMapping"
+          var lastLine = remainingLines.shift();
+          if (remainingLines.length > 0) lastLine += "\n";
+          addMappingWithCode(lastMapping, lastLine);
+        }
+        // and add the remaining lines without any mapping
+        node.add(remainingLines.join("\n"));
+      }
 
       // Copy sourcesContent into SourceNode
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
@@ -6505,10 +6521,28 @@ define(function (_dereq_, exports, module) {
         lastOriginalSource = null;
         sourceMappingActive = false;
       }
-      chunk.split('').forEach(function (ch) {
+      chunk.split('').forEach(function (ch, idx, array) {
         if (ch === '\n') {
           generated.line++;
           generated.column = 0;
+          // Mappings end at eol
+          if (idx + 1 === array.length) {
+            lastOriginalSource = null;
+            sourceMappingActive = false;
+          } else if (sourceMappingActive) {
+            map.addMapping({
+              source: original.source,
+              original: {
+                line: original.line,
+                column: original.column
+              },
+              generated: {
+                line: generated.line,
+                column: generated.column
+              },
+              name: original.name
+            });
+          }
         } else {
           generated.column++;
         }
@@ -6558,8 +6592,8 @@ define(function (_dereq_, exports, module) {
   }
   exports.getArg = getArg;
 
-  var urlRegexp = /([\w+\-.]+):\/\/((\w+:\w+)@)?([\w.]+)?(:(\d+))?(\S+)?/;
-  var dataUrlRegexp = /^data:.+\,.+/;
+  var urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.]*)(?::(\d+))?(\S*)$/;
+  var dataUrlRegexp = /^data:.+\,.+$/;
 
   function urlParse(aUrl) {
     var match = aUrl.match(urlRegexp);
@@ -6568,18 +6602,22 @@ define(function (_dereq_, exports, module) {
     }
     return {
       scheme: match[1],
-      auth: match[3],
-      host: match[4],
-      port: match[6],
-      path: match[7]
+      auth: match[2],
+      host: match[3],
+      port: match[4],
+      path: match[5]
     };
   }
   exports.urlParse = urlParse;
 
   function urlGenerate(aParsedUrl) {
-    var url = aParsedUrl.scheme + "://";
+    var url = '';
+    if (aParsedUrl.scheme) {
+      url += aParsedUrl.scheme + ':';
+    }
+    url += '//';
     if (aParsedUrl.auth) {
-      url += aParsedUrl.auth + "@"
+      url += aParsedUrl.auth + '@';
     }
     if (aParsedUrl.host) {
       url += aParsedUrl.host;
@@ -6594,19 +6632,112 @@ define(function (_dereq_, exports, module) {
   }
   exports.urlGenerate = urlGenerate;
 
-  function join(aRoot, aPath) {
-    var url;
+  /**
+   * Normalizes a path, or the path portion of a URL:
+   *
+   * - Replaces consequtive slashes with one slash.
+   * - Removes unnecessary '.' parts.
+   * - Removes unnecessary '<dir>/..' parts.
+   *
+   * Based on code in the Node.js 'path' core module.
+   *
+   * @param aPath The path or url to normalize.
+   */
+  function normalize(aPath) {
+    var path = aPath;
+    var url = urlParse(aPath);
+    if (url) {
+      if (!url.path) {
+        return aPath;
+      }
+      path = url.path;
+    }
+    var isAbsolute = (path.charAt(0) === '/');
 
-    if (aPath.match(urlRegexp) || aPath.match(dataUrlRegexp)) {
+    var parts = path.split(/\/+/);
+    for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
+      part = parts[i];
+      if (part === '.') {
+        parts.splice(i, 1);
+      } else if (part === '..') {
+        up++;
+      } else if (up > 0) {
+        if (part === '') {
+          // The first part is blank if the path is absolute. Trying to go
+          // above the root is a no-op. Therefore we can remove all '..' parts
+          // directly after the root.
+          parts.splice(i + 1, up);
+          up = 0;
+        } else {
+          parts.splice(i, 2);
+          up--;
+        }
+      }
+    }
+    path = parts.join('/');
+
+    if (path === '') {
+      path = isAbsolute ? '/' : '.';
+    }
+
+    if (url) {
+      url.path = path;
+      return urlGenerate(url);
+    }
+    return path;
+  }
+  exports.normalize = normalize;
+
+  /**
+   * Joins two paths/URLs.
+   *
+   * @param aRoot The root path or URL.
+   * @param aPath The path or URL to be joined with the root.
+   *
+   * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
+   *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
+   *   first.
+   * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
+   *   is updated with the result and aRoot is returned. Otherwise the result
+   *   is returned.
+   *   - If aPath is absolute, the result is aPath.
+   *   - Otherwise the two paths are joined with a slash.
+   * - Joining for example 'http://' and 'www.example.com' is also supported.
+   */
+  function join(aRoot, aPath) {
+    var aPathUrl = urlParse(aPath);
+    var aRootUrl = urlParse(aRoot);
+    if (aRootUrl) {
+      aRoot = aRootUrl.path || '/';
+    }
+
+    // `join(foo, '//www.example.org')`
+    if (aPathUrl && !aPathUrl.scheme) {
+      if (aRootUrl) {
+        aPathUrl.scheme = aRootUrl.scheme;
+      }
+      return urlGenerate(aPathUrl);
+    }
+
+    if (aPathUrl || aPath.match(dataUrlRegexp)) {
       return aPath;
     }
 
-    if (aPath.charAt(0) === '/' && (url = urlParse(aRoot))) {
-      url.path = aPath;
-      return urlGenerate(url);
+    // `join('http://', 'www.example.com')`
+    if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
+      aRootUrl.host = aPath;
+      return urlGenerate(aRootUrl);
     }
 
-    return aRoot.replace(/\/$/, '') + '/' + aPath;
+    var joined = aPath.charAt(0) === '/'
+      ? aPath
+      : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
+
+    if (aRootUrl) {
+      aRootUrl.path = joined;
+      return urlGenerate(aRootUrl);
+    }
+    return joined;
   }
   exports.join = join;
 
@@ -7034,8 +7165,8 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"),"/..\\node_modules\\uglify-js\\node_modules\\source-map\\node_modules\\amdefine\\amdefine.js")
-},{"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":29,"path":30}],45:[function(_dereq_,module,exports){
+}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),"/../node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js")
+},{"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29,"path":30}],45:[function(_dereq_,module,exports){
 var sys = _dereq_("util");
 var MOZ_SourceMap = _dereq_("source-map");
 var UglifyJS = exports;
@@ -10371,6 +10502,10 @@ AST_Toplevel.DEFMETHOD("mangle_names", function(options){
             node.mangled_name = name;
             return true;
         }
+        if (options.screw_ie8 && node instanceof AST_SymbolCatch) {
+            to_mangle.push(node.definition());
+            return;
+        }
     });
     this.walk(tw);
     to_mangle.forEach(function(def){ def.mangle(options) });
@@ -11932,6 +12067,7 @@ function Compressor(options, false_by_default) {
         loops         : !false_by_default,
         unused        : !false_by_default,
         hoist_funs    : !false_by_default,
+        keep_fargs    : false,
         hoist_vars    : false,
         if_return     : !false_by_default,
         join_vars     : !false_by_default,
@@ -12247,7 +12383,7 @@ merge(Compressor.prototype, {
                         stat = stat.clone();
                         stat.condition = stat.condition.negate(compressor);
                         stat.body = make_node(AST_BlockStatement, stat, {
-                            body: ret
+                            body: as_statement_array(stat.alternative).concat(ret)
                         });
                         stat.alternative = make_node(AST_BlockStatement, stat, {
                             body: body
@@ -12915,18 +13051,20 @@ merge(Compressor.prototype, {
             var tt = new TreeTransformer(
                 function before(node, descend, in_list) {
                     if (node instanceof AST_Lambda && !(node instanceof AST_Accessor)) {
-                        for (var a = node.argnames, i = a.length; --i >= 0;) {
-                            var sym = a[i];
-                            if (sym.unreferenced()) {
-                                a.pop();
-                                compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
-                                    name : sym.name,
-                                    file : sym.start.file,
-                                    line : sym.start.line,
-                                    col  : sym.start.col
-                                });
+                        if (!compressor.option("keep_fargs")) {
+                            for (var a = node.argnames, i = a.length; --i >= 0;) {
+                                var sym = a[i];
+                                if (sym.unreferenced()) {
+                                    a.pop();
+                                    compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
+                                        name : sym.name,
+                                        file : sym.start.file,
+                                        line : sym.start.line,
+                                        col  : sym.start.col
+                                    });
+                                }
+                                else break;
                             }
-                            else break;
                         }
                     }
                     if (node instanceof AST_Defun && node !== self) {
@@ -14167,6 +14305,19 @@ merge(Compressor.prototype, {
                 return consequent;
             }
         }
+        // x?y?z:a:a --> x&&y?z:a
+        if (consequent instanceof AST_Conditional
+            && consequent.alternative.equivalent_to(alternative)) {
+            return make_node(AST_Conditional, self, {
+                condition: make_node(AST_Binary, self, {
+                    left: self.condition,
+                    operator: "&&",
+                    right: consequent.condition
+                }),
+                consequent: consequent.consequent,
+                alternative: alternative
+            });
+        }
         return self;
     });
 
@@ -14294,6 +14445,9 @@ function SourceMap(options) {
                 line: orig_line,
                 column: orig_col
             });
+            if (info.source === null) {
+                return;
+            }
             source = info.source;
             orig_line = info.line;
             orig_col = info.column;
@@ -14755,7 +14909,8 @@ exports.minify = function (files, options) {
     UglifyJS.base54.reset();
 
     // 1. parse
-    var toplevel = null;
+    var toplevel = null,
+        sourcesContent = {};
 
     if (options.spidermonkey) {
         toplevel = UglifyJS.AST_Node.from_mozilla_ast(files);
@@ -14766,6 +14921,7 @@ exports.minify = function (files, options) {
             var code = options.fromString
                 ? file
                 : fs.readFileSync(file, "utf8");
+            sourcesContent[file] = code;
             toplevel = UglifyJS.parse(code, {
                 filename: options.fromString ? "?" : file,
                 toplevel: toplevel
@@ -14801,6 +14957,14 @@ exports.minify = function (files, options) {
             orig: inMap,
             root: options.sourceRoot
         });
+        if (options.sourceMapIncludeSources) {
+            for (var file in sourcesContent) {
+                if (sourcesContent.hasOwnProperty(file)) {
+                    options.source_map.get().setSourceContent(file, sourcesContent[file]);
+                }
+            }
+        }
+
     }
     if (options.output) {
         UglifyJS.merge(output, options.output);
