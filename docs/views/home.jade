@@ -1,0 +1,51 @@
+extends ./layout.jade
+
+block content
+  .row(data-control='interactive')
+      .col-md-6
+        +jade
+          :jadesrc
+            doctype html
+            html(lang="en")
+              head
+                title= pageTitle
+                script(type='text/javascript').
+                  if (foo) {
+                     bar(1 + 5)
+                  }
+              body
+                h1 Jade - node template engine
+                #container.col
+                  if youAreUsingJade
+                    p You are amazing
+                  else
+                    p Get on it!
+                  p.
+                    Jade is a terse and simple
+                    templating language with a
+                    strong focus on performance
+                    and powerful features.
+      .col-md-6
+        +html
+          :htmlsrc
+            <!DOCTYPE html>
+            <html lang="en">
+              <head>
+                <title>Jade</title>
+                <script type="text/javascript">
+                  if (foo) {
+                    bar(1 + 5)
+                  }
+                </script>
+              </head>
+              <body>
+                <h1>Jade - node template engine</h1>
+                <div id="container" class="col">
+                  <p>You are amazing</p>
+                  <p>Jade is a terse and simple
+                     templating language with a
+                     strong focus on performance
+                     and powerful features.</p>
+                </div>
+              </body>
+            </html>

@@ -1,0 +1,34 @@
+extends ../reference.jade
+
+block documentation
+  h1 doctype
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          doctype html
+    .col-lg-6
+      +html
+        :htmlsrc
+          <!DOCTYPE html>
+  p There are shortcuts for commonly used doctypes:
+
+  dl
+    each doctype, key in doctypes
+      if key != '5' && key != 'default'
+        dt= key
+        dd
+          pre
+            code= doctype
+
+  p You can also use your own literal custom doctype:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+    .col-lg-6
+      +html
+        :htmlsrc
+          <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">
