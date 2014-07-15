@@ -959,6 +959,13 @@ describe('jade', function(){
       var actual = fn({name: 'foo'}).replace(/\s/g, '');
       assert(actual === expected);
     });
+    it('accepts the `name` option to rename the resulting function', function () {
+      var src = jade.compileFileClient(__dirname + '/cases/basic.jade', {name: 'myTemplateName'});
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
+      var actual = fn({name: 'foo'}).replace(/\s/g, '');
+      assert(actual === expected);
+    });
   });
 
   describe('.runtime', function () {
