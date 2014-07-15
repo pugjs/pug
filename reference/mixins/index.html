@@ -1,0 +1,69 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/bundle.css"></head><body></body><body><div id="wrap"><div id="content"><div class="logo-container"><a href="/"><img src="/style/logo.png"><div class="sr-only">Jade - Node Template Engine</div></a></div><div class="navbar navbar-default navbar-static-top"><div class="container"><div class="navbar-header visible-sm visible-xs"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">JADE</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a href="/reference">Language Reference</a></li><li class="false"><a href="/api">API</a></li><li class="false"><a href="/command-line">Command Line</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="false"><a href="/history">Change Log</a></li><li><a href="/coverage/">Code Coverage</a></li><li><a href="https://travis-ci.org/visionmedia/jade">Test Results</a></li><li><a href="https://github.com/visionmedia/jade">GitHub Repository</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-2"><ul class="nav nav-pills nav-stacked"><li class="false"><a href="/reference/attributes">attributes</a></li><li class="false"><a href="/reference/case">case</a></li><li class="false"><a href="/reference/code">code</a></li><li class="false"><a href="/reference/comments">comments</a></li><li class="false"><a href="/reference/conditionals">conditionals</a></li><li class="false"><a href="/reference/doctype">doctype</a></li><li class="false"><a href="/reference/extends">extends</a></li><li class="false"><a href="/reference/filters">filters</a></li><li class="false"><a href="/reference/includes">includes</a></li><li class="false"><a href="/reference/iteration">iteration</a></li><li class="active"><a href="/reference/mixins">mixins</a></li><li class="false"><a href="/reference/plain-text">plain text</a></li><li class="false"><a href="/reference/tags">tags</a></li></ul></div><div class="col-md-10"><h1>Mixins</h1><p>Mixins allow you to create reusable blocks of jade.</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">//- Declaration</span>
+<span class="cm-keyword">mixin</span> <span class="cm-variable">list</span>
+<span class="cm-indent">  </span><span class="cm-tag">ul</span>
+<span class="cm-indent">    </span><span class="cm-tag">li</span><span class="cm-string"> foo</span>
+<span class="cm-indent">    </span><span class="cm-tag">li</span><span class="cm-string"> bar</span>
+<span class="cm-indent">    </span><span class="cm-tag">li</span><span class="cm-string"> baz</span>
+<span class="cm-comment">//- Use</span>
+<span class="cm-variable">+list</span>
+<span class="cm-variable">+list</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>foo<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>bar<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>baz<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>foo<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>bar<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span><span class="cm-tag">&gt;</span>baz<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><p>They are compiled to functions and can take arguments:</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">mixin</span> <span class="cm-variable">pet</span>(<span class="cm-variable">name</span>)
+<span class="cm-indent">  </span><span class="cm-tag">li</span><span class="cm-qualifier">.pet</span><span class="cm-punctuation">=</span> <span class="cm-variable">name</span>
+<span class="cm-tag">ul</span>
+<span class="cm-indent">  </span><span class="cm-variable">+pet</span>(<span class="cm-string">&#39;cat&#39;</span>)
+<span class="cm-indent">  </span><span class="cm-variable">+pet</span>(<span class="cm-string">&#39;dog&#39;</span>)
+<span class="cm-indent">  </span><span class="cm-variable">+pet</span>(<span class="cm-string">&#39;pig&#39;</span>)</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;ul</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;pet&quot;</span><span class="cm-tag">&gt;</span>cat<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;pet&quot;</span><span class="cm-tag">&gt;</span>dog<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;li</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;pet&quot;</span><span class="cm-tag">&gt;</span>pig<span class="cm-tag">&lt;/li</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/ul</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h2>Mixin Blocks</h2><p>Mixins can also take a block of jade to act as the content:</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">mixin</span> <span class="cm-variable">article</span>(<span class="cm-variable">title</span>)
+<span class="cm-indent">  </span><span class="cm-qualifier">.article</span>
+<span class="cm-indent">    </span><span class="cm-qualifier">.article-wrapper</span>
+<span class="cm-indent">      </span><span class="cm-tag">h1</span><span class="cm-punctuation">=</span> <span class="cm-variable">title</span>
+<span class="cm-indent">      </span><span class="cm-keyword">if</span> <span class="cm-variable">block</span>
+<span class="cm-indent">        </span><span class="cm-keyword">block</span>
+<span class="cm-indent">      </span><span class="cm-keyword">else</span>
+<span class="cm-indent">        </span><span class="cm-tag">p</span><span class="cm-string"> No content provided</span>
+
+<span class="cm-variable">+article</span>(<span class="cm-string">&#39;Hello world&#39;</span>)
+
+<span class="cm-variable">+article</span>(<span class="cm-string">&#39;Hello world&#39;</span>)
+<span class="cm-indent">  </span><span class="cm-tag">p</span><span class="cm-string"> This is my</span>
+<span class="cm-indent">  </span><span class="cm-tag">p</span><span class="cm-string"> Amazing article</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;article&quot;</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;article-wrapper&quot;</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Hello world<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>No content provided<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+
+<span class="cm-tag">&lt;div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;article&quot;</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;article-wrapper&quot;</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>Hello world<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>This is my<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Amazing article<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+  <span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h2>Mixin Attributes</h2><p>Mixins also get an implicit attributes argument taken from the attributes passed to the mixin:</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">mixin</span> <span class="cm-variable">link</span>(<span class="cm-variable">href</span>, <span class="cm-variable">name</span>)
+<span class="cm-indent">  </span><span class="cm-comment">//- attributes == {class: &quot;btn&quot;}</span>
+<span class="cm-indent">  </span><span class="cm-tag">a</span><span class="cm-punctuation">(</span><span class="cm-attribute">class</span>!=<span class="cm-variable">attributes</span>.<span class="cm-property">class</span>, <span class="cm-attribute">href</span>=<span class="cm-variable">href</span><span class="cm-punctuation">)</span><span class="cm-punctuation">=</span> <span class="cm-variable">name</span>
+
+<span class="cm-variable">+link</span>(<span class="cm-string">&#39;/foo&#39;</span>, <span class="cm-string">&#39;foo&#39;</span>)<span class="cm-punctuation">(</span><span class="cm-attribute">class</span>=<span class="cm-string">&quot;btn&quot;</span><span class="cm-punctuation">)</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;a</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;btn&quot;</span> <span class="cm-attribute">href</span>=<span class="cm-string">&quot;/foo&quot;</span><span class="cm-tag">&gt;</span>foo<span class="cm-tag">&lt;/a</span><span class="cm-tag">&gt;</span></code></pre></div></div><div class="panel panel-info"><div class="panel-heading">Note</div><div class="panel-body">The values in <code>attributes</code> are already escaped so you should
+use <code>!=</code> to avoid escaping them a second time.</div></div></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="/client.js"></script><script src="http://code.jquery.com/jquery-2.1.1.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script></body></html>

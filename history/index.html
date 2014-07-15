@@ -1,0 +1,758 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/bundle.css"></head><body></body><body><div id="wrap"><div id="content"><div class="logo-container"><a href="/"><img src="/style/logo.png"><div class="sr-only">Jade - Node Template Engine</div></a></div><div class="navbar navbar-default navbar-static-top"><div class="container"><div class="navbar-header visible-sm visible-xs"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">JADE</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="false"><a href="/reference">Language Reference</a></li><li class="false"><a href="/api">API</a></li><li class="false"><a href="/command-line">Command Line</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="active"><a href="/history">Change Log</a></li><li><a href="/coverage/">Code Coverage</a></li><li><a href="https://travis-ci.org/visionmedia/jade">Test Results</a></li><li><a href="https://github.com/visionmedia/jade">GitHub Repository</a></li></ul></div></div></div><div class="container"><h1>Change Log</h1><h2 id="1-3-1-2014-04-04">1.3.1 / 2014-04-04</h2><p><a href="/1.3.1/reference" rel="nofollow">Documentation</a></p>
+<ul>
+<li>Fix error with tags in xml that are self-closing in html (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Fix error message for inline tags with content (<a href="https://github.com/hiddentao">@hiddentao</a>)</li>
+</ul>
+<h2 id="1-3-0-2014-03-02">1.3.0 / 2014-03-02</h2><p><a href="/1.3.0/reference" rel="nofollow">Documentation</a></p>
+<ul>
+<li>Fix a bug where sometimes mixins were removed by an optimisation even though they were being called (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>, reported by <a href="https://github.com/leider">@leider</a>)</li>
+<li>Updated with to support automatically detecting when a value is &quot;global&quot; and removed redundant <code>options.globals</code> option (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Improve warnings for tags with multiple attributes (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Deprecate (with a warning) <code>node.clone</code>, <code>block.replace</code>, <code>attrs.removeAttribute</code>, <code>attrs.getAttribute</code> - these are all internal APIs for the AST (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-2-0-2014-02-26">1.2.0 / 2014-02-26</h2>
+<ul>
+<li>Use variables instead of properties of jade, improving performance and reliability with nested templates (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Support compiling templates from stdin via a user typing (<a href="https://github.com/yorkie">@yorkie</a>)</li>
+<li>Lazily add mixins (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Fix case fall-through (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Earlier errors for <code>when</code> without <code>case</code> and <code>else</code> without <code>if</code> (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Allow <code>if</code>/<code>else</code> etc. to not have a block.</li>
+<li>Remove lib-cov legacy to make browserify work better (<a href="https://github.com/silver83">@silver83</a>)</li>
+<li>Add and improve test coverage using istanbul (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-1-5-2014-01-19">1.1.5 / 2014-01-19</h2>
+<ul>
+<li>Add filename to and fix line numbers for missing space before text warning (@ijin82)</li>
+<li>Fix filenames for some error reporting in extends/includes (@doublerebel)</li>
+<li>Fix a corner case where a mixin was called with <code>&amp;attributes</code> but no other attributes and a block that was supposed to be fixed in 1.1.4 (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-1-4-2014-01-09">1.1.4 / 2014-01-09</h2>
+<ul>
+<li>Fix a corner case where a mixin was called with <code>&amp;attributes</code> but no other attributes and a block (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-1-3-2014-01-09">1.1.3 / 2014-01-09</h2>
+<ul>
+<li>Fix failure of npm prepublish not running</li>
+</ul>
+<h2 id="1-1-2-2014-01-09">1.1.2 / 2014-01-09</h2>
+<ul>
+<li>Fix same interaction of <code>&amp;attributes</code> with <code>false</code> <code>null</code> or <code>undefined</code> but combined with dynamic attributes (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-1-1-2014-01-09">1.1.1 / 2014-01-09</h2>
+<ul>
+<li>Fix a bug when <code>&amp;attributes</code> is combined with static attributes that evaluate to <code>false</code> or <code>null</code> or <code>undefined</code> (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-1-0-2014-01-07">1.1.0 / 2014-01-07</h2>
+<ul>
+<li>Fix class merging to work as documented (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Throw an error when the same attribute is duplicated multiple times (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Move more errors into the parser/lexer so they have more info about line numbers (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Support mixin blocks at the end of files (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-0-2-2013-12-31">1.0.2 / 2013-12-31</h2>
+<ul>
+<li>Fix a bug when <code>&amp;attributes</code> is combined with dynamic attributes (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-0-1-2013-12-29">1.0.1 / 2013-12-29</h2>
+<ul>
+<li>Allow self closing tags to contian whitespace (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Allow tags to have a single white space after them (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Support text bodies of tags that begin with <code>//</code> rather than treating them as comments (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+</ul>
+<h2 id="1-0-0-2013-12-22">1.0.0 / 2013-12-22</h2>
+<ul>
+<li>No longer support node@0.8 (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Fix error reporting in layouts &amp; includes (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Allow a list of &#39;globals&#39; to be passed as an array at compile time &amp; don&#39;t automatically expose all globals (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Escape apostrophes in data attributes (@qualiabyte)</li>
+<li>Fix mixin/block interaction (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a> &amp; <a href="https://github.com/paulyoung">@paulyoung</a>)</li>
+<li>Ignore trailing space after mixin declaration (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Make literal <code>.</code> work as expected (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove implicit text only for script/style (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Stop parsing comments and remove support for conditional comments (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Make filtering includes explicit (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove special assignment syntax (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove <code>!!!</code> shortcut for <code>doctype</code> (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove <code>5</code> shorcut for <code>html</code> doctype (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove <code>colons</code> option from the distant past (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Add a sepatate <code>compileClient</code> and <code>compileFileClient</code> to replace the <code>client</code> option (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove polyfills for supporting old browsers (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Allow interpolation for mixin names (<a href="https://github.com/jeromew">@jeromew</a></li>
+<li>Use <code>node.type</code> instead of <code>node.constructor.name</code> so it can be minified (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Allow hyphens in filter names (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Throw an error if a self closing tag has content (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Support inline tags (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Replace <code>attributes</code> magic attribute with <code>&amp;attributes(attributes)</code> (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove automatic tag wrapping for filters, you can just put the tags in yourself now (<a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Remove whitespace from tags nested inside pre tags (<a href="http://markdalgleish.com">@markdalgleish</a>)</li>
+</ul>
+<h2 id="0-35-0-2013-08-21">0.35.0 / 2013-08-21</h2>
+<ul>
+<li>Add support for space separated attributes (thanks to <a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Add earlier errors for invalid JavaScript expressions (thanks to <a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>Fix parsing files with UTF8 BOMs when they are includes or parent/layout templates (thanks to <a href="https://github.com/kiinoo">@kiinoo</a>)</li>
+</ul>
+<h2 id="0-34-1-2013-07-26">0.34.1 / 2013-07-26</h2>
+<ul>
+<li>fix render file not working when called with callback (reported by <a href="https://github.com/xieren58">@xieren58</a>)</li>
+</ul>
+<h2 id="0-34-0-2013-07-26">0.34.0 / 2013-07-26</h2>
+<ul>
+<li>callbacks only called once for async methods even if they throw (reported by <a href="https://github.com/davidcornu">@davidcornu</a>)</li>
+<li>HTML comments are pretty printed better (thanks to <a href="https://github.com/eddiemonge">@eddiemonge</a>)</li>
+<li>callbacks are optional and leaving them out results in synchronous operation (thanks to <a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>)</li>
+<li>empty filter nodes are now permitted (thanks to <a href="https://github.com/coderanger">@coderanger</a>)</li>
+<li>overhaul website and documentation (thanks to <a href="http://www.forbeslindesay.co.uk/">@ForbesLindesay</a>), much more of this to come.</li>
+</ul>
+<h2 id="0-33-0-2013-07-12">0.33.0 / 2013-07-12</h2>
+<ul>
+<li>Hugely more powerful error reporting (especially with <code>compileDebug</code> set explicitly to <code>true</code>)</li>
+<li>Add a warning for tags with multiple attributes</li>
+<li>be strict about requiring newlines after tags to fix some odd corner cases</li>
+<li>fix escaping of class to allow it to be unescaped (thanks to <a href="https://github.com/christiangenco">@christiangenco</a>)</li>
+</ul>
+<h2 id="0-32-0-2013-06-28">0.32.0 / 2013-06-28</h2>
+<ul>
+<li>remove <code>jade.version</code> and fix <code>jade --version</code></li>
+<li>add file name and line number to deprecation warnings</li>
+<li>use constantinople for better constant detection</li>
+<li>update <code>with</code> for a massive performance upgrade at compile time</li>
+</ul>
+<h2 id="0-31-2-2013-06-07">0.31.2 / 2013-06-07</h2>
+<ul>
+<li>fix overzealous deprecation warnings</li>
+</ul>
+<h2 id="0-31-1-2013-05-31">0.31.1 / 2013-05-31</h2>
+<ul>
+<li>fix line endings for executable command</li>
+<li>fix <code>locals</code> variable being undefined</li>
+<li>fix an obscure bug that could occur if multiple mixins interact badly (see <a href="https://github.com/substack/lexical-scope/issues/13">substack/lexical-scope#13</a>)</li>
+</ul>
+<h2 id="0-31-0-2013-05-30">0.31.0 / 2013-05-30</h2>
+<ul>
+<li>deprecate implicit text-only <code>script</code> and <code>style</code> tags</li>
+<li>make <code>with</code> at compile time using <code>lexical-scope</code></li>
+<li>add <code>options.parser</code> that behaves exactly like <code>options.compiler</code></li>
+<li>add &quot;component.json&quot; for component (runtime) support</li>
+<li>removed <code>hasOwnProperty</code> check in each loops</li>
+<li>removed .min files from the repository (people can just generate these themselves)</li>
+<li>use browserify to compile client side libraries</li>
+<li>fix buggy block extending should now be fixed</li>
+<li>fix preserve case of custom doctypes</li>
+<li>fix regexps in attributes sometimes not being accepted</li>
+<li>fix allow <code>$</code> sign in each loop variable names</li>
+<li>fix mixins with buffered code on the same line</li>
+<li>fix separate class names by <code>` rather than</code>,` (was sometimes incorrect)</li>
+</ul>
+<h2 id="0-30-0-2013-04-25">0.30.0 / 2013-04-25</h2>
+<ul>
+<li>add support for &#39;include&#39; and &#39;extends&#39; to use paths relative to basedir</li>
+<li>fix accidental calling of functions in iteration block. Closes #986</li>
+<li>fix: skip rethrow on client</li>
+<li>fix each/else prefixed with <code>-</code></li>
+<li>fix multi-block prepend/append</li>
+<li>swap -o and -O, set -o to --out</li>
+</ul>
+<h2 id="0-29-0-2013-04-16">0.29.0 / 2013-04-16</h2>
+<ul>
+<li>add &quot;monocle&quot; for watcher that actually works...</li>
+<li>fix interpolation in blocks of text</li>
+<li>fix attribute interpolation</li>
+<li>move filters to an external library</li>
+<li>fix JavaScript escaping corner cases</li>
+</ul>
+<h2 id="0-28-2-2013-03-04">0.28.2 / 2013-03-04</h2>
+<ul>
+<li>wtf coffeescript is not a dep</li>
+</ul>
+<h2 id="0-28-1-2013-01-10">0.28.1 / 2013-01-10</h2>
+<ul>
+<li>add passing of filename to include filters</li>
+<li>fix wrong new lines for include filters</li>
+</ul>
+<h2 id="0-28-0-2013-01-08">0.28.0 / 2013-01-08</h2>
+<ul>
+<li>add .css and .js &quot;filters&quot;. re #438</li>
+<li>add include filters. Closes #283</li>
+<li>fix &quot;class:&quot; within attribute escaping</li>
+<li>removing ast filters</li>
+<li>things I can&#39;t read:</li>
+<li>反馈地址</li>
+<li>样式</li>
+<li>联系</li>
+<li>初稿，翻译完</li>
+<li>接受大鸟的建议</li>
+<li>头晕，翻译一点点</li>
+<li>到过滤器翻译完毕</li>
+<li>翻译一部分</li>
+<li>中文翻译单独放</li>
+<li>特性部分</li>
+<li>再翻</li>
+<li>翻译一点点</li>
+</ul>
+<h2 id="0-27-7-2012-11-05">0.27.7 / 2012-11-05</h2>
+<ul>
+<li>fix each/else clause for enumerated objects</li>
+<li>fix #764 (incorrect line number for error messages)</li>
+<li>fix double-escaping of interpolated js slashes. Closes #784</li>
+</ul>
+<h2 id="0-27-6-2012-10-05">0.27.6 / 2012-10-05</h2>
+<ul>
+<li>Included templates can not override blocks of their parent. Closes #699</li>
+</ul>
+<h2 id="0-27-5-2012-09-24">0.27.5 / 2012-09-24</h2>
+<ul>
+<li>fix attr interpolation escaping. Closes #771</li>
+</ul>
+<h2 id="0-27-4-2012-09-18">0.27.4 / 2012-09-18</h2>
+<ul>
+<li>fix include yields. Closes #770</li>
+</ul>
+<h2 id="0-27-3-2012-09-18">0.27.3 / 2012-09-18</h2>
+<ul>
+<li>fix escaping of interpolation. Closes #769</li>
+<li>loosen &quot;mkdirp&quot; version restriction [TooTallNate]</li>
+</ul>
+<h2 id="0-27-2-2012-08-07">0.27.2 / 2012-08-07</h2>
+<ul>
+<li>Revert &quot;fixing string interpolation escaping #731&quot;, problems reported</li>
+</ul>
+<h2 id="0-27-1-2012-08-06">0.27.1 / 2012-08-06</h2>
+<ul>
+<li>fix attribute interpolation escaping #731</li>
+<li>fix string interpolation escaping #731</li>
+</ul>
+<h2 id="0-27-0-2012-07-26">0.27.0 / 2012-07-26</h2>
+<ul>
+<li>added ability to pass in json file to <code>--obj</code></li>
+<li>add preliminary <code>each</code> <code>else</code> support. Closes #716</li>
+<li>fix doctype bug overlooked in #712</li>
+<li>fix stripping of utf-8 BOMs</li>
+</ul>
+<h2 id="0-26-3-2012-06-25">0.26.3 / 2012-06-25</h2>
+<ul>
+<li>Update version of commander that supports node v0.8.</li>
+</ul>
+<h2 id="0-26-2-2012-06-22">0.26.2 / 2012-06-22</h2>
+<ul>
+<li>Added --options alias of --obj</li>
+<li>Added reserved word conflict prevention in Google&#39;s Closure Compiler</li>
+<li>Added tag interpolation. Closes #657</li>
+<li>Allow the compiled client to use it&#39;s own jade util functions [3rd-Eden]</li>
+<li>Fixed <code>attrs()</code> escape bug [caseywebdev]</li>
+</ul>
+<h2 id="0-26-1-2012-05-27">0.26.1 / 2012-05-27</h2>
+<ul>
+<li>Changed default doctype to <strong>html5</strong></li>
+<li>Performance: statically compile attrs when possible [chowey]</li>
+<li>Fixed some class attribute merging cases</li>
+<li>Fixed so <code>block</code> doesn&#39;t consume <code>blockquotes</code> tag [chowey]</li>
+<li>Fixed backslashes in text nodes [chowey]</li>
+<li>Fixed / in text. Closes #638</li>
+</ul>
+<h2 id="0-26-0-2012-05-04">0.26.0 / 2012-05-04</h2>
+<ul>
+<li>Added package.json <strong>component</strong> support</li>
+<li>Added explicit self-closing tag support. Closes #605</li>
+<li>Added <code>block</code> statement</li>
+<li>Added mixin tag-like behaviour [chowey]</li>
+<li>Fixed mixins with extends [chowey]</li>
+</ul>
+<h2 id="0-25-0-2012-04-18">0.25.0 / 2012-04-18</h2>
+<ul>
+<li>Added preliminary mixin block support. Closes #310</li>
+<li>Fixed whitespace handling in various situations [chowey]</li>
+<li>Fixed indentation in various situations [chowey]</li>
+</ul>
+<h2 id="0-24-0-2012-04-12">0.24.0 / 2012-04-12</h2>
+<ul>
+<li>Fixed unescaped attribute compilation</li>
+<li>Fixed pretty-printing of text-only tags (<strong>Warning</strong>: this may affect rendering) [chowey]</li>
+</ul>
+<h2 id="0-23-0-2012-04-11">0.23.0 / 2012-04-11</h2>
+<ul>
+<li>Added data-attr json stringification support. Closes #572</li>
+<li>Added unescaped attr support. Closes #198</li>
+<li>Fixed #1070, reverted mixin function statements</li>
+<li>Fixed jade.1 typo</li>
+</ul>
+<h2 id="0-22-1-2012-04-04">0.22.1 / 2012-04-04</h2>
+<ul>
+<li>Fixed source tags. now self-closing. Closes #308</li>
+<li>Fixed: escape backslashes in coffeescript filter</li>
+</ul>
+<h2 id="0-22-0-2012-03-22">0.22.0 / 2012-03-22</h2>
+<ul>
+<li>Added jade manpage (<code>man jade</code> after installation for docs)</li>
+<li>Added <code>-D, --no-debug</code> to jade(1)</li>
+<li>Added <code>-p, --pretty</code> to jade(1)</li>
+<li>Added <code>-c, --client</code> option to jade(1)</li>
+<li>Fixed <code>-o { client: true }</code> with stdin</li>
+<li>Fixed: skip blank lines in lexer (unless within pipeless text). Closes #399</li>
+</ul>
+<h2 id="0-21-0-2012-03-10">0.21.0 / 2012-03-10</h2>
+<ul>
+<li>Added new input/output test suite using Mocha&#39;s string diffing</li>
+<li>Added alias <code>extend</code> -&gt; <code>extends</code>. Closes #527 [guillermo]</li>
+<li>Fixed include escapes. Closes #513</li>
+<li>Fixed block-expansion with .foo and #foo short-hands. Closes #498</li>
+</ul>
+<h2 id="0-20-3-2012-02-16">0.20.3 / 2012-02-16</h2>
+<ul>
+<li>Changed: pass <code>.filename</code> to filters only</li>
+</ul>
+<h2 id="0-20-2-2012-02-16">0.20.2 / 2012-02-16</h2>
+<ul>
+<li>Fixed <code>:stylus</code> import capabilities, pass .filename</li>
+</ul>
+<h2 id="0-20-1-2012-02-02">0.20.1 / 2012-02-02</h2>
+<ul>
+<li>Fixed Block#includeBlock() with textOnly blocks</li>
+</ul>
+<h2 id="0-20-0-2011-12-28">0.20.0 / 2011-12-28</h2>
+<ul>
+<li>Added a browser example</li>
+<li>Added <code>yield</code> for block <code>include</code>s</li>
+<li>Changed: replaced internal <code>__</code> var with <code>__jade</code> [chrisleishman]</li>
+<li>Fixed two globals. Closes #433</li>
+</ul>
+<h2 id="0-19-0-2011-12-02">0.19.0 / 2011-12-02</h2>
+<ul>
+<li>Added block <code>append</code> / <code>prepend</code> support. Closes #355</li>
+<li>Added link in readme to jade-mode for Emacs</li>
+<li>Added link to python implementation</li>
+</ul>
+<h2 id="0-18-0-2011-11-21">0.18.0 / 2011-11-21</h2>
+<ul>
+<li>Changed: only [&#39;script&#39;, &#39;style&#39;] are text-only. Closes #398&#39;</li>
+</ul>
+<h2 id="0-17-0-2011-11-10">0.17.0 / 2011-11-10</h2>
+<ul>
+<li>jade.renderFile() is back! (for express 3.x)</li>
+<li>Fixed <code>Object.keys()</code> failover bug</li>
+</ul>
+<h2 id="0-16-4-2011-10-24">0.16.4 / 2011-10-24</h2>
+<ul>
+<li>Fixed a test due to reserved keyword</li>
+<li>Fixed: commander 0.1.x dep for 0.5.x</li>
+</ul>
+<h2 id="0-16-3-2011-10-24">0.16.3 / 2011-10-24</h2>
+<ul>
+<li>Added: allow leading space for conditional comments</li>
+<li>Added quick implementation of a switch statement</li>
+<li>Fixed parens in mixin args. Closes #380</li>
+<li>Fixed: include files with a .jade extension as jade files</li>
+</ul>
+<h2 id="0-16-2-2011-09-30">0.16.2 / 2011-09-30</h2>
+<ul>
+<li>Fixed include regression. Closes #354</li>
+</ul>
+<h2 id="0-16-1-2011-09-29">0.16.1 / 2011-09-29</h2>
+<ul>
+<li>Fixed unexpected <code>else</code> bug when compileDebug: false</li>
+<li>Fixed attr state issue for balancing pairs. Closes #353</li>
+</ul>
+<h2 id="0-16-0-2011-09-26">0.16.0 / 2011-09-26</h2>
+<ul>
+<li>Added <code>include</code> block support. Closes #303</li>
+<li>Added template inheritance via <code>block</code> and <code>extends</code>. Closes #242</li>
+<li>Added &#39;type=&quot;text/css&quot;&#39; to the style tags generated by filters.</li>
+<li>Added &#39;uglifyjs&#39; as an explicit devDependency.</li>
+<li>Added  -p, --path <path> flag to jade(1)</li>
+<li>Added support for any arbitrary doctype</li>
+<li>Added <code>jade.render(str[,options], fn)</code> back</li>
+<li>Added first-class <code>while</code> support</li>
+<li>Added first-class assignment support</li>
+<li>Fixed runtime.js <code>Array.isArray()</code> polyfill. Closes #345</li>
+<li>Fixed: set .filename option in jade(1) when passing filenames</li>
+<li>Fixed <code>Object.keys()</code> polyfill typo. Closes #331</li>
+<li>Fixed <code>include</code> error context</li>
+<li>Renamed magic &quot;index&quot; to &quot;$index&quot;. Closes #350</li>
+</ul>
+<h2 id="0-15-4-2011-09-05">0.15.4 / 2011-09-05</h2>
+<ul>
+<li>Fixed script template html. Closes #316</li>
+<li>Revert &quot;Fixed script() tag with trailing &quot;.&quot;. Closes #314&quot;</li>
+</ul>
+<h2 id="0-15-3-2011-08-30">0.15.3 / 2011-08-30</h2>
+<ul>
+<li>Added Makefile example. Closes #312</li>
+<li>Fixed script() tag with trailing &quot;.&quot;. Closes #314</li>
+</ul>
+<h2 id="0-15-2-2011-08-26">0.15.2 / 2011-08-26</h2>
+<ul>
+<li>Fixed new conditional boundaries. Closes #307</li>
+</ul>
+<h2 id="0-15-1-2011-08-26">0.15.1 / 2011-08-26</h2>
+<ul>
+<li>Fixed jade(1) support due to <code>res.render()</code> removal</li>
+<li>Removed --watch support (use a makefile + watch...)</li>
+</ul>
+<h2 id="0-15-0-2011-08-26">0.15.0 / 2011-08-26</h2>
+<ul>
+<li>Added <code>client</code> option to reference runtime helpers</li>
+<li>Added <code>Array.isArray()</code> for runtime.js as well</li>
+<li>Added <code>Object.keys()</code> for the client-side runtime</li>
+<li>Added first-class <code>if</code>, <code>unless</code>, <code>else</code> and <code>else if</code> support</li>
+<li>Added first-class <code>each</code> / <code>for</code> support</li>
+<li>Added <code>make benchmark</code> for continuous-bench</li>
+<li>Removed <code>inline</code> option, SS helpers are no longer inlined either</li>
+<li>Removed <code>Parser#debug()</code></li>
+<li>Removed <code>jade.render()</code> and <code>jade.renderFile()</code></li>
+<li>Fixed runtime.js <code>escape()</code> bug causing window.escape to be used</li>
+<li>Fixed a bunch of tests</li>
+</ul>
+<h2 id="0-14-2-2011-08-16">0.14.2 / 2011-08-16</h2>
+<ul>
+<li>Added <code>include</code> support for non-jade files</li>
+<li>Fixed code indentation when followed by newline(s). Closes #295 [reported by masylum]</li>
+</ul>
+<h2 id="0-14-1-2011-08-14">0.14.1 / 2011-08-14</h2>
+<ul>
+<li>Added <code>colons</code> option for everyone stuck with &quot;:&quot;. Closes #231</li>
+<li>Optimization: consecutive lines are merged in compiled js</li>
+</ul>
+<h2 id="0-14-0-2011-08-08">0.14.0 / 2011-08-08</h2>
+<ul>
+<li>Added array iteration with index example. Closes #276</li>
+<li>Added <em>runtime.js</em></li>
+<li>Added <code>compileDebug</code> option to enable lineno instrumentation</li>
+<li>Added <code>inline</code> option to disable inlining of helpers (for client-side)</li>
+</ul>
+<h2 id="0-13-0-2011-07-13">0.13.0 / 2011-07-13</h2>
+<ul>
+<li>Added <code>mixin</code> support</li>
+<li>Added <code>include</code> support</li>
+<li>Added array support for the class attribute</li>
+</ul>
+<h2 id="0-12-4-2011-06-23">0.12.4 / 2011-06-23</h2>
+<ul>
+<li>Fixed filter indentation bug. Closes #243</li>
+</ul>
+<h2 id="0-12-3-2011-06-21">0.12.3 / 2011-06-21</h2>
+<ul>
+<li>Fixed empty strings support. Closes #223</li>
+<li>Fixed conditional comments documentation. Closes #245</li>
+</ul>
+<h2 id="0-12-2-2011-06-16">0.12.2 / 2011-06-16</h2>
+<ul>
+<li>Fixed <code>make test</code></li>
+<li>Fixed block comments</li>
+</ul>
+<h2 id="0-12-1-2011-06-04">0.12.1 / 2011-06-04</h2>
+<ul>
+<li>Fixed attribute interpolation with double quotes. Fixes #232 [topaxi]</li>
+</ul>
+<h2 id="0-12-0-2011-06-03">0.12.0 / 2011-06-03</h2>
+<ul>
+<li>Added <code>doctype</code> as alias of <code>!!!</code></li>
+<li>Added; doctype value is now case-insensitive</li>
+<li>Added attribute interpolation support</li>
+<li>Fixed; retain original indentation spaces in text blocks</li>
+</ul>
+<h2 id="0-11-1-2011-06-01">0.11.1 / 2011-06-01</h2>
+<ul>
+<li>Fixed text block indentation [Laszlo Bacsi]</li>
+<li>Changed; utilizing devDependencies</li>
+<li>Fixed try/catch issue with renderFile(). Closes #227</li>
+<li>Removed attribute &quot;:&quot; support, use &quot;=&quot; (option for &#39;:&#39; coming soon)</li>
+</ul>
+<h2 id="0-11-0-2011-05-14">0.11.0 / 2011-05-14</h2>
+<ul>
+<li>Added <code>self</code> object to avoid poor <code>with(){}</code> performance [masylum]</li>
+<li>Added <code>doctype</code> option [Jeremy Larkin]</li>
+</ul>
+<h2 id="0-10-7-2011-05-04">0.10.7 / 2011-05-04</h2>
+<ul>
+<li>expose Parser</li>
+</ul>
+<h2 id="0-10-6-2011-04-29">0.10.6 / 2011-04-29</h2>
+<ul>
+<li>Fixed CS <code>Object.keys()</code> [reported by robholland]</li>
+</ul>
+<h2 id="0-10-5-2011-04-26">0.10.5 / 2011-04-26</h2>
+<ul>
+<li>Added error context after the lineno</li>
+<li>Added; indicate failing lineno with &quot;&gt;&quot;</li>
+<li>Added <code>Object.keys()</code> for the client-side</li>
+<li>Fixed attr strings when containing the opposite quote. Closes 207</li>
+<li>Fixed attr issue with js expressions within strings</li>
+<li>Fixed single-quote filter escape bug. Closes #196</li>
+</ul>
+<h2 id="0-10-4-2011-04-05">0.10.4 / 2011-04-05</h2>
+<ul>
+<li>Added <code>html</code> doctype, same as &quot;5&quot;</li>
+<li>Fixed <code>pre</code>, no longer text-only</li>
+</ul>
+<h2 id="0-10-3-2011-03-30">0.10.3 / 2011-03-30</h2>
+<ul>
+<li>Fixed support for quoted attribute keys ex <code>rss(&quot;xmlns:atom&quot;=&quot;atom&quot;)</code></li>
+</ul>
+<h2 id="0-10-2-2011-03-30">0.10.2 / 2011-03-30</h2>
+<ul>
+<li>Fixed pipeless text bug with missing outdent</li>
+</ul>
+<h2 id="0-10-1-2011-03-28">0.10.1 / 2011-03-28</h2>
+<ul>
+<li>Fixed <code>support/compile.js</code> to exclude browser js in node</li>
+<li>Fixes for IE [Patrick Pfeiffer]</li>
+</ul>
+<h2 id="0-10-0-2011-03-25">0.10.0 / 2011-03-25</h2>
+<ul>
+<li>Added AST-filter support back in the form of <code>&lt;tag&gt;[attrs]&lt;:&gt;&lt;block&gt;</code></li>
+</ul>
+<h2 id="0-9-3-2011-03-24">0.9.3 / 2011-03-24</h2>
+<ul>
+<li>Added <code>Block#unshift(node)</code></li>
+<li>Added <code>jade.js</code> for the client-side to the repo</li>
+<li>Added <code>jade.min.js</code> for the client-side to the repo</li>
+<li>Removed need for pipes in filters. Closes #185
+Note that this <em>will</em> break filters used to
+manipulate the AST, until we have a different
+syntax for doing so.</li>
+</ul>
+<h2 id="0-9-2-2011-03-23">0.9.2 / 2011-03-23</h2>
+<ul>
+<li>Added jade <code>--version</code></li>
+<li>Removed <code>${}</code> interpolation support, use <code>#{}</code></li>
+</ul>
+<h2 id="0-9-1-2011-03-16">0.9.1 / 2011-03-16</h2>
+<ul>
+<li>Fixed invalid <code>.map()</code> call due to recent changes</li>
+</ul>
+<h2 id="0-9-0-2011-03-16">0.9.0 / 2011-03-16</h2>
+<ul>
+<li>Added client-side browser support via <code>make jade.js</code> and <code>make jade.min.js</code>.</li>
+</ul>
+<h2 id="0-8-9-2011-03-15">0.8.9 / 2011-03-15</h2>
+<ul>
+<li>Fixed preservation of newlines in text blocks</li>
+</ul>
+<h2 id="0-8-8-2011-03-14">0.8.8 / 2011-03-14</h2>
+<ul>
+<li>Fixed jade(1) stdio</li>
+</ul>
+<h2 id="0-8-7-2011-03-14">0.8.7  / 2011-03-14</h2>
+<ul>
+<li>Added <code>mkdirs()</code> to jade(1)</li>
+<li>Added jade(1) stdio support</li>
+<li>Added new features to jade(1), <code>--watch</code>, recursive compilation etc [khingebjerg]</li>
+<li>Fixed pipe-less text newlines</li>
+<li>Removed jade(1) <code>--pipe</code> flag</li>
+</ul>
+<h2 id="0-8-6-2011-03-11">0.8.6 / 2011-03-11</h2>
+<ul>
+<li>Fixed parenthesized expressions in attrs. Closes #170</li>
+<li>Changed; default interpolation values <code>== null</code> to &#39;&#39;. Closes #167</li>
+</ul>
+<h2 id="0-8-5-2011-03-09">0.8.5 / 2011-03-09</h2>
+<ul>
+<li>Added pipe-less text support with immediate &quot;.&quot;. Closes #157</li>
+<li>Fixed object support in attrs</li>
+<li>Fixed array support for attrs</li>
+</ul>
+<h2 id="0-8-4-2011-03-08">0.8.4 / 2011-03-08</h2>
+<ul>
+<li>Fixed issue with expressions being evaluated several times. closes #162</li>
+</ul>
+<h2 id="0-8-2-2011-03-07">0.8.2 / 2011-03-07</h2>
+<ul>
+<li>Added markdown, discount, and markdown-js support to <code>:markdown</code>. Closes #160</li>
+<li>Removed <code>:discount</code></li>
+</ul>
+<h2 id="0-8-1-2011-03-04">0.8.1 / 2011-03-04</h2>
+<ul>
+<li>Added <code>pre</code> pipe-less text support (and auto-escaping)</li>
+</ul>
+<h2 id="0-8-0-2011-03-04">0.8.0 / 2011-03-04</h2>
+<ul>
+<li>Added block-expansion support. Closes #74</li>
+<li>Added support for multi-line attrs without commas. Closes #65</li>
+</ul>
+<h2 id="0-7-1-2011-03-04">0.7.1 / 2011-03-04</h2>
+<ul>
+<li>Fixed <code>script()</code> etc pipe-less text with attrs</li>
+</ul>
+<h2 id="0-7-0-2011-03-04">0.7.0 / 2011-03-04</h2>
+<ul>
+<li>Removed <code>:javascript</code> filter (it doesn&#39;t really do anything special, use <code>script</code> tags)</li>
+<li>Added pipe-less text support. Tags that only accept text nodes (<code>script</code>, <code>textarea</code>, etc) do not require <code>|</code>.</li>
+<li>Added <code>:text</code> filter for ad-hoc pipe-less</li>
+<li>Added flexible indentation. Tabs, arbitrary number of spaces etc</li>
+<li>Added conditional-comment support. Closes #146</li>
+<li>Added block comment support</li>
+<li>Added rss example</li>
+<li>Added <code>:stylus</code> filter</li>
+<li>Added <code>:discount</code> filter</li>
+<li>Fixed; auto-detect xml and do not self-close tags. Closes #147</li>
+<li>Fixed whitespace issue. Closes #118</li>
+<li>Fixed attrs. <code>,</code>, <code>=</code>, and <code>:</code> within attr value strings are valid  Closes #133</li>
+<li>Fixed; only output &quot;&quot; when code == null. Ex: <code>span.name= user.name</code> when undefined or null will not output &quot;undefined&quot;. Closes #130</li>
+<li>Fixed; throw on unexpected token instead of hanging</li>
+</ul>
+<h2 id="0-6-3-2011-02-02">0.6.3 / 2011-02-02</h2>
+<ul>
+<li>Added <code>each</code> support for Array-like objects [guillermo]</li>
+</ul>
+<h2 id="0-6-2-2011-02-02">0.6.2 / 2011-02-02</h2>
+<ul>
+<li>Added CSRF example, showing how you can transparently add inputs to a form</li>
+<li>Added link to vim-jade</li>
+<li>Fixed self-closing col support [guillermo]</li>
+<li>Fixed exception when getAttribute or removeAttribute run into removed attributes [Naitik Shah]</li>
+</ul>
+<h2 id="0-6-0-2010-12-19">0.6.0 / 2010-12-19</h2>
+<ul>
+<li>Added unescaped interpolation variant <code>!{code}</code>. Closes #124</li>
+<li>Changed; escape interpolated code by default <code>#{code}</code></li>
+</ul>
+<h2 id="0-5-7-2010-12-08">0.5.7 / 2010-12-08</h2>
+<ul>
+<li>Fixed; hyphen in get <code>tag()</code></li>
+</ul>
+<h2 id="0-5-6-2010-11-24">0.5.6 / 2010-11-24</h2>
+<ul>
+<li>Added <code>exports.compile(str, options)</code></li>
+<li>Renamed internal <code>_</code> to <code>__</code>, since <code>_()</code> is commonly used for translation</li>
+</ul>
+<h2 id="0-5-5-2010-10-30">0.5.5 / 2010-10-30</h2>
+<ul>
+<li>Add <em>coffeescript</em> filter [Michael Hampton]</li>
+<li>Added link to <em>slim</em>; a ruby implementation</li>
+<li><p>Fixed quoted attributes issue.</p>
+</li>
+<li><p>Fixed attribute issue with over greedy regexp.
+Previously &quot;p(foo=((((&#39;bar&#39;)))))= (((&#39;baz&#39;)))&quot;
+would <strong>fail</strong> for example since the regexp
+would lookahead to far. Now we simply pair
+the delimiters.</p>
+</li>
+</ul>
+<h2 id="0-5-4-2010-10-18">0.5.4 / 2010-10-18</h2>
+<ul>
+<li>Adding newline when using tag code when preceding text</li>
+<li>Assume newline in tag text when preceding text</li>
+<li>Changed; retain leading text whitespace</li>
+<li>Fixed code block support to prevent multiple buffer openings [Jake Luer]</li>
+<li>Fixed nested filter support</li>
+</ul>
+<h2 id="0-5-3-2010-10-06">0.5.3 / 2010-10-06</h2>
+<ul>
+<li>Fixed bug when tags with code also have a block [reported by chrisirhc]</li>
+</ul>
+<h2 id="0-5-2-2010-10-05">0.5.2 / 2010-10-05</h2>
+<ul>
+<li><p>Added; Text introduces newlines to mimic the grammar.
+Whitespace handling is a little tricky with this sort of grammar.
+Jade will now mimic the written grammar, meaning that text blocks
+using the &quot;|&quot; margin character will introduce a literal newline,
+where as immediate tag text (ex &quot;a(href=&#39;#&#39;) Link&quot;) will not.</p>
+<p>This may not be ideal, but it makes more sense than what Jade was
+previously doing.</p>
+</li>
+<li><p>Added <code>Tag#text</code> to disambiguate between immediate / block text</p>
+</li>
+<li>Removed <em>pretty</em> option (was kinda useless in the state it was in)</li>
+<li>Reverted ignoring of newlines. Closes #92.</li>
+<li>Fixed; <code>Parser#parse()</code> ignoring newlines</li>
+</ul>
+<h2 id="0-5-1-2010-10-04">0.5.1 / 2010-10-04</h2>
+<ul>
+<li>Added many examples</li>
+<li>Added; compiler api is now public</li>
+<li>Added; filters can accept / manipulate the parse tree</li>
+<li>Added filter attribute support. Closes #79</li>
+<li>Added LL(*) capabilities</li>
+<li>Performance; wrapping code blocks in {} instead of <code>(function(){}).call(this)</code></li>
+<li>Performance; Optimized attribute buffering</li>
+<li>Fixed trailing newlines in blocks</li>
+</ul>
+<h2 id="0-5-0-2010-09-11">0.5.0 / 2010-09-11</h2>
+<ul>
+<li><strong>Major</strong> refactor. Logic now separated into lexer/parser/compiler for future extensibility.</li>
+<li>Added <em>pretty</em> option</li>
+<li>Added parse tree output for <em>debug</em> option</li>
+<li>Added new examples</li>
+<li>Removed <em>context</em> option, use <em>scope</em></li>
+</ul>
+<h2 id="0-4-1-2010-09-09">0.4.1 / 2010-09-09</h2>
+<ul>
+<li>Added support for arbitrary indentation for single-line comments. Closes #71</li>
+<li>Only strip first space in text (ex &#39;|  foo&#39; will buffer &#39; foo&#39;)</li>
+</ul>
+<h2 id="0-4-0-2010-08-30">0.4.0 / 2010-08-30</h2>
+<ul>
+<li>Added tab naive support (tabs are converted to a single indent, aka two spaces). Closes #24</li>
+<li>Added unbuffered comment support. Closes #62</li>
+<li>Added hyphen support for tag names, ex: &quot;fb:foo-bar&quot;</li>
+<li>Fixed bug with single quotes in comments. Closes #61</li>
+<li>Fixed comment whitespace issue, previously padding. Closes #55</li>
+</ul>
+<h2 id="0-3-0-2010-08-04">0.3.0 / 2010-08-04</h2>
+<ul>
+<li>Added single line comment support. Closes #25</li>
+<li>Removed CDATA from <em>:javascript</em> filter. Closes #47</li>
+<li>Removed <em>sys</em> local</li>
+<li>Fixed code following tag</li>
+</ul>
+<h2 id="0-2-4-2010-08-02">0.2.4 / 2010-08-02</h2>
+<ul>
+<li>Added Buffer support to <code>render()</code></li>
+<li>Fixed filter text block exception reporting</li>
+<li>Fixed tag exception reporting</li>
+</ul>
+<h2 id="0-2-3-2010-07-27">0.2.3 / 2010-07-27</h2>
+<ul>
+<li>Fixed newlines before block</li>
+<li>Fixed; tag text allowing arbitrary trailing whitespace</li>
+</ul>
+<h2 id="0-2-2-2010-07-16">0.2.2 / 2010-07-16</h2>
+<ul>
+<li>Added support for <code>jade.renderFile()</code> to utilize primed cache</li>
+<li>Added link to <a href="http://github.com/miksago/jade-tmbundle">textmate bundle</a></li>
+<li>Fixed filter issue with single quotes</li>
+<li>Fixed hyphenated attr bug</li>
+<li>Fixed interpolation single quotes. Closes #28</li>
+<li>Fixed issue with comma in attrs</li>
+</ul>
+<h2 id="0-2-1-2010-07-09">0.2.1 / 2010-07-09</h2>
+<ul>
+<li><p>Added support for node-discount and markdown-js
+depending on which is available.</p>
+</li>
+<li><p>Added support for tags to have blocks <em>and</em> text.
+this kinda fucks with arbitrary whitespace unfortunately,
+but also fixes trailing spaces after tags <em>with</em> blocks.</p>
+</li>
+<li><p>Caching generated functions. Closes #46</p>
+</li>
+</ul>
+<h2 id="0-2-0-2010-07-08">0.2.0 / 2010-07-08</h2>
+<ul>
+<li>Added <code>- each</code> support for readable iteration</li>
+<li>Added <a href="http://github.com/evilstreak/markdown-js">markdown-js</a> support (no compilation required)</li>
+<li>Removed node-discount support</li>
+</ul>
+<h2 id="0-1-0-2010-07-05">0.1.0 / 2010-07-05</h2>
+<ul>
+<li>Added <code>${}</code> support for interpolation. Closes #45</li>
+<li>Added support for quoted attr keys: <code>label(&quot;for&quot;: &#39;something&#39;)</code> is allowed (<em>although not required</em>) [Guillermo]</li>
+<li>Added <code>:less</code> filter [jakeluer]</li>
+</ul>
+<h2 id="0-0-2-2010-07-03">0.0.2 / 2010-07-03</h2>
+<ul>
+<li>Added <code>context</code> as synonym for <code>scope</code> option [Guillermo]</li>
+<li>Fixed attr splitting: <code>div(style:&quot;color: red&quot;)</code> is now allowed</li>
+<li>Fixed issue with <code>(</code> and <code>)</code> within attrs: <code>a(class: (a ? &#39;a&#39; : &#39;b&#39;))</code> is now allowed</li>
+<li>Fixed issue with leading / trailing spaces in attrs: <code>a( href=&quot;#&quot; )</code> is now allowed [Guillermo]</li>
+</ul>
+</div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="/client.js"></script><script src="http://code.jquery.com/jquery-2.1.1.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script></body></html>

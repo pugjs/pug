@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/bundle.css"></head><body></body><body><div id="wrap"><div id="content"><div class="logo-container"><a href="/"><img src="/style/logo.png"><div class="sr-only">Jade - Node Template Engine</div></a></div><div class="navbar navbar-default navbar-static-top"><div class="container"><div class="navbar-header visible-sm visible-xs"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">JADE</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a href="/reference">Language Reference</a></li><li class="false"><a href="/api">API</a></li><li class="false"><a href="/command-line">Command Line</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="false"><a href="/history">Change Log</a></li><li><a href="/coverage/">Code Coverage</a></li><li><a href="https://travis-ci.org/visionmedia/jade">Test Results</a></li><li><a href="https://github.com/visionmedia/jade">GitHub Repository</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-2"><ul class="nav nav-pills nav-stacked"><li class="false"><a href="/reference/attributes">attributes</a></li><li class="false"><a href="/reference/case">case</a></li><li class="false"><a href="/reference/code">code</a></li><li class="active"><a href="/reference/comments">comments</a></li><li class="false"><a href="/reference/conditionals">conditionals</a></li><li class="false"><a href="/reference/doctype">doctype</a></li><li class="false"><a href="/reference/extends">extends</a></li><li class="false"><a href="/reference/filters">filters</a></li><li class="false"><a href="/reference/includes">includes</a></li><li class="false"><a href="/reference/iteration">iteration</a></li><li class="false"><a href="/reference/mixins">mixins</a></li><li class="false"><a href="/reference/plain-text">plain text</a></li><li class="false"><a href="/reference/tags">tags</a></li></ul></div><div class="col-md-10"><h1>Comments</h1><p>Single line comments look the same as JavaScript comments and must be placed on their own line:</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">// just some paragraphs</span>
+<span class="cm-tag">p</span><span class="cm-string"> foo</span>
+<span class="cm-tag">p</span><span class="cm-string"> bar</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-comment">&lt;!-- just some paragraphs --&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>foo<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>bar<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><p>Jade also supports unbuffered comments, by simply adding a hyphen</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">//- will not output within markup</span>
+<span class="cm-tag">p</span><span class="cm-string"> foo</span>
+<span class="cm-tag">p</span><span class="cm-string"> bar</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>foo<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>bar<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h2>Block Comments</h2><p>A block comment is legal as well:</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">body</span>
+<span class="cm-indent">  </span><span class="cm-comment">//</span>
+<span class="cm-comment">    As much text as you want</span>
+<span class="cm-comment">    can go here.</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;body</span><span class="cm-tag">&gt;</span>
+  <span class="cm-comment">&lt;!--</span>
+  <span class="cm-comment">As much text as you want</span>
+  <span class="cm-comment">can go here.</span>
+  <span class="cm-comment">--&gt;</span>
+<span class="cm-tag">&lt;/body</span><span class="cm-tag">&gt;</span>
+</code></pre></div></div><h2>Conditional Comments</h2><p>Jade does not have any special syntax for conditional comments.
+If your line begins with <code>&gt;</code> then it is treated as plain text.
+So just use normal HTML syle conditional comments:
+</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">&lt;!--[if IE 8]&gt;</span>
+<span class="cm-comment">&lt;html lang=&quot;en&quot; class=&quot;lt-ie9&quot;&gt;</span>
+<span class="cm-comment">&lt;![endif]--&gt;</span>
+<span class="cm-comment">&lt;!--[if gt IE 8]&gt;&lt;!--&gt;</span>
+<span class="cm-tag">&lt;html</span> <span class="cm-attribute">lang</span>=<span class="cm-string">&quot;en&quot;</span><span class="cm-tag">&gt;</span>
+<span class="cm-comment">&lt;!--&lt;![endif]--&gt;</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-comment">&lt;!--[if IE 8]&gt;</span>
+<span class="cm-comment">&lt;html lang=&quot;en&quot; class=&quot;lt-ie9&quot;&gt;</span>
+<span class="cm-comment">&lt;![endif]--&gt;</span>
+<span class="cm-comment">&lt;!--[if gt IE 8]&gt;&lt;!--&gt;</span>
+<span class="cm-tag">&lt;html</span> <span class="cm-attribute">lang</span>=<span class="cm-string">&quot;en&quot;</span><span class="cm-tag">&gt;</span>
+<span class="cm-comment">&lt;!--&lt;![endif]--&gt;</span></code></pre></div></div></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="/client.js"></script><script src="http://code.jquery.com/jquery-2.1.1.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script></body></html>
