@@ -208,8 +208,7 @@ function renderFile(path) {
  * @returns {String}
  */
 function getNameFromFileName(filename) {
-  var file = filename.split(/\/|\\/g);
-  file = file[file.length - 1].replace(/\.jade$/, '');
+  var file = path.basename(filename, '.jade');
   return file.toLowerCase().replace(/[^a-z0-9]+([a-z])/g, function (_, character) {
     return character.toUpperCase();
   }) + 'Template';
