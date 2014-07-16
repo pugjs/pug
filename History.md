@@ -1,3 +1,8 @@
+1.4.2 / 2014-07-16
+==================
+
+  * Fix a warning that eroniously warned for un-used blocks if they were under a "Code" element (Reported by [@narirou](https://github.com/narirou))
+
 1.4.1 / 2014-07-16
 ==================
 
