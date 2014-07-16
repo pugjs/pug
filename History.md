@@ -1,3 +1,8 @@
+1.4.1 / 2014-07-16
+==================
+
+  * Fix an error that sometimes resulted in 'unexpected token "pipless-text"' being erroniously thrown (Reported by [@Artazor](https://github.com/Artazor) and [@thenitai](https://github.com/thenitai))
+
 1.4.0 / 2014-07-15
 ==================
 
