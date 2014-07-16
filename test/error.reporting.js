@@ -85,6 +85,20 @@ describe('error reporting', function () {
         assert(/foo\(/.test(err.message))
       });
     });
+    describe('Unexpected character', function () {
+      it('includes details of where the error was thrown', function () {
+        var err = getError('ul?', {});
+        assert(err.message.indexOf('unexpected text ?') !== -1);
+      });
+    });
+    describe('Include filtered', function () {
+      it('includes details of where the error was thrown', function () {
+        var err = getError('include:js()!', {});
+        assert(err.message.indexOf('expected space after include:filter but got "!"') !== -1);
+        var err = getError('include:js ', {});
+        assert(err.message.indexOf('missing path for include:filter') !== -1);
+      });
+    });
   });
   describe('runtime errors', function () {
     describe('with no filename and `compileDebug` left undefined', function () {

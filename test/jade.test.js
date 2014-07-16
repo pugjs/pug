@@ -918,7 +918,11 @@ describe('jade', function(){
 
     it('should be reasonably fast', function(){
       jade.compile(perfTest, {})
-    })
+    });
+    it('allows trailing space (see #1586)', function () {
+      var res = jade.render('ul \n  li An Item');
+      assert.equal('<ul> <li>An Item</li></ul>', res);
+    });
   });
 
   describe('.renderFile()', function () {
