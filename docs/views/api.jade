@@ -68,6 +68,33 @@ block content
       var html = fn(locals);
       // => '<string>of jade</string>'
 
+  h3 jade.compileFile(path, options)
+
+  p Compile some jade source from a file to a function which can be rendered multiple times with different locals.
+
+  dl.parameter-list
+    dt source
+    dd.type.string path
+    dd.description The path to a jade file
+    dt options
+    dd.type.object options
+    dd.description An options object (see above)
+  dl.returns
+    dt returns
+    dd.type.function function
+    dd.description A function to generate the html from an object containing locals
+
+  +js
+    :jssrc
+      var jade = require('jade');
+
+      // Compile a function
+      var fn = jade.compileFile('path to jade file', options);
+
+      // Render the function
+      var html = fn(locals);
+      // => '<string>of jade</string>'
+
   h3 jade.compileClient(source, options)
 
   p Compile some jade source to a string of JavaScript that can be used client side along with the jade runtime.
