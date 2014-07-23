@@ -983,7 +983,34 @@ exports.compileClient = function(str, options){
   return 'function ' + name + '(locals) {\n' + fn + '\n}';
 };
 
+/**
+ * Compile a `Function` representation of the given jade file.
+ *
+ * Options:
+ *
+ *   - `compileDebug` when `false` debugging code is stripped from the compiled
+       template, when it is explicitly `true`, the source code is included in
+       the compiled template for better accuracy.
+ *
+ * @param {String} path
+ * @param {Options} options
+ * @return {Function}
+ * @api public
+ */
+exports.compileFile = function (path, options) {
+  options = options || {};
 
+  var key = path + ':string';
+
+  options.filename = path;
+  var str = options.cache
+    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
+    : fs.readFileSync(path, 'utf8');
+
+  return options.cache
+    ? exports.cache[path] || (exports.cache[path] = exports.compile(str, options))
+    : exports.compile(str, options);
+};
 
 /**
  * Render the given `str` of jade.
@@ -2681,6 +2708,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
   this.contexts = [this];
   this.inMixin = false;
   this.dependencies = [];
+  this.inBlock = 0;
 };
 
 /**
@@ -2796,7 +2824,7 @@ Parser.prototype = {
         }
       });
       Object.keys(this.blocks).forEach(function (name) {
-        if (blocks.indexOf(name) === -1) {
+        if (blocks.indexOf(name) === -1 && !this.blocks[name].isSubBlock) {
           console.warn('Warning: Unexpected block "'
                        + name
                        + '" '
@@ -3156,10 +3184,15 @@ Parser.prototype = {
     var mode = block.mode;
     var name = block.val.trim();
 
+    var line = block.line;
+
+    this.inBlock++;
     block = 'indent' == this.peek().type
       ? this.block()
       : new nodes.Block(new nodes.Literal(''));
+    this.inBlock--;
     block.name = name;
+    block.line = line;
 
     var prev = this.blocks[name] || {prepended: [], appended: []}
     if (prev.mode === 'replace') return this.blocks[name] = prev;
@@ -3183,6 +3216,8 @@ Parser.prototype = {
     block.prepended = prev.prepended;
     block.mode = mode;
     block.parser = this;
+
+    block.isSubBlock = this.inBlock > 0;
 
     return this.blocks[name] = block;
   },

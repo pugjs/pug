@@ -1,3 +1,10 @@
+1.5.0 / 2014-07-23
+==================
+
+  * Added compileFile API ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix line number in un-used blocks warning ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix a warning that eroniously warned for un-used blocks if they were under another block (Reported by [@pesho](https://github.com/pesho))
+
 1.4.2 / 2014-07-16
 ==================
 
