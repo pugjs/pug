@@ -868,6 +868,10 @@ describe('jade', function(){
       assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><scripts src=\"/app.js\"></scripts></head></html>'
       , jade.render(str, { filename: __dirname + '/jade.test.js' }));
     });
+
+    it('does not produce warnings for issue-1593', function () {
+      jade.compileFile(__dirname + '/fixtures/issue-1593/index.jade');
+    });
   });
 
   describe('.render()', function(){
