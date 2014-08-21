@@ -2,7 +2,7 @@
 
 mixin form(method, action)
   form(method=method, action=action)
-    csrf_token_from_somewhere = 'hey'
+    - var csrf_token_from_somewhere = 'hey'
     input(type='hidden', name='_csrf', value=csrf_token_from_somewhere)
     block
 
@@ -35,3 +35,10 @@ mixin foo()
   p one
   p two
   p three
+
+
+mixin baz
+    #baz
+        block
+
++baz()= '123'

@@ -1,5 +1,5 @@
 
-users = []
+- var users = []
 
 ul
   for user in users
@@ -8,7 +8,7 @@ ul
     li no users!
 
 
-users = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]
+- var users = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]
 
 if users
   ul
@@ -17,7 +17,7 @@ if users
     else
       li no users!
 
-user = { name: 'tobi', age: 10 }
+- var user = { name: 'tobi', age: 10 }
 
 ul
   each val, key in user
@@ -25,10 +25,25 @@ ul
   else
     li user has no details!
 
-user = {}
+- var user = {}
 
 ul
   each prop, key in user
+    li #{key}: #{val}
+  else
+    li user has no details!
+
+ul
+  - each prop, key in user
+    li #{key}: #{val}
+  - else
+    li user has no details!
+
+- var user = Object.create(null)
+- user.name = 'tobi'
+
+ul
+  each val, key in user
     li #{key}: #{val}
   else
     li user has no details!

@@ -1,44 +1,289 @@
+1.5.0 / 2014-07-23
+==================
 
-0.27.7 / 2012-11-05 
+  * Added compileFile API ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix line number in un-used blocks warning ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix a warning that eroniously warned for un-used blocks if they were under another block (Reported by [@pesho](https://github.com/pesho))
+
+1.4.2 / 2014-07-16
+==================
+
+  * Fix a warning that eroniously warned for un-used blocks if they were under a "Code" element (Reported by [@narirou](https://github.com/narirou))
+
+1.4.1 / 2014-07-16
+==================
+
+  * Fix an error that sometimes resulted in 'unexpected token "pipless-text"' being erroniously thrown (Reported by [@Artazor](https://github.com/Artazor) and [@thenitai](https://github.com/thenitai))
+
+1.4.0 / 2014-07-15
+==================
+
+  * Fix CLI so it keeps watching when errors occur ([@AndrewTsao](https://github.com/AndrewTsao))
+  * Support custom names for client side templates ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) and [@dscape](https://github.com/dscape))
+  * Allow whitepsace other than "space" before attributes passed to mixins (N.B. there is a small chance this could be a breaking change for you) ([@regular](https://github.com/regular))
+  * Track dependencies so file watchers can be more clever ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) and [@sdether](https://github.com/sdether))
+  * Allow passing options to filtered includes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix bugs with indentation in filters ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) and [@lackac](https://github.com/lackac))
+  * Warn on block names that are never used ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.3.1 / 2014-04-04
+==================
+
+  * Fix error with tags in xml that are self-closing in html ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix error message for inline tags with content ([@hiddentao](https://github.com/hiddentao))
+
+1.3.0 / 2014-03-02
+==================
+
+  * Fix a bug where sometimes mixins were removed by an optimisation even though they were being called ([@ForbesLindesay](http://www.forbeslindesay.co.uk/), reported by [@leider](https://github.com/leider))
+  * Updated with to support automatically detecting when a value is "global" and removed redundant `options.globals` option ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Improve warnings for tags with multiple attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Deprecate (with a warning) `node.clone`, `block.replace`, `attrs.removeAttribute`, `attrs.getAttribute` - these are all internal APIs for the AST ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.2.0 / 2014-02-26
+==================
+
+  * Use variables instead of properties of jade, improving performance and reliability with nested templates ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support compiling templates from stdin via a user typing ([@yorkie](https://github.com/yorkie))
+  * Lazily add mixins ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix case fall-through ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Earlier errors for `when` without `case` and `else` without `if` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow `if`/`else` etc. to not have a block.
+  * Remove lib-cov legacy to make browserify work better ([@silver83](https://github.com/silver83))
+  * Add and improve test coverage using istanbul ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.5 / 2014-01-19
+==================
+
+  * Add filename to and fix line numbers for missing space before text warning (@ijin82)
+  * Fix filenames for some error reporting in extends/includes (@doublerebel)
+  * Fix a corner case where a mixin was called with `&attributes` but no other attributes and a block that was supposed to be fixed in 1.1.4 ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.4 / 2014-01-09
+==================
+
+  * Fix a corner case where a mixin was called with `&attributes` but no other attributes and a block ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.3 / 2014-01-09
+==================
+
+  * Fix failure of npm prepublish not running
+
+1.1.2 / 2014-01-09
+==================
+
+  * Fix same interaction of `&attributes` with `false` `null` or `undefined` but combined with dynamic attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.1 / 2014-01-09
+==================
+
+  * Fix a bug when `&attributes` is combined with static attributes that evaluate to `false` or `null` or `undefined` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.1.0 / 2014-01-07
+==================
+
+  * Fix class merging to work as documented ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Throw an error when the same attribute is duplicated multiple times ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Move more errors into the parser/lexer so they have more info about line numbers ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support mixin blocks at the end of files ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.0.2 / 2013-12-31
+==================
+
+  * Fix a bug when `&attributes` is combined with dynamic attributes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.0.1 / 2013-12-29
+==================
+
+  * Allow self closing tags to contian whitespace ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow tags to have a single white space after them ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support text bodies of tags that begin with `//` rather than treating them as comments ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+1.0.0 / 2013-12-22
+==================
+
+  * No longer support node@0.8 ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix error reporting in layouts & includes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow a list of 'globals' to be passed as an array at compile time & don't automatically expose all globals ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Escape apostrophes in data attributes (@qualiabyte)
+  * Fix mixin/block interaction ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) & [@paulyoung](https://github.com/paulyoung))
+  * Ignore trailing space after mixin declaration ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Make literal `.` work as expected ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove implicit text only for script/style ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Stop parsing comments and remove support for conditional comments ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Make filtering includes explicit ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove special assignment syntax ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove `!!!` shortcut for `doctype` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove `5` shorcut for `html` doctype ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove `colons` option from the distant past ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add a sepatate `compileClient` and `compileFileClient` to replace the `client` option ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove polyfills for supporting old browsers ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow interpolation for mixin names ([@jeromew](https://github.com/jeromew)
+  * Use `node.type` instead of `node.constructor.name` so it can be minified ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Allow hyphens in filter names ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Throw an error if a self closing tag has content ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support inline tags ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Replace `attributes` magic attribute with `&attributes(attributes)` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove automatic tag wrapping for filters, you can just put the tags in yourself now ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove whitespace from tags nested inside pre tags ([@markdalgleish](http://markdalgleish.com))
+
+0.35.0 / 2013-08-21
+===================
+
+  * Add support for space separated attributes (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add earlier errors for invalid JavaScript expressions (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix parsing files with UTF8 BOMs when they are includes or parent/layout templates (thanks to [@kiinoo](https://github.com/kiinoo))
+
+0.34.1 / 2013-07-26
+===================
+
+  * fix render file not working when called with callback (reported by [@xieren58](https://github.com/xieren58))
+
+0.34.0 / 2013-07-26
+===================
+
+  * callbacks only called once for async methods even if they throw (reported by [@davidcornu](https://github.com/davidcornu))
+  * HTML comments are pretty printed better (thanks to [@eddiemonge](https://github.com/eddiemonge))
+  * callbacks are optional and leaving them out results in synchronous operation (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * empty filter nodes are now permitted (thanks to [@coderanger](https://github.com/coderanger))
+  * overhaul website and documentation (thanks to [@ForbesLindesay](http://www.forbeslindesay.co.uk/)), much more of this to come.
+
+0.33.0 / 2013-07-12
+===================
+
+  * Hugely more powerful error reporting (especially with `compileDebug` set explicitly to `true`)
+  * Add a warning for tags with multiple attributes
+  * be strict about requiring newlines after tags to fix some odd corner cases
+  * fix escaping of class to allow it to be unescaped (thanks to [@christiangenco](https://github.com/christiangenco))
+
+0.32.0 / 2013-06-28
+===================
+
+  * remove `jade.version` and fix `jade --version`
+  * add file name and line number to deprecation warnings
+  * use constantinople for better constant detection
+  * update `with` for a massive performance upgrade at compile time
+
+0.31.2 / 2013-06-07
+===================
+
+  * fix overzealous deprecation warnings
+
+0.31.1 / 2013-05-31
+===================
+
+  * fix line endings for executable command
+  * fix `locals` variable being undefined
+  * fix an obscure bug that could occur if multiple mixins interact badly (see [substack/lexical-scope#13](https://github.com/substack/lexical-scope/issues/13))
+
+0.31.0 / 2013-05-30
+==================
+
+  * deprecate implicit text-only `script` and `style` tags
+  * make `with` at compile time using `lexical-scope`
+  * add `options.parser` that behaves exactly like `options.compiler`
+  * add "component.json" for component (runtime) support
+  * removed `hasOwnProperty` check in each loops
+  * removed .min files from the repository (people can just generate these themselves)
+  * use browserify to compile client side libraries
+  * fix buggy block extending should now be fixed
+  * fix preserve case of custom doctypes
+  * fix regexps in attributes sometimes not being accepted
+  * fix allow `$` sign in each loop variable names
+  * fix mixins with buffered code on the same line
+  * fix separate class names by ` ` rather than `,` (was sometimes incorrect)
+
+0.30.0 / 2013-04-25
+==================
+
+  * add support for 'include' and 'extends' to use paths relative to basedir
+  * fix accidental calling of functions in iteration block. Closes #986
+  * fix: skip rethrow on client
+  * fix each/else prefixed with `-`
+  * fix multi-block prepend/append
+  * swap -o and -O, set -o to --out
+
+0.29.0 / 2013-04-16
+==================
+
+  * add "monocle" for watcher that actually works...
+  * fix interpolation in blocks of text
+  * fix attribute interpolation
+  * move filters to an external library
+  * fix JavaScript escaping corner cases
+
+0.28.2 / 2013-03-04
+==================
+
+  * wtf coffeescript is not a dep
+
+0.28.1 / 2013-01-10
+==================
+
+  * add passing of filename to include filters
+  * fix wrong new lines for include filters
+
+0.28.0 / 2013-01-08
+==================
+
+  * add .css and .js "filters". re #438
+  * add include filters. Closes #283
+  * fix "class:" within attribute escaping
+  * removing ast filters
+  * things I can't read:
+  * 反馈地址
+  * 样式
+  * 联系
+  * 初稿，翻译完
+  * 接受大鸟的建议
+  * 头晕，翻译一点点
+  * 到过滤器翻译完毕
+  * 翻译一部分
+  * 中文翻译单独放
+  * 特性部分
+  * 再翻
+  * 翻译一点点
+
+0.27.7 / 2012-11-05
 ==================
 
   * fix each/else clause for enumerated objects
   * fix #764 (incorrect line number for error messages)
   * fix double-escaping of interpolated js slashes. Closes #784
 
-0.27.6 / 2012-10-05 
+0.27.6 / 2012-10-05
 ==================
 
   * Included templates can not override blocks of their parent. Closes #699
 
-0.27.5 / 2012-09-24 
+0.27.5 / 2012-09-24
 ==================
 
   * fix attr interpolation escaping. Closes #771
 
-0.27.4 / 2012-09-18 
+0.27.4 / 2012-09-18
 ==================
 
   * fix include yields. Closes #770
 
-0.27.3 / 2012-09-18 
+0.27.3 / 2012-09-18
 ==================
 
   * fix escaping of interpolation. Closes #769
   * loosen "mkdirp" version restriction [TooTallNate]
 
-0.27.2 / 2012-08-07 
+0.27.2 / 2012-08-07
 ==================
 
   * Revert "fixing string interpolation escaping #731", problems reported
 
-0.27.1 / 2012-08-06 
+0.27.1 / 2012-08-06
 ==================
 
   * fix attribute interpolation escaping #731
   * fix string interpolation escaping #731
 
-0.27.0 / 2012-07-26 
+0.27.0 / 2012-07-26
 ==================
 
   * added ability to pass in json file to `--obj`
@@ -46,21 +291,21 @@
   * fix doctype bug overlooked in #712
   * fix stripping of utf-8 BOMs
 
-0.26.3 / 2012-06-25 
+0.26.3 / 2012-06-25
 ==================
 
   * Update version of commander that supports node v0.8.
 
-0.26.2 / 2012-06-22 
+0.26.2 / 2012-06-22
 ==================
 
   * Added --options alias of --obj
-  * Added reserved word conflict prevention in Google's Closure Compiler 
+  * Added reserved word conflict prevention in Google's Closure Compiler
   * Added tag interpolation. Closes #657
   * Allow the compiled client to use it's own jade util functions [3rd-Eden]
   * Fixed `attrs()` escape bug [caseywebdev]
 
-0.26.1 / 2012-05-27 
+0.26.1 / 2012-05-27
 ==================
 
   * Changed default doctype to __html5__
@@ -70,7 +315,7 @@
   * Fixed backslashes in text nodes [chowey]
   * Fixed / in text. Closes #638
 
-0.26.0 / 2012-05-04 
+0.26.0 / 2012-05-04
 ==================
 
   * Added package.json __component__ support
@@ -79,20 +324,20 @@
   * Added mixin tag-like behaviour [chowey]
   * Fixed mixins with extends [chowey]
 
-0.25.0 / 2012-04-18 
+0.25.0 / 2012-04-18
 ==================
 
   * Added preliminary mixin block support. Closes #310
   * Fixed whitespace handling in various situations [chowey]
   * Fixed indentation in various situations [chowey]
 
-0.24.0 / 2012-04-12 
+0.24.0 / 2012-04-12
 ==================
 
   * Fixed unescaped attribute compilation
   * Fixed pretty-printing of text-only tags (__Warning__: this may affect rendering) [chowey]
 
-0.23.0 / 2012-04-11 
+0.23.0 / 2012-04-11
 ==================
 
   * Added data-attr json stringification support. Closes #572
@@ -100,13 +345,13 @@
   * Fixed #1070, reverted mixin function statements
   * Fixed jade.1 typo
 
-0.22.1 / 2012-04-04 
+0.22.1 / 2012-04-04
 ==================
 
   * Fixed source tags. now self-closing. Closes #308
   * Fixed: escape backslashes in coffeescript filter
 
-0.22.0 / 2012-03-22 
+0.22.0 / 2012-03-22
 ==================
 
   * Added jade manpage (`man jade` after installation for docs)
@@ -116,7 +361,7 @@
   * Fixed `-o { client: true }` with stdin
   * Fixed: skip blank lines in lexer (unless within pipeless text). Closes #399
 
-0.21.0 / 2012-03-10 
+0.21.0 / 2012-03-10
 ==================
 
   * Added new input/output test suite using Mocha's string diffing
@@ -124,22 +369,22 @@
   * Fixed include escapes. Closes #513
   * Fixed block-expansion with .foo and #foo short-hands. Closes #498
 
-0.20.3 / 2012-02-16 
+0.20.3 / 2012-02-16
 ==================
 
   * Changed: pass `.filename` to filters only
 
-0.20.2 / 2012-02-16 
+0.20.2 / 2012-02-16
 ==================
 
   * Fixed `:stylus` import capabilities, pass .filename
 
-0.20.1 / 2012-02-02 
+0.20.1 / 2012-02-02
 ==================
 
   * Fixed Block#includeBlock() with textOnly blocks
 
-0.20.0 / 2011-12-28 
+0.20.0 / 2011-12-28
 ==================
 
   * Added a browser example
@@ -147,31 +392,31 @@
   * Changed: replaced internal `__` var with `__jade` [chrisleishman]
   * Fixed two globals. Closes #433
 
-0.19.0 / 2011-12-02 
+0.19.0 / 2011-12-02
 ==================
 
   * Added block `append` / `prepend` support. Closes #355
   * Added link in readme to jade-mode for Emacs
   * Added link to python implementation
 
-0.18.0 / 2011-11-21 
+0.18.0 / 2011-11-21
 ==================
 
   * Changed: only ['script', 'style'] are text-only. Closes #398'
 
-0.17.0 / 2011-11-10 
+0.17.0 / 2011-11-10
 ==================
 
   * jade.renderFile() is back! (for express 3.x)
   * Fixed `Object.keys()` failover bug
 
-0.16.4 / 2011-10-24 
+0.16.4 / 2011-10-24
 ==================
 
   * Fixed a test due to reserved keyword
   * Fixed: commander 0.1.x dep for 0.5.x
 
-0.16.3 / 2011-10-24 
+0.16.3 / 2011-10-24
 ==================
 
   * Added: allow leading space for conditional comments
@@ -179,18 +424,18 @@
   * Fixed parens in mixin args. Closes #380
   * Fixed: include files with a .jade extension as jade files
 
-0.16.2 / 2011-09-30 
+0.16.2 / 2011-09-30
 ==================
 
   * Fixed include regression. Closes #354
 
-0.16.1 / 2011-09-29 
+0.16.1 / 2011-09-29
 ==================
 
   * Fixed unexpected `else` bug when compileDebug: false
   * Fixed attr state issue for balancing pairs. Closes #353
 
-0.16.0 / 2011-09-26 
+0.16.0 / 2011-09-26
 ==================
 
   * Added `include` block support. Closes #303
@@ -208,30 +453,30 @@
   * Fixed `include` error context
   * Renamed magic "index" to "$index". Closes #350
 
-0.15.4 / 2011-09-05 
+0.15.4 / 2011-09-05
 ==================
 
   * Fixed script template html. Closes #316
   * Revert "Fixed script() tag with trailing ".". Closes #314"
 
-0.15.3 / 2011-08-30 
+0.15.3 / 2011-08-30
 ==================
 
   * Added Makefile example. Closes #312
   * Fixed script() tag with trailing ".". Closes #314
 
-0.15.2 / 2011-08-26 
+0.15.2 / 2011-08-26
 ==================
 
   * Fixed new conditional boundaries. Closes #307
 
-0.15.1 / 2011-08-26 
+0.15.1 / 2011-08-26
 ==================
 
   * Fixed jade(1) support due to `res.render()` removal
   * Removed --watch support (use a makefile + watch...)
 
-0.15.0 / 2011-08-26 
+0.15.0 / 2011-08-26
 ==================
 
   * Added `client` option to reference runtime helpers
@@ -246,19 +491,19 @@
   * Fixed runtime.js `escape()` bug causing window.escape to be used
   * Fixed a bunch of tests
 
-0.14.2 / 2011-08-16 
+0.14.2 / 2011-08-16
 ==================
 
   * Added `include` support for non-jade files
   * Fixed code indentation when followed by newline(s). Closes #295 [reported by masylum]
 
-0.14.1 / 2011-08-14 
+0.14.1 / 2011-08-14
 ==================
 
   * Added `colons` option for everyone stuck with ":". Closes #231
   * Optimization: consecutive lines are merged in compiled js
 
-0.14.0 / 2011-08-08 
+0.14.0 / 2011-08-08
 ==================
 
   * Added array iteration with index example. Closes #276
@@ -266,36 +511,36 @@
   * Added `compileDebug` option to enable lineno instrumentation
   * Added `inline` option to disable inlining of helpers (for client-side)
 
-0.13.0 / 2011-07-13 
+0.13.0 / 2011-07-13
 ==================
 
   * Added `mixin` support
   * Added `include` support
   * Added array support for the class attribute
 
-0.12.4 / 2011-06-23 
+0.12.4 / 2011-06-23
 ==================
 
   * Fixed filter indentation bug. Closes #243
 
-0.12.3 / 2011-06-21 
+0.12.3 / 2011-06-21
 ==================
 
   * Fixed empty strings support. Closes #223
   * Fixed conditional comments documentation. Closes #245
 
-0.12.2 / 2011-06-16 
+0.12.2 / 2011-06-16
 ==================
 
   * Fixed `make test`
   * Fixed block comments
 
-0.12.1 / 2011-06-04 
+0.12.1 / 2011-06-04
 ==================
 
   * Fixed attribute interpolation with double quotes. Fixes #232 [topaxi]
 
-0.12.0 / 2011-06-03 
+0.12.0 / 2011-06-03
 ==================
 
   * Added `doctype` as alias of `!!!`
@@ -303,7 +548,7 @@
   * Added attribute interpolation support
   * Fixed; retain original indentation spaces in text blocks
 
-0.11.1 / 2011-06-01 
+0.11.1 / 2011-06-01
 ==================
 
   * Fixed text block indentation [Laszlo Bacsi]
@@ -311,23 +556,23 @@
   * Fixed try/catch issue with renderFile(). Closes #227
   * Removed attribute ":" support, use "=" (option for ':' coming soon)
 
-0.11.0 / 2011-05-14 
+0.11.0 / 2011-05-14
 ==================
 
   * Added `self` object to avoid poor `with(){}` performance [masylum]
   * Added `doctype` option [Jeremy Larkin]
 
-0.10.7 / 2011-05-04 
+0.10.7 / 2011-05-04
 ==================
 
   * expose Parser
 
-0.10.6 / 2011-04-29 
+0.10.6 / 2011-04-29
 ==================
 
   * Fixed CS `Object.keys()` [reported by robholland]
 
-0.10.5 / 2011-04-26 
+0.10.5 / 2011-04-26
 ==================
 
   * Added error context after the lineno
@@ -338,34 +583,34 @@
   * Fixed single-quote filter escape bug. Closes #196
 
 
-0.10.4 / 2011-04-05 
+0.10.4 / 2011-04-05
 ==================
 
   * Added `html` doctype, same as "5"
   * Fixed `pre`, no longer text-only
 
-0.10.3 / 2011-03-30 
+0.10.3 / 2011-03-30
 ==================
 
   * Fixed support for quoted attribute keys ex `rss("xmlns:atom"="atom")`
 
-0.10.2 / 2011-03-30 
+0.10.2 / 2011-03-30
 ==================
 
   * Fixed pipeless text bug with missing outdent
 
-0.10.1 / 2011-03-28 
+0.10.1 / 2011-03-28
 ==================
 
   * Fixed `support/compile.js` to exclude browser js in node
   * Fixes for IE [Patrick Pfeiffer]
 
-0.10.0 / 2011-03-25 
+0.10.0 / 2011-03-25
 ==================
 
   * Added AST-filter support back in the form of `<tag>[attrs]<:><block>`
 
-0.9.3 / 2011-03-24 
+0.9.3 / 2011-03-24
 ==================
 
   * Added `Block#unshift(node)`
@@ -376,33 +621,33 @@
     manipulate the AST, until we have a different
     syntax for doing so.
 
-0.9.2 / 2011-03-23 
+0.9.2 / 2011-03-23
 ==================
 
   * Added jade `--version`
   * Removed `${}` interpolation support, use `#{}`
 
-0.9.1 / 2011-03-16 
+0.9.1 / 2011-03-16
 ==================
 
   * Fixed invalid `.map()` call due to recent changes
 
-0.9.0 / 2011-03-16 
+0.9.0 / 2011-03-16
 ==================
 
   * Added client-side browser support via `make jade.js` and `make jade.min.js`.
 
-0.8.9 / 2011-03-15 
+0.8.9 / 2011-03-15
 ==================
 
   * Fixed preservation of newlines in text blocks
 
-0.8.8 / 2011-03-14 
+0.8.8 / 2011-03-14
 ==================
 
   * Fixed jade(1) stdio
 
-0.8.7  / 2011-03-14 
+0.8.7  / 2011-03-14
 ==================
 
   * Added `mkdirs()` to jade(1)
@@ -411,52 +656,52 @@
   * Fixed pipe-less text newlines
   * Removed jade(1) `--pipe` flag
 
-0.8.6 / 2011-03-11 
+0.8.6 / 2011-03-11
 ==================
 
   * Fixed parenthesized expressions in attrs. Closes #170
   * Changed; default interpolation values `== null` to ''. Closes #167
 
-0.8.5 / 2011-03-09 
+0.8.5 / 2011-03-09
 ==================
 
   * Added pipe-less text support with immediate ".". Closes #157
   * Fixed object support in attrs
   * Fixed array support for attrs
 
-0.8.4 / 2011-03-08 
+0.8.4 / 2011-03-08
 ==================
 
   * Fixed issue with expressions being evaluated several times. closes #162
 
-0.8.2 / 2011-03-07 
+0.8.2 / 2011-03-07
 ==================
 
   * Added markdown, discount, and markdown-js support to `:markdown`. Closes #160
   * Removed `:discount`
 
-0.8.1 / 2011-03-04 
+0.8.1 / 2011-03-04
 ==================
 
   * Added `pre` pipe-less text support (and auto-escaping)
 
-0.8.0 / 2011-03-04 
+0.8.0 / 2011-03-04
 ==================
 
   * Added block-expansion support. Closes #74
   * Added support for multi-line attrs without commas. Closes #65
 
-0.7.1 / 2011-03-04 
+0.7.1 / 2011-03-04
 ==================
 
   * Fixed `script()` etc pipe-less text with attrs
 
-0.7.0 / 2011-03-04 
+0.7.0 / 2011-03-04
 ==================
 
   * Removed `:javascript` filter (it doesn't really do anything special, use `script` tags)
-  * Added pipe-less text support. Tags that only accept text nodes (`script`, `textarea`, etc) do not require `|`. 
-  * Added `:text` filter for ad-hoc pipe-less 
+  * Added pipe-less text support. Tags that only accept text nodes (`script`, `textarea`, etc) do not require `|`.
+  * Added `:text` filter for ad-hoc pipe-less
   * Added flexible indentation. Tabs, arbitrary number of spaces etc
   * Added conditional-comment support. Closes #146
   * Added block comment support
@@ -469,12 +714,12 @@
   * Fixed; only output "" when code == null. Ex: `span.name= user.name` when undefined or null will not output "undefined". Closes #130
   * Fixed; throw on unexpected token instead of hanging
 
-0.6.3 / 2011-02-02 
+0.6.3 / 2011-02-02
 ==================
 
   * Added `each` support for Array-like objects [guillermo]
 
-0.6.2 / 2011-02-02 
+0.6.2 / 2011-02-02
 ==================
 
   * Added CSRF example, showing how you can transparently add inputs to a form
@@ -482,24 +727,24 @@
   * Fixed self-closing col support [guillermo]
   * Fixed exception when getAttribute or removeAttribute run into removed attributes [Naitik Shah]
 
-0.6.0 / 2010-12-19 
+0.6.0 / 2010-12-19
 ==================
 
   * Added unescaped interpolation variant `!{code}`. Closes #124
   * Changed; escape interpolated code by default `#{code}`
 
-0.5.7 / 2010-12-08 
+0.5.7 / 2010-12-08
 ==================
 
   * Fixed; hyphen in get `tag()`
 
-0.5.6 / 2010-11-24 
+0.5.6 / 2010-11-24
 ==================
 
   * Added `exports.compile(str, options)`
   * Renamed internal `_` to `__`, since `_()` is commonly used for translation
 
-0.5.5 / 2010-10-30 
+0.5.5 / 2010-10-30
 ==================
 
   * Add _coffeescript_ filter [Michael Hampton]
@@ -512,7 +757,7 @@
     would lookahead to far. Now we simply pair
     the delimiters.
 
-0.5.4 / 2010-10-18 
+0.5.4 / 2010-10-18
 ==================
 
   * Adding newline when using tag code when preceding text
@@ -521,12 +766,12 @@
   * Fixed code block support to prevent multiple buffer openings [Jake Luer]
   * Fixed nested filter support
 
-0.5.3 / 2010-10-06 
+0.5.3 / 2010-10-06
 ==================
 
   * Fixed bug when tags with code also have a block [reported by chrisirhc]
 
-0.5.2 / 2010-10-05 
+0.5.2 / 2010-10-05
 ==================
 
   * Added; Text introduces newlines to mimic the grammar.
@@ -535,7 +780,7 @@
     using the "|" margin character will introduce a literal newline,
     where as immediate tag text (ex "a(href='#') Link") will not.
 
-    This may not be ideal, but it makes more sense than what Jade was     
+    This may not be ideal, but it makes more sense than what Jade was
     previously doing.
 
   * Added `Tag#text` to disambiguate between immediate / block text
@@ -543,7 +788,7 @@
   * Reverted ignoring of newlines. Closes #92.
   * Fixed; `Parser#parse()` ignoring newlines
 
-0.5.1 / 2010-10-04 
+0.5.1 / 2010-10-04
 ==================
 
   * Added many examples
@@ -555,7 +800,7 @@
   * Performance; Optimized attribute buffering
   * Fixed trailing newlines in blocks
 
-0.5.0 / 2010-09-11 
+0.5.0 / 2010-09-11
 ==================
 
   * __Major__ refactor. Logic now separated into lexer/parser/compiler for future extensibility.
@@ -564,13 +809,13 @@
   * Added new examples
   * Removed _context_ option, use _scope_
 
-0.4.1 / 2010-09-09 
+0.4.1 / 2010-09-09
 ==================
 
   * Added support for arbitrary indentation for single-line comments. Closes #71
   * Only strip first space in text (ex '|  foo' will buffer ' foo')
 
-0.4.0 / 2010-08-30 
+0.4.0 / 2010-08-30
 ==================
 
   * Added tab naive support (tabs are converted to a single indent, aka two spaces). Closes #24

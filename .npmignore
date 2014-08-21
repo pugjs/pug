@@ -3,7 +3,7 @@ support
 benchmarks
 examples
 lib-cov
-coverage.html
+coverage
 .gitmodules
 .travis.yml
 History.md
@@ -12,3 +12,4 @@ test/
 support/
 benchmarks/
 examples/
+docs/

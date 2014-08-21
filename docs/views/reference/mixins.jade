@@ -1,0 +1,117 @@
+extends ../reference.jade
+
+block documentation
+  h1 Mixins
+
+  p Mixins allow you to create reusable blocks of jade.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          //- Declaration
+          mixin list
+            ul
+              li foo
+              li bar
+              li baz
+          //- Use
+          +list
+          +list
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>foo</li>
+            <li>bar</li>
+            <li>baz</li>
+          </ul>
+          <ul>
+            <li>foo</li>
+            <li>bar</li>
+            <li>baz</li>
+          </ul>
+
+  p They are compiled to functions and can take arguments:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          mixin pet(name)
+            li.pet= name
+          ul
+            +pet('cat')
+            +pet('dog')
+            +pet('pig')
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li class="pet">cat</li>
+            <li class="pet">dog</li>
+            <li class="pet">pig</li>
+          </ul>
+
+  h2 Mixin Blocks
+
+  p Mixins can also take a block of jade to act as the content:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          mixin article(title)
+            .article
+              .article-wrapper
+                h1= title
+                if block
+                  block
+                else
+                  p No content provided
+
+          +article('Hello world')
+
+          +article('Hello world')
+            p This is my
+            p Amazing article
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div class="article">
+            <div class="article-wrapper">
+              <h1>Hello world</h1>
+              <p>No content provided</p>
+            </div>
+          </div>
+
+          <div class="article">
+            <div class="article-wrapper">
+              <h1>Hello world</h1>
+              <p>This is my</p>
+              <p>Amazing article</p>
+            </div>
+          </div>
+
+  h2 Mixin Attributes
+
+  p Mixins also get an implicit attributes argument taken from the attributes passed to the mixin:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          mixin link(href, name)
+            //- attributes == {class: "btn"}
+            a(class!=attributes.class, href=href)= name
+
+          +link('/foo', 'foo')(class="btn")
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a class="btn" href="/foo">foo</a>
+  .panel.panel-info
+    .panel-heading Note
+    .panel-body.
+      The values in #[code attributes] are already escaped so you should
+      use #[code !=] to avoid escaping them a second time.

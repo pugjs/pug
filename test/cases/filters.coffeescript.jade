@@ -1,2 +1,6 @@
-:coffeescript
-  regexp = /\n/
+script(type='text/javascript')
+  :coffeescript
+    regexp = /\n/
+  :coffeescript(minify=true)
+    math =
+      square: (value) -> value * value

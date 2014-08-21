@@ -1,6 +1,6 @@
 
-tag = 'p'
-foo = 'bar'
+- var tag = 'p'
+- var foo = 'bar'
 
 #{tag} value
 #{tag}(foo='bar') value
@@ -9,11 +9,11 @@ foo = 'bar'
 mixin item(icon)
   li
     if attributes.href
-      a(attributes)
+      a&attributes(attributes)
         img.icon(src=icon)
         block
     else
-      span(attributes)
+      span&attributes(attributes)
         img.icon(src=icon)
         block
 

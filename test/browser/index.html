@@ -1,0 +1,10 @@
+<!DOCTYPE html><html><head></head><body><textarea id="input" placeholder="write jade here" style="width: 100%; min-height: 400px;">p
+  author
+    != myName</textarea><pre style="background: #ECECEC;width: 100%; min-height: 400px;"><code id="output"></code></pre><script src="../../jade.js"></script><script>var input = document.getElementById('input');
+var output = document.getElementById('output');
+setInterval(function () {
+  jade.render(input.value, {myName: 'Forbes Lindesay', pretty: true}, function (err, res) {
+    if (err) throw err;
+    output.textContent = res;
+  })
+}, 500)</script></body></html>

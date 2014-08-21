@@ -1,8 +1,8 @@
-div#id.left(class='user user-' + name).container
+div#id.left.container(class='user user-' + name)
   h1.title= name
   form
     //- unbuffered comment :)
     // An example of attributes.
-    input(type='text', name='user[name]', value=name)
+    input(type='text' name='user[name]' value=name)
     input(checked, type='checkbox', name='user[blocked]')
     input(type='submit', value='Update')

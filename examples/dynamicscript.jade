@@ -1,5 +1,5 @@
 html
   head
     title Dynamic Inline JavaScript
-    script
-      var users = !{JSON.stringify(users)}
+    script.
+      var users = !{JSON.stringify(users).replace(/<\//g, "<\\/")}
