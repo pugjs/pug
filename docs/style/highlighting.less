@@ -1,0 +1,37 @@
+@import (npm) "inconsolata";
+@import (npm) "code-mirror/codemirror";
+
+pre code, pre, pre span {
+  font-family: 'Inconsolata' monospace;
+  font-size: 17px;
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+  line-height: 1.2;
+}
+pre {
+  padding: 4px;
+}
+.CodeMirror {
+  font-size: 17px;
+  font-family: 'Inconsolata' monospace;
+}
+
+.CodeMirror {
+  height: auto;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+pre, .CodeMirror, .code {
+  border: 2px solid grey;
+  background: white;
+  border-radius: 0;
+  margin-bottom: 10px;
+}
+
+.read-only-code-mirror .CodeMirror-cursor {
+  visibility: hidden !important;
+}

@@ -1,0 +1,133 @@
+extends ../reference.jade
+
+block documentation
+  h1 Includes
+
+  p Includes allow you to insert the contents of one jade file into another.
+
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          //- index.jade
+          doctype html
+          html
+            include ./includes/head.jade
+            body
+              h1 My Site
+              p Welcome to my super lame site.
+              include ./includes/foot.jade
+      +jade
+        :jadesrc
+          //- includes/head.jade
+          head
+            title My Site
+            script(src='/javascripts/jquery.js')
+            script(src='/javascripts/app.js')
+
+      +jade
+        :jadesrc
+          //- includes/foot.jade
+          #footer
+            p Copyright (c) foobar
+    .col-lg-6
+      +html
+        :htmlsrc
+          <!doctype html>
+          <html>
+            <head>
+              <title>My Site</title>
+              <script src='/javascripts/jquery.js'></script>
+              <script src='/javascripts/app.js'></script>
+            </head>
+            <body>
+              <h1>My Site</h1>
+              <p>Welcome to my super lame site.</p>
+              <div id="footer">
+                <p>Copyright (c) foobar</p>
+              </div>
+            </body>
+          </html>
+  h2 Including Plain Text
+
+  p Including files that are not jade just includes the raw text.
+
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          //- index.jade
+          doctype html
+          html
+            head
+              style
+                include style.css
+            body
+              h1 My Site
+              p Welcome to my super lame site.
+              script
+                include script.js
+      +jade
+        :csssrc
+          /* style.css */
+          h1 { color: red; }
+
+      +jade
+        :jssrc
+          // script.js
+          console.log('You are awesome');
+    .col-lg-6
+      +html
+        :htmlsrc
+          <!doctype html>
+          <html>
+            <head>
+              <style>
+                /* style.css */
+                h1 { color: red; }
+              </style>
+            </head>
+            <body>
+              <h1>My Site</h1>
+              <p>Welcome to my super lame site.</p>
+              <script>
+                // script.js
+                console.log('You are awesome');
+              </script>
+            </body>
+          </html>
+
+  h2 Including Filtered Text
+
+  p You can combine filters with includes to filter things as you include them.
+
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          //- index.jade
+          doctype html
+          html
+            head
+              title An Article
+            body
+              include:markdown article.md
+      +jade
+        :verbatim
+          # article.md
+
+          This is an article written in markdown.
+
+    .col-lg-6
+      +html
+        :htmlsrc
+          <!doctype html>
+          <html>
+            <head>
+              <title>An Article</title>
+            </head>
+            <body>
+              <h1>article.md</h1>
+              <p>This is an article written in markdown.</p>
+            </body>
+          </html>

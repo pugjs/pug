@@ -1,0 +1,143 @@
+extends ../reference.jade
+
+block documentation
+  h1 Attributes
+
+  p Tag attributes look similar to html, however their values are just regular JavaScript.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          a(href='google.com') Google
+          a(class='button', href='google.com') Google
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a href="google.com">Google</a>
+          <a class="button" href="google.com">Google</a>
+
+  p All the normal JavaScript expressions work fine too:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var authenticated = true
+          body(class=authenticated?'authed':'anon')
+    .col-lg-6
+      +html
+        :htmlsrc
+          <body class="authed"></body>
+
+  h4#booleanattribs Boolean Attributes
+
+  p Boolean attributes are mirrored by Jade, and accept bools, aka #[code true] or #[code false]. When no value is specified true is assumed.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          input(type='checkbox', checked)
+          input(type='checkbox', checked=true)
+          input(type='checkbox', checked=false)
+          input(type='checkbox', checked=true.toString())
+    .col-lg-6
+      +html
+        :htmlsrc
+          <input type="checkbox" checked="checked" />
+          <input type="checkbox" checked="checked" />
+          <input type="checkbox" />
+          <input type="checkbox" checked="true" />
+
+  p If the doctype is #[code html] jade knows not to mirror the attribute and uses the terse style (understood by all browsers).
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          doctype html
+          input(type='checkbox', checked)
+          input(type='checkbox', checked=true)
+          input(type='checkbox', checked=false)
+          input(type='checkbox', checked=true && 'checked')
+    .col-lg-6
+      +html
+        :htmlsrc
+          <!DOCTYPE html>
+          <input type="checkbox" checked>
+          <input type="checkbox" checked>
+          <input type="checkbox">
+          <input type="checkbox" checked="checked">
+
+  h2 Class Attributes
+
+  p The <code>class</code> attribute can be a string (like any normal attribute) but it can also be an array of class names, which is handy when generated from JavaScript.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var classes = ['foo', 'bar', 'baz']
+          a(class=classes)
+          //- the class attribute may also be repeated to merge arrays
+          a.bing(class=classes class=['bing'])
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a class="foo bar baz"></a>
+          <a class="foo bar baz bing"></a>
+
+  h2 Class Literal
+
+  p Classes may be defined using a #[code .classname] syntax:
+
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          a.button
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a class="button"></a>
+
+  p Since div's are such a common choice of tag, it is the default if you omit the tag name:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          .content
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div class="content"></div>
+
+  h2 ID Literal
+
+  p IDs may be defined using a <code>#idname</code> syntax:
+
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          a#main-link
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a id="main-link"></a>
+
+  p Since div's are such a common choice of tag, it is the default if you omit the tag name:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          #content
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div id="content"></div>

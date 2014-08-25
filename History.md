@@ -1,3 +1,31 @@
+1.5.0 / 2014-07-23
+==================
+
+  * Added compileFile API ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix line number in un-used blocks warning ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix a warning that eroniously warned for un-used blocks if they were under another block (Reported by [@pesho](https://github.com/pesho))
+
+1.4.2 / 2014-07-16
+==================
+
+  * Fix a warning that eroniously warned for un-used blocks if they were under a "Code" element (Reported by [@narirou](https://github.com/narirou))
+
+1.4.1 / 2014-07-16
+==================
+
+  * Fix an error that sometimes resulted in 'unexpected token "pipless-text"' being erroniously thrown (Reported by [@Artazor](https://github.com/Artazor) and [@thenitai](https://github.com/thenitai))
+
+1.4.0 / 2014-07-15
+==================
+
+  * Fix CLI so it keeps watching when errors occur ([@AndrewTsao](https://github.com/AndrewTsao))
+  * Support custom names for client side templates ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) and [@dscape](https://github.com/dscape))
+  * Allow whitepsace other than "space" before attributes passed to mixins (N.B. there is a small chance this could be a breaking change for you) ([@regular](https://github.com/regular))
+  * Track dependencies so file watchers can be more clever ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) and [@sdether](https://github.com/sdether))
+  * Allow passing options to filtered includes ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix bugs with indentation in filters ([@ForbesLindesay](http://www.forbeslindesay.co.uk/) and [@lackac](https://github.com/lackac))
+  * Warn on block names that are never used ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.3.1 / 2014-04-04
 ==================
 

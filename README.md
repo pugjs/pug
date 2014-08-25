@@ -123,7 +123,7 @@ Tutorials:
   - cssdeck interactive [Jade syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
   - cssdeck interactive [Jade logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - [Jade について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
-
+  - [Jade - 模板引擎](https://github.com/visionmedia/jade/blob/master/Readme_zh-cn.md)
 
 Implementations in other languages:
 
@@ -141,6 +141,7 @@ Other:
   - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
   - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
   - [html2jade](https://github.com/donpark/html2jade) converter
+  - [Jade Server](https://github.com/ded/jade-server)  Ideal for building local prototypes apart from any application
 
 ## License
 

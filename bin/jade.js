@@ -30,8 +30,11 @@ program
   .option('-p, --path <path>', 'filename used to resolve includes')
   .option('-P, --pretty', 'compile pretty html output')
   .option('-c, --client', 'compile function for client-side runtime.js')
+  .option('-n, --name <str>', 'The name of the compiled template (requires --client)')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
+  .option('--name-after-file', 'Name the template after the last section of the file path (requires --client and overriden by --name)')
+
 
 program.on('--help', function(){
   console.log('  Examples:');
@@ -85,6 +88,10 @@ options.pretty = program.pretty;
 
 options.watch = program.watch;
 
+// --name
+
+options.name = program.name;
+
 // left-over args are file paths
 
 var files = program.args;
@@ -93,14 +100,20 @@ var files = program.args;
 
 if (files.length) {
   console.log();
-  files.forEach(renderFile);
   if (options.watch) {
+    // keep watching when error occured.
+    process.on('uncaughtException', function(err) {
+      console.error(err);
+    });
+    files.forEach(renderFile);
     monocle.watchFiles({
       files: files,
       listener: function(file) {
         renderFile(file.absolutePath);
       }
     });
+  } else {
+    files.forEach(renderFile);
   }
   process.on('exit', function () {
     console.log();
@@ -128,7 +141,7 @@ function stdin() {
     }
     process.stdout.write(output);
   }).resume();
-  
+
   process.on('SIGINT', function() {
     process.stdout.write('\n');
     process.stdin.emit('end');
@@ -151,6 +164,9 @@ function renderFile(path) {
       fs.readFile(path, 'utf8', function(err, str){
         if (err) throw err;
         options.filename = path;
+        if (program.nameAfterFile) {
+          options.name = getNameFromFileName(path);
+        }
         var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
         var extname = options.client ? '.js' : '.html';
         path = path.replace(re, extname);
@@ -183,4 +199,17 @@ function renderFile(path) {
       });
     }
   });
+}
+
+/**
+ * Get a sensible name for a template function from a file path
+ *
+ * @param {String} filename
+ * @returns {String}
+ */
+function getNameFromFileName(filename) {
+  var file = path.basename(filename, '.jade');
+  return file.toLowerCase().replace(/[^a-z0-9]+([a-z])/g, function (_, character) {
+    return character.toUpperCase();
+  }) + 'Template';
 }

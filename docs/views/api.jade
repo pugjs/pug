@@ -1,0 +1,165 @@
+extends ./layout.jade
+
+block content
+  h1 API Documentation
+
+  p This page details how to render jade using the JavaScript API in node.js
+
+  h2 Installation
+
+  p via npm:
+
+  pre
+    code npm install jade
+
+  h2 Usage
+
+  h3 options
+
+  p All API methods take the following set of options:
+
+  .code
+    div {
+    dl.parameter-list
+      dt filename:
+      dd.type.string string
+      dd.description Used in exceptions, and required for relative includes and extends
+      dt pretty:
+      dd.type.boolean boolean
+      dd.description Adds whitespace to the resulting html to make it easier for a human to read
+      dt self:
+      dd.type.boolean boolean
+      dd.description Use a #[code self] namespace to hold the locals (false by default)
+      dt debug:
+      dd.type.boolean boolean
+      dd.description If set to true, the tokens and function body is logged to stdout
+      dt compileDebug:
+      dd.type.boolean boolean
+      dd.description Set this to false to disable debugging instrumentation (recommended in production).  Set it to true to include the function source in the compiled template for better error messages (sometimes useful in development).
+      dt compiler:
+      dd.type.function class
+      dd.description Override the default compiler
+    div }
+
+  h3 jade.compile(source, options)
+
+  p Compile some jade source to a function which can be rendered multiple times with different locals.
+
+  dl.parameter-list
+    dt source
+    dd.type.string string
+    dd.description The source jade to compile
+    dt options
+    dd.type.object options
+    dd.description An options object (see above)
+  dl.returns
+    dt returns
+    dd.type.function function
+    dd.description A function to generate the html from an object containing locals
+
+  +js
+    :jssrc
+      var jade = require('jade');
+
+      // Compile a function
+      var fn = jade.compile('string of jade', options);
+
+      // Render the function
+      var html = fn(locals);
+      // => '<string>of jade</string>'
+
+  h3 jade.compileFile(path, options)
+
+  p Compile some jade source from a file to a function which can be rendered multiple times with different locals.
+
+  dl.parameter-list
+    dt source
+    dd.type.string path
+    dd.description The path to a jade file
+    dt options
+    dd.type.object options
+    dd.description An options object (see above)
+  dl.returns
+    dt returns
+    dd.type.function function
+    dd.description A function to generate the html from an object containing locals
+
+  +js
+    :jssrc
+      var jade = require('jade');
+
+      // Compile a function
+      var fn = jade.compileFile('path to jade file', options);
+
+      // Render the function
+      var html = fn(locals);
+      // => '<string>of jade</string>'
+
+  h3 jade.compileClient(source, options)
+
+  p Compile some jade source to a string of JavaScript that can be used client side along with the jade runtime.
+
+  dl.parameter-list
+    dt source
+    dd.type.string string
+    dd.description The source jade to compile
+    dt options
+    dd.type.object options
+    dd.description An options object (see above)
+  dl.returns
+    dt returns
+    dd.type.string string
+    dd.description A string of JavaScript representing a function
+
+  +js
+    :jssrc
+      var jade = require('jade');
+
+      // Compile a function
+      var fn = jade.compileClient('string of jade', options);
+
+      // Render the function
+      var html = fn(locals);
+      // => 'function template(locals) { return "<string>of jade</string>"; }'
+
+  h3 jade.render(source, options)
+
+  dl.parameter-list
+    dt source
+    dd.type.string string
+    dd.description The source jade to render
+    dt options
+    dd.type.object options
+    dd.description An options object (see above), also used as the locals object
+  dl.returns
+    dt returns
+    dd.type.string string
+    dd.description The resulting html string
+
+  +js
+    :jssrc
+      var jade = require('jade');
+
+      var html = jade.render('string of jade', options);
+      // => '<string>of jade</string>'
+
+  h3 jade.renderFile(filename, options)
+
+  dl.parameter-list
+    dt filename
+    dd.type.string string
+    dd.description The path to the jade file to render
+    dt options
+    dd.type.object options
+    dd.description An options object (see above), also used as the locals object
+  dl.returns
+    dt returns
+    dd.type.string string
+    dd.description The resulting html string
+
+  +js
+    :jssrc
+      var jade = require('jade');
+
+      var html = jade.renderFile('path/to/file.jade', options);
+      // ...
