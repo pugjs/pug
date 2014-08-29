@@ -1,4 +1,4 @@
-!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 'use strict';
 
 var nodes = _dereq_('./nodes');
@@ -722,11 +722,10 @@ module.exports = {
 module.exports = filter;
 function filter(name, str, options) {
   if (typeof filter[name] === 'function') {
-    var res = filter[name](str, options);
+    return filter[name](str, options);
   } else {
     throw new Error('unknown filter ":' + name + '"');
   }
-  return res;
 }
 
 },{}],4:[function(_dereq_,module,exports){
@@ -852,6 +851,11 @@ function parse(str, options){
   } catch (err) {
     parser = parser.context();
     runtime.rethrow(err, parser.filename, parser.lexer.lineno, parser.input);
+  }
+
+  // Process AST
+  if (options.preprocessor) {
+    tokens = options.preprocessor(tokens, _dereq_('./nodes'), options);
   }
 
   // Compile
@@ -1572,17 +1576,17 @@ Lexer.prototype = {
   call: function(){
 
     var tok, captures;
-    if (captures = /^\+(([-\w]+)|(#\{))/.exec(this.input)) {
+    if (captures = /^\+(\s*)(([-\w]+)|(#\{))/.exec(this.input)) {
       // try to consume simple or interpolated call
-      if (captures[2]) {
+      if (captures[3]) {
         // simple call
         this.consume(captures[0].length);
-        tok = this.tok('call', captures[2]);
+        tok = this.tok('call', captures[3]);
       } else {
         // interpolated call
         var match;
         try {
-          match = this.bracketExpression(2);
+          match = this.bracketExpression(2 + captures[1].length);
         } catch (ex) {
           return;//not an interpolation expression, just an unmatched open interpolation
         }
@@ -3168,6 +3172,7 @@ Parser.prototype = {
     parser.dependencies = this.dependencies;
 
     parser.blocks = this.blocks;
+    parser.included = this.included;
     parser.contexts = this.contexts;
     this.extending = parser;
 
@@ -3501,7 +3506,7 @@ Parser.prototype = {
   }
 };
 
-},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":26,"character-parser":33,"constantinople":34,"fs":27,"path":30}],24:[function(_dereq_,module,exports){
+},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":26,"character-parser":33,"constantinople":34,"fs":27,"path":29}],24:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -3807,61 +3812,6 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],29:[function(_dereq_,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
-    }
-
-    if (canPost) {
-        var queue = [];
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
-    }
-
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-}
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-
-},{}],30:[function(_dereq_,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4088,8 +4038,73 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
-},{"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29}],31:[function(_dereq_,module,exports){
+}).call(this,_dereq_("FWaASH"))
+},{"FWaASH":30}],30:[function(_dereq_,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+
+    if (canPost) {
+        var queue = [];
+        window.addEventListener('message', function (ev) {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('process-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+}
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+
+},{}],31:[function(_dereq_,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
@@ -4685,8 +4700,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":31,"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29,"inherits":28}],33:[function(_dereq_,module,exports){
+}).call(this,_dereq_("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":31,"FWaASH":30,"inherits":28}],33:[function(_dereq_,module,exports){
 exports = (module.exports = parse);
 exports.parse = parse;
 function parse(src, state, options) {
@@ -6040,6 +6055,9 @@ define(function (_dereq_, exports, module) {
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
         var content = aSourceMapConsumer.sourceContentFor(sourceFile);
         if (content) {
+          if (aSourceMapPath) {
+            sourceFile = util.join(aSourceMapPath, sourceFile);
+          }
           if (sourceRoot) {
             sourceFile = util.relative(sourceRoot, sourceFile);
           }
@@ -6222,6 +6240,13 @@ define(function (_dereq_, exports, module) {
   var SourceMapGenerator = _dereq_('./source-map-generator').SourceMapGenerator;
   var util = _dereq_('./util');
 
+  // Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
+  // operating systems these days (capturing the result).
+  var REGEX_NEWLINE = /(\r?\n)/g;
+
+  // Matches a Windows-style newline, or any character.
+  var REGEX_CHARACTER = /\r\n|[\s\S]/g;
+
   /**
    * SourceNodes provide a way to abstract over interpolating/concatenating
    * snippets of generated JavaScript source code while maintaining the line and
@@ -6256,9 +6281,17 @@ define(function (_dereq_, exports, module) {
       // and the SourceMap
       var node = new SourceNode();
 
-      // The generated code
-      // Processed fragments are removed from this array.
-      var remainingLines = aGeneratedCode.split('\n');
+      // All even indices of this array are one line of the generated code,
+      // while all odd indices are the newlines between two adjacent lines
+      // (since `REGEX_NEWLINE` captures its match).
+      // Processed fragments are removed from this array, by calling `shiftNextLine`.
+      var remainingLines = aGeneratedCode.split(REGEX_NEWLINE);
+      var shiftNextLine = function() {
+        var lineContents = remainingLines.shift();
+        // The last line of a file might not have a newline.
+        var newLine = remainingLines.shift() || "";
+        return lineContents + newLine;
+      };
 
       // We need to remember the position of "remainingLines"
       var lastGeneratedLine = 1, lastGeneratedColumn = 0;
@@ -6275,7 +6308,7 @@ define(function (_dereq_, exports, module) {
           if (lastGeneratedLine < mapping.generatedLine) {
             var code = "";
             // Associate first line with "lastMapping"
-            addMappingWithCode(lastMapping, remainingLines.shift() + "\n");
+            addMappingWithCode(lastMapping, shiftNextLine());
             lastGeneratedLine++;
             lastGeneratedColumn = 0;
             // The remaining code is added without mapping
@@ -6299,7 +6332,7 @@ define(function (_dereq_, exports, module) {
         // to the SourceNode without any mapping.
         // Each line is added as separate string.
         while (lastGeneratedLine < mapping.generatedLine) {
-          node.add(remainingLines.shift() + "\n");
+          node.add(shiftNextLine());
           lastGeneratedLine++;
         }
         if (lastGeneratedColumn < mapping.generatedColumn) {
@@ -6314,12 +6347,10 @@ define(function (_dereq_, exports, module) {
       if (remainingLines.length > 0) {
         if (lastMapping) {
           // Associate the remaining code in the current line with "lastMapping"
-          var lastLine = remainingLines.shift();
-          if (remainingLines.length > 0) lastLine += "\n";
-          addMappingWithCode(lastMapping, lastLine);
+          addMappingWithCode(lastMapping, shiftNextLine());
         }
         // and add the remaining lines without any mapping
-        node.add(remainingLines.join("\n"));
+        node.add(remainingLines.join(""));
       }
 
       // Copy sourcesContent into SourceNode
@@ -6558,8 +6589,8 @@ define(function (_dereq_, exports, module) {
         lastOriginalSource = null;
         sourceMappingActive = false;
       }
-      chunk.split('').forEach(function (ch, idx, array) {
-        if (ch === '\n') {
+      chunk.match(REGEX_CHARACTER).forEach(function (ch, idx, array) {
+        if (REGEX_NEWLINE.test(ch)) {
           generated.line++;
           generated.column = 0;
           // Mappings end at eol
@@ -6581,7 +6612,7 @@ define(function (_dereq_, exports, module) {
             });
           }
         } else {
-          generated.column++;
+          generated.column += ch.length;
         }
       });
     });
@@ -7202,8 +7233,8 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,_dereq_("/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),"/../node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"/Users/forbeslindesay/GitHub/jade/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":29,"path":30}],45:[function(_dereq_,module,exports){
+}).call(this,_dereq_("FWaASH"),"/../node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js")
+},{"FWaASH":30,"path":29}],45:[function(_dereq_,module,exports){
 var sys = _dereq_("util");
 var MOZ_SourceMap = _dereq_("source-map");
 var UglifyJS = exports;
@@ -7807,10 +7838,10 @@ var AST_Toplevel = DEFNODE("Toplevel", "globals", {
         var parameters = [];
 
         arg_parameter_pairs.forEach(function(pair) {
-            var split = pair.split(":");
+            var splitAt = pair.lastIndexOf(":");
 
-            args.push(split[0]);
-            parameters.push(split[1]);
+            args.push(pair.substr(0, splitAt));
+            parameters.push(pair.substr(splitAt + 1));
         });
 
         var wrapped_tl = "(function(" + parameters.join(",") + "){ '$ORIG'; })(" + args.join(",") + ")";
@@ -8665,14 +8696,7 @@ function is_identifier_char(ch) {
 };
 
 function is_identifier_string(str){
-    var i = str.length;
-    if (i == 0) return false;
-    if (!is_identifier_start(str.charCodeAt(0))) return false;
-    while (--i >= 0) {
-        if (!is_identifier_char(str.charAt(i)))
-            return false;
-    }
-    return true;
+    return /^[a-z_$][a-z0-9_$]*$/i.test(str);
 };
 
 function parse_js_number(num) {
@@ -11738,8 +11762,12 @@ function OutputStream(options) {
     DEFPRINT(AST_UnaryPrefix, function(self, output){
         var op = self.operator;
         output.print(op);
-        if (/^[a-z]/i.test(op))
+        if (/^[a-z]/i.test(op)
+            || (/[+-]$/.test(op)
+                && self.expression instanceof AST_UnaryPrefix
+                && /^[+-]/.test(self.expression.operator))) {
             output.space();
+        }
         self.expression.print(output);
     });
     DEFPRINT(AST_UnaryPostfix, function(self, output){
@@ -14557,7 +14585,7 @@ function SourceMap(options) {
                 start    : my_start_token(M),
                 end      : my_end_token(M),
                 body     : from_moz(M.block).body,
-                bcatch   : from_moz(M.handlers[0]),
+                bcatch   : from_moz(M.handlers ? M.handlers[0] : M.handler),
                 bfinally : M.finalizer ? new AST_Finally(from_moz(M.finalizer)) : null
             });
         },
@@ -14997,7 +15025,7 @@ exports.minify = function (files, options) {
         if (options.sourceMapIncludeSources) {
             for (var file in sourcesContent) {
                 if (sourcesContent.hasOwnProperty(file)) {
-                    options.source_map.get().setSourceContent(file, sourcesContent[file]);
+                    output.source_map.get().setSourceContent(file, sourcesContent[file]);
                 }
             }
         }
@@ -15008,6 +15036,11 @@ exports.minify = function (files, options) {
     }
     var stream = UglifyJS.OutputStream(output);
     toplevel.print(stream);
+
+    if(options.outSourceMap){
+        stream += "\n//# sourceMappingURL=" + options.outSourceMap;
+    }
+
     return {
         code : stream + "",
         map  : output.source_map + ""
