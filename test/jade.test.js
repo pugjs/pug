@@ -872,6 +872,111 @@ describe('jade', function(){
     it('does not produce warnings for issue-1593', function () {
       jade.compileFile(__dirname + '/fixtures/issue-1593/index.jade');
     });
+
+    it('should look in options.basedir', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+      ].join('\n');
+
+      assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script></head></html>'
+      , jade.render(str, {
+        filename: __dirname + '/jade.test.js',
+        basedir: __dirname + '/fixtures'
+      }));
+    });
+
+    it('should look in options.filename before loadPaths', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include scripts',
+      ].join('\n');
+
+      assert.equal('<html><head><script>if (foo) {\n  bar();\n}<\/script><script>foo()<\/script><script>foo()<\/script><script><\/script><div><\/div></head></html>'
+      , jade.render(str, {
+        filename: __dirname + '/cases/jade.test.js',
+        loadPaths: [
+          __dirname + '/fixtures'
+        ]
+      }));
+    });
+
+    it('should look in options.basedir or options.filename before loadPaths', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+          '    include scripts',
+      ].join('\n');
+
+      assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><script>if (foo) {\n  bar();\n}<\/script><script>foo()<\/script><script>foo()<\/script><script><\/script><div><\/div></head></html>'
+      , jade.render(str, {
+        filename: __dirname + '/jade.test.js',
+        basedir: __dirname + '/fixtures',
+        loadPaths: [
+          __dirname + '/cases'
+        ]
+      }));
+    });
+
+    it('should fallthrough options.basedir to loadPaths', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+          '    include scripts',
+      ].join('\n');
+
+      assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script></head></html>'
+      , jade.render(str, {
+        filename: __dirname + '/jade.test.js',
+        basedir: __dirname + '/browser',
+        loadPaths: [
+          __dirname + '/fixtures'
+        ]
+      }));
+    });
+
+    it('should search options.loadPaths', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+          '    include scripts',
+      ].join('\n');
+
+      assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script></head></html>'
+      , jade.render(str, {
+        filename: __dirname + '/jade.test.js',
+        loadPaths: [
+          __dirname + '/anti-cases',
+          __dirname + '/prepend',
+          __dirname + '/fixtures'
+        ]
+      }));
+    });
+
+    it('should find the first result via options.loadPaths', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+          '    include scripts',
+      ].join('\n');
+
+      assert.equal('<html><head><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script><script src=\"/jquery.js\"></script><script src=\"/caustic.js\"></script></head></html>'
+      , jade.render(str, {
+        filename: __dirname + '/jade.test.js',
+        loadPaths: [
+          __dirname + '/browser',
+          __dirname + '/fixtures',
+          __dirname + '/cases'
+        ]
+      }));
+    });
+
   });
 
   describe('.render()', function(){

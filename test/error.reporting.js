@@ -196,12 +196,39 @@ describe('error reporting', function () {
       assert(err === 'foo');
     });
   });
-  describe('import without a filename for a basedir', function () {
-    it('throws an error', function () {
+  describe('path resolution errors', function () {
+    it('throws an error if filename is missing', function () {
       var err = getError('include foo.jade');
-      assert(/the "filename" option is required to use/.test(err.message));
-      var err = getError('include /foo.jade');
-      assert(/the "basedir" option is required to use/.test(err.message));
-    })
+      assert(/the "filename" or "loadPaths" option is required to use/.test(err.message));
+    });
+
+    it('should throw error if basedir and loadPaths empty', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+      ].join('\n');
+
+      assert.throws(function() {
+        jade.render(str, {filename: __dirname + '/jade.test.js' });
+      }, /the "basedir" or "loadPaths" option is required/);
+    });
+
+    it('should throw error not found in loadPaths', function(){
+      var str = [
+          'html',
+          '  head',
+          '    include /scripts',
+      ].join('\n');
+
+      assert.throws(function() {
+        jade.render(str, {
+          filename: __dirname + '/jade.test.js',
+          loadPaths: [
+            __dirname + '/browser',
+          ]
+        })
+      }, /among any of these directories:.*\/browser/);
+    });
   });
 });
