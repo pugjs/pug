@@ -1,3 +1,13 @@
+1.6.0 / 2014-08-31
+==================
+
+  * Allow optional white space after `+` when calling a mixin ([@char101](https://github.com/char101))
+  * Use void-elements module to replace internal self-closing list ([@hemanth](https://github.com/hemanth))
+  * Fix a warning that eroniously warned for un-used blocks if in an extending template from an include (Reported by [@Dissimulazione](https://github.com/Dissimulazione))
+  * Fix mixins not working at end of file ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix error reporting when mixin block was followed by blank lines ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
+
 1.5.0 / 2014-07-23
 ==================
 
