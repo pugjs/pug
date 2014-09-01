@@ -71,6 +71,7 @@
     "compile-runtime": "browserify ./lib/runtime.js --standalone jade > runtime.js"
   },
   "browser": {
+    "fs": false,
     "./lib/filters.js": "./lib/filters-client.js"
   }
 }
