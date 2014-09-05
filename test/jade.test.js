@@ -1058,5 +1058,9 @@ describe('jade', function(){
         path.resolve(__dirname + '/dependencies/dependency3.jade')
       ],info.dependencies);
     });
+    it('should not fail on js newlines', function(){
+      assert.equal("<p>foo\u2028bar</p>", jade.render("p foo\u2028bar"));
+      assert.equal("<p>foo\u2029bar</p>", jade.render("p foo\u2029bar"));
+    });
   });
 });
