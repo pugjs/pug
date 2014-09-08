@@ -11,10 +11,10 @@ var parseJSExpression = require('character-parser').parseMax;
 var constantinople = require('constantinople');
 
 function isConstant(src) {
-  return constantinople(src, {jade: runtime, 'jade_interp': undefined});
+  return constantinople(src, {jade: runtime});
 }
 function toConstant(src) {
-  return constantinople.toConstant(src, {jade: runtime, 'jade_interp': undefined});
+  return constantinople.toConstant(src, {jade: runtime});
 }
 function errorAtNode(node, error) {
   error.line = node.line;
@@ -36,7 +36,8 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
-  this.debug = false !== options.compileDebug;
+  this.debug = false !== options.compileDebug
+  if (options.compileDebug === true) this.sources = {};
   this.indents = 0;
   this.parentIndents = 0;
   this.terse = false;
@@ -59,7 +60,6 @@ Compiler.prototype = {
 
   compile: function(){
     this.buf = [];
-    if (this.pp) this.buf.push("var jade_indent = [];");
     this.lastBufferedIdx = -1;
     this.visit(this.node);
     if (!this.dynamicMixins) {
@@ -115,7 +115,7 @@ Compiler.prototype = {
         } else {
           var rest = match[3];
           var range = parseJSExpression(rest);
-          var code = ('!' == match[2] ? '' : 'jade.escape') + "((jade_interp = " + range.src + ") == null ? '' : jade_interp)";
+          var code = ('!' == match[2] ? '' : 'jade.escape') + "((jade._ = " + range.src + ") == null ? '' : jade._)";
           this.bufferExpression(code);
           this.buffer(rest.substr(range.end + 1), true);
           return;
@@ -123,16 +123,16 @@ Compiler.prototype = {
       }
     }
 
-    str = JSON.stringify(str);
+    str = utils.stringify(str);
     str = str.substr(1, str.length - 2);
 
     if (this.lastBufferedIdx == this.buf.length) {
       if (this.lastBufferedType === 'code') this.lastBuffered += ' + "';
       this.lastBufferedType = 'text';
       this.lastBuffered += str;
-      this.buf[this.lastBufferedIdx - 1] = 'buf.push(' + this.bufferStartChar + this.lastBuffered + '");'
+      this.buf[this.lastBufferedIdx - 1] = 'jade.emit(' + this.bufferStartChar + this.lastBuffered + '");'
     } else {
-      this.buf.push('buf.push("' + str + '");');
+      this.buf.push('jade.emit("' + str + '");');
       this.lastBufferedType = 'text';
       this.bufferStartChar = '"';
       this.lastBuffered = str;
@@ -155,9 +155,9 @@ Compiler.prototype = {
       if (this.lastBufferedType === 'text') this.lastBuffered += '"';
       this.lastBufferedType = 'code';
       this.lastBuffered += ' + (' + src + ')';
-      this.buf[this.lastBufferedIdx - 1] = 'buf.push(' + this.bufferStartChar + this.lastBuffered + ');'
+      this.buf[this.lastBufferedIdx - 1] = 'jade.emit(' + this.bufferStartChar + this.lastBuffered + ');'
     } else {
-      this.buf.push('buf.push(' + src + ');');
+      this.buf.push('jade.emit(' + src + ');');
       this.lastBufferedType = 'code';
       this.bufferStartChar = '';
       this.lastBuffered = '(' + src + ')';
@@ -179,7 +179,7 @@ Compiler.prototype = {
     newline = newline ? '\n' : '';
     this.buffer(newline + Array(this.indents + offset).join('  '));
     if (this.parentIndents)
-      this.buf.push("buf.push.apply(buf, jade_indent);");
+      this.buf.push('jade.emit(jade.indent.join(""));');
   },
 
   /**
@@ -190,26 +190,32 @@ Compiler.prototype = {
    */
 
   visit: function(node){
-    var debug = this.debug;
+
+    // node.generative - same hack to
+    // fix our context for MixinLiteral
+    var debug = this.debug && node.generative !== false;
+
+    //debug = false;
+    var filename;
 
     if (debug) {
-      this.buf.push('jade_debug.unshift({ lineno: ' + node.line
-        + ', filename: ' + (node.filename
-          ? JSON.stringify(node.filename)
-          : 'jade_debug[0].filename')
-        + ' });');
+      filename = utils.stringify(node.filename);
+      this.buf.push('jade.enter(' + filename + ',' + node.line +');');
     }
 
     // Massive hack to fix our context
     // stack for - else[ if] etc
-    if (false === node.debug && this.debug) {
+    if (false === node.debug && debug) {
       this.buf.pop();
       this.buf.pop();
     }
 
     this.visitNode(node);
 
-    if (debug) this.buf.push('jade_debug.shift();');
+    if (debug) {
+      this.buf.push('jade.leave();');
+    }
+
   },
 
   /**
@@ -305,9 +311,9 @@ Compiler.prototype = {
    */
 
   visitMixinBlock: function(block){
-    if (this.pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join('  ') + "');");
+    if (this.pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');");
     this.buf.push('block && block();');
-    if (this.pp) this.buf.push("jade_indent.pop();");
+    if (this.pp) this.buf.push("jade.indent.pop();");
   },
 
   /**
@@ -329,6 +335,121 @@ Compiler.prototype = {
   },
 
   /**
+   * Visit `body`, generating mixin literal (first-class mixin value)
+   * Used for mixin definition or block passing
+   *
+   * @param {MixinLiteral} body
+   * @api public
+   */
+
+  visitMixinLiteral: function(body) {
+    var args = body.args || '';
+    var block = body.block;
+    var noIndent = body.noIndent;
+    var indents = this.indents;
+
+    // using `jade_parent` to ensure reusing of
+    // `attributes`, `block`, `buf` and possibly `self`
+    // from outer scope unless they are overriden by
+    // mixin.call({attributes:..., block:...},...)
+
+    this.buf.push('(function(jade_parent){');
+    this.buf.push('return function(' + args + '){');
+    this.buf.push('var jade = jade_parent.spawn(this)');
+    this.buf.push('var attributes = jade.attributes;');
+    this.buf.push('var block = jade.block;');
+    if (this.options.self) this.buf.push('var self = jade.self;');
+    this.parentIndents++;
+    if (noIndent) {
+      this.indents = 0;
+      this.visit(block);
+      this.indents = indents;
+    } else {
+      this.visit(block);
+    }
+    this.parentIndents--;
+    this.buf.push('}}(jade))');
+
+  },
+
+  /**
+   * Visit `call`, generating an appropriate mixin call
+   *
+   * @param {MixinCall} call
+   * @api public
+   */
+
+  visitMixinCall: function(call){
+    var name = call.name;
+    var args = call.args || '';
+    var body = call.body;
+    var attrs = call.attrs;
+    var attrsBlocks = call.attributeBlocks;
+    var pp = this.pp;
+
+    var interp = call.interp;
+    var selfArg = call.selfArg;
+    var nameExpr = interp ? name : '"' + name + '"'
+    var source = selfArg
+      ? selfArg // treat selfArg as first-class mixin unless mixin name is provided
+      : 'jade.mixins[' + nameExpr + ']'
+    var expr = '(jade._=' + source + ')' // clear this-context for call
+
+    var buf = this.buf;
+
+    // small local helper to avoid unnecessary complex checks
+    // for pushing comma-separated arguments
+    function pushArg(chunk) {
+      buf.push(buf.pop()+',');
+      buf.push(chunk)
+    }
+
+    if (selfArg) {
+      // if mixin name is provided then resolve mixin code with jade.resolveMixin
+      if (name) expr = 'jade.resolveMixin(' + expr + ',' + nameExpr + ')';
+      else selfArg = null;
+    } else if (interp) {
+      this.dynamicMixins = true;
+    } else {
+      // manage mixin usage only for static local mixins
+      var usage = this.mixins[name] = this.mixins[name] || {used: false, instances: []};
+      usage.used = true;
+    }
+
+    if (pp) this.buf.push("jade.indent.push('" + Array(this.indents + 1).join('  ') + "');");
+
+    this.buf.push(expr + '.call({emit:jade.emit');
+
+    if (selfArg) {
+      pushArg('self:jade._'); // value of selfArg is still stored in `jade._`
+    }
+
+    if (body) {
+      pushArg('block:');
+      this.visit(body);
+    }
+
+    if (attrsBlocks.length) {
+      if (attrs.length) {
+        var val = this.attrs(attrs);
+        attrsBlocks.unshift(val);
+      }
+      pushArg('attributes: jade.merge([' + attrsBlocks.join(',') + '])');
+    } else if (attrs.length) {
+      var val = this.attrs(attrs);
+      pushArg('attributes: ' + val);
+    }
+
+    if (args) {
+      this.buf.push('}, ' + args + ');');
+    } else {
+      this.buf.push('});');
+    }
+
+    if (pp) this.buf.push("jade.indent.pop();")
+  },
+
+  /**
    * Visit `mixin`, generating a function that
    * may be called within the template.
    *
@@ -337,75 +458,14 @@ Compiler.prototype = {
    */
 
   visitMixin: function(mixin){
-    var name = 'jade_mixins[';
-    var args = mixin.args || '';
-    var block = mixin.block;
-    var attrs = mixin.attrs;
-    var attrsBlocks = mixin.attributeBlocks;
-    var pp = this.pp;
-    var dynamic = mixin.name[0]==='#';
     var key = mixin.name;
-    if (dynamic) this.dynamicMixins = true;
-    name += (dynamic ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
-
-    this.mixins[key] = this.mixins[key] || {used: false, instances: []};
-    if (mixin.call) {
-      this.mixins[key].used = true;
-      if (pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join('  ') + "');")
-      if (block || attrs.length || attrsBlocks.length) {
-
-        this.buf.push(name + '.call({');
-
-        if (block) {
-          this.buf.push('block: function(){');
-
-          // Render block with no indents, dynamically added when rendered
-          this.parentIndents++;
-          var _indents = this.indents;
-          this.indents = 0;
-          this.visit(mixin.block);
-          this.indents = _indents;
-          this.parentIndents--;
-
-          if (attrs.length || attrsBlocks.length) {
-            this.buf.push('},');
-          } else {
-            this.buf.push('}');
-          }
-        }
-
-        if (attrsBlocks.length) {
-          if (attrs.length) {
-            var val = this.attrs(attrs);
-            attrsBlocks.unshift(val);
-          }
-          this.buf.push('attributes: jade.merge([' + attrsBlocks.join(',') + '])');
-        } else if (attrs.length) {
-          var val = this.attrs(attrs);
-          this.buf.push('attributes: ' + val);
-        }
-
-        if (args) {
-          this.buf.push('}, ' + args + ');');
-        } else {
-          this.buf.push('});');
-        }
-
-      } else {
-        this.buf.push(name + '(' + args + ');');
-      }
-      if (pp) this.buf.push("jade_indent.pop();")
-    } else {
-      var mixin_start = this.buf.length;
-      this.buf.push(name + ' = function(' + args + '){');
-      this.buf.push('var block = (this && this.block), attributes = (this && this.attributes) || {};');
-      this.parentIndents++;
-      this.visit(block);
-      this.parentIndents--;
-      this.buf.push('};');
-      var mixin_end = this.buf.length;
-      this.mixins[key].instances.push({start: mixin_start, end: mixin_end});
-    }
+    var usage = this.mixins[key] = this.mixins[key] || {used: false, instances: []};
+    var mixin_start = this.buf.length;
+    this.buf.push('jade.mixins["' + mixin.name + '"] = ');
+    this.visit(mixin.body);
+    this.buf.push(';');
+    var mixin_end = this.buf.length;
+    usage.instances.push({start: mixin_start, end: mixin_end});
   },
 
   /**
@@ -554,7 +614,7 @@ Compiler.prototype = {
     // Buffer code
     if (code.buffer) {
       var val = code.val.trimLeft();
-      val = 'null == (jade_interp = '+val+') ? "" : jade_interp';
+      val = 'null == (jade._ = '+val+') ? "" : jade._';
       if (code.escape) val = 'jade.escape(' + val + ')';
       this.bufferExpression(val);
     } else {
@@ -632,7 +692,7 @@ Compiler.prototype = {
         var val = this.attrs(attrs);
         attributeBlocks.unshift(val);
       }
-      this.bufferExpression('jade.attrs(jade.merge([' + attributeBlocks.join(',') + ']), ' + JSON.stringify(this.terse) + ')');
+      this.bufferExpression('jade.attrs(jade.merge([' + attributeBlocks.join(',') + ']), ' + utils.stringify(this.terse) + ')');
     } else if (attrs.length) {
       this.attrs(attrs, true);
     }
@@ -662,19 +722,19 @@ Compiler.prototype = {
           if (escaped && !(key.indexOf('data') === 0 && typeof val !== 'string')) {
             val = runtime.escape(val);
           }
-          buf.push(JSON.stringify(key) + ': ' + JSON.stringify(val));
+          buf.push(utils.stringify(key) + ': ' + utils.stringify(val));
         }
       } else {
         if (buffer) {
-          this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + JSON.stringify(escaped) + ', ' + JSON.stringify(this.terse) + ')');
+          this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + utils.stringify(escaped) + ', ' + utils.stringify(this.terse) + ')');
         } else {
           var val = attr.val;
           if (escaped && !(key.indexOf('data') === 0)) {
             val = 'jade.escape(' + val + ')';
           } else if (escaped) {
-            val = '(typeof (jade_interp = ' + val + ') == "string" ? jade.escape(jade_interp) : jade_interp)';
+            val = '(typeof (jade._ = ' + val + ') == "string" ? jade.escape(jade._) : jade._)';
           }
-          buf.push(JSON.stringify(key) + ': ' + val);
+          buf.push(utils.stringify(key) + ': ' + val);
         }
       }
     }.bind(this));
@@ -682,17 +742,17 @@ Compiler.prototype = {
       if (classes.every(isConstant)) {
         this.buffer(runtime.cls(classes.map(toConstant), classEscaping));
       } else {
-        this.bufferExpression('jade.cls([' + classes.join(',') + '], ' + JSON.stringify(classEscaping) + ')');
+        this.bufferExpression('jade.cls([' + classes.join(',') + '], ' + utils.stringify(classEscaping) + ')');
       }
     } else if (classes.length) {
       if (classes.every(isConstant)) {
-        classes = JSON.stringify(runtime.joinClasses(classes.map(toConstant).map(runtime.joinClasses).map(function (cls, i) {
+        classes = utils.stringify(runtime.joinClasses(classes.map(toConstant).map(runtime.joinClasses).map(function (cls, i) {
           return classEscaping[i] ? runtime.escape(cls) : cls;
         })));
       } else {
-        classes = '(jade_interp = ' + JSON.stringify(classEscaping) + ',' +
+        classes = '(jade._ = ' + utils.stringify(classEscaping) + ',' +
           ' jade.joinClasses([' + classes.join(',') + '].map(jade.joinClasses).map(function (cls, i) {' +
-          '   return jade_interp[i] ? jade.escape(cls) : cls' +
+          '   return jade._[i] ? jade.escape(cls) : cls' +
           ' }))' +
           ')';
       }
@@ -703,7 +763,7 @@ Compiler.prototype = {
   }
 };
 
-},{"./doctypes":2,"./filters":3,"./nodes":16,"./runtime":24,"./utils":25,"character-parser":32,"constantinople":33,"void-elements":45}],2:[function(require,module,exports){
+},{"./doctypes":2,"./filters":3,"./nodes":16,"./runtime":26,"./utils":27,"character-parser":34,"constantinople":35,"void-elements":47}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -770,7 +830,9 @@ var Parser = require('./parser')
   , Compiler = require('./compiler')
   , runtime = require('./runtime')
   , addWith = require('with')
-  , fs = require('fs');
+  , fs = require('fs')
+  , utils = require('./utils')
+  , nodes = require('./nodes');
 
 /**
  * Expose self closing tags.
@@ -818,7 +880,7 @@ exports.Lexer = Lexer;
  * Nodes.
  */
 
-exports.nodes = require('./nodes');
+exports.nodes = nodes;
 
 /**
  * Jade runtime helpers.
@@ -842,25 +904,35 @@ exports.cache = {};
  */
 
 function parse(str, options){
+
+  if (options.compileDebug === true) {
+    options.sourceStr = str;
+  }
+
   // Parse
   var parser = new (options.parser || Parser)(str, options.filename, options);
-  var tokens;
+  var block;
   try {
     // Parse
-    tokens = parser.parse();
+    block = parser.parse();
   } catch (err) {
     parser = parser.context();
     runtime.rethrow(err, parser.filename, parser.lexer.lineno, parser.input);
   }
 
+  var node = options.mixin ? parser.blockToMixinLiteral(block, true) : block;
+
   // Compile
-  var compiler = new (options.compiler || Compiler)(tokens, options);
+  var compiler = new (options.compiler || Compiler)(node, options);
   var js;
   try {
+    // Compile
     js = compiler.compile();
   } catch (err) {
     if (err.line && (err.filename || !options.filename)) {
       runtime.rethrow(err, err.filename, err.line, parser.input);
+    } else {
+      throw err;
     }
   }
 
@@ -869,24 +941,72 @@ function parse(str, options){
     console.error('\nCompiled Function:\n\n\u001b[90m%s\u001b[0m', js.replace(/^/gm, '  '));
   }
 
-  var globals = [];
+  var body;
+  var globals = ['jade', 'jade_parent', 'undefined']
+  var pp = options.pretty ? 'jade.indent = [];\n' : '';
 
-  globals.push('jade');
-  globals.push('jade_mixins');
-  globals.push('jade_interp');
-  globals.push('jade_debug');
-  globals.push('buf');
+  function dbg(actions) {
+    if (options.compileDebug === false) return actions;
+    if (options.compileDebug === true) {
+      var filename = utils.stringify(options.filename || "*");
+      actions = 'jade.sources['+ filename +']='
+        + utils.stringify(str) + ';\n'
+        + actions;
+    }
+    actions = 'try {\n'
+      + actions
+      + '} catch(err) {\n'
+      + '  var last = jade.trace.pop() || {};\n'
+      + '  var filename = last.filename || "*";\n'
+      + '  jade.rethrow(err, last.filename, last.lineno, jade.sources[filename]);\n'
+      + '}\n'
+    return actions;
+  }
 
-  var body = ''
-    + 'var buf = [];\n'
-    + 'var jade_mixins = {};\n'
-    + 'var jade_interp;\n'
-    + (options.self
-      ? 'var self = locals || {};\n' + js
-      : addWith('locals || {}', '\n' + js, globals)) + ';'
-    + 'return buf.join("");';
+  if (options.mixin) {
+    body = addWith('locals', pp + 'return ' + js, globals) + ';';
+  } else {
+    var actions = options.self
+      ? 'var self = locals;\n' + js
+      : addWith('locals', '\n' + js, globals) + ';'
+    ;
+    body = 'return function(locals){\n'
+      + 'var buf = [];\n'
+      + 'var jade = jade_parent.spawn({emit:function(chunk){buf.push(chunk)}});\n'
+      + 'locals = locals ? Object.create(locals) : {};'
+      + pp
+      + dbg(actions)
+      + 'return buf.join("");'
+      + '}';
+  }
+
   return {body: body, dependencies: parser.dependencies};
 }
+
+/**
+ * Compile a `Function` representation of the given jade `str` as `MixinLiteral`.
+ *
+ * @param {String} str
+ * @param {Options} options
+ * @return {Function}
+ * @api public
+ */
+
+exports.compileMixin = function(str, options){
+  var options = Object.create(options || {});
+  options.self = true;
+  options.mixin = true;
+  str = String(str);
+  var parsed = parse(str, options);
+  var locals = Object.create(options.locals || {});
+  var buf = [];
+  var make = new Function('locals,jade', parsed.body);
+  var res = make(locals, options.runtime || runtime);
+  res.dependencies = parsed.dependencies;
+  res.locals = locals;
+  return res;
+};
+
 
 /**
  * Compile a `Function` representation of the given jade `str`.
@@ -905,29 +1025,11 @@ function parse(str, options){
  */
 
 exports.compile = function(str, options){
-  var options = options || {}
-    , filename = options.filename
-      ? JSON.stringify(options.filename)
-      : 'undefined'
-    , fn;
-
+  var options = options || {};
   str = String(str);
-
   var parsed = parse(str, options);
-  if (options.compileDebug !== false) {
-    fn = [
-        'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
-      , 'try {'
-      , parsed.body
-      , '} catch (err) {'
-      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno' + (options.compileDebug === true ? ',' + JSON.stringify(str) : '') + ');'
-      , '}'
-    ].join('\n');
-  } else {
-    fn = parsed.body;
-  }
-  fn = new Function('locals, jade', fn)
-  var res = function(locals){ return fn(locals, Object.create(runtime)) };
+  var make = new Function('jade_parent', parsed.body);
+  var res = make(options.runtime || runtime);
   if (options.client) {
     res.toString = function () {
       var err = new Error('The `client` option is deprecated, use the `jade.compileClient` method instead');
@@ -939,6 +1041,13 @@ exports.compile = function(str, options){
   res.dependencies = parsed.dependencies;
   return res;
 };
+
+var bare_runtime = function(){
+  var placeholder = '*';
+  var rt = { attributes: [], block: null, self: null, mixins: {}, debug:[], spawn: placeholder, sources:{} };
+  var spawn = runtime.spawn.toString().replace('exports','{}');
+  return utils.stringify(rt).replace(utils.stringify(placeholder),spawn);
+}();
 
 /**
  * Compile a JavaScript source representation of the given jade `str`.
@@ -959,27 +1068,18 @@ exports.compile = function(str, options){
 exports.compileClient = function(str, options){
   var options = options || {};
   var name = options.name || 'template';
-  var filename = options.filename ? JSON.stringify(options.filename) : 'undefined';
-  var fn;
-
+  var compiled = name + '.jade'
   str = String(str);
-
-  if (options.compileDebug) {
-    options.compileDebug = true;
-    fn = [
-        'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
-      , 'try {'
-      , parse(str, options).body
-      , '} catch (err) {'
-      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + JSON.stringify(str) + ');'
-      , '}'
-    ].join('\n');
-  } else {
-    options.compileDebug = false;
-    fn = parse(str, options).body;
-  }
-
-  return 'function ' + name + '(locals) {\n' + fn + '\n}';
+  options.compileDebug = Boolean(options.compileDebug); // make it explicitly true or false;
+  var parsed = parse(str, options);
+  return 'function ' + name + '(locals){\n'
+       + ' if (!' + compiled + ') '
+       + compiled
+       + ' = function(jade_parent){\n'
+       + parsed.body
+       + '\n}(typeof jade !== "undefined" ? jade : ' + bare_runtime +');\n'
+       + ' return ' + compiled + '.call(this,locals);\n'
+       + '}';
 };
 
 /**
@@ -1010,6 +1110,38 @@ exports.compileFile = function (path, options) {
     ? exports.cache[path] || (exports.cache[path] = exports.compile(str, options))
     : exports.compile(str, options);
 };
+
+
+/**
+ * Compile a `Function` representation of the given jade file as `MixinLiteral`.
+ *
+ * Options:
+ *
+ *   - `compileDebug` when `false` debugging code is stripped from the compiled
+       template, when it is explicitly `true`, the source code is included in
+       the compiled template for better accuracy.
+ *
+ * @param {String} path
+ * @param {Options} options
+ * @return {Function}
+ * @api public
+ */
+
+exports.compileMixinFile = function (path, options) {
+  options = Object.create(options || {});
+
+  var key = path + ':string';
+
+  options.filename = path;
+  var str = options.cache
+    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
+    : fs.readFileSync(path, 'utf8');
+
+  return options.cache
+    ? exports.cache[path] || (exports.cache[path] = exports.compileMixin(str, options))
+    : exports.compileMixin(str, options);
+};
+
 
 /**
  * Render the given `str` of jade.
@@ -1120,7 +1252,7 @@ exports.compileFileClient = function(path, options){
 
 exports.__express = exports.renderFile;
 
-},{"./compiler":1,"./doctypes":2,"./filters":3,"./lexer":6,"./nodes":16,"./parser":23,"./runtime":24,"./utils":25,"fs":26,"void-elements":45,"with":46}],6:[function(require,module,exports){
+},{"./compiler":1,"./doctypes":2,"./filters":3,"./lexer":6,"./nodes":16,"./parser":25,"./runtime":26,"./utils":27,"fs":28,"void-elements":47,"with":48}],6:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -1525,7 +1657,7 @@ Lexer.prototype = {
       var filter = captures[1];
       var attrs = captures[2] === '(' ? this.attrs() : null;
       if (!(captures[2] === ' ' || this.input[0] === ' ')) {
-        throw new Error('expected space after include:filter but got ' + JSON.stringify(this.input[0]));
+        throw new Error('expected space after include:filter but got ' + utils.stringify(this.input[0]));
       }
       captures = /^ *([^\n]+)/.exec(this.input);
       if (!captures || captures[1].trim() === '') {
@@ -1570,13 +1702,33 @@ Lexer.prototype = {
 
   call: function(){
 
-    var tok, captures;
-    if (captures = /^\+(\s*)(([-\w]+)|(#\{))/.exec(this.input)) {
+    var tok, captures, selfArg = null;
+    if (captures = /^\+(\s*)(?:(\[)|([-\w]+)|(#\{))/.exec(this.input)) {
+
+      // try to consume selfArg
+      if (captures[2]) {
+        var match;
+        try {
+          match = this.bracketExpression(1 + captures[1].length);
+        } catch (ex) {
+          return;// not a selfArg, just unmatched open expression
+        }
+        this.consume(match.end + 1);
+        assertExpression(match.src);
+        selfArg = match.src;
+
+        // continue original mixin call parsing
+        captures = /^( *)(?:(#\{)|([-\w]*))/.exec(this.input);
+        // captures[3] still matches with simple name
+        // but now it can be empty since we have a selfArg
+      }
+
       // try to consume simple or interpolated call
-      if (captures[3]) {
+      if (captures[3] != null) {
         // simple call
         this.consume(captures[0].length);
-        tok = this.tok('call', captures[3]);
+        tok = this.tok('call', captures[3] || null);
+        tok.interp = false;
       } else {
         // interpolated call
         var match;
@@ -1587,8 +1739,12 @@ Lexer.prototype = {
         }
         this.consume(match.end + 1);
         assertExpression(match.src);
-        tok = this.tok('call', '#{'+match.src+'}');
+        tok = this.tok('call', match.src);
+        tok.interp = true;
       }
+
+      // Attach selfArg to the token
+      if (selfArg) tok.selfArg = selfArg;
 
       // Check for args (not attributes)
       if (captures = /^ *\(/.exec(this.input)) {
@@ -1608,6 +1764,20 @@ Lexer.prototype = {
   },
 
   /**
+   * Mixin Literal.
+   */
+
+  mixinLiteral: function(){
+    var captures;
+    if (captures = /^mixin(?: *\((.*)\) *| *(?![^\r\n]))/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var tok = this.tok('mixinLiteral', null);
+      tok.args = captures[1] || '';
+      return tok;
+    }
+  },
+
+  /**
    * Mixin.
    */
 
@@ -1620,6 +1790,7 @@ Lexer.prototype = {
       return tok;
     }
   },
+
 
   /**
    * Conditional.
@@ -2033,6 +2204,7 @@ Lexer.prototype = {
       || this.mixinBlock()
       || this.include()
       || this.includeFiltered()
+      || this.mixinLiteral()
       || this.mixin()
       || this.call()
       || this.conditional()
@@ -2055,7 +2227,7 @@ Lexer.prototype = {
   }
 };
 
-},{"./utils":25,"character-parser":32}],7:[function(require,module,exports){
+},{"./utils":27,"character-parser":34}],7:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2140,7 +2312,7 @@ Attrs.prototype.addAttributes = function (src) {
   this.attributeBlocks.push(src);
 };
 
-},{"./node":20}],8:[function(require,module,exports){
+},{"./node":22}],8:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2166,7 +2338,7 @@ BlockComment.prototype.constructor = BlockComment;
 
 BlockComment.prototype.type = 'BlockComment';
 
-},{"./node":20}],9:[function(require,module,exports){
+},{"./node":22}],9:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2286,7 +2458,7 @@ Block.prototype.clone = function(){
   return clone;
 };
 
-},{"./node":20}],10:[function(require,module,exports){
+},{"./node":22}],10:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2321,7 +2493,7 @@ When.prototype.constructor = When;
 
 When.prototype.type = 'When';
 
-},{"./node":20}],11:[function(require,module,exports){
+},{"./node":22}],11:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2348,7 +2520,7 @@ Code.prototype = Object.create(Node.prototype);
 Code.prototype.constructor = Code;
 
 Code.prototype.type = 'Code'; // prevent the minifiers removing this
-},{"./node":20}],12:[function(require,module,exports){
+},{"./node":22}],12:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2373,7 +2545,7 @@ Comment.prototype.constructor = Comment;
 
 Comment.prototype.type = 'Comment';
 
-},{"./node":20}],13:[function(require,module,exports){
+},{"./node":22}],13:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2395,7 +2567,7 @@ Doctype.prototype.constructor = Doctype;
 
 Doctype.prototype.type = 'Doctype';
 
-},{"./node":20}],14:[function(require,module,exports){
+},{"./node":22}],14:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2423,7 +2595,7 @@ Each.prototype.constructor = Each;
 
 Each.prototype.type = 'Each';
 
-},{"./node":20}],15:[function(require,module,exports){
+},{"./node":22}],15:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2449,7 +2621,7 @@ Filter.prototype.constructor = Filter;
 
 Filter.prototype.type = 'Filter';
 
-},{"./node":20}],16:[function(require,module,exports){
+},{"./node":22}],16:[function(require,module,exports){
 'use strict';
 
 exports.Node = require('./node');
@@ -2460,6 +2632,8 @@ exports.Case = require('./case');
 exports.Text = require('./text');
 exports.Block = require('./block');
 exports.MixinBlock = require('./mixin-block');
+exports.MixinCall = require('./mixin-call');
+exports.MixinLiteral = require('./mixin-literal');
 exports.Mixin = require('./mixin');
 exports.Filter = require('./filter');
 exports.Comment = require('./comment');
@@ -2467,7 +2641,7 @@ exports.Literal = require('./literal');
 exports.BlockComment = require('./block-comment');
 exports.Doctype = require('./doctype');
 
-},{"./block":9,"./block-comment":8,"./case":10,"./code":11,"./comment":12,"./doctype":13,"./each":14,"./filter":15,"./literal":17,"./mixin":19,"./mixin-block":18,"./node":20,"./tag":21,"./text":22}],17:[function(require,module,exports){
+},{"./block":9,"./block-comment":8,"./case":10,"./code":11,"./comment":12,"./doctype":13,"./each":14,"./filter":15,"./literal":17,"./mixin":21,"./mixin-block":18,"./mixin-call":19,"./mixin-literal":20,"./node":22,"./tag":23,"./text":24}],17:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2489,7 +2663,7 @@ Literal.prototype.constructor = Literal;
 
 Literal.prototype.type = 'Literal';
 
-},{"./node":20}],18:[function(require,module,exports){
+},{"./node":22}],18:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2509,26 +2683,82 @@ MixinBlock.prototype.constructor = MixinBlock;
 
 MixinBlock.prototype.type = 'MixinBlock';
 
-},{"./node":20}],19:[function(require,module,exports){
+},{"./node":22}],19:[function(require,module,exports){
 'use strict';
 
 var Attrs = require('./attrs');
 
 /**
- * Initialize a new `Mixin` with `name` and `block`.
+ * Initialize a new `MixinCall` with `name`, `interp`, `args`, `selfArg` and `block`.
  *
  * @param {String} name
+ * @param {Boolean} interp
  * @param {String} args
- * @param {Block} block
+ * @param {String} selfArg
+ * @param {MixinLiteral} body
  * @api public
  */
 
-var Mixin = module.exports = function Mixin(name, args, block, call){
+var MixinCall = module.exports = function MixinCall(name, interp, args, selfArg, body){
   Attrs.call(this);
   this.name = name;
+  this.interp = interp; // if true then name is an expression from #{expression}
+  this.args = args;
+  this.selfArg = selfArg;
+  this.body = body;
+};
+
+// Inherit from `Attrs`.
+MixinCall.prototype = Object.create(Attrs.prototype);
+MixinCall.prototype.constructor = MixinCall;
+
+MixinCall.prototype.type = 'MixinCall';
+
+},{"./attrs":7}],20:[function(require,module,exports){
+'use strict';
+
+var Attrs = require('./attrs');
+
+/**
+ * Initialize a new `MixinLiteral` with `args`, `block` and `noIndent`.
+ *
+ * @param {String} args
+ * @param {Block} block
+ * @param {Boolean} noIndent
+ * @api public
+ */
+
+var MixinLiteral = module.exports = function MixinLiteral(args, block, noIndent){
+  Attrs.call(this);
   this.args = args;
   this.block = block;
-  this.call = call;
+  this.noIndent = noIndent;
+  this.generative = false;
+};
+
+// Inherit from `Attrs`.
+MixinLiteral.prototype = Object.create(Attrs.prototype);
+MixinLiteral.prototype.constructor = MixinLiteral;
+
+MixinLiteral.prototype.type = 'MixinLiteral';
+
+},{"./attrs":7}],21:[function(require,module,exports){
+'use strict';
+
+var Attrs = require('./attrs');
+
+/**
+ * Initialize a new `Mixin` with `name` and `body`.
+ *
+ * @param {String} name
+ * @param {MixinLiteral} body
+ * @api public
+ */
+
+var Mixin = module.exports = function Mixin(name, body){
+  Attrs.call(this);
+  this.name = name;
+  this.body = body;
 };
 
 // Inherit from `Attrs`.
@@ -2537,7 +2767,7 @@ Mixin.prototype.constructor = Mixin;
 
 Mixin.prototype.type = 'Mixin';
 
-},{"./attrs":7}],20:[function(require,module,exports){
+},{"./attrs":7}],22:[function(require,module,exports){
 'use strict';
 
 var Node = module.exports = function Node(){};
@@ -2557,7 +2787,7 @@ Node.prototype.clone = function(){
 
 Node.prototype.type = '';
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 var Attrs = require('./attrs');
@@ -2648,7 +2878,7 @@ Tag.prototype.canInline = function(){
   return false;
 };
 
-},{"../inline-tags":4,"./attrs":7,"./block":9}],22:[function(require,module,exports){
+},{"../inline-tags":4,"./attrs":7,"./block":9}],24:[function(require,module,exports){
 'use strict';
 
 var Node = require('./node');
@@ -2675,7 +2905,7 @@ Text.prototype.type = 'Text';
  */
 
 Text.prototype.isText = true;
-},{"./node":20}],23:[function(require,module,exports){
+},{"./node":22}],25:[function(require,module,exports){
 'use strict';
 
 var Lexer = require('./lexer');
@@ -2686,6 +2916,7 @@ var path = require('path');
 var constantinople = require('constantinople');
 var parseJSExpression = require('character-parser').parseMax;
 var extname = path.extname;
+var runtime = require('./runtime');
 
 /**
  * Initialize `Parser` with the given input `str` and `filename`.
@@ -2705,7 +2936,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
   this.mixins = {};
   this.options = options;
   this.contexts = [this];
-  this.inMixin = false;
+  this.inMixin = options.mixin ? 1 : 0; // mixin definition nesting level
   this.dependencies = [];
   this.inBlock = 0;
 };
@@ -2781,6 +3012,27 @@ Parser.prototype = {
   },
 
   /**
+   * Convert block to the MixinLiteral
+   * @param {Block} block
+   * @return {MixinLiteral}
+   * @api private
+   */
+
+  blockToMixinLiteral: function (block, noIndent) {
+    if (block.isEmpty()) return null;
+    if (block.nodes[0].type === 'MixinLiteral') {
+      if (block.nodes.length > 1) {
+        var err = new Error('Extra nodes after mixin literal');
+        runtime.rethrow(err, block.nodes[1].filename, block.nodes[1].line, block.nodes[1].input);
+      } else {
+        return block.nodes[0];
+      }
+    } else {
+      return new nodes.MixinLiteral('', block, noIndent);
+    }
+  },
+
+  /**
    * Parse input returning a string of js for evaluation.
    *
    * @return {String}
@@ -2791,6 +3043,7 @@ Parser.prototype = {
     var block = new nodes.Block, parser;
     block.line = 0;
     block.filename = this.filename;
+    block.input = this.input;
 
     while ('eos' != this.peek().type) {
       if ('newline' == this.peek().type) {
@@ -2799,6 +3052,7 @@ Parser.prototype = {
         var next = this.peek();
         var expr = this.parseExpr();
         expr.filename = expr.filename || this.filename;
+        expr.input = expr.input || this.input;
         expr.line = next.line;
         block.push(expr);
       }
@@ -2887,6 +3141,8 @@ Parser.prototype = {
     switch (this.peek().type) {
       case 'tag':
         return this.parseTag();
+      case 'mixinLiteral':
+        return this.parseMixinLiteral();
       case 'mixin':
         return this.parseMixin();
       case 'block':
@@ -2972,6 +3228,7 @@ Parser.prototype = {
     var block = new nodes.Block;
     block.line = this.line();
     block.filename = this.filename;
+    block.input = this.input;
     this.expect('indent');
     while ('outdent' != this.peek().type) {
       switch (this.peek().type) {
@@ -3224,7 +3481,7 @@ Parser.prototype = {
 
   parseMixinBlock: function () {
     var block = this.expect('mixin-block');
-    if (!this.inMixin) {
+    if (this.inMixin === 0) { // check nesting level
       throw new Error('Anonymous blocks are not allowed unless they are part of a mixin.');
     }
     return new nodes.MixinBlock();
@@ -3287,16 +3544,17 @@ Parser.prototype = {
   parseCall: function(){
     var tok = this.expect('call');
     var name = tok.val;
+    var interp = tok.interp;
+    var selfArg = tok.selfArg;
     var args = tok.args;
-    var mixin = new nodes.Mixin(name, args, new nodes.Block, true);
-
-    this.tag(mixin);
-    if (mixin.code) {
-      mixin.block.push(mixin.code);
-      mixin.code = null;
-    }
-    if (mixin.block.isEmpty()) mixin.block = null;
-    return mixin;
+    var blockArgs = tok.blockArgs;
+    var call = new nodes.MixinCall(name, interp, args, selfArg, null);
+    call.block = new nodes.Block();
+    this.tag(call);
+    if (call.code) call.block.push(call.code);
+    call.body = this.blockToMixinLiteral(call.block, true);
+    delete call.block;
+    return call;
   },
 
   /**
@@ -3307,19 +3565,37 @@ Parser.prototype = {
     var tok = this.expect('mixin');
     var name = tok.val;
     var args = tok.args;
-    var mixin;
 
     // definition
     if ('indent' == this.peek().type) {
-      this.inMixin = true;
-      mixin = new nodes.Mixin(name, args, this.block(), false);
+      this.inMixin++;
+      var body = new nodes.MixinLiteral(args, this.block());
+      var mixin = new nodes.Mixin(name, body);
       this.mixins[name] = mixin;
-      this.inMixin = false;
+      this.inMixin--;
       return mixin;
     // call
     } else {
-      return new nodes.Mixin(name, args, null, true);
+      return new nodes.MixinCall(name, false, args, null, null);
     }
+  },
+
+  /**
+   * mixin literal
+   */
+
+  parseMixinLiteral: function(){
+    var tok = this.expect('mixinLiteral');
+    var args = tok.args;
+    this.inMixin++;
+    var block = new nodes.Block();
+    block.filename = this.filename;
+    block.input = this.input;
+    var mixinLiteral = new nodes.MixinLiteral(args, block);
+    this.gen(mixinLiteral);
+    if (mixinLiteral.code) mixinLiteral.block.push(mixinLiteral.code);
+    this.inMixin--;
+    return mixinLiteral;
   },
 
   parseInlineTagsInText: function (str) {
@@ -3377,6 +3653,7 @@ Parser.prototype = {
     var block = new nodes.Block;
     block.line = this.line();
     block.filename = this.filename;
+    block.input = this.input;
     this.expect('indent');
     while ('outdent' != this.peek().type) {
       if ('newline' == this.peek().type) {
@@ -3384,6 +3661,7 @@ Parser.prototype = {
       } else {
         var expr = this.parseExpr();
         expr.filename = this.filename;
+        expr.input = this.input;
         block.push(expr);
       }
     }
@@ -3413,6 +3691,56 @@ Parser.prototype = {
     tag.selfClosing = tok.selfClosing;
 
     return this.tag(tag);
+  },
+
+  /**
+   * Parse generative content
+   */
+  gen: function(gen, checkOnly){
+    // check immediate '.'
+    if ('dot' == this.peek().type) {
+      gen.textOnly = true;
+      this.advance();
+      checkOnly = false;
+    }
+
+    // (text | code | ':')?
+    switch (this.peek().type) {
+      case 'text':
+        gen.block.push(this.parseText());
+        break;
+      case 'code':
+        gen.code = this.parseCode();
+        break;
+      case ':':
+        this.advance();
+        gen.block = new nodes.Block;
+        gen.block.push(this.parseExpr());
+        break;
+      case 'newline':
+      case 'indent':
+      case 'outdent':
+      case 'eos':
+      case 'pipeless-text':
+        break;
+      default:
+        if (checkOnly) return null;
+        throw new Error('Unexpected token `' + this.peek().type + '` expected `text`, `code`, `:`, `newline` or `eos`')
+    }
+
+    // newline*
+    while ('newline' == this.peek().type) this.advance();
+
+    // block?
+    if (gen.textOnly) {
+      gen.block = this.parseTextBlock();
+    } else if ('indent' == this.peek().type) {
+      var block = this.block();
+      for (var i = 0, len = block.nodes.length; i < len; ++i) {
+        gen.block.push(block.nodes[i]);
+      }
+    }
+    return gen;
   },
 
   /**
@@ -3454,55 +3782,80 @@ Parser.prototype = {
             break out;
         }
       }
-
-    // check immediate '.'
-    if ('dot' == this.peek().type) {
-      tag.textOnly = true;
-      this.advance();
-    }
-
-    // (text | code | ':')?
-    switch (this.peek().type) {
-      case 'text':
-        tag.block.push(this.parseText());
-        break;
-      case 'code':
-        tag.code = this.parseCode();
-        break;
-      case ':':
-        this.advance();
-        tag.block = new nodes.Block;
-        tag.block.push(this.parseExpr());
-        break;
-      case 'newline':
-      case 'indent':
-      case 'outdent':
-      case 'eos':
-      case 'pipeless-text':
-        break;
-      default:
-        throw new Error('Unexpected token `' + this.peek().type + '` expected `text`, `code`, `:`, `newline` or `eos`')
-    }
-
-    // newline*
-    while ('newline' == this.peek().type) this.advance();
-
-    // block?
-    if (tag.textOnly) {
-      tag.block = this.parseTextBlock();
-    } else if ('indent' == this.peek().type) {
-      var block = this.block();
-      for (var i = 0, len = block.nodes.length; i < len; ++i) {
-        tag.block.push(block.nodes[i]);
-      }
-    }
-
-    return tag;
+    return this.gen(tag);
   }
 };
 
-},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":25,"character-parser":32,"constantinople":33,"fs":26,"path":28}],24:[function(require,module,exports){
+},{"./filters":3,"./lexer":6,"./nodes":16,"./runtime":26,"./utils":27,"character-parser":34,"constantinople":35,"fs":28,"path":30}],26:[function(require,module,exports){
 'use strict';
+
+exports.sources = {}
+
+// Initial values for overriding and prototyping in spawn
+exports.mixins = {};
+exports.attributes = {};
+exports.block = null;
+exports.self = null;
+exports.trace = [];
+exports.depth = 0;
+
+exports.emit = function emit(chunk){/* no special code here */}
+
+exports.enter = function eneter(filename, lineno) {
+  var last = this.trace[this.depth-1] || {};
+  filename = filename || last.filename;
+  lineno = lineno || last.lineno;
+  this.trace.push({filename: filename, lineno: lineno});
+}
+
+exports.leave = function leave() {
+  this.trace.pop();
+}
+
+/**
+ * Spawns a new runtime scope by lifting the old one into prototype chain
+ * and overriding `buf`, `attributes`, `block` or `self` if necessary.
+ * Mixins are lifted too for consistent overriding
+ *
+ * @param {Object} override
+ * @param {Object?} parent
+ * @api private
+ */
+
+exports.spawn = function spawn(override, parent) {
+  if (!override) return this;
+  if (!parent) return Object.create(parent = this || exports).spawn(override, parent);
+  this.parent = parent;
+  this.mixins = Object.create(parent.mixins);
+  this.sources = Object.create(parent.sources);
+  if (override.emit)       this.emit       = override.emit;
+  if (override.attributes) this.attributes = override.attributes;
+  if (override.block)      this.block      = override.block;
+  if (override.self)       this.self       = override.self;
+  return this;
+}
+
+/**
+ * Empty mixin that any mixin-name resolves to for null
+ *
+ * @api private
+ */
+function nullMixin(){}
+
+/**
+ * Resolve mixin `name` for object `self`
+ *
+ * @param {*} self
+ * @param {String} name
+ * @return {Function}
+ */
+exports.resolveMixin = function resolveMixin(self, name) {
+  if (self === null) return nullMixin;
+  var table = self != null && self.constructor.jade_mixins;
+  var mixin = table && table[name];
+  if (!mixin) throw new Error('Can\'t resolve mixin "' + name + '" for ' + self);
+  return mixin;
+}
 
 /**
  * Merge two attribute objects giving precedence
@@ -3706,7 +4059,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
   throw err;
 };
 
-},{"fs":26}],25:[function(require,module,exports){
+},{"fs":28}],27:[function(require,module,exports){
 'use strict';
 
 /**
@@ -3723,6 +4076,13 @@ exports.merge = function(a, b) {
   return a;
 };
 
+exports.stringify = function(str) {
+  if (typeof str === "undefined") return str;
+  return JSON.stringify(str)
+             .replace(/\u2028/g, '\\u2028')
+             .replace(/\u2029/g, '\\u2029');
+};
+
 exports.walkAST = function walkAST(ast, before, after) {
   before && before(ast);
   switch (ast.type) {
@@ -3731,9 +4091,13 @@ exports.walkAST = function walkAST(ast, before, after) {
         walkAST(node, before, after);
       });
       break;
+    case 'MixinCall':
+      if (ast.body) walkAST(ast.body, before, after);
+      break;
     case 'Case':
     case 'Each':
     case 'Mixin':
+    case 'MixinLiteral':
     case 'Tag':
     case 'When':
     case 'Code':
@@ -3755,9 +4119,9 @@ exports.walkAST = function walkAST(ast, before, after) {
   after && after(ast);
 };
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -3782,7 +4146,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4010,7 +4374,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":29}],29:[function(require,module,exports){
+},{"_process":31}],31:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -4075,14 +4439,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4672,7 +5036,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":30,"_process":29,"inherits":27}],32:[function(require,module,exports){
+},{"./support/isBuffer":32,"_process":31,"inherits":29}],34:[function(require,module,exports){
 exports = (module.exports = parse);
 exports.parse = parse;
 function parse(src, state, options) {
@@ -4891,7 +5255,7 @@ function isRegexp(history) {
   return false;
 }
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 'use strict'
 
 var uglify = require('uglify-js')
@@ -4947,7 +5311,7 @@ function detect(src) {
   return globals
 }
 
-},{"uglify-js":44}],34:[function(require,module,exports){
+},{"uglify-js":46}],36:[function(require,module,exports){
 /*
  * Copyright 2009-2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE.txt or:
@@ -4957,7 +5321,7 @@ exports.SourceMapGenerator = require('./source-map/source-map-generator').Source
 exports.SourceMapConsumer = require('./source-map/source-map-consumer').SourceMapConsumer;
 exports.SourceNode = require('./source-map/source-node').SourceNode;
 
-},{"./source-map/source-map-consumer":39,"./source-map/source-map-generator":40,"./source-map/source-node":41}],35:[function(require,module,exports){
+},{"./source-map/source-map-consumer":41,"./source-map/source-map-generator":42,"./source-map/source-node":43}],37:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5056,7 +5420,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":42,"amdefine":43}],36:[function(require,module,exports){
+},{"./util":44,"amdefine":45}],38:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5202,7 +5566,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./base64":37,"amdefine":43}],37:[function(require,module,exports){
+},{"./base64":39,"amdefine":45}],39:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5246,7 +5610,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":43}],38:[function(require,module,exports){
+},{"amdefine":45}],40:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5329,7 +5693,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":43}],39:[function(require,module,exports){
+},{"amdefine":45}],41:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5809,7 +6173,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":35,"./base64-vlq":36,"./binary-search":38,"./util":42,"amdefine":43}],40:[function(require,module,exports){
+},{"./array-set":37,"./base64-vlq":38,"./binary-search":40,"./util":44,"amdefine":45}],42:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -6211,7 +6575,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":35,"./base64-vlq":36,"./util":42,"amdefine":43}],41:[function(require,module,exports){
+},{"./array-set":37,"./base64-vlq":38,"./util":44,"amdefine":45}],43:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -6613,7 +6977,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./source-map-generator":40,"./util":42,"amdefine":43}],42:[function(require,module,exports){
+},{"./source-map-generator":42,"./util":44,"amdefine":45}],44:[function(require,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -6917,7 +7281,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":43}],43:[function(require,module,exports){
+},{"amdefine":45}],45:[function(require,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -7220,7 +7584,7 @@ function amdefine(module, requireFn) {
 module.exports = amdefine;
 
 }).call(this,require('_process'),"/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"_process":29,"path":28}],44:[function(require,module,exports){
+},{"_process":31,"path":30}],46:[function(require,module,exports){
 var sys = require("util");
 var MOZ_SourceMap = require("source-map");
 var UglifyJS = exports;
@@ -9326,7 +9690,13 @@ function parse($TEXT, options) {
                 });
 
               case "try":
-                return try_();
+                try{
+                    return try_();
+                } catch (err) {
+                    console.error("======================================");
+                    console.error($TEXT);
+                    throw err;
+                }
 
               case "var":
                 return tmp = var_(), semicolon(), tmp;
@@ -15079,7 +15449,7 @@ exports.describe_ast = function () {
     doitem(UglifyJS.AST_Node);
     return out + "";
 };
-},{"source-map":34,"util":31}],45:[function(require,module,exports){
+},{"source-map":36,"util":33}],47:[function(require,module,exports){
 /**
  * This file automatically generated from `build.js`.
  * Do not manually edit.
@@ -15104,7 +15474,7 @@ module.exports = [
   "wbr"
 ];
 
-},{}],46:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 'use strict';
 
 var uglify = require('uglify-js')
@@ -15222,5 +15592,5 @@ function unwrapReturns(src, result) {
   else return 'var ' + result + '=' + src.join('') + ';if (' + result + ') return ' + result + '.value'
 }
 
-},{"uglify-js":44}]},{},[5])(5)
+},{"uglify-js":46}]},{},[5])(5)
 });
