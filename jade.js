@@ -389,24 +389,33 @@ Compiler.prototype = {
 
     var interp = call.interp;
     var selfArg = call.selfArg;
-    var nameExpr = interp ? name : '"' + name + '"'
+    var options = this.options;
+    var _attrs = options.provideMixinAttrs
+      ? ', (jade._attrs = {})'
+      : ''
+    ;
+    var nameExpr = interp
+      ? '(' + name + ')'
+      : '"' + name + '"'
+    ;
     var source = selfArg
       ? selfArg // treat selfArg as first-class mixin unless mixin name is provided
       : 'jade.mixins[' + nameExpr + ']'
-    var expr = '(jade._=' + source + ')' // clear this-context for call
+    ;
 
+    var expr = '(jade._=' + source + ')' // clear this-context for call
     var buf = this.buf;
 
     // small local helper to avoid unnecessary complex checks
     // for pushing comma-separated arguments
     function pushArg(chunk) {
       buf.push(buf.pop()+',');
-      buf.push(chunk)
+      buf.push(chunk);
     }
 
     if (selfArg) {
       // if mixin name is provided then resolve mixin code with jade.resolveMixin
-      if (name) expr = 'jade.resolveMixin(' + expr + ',' + nameExpr + ')';
+      if (name) expr = 'jade.resolveMixin(' + expr + ',' + nameExpr + _attrs + ')';
       else selfArg = null;
     } else if (interp) {
       this.dynamicMixins = true;
@@ -427,6 +436,10 @@ Compiler.prototype = {
     if (body) {
       pushArg('block:');
       this.visit(body);
+    }
+
+    if (selfArg && options.provideMixinAttrs) {
+      attrsBlocks.push('jade._attrs');
     }
 
     if (attrsBlocks.length) {
@@ -999,7 +1012,6 @@ exports.compileMixin = function(str, options){
   str = String(str);
   var parsed = parse(str, options);
   var locals = Object.create(options.locals || {});
-  var buf = [];
   var make = new Function('locals,jade', parsed.body);
   var res = make(locals, options.runtime || runtime);
   res.dependencies = parsed.dependencies;
@@ -3828,10 +3840,7 @@ exports.spawn = function spawn(override, parent) {
   this.parent = parent;
   this.mixins = Object.create(parent.mixins);
   this.sources = Object.create(parent.sources);
-  if (override.emit)       this.emit       = override.emit;
-  if (override.attributes) this.attributes = override.attributes;
-  if (override.block)      this.block      = override.block;
-  if (override.self)       this.self       = override.self;
+  for (var p in override) this[p] = override[p];
   return this;
 }
 
@@ -3849,11 +3858,23 @@ function nullMixin(){}
  * @param {String} name
  * @return {Function}
  */
-exports.resolveMixin = function resolveMixin(self, name) {
-  if (self === null) return nullMixin;
-  var table = self != null && self.constructor.jade_mixins;
-  var mixin = table && table[name];
-  if (!mixin) throw new Error('Can\'t resolve mixin "' + name + '" for ' + self);
+exports.resolveMixin = function resolveMixin(selfArg, name, attrs) {
+
+  // explicitly resolve all mixin names to empty mixin for null selfArg
+  if (selfArg === null) return nullMixin;
+
+  // resolving a mixin
+  var ctor   = selfArg != null && selfArg.constructor;
+  var mixins = ctor && ctor.jade_mixins;
+  var mixin  = mixins && mixins[name];
+  if (!mixin) throw new Error('Can\'t resolve mixin "' + name + '" for ' + selfArg);
+
+  // if extra attributes should be provided (attrs != null)
+  // then try obtain them via constructor
+  if (attrs && ctor.jadeAttributes) {
+    ctor.jadeAttributes.call(selfArg, name, mixin, attrs);
+  }
+
   return mixin;
 }
 
