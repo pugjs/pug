@@ -25,8 +25,8 @@ block content
       dd.type.string string
       dd.description Used in exceptions, and required for relative includes and extends
       dt pretty:
-      dd.type.boolean boolean
-      dd.description Adds whitespace to the resulting html to make it easier for a human to read
+      dd.type.boolean boolean|string
+      dd.description Adds whitespace to the resulting html to make it easier for a human to read. If a string is specified, it will be used as indentation. (e.g. #[code '\t'])
       dt self:
       dd.type.boolean boolean
       dd.description Use a #[code self] namespace to hold the locals (false by default)
