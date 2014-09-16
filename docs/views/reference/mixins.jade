@@ -53,7 +53,7 @@ block documentation
             <li class="pet">pig</li>
           </ul>
 
-  h2 Mixin Blocks
+  h2#blocks Mixin Blocks
 
   p Mixins can also take a block of jade to act as the content:
 
@@ -93,7 +93,7 @@ block documentation
             </div>
           </div>
 
-  h2 Mixin Attributes
+  h2#attributes Mixin Attributes
 
   p Mixins also get an implicit attributes argument taken from the attributes passed to the mixin:
 
@@ -109,9 +109,26 @@ block documentation
     .col-lg-6
       +html
         :htmlsrc
-          <a class="btn" href="/foo">foo</a>
+          <a href="/foo" class="btn" >foo</a>
+
   .panel.panel-info
     .panel-heading Note
     .panel-body.
       The values in #[code attributes] are already escaped so you should
-      use #[code !=] to avoid escaping them a second time.
+      use #[code !=] to avoid escaping them a second time (see also #[a(href="/reference/attributes#unescaped") unescaped attributes]).
+
+  p You can also use with #[code &amp;attributes] (see also #[a(href="/reference/attributes#and-attributes") &amp;attributes])
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          mixin link(href, name)
+            a(href=href)&attributes(attributes)= name
+
+          +link('/foo', 'foo')(class="btn")
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a href="/foo" class="btn" >foo</a>
+

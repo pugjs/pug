@@ -24,13 +24,37 @@ block documentation
       +jade
         :jadesrc
           - var authenticated = true
-          body(class=authenticated?'authed':'anon')
+          body(class=authenticated ? 'authed' : 'anon')
     .col-lg-6
       +html
         :htmlsrc
           <body class="authed"></body>
 
-  h4#booleanattribs Boolean Attributes
+  h2#unescaped Unescaped Attributes
+
+  p By default, all attributes are escaped (replacing special characters with escape sequences) to prevent attacks such as cross site scripting.  If you need to use special characters you can use #[code !=] instead of #[code =].
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          div(escaped="<code>")
+          div(unescaped!="<code>")
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div escaped="&lt;code&gt;"></div>
+          <div unescaped="<code>"></div>
+
+  .panel.panel-danger
+    .panel-heading Danger
+    .panel-body
+      p.
+        Unescaped buffered code can be dangerous.
+        You must be sure to sanatize any user inputs to avoid
+        #[a(href='http://en.wikipedia.org/wiki/Cross-site_scripting') Cross Site Scripting]
+
+  h2#booleanattribs Boolean Attributes
 
   p Boolean attributes are mirrored by Jade, and accept bools, aka #[code true] or #[code false]. When no value is specified true is assumed.
 
@@ -119,7 +143,6 @@ block documentation
 
   p IDs may be defined using a <code>#idname</code> syntax:
 
-
   .row(data-control='interactive')
     .col-lg-6
       +jade
@@ -141,3 +164,38 @@ block documentation
       +html
         :htmlsrc
           <div id="content"></div>
+
+  h2#and-attributes &amp;attributes
+
+  p Pronounced "and attributes", the #[code &amp;attributes] syntax can be used to explode an object into attributes of an element.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          div#foo(data-bar="foo")&attributes({'data-foo': 'bar'})
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div id="foo" data-bar="foo" data-foo="bar"></div>
+
+  p The object does not have to be an object literal. It can also just be a variable that has an object as its value (see also #[a(href="/reference/mixins#attributes") Mixin Attributes])
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var attributes = {'data-foo': 'bar'};
+          div#foo(data-bar="foo")&attributes(attributes)
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div id="foo" data-bar="foo" data-foo="bar"></div>
+  .panel.panel-danger
+    .panel-heading Danger
+    .panel-body
+      p.
+        Attributes applied using #[code &amp;attributes] are not automatically escaped.
+        You must be sure to sanatize any user inputs to avoid
+        #[a(href='http://en.wikipedia.org/wiki/Cross-site_scripting') Cross Site Scripting].
+        This is done for you if you are passing in #[code attributes] from a mixin call.
