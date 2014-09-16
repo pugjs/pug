@@ -30,6 +30,22 @@ block documentation
         :htmlsrc
           <body class="authed"></body>
 
+  p If you have many attributes, you can also spread them across many lines:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          input(
+            type='checkbox'
+            name='agreement'
+            checked
+          )
+    .col-lg-6
+      +html
+        :htmlsrc
+          <input type="checkbox" name="agreement" checked="checked" />
+
   h2#unescaped Unescaped Attributes
 
   p By default, all attributes are escaped (replacing special characters with escape sequences) to prevent attacks such as cross site scripting.  If you need to use special characters you can use #[code !=] instead of #[code =].
