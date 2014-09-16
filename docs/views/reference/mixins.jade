@@ -132,3 +132,26 @@ block documentation
         :htmlsrc
           <a href="/foo" class="btn" >foo</a>
 
+  h2 Rest Arguments
+
+  p You can write mixins that take an unknown number of arguments using the "rest arguments" syntax.  e.g.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          mixin list(id, ...items)
+            ul(id=id)
+              each item in items
+                li= item
+
+          +list('my-list', 1, 2, 3, 4)
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul id="my-list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+          </ul>
