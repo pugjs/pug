@@ -1,0 +1,104 @@
+extends ../reference.jade
+
+block documentation
+  h1 Template inheritance
+
+  p.
+    Jade supports template inheritance via the #[code block] and #[code extends] keywords. A block is simply a "block"
+    of Jade that may be replaced within a child template, this process is recursive.
+
+  p.
+    Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
+
+  p layout.jade
+  +jade
+    :jadesrc
+      html
+        head
+          title My Site - \#{title}
+          block scripts
+            script(src='/jquery.js')
+        body
+          block content
+          block foot
+            #footer
+              p some footer content
+
+  p Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".
+
+  p page-a.jade
+  +jade
+    :jadesrc
+      extends ./layout.jade
+
+      block scripts
+        script(src='/jquery.js')
+        script(src='/pets.js')
+
+      block content
+        h1= title
+        each pet in pets
+          include pet
+
+  p.
+    It's also possible to override a block to provide additional blocks, as shown in the following example where `content` now exposes a `sidebar` and `primary` block for overriding, or the child template could override `content` all together.
+
+  p sub-layout.jade
+  +jade
+    :jadesrc
+      extends ./layout.jade
+
+      block content
+        .sidebar
+          block sidebar
+            p nothing
+        .primary
+          block primary
+            p nothing
+  p page-b.jade
+  +jade
+    :jadesrc
+      extends ./sub-layout.jade
+
+      block content
+        .sidebar
+          block sidebar
+            p nothing
+        .primary
+          block primary
+            p nothing
+
+
+  h2 Block append / prepend
+
+  p Jade allows you to #[em replace] (default), #[em prepend], or #[em append] blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on #[em every] page, you might do this:
+
+  +jade
+    :jadesrc
+      html
+        head
+          block head
+            script(src='/vendor/jquery.js')
+            script(src='/vendor/caustic.js')
+        body
+          block content
+
+  p Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
+
+  +jade
+    :jadesrc
+      extends layout
+
+      block append head
+        script(src='/vendor/three.js')
+        script(src='/game.js')
+
+  p When using `block append` or `block prepend` the `block` is optional:
+
+  +jade
+    :jadesrc
+      extends layout
+
+      append head
+        script(src='/vendor/three.js')
+        script(src='/game.js')
