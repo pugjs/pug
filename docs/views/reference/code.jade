@@ -1,7 +1,7 @@
 extends ../reference.jade
 
 block documentation
-  h1 Code
+  h1 Code &amp; Interpolation
 
   p Jade makes it possible to write inline JavaScript code in your templates.  There are three types of code.
 
@@ -77,6 +77,48 @@ block documentation
       +html
         :htmlsrc
           <p>This code is <strong>not</strong> escaped!</p>
+  .panel.panel-danger
+    .panel-heading Danger
+    .panel-body
+      p.
+        Unescaped buffered code can be dangerous.
+        You must be sure to sanatize any user inputs to avoid
+        #[a(href='http://en.wikipedia.org/wiki/Cross-site_scripting') Cross Site Scripting]
+
+  h2 Interpolation
+
+  p.
+    Both plain-text and piped-text support interpolation. The following will output the user.name in the paragraph:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var user = {name: 'Forbes Lindesay'}
+          p Welcome \#{user.name}
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>Welcome Forbes Lindesay</p>
+
+  p It is generally recommended that you use #[code =] for buffering code unless it is a small amount of code in a large block.
+
+  h2 Unescaped Interpolation
+
+  p You can also use unescaped interpolation to output HTML:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var user = {name: '<strong>Forbes Lindesay</strong>'}
+          p Welcome \#{user.name}
+          p Welcome \!{user.name}
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>Welcome &lt;strong&gt;Forbes Lindesay&lt;/strong&gt;</p>
+          <p>Welcome <strong>Forbes Lindesay</strong></p>
   .panel.panel-danger
     .panel-heading Danger
     .panel-body
