@@ -1,0 +1,250 @@
+
+# general strings
+
+danger:
+  | Danger
+sanatize-inputs:
+  | You must be sure to sanatize any user inputs to avoid
+  = ' '
+  a(href='http://en.wikipedia.org/wiki/Cross-site_scripting') Cross Site Scripting
+
+# layout.jade
+
+node-template-engine:
+  | Node Template Engine
+
+toggle-navigation:
+  | Toggle navigation
+
+language-reference:
+  | Language Reference
+
+api:
+  | API
+
+command-line:
+  | Command Line
+
+change-log:
+  | Change Log
+
+coverage:
+  | Code Coverage
+
+test-results:
+  | Test Results
+
+github-repository:
+  | GitHub Repository
+
+maintained-by:
+  | Jade is a template language maintained by !{name}.
+
+
+# home.jade
+
+you-are-amazing:
+  | You are amazing
+
+jade-description:
+  | Jade is a terse and simple
+  | templating language with a
+  | strong focus on performance
+  | and powerful features.
+
+
+# reference.jade
+
+attributes:
+  | attributes
+case:
+  | case
+code:
+  | code
+comments:
+  | comments
+conditionals:
+  | conditionals
+doctype:
+  | doctype
+filters:
+  | filters
+includes:
+  | includes
+inheritance:
+  | inheritance
+iteration:
+  | iteration
+mixins:
+  | mixins
+plain-text:
+  | plain text
+tags:
+  | tags
+
+language-reference-description:
+  p.
+    Jade is a terse language for writing HTML templates.
+  ul
+    li Produces HTML
+    li Supports dynamic code
+    li Supports reusability (DRY)
+  p.
+    To read about the features of the language, select them from
+    the navigation menu on the right.
+
+# reference/attributes.jade
+
+attributes-title:
+  | Attributes
+like-html:
+  | Tag attributes look similar to html, however their values
+  | are just regular JavaScript.
+normal-js-works-too:
+  | All the normal JavaScript expressions work fine too:
+multi-line-attributes:
+  | If you have many attributes, you can also spread them across many lines:
+
+unescaped-attributes:
+  | Unescaped Attributes
+unescaped-attributes-description:
+  | By default, all attributes are escaped (replacing special
+  | characters with escape sequences) to prevent attacks such
+  | as cross site scripting.  If you need to use special characters
+  | you can use #[code !=] instead of #[code =].
+buffered-code-danger:
+  | Unescaped buffered code can be dangerous.
+
+boolean-attributes:
+  | Boolean Attributes
+boolean-attributes-description:
+  | Boolean attributes are mirrored by Jade, and accept bools,
+  | i.e. #[code true] or #[code false]. When no value is specified
+  | #[code true] is assumed.
+boolean-attributes-doctype:
+  | If the doctype is #[code html] jade knows not to mirror the
+  | attribute and uses the terse style (understood by all browsers).
+
+class-attributes:
+  | Class Attributes
+class-attributes-description:
+  | The #[code class] attribute can be a string (like any normal
+  | attribute) but it can also be an array of class names, which is handy
+  | when generated from JavaScript.
+
+class-literal:
+  | Class Literal
+class-literal-description:
+  | Classes may be defined using a #[code .classname] syntax:
+
+id-literal:
+  | ID Literal
+id-literal-description:
+  | IDs may be defined using a #[code #idname] syntax:
+
+div-default:
+  | Since div's are such a common choice of tag, it is the
+  | default if you omit the tag name:
+
+and-attributes-description:
+  | Pronounced "and attributes", the #[code &amp;attributes] syntax
+  | can be used to explode an object into attributes of an element.
+and-attributes-not-just-literals:
+  | The object does not have to be an object literal. It can also
+  | just be a variable that has an object as its value
+  | (see also !{link})
+and-attributes-not-escaped:
+  | Attributes applied using #[code &amp;attributes] are not automatically escaped.
+
+# reference/case.jade
+
+case-title:
+  | Case
+case-description:
+  | The case statement is a shorthand for JavaScript's
+  | #[code switch] statement and takes the following form:
+case-fall-through:
+  | Case Fall Through
+case-fall-through-description:
+  | You can use fall through just like in a select statement in JavaScript
+case-block-expansion-description:
+  | Block expansion may also be used:
+
+block-expansion:
+  | Block Expansion
+
+# api.jade
+
+api-title:
+  | API Documentation
+
+api-intro:
+  | This page details how to render jade using the JavaScript API in node.js
+
+installation:
+  | Installation
+
+using-npm:
+  | using npm:
+
+usage:
+  | Usage
+
+options:
+  | options
+
+all-api-methods:
+  | All API methods take the following set of options:
+
+filename-description:
+  | Used in exceptions, and required for relative includes and extends
+doctype-description:
+  | If the doctype is not specified as part of the template, you can
+  | specify it here.  It is sometimes useful to get self-closing tags
+  | and remove mirroring of boolean attributes.
+pretty-description:
+  | Adds whitespace to the resulting html to make it easier for a human to read
+self-description:
+  | Use a #[code self] namespace to hold the locals (#[code false] by default)
+debug-description:
+  | If set to true, the tokens and function body is logged to stdout
+compile-debug-description:
+  | Set this to false to disable debugging instrumentation
+  | (recommended in production).  Set it to true to include
+  | the function source in the compiled template for better
+  | error messages (sometimes useful in development).
+compiler-description:
+  | Override the default compiler
+
+source:
+  source
+filename:
+  filename
+
+filename-param-description:
+  | The path to a jade file
+source-param-description:
+  | The source jade as a string
+options-param-description:
+  | An options object (see above)
+options-and-locals-param-description:
+  | An options object (see above), also used as the locals object
+resulting-html:
+  | The resulting html string
+a-function-to-generate-html:
+  | A function to generate the html from an object containing locals
+
+compile-description:
+  | Compile some jade source to a function which can be rendered
+  | multiple times with different locals.
+compile-file-description:
+  | Compile some jade source from a file to a function which can
+  | be rendered multiple times with different locals.
+compile-client-description:
+  | Compile some jade source to a string of JavaScript that
+  | can be used client side along with the jade runtime.
+
+compile-function:
+  | Compile a function
+render-to-html:
+  | Render the function to html

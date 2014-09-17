@@ -8,6 +8,7 @@ var less = require('less-file');
 var browserify = require('browserify-middleware');
 var CodeMirror = require('highlight-codemirror');
 var highlightJade = require('jade-highlighter');
+var languageParser = require('./lib/language-parser.js');
 var jade = require('../');
 
 
@@ -32,12 +33,56 @@ filters.csssrc = function (css) {
   return CodeMirror.highlight(css, {name: 'css'});
 };
 
-app.engine('jade', jade.renderFile);
+// using ISO 639-1 Language Codes
+var languages = {};
+fs.readdirSync(__dirname + '/languages').forEach(function (languageFile) {
+  if (!/\.lang$/.test(languageFile)) return;
+  languages[languageFile.replace(/\.lang$/, '')] = languageParser.compile(fs.readFileSync(__dirname + '/languages/' + languageFile, 'utf8'));
+});
+
+app.engine('jade', function (path, options, callback) {
+  var html = jade.renderFile(path, options);
+  var lang = (options.lang || 'en');
+  var language = languages[lang];
+  var defaultLanguage = languages['en'];
+  html = html.replace(/((?: |\t)*)\{\{((?:[^\}]|\}[^\}])+)\}\}/g, function (_, space, expression) {
+    var result = _;
+    var match;
+    if (/^[a-z\-]+$/.test(expression)) {
+      if (!language[expression] && !defaultLanguage[expression]) {
+        throw new Error('Could not find ' + expression + ' in ' + lang + ' or en (the default language)');
+      }
+      result = (language[expression] || defaultLanguage[expression])().replace(/^/gm, space);
+    } else if (match = /^([a-z\-]+)\((.*)\)$/.exec(expression)) {
+      if (!language[match[1]] && !defaultLanguage[match[1]]) {
+        throw new Error('Could not find ' + match[1] + ' in ' + lang + ' or en (the default language)');
+      }
+      result = (language[match[1]] || defaultLanguage[match[1]]).apply(null, Function('', 'return [' + match[2] + ']')()).replace(/^/gm, space);
+    }
+    if (result !== _ && options.mask) {
+      return result.replace(/./g, '-');
+    }
+    return result;
+  });
+  callback(null, html);
+});
 app.set('views', __dirname + '/views');
 
 app.locals.doctypes = jade.doctypes;
 
 app.use(function (req, res, next) {
+  var lang = 'en';
+  req.url = req.url.replace(/^\/([a-z][a-z])\//, function (_, languageCode) {
+    if (languages[languageCode] && languageCode !== 'en') {
+      lang = languageCode;
+      return '/';
+    }
+    return _;
+  });
+  if (req.query.mask) {
+    res.locals.mask = true;
+  }
+  res.locals.lang = lang;
   if (req.url.substr(0, version.length + 2) === '/' + version + '/') {
     req.url = req.url.substr(version.length + 1);
     res.locals.path = function (path) {
@@ -49,6 +94,44 @@ app.use(function (req, res, next) {
   } else {
     res.locals.path = function (path) {
       return path;
+    };
+  }
+  if (lang !== 'en') {
+    var getPath = res.locals.path;
+    var getLangPath = function (path, options) {
+      options = options || {};
+      if (options.lang === 'en') {
+        if (options.version === 'latest') {
+          return path;
+        } else if (options.version) {
+          return '/' + options.version + path;
+        } else {
+          return getPath(path);
+        }
+      } else if (options.lang) {
+        if (options.verson === 'latest') {
+          return '/' + options.lang + path;
+        } else if (options.verson) {
+          return '/' + options.lang + '/' + options.version + path;
+        } else {
+          return '/' + options.lang + getPath(path);
+        }
+      } else {
+        if (options.version === 'latest') {
+          return '/' + lang + path;
+        } else if (options.version) {
+          return '/' + lang + '/' + options.version + path;
+        } else {
+          return '/' + lang + getPath(path);
+        }
+      }
+    };
+    res.locals.path = function (path, options) {
+      if (res.locals.mask) {
+        return getLangPath(path, options) + '?mask=true';
+      } else {
+        return getLangPath(path, options);
+      }
     };
   }
   next();
@@ -83,8 +166,8 @@ app.get('/history', function (req, res, next) {
     .replace(/h1/g, 'h2')
     .replace(versionHeader, function (_, version) {
       if (versions.indexOf(version) !== -1) {
-        return _ + '<p><a href="/' + version +
-          '/reference" rel="nofollow">Documentation</a></p>';
+
+        return _ + '<p><a href="' + res.locals.path('/reference', {version: version, lang: 'en'}) + '" rel="nofollow">Documentation</a></p>';
       } else {
         return _;
       }

@@ -1,9 +1,9 @@
 extends ../reference.jade
 
 block documentation
-  h1 Case
+  h1 {{case-title}}
 
-  p The case statement is a shorthand for JavaScript's <code>switch</code> statement and takes the following form:
+  p {{case-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -22,9 +22,9 @@ block documentation
         :htmlsrc
           <p>you have 10 friends</p>
 
-  h2 Case Fall Through
+  h2 {{case-fall-through}}
 
-  p You can use fall through just like in a select statement in JavaScript
+  p {{case-fall-through-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -42,9 +42,9 @@ block documentation
         :htmlsrc
           <p>you have very few friends</p>
 
-  h2 Block Expansion
+  h2 {{block-expansion}}
 
-  p Block expansion may also be used:
+  p {{case-block-expansion-description}}
 
   .row(data-control='interactive')
     .col-lg-6

@@ -1,117 +1,117 @@
 extends ./layout.jade
 
 block content
-  h1 API Documentation
+  h1 {{api-title}}
 
-  p This page details how to render jade using the JavaScript API in node.js
+  p {{api-intro}}
 
-  h2 Installation
+  h2 {{installation}}
 
-  p via npm:
+  p {{using-npm}}
 
   pre
     code npm install jade
 
-  h2 Usage
+  h2 {{usage}}
 
-  h3 options
+  h3 {{options}}
 
-  p All API methods take the following set of options:
+  p {{all-api-methods}}
 
   .code
     div {
     dl.parameter-list
       dt filename:
       dd.type.string string
-      dd.description Used in exceptions, and required for relative includes and extends
+      dd.description {{filename-description}}
       dt doctype:
       dd.type.string string
-      dd.description If the doctype is not specified as part of the template, you can specify it here.  It is sometimes useful to get self-closing tags and remove mirroring of boolean attributes.
+      dd.description {{doctype-description}}
       dt pretty:
       dd.type boolean | string
       dd.description Adds whitespace to the resulting html to make it easier for a human to read using #[code '  '] as indentation. If a string is specified, that will be used as indentation instead (e.g. #[code '\t']).
       dt self:
       dd.type.boolean boolean
-      dd.description Use a #[code self] namespace to hold the locals (false by default)
+      dd.description {{self-description}}
       dt debug:
       dd.type.boolean boolean
-      dd.description If set to true, the tokens and function body is logged to stdout
+      dd.description {{debug-description}}
       dt compileDebug:
       dd.type.boolean boolean
-      dd.description Set this to false to disable debugging instrumentation (recommended in production).  Set it to true to include the function source in the compiled template for better error messages (sometimes useful in development).
+      dd.description {{compile-debug-description}}
       dt compiler:
       dd.type.function class
-      dd.description Override the default compiler
+      dd.description {{compiler-description}}
       dt globals:
       dd.type.array array
       dd.description Add a list of globals (as string names) to make accessible in templates
     div }
 
-  h3 jade.compile(source, options)
+  h3 jade.compile({{source}}, {{options}})
 
-  p Compile some jade source to a function which can be rendered multiple times with different locals.
+  p {{compile-description}}
 
   dl.parameter-list
     dt source
     dd.type.string string
-    dd.description The source jade to compile
-    dt options
-    dd.type.object options
-    dd.description An options object (see above)
+    dd.description {{source-param-description}}
+    dt {{options}}
+    dd.type.object {{options}}
+    dd.description {{options-param-description}}
   dl.returns
     dt returns
     dd.type.function function
-    dd.description A function to generate the html from an object containing locals
+    dd.description {{a-function-to-generate-html}}
 
   +js
     :jssrc
       var jade = require('jade');
 
-      // Compile a function
+      // {{compile-function}}
       var fn = jade.compile('string of jade', options);
 
-      // Render the function
+      // {{render-to-html}}
       var html = fn(locals);
       // => '<string>of jade</string>'
 
-  h3 jade.compileFile(path, options)
+  h3 jade.compileFile({{filename}}, {{options}})
 
-  p Compile some jade source from a file to a function which can be rendered multiple times with different locals.
+  p {{compile-file-description}}
 
   dl.parameter-list
-    dt source
+    dt {{filename}}
     dd.type.string path
-    dd.description The path to a jade file
-    dt options
-    dd.type.object options
-    dd.description An options object (see above)
+    dd.description {{filename-param-description}}
+    dt {{options}}
+    dd.type.object {{options}}
+    dd.description {{options-param-description}}
   dl.returns
     dt returns
     dd.type.function function
-    dd.description A function to generate the html from an object containing locals
+    dd.description {{a-function-to-generate-html}}
 
   +js
     :jssrc
       var jade = require('jade');
 
-      // Compile a function
-      var fn = jade.compileFile('path to jade file', options);
+      // {{compile-function}}
+      var fn = jade.compileFile('path to jade file', {{options}});
 
-      // Render the function
+      // {{render-to-html}}
       var html = fn(locals);
       // => '<string>of jade</string>'
 
-  h3 jade.compileClient(source, options)
+  h3 jade.compileClient({{source}}, {{options}})
 
-  p Compile some jade source to a string of JavaScript that can be used client side along with the jade runtime.
+  p {{compile-client-description}}
 
   dl.parameter-list
-    dt source
+    dt {{source}}
     dd.type.string string
-    dd.description The source jade to compile
-    dt options
-    dd.type.object options
-    dd.description An options object (see above)
+    dd.description {{source-param-description}}
+    dt {{options}}
+    dd.type.object {{options}}
+    dd.description {{options-param-description}}
   dl.returns
     dt returns
     dd.type.string string
@@ -121,26 +121,23 @@ block content
     :jssrc
       var jade = require('jade');
 
-      // Compile a function
-      var fn = jade.compileClient('string of jade', options);
-
-      // Render the function
-      var html = fn(locals);
+      // {{compile-function}}
+      var src = jade.compileClient('string of jade', {{options}});
       // => 'function template(locals) { return "<string>of jade</string>"; }'
 
-  h3 jade.render(source, options)
+  h3 jade.render({{source}}, {{options}})
 
   dl.parameter-list
-    dt source
+    dt {{source}}
     dd.type.string string
-    dd.description The source jade to render
-    dt options
-    dd.type.object options
-    dd.description An options object (see above), also used as the locals object
+    dd.description {{source-param-description}}
+    dt {{options}}
+    dd.type.object {{options}}
+    dd.description {{options-and-locals-param-description}}
   dl.returns
     dt returns
     dd.type.string string
-    dd.description The resulting html string
+    dd.description {{resulting-html}}
 
   +js
     :jssrc
@@ -149,19 +146,19 @@ block content
       var html = jade.render('string of jade', options);
       // => '<string>of jade</string>'
 
-  h3 jade.renderFile(filename, options)
+  h3 jade.renderFile({{filename}}, {{options}})
 
   dl.parameter-list
-    dt filename
+    dt {{filename}}
     dd.type.string string
-    dd.description The path to the jade file to render
-    dt options
-    dd.type.object options
-    dd.description An options object (see above), also used as the locals object
+    dd.description {{filename-param-description}}
+    dt {{options}}
+    dd.type.object {{options}}
+    dd.description {{options-and-locals-param-description}}
   dl.returns
     dt returns
     dd.type.string string
-    dd.description The resulting html string
+    dd.description {{resulting-html}}
 
   +js
     :jssrc
