@@ -1,3 +1,12 @@
+1.7.0 / 2014-09-17
+==================
+
+  * Add Doctype option on command line ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support ES6 style rest args in mixins ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix support for unicode newlines (\u2028, \u2029) ([@rlidwka](https://github.com/rlidwka))
+  * Expose `globals` option from the `with` module ([@sokra](https://github.com/sokra))
+  * Lots of new documentation ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.6.0 / 2014-08-31
 ==================
 

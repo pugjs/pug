@@ -1,14 +1,14 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jade=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 'use strict';
 
-var nodes = require('./nodes');
-var filters = require('./filters');
-var doctypes = require('./doctypes');
-var runtime = require('./runtime');
-var utils = require('./utils');
-var selfClosing = require('void-elements');
-var parseJSExpression = require('character-parser').parseMax;
-var constantinople = require('constantinople');
+var nodes = _dereq_('./nodes');
+var filters = _dereq_('./filters');
+var doctypes = _dereq_('./doctypes');
+var runtime = _dereq_('./runtime');
+var utils = _dereq_('./utils');
+var selfClosing = _dereq_('void-elements');
+var parseJSExpression = _dereq_('character-parser').parseMax;
+var constantinople = _dereq_('constantinople');
 
 function isConstant(src) {
   return constantinople(src, {jade: runtime, 'jade_interp': undefined});
@@ -123,7 +123,7 @@ Compiler.prototype = {
       }
     }
 
-    str = JSON.stringify(str);
+    str = utils.stringify(str);
     str = str.substr(1, str.length - 2);
 
     if (this.lastBufferedIdx == this.buf.length) {
@@ -195,7 +195,7 @@ Compiler.prototype = {
     if (debug) {
       this.buf.push('jade_debug.unshift({ lineno: ' + node.line
         + ', filename: ' + (node.filename
-          ? JSON.stringify(node.filename)
+          ? utils.stringify(node.filename)
           : 'jade_debug[0].filename')
         + ' });');
     }
@@ -397,8 +397,19 @@ Compiler.prototype = {
       if (pp) this.buf.push("jade_indent.pop();")
     } else {
       var mixin_start = this.buf.length;
-      this.buf.push(name + ' = function(' + args + '){');
+      args = args ? args.split(',') : [];
+      var rest;
+      if (args.length && /^\.\.\./.test(args[args.length - 1].trim())) {
+        rest = args.pop().trim().replace(/^\.\.\./, '');
+      }
+      this.buf.push(name + ' = function(' + args.join(',') + '){');
       this.buf.push('var block = (this && this.block), attributes = (this && this.attributes) || {};');
+      if (rest) {
+        this.buf.push('var ' + rest + ' = [];');
+        this.buf.push('for (jade_interp = ' + args.length + '; jade_interp < arguments.length; jade_interp++) {');
+        this.buf.push('  ' + rest + '.push(arguments[jade_interp]);');
+        this.buf.push('}');
+      }
       this.parentIndents++;
       this.visit(block);
       this.parentIndents--;
@@ -632,7 +643,7 @@ Compiler.prototype = {
         var val = this.attrs(attrs);
         attributeBlocks.unshift(val);
       }
-      this.bufferExpression('jade.attrs(jade.merge([' + attributeBlocks.join(',') + ']), ' + JSON.stringify(this.terse) + ')');
+      this.bufferExpression('jade.attrs(jade.merge([' + attributeBlocks.join(',') + ']), ' + utils.stringify(this.terse) + ')');
     } else if (attrs.length) {
       this.attrs(attrs, true);
     }
@@ -662,11 +673,11 @@ Compiler.prototype = {
           if (escaped && !(key.indexOf('data') === 0 && typeof val !== 'string')) {
             val = runtime.escape(val);
           }
-          buf.push(JSON.stringify(key) + ': ' + JSON.stringify(val));
+          buf.push(utils.stringify(key) + ': ' + utils.stringify(val));
         }
       } else {
         if (buffer) {
-          this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + JSON.stringify(escaped) + ', ' + JSON.stringify(this.terse) + ')');
+          this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + utils.stringify(escaped) + ', ' + utils.stringify(this.terse) + ')');
         } else {
           var val = attr.val;
           if (escaped && !(key.indexOf('data') === 0)) {
@@ -674,7 +685,7 @@ Compiler.prototype = {
           } else if (escaped) {
             val = '(typeof (jade_interp = ' + val + ') == "string" ? jade.escape(jade_interp) : jade_interp)';
           }
-          buf.push(JSON.stringify(key) + ': ' + val);
+          buf.push(utils.stringify(key) + ': ' + val);
         }
       }
     }.bind(this));
@@ -682,15 +693,15 @@ Compiler.prototype = {
       if (classes.every(isConstant)) {
         this.buffer(runtime.cls(classes.map(toConstant), classEscaping));
       } else {
-        this.bufferExpression('jade.cls([' + classes.join(',') + '], ' + JSON.stringify(classEscaping) + ')');
+        this.bufferExpression('jade.cls([' + classes.join(',') + '], ' + utils.stringify(classEscaping) + ')');
       }
     } else if (classes.length) {
       if (classes.every(isConstant)) {
-        classes = JSON.stringify(runtime.joinClasses(classes.map(toConstant).map(runtime.joinClasses).map(function (cls, i) {
+        classes = utils.stringify(runtime.joinClasses(classes.map(toConstant).map(runtime.joinClasses).map(function (cls, i) {
           return classEscaping[i] ? runtime.escape(cls) : cls;
         })));
       } else {
-        classes = '(jade_interp = ' + JSON.stringify(classEscaping) + ',' +
+        classes = '(jade_interp = ' + utils.stringify(classEscaping) + ',' +
           ' jade.joinClasses([' + classes.join(',') + '].map(jade.joinClasses).map(function (cls, i) {' +
           '   return jade_interp[i] ? jade.escape(cls) : cls' +
           ' }))' +
@@ -703,7 +714,7 @@ Compiler.prototype = {
   }
 };
 
-},{"./doctypes":2,"./filters":3,"./nodes":16,"./runtime":24,"./utils":25,"character-parser":32,"constantinople":33,"void-elements":45}],2:[function(require,module,exports){
+},{"./doctypes":2,"./filters":3,"./nodes":16,"./runtime":24,"./utils":25,"character-parser":32,"constantinople":33,"void-elements":45}],2:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = {
@@ -716,7 +727,7 @@ module.exports = {
   , 'basic': '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">'
   , 'mobile': '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">'
 };
-},{}],3:[function(require,module,exports){
+},{}],3:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = filter;
@@ -728,7 +739,7 @@ function filter(name, str, options) {
   }
 }
 
-},{}],4:[function(require,module,exports){
+},{}],4:[function(_dereq_,module,exports){
 'use strict';
 
 module.exports = [
@@ -752,7 +763,7 @@ module.exports = [
   , 'sub'
   , 'sup'
 ];
-},{}],5:[function(require,module,exports){
+},{}],5:[function(_dereq_,module,exports){
 'use strict';
 
 /*!
@@ -765,36 +776,37 @@ module.exports = [
  * Module dependencies.
  */
 
-var Parser = require('./parser')
-  , Lexer = require('./lexer')
-  , Compiler = require('./compiler')
-  , runtime = require('./runtime')
-  , addWith = require('with')
-  , fs = require('fs');
+var Parser = _dereq_('./parser')
+  , Lexer = _dereq_('./lexer')
+  , Compiler = _dereq_('./compiler')
+  , runtime = _dereq_('./runtime')
+  , addWith = _dereq_('with')
+  , fs = _dereq_('fs')
+  , utils = _dereq_('./utils');
 
 /**
  * Expose self closing tags.
  */
 
-exports.selfClosing = require('void-elements');
+exports.selfClosing = _dereq_('void-elements');
 
 /**
  * Default supported doctypes.
  */
 
-exports.doctypes = require('./doctypes');
+exports.doctypes = _dereq_('./doctypes');
 
 /**
  * Text filters.
  */
 
-exports.filters = require('./filters');
+exports.filters = _dereq_('./filters');
 
 /**
  * Utilities.
  */
 
-exports.utils = require('./utils');
+exports.utils = _dereq_('./utils');
 
 /**
  * Expose `Compiler`.
@@ -818,7 +830,7 @@ exports.Lexer = Lexer;
  * Nodes.
  */
 
-exports.nodes = require('./nodes');
+exports.nodes = _dereq_('./nodes');
 
 /**
  * Jade runtime helpers.
@@ -871,6 +883,10 @@ function parse(str, options){
 
   var globals = [];
 
+  if (options.globals) {
+    globals = options.globals.slice();
+  }
+
   globals.push('jade');
   globals.push('jade_mixins');
   globals.push('jade_interp');
@@ -907,7 +923,7 @@ function parse(str, options){
 exports.compile = function(str, options){
   var options = options || {}
     , filename = options.filename
-      ? JSON.stringify(options.filename)
+      ? utils.stringify(options.filename)
       : 'undefined'
     , fn;
 
@@ -920,7 +936,7 @@ exports.compile = function(str, options){
       , 'try {'
       , parsed.body
       , '} catch (err) {'
-      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno' + (options.compileDebug === true ? ',' + JSON.stringify(str) : '') + ');'
+      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno' + (options.compileDebug === true ? ',' + utils.stringify(str) : '') + ');'
       , '}'
     ].join('\n');
   } else {
@@ -959,7 +975,7 @@ exports.compile = function(str, options){
 exports.compileClient = function(str, options){
   var options = options || {};
   var name = options.name || 'template';
-  var filename = options.filename ? JSON.stringify(options.filename) : 'undefined';
+  var filename = options.filename ? utils.stringify(options.filename) : 'undefined';
   var fn;
 
   str = String(str);
@@ -971,7 +987,7 @@ exports.compileClient = function(str, options){
       , 'try {'
       , parse(str, options).body
       , '} catch (err) {'
-      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + JSON.stringify(str) + ');'
+      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + utils.stringify(str) + ');'
       , '}'
     ].join('\n');
   } else {
@@ -1120,11 +1136,11 @@ exports.compileFileClient = function(path, options){
 
 exports.__express = exports.renderFile;
 
-},{"./compiler":1,"./doctypes":2,"./filters":3,"./lexer":6,"./nodes":16,"./parser":23,"./runtime":24,"./utils":25,"fs":26,"void-elements":45,"with":46}],6:[function(require,module,exports){
+},{"./compiler":1,"./doctypes":2,"./filters":3,"./lexer":6,"./nodes":16,"./parser":23,"./runtime":24,"./utils":25,"fs":26,"void-elements":45,"with":46}],6:[function(_dereq_,module,exports){
 'use strict';
 
-var utils = require('./utils');
-var characterParser = require('character-parser');
+var utils = _dereq_('./utils');
+var characterParser = _dereq_('character-parser');
 
 
 /**
@@ -1525,7 +1541,7 @@ Lexer.prototype = {
       var filter = captures[1];
       var attrs = captures[2] === '(' ? this.attrs() : null;
       if (!(captures[2] === ' ' || this.input[0] === ' ')) {
-        throw new Error('expected space after include:filter but got ' + JSON.stringify(this.input[0]));
+        throw new Error('expected space after include:filter but got ' + utils.stringify(this.input[0]));
       }
       captures = /^ *([^\n]+)/.exec(this.input);
       if (!captures || captures[1].trim() === '') {
@@ -2055,10 +2071,10 @@ Lexer.prototype = {
   }
 };
 
-},{"./utils":25,"character-parser":32}],7:[function(require,module,exports){
+},{"./utils":25,"character-parser":32}],7:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Attrs` node.
@@ -2140,10 +2156,10 @@ Attrs.prototype.addAttributes = function (src) {
   this.attributeBlocks.push(src);
 };
 
-},{"./node":20}],8:[function(require,module,exports){
+},{"./node":20}],8:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `BlockComment` with the given `block`.
@@ -2166,10 +2182,10 @@ BlockComment.prototype.constructor = BlockComment;
 
 BlockComment.prototype.type = 'BlockComment';
 
-},{"./node":20}],9:[function(require,module,exports){
+},{"./node":20}],9:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a new `Block` with an optional `node`.
@@ -2286,10 +2302,10 @@ Block.prototype.clone = function(){
   return clone;
 };
 
-},{"./node":20}],10:[function(require,module,exports){
+},{"./node":20}],10:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a new `Case` with `expr`.
@@ -2321,10 +2337,10 @@ When.prototype.constructor = When;
 
 When.prototype.type = 'When';
 
-},{"./node":20}],11:[function(require,module,exports){
+},{"./node":20}],11:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Code` node with the given code `val`.
@@ -2348,10 +2364,10 @@ Code.prototype = Object.create(Node.prototype);
 Code.prototype.constructor = Code;
 
 Code.prototype.type = 'Code'; // prevent the minifiers removing this
-},{"./node":20}],12:[function(require,module,exports){
+},{"./node":20}],12:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Comment` with the given `val`, optionally `buffer`,
@@ -2373,10 +2389,10 @@ Comment.prototype.constructor = Comment;
 
 Comment.prototype.type = 'Comment';
 
-},{"./node":20}],13:[function(require,module,exports){
+},{"./node":20}],13:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Doctype` with the given `val`. 
@@ -2395,10 +2411,10 @@ Doctype.prototype.constructor = Doctype;
 
 Doctype.prototype.type = 'Doctype';
 
-},{"./node":20}],14:[function(require,module,exports){
+},{"./node":20}],14:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize an `Each` node, representing iteration
@@ -2423,10 +2439,10 @@ Each.prototype.constructor = Each;
 
 Each.prototype.type = 'Each';
 
-},{"./node":20}],15:[function(require,module,exports){
+},{"./node":20}],15:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Filter` node with the given
@@ -2449,28 +2465,28 @@ Filter.prototype.constructor = Filter;
 
 Filter.prototype.type = 'Filter';
 
-},{"./node":20}],16:[function(require,module,exports){
+},{"./node":20}],16:[function(_dereq_,module,exports){
 'use strict';
 
-exports.Node = require('./node');
-exports.Tag = require('./tag');
-exports.Code = require('./code');
-exports.Each = require('./each');
-exports.Case = require('./case');
-exports.Text = require('./text');
-exports.Block = require('./block');
-exports.MixinBlock = require('./mixin-block');
-exports.Mixin = require('./mixin');
-exports.Filter = require('./filter');
-exports.Comment = require('./comment');
-exports.Literal = require('./literal');
-exports.BlockComment = require('./block-comment');
-exports.Doctype = require('./doctype');
+exports.Node = _dereq_('./node');
+exports.Tag = _dereq_('./tag');
+exports.Code = _dereq_('./code');
+exports.Each = _dereq_('./each');
+exports.Case = _dereq_('./case');
+exports.Text = _dereq_('./text');
+exports.Block = _dereq_('./block');
+exports.MixinBlock = _dereq_('./mixin-block');
+exports.Mixin = _dereq_('./mixin');
+exports.Filter = _dereq_('./filter');
+exports.Comment = _dereq_('./comment');
+exports.Literal = _dereq_('./literal');
+exports.BlockComment = _dereq_('./block-comment');
+exports.Doctype = _dereq_('./doctype');
 
-},{"./block":9,"./block-comment":8,"./case":10,"./code":11,"./comment":12,"./doctype":13,"./each":14,"./filter":15,"./literal":17,"./mixin":19,"./mixin-block":18,"./node":20,"./tag":21,"./text":22}],17:[function(require,module,exports){
+},{"./block":9,"./block-comment":8,"./case":10,"./code":11,"./comment":12,"./doctype":13,"./each":14,"./filter":15,"./literal":17,"./mixin":19,"./mixin-block":18,"./node":20,"./tag":21,"./text":22}],17:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Literal` node with the given `str.
@@ -2489,10 +2505,10 @@ Literal.prototype.constructor = Literal;
 
 Literal.prototype.type = 'Literal';
 
-},{"./node":20}],18:[function(require,module,exports){
+},{"./node":20}],18:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a new `Block` with an optional `node`.
@@ -2509,10 +2525,10 @@ MixinBlock.prototype.constructor = MixinBlock;
 
 MixinBlock.prototype.type = 'MixinBlock';
 
-},{"./node":20}],19:[function(require,module,exports){
+},{"./node":20}],19:[function(_dereq_,module,exports){
 'use strict';
 
-var Attrs = require('./attrs');
+var Attrs = _dereq_('./attrs');
 
 /**
  * Initialize a new `Mixin` with `name` and `block`.
@@ -2537,7 +2553,7 @@ Mixin.prototype.constructor = Mixin;
 
 Mixin.prototype.type = 'Mixin';
 
-},{"./attrs":7}],20:[function(require,module,exports){
+},{"./attrs":7}],20:[function(_dereq_,module,exports){
 'use strict';
 
 var Node = module.exports = function Node(){};
@@ -2557,12 +2573,12 @@ Node.prototype.clone = function(){
 
 Node.prototype.type = '';
 
-},{}],21:[function(require,module,exports){
+},{}],21:[function(_dereq_,module,exports){
 'use strict';
 
-var Attrs = require('./attrs');
-var Block = require('./block');
-var inlineTags = require('../inline-tags');
+var Attrs = _dereq_('./attrs');
+var Block = _dereq_('./block');
+var inlineTags = _dereq_('../inline-tags');
 
 /**
  * Initialize a `Tag` node with the given tag `name` and optional `block`.
@@ -2648,10 +2664,10 @@ Tag.prototype.canInline = function(){
   return false;
 };
 
-},{"../inline-tags":4,"./attrs":7,"./block":9}],22:[function(require,module,exports){
+},{"../inline-tags":4,"./attrs":7,"./block":9}],22:[function(_dereq_,module,exports){
 'use strict';
 
-var Node = require('./node');
+var Node = _dereq_('./node');
 
 /**
  * Initialize a `Text` node with optional `line`.
@@ -2675,16 +2691,16 @@ Text.prototype.type = 'Text';
  */
 
 Text.prototype.isText = true;
-},{"./node":20}],23:[function(require,module,exports){
+},{"./node":20}],23:[function(_dereq_,module,exports){
 'use strict';
 
-var Lexer = require('./lexer');
-var nodes = require('./nodes');
-var utils = require('./utils');
-var filters = require('./filters');
-var path = require('path');
-var constantinople = require('constantinople');
-var parseJSExpression = require('character-parser').parseMax;
+var Lexer = _dereq_('./lexer');
+var nodes = _dereq_('./nodes');
+var utils = _dereq_('./utils');
+var filters = _dereq_('./filters');
+var path = _dereq_('path');
+var constantinople = _dereq_('constantinople');
+var parseJSExpression = _dereq_('character-parser').parseMax;
 var extname = path.extname;
 
 /**
@@ -3133,7 +3149,7 @@ Parser.prototype = {
    */
 
   resolvePath: function (path, purpose) {
-    var p = require('path');
+    var p = _dereq_('path');
     var dirname = p.dirname;
     var basename = p.basename;
     var join = p.join;
@@ -3156,7 +3172,7 @@ Parser.prototype = {
    */
 
   parseExtends: function(){
-    var fs = require('fs');
+    var fs = _dereq_('fs');
 
     var path = this.resolvePath(this.expect('extends').val.trim(), 'extends');
     if ('.jade' != path.substr(-5)) path += '.jade';
@@ -3235,7 +3251,7 @@ Parser.prototype = {
    */
 
   parseInclude: function(){
-    var fs = require('fs');
+    var fs = _dereq_('fs');
     var tok = this.expect('include');
 
     var path = this.resolvePath(tok.val.trim(), 'include');
@@ -3501,7 +3517,7 @@ Parser.prototype = {
   }
 };
 
-},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":25,"character-parser":32,"constantinople":33,"fs":26,"path":28}],24:[function(require,module,exports){
+},{"./filters":3,"./lexer":6,"./nodes":16,"./utils":25,"character-parser":32,"constantinople":33,"fs":26,"path":29}],24:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -3681,7 +3697,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
     throw err;
   }
   try {
-    str = str || require('fs').readFileSync(filename, 'utf8')
+    str = str || _dereq_('fs').readFileSync(filename, 'utf8')
   } catch (ex) {
     rethrow(err, null, lineno)
   }
@@ -3706,7 +3722,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
   throw err;
 };
 
-},{"fs":26}],25:[function(require,module,exports){
+},{"fs":26}],25:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -3721,6 +3737,12 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
 exports.merge = function(a, b) {
   for (var key in b) a[key] = b[key];
   return a;
+};
+
+exports.stringify = function(str) {
+  return JSON.stringify(str)
+             .replace(/\u2028/g, '\\u2028')
+             .replace(/\u2029/g, '\\u2029');
 };
 
 exports.walkAST = function walkAST(ast, before, after) {
@@ -3755,9 +3777,9 @@ exports.walkAST = function walkAST(ast, before, after) {
   after && after(ast);
 };
 
-},{}],26:[function(require,module,exports){
+},{}],26:[function(_dereq_,module,exports){
 
-},{}],27:[function(require,module,exports){
+},{}],27:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -3782,7 +3804,62 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],28:[function(require,module,exports){
+},{}],28:[function(_dereq_,module,exports){
+// shim for using process in browser
+
+var process = module.exports = {};
+
+process.nextTick = (function () {
+    var canSetImmediate = typeof window !== 'undefined'
+    && window.setImmediate;
+    var canPost = typeof window !== 'undefined'
+    && window.postMessage && window.addEventListener
+    ;
+
+    if (canSetImmediate) {
+        return function (f) { return window.setImmediate(f) };
+    }
+
+    if (canPost) {
+        var queue = [];
+        window.addEventListener('message', function (ev) {
+            var source = ev.source;
+            if ((source === window || source === null) && ev.data === 'process-tick') {
+                ev.stopPropagation();
+                if (queue.length > 0) {
+                    var fn = queue.shift();
+                    fn();
+                }
+            }
+        }, true);
+
+        return function nextTick(fn) {
+            queue.push(fn);
+            window.postMessage('process-tick', '*');
+        };
+    }
+
+    return function nextTick(fn) {
+        setTimeout(fn, 0);
+    };
+})();
+
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+}
+
+// TODO(shtylman)
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+
+},{}],29:[function(_dereq_,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4009,80 +4086,15 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,require('_process'))
-},{"_process":29}],29:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-
-process.nextTick = (function () {
-    var canSetImmediate = typeof window !== 'undefined'
-    && window.setImmediate;
-    var canPost = typeof window !== 'undefined'
-    && window.postMessage && window.addEventListener
-    ;
-
-    if (canSetImmediate) {
-        return function (f) { return window.setImmediate(f) };
-    }
-
-    if (canPost) {
-        var queue = [];
-        window.addEventListener('message', function (ev) {
-            var source = ev.source;
-            if ((source === window || source === null) && ev.data === 'process-tick') {
-                ev.stopPropagation();
-                if (queue.length > 0) {
-                    var fn = queue.shift();
-                    fn();
-                }
-            }
-        }, true);
-
-        return function nextTick(fn) {
-            queue.push(fn);
-            window.postMessage('process-tick', '*');
-        };
-    }
-
-    return function nextTick(fn) {
-        setTimeout(fn, 0);
-    };
-})();
-
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-}
-
-// TODO(shtylman)
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-
-},{}],30:[function(require,module,exports){
+}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"))
+},{"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":28}],30:[function(_dereq_,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],31:[function(require,module,exports){
+},{}],31:[function(_dereq_,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4609,7 +4621,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = require('./support/isBuffer');
+exports.isBuffer = _dereq_('./support/isBuffer');
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -4653,7 +4665,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = require('inherits');
+exports.inherits = _dereq_('inherits');
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -4671,8 +4683,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":30,"_process":29,"inherits":27}],32:[function(require,module,exports){
+}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":30,"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":28,"inherits":27}],32:[function(_dereq_,module,exports){
 exports = (module.exports = parse);
 exports.parse = parse;
 function parse(src, state, options) {
@@ -4734,8 +4746,17 @@ exports.parseChar = parseChar;
 function parseChar(character, state) {
   if (character.length !== 1) throw new Error('Character must be a string of length 1');
   state = state || exports.defaultState();
+  state.src = state.src || '';
+  state.src += character;
   var wasComment = state.blockComment || state.lineComment;
   var lastChar = state.history ? state.history[0] : '';
+
+  if (state.regexpStart) {
+    if (character === '/' || character == '*') {
+      state.regexp = false;
+    }
+    state.regexpStart = false;
+  }
   if (state.lineComment) {
     if (character === '\n') {
       state.lineComment = false;
@@ -4776,6 +4797,7 @@ function parseChar(character, state) {
     state.blockComment = true;
   } else if (character === '/' && isRegexp(state.history)) {
     state.regexp = true;
+    state.regexpStart = true;
   } else if (character === '\'') {
     state.singleQuote = true;
   } else if (character === '"') {
@@ -4794,6 +4816,7 @@ function parseChar(character, state) {
     state.squareDepth--;
   }
   if (!state.blockComment && !state.lineComment && !wasComment) state.history = character + state.history;
+  state.lastChar = character; // store last character for ending block comments
   return state;
 }
 
@@ -4805,6 +4828,7 @@ function State() {
   this.singleQuote = false;
   this.doubleQuote = false;
   this.regexp = false;
+
   this.escaped = false;
 
   this.roundDepth = 0;
@@ -4812,6 +4836,7 @@ function State() {
   this.squareDepth = 0;
 
   this.history = ''
+  this.lastChar = ''
 }
 State.prototype.isString = function () {
   return this.singleQuote || this.doubleQuote;
@@ -4829,6 +4854,7 @@ function startsWith(str, start, i) {
 
 exports.isPunctuator = isPunctuator
 function isPunctuator(c) {
+  if (!c) return true; // the start of a string is a punctuator
   var code = c.charCodeAt(0)
 
   switch (code) {
@@ -4891,10 +4917,10 @@ function isRegexp(history) {
   return false;
 }
 
-},{}],33:[function(require,module,exports){
+},{}],33:[function(_dereq_,module,exports){
 'use strict'
 
-var uglify = require('uglify-js')
+var uglify = _dereq_('uglify-js')
 
 var lastSRC = '(null)'
 var lastRes = true
@@ -4930,34 +4956,19 @@ function detect(src) {
     .map(function (node, name) {
       return name
     })
-  
-  // Walk the AST tree in search for `this`
-  // Add a fake "this" global when found
-  var has_this = false;
-  var walker = new uglify.TreeWalker(function(node) {
-    if (node instanceof uglify.AST_This) {
-      has_this = true;
-    }
-  });
-  ast.walk(walker);
-  if (has_this) {
-    globals.push('this')
-  }
-  
   return globals
 }
-
-},{"uglify-js":44}],34:[function(require,module,exports){
+},{"uglify-js":44}],34:[function(_dereq_,module,exports){
 /*
  * Copyright 2009-2011 Mozilla Foundation and contributors
  * Licensed under the New BSD license. See LICENSE.txt or:
  * http://opensource.org/licenses/BSD-3-Clause
  */
-exports.SourceMapGenerator = require('./source-map/source-map-generator').SourceMapGenerator;
-exports.SourceMapConsumer = require('./source-map/source-map-consumer').SourceMapConsumer;
-exports.SourceNode = require('./source-map/source-node').SourceNode;
+exports.SourceMapGenerator = _dereq_('./source-map/source-map-generator').SourceMapGenerator;
+exports.SourceMapConsumer = _dereq_('./source-map/source-map-consumer').SourceMapConsumer;
+exports.SourceNode = _dereq_('./source-map/source-node').SourceNode;
 
-},{"./source-map/source-map-consumer":39,"./source-map/source-map-generator":40,"./source-map/source-node":41}],35:[function(require,module,exports){
+},{"./source-map/source-map-consumer":39,"./source-map/source-map-generator":40,"./source-map/source-node":41}],35:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -4965,11 +4976,11 @@ exports.SourceNode = require('./source-map/source-node').SourceNode;
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
-  var util = require('./util');
+  var util = _dereq_('./util');
 
   /**
    * A data structure which is a combination of an array and a set. Adding a new
@@ -5056,7 +5067,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./util":42,"amdefine":43}],36:[function(require,module,exports){
+},{"./util":42,"amdefine":43}],36:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5094,11 +5105,11 @@ define(function (require, exports, module) {
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
-  var base64 = require('./base64');
+  var base64 = _dereq_('./base64');
 
   // A single base 64 digit can contain 6 bits of data. For the base 64 variable
   // length quantities we use in the source map spec, the first bit is the sign,
@@ -5202,7 +5213,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./base64":37,"amdefine":43}],37:[function(require,module,exports){
+},{"./base64":37,"amdefine":43}],37:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5210,9 +5221,9 @@ define(function (require, exports, module) {
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
   var charToIntMap = {};
   var intToCharMap = {};
@@ -5246,7 +5257,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":43}],38:[function(require,module,exports){
+},{"amdefine":43}],38:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5254,9 +5265,9 @@ define(function (require, exports, module) {
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
   /**
    * Recursive implementation of binary search.
@@ -5329,7 +5340,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":43}],39:[function(require,module,exports){
+},{"amdefine":43}],39:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5337,14 +5348,14 @@ define(function (require, exports, module) {
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
-  var util = require('./util');
-  var binarySearch = require('./binary-search');
-  var ArraySet = require('./array-set').ArraySet;
-  var base64VLQ = require('./base64-vlq');
+  var util = _dereq_('./util');
+  var binarySearch = _dereq_('./binary-search');
+  var ArraySet = _dereq_('./array-set').ArraySet;
+  var base64VLQ = _dereq_('./base64-vlq');
 
   /**
    * A SourceMapConsumer instance represents a parsed source map which we can
@@ -5361,7 +5372,7 @@ define(function (require, exports, module) {
    *   - sourceRoot: Optional. The URL root from which all sources are relative.
    *   - sourcesContent: Optional. An array of contents of the original source files.
    *   - mappings: A string of base64 VLQs which contain the actual mappings.
-   *   - file: Optional. The generated file this source map is associated with.
+   *   - file: The generated file this source map is associated with.
    *
    * Here is an example source map, taken from the source map spec[0]:
    *
@@ -5589,7 +5600,6 @@ define(function (require, exports, module) {
         }
       }
 
-      this.__generatedMappings.sort(util.compareByGeneratedPositions);
       this.__originalMappings.sort(util.compareByOriginalPositions);
     };
 
@@ -5645,7 +5655,7 @@ define(function (require, exports, module) {
                                       "generatedColumn",
                                       util.compareByGeneratedPositions);
 
-      if (mapping && mapping.generatedLine === needle.generatedLine) {
+      if (mapping) {
         var source = util.getArg(mapping, 'source', null);
         if (source && this.sourceRoot) {
           source = util.join(this.sourceRoot, source);
@@ -5809,7 +5819,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":35,"./base64-vlq":36,"./binary-search":38,"./util":42,"amdefine":43}],40:[function(require,module,exports){
+},{"./array-set":35,"./base64-vlq":36,"./binary-search":38,"./util":42,"amdefine":43}],40:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -5817,27 +5827,24 @@ define(function (require, exports, module) {
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
-  var base64VLQ = require('./base64-vlq');
-  var util = require('./util');
-  var ArraySet = require('./array-set').ArraySet;
+  var base64VLQ = _dereq_('./base64-vlq');
+  var util = _dereq_('./util');
+  var ArraySet = _dereq_('./array-set').ArraySet;
 
   /**
    * An instance of the SourceMapGenerator represents a source map which is
-   * being built incrementally. You may pass an object with the following
-   * properties:
+   * being built incrementally. To create a new one, you must pass an object
+   * with the following properties:
    *
    *   - file: The filename of the generated source.
-   *   - sourceRoot: A root for all relative URLs in this source map.
+   *   - sourceRoot: An optional root for all URLs in this source map.
    */
   function SourceMapGenerator(aArgs) {
-    if (!aArgs) {
-      aArgs = {};
-    }
-    this._file = util.getArg(aArgs, 'file', null);
+    this._file = util.getArg(aArgs, 'file');
     this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
     this._sources = new ArraySet();
     this._names = new ArraySet();
@@ -5967,23 +5974,11 @@ define(function (require, exports, module) {
    * @param aSourceMapConsumer The source map to be applied.
    * @param aSourceFile Optional. The filename of the source file.
    *        If omitted, SourceMapConsumer's file property will be used.
-   * @param aSourceMapPath Optional. The dirname of the path to the source map
-   *        to be applied. If relative, it is relative to the SourceMapConsumer.
-   *        This parameter is needed when the two source maps aren't in the same
-   *        directory, and the source map to be applied contains relative source
-   *        paths. If so, those relative source paths need to be rewritten
-   *        relative to the SourceMapGenerator.
    */
   SourceMapGenerator.prototype.applySourceMap =
-    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile, aSourceMapPath) {
+    function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile) {
       // If aSourceFile is omitted, we will use the file property of the SourceMap
       if (!aSourceFile) {
-        if (!aSourceMapConsumer.file) {
-          throw new Error(
-            'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
-            'or the source map\'s "file" property. Both were omitted.'
-          );
-        }
         aSourceFile = aSourceMapConsumer.file;
       }
       var sourceRoot = this._sourceRoot;
@@ -6006,12 +6001,10 @@ define(function (require, exports, module) {
           });
           if (original.source !== null) {
             // Copy mapping
-            mapping.source = original.source;
-            if (aSourceMapPath) {
-              mapping.source = util.join(aSourceMapPath, mapping.source)
-            }
             if (sourceRoot) {
-              mapping.source = util.relative(sourceRoot, mapping.source);
+              mapping.source = util.relative(sourceRoot, original.source);
+            } else {
+              mapping.source = original.source;
             }
             mapping.originalLine = original.line;
             mapping.originalColumn = original.column;
@@ -6041,9 +6034,6 @@ define(function (require, exports, module) {
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
         var content = aSourceMapConsumer.sourceContentFor(sourceFile);
         if (content) {
-          if (aSourceMapPath) {
-            sourceFile = util.join(aSourceMapPath, sourceFile);
-          }
           if (sourceRoot) {
             sourceFile = util.relative(sourceRoot, sourceFile);
           }
@@ -6084,7 +6074,7 @@ define(function (require, exports, module) {
         throw new Error('Invalid mapping: ' + JSON.stringify({
           generated: aGenerated,
           source: aSource,
-          original: aOriginal,
+          orginal: aOriginal,
           name: aName
         }));
       }
@@ -6211,7 +6201,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./array-set":35,"./base64-vlq":36,"./util":42,"amdefine":43}],41:[function(require,module,exports){
+},{"./array-set":35,"./base64-vlq":36,"./util":42,"amdefine":43}],41:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -6219,19 +6209,12 @@ define(function (require, exports, module) {
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
-  var SourceMapGenerator = require('./source-map-generator').SourceMapGenerator;
-  var util = require('./util');
-
-  // Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
-  // operating systems these days (capturing the result).
-  var REGEX_NEWLINE = /(\r?\n)/g;
-
-  // Matches a Windows-style newline, or any character.
-  var REGEX_CHARACTER = /\r\n|[\s\S]/g;
+  var SourceMapGenerator = _dereq_('./source-map-generator').SourceMapGenerator;
+  var util = _dereq_('./util');
 
   /**
    * SourceNodes provide a way to abstract over interpolating/concatenating
@@ -6267,17 +6250,9 @@ define(function (require, exports, module) {
       // and the SourceMap
       var node = new SourceNode();
 
-      // All even indices of this array are one line of the generated code,
-      // while all odd indices are the newlines between two adjacent lines
-      // (since `REGEX_NEWLINE` captures its match).
-      // Processed fragments are removed from this array, by calling `shiftNextLine`.
-      var remainingLines = aGeneratedCode.split(REGEX_NEWLINE);
-      var shiftNextLine = function() {
-        var lineContents = remainingLines.shift();
-        // The last line of a file might not have a newline.
-        var newLine = remainingLines.shift() || "";
-        return lineContents + newLine;
-      };
+      // The generated code
+      // Processed fragments are removed from this array.
+      var remainingLines = aGeneratedCode.split('\n');
 
       // We need to remember the position of "remainingLines"
       var lastGeneratedLine = 1, lastGeneratedColumn = 0;
@@ -6288,16 +6263,41 @@ define(function (require, exports, module) {
       var lastMapping = null;
 
       aSourceMapConsumer.eachMapping(function (mapping) {
-        if (lastMapping !== null) {
+        if (lastMapping === null) {
+          // We add the generated code until the first mapping
+          // to the SourceNode without any mapping.
+          // Each line is added as separate string.
+          while (lastGeneratedLine < mapping.generatedLine) {
+            node.add(remainingLines.shift() + "\n");
+            lastGeneratedLine++;
+          }
+          if (lastGeneratedColumn < mapping.generatedColumn) {
+            var nextLine = remainingLines[0];
+            node.add(nextLine.substr(0, mapping.generatedColumn));
+            remainingLines[0] = nextLine.substr(mapping.generatedColumn);
+            lastGeneratedColumn = mapping.generatedColumn;
+          }
+        } else {
           // We add the code from "lastMapping" to "mapping":
           // First check if there is a new line in between.
           if (lastGeneratedLine < mapping.generatedLine) {
             var code = "";
-            // Associate first line with "lastMapping"
-            addMappingWithCode(lastMapping, shiftNextLine());
-            lastGeneratedLine++;
-            lastGeneratedColumn = 0;
-            // The remaining code is added without mapping
+            // Associate full lines with "lastMapping"
+            do {
+              code += remainingLines.shift() + "\n";
+              lastGeneratedLine++;
+              lastGeneratedColumn = 0;
+            } while (lastGeneratedLine < mapping.generatedLine);
+            // When we reached the correct line, we add code until we
+            // reach the correct column too.
+            if (lastGeneratedColumn < mapping.generatedColumn) {
+              var nextLine = remainingLines[0];
+              code += nextLine.substr(0, mapping.generatedColumn);
+              remainingLines[0] = nextLine.substr(mapping.generatedColumn);
+              lastGeneratedColumn = mapping.generatedColumn;
+            }
+            // Create the SourceNode.
+            addMappingWithCode(lastMapping, code);
           } else {
             // There is no new line in between.
             // Associate the code between "lastGeneratedColumn" and
@@ -6309,35 +6309,14 @@ define(function (require, exports, module) {
                                                 lastGeneratedColumn);
             lastGeneratedColumn = mapping.generatedColumn;
             addMappingWithCode(lastMapping, code);
-            // No more remaining code, continue
-            lastMapping = mapping;
-            return;
           }
-        }
-        // We add the generated code until the first mapping
-        // to the SourceNode without any mapping.
-        // Each line is added as separate string.
-        while (lastGeneratedLine < mapping.generatedLine) {
-          node.add(shiftNextLine());
-          lastGeneratedLine++;
-        }
-        if (lastGeneratedColumn < mapping.generatedColumn) {
-          var nextLine = remainingLines[0];
-          node.add(nextLine.substr(0, mapping.generatedColumn));
-          remainingLines[0] = nextLine.substr(mapping.generatedColumn);
-          lastGeneratedColumn = mapping.generatedColumn;
         }
         lastMapping = mapping;
       }, this);
       // We have processed all mappings.
-      if (remainingLines.length > 0) {
-        if (lastMapping) {
-          // Associate the remaining code in the current line with "lastMapping"
-          addMappingWithCode(lastMapping, shiftNextLine());
-        }
-        // and add the remaining lines without any mapping
-        node.add(remainingLines.join(""));
-      }
+      // Associate the remaining code in the current line with "lastMapping"
+      // and add the remaining lines without any mapping
+      addMappingWithCode(lastMapping, remainingLines.join("\n"));
 
       // Copy sourcesContent into SourceNode
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
@@ -6575,30 +6554,12 @@ define(function (require, exports, module) {
         lastOriginalSource = null;
         sourceMappingActive = false;
       }
-      chunk.match(REGEX_CHARACTER).forEach(function (ch, idx, array) {
-        if (REGEX_NEWLINE.test(ch)) {
+      chunk.split('').forEach(function (ch) {
+        if (ch === '\n') {
           generated.line++;
           generated.column = 0;
-          // Mappings end at eol
-          if (idx + 1 === array.length) {
-            lastOriginalSource = null;
-            sourceMappingActive = false;
-          } else if (sourceMappingActive) {
-            map.addMapping({
-              source: original.source,
-              original: {
-                line: original.line,
-                column: original.column
-              },
-              generated: {
-                line: generated.line,
-                column: generated.column
-              },
-              name: original.name
-            });
-          }
         } else {
-          generated.column += ch.length;
+          generated.column++;
         }
       });
     });
@@ -6613,7 +6574,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"./source-map-generator":40,"./util":42,"amdefine":43}],42:[function(require,module,exports){
+},{"./source-map-generator":40,"./util":42,"amdefine":43}],42:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -6621,9 +6582,9 @@ define(function (require, exports, module) {
  * http://opensource.org/licenses/BSD-3-Clause
  */
 if (typeof define !== 'function') {
-    var define = require('amdefine')(module, require);
+    var define = _dereq_('amdefine')(module, _dereq_);
 }
-define(function (require, exports, module) {
+define(function (_dereq_, exports, module) {
 
   /**
    * This is a helper function for getting values from parameter/options
@@ -6646,8 +6607,8 @@ define(function (require, exports, module) {
   }
   exports.getArg = getArg;
 
-  var urlRegexp = /^(?:([\w+\-.]+):)?\/\/(?:(\w+:\w+)@)?([\w.]*)(?::(\d+))?(\S*)$/;
-  var dataUrlRegexp = /^data:.+\,.+$/;
+  var urlRegexp = /([\w+\-.]+):\/\/((\w+:\w+)@)?([\w.]+)?(:(\d+))?(\S+)?/;
+  var dataUrlRegexp = /^data:.+\,.+/;
 
   function urlParse(aUrl) {
     var match = aUrl.match(urlRegexp);
@@ -6656,22 +6617,18 @@ define(function (require, exports, module) {
     }
     return {
       scheme: match[1],
-      auth: match[2],
-      host: match[3],
-      port: match[4],
-      path: match[5]
+      auth: match[3],
+      host: match[4],
+      port: match[6],
+      path: match[7]
     };
   }
   exports.urlParse = urlParse;
 
   function urlGenerate(aParsedUrl) {
-    var url = '';
-    if (aParsedUrl.scheme) {
-      url += aParsedUrl.scheme + ':';
-    }
-    url += '//';
+    var url = aParsedUrl.scheme + "://";
     if (aParsedUrl.auth) {
-      url += aParsedUrl.auth + '@';
+      url += aParsedUrl.auth + "@"
     }
     if (aParsedUrl.host) {
       url += aParsedUrl.host;
@@ -6686,112 +6643,19 @@ define(function (require, exports, module) {
   }
   exports.urlGenerate = urlGenerate;
 
-  /**
-   * Normalizes a path, or the path portion of a URL:
-   *
-   * - Replaces consequtive slashes with one slash.
-   * - Removes unnecessary '.' parts.
-   * - Removes unnecessary '<dir>/..' parts.
-   *
-   * Based on code in the Node.js 'path' core module.
-   *
-   * @param aPath The path or url to normalize.
-   */
-  function normalize(aPath) {
-    var path = aPath;
-    var url = urlParse(aPath);
-    if (url) {
-      if (!url.path) {
-        return aPath;
-      }
-      path = url.path;
-    }
-    var isAbsolute = (path.charAt(0) === '/');
-
-    var parts = path.split(/\/+/);
-    for (var part, up = 0, i = parts.length - 1; i >= 0; i--) {
-      part = parts[i];
-      if (part === '.') {
-        parts.splice(i, 1);
-      } else if (part === '..') {
-        up++;
-      } else if (up > 0) {
-        if (part === '') {
-          // The first part is blank if the path is absolute. Trying to go
-          // above the root is a no-op. Therefore we can remove all '..' parts
-          // directly after the root.
-          parts.splice(i + 1, up);
-          up = 0;
-        } else {
-          parts.splice(i, 2);
-          up--;
-        }
-      }
-    }
-    path = parts.join('/');
-
-    if (path === '') {
-      path = isAbsolute ? '/' : '.';
-    }
-
-    if (url) {
-      url.path = path;
-      return urlGenerate(url);
-    }
-    return path;
-  }
-  exports.normalize = normalize;
-
-  /**
-   * Joins two paths/URLs.
-   *
-   * @param aRoot The root path or URL.
-   * @param aPath The path or URL to be joined with the root.
-   *
-   * - If aPath is a URL or a data URI, aPath is returned, unless aPath is a
-   *   scheme-relative URL: Then the scheme of aRoot, if any, is prepended
-   *   first.
-   * - Otherwise aPath is a path. If aRoot is a URL, then its path portion
-   *   is updated with the result and aRoot is returned. Otherwise the result
-   *   is returned.
-   *   - If aPath is absolute, the result is aPath.
-   *   - Otherwise the two paths are joined with a slash.
-   * - Joining for example 'http://' and 'www.example.com' is also supported.
-   */
   function join(aRoot, aPath) {
-    var aPathUrl = urlParse(aPath);
-    var aRootUrl = urlParse(aRoot);
-    if (aRootUrl) {
-      aRoot = aRootUrl.path || '/';
-    }
+    var url;
 
-    // `join(foo, '//www.example.org')`
-    if (aPathUrl && !aPathUrl.scheme) {
-      if (aRootUrl) {
-        aPathUrl.scheme = aRootUrl.scheme;
-      }
-      return urlGenerate(aPathUrl);
-    }
-
-    if (aPathUrl || aPath.match(dataUrlRegexp)) {
+    if (aPath.match(urlRegexp) || aPath.match(dataUrlRegexp)) {
       return aPath;
     }
 
-    // `join('http://', 'www.example.com')`
-    if (aRootUrl && !aRootUrl.host && !aRootUrl.path) {
-      aRootUrl.host = aPath;
-      return urlGenerate(aRootUrl);
+    if (aPath.charAt(0) === '/' && (url = urlParse(aRoot))) {
+      url.path = aPath;
+      return urlGenerate(url);
     }
 
-    var joined = aPath.charAt(0) === '/'
-      ? aPath
-      : normalize(aRoot.replace(/\/+$/, '') + '/' + aPath);
-
-    if (aRootUrl) {
-      aRootUrl.path = joined;
-      return urlGenerate(aRootUrl);
-    }
-    return joined;
+    return aRoot.replace(/\/$/, '') + '/' + aPath;
   }
   exports.join = join;
 
@@ -6917,7 +6781,7 @@ define(function (require, exports, module) {
 
 });
 
-},{"amdefine":43}],43:[function(require,module,exports){
+},{"amdefine":43}],43:[function(_dereq_,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -6944,7 +6808,7 @@ function amdefine(module, requireFn) {
     var defineCache = {},
         loaderCache = {},
         alreadyCalled = false,
-        path = require('path'),
+        path = _dereq_('path'),
         makeRequire, stringRequire;
 
     /**
@@ -7219,10 +7083,10 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,require('_process'),"/node_modules/uglify-js/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"_process":29,"path":28}],44:[function(require,module,exports){
-var sys = require("util");
-var MOZ_SourceMap = require("source-map");
+}).call(this,_dereq_("C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js"),"/..\\node_modules\\uglify-js\\node_modules\\source-map\\node_modules\\amdefine\\amdefine.js")
+},{"C:\\Users\\forbes.lindesay\\Documents\\GitHub\\jade\\node_modules\\browserify\\node_modules\\insert-module-globals\\node_modules\\process\\browser.js":28,"path":29}],44:[function(_dereq_,module,exports){
+var sys = _dereq_("util");
+var MOZ_SourceMap = _dereq_("source-map");
 var UglifyJS = exports;
 /***********************************************************************
 
@@ -7824,10 +7688,10 @@ var AST_Toplevel = DEFNODE("Toplevel", "globals", {
         var parameters = [];
 
         arg_parameter_pairs.forEach(function(pair) {
-            var splitAt = pair.lastIndexOf(":");
+            var split = pair.split(":");
 
-            args.push(pair.substr(0, splitAt));
-            parameters.push(pair.substr(splitAt + 1));
+            args.push(split[0]);
+            parameters.push(split[1]);
         });
 
         var wrapped_tl = "(function(" + parameters.join(",") + "){ '$ORIG'; })(" + args.join(",") + ")";
@@ -8682,7 +8546,14 @@ function is_identifier_char(ch) {
 };
 
 function is_identifier_string(str){
-    return /^[a-z_$][a-z0-9_$]*$/i.test(str);
+    var i = str.length;
+    if (i == 0) return false;
+    if (!is_identifier_start(str.charCodeAt(0))) return false;
+    while (--i >= 0) {
+        if (!is_identifier_char(str.charAt(i)))
+            return false;
+    }
+    return true;
 };
 
 function parse_js_number(num) {
@@ -10549,10 +10420,6 @@ AST_Toplevel.DEFMETHOD("mangle_names", function(options){
             node.mangled_name = name;
             return true;
         }
-        if (options.screw_ie8 && node instanceof AST_SymbolCatch) {
-            to_mangle.push(node.definition());
-            return;
-        }
     });
     this.walk(tw);
     to_mangle.forEach(function(def){ def.mangle(options) });
@@ -11408,7 +11275,7 @@ function OutputStream(options) {
         output.print("fo" + "r");
         output.space();
         output.with_parens(function(){
-            if (self.init && !(self.init instanceof AST_EmptyStatement)) {
+            if (self.init) {
                 if (self.init instanceof AST_Definitions) {
                     self.init.print(output);
                 } else {
@@ -11748,12 +11615,8 @@ function OutputStream(options) {
     DEFPRINT(AST_UnaryPrefix, function(self, output){
         var op = self.operator;
         output.print(op);
-        if (/^[a-z]/i.test(op)
-            || (/[+-]$/.test(op)
-                && self.expression instanceof AST_UnaryPrefix
-                && /^[+-]/.test(self.expression.operator))) {
+        if (/^[a-z]/i.test(op))
             output.space();
-        }
         self.expression.print(output);
     });
     DEFPRINT(AST_UnaryPostfix, function(self, output){
@@ -12118,7 +11981,6 @@ function Compressor(options, false_by_default) {
         loops         : !false_by_default,
         unused        : !false_by_default,
         hoist_funs    : !false_by_default,
-        keep_fargs    : false,
         hoist_vars    : false,
         if_return     : !false_by_default,
         join_vars     : !false_by_default,
@@ -12434,7 +12296,7 @@ merge(Compressor.prototype, {
                         stat = stat.clone();
                         stat.condition = stat.condition.negate(compressor);
                         stat.body = make_node(AST_BlockStatement, stat, {
-                            body: as_statement_array(stat.alternative).concat(ret)
+                            body: ret
                         });
                         stat.alternative = make_node(AST_BlockStatement, stat, {
                             body: body
@@ -12832,14 +12694,6 @@ merge(Compressor.prototype, {
             if (d && d.constant && d.init) return ev(d.init, compressor);
             throw def;
         });
-        def(AST_Dot, function(compressor){
-            if (compressor.option("unsafe") && this.property == "length") {
-                var str = ev(this.expression, compressor);
-                if (typeof str == "string")
-                    return str.length;
-            }
-            throw def;
-        });
     })(function(node, func){
         node.DEFMETHOD("_eval", func);
     });
@@ -13110,20 +12964,18 @@ merge(Compressor.prototype, {
             var tt = new TreeTransformer(
                 function before(node, descend, in_list) {
                     if (node instanceof AST_Lambda && !(node instanceof AST_Accessor)) {
-                        if (!compressor.option("keep_fargs")) {
-                            for (var a = node.argnames, i = a.length; --i >= 0;) {
-                                var sym = a[i];
-                                if (sym.unreferenced()) {
-                                    a.pop();
-                                    compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
-                                        name : sym.name,
-                                        file : sym.start.file,
-                                        line : sym.start.line,
-                                        col  : sym.start.col
-                                    });
-                                }
-                                else break;
+                        for (var a = node.argnames, i = a.length; --i >= 0;) {
+                            var sym = a[i];
+                            if (sym.unreferenced()) {
+                                a.pop();
+                                compressor.warn("Dropping unused function argument {name} [{file}:{line},{col}]", {
+                                    name : sym.name,
+                                    file : sym.start.file,
+                                    line : sym.start.line,
+                                    col  : sym.start.col
+                                });
                             }
+                            else break;
                         }
                     }
                     if (node instanceof AST_Defun && node !== self) {
@@ -14364,19 +14216,6 @@ merge(Compressor.prototype, {
                 return consequent;
             }
         }
-        // x?y?z:a:a --> x&&y?z:a
-        if (consequent instanceof AST_Conditional
-            && consequent.alternative.equivalent_to(alternative)) {
-            return make_node(AST_Conditional, self, {
-                condition: make_node(AST_Binary, self, {
-                    left: self.condition,
-                    operator: "&&",
-                    right: consequent.condition
-                }),
-                consequent: consequent.consequent,
-                alternative: alternative
-            });
-        }
         return self;
     });
 
@@ -14414,7 +14253,7 @@ merge(Compressor.prototype, {
                 return make_node(AST_Dot, self, {
                     expression : self.expression,
                     property   : prop
-                }).optimize(compressor);
+                });
             }
             var v = parseFloat(prop);
             if (!isNaN(v) && v.toString() == prop) {
@@ -14424,10 +14263,6 @@ merge(Compressor.prototype, {
             }
         }
         return self;
-    });
-
-    OPT(AST_Dot, function(self, compressor){
-        return self.evaluate(compressor)[0];
     });
 
     function literals_in_boolean_context(self, compressor) {
@@ -14508,9 +14343,6 @@ function SourceMap(options) {
                 line: orig_line,
                 column: orig_col
             });
-            if (info.source === null) {
-                return;
-            }
             source = info.source;
             orig_line = info.line;
             orig_col = info.column;
@@ -14583,7 +14415,7 @@ function SourceMap(options) {
                 start    : my_start_token(M),
                 end      : my_end_token(M),
                 body     : from_moz(M.block).body,
-                bcatch   : from_moz(M.handlers ? M.handlers[0] : M.handler),
+                bcatch   : from_moz(M.handlers[0]),
                 bfinally : M.finalizer ? new AST_Finally(from_moz(M.finalizer)) : null
             });
         },
@@ -14972,8 +14804,7 @@ exports.minify = function (files, options) {
     UglifyJS.base54.reset();
 
     // 1. parse
-    var toplevel = null,
-        sourcesContent = {};
+    var toplevel = null;
 
     if (options.spidermonkey) {
         toplevel = UglifyJS.AST_Node.from_mozilla_ast(files);
@@ -14984,7 +14815,6 @@ exports.minify = function (files, options) {
             var code = options.fromString
                 ? file
                 : fs.readFileSync(file, "utf8");
-            sourcesContent[file] = code;
             toplevel = UglifyJS.parse(code, {
                 filename: options.fromString ? "?" : file,
                 toplevel: toplevel
@@ -15020,25 +14850,12 @@ exports.minify = function (files, options) {
             orig: inMap,
             root: options.sourceRoot
         });
-        if (options.sourceMapIncludeSources) {
-            for (var file in sourcesContent) {
-                if (sourcesContent.hasOwnProperty(file)) {
-                    output.source_map.get().setSourceContent(file, sourcesContent[file]);
-                }
-            }
-        }
-
     }
     if (options.output) {
         UglifyJS.merge(output, options.output);
     }
     var stream = UglifyJS.OutputStream(output);
     toplevel.print(stream);
-
-    if(options.outSourceMap){
-        stream += "\n//# sourceMappingURL=" + options.outSourceMap;
-    }
-
     return {
         code : stream + "",
         map  : output.source_map + ""
@@ -15079,7 +14896,7 @@ exports.describe_ast = function () {
     doitem(UglifyJS.AST_Node);
     return out + "";
 };
-},{"source-map":34,"util":31}],45:[function(require,module,exports){
+},{"source-map":34,"util":31}],45:[function(_dereq_,module,exports){
 /**
  * This file automatically generated from `build.js`.
  * Do not manually edit.
@@ -15104,10 +14921,10 @@ module.exports = [
   "wbr"
 ];
 
-},{}],46:[function(require,module,exports){
+},{}],46:[function(_dereq_,module,exports){
 'use strict';
 
-var uglify = require('uglify-js')
+var uglify = _dereq_('uglify-js')
 
 module.exports = addWith
 
@@ -15153,7 +14970,7 @@ function addWith(obj, src, exclude) {
 
   src = '(function (' + vars.join(', ') + ') {' +
     src +
-    '}.call(this' + inputVars.map(function (v) { return ',' + v; }).join('') + '))'
+    '}(' + inputVars.join(',') + '))'
 
   return ';' + declareLocal + ';' + unwrapReturns(src, result) + ';'
 }
@@ -15184,17 +15001,12 @@ function unwrapReturns(src, result) {
   var originalSource = src
   var hasReturn = false
   var ast = uglify.parse(src)
-  var ref
   src = src.split('')
 
-  // get a reference to the function that was inserted to add an inner context
-  if ((ref = ast.body).length !== 1
-   || (ref = ref[0]).TYPE !== 'SimpleStatement'
-   || (ref = ref.body).TYPE !== 'Call'
-   || (ref = ref.expression).TYPE !== 'Dot' || ref.property !== 'call'
-   || (ref = ref.expression).TYPE !== 'Function')
+  if (ast.body.length !== 1 || ast.body[0].TYPE !== 'SimpleStatement' ||
+      ast.body[0].body.TYPE !== 'Call' || ast.body[0].body.expression.TYPE !== 'Function')
     throw new Error('AST does not seem to represent a self-calling function')
-  var fn = ref
+  var fn = ast.body[0].body.expression
 
   var walker = new uglify.TreeWalker(visitor)
   function visitor(node, descend) {
@@ -15222,5 +15034,6 @@ function unwrapReturns(src, result) {
   else return 'var ' + result + '=' + src.join('') + ';if (' + result + ') return ' + result + '.value'
 }
 
-},{"uglify-js":44}]},{},[5])(5)
+},{"uglify-js":44}]},{},[5])
+(5)
 });
