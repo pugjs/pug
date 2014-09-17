@@ -321,6 +321,12 @@ describe('jade', function(){
       assert.equal('<html><body><h1>Wahoo</h1><p>test</p></body></html>', jade.render('html\n  body\n   h1 Wahoo\n   p test'));
     });
 
+    it('should support escaped dots in tag name', function(){
+      assert.equal('<dotted.tag></dotted.tag>', jade.render('dotted\\.tag'));
+      assert.equal('<dotted.tag.name></dotted.tag.name>', jade.render('dotted\\.tag\\.name'));
+      assert.equal('<dotted.tag.name/>', jade.render('dotted\\.tag\\.name/'));
+    });
+
     it('should support interpolation values', function(){
       assert.equal('<p>Users: 15</p>', jade.render('p Users: #{15}'));
       assert.equal('<p>Users: </p>', jade.render('p Users: #{null}'));
