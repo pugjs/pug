@@ -1,13 +1,13 @@
 extends ../reference.jade
 
 block documentation
-  h1 Plain Text
+  h1 {{plain-text-title}}
 
-  p Jade provides three common ways of getting plain text.  They are useful in different situations
+  p {{plain-text-description}}
 
-  h2 Piped Text
+  h2 {{piped-text}}
 
-  p The simplest way of adding plain text to templates is to prefix the line with a <code>|</code> character (pronounced "pipe").
+  p {{piped-text-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -22,9 +22,9 @@ block documentation
           Plain text can include <strong>html</strong>
           <p>It must always be on its own line</p>
 
-  h2 Inline in a Tag
+  h2 {{inline-in-tag}}
 
-  p Since it's a common use case, you can put text in a tag just by adding it inline after a space.
+  p {{inline-in-tag-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -36,9 +36,9 @@ block documentation
         :htmlsrc
           <p>Plain text can include <strong>html</strong></p>
 
-  h2 Block in a Tag
+  h2 {{block-in-tag}}
 
-  p Often you might want large blocks of text within a tag.  A good example is with inline scripts or styles.  To do this, just add a <code>.</code> after the tag (with no preceding space):
+  p {{block-in-tag-description}}
 
   .row(data-control='interactive')
     .col-lg-6

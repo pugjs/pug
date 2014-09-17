@@ -1,9 +1,9 @@
 extends ../reference.jade
 
 block documentation
-  h1 Comments
+  h1 {{comments-title}}
 
-  p Single line comments look the same as JavaScript comments and must be placed on their own line:
+  p {{comments-single-line}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -19,7 +19,7 @@ block documentation
           <p>foo</p>
           <p>bar</p>
 
-  p Jade also supports unbuffered comments, by simply adding a hyphen
+  p {{unubuffered-comments}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -34,9 +34,9 @@ block documentation
           <p>foo</p>
           <p>bar</p>
 
-  h2 Block Comments
+  h2 {{bock-comments}}
 
-  p A block comment is legal as well:
+  p {{block-comments-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -56,12 +56,9 @@ block documentation
             -->
           </body>
 
-  h2 Conditional Comments
+  h2 {{conditional-comments}}
 
-  p.
-    Jade does not have any special syntax for conditional comments.
-    If your line begins with #[code &lt;] then it is treated as plain text.
-    So just use normal HTML syle conditional comments:
+  p {{conditional-comments-description}}
 
   .row(data-control='interactive')
     .col-lg-6

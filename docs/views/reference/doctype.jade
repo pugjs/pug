@@ -1,7 +1,7 @@
 extends ../reference.jade
 
 block documentation
-  h1 Doctype
+  h1 {{doctype-title}}
   .row(data-control='interactive')
     .col-lg-6
       +jade
@@ -12,9 +12,9 @@ block documentation
         :htmlsrc
           <!DOCTYPE html>
 
-  h2 Doctype Shortcuts
+  h2 {{doctype-shortcuts}}
 
-  p There are shortcuts for commonly used doctypes:
+  p {{doctype-shortcuts-description}}
 
   dl
     dt doctype html
@@ -28,9 +28,9 @@ block documentation
           pre
             code= doctype
 
-  h2 Custom Doctypes
+  h2 {{custom-doctypes}}
 
-  p You can also use your own literal custom doctype:
+  p {{custom-doctypes-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -42,30 +42,26 @@ block documentation
         :htmlsrc
           <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN">
 
-  h2 Doctype Option
+  h2 {{doctype-option}}
 
-  p.
-    The doctype affects compilation in some other cases, for example self closing tags
-    and #[a(href="http://localhost:3000/reference/attributes#booleanattribs") boolean attributes]).
-    For this reason, you might sometimes want to specify it manually. You can do this via the
-    #[code doctype] option.  e.g.
+  p {{doctype-option-description}}
 
 
   +js
     :jssrc
       var jade = require('./');
 
-      // Compile a function
+      // {{compile-function}}
       var fn = jade.compile('img(src="foo.png")', {doctype: 'xml'});
 
-      // Render the function
+      // {{render-to-html}}
       var html = fn({});
       // => '<img src="foo.png"></img>'
 
-      // Compile a function
+      // {{compile-function}}
       var fn = jade.compile('img(src="foo.png")', {doctype: 'html'});
 
-      // Render the function
+      // {{render-to-html}}
       var html = fn({});
       // => '<img src="foo.png">'
 

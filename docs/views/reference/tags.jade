@@ -1,9 +1,9 @@
 extends ../reference.jade
 
 block documentation
-  h1 Tags
+  h1 {{tags-title}}
 
-  p By default, text at the start of a line (or after only white space) represents an html tag.  Indented tags are nested, creating the tree like structure of html.
+  p {{tags-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -22,7 +22,7 @@ block documentation
             <li>Item C</li>
           </ul>
 
-  p Jade also knows which elements are self closing:
+  p {{tags-auto-self-closing}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -34,9 +34,9 @@ block documentation
         :htmlsrc
           <img/>
 
-  h2 Block Expansion
+  h2 {{block-expansion}}
 
-  p To save space, jade provides an inline syntax for nested tags.
+  p {{block-expansion-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -48,9 +48,9 @@ block documentation
         :htmlsrc
           <a><img/></a>
 
-  h2 Self Closing Tags
+  h2 {{self-closing-tags}}
 
-  p Tags such as #[code img], #[code meta], #[code link] and so on are automatically self-closing (unless you use the xml doctype).  You can also explicitly self close a tag by simply appending the #[code /] character.  Only do this if you know what you're doing
+  p {{self-closing-tags-description}}
 
   .row(data-control='interactive')
     .col-lg-6

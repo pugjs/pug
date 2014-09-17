@@ -1,15 +1,13 @@
 extends ../reference.jade
 
 block documentation
-  h1 Iteration
+  h1 {{iteration-title}}
 
-  p Jade supports two primary methods of iteration, #[code each] and #[code while].
+  p {{iteration-description}}
 
   h2 each
 
-  p.
-    Jade's first-class iteration syntax makes it easier to iterate over
-    arrays and objects within a template:
+  p {{each-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -29,7 +27,7 @@ block documentation
             <li>5</li>
           </ul>
 
-  p You can also get the index as you iterate:
+  p {{each-index}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -47,7 +45,7 @@ block documentation
             <li>2: two</li>
           </ul>
 
-  p Jade also lets you iterate over the keys in an object:
+  p {{each-object}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -65,7 +63,7 @@ block documentation
             <li>3: three</li>
           </ul>
 
-  p The object or array to iterate over is just plain JavaScript so it can be a variable or the result of a function call or almost anything else.  e.g.
+  p {{each-javascript}}
 
 
   .row(data-control='interactive')
@@ -83,11 +81,11 @@ block documentation
             <li>There are no values</li>
           </ul>
 
-  p You can also use #[code for] as an alias of #[code each].
+  p {{each-for}}
 
   h2 while
 
-  p You can also use #[code while] to create a loop:
+  p {{while-description}}
 
   .row(data-control='interactive')
     .col-lg-6

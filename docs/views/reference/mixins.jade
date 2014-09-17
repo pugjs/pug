@@ -1,9 +1,9 @@
 extends ../reference.jade
 
 block documentation
-  h1 Mixins
+  h1 {{mixins-title}}
 
-  p Mixins allow you to create reusable blocks of jade.
+  p {{mixins-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -32,7 +32,7 @@ block documentation
             <li>baz</li>
           </ul>
 
-  p They are compiled to functions and can take arguments:
+  p {{mixins-implementation}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -53,9 +53,9 @@ block documentation
             <li class="pet">pig</li>
           </ul>
 
-  h2#blocks Mixin Blocks
+  h2#blocks {{mixin-blocks}}
 
-  p Mixins can also take a block of jade to act as the content:
+  p {{mixin-blocks-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -93,9 +93,9 @@ block documentation
             </div>
           </div>
 
-  h2#attributes Mixin Attributes
+  h2#attributes {{mixin-attributes}}
 
-  p Mixins also get an implicit attributes argument taken from the attributes passed to the mixin:
+  p {{mixin-attributes-description}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -112,12 +112,11 @@ block documentation
           <a href="/foo" class="btn" >foo</a>
 
   .panel.panel-info
-    .panel-heading Note
+    .panel-heading {{note}}
     .panel-body.
-      The values in #[code attributes] are already escaped so you should
-      use #[code !=] to avoid escaping them a second time (see also #[a(href="/reference/attributes#unescaped") unescaped attributes]).
+      {{mixin-attributes-note({link: '#[a(href="/reference/attributes#unescaped") unescaped attributes]'})}}
 
-  p You can also use with #[code &amp;attributes] (see also #[a(href="/reference/attributes#and-attributes") &amp;attributes])
+  p {{mixin-and-attributes({link: '#[code &amp;attributes] (see also #[a(href="/reference/attributes#and-attributes") &amp;attributes])'})}}
 
   .row(data-control='interactive')
     .col-lg-6
@@ -132,9 +131,9 @@ block documentation
         :htmlsrc
           <a href="/foo" class="btn" >foo</a>
 
-  h2 Rest Arguments
+  h2 {{rest-arguments}}
 
-  p You can write mixins that take an unknown number of arguments using the "rest arguments" syntax.  e.g.
+  p {{rest-arguments-description}}
 
   .row(data-control='interactive')
     .col-lg-6

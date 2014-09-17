@@ -1,12 +1,18 @@
 
 # general strings
 
-danger:
-  | Danger
 sanatize-inputs:
   | You must be sure to sanatize any user inputs to avoid
   = ' '
   a(href='http://en.wikipedia.org/wiki/Cross-site_scripting') Cross Site Scripting
+
+note:
+  | Note
+warning:
+  | Warning
+danger:
+  | Danger
+
 
 # layout.jade
 
@@ -172,6 +178,295 @@ case-block-expansion-description:
 
 block-expansion:
   | Block Expansion
+
+# reference/code.jade
+
+code-title:
+  | Code &amp; Interpolation
+code-description:
+  | Jade makes it possible to write inline JavaScript code in your
+  | templates. There are three types of code.
+
+unbuffered-code-title:
+  | Unbuffered Code
+unbuffered-code-description:
+  | Unbuffered code starts with #[code -] and does not add any
+  | output directly, e.g.
+
+buffered-code-title:
+  | Buffered Code
+buffered-code-description:
+  | Buffered code starts with #[code =] and outputs the result of evaluating
+  | the JavaScript expression in the template. For security, it is
+  | first HTML escaped:
+buffered-code-inline:
+  | It can also be written inline with a tag, and supports the full
+  | range of JavaScript expressions:
+
+unescaped-buffered-code:
+  | Unescaped Buffered Code
+unescaped-buffered-code-description:
+  | Unescaped buffered code starts with #[code !=] and outputs the
+  | result of evaluating the JavaScript expression in the template.
+  | This does not do any escaping, so is not safe for user input:
+unescaped-buffered-code-danger:
+  | Unescaped buffered code can be dangerous.
+
+interpolation-title:
+  | Interpolation
+interpolation-description:
+  | Both plain-text and piped-text support interpolation.
+  | The following will output the user.name in the paragraph:
+dont-interpolate:
+  | It is generally recommended that you use #[code =]
+  | for buffering code unless it is a small amount of
+  | code in a large block.
+unescaped-interpolation:
+  | Unescaped Interpolation
+unescaped-interpolation-description:
+  | You can also use unescaped interpolation to output HTML:
+
+# reference/comments.jade
+
+comments-title:
+  | Comments
+comments-single-line:
+  | Single line comments look the same as JavaScript comments
+  | and must be placed on their own line:
+unubuffered-comments:
+  | Jade also supports unbuffered comments, by simply adding a hyphen:
+bock-comments:
+  | Block Comments
+block-comments-description:
+  | A block comment is legal as well:
+conditional-comments:
+  | Conditional Comments
+conditional-comments-description:
+  | Jade does not have any special syntax for conditional comments.
+  | If your line begins with #[code &lt;] then it is treated as plain text.
+  | So just use normal HTML syle conditional comments:
+
+# reference/conditionals.jade
+
+conditionals-title:
+  | Conditionals
+conditionals-description:
+  | Jade's first-class conditional syntax allows for optional parenthesis,
+  | and you may now omit the leading #[code -] otherwise it's identical,
+  | still just regular javascript:
+description:
+  | Description
+no-description:
+  | User has no description
+why-not-add-one:
+  | Why not add one...
+unless-description:
+  | Jade also provides a negated version #[code unless] (the following
+  | are therefore equivalent):
+you-are-logged-in:
+  | You're logged in!
+
+# reference/doctype.jade
+
+doctype-title:
+  | Doctype
+doctype-shortcuts:
+  | Doctype Shortcuts
+doctype-shortcuts-description:
+  | There are shortcuts for commonly used doctypes:
+custom-doctypes:
+  | Custom Doctypes
+custom-doctypes-description:
+  | You can also use your own literal custom doctype:
+doctype-option:
+  | Doctype Option
+doctype-option-description:
+  | The doctype affects compilation in some other cases, for example self
+  | closing tags and
+  = ' '
+  a(href="http://localhost:3000/reference/attributes#booleanattribs") boolean attributes]
+  |).
+  | For this reason, you might sometimes want to specify it manually. You
+  | can do this via the #[code doctype] option.  e.g.
+
+# referenec/filters.jade
+
+filters-title:
+  | Filters
+filters-description:
+  | Filters let you use other languages within a jade template.
+  | They take a block of plain text as an input.
+filters-warning:
+  p.
+    Filters are compile time. This makes them fast but means they
+    cannot support dynamic content.
+  p.
+    Built in filters are not available in the browser as they would
+    not all work. Providing you compile your templates server side,
+    they will still work fine though.
+
+# reference/includes.jade
+
+includes-title:
+  | Includes
+includes-description:
+  | Includes allow you to insert the contents of one jade file into another.
+
+including-plain-text:
+  | Including Plain Text
+including-plain-text-description:
+  | Including files that are not jade just includes the raw text.
+
+including-filtered-text:
+  | Including Filtered Text
+including-filtered-text-description:
+  | You can combine filters with includes to filter things as you include them.
+
+# reference/inheritance.jade
+
+inheritance-title:
+  Template Inheritance
+inheritance-description:
+  p.
+    Jade supports template inheritance via the #[code block]
+     and #[code extends] keywords. A block is simply a "block"
+     of Jade that may be replaced within a child template, this
+     process is recursive.
+  p.
+    Jade blocks can provide default content if desired, however
+     optional as shown below by #[code block scripts], #[code block content],
+     and #[code block foot].
+
+extend-layout:
+  | Now to extend the layout, simply create a new file and use
+  |  the #[code extends] directive as shown below, giving the path
+  |  (with or without the .jade extension). You may now define
+  |  one or more blocks that will override the parent block
+  |  content, note that here the #[code foot] block is #[em not] redefined
+  |  and will output "some footer content".
+
+sub-blocks:
+  | It's also possible to override a block to provide additional blocks,
+  |  as shown in the following example where #[code content] now exposes
+  |  a #[code sidebar] and #[code primary] block for overriding, or the
+  |  child template could override #[code content] all together.
+
+append-prepend:
+  | Block append / prepend
+append-prend-description:
+  | Jade allows you to #[em replace] (default), #[em prepend],
+  |  or #[em append] blocks. Suppose for example you have default
+  |  scripts in a "head" block that you wish to utilize on #[em every]
+  |  page, you might do this:
+append-prepend-example:
+  | Now suppose you have a page of your application for a JavaScript
+  |  game, you want some game related scripts as well as these defaults,
+  |  you can simply `append` the block:
+optional-block:
+  | When using #[code block append] or #[code block prepend]
+  |  the #[code block] is optional:
+
+# reference/iteration.jade
+
+iteration-title:
+  | Iteration
+iteration-description:
+  | Jade supports two primary methods of iteration, #[code each] and #[code while].
+
+each-description:
+  | Jade's first-class iteration syntax makes it easier to iterate over
+  |  arrays and objects within a template:
+each-index:
+  | You can also get the index as you iterate:
+each-object:
+  | Jade also lets you iterate over the keys in an object:
+each-javascript:
+  | The object or array to iterate over is just plain JavaScript
+  |  so it can be a variable or the result of a function call or
+  |  almost anything else. e.g.
+each-for:
+  | You can also use #[code for] as an alias of #[code each].
+while-description:
+  | You can also use #[code while] to create a loop:
+
+# reference/mixins.jade
+
+mixins-title:
+  | Mixins
+mixins-description:
+  | Mixins allow you to create reusable blocks of jade.
+mixins-implementation:
+  | They are compiled to functions and can take arguments:
+
+mixin-blocks:
+  | Mixin Blocks
+mixin-blocks-description:
+  | Mixins can also take a block of jade to act as the content:
+
+mixin-attributes:
+  | Mixin Attributes
+mixin-attributes-description:
+  | Mixins also get an implicit attributes argument taken from
+  | the attributes passed to the mixin:
+mixin-attributes-note:
+  | The values in #[code attributes] are already escaped so you
+  |  should use #[code !=] to avoid escaping them a second
+  |  time (see also !{link}).
+mixin-and-attributes:
+  | You can also use with &attributes (see also !{link})
+rest-arguments:
+  | Rest Arguments
+rest-arguments-description:
+  | You can write mixins that take an unknown number of arguments
+  | using the "rest arguments" syntax. e.g.
+
+# reference/plain-text.jade
+
+plain-text-title:
+  | Plain Text
+plain-text-description:
+  | Jade provides three common ways of getting plain text.
+  | They are useful in different situations.
+piped-text:
+  | Piped Text
+piped-text-description:
+  | The simplest way of adding plain text to templates is to
+  |  prefix the line with a #[code |]
+  | character (pronounced "pipe").
+
+inline-in-tag:
+  | Inline in a Tag
+inline-in-tag-description:
+  | Since it's a common use case, you can put text in a tag
+  |  just by adding it inline after a space.
+block-in-tag:
+  | Block in a Tag
+block-in-tag-description:
+  | Often you might want large blocks of text within a tag.
+  | A good example is with inline scripts or styles.
+  | To do this, just add a #[code .] after the tag (with no preceding space):
+
+# reference/tags.jade
+
+tags-title:
+  | Tags
+tags-description:
+  | By default, text at the start of a line (or after only white space)
+  |  represents an html tag. Indented tags are nested, creating the tree
+  |  like structure of html.
+tags-auto-self-closing:
+  | Jade also knows which elements are self closing
+block-expansion:
+  | Block Expansion
+block-expansion-description:
+  | To save space, jade provides an inline syntax for nested tags.
+self-closing-tags:
+  | Self Closing Tags
+self-closing-tags-description:
+  | Tags such as img, meta, link and so on are automatically self-closing
+  |  (unless you use the xml doctype). You can also explicitly self close
+  |  a tag by simply appending the / character. Only do this if you know
+  |  what you're doing.
 
 # api.jade
 

@@ -60,7 +60,7 @@ app.engine('jade', function (path, options, callback) {
       result = (language[match[1]] || defaultLanguage[match[1]]).apply(null, Function('', 'return [' + match[2] + ']')()).replace(/^/gm, space);
     }
     if (result !== _ && options.mask) {
-      return result.replace(/./g, '-');
+      return result.replace(/\S/g, '-');
     }
     return result;
   });
