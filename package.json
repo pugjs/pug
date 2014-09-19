@@ -72,5 +72,6 @@
   },
   "browser": {
     "./lib/filters.js": "./lib/filters-client.js"
-  }
+  },
+  "homepage": "http://jade-lang.com"
 }
