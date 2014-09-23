@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var jade = require('./../lib/jade');
+var jade = require('../');
 
 var options = {
     locals: {

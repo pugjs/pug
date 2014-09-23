@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git://github.com/visionmedia/jade"
   },
-  "main": "./index.js",
+  "main": "lib",
   "bin": {
     "jade": "./bin/jade.js"
   },
@@ -67,7 +67,7 @@
     "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
-    "compile-full": "browserify ./lib/jade.js --standalone jade -x ./node_modules/transformers > jade.js",
+    "compile-full": "browserify ./lib/index.js --standalone jade -x ./node_modules/transformers > jade.js",
     "compile-runtime": "browserify ./lib/runtime.js --standalone jade > runtime.js"
   },
   "browser": {
