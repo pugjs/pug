@@ -25,6 +25,7 @@
     "monocle": "1.1.51",
     "transformers": "2.1.0",
     "void-elements": "~1.0.0",
+    "optional-tags": "~0.0.4",
     "with": "~4.0.0"
   },
   "devDependencies": {
