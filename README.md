@@ -7,8 +7,8 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
 
- [![Build Status](https://img.shields.io/travis/visionmedia/jade/master.svg)](https://travis-ci.org/visionmedia/jade)
- [![Dependency Status](https://img.shields.io/gemnasium/visionmedia/jade.svg)](https://gemnasium.com/visionmedia/jade)
+ [![Build Status](https://img.shields.io/travis/jadejs/jade/master.svg)](https://travis-ci.org/jadejs/jade)
+ [![Dependency Status](https://img.shields.io/gemnasium/jadejs/jade.svg)](https://gemnasium.com/jadejs/jade)
  [![NPM version](https://img.shields.io/npm/v/jade.svg)](http://badge.fury.io/js/jade)
 
 ## Installation
