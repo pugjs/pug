@@ -64,7 +64,7 @@ becomes
 </html>
 ```
 
-The official [jade tutorial](http://jade-lang.com/tutorial/) is a great place to start.  While that (and the syntax documentation) is being finished, you can view some of the old documentation [here](https://github.com/visionmedia/jade/blob/master/jade.md) and [here](https://github.com/visionmedia/jade/blob/master/jade-language.md)
+The official [jade tutorial](http://jade-lang.com/tutorial/) is a great place to start.  While that (and the syntax documentation) is being finished, you can view some of the old documentation [here](https://github.com/jadejs/jade/blob/master/jade.md) and [here](https://github.com/jadejs/jade/blob/master/jade-language.md)
 
 ## API
 
@@ -92,7 +92,7 @@ var html = jade.renderFile('filename.jade', merge(options, locals));
 
 ## Browser Support
 
- The latest version of jade can be download for the browser in standalone form from [here](https://github.com/visionmedia/jade/raw/master/jade.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your jade templates to JavaScript and then just use the [runtime.js](https://github.com/visionmedia/jade/raw/master/runtime.js) library on the client.
+ The latest version of jade can be download for the browser in standalone form from [here](https://github.com/jadejs/jade/raw/master/jade.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your jade templates to JavaScript and then just use the [runtime.js](https://github.com/jadejs/jade/raw/master/runtime.js) library on the client.
 
  To compile a template for use on the client using the command line, do:
 
@@ -123,7 +123,7 @@ Tutorials:
   - cssdeck interactive [Jade syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
   - cssdeck interactive [Jade logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - [Jade について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
-  - [Jade - 模板引擎](https://github.com/visionmedia/jade/blob/master/Readme_zh-cn.md)
+  - [Jade - 模板引擎](https://github.com/jadejs/jade/blob/master/Readme_zh-cn.md)
 
 Implementations in other languages:
 
