@@ -34,7 +34,7 @@
     "markdown": "*",
     "stylus": "*",
     "should": "*",
-    "less": "*",
+    "less": "<2.0.0",
     "uglify-js": "*",
     "browserify": "*",
     "linify": "*",
