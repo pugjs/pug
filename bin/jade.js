@@ -65,7 +65,7 @@ if (program.obj) {
   if (exists(program.obj)) {
     options = JSON.parse(fs.readFileSync(program.obj));
   } else {
-    options = eval('(' + program.obj + ')');
+    options = JSON.parse(program.obj);
   }
 }
 
