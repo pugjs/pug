@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/bundle.css"></head><body></body><body><div id="wrap"><div id="content"><div class="logo-container"><a href="/1.8.0/"><img src="/style/logo.png" alt="Jade - Node Template Engine"></a></div><div class="navbar navbar-default navbar-static-top"><div class="container"><div class="navbar-header visible-sm visible-xs"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/1.8.0/" class="navbar-brand">JADE</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a href="/1.8.0/reference">Language Reference</a></li><li class="false"><a href="/1.8.0/api">API</a></li><li class="false"><a href="/1.8.0/command-line">Command Line</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="false"><a href="/history">Change Log</a></li><li><a href="/1.8.0/coverage/">Code Coverage</a></li><li><a href="https://travis-ci.org/jadejs/jade">Test Results</a></li><li><a href="https://github.com/jadejs/jade">GitHub Repository</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-2"><ul class="nav nav-pills nav-stacked"><li class="false"><a href="/1.8.0/reference/attributes">attributes</a></li><li class="false"><a href="/1.8.0/reference/case">case</a></li><li class="false"><a href="/1.8.0/reference/code">code</a></li><li class="false"><a href="/1.8.0/reference/comments">comments</a></li><li class="false"><a href="/1.8.0/reference/conditionals">conditionals</a></li><li class="false"><a href="/1.8.0/reference/doctype">doctype</a></li><li class="false"><a href="/1.8.0/reference/extends">extends</a></li><li class="false"><a href="/1.8.0/reference/filters">filters</a></li><li class="false"><a href="/1.8.0/reference/includes">includes</a></li><li class="active"><a href="/1.8.0/reference/inheritance">inheritance</a></li><li class="false"><a href="/1.8.0/reference/iteration">iteration</a></li><li class="false"><a href="/1.8.0/reference/mixins">mixins</a></li><li class="false"><a href="/1.8.0/reference/plain-text">plain text</a></li><li class="false"><a href="/1.8.0/reference/tags">tags</a></li></ul></div><div class="col-md-10"><h1>Template inheritance</h1><p>Jade supports template inheritance via the <code>block</code> and <code>extends</code> keywords. A block is simply a "block"
+of Jade that may be replaced within a child template, this process is recursive.
+</p><p>Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
+</p><p>layout.jade</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">html</span>
+<span class="cm-indent">  </span><span class="cm-tag">head</span>
+<span class="cm-indent">    </span><span class="cm-tag">title</span><span class="cm-string"> My Site - #{title}</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">scripts</span>
+<span class="cm-indent">      </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/jquery.js&#39;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">  </span><span class="cm-tag">body</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">content</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">foot</span>
+<span class="cm-indent">      </span><span class="cm-builtin">#footer</span>
+<span class="cm-indent">        </span><span class="cm-tag">p</span><span class="cm-string"> some footer content</span>
+</code></pre><p>Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".</p><p>page-a.jade</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">extends</span><span class="cm-string"> ./layout.jade</span>
+
+<span class="cm-keyword">block </span><span class="cm-variable">scripts</span>
+<span class="cm-indent">  </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/jquery.js&#39;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">  </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/pets.js&#39;</span><span class="cm-punctuation">)</span>
+
+<span class="cm-keyword">block </span><span class="cm-variable">content</span>
+<span class="cm-indent">  </span><span class="cm-tag">h1</span><span class="cm-punctuation">=</span> <span class="cm-variable">title</span>
+<span class="cm-indent">  </span><span class="cm-keyword">each</span><span class="cm-variable"> pet</span><span class="cm-keyword"> in</span> <span class="cm-variable">pets</span>
+<span class="cm-indent">    </span><span class="cm-keyword">include</span><span class="cm-string"> pet</span>
+</code></pre><p>It's also possible to override a block to provide additional blocks, as shown in the following example where `content` now exposes a `sidebar` and `primary` block for overriding, or the child template could override `content` all together.
+</p><p>sub-layout.jade</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">extends</span><span class="cm-string"> ./layout.jade</span>
+
+<span class="cm-keyword">block </span><span class="cm-variable">content</span>
+<span class="cm-indent">  </span><span class="cm-qualifier">.sidebar</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">sidebar</span>
+<span class="cm-indent">      </span><span class="cm-tag">p</span><span class="cm-string"> nothing</span>
+<span class="cm-indent">  </span><span class="cm-qualifier">.primary</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">primary</span>
+<span class="cm-indent">      </span><span class="cm-tag">p</span><span class="cm-string"> nothing</span></code></pre><p>page-b.jade</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">extends</span><span class="cm-string"> ./sub-layout.jade</span>
+
+<span class="cm-keyword">block </span><span class="cm-variable">content</span>
+<span class="cm-indent">  </span><span class="cm-qualifier">.sidebar</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">sidebar</span>
+<span class="cm-indent">      </span><span class="cm-tag">p</span><span class="cm-string"> nothing</span>
+<span class="cm-indent">  </span><span class="cm-qualifier">.primary</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">primary</span>
+<span class="cm-indent">      </span><span class="cm-tag">p</span><span class="cm-string"> nothing</span>
+
+</code></pre><h2>Block append / prepend</h2><p>Jade allows you to <em>replace</em> (default), <em>prepend</em>, or <em>append</em> blocks. Suppose for example you have default scripts in a "head" block that you wish to utilize on <em>every</em> page, you might do this:</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">html</span>
+<span class="cm-indent">  </span><span class="cm-tag">head</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">head</span>
+<span class="cm-indent">      </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/vendor/jquery.js&#39;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">      </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/vendor/caustic.js&#39;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">  </span><span class="cm-tag">body</span>
+<span class="cm-indent">    </span><span class="cm-keyword">block </span><span class="cm-variable">content</span>
+</code></pre><p>Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">extends</span><span class="cm-string"> layout</span>
+
+<span class="cm-keyword">block append</span><span class="cm-variable"> head</span>
+<span class="cm-indent">  </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/vendor/three.js&#39;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">  </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/game.js&#39;</span><span class="cm-punctuation">)</span>
+</code></pre><p>When using `block append` or `block prepend` the `block` is optional:</p><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-keyword">extends</span><span class="cm-string"> layout</span>
+
+<span class="cm-keyword">append</span><span class="cm-variable"> head</span>
+<span class="cm-indent">  </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/vendor/three.js&#39;</span><span class="cm-punctuation">)</span>
+<span class="cm-indent">  </span><span class="cm-tag">script</span><span class="cm-punctuation">(</span><span class="cm-attribute">src</span><span class="cm-operator">=</span><span class="cm-string">&#39;/game.js&#39;</span><span class="cm-punctuation">)</span></code></pre></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>&nbsp;and contributed by&nbsp;<a href="https://github.com/jadejs/jade/graphs/contributors">many others</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="/1.8.0/client.js"></script><script src="http://code.jquery.com/jquery-2.1.1.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script></body></html>
