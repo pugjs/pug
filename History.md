@@ -1,3 +1,10 @@
+1.8.1 / 2014-11-30
+==================
+
+  * Fix corner case when the pretty option was passed a non-string truthy value ([@TimothyGu](https://github.com/TimothyGu))
+  * Warn when `lexer` is given as an option ([@TimothyGu](https://github.com/TimothyGu))
+  * Update dependencies ([@TimothyGu](https://github.com/TimothyGu))
+
 1.8.0 / 2014-11-28
 ==================
 

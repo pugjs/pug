@@ -36,7 +36,7 @@ var Compiler = module.exports = function Compiler(node, options) {
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
-  if (this.pp === true) {
+  if (this.pp && typeof this.pp !== 'string') {
     this.pp = '  ';
   }
   this.debug = false !== options.compileDebug;
@@ -837,6 +837,12 @@ exports.cache = {};
  */
 
 function parse(str, options){
+
+  if (options.lexer) {
+    console.warn('Using `lexer` as a local in render() is deprecated and '
+               + 'will be interpreted as an option in Jade 2.0.0');
+  }
+
   // Parse
   var parser = new (options.parser || Parser)(str, options.filename, options);
   var tokens;
