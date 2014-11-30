@@ -1,3 +1,17 @@
+1.8.0 / 2014-11-28
+==================
+
+  * Fix empty text-only block ([@rlidwka](https://github.com/rlidwka))
+  * Warn about future change to ISO 8601 style dates ([@TimothyGu](https://github.com/TimothyGu) and [@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add warnings when data-attributes contain ampersands ([@TimothyGu](https://github.com/TimothyGu))
+  * Allow custom pretty indentation ([@bfred-it](https://github.com/bfred-it))
+  * Add support for an object in the style attribute ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add support for an object in the class attribute ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Ignore fs module in browser builds ([@sokra](https://github.com/sokra))
+  * Update dependencies ([@hildjj](https://github.com/hildjj))
+  * Check mixin arguments are valid JavaScript expressions ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove symlink ([@slang800](https://github.com/slang800))
+
 1.7.0 / 2014-09-17
 ==================
 
