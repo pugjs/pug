@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tj/jade"
+    "url": "git://github.com/jadejs/jade"
   },
   "main": "lib",
   "bin": {
