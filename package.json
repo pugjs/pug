@@ -4,9 +4,13 @@
   "version": "1.8.1",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
-    "forbeslindesay <forbes@lindesay.co.uk>",
-    "bloodyowl <mlbli@me.com",
-    "jbnicolai <joshua@jbna.nl>"
+    "Forbes Lindesay <forbes@lindesay.co.uk>",
+    "Matthias Le Brun <mlbli@me.com>",
+    "Joshua Appelman <joshua@jbna.nl>",
+    "Jonathan Ong <jonathanrichardong@gmail.com>",
+    "Alex Kocharin <alex@kocharin.ru>",
+    "Hemanth <hemanth.hm@gmail.com>",
+    "Timothy Gu <timothygu99@gmail.com>"
   ],
   "license": "MIT",
   "repository": {
