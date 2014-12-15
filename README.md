@@ -1,5 +1,7 @@
 # [![Jade - template engine ](http://i.imgur.com/5zf2aVt.png)](http://jade-lang.com/)
 
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/jadejs/jade?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
