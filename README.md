@@ -3,7 +3,9 @@
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
- and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
+ and implemented with JavaScript for [node](http://nodejs.org) and browsers. For bug reports,
+ feature requests and questions, [open an issue](https://github.com/jadejs/jade/issues/new).
+ For discussion join the [chat room](https://gitter.im/jadejs/jade).
 
  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
 
