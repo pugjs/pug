@@ -567,7 +567,7 @@ Compiler.prototype = {
 
     // Buffer code
     if (code.buffer) {
-      var val = code.val.trimLeft();
+      var val = code.val.trim();
       val = 'null == (jade_interp = '+val+') ? "" : jade_interp';
       if (code.escape) val = 'jade.escape(' + val + ')';
       this.bufferExpression(val);
@@ -862,6 +862,11 @@ function parse(str, options){
   } catch (err) {
     if (err.line && (err.filename || !options.filename)) {
       runtime.rethrow(err, err.filename, err.line, parser.input);
+    } else {
+      if (err instanceof Error) {
+        err.message += '\n\nPlease report this entire error and stack trace to https://github.com/jadejs/jade/issues';
+      }
+      throw err;
     }
   }
 

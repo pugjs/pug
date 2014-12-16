@@ -1,3 +1,13 @@
+1.8.2 / 2014-12-16
+==================
+
+  * Use `-` as the default filename when using stdin on CLI ([@TimothyGu](https://github.com/TimothyGu))
+  * Prevent some compiler errors being silenced ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove use of non-standard `string.trimLeft()` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix bug in CLI when no name was provided for child template ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove dependency on monocle (hopefully fixing installation on 0.8) ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add gitter chat room ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.8.1 / 2014-11-30
 ==================
 
