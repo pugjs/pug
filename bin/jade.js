@@ -12,7 +12,6 @@ var fs = require('fs')
   , resolve = path.resolve
   , exists = fs.existsSync || path.existsSync
   , join = path.join
-  , monocle = require('monocle')()
   , mkdirp = require('mkdirp')
   , jade = require('../');
 
@@ -108,16 +107,21 @@ var files = program.args;
 if (files.length) {
   console.log();
   if (options.watch) {
-    // keep watching when error occured.
-    process.on('uncaughtException', function(err) {
-      console.error(err);
-    });
-    files.forEach(renderFile);
-    monocle.watchFiles({
-      files: files,
-      listener: function(file) {
-        renderFile(file.absolutePath);
+    files.forEach(function(filename) {
+      try {
+        renderFile(filename);
+      } catch (ex) {
+        // keep watching when error occured.
+        console.error(ex.stack || ex.message || ex);
       }
+      fs.watchFile(filename, {persistent: true, interval: 200}, function (filename) {
+        try {
+          renderFile(filename);
+        } catch (ex) {
+          // keep watching when error occured.
+          console.error(ex.stack || ex.message || ex);
+        }
+      });
     });
   } else {
     files.forEach(renderFile);
