@@ -26,6 +26,8 @@
     "commander": "~2.6.0",
     "constantinople": "~3.0.1",
     "coveralls": "^2.11.2",
+    "jade-lexer": "https://github.com/jadejs/jade-lexer/archive/master.tar.gz",
+    "jade-parser": "https://github.com/jadejs/jade-parser/archive/master.tar.gz",
     "mkdirp": "~0.5.0",
     "transformers": "ForbesLindesay/transformers#e30cf28f7f0e74dca4bca902e3768244d14ec973",
     "void-elements": "~2.0.1",
