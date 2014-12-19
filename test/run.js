@@ -9,7 +9,6 @@ var jade = require('../');
 var uglify = require('uglify-js');
 
 jade.filters['custom-filter'] = function (str, options) {
-  console.dir(options);
   assert(str === 'foo bar');
   assert(options.foo === 'bar');
   return 'bar baz';
