@@ -114,7 +114,9 @@ if (files.length) {
         // keep watching when error occured.
         console.error(ex.stack || ex.message || ex);
       }
-      fs.watchFile(filename, {persistent: true, interval: 200}, function (filename) {
+      fs.watchFile(filename, {persistent: true, interval: 200},
+                   function (curr, prev) {
+        if (curr.mtime === prev.mtime) return;
         try {
           renderFile(filename);
         } catch (ex) {
