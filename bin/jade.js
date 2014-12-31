@@ -142,7 +142,6 @@ if (files.length) {
 
 function stdin() {
   var buf = '';
-  options.filename = '-';
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', function(chunk){ buf += chunk; });
   process.stdin.on('end', function(){
