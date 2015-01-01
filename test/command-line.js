@@ -3,10 +3,10 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var exec = require('child_process').exec;
+var cp = require('child_process');
 
 function run(args, callback) {
-  exec('node ' + JSON.stringify(path.resolve(__dirname + '/../bin/jade.js')) + ' ' + args, {
+  cp.exec('node ' + JSON.stringify(path.resolve(__dirname + '/../bin/jade.js')) + ' ' + args, {
     cwd: __dirname + '/temp'
   }, callback);
 }
@@ -39,5 +39,56 @@ describe('command line', function () {
       assert(template() === '<div class="foo">bar</div>');
       return done();
     });
+  });
+});
+
+describe('command line watch mode', function () {
+  var watchProc;
+  var stdout = '';
+  after(function() {
+    watchProc.kill('SIGINT');
+  });
+  it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 1)");');
+    var args = [__dirname + '/../bin/jade.js', '--no-debug', '--client', '--name-after-file', '--watch', 'input-file.jade']
+    watchProc = cp.spawn('node', args,  {
+      cwd: __dirname + '/temp'
+    });
+
+    watchProc.stdout.setEncoding('utf8');
+    watchProc
+      .on('error', done)
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if (/.*rendered.*/.test(stdout)) {
+          stdout = '';
+          var template = Function('', fs.readFileSync(__dirname + '/temp/input-file.js', 'utf8') + ';return inputFileTemplate;')();
+          assert(template() === '<div class="foo">bar</div>');
+
+          watchProc.stdout.removeAllListeners('data');
+          watchProc.removeAllListeners('error');
+          return done();
+        }
+      });
+  });
+  it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 2)', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 2)");');
+    fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo baz');
+
+    watchProc
+      .on('error', done)
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if (/.*rendered.*/.test(stdout)) {
+          stdout = '';
+          var template = Function('', fs.readFileSync(__dirname + '/temp/input-file.js', 'utf8') + ';return inputFileTemplate;')();
+          assert(template() === '<div class="foo">baz</div>');
+
+          watchProc.stdout.removeAllListeners('data');
+          watchProc.removeAllListeners('error');
+          return done();
+        }
+      });
   });
 });
