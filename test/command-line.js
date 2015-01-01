@@ -44,6 +44,14 @@ describe('command line with HTML output', function () {
       done();
     });
   });
+  it('cat input.jade | jade --no-debug', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    run('--no-debug', 'cat input.jade | ', function (err, stdout, stderr) {
+      if (err) return done(err);
+      assert(stdout === '<div class="foo">bar</div>');
+      done();
+    });
+  });
 });
 
 describe('command line with client JS output', function () {
@@ -53,6 +61,16 @@ describe('command line with client JS output', function () {
     run('--no-debug --client --name myTemplate input.jade', function (err) {
       if (err) return done(err);
       var template = Function('', fs.readFileSync(__dirname + '/temp/input.js', 'utf8') + ';return myTemplate;')();
+      assert(template() === '<div class="foo">bar</div>');
+      done();
+    });
+  });
+  it('cat input.jade | jade --no-debug --client --name myTemplate', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
+    run('--no-debug --client --name myTemplate', 'cat input.jade | ', function (err, stdout) {
+      if (err) return done(err);
+      var template = Function('', stdout + ';return myTemplate;')();
       assert(template() === '<div class="foo">bar</div>');
       done();
     });
