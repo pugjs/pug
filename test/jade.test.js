@@ -910,6 +910,11 @@ describe('jade', function(){
       assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
     });
 
+    it('should support .compile() locals in \'self\' hash', function(){
+      var fn = jade.compile('p= self.foo', {self: true});
+      assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
+    });
+
     it('should support .compile() no debug', function(){
       var fn = jade.compile('p foo\np #{bar}', {compileDebug: false});
       assert.equal('<p>foo</p><p>baz</p>', fn({bar: 'baz'}));
