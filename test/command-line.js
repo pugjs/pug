@@ -5,12 +5,38 @@ var path = require('path');
 var assert = require('assert');
 var cp = require('child_process');
 
+// Sets directory to output coverage data to
+// Incremented every time getRunner() is called.
+var covCount = 1;
+var isIstanbul = process.env.running_under_istanbul;
+
+/**
+ * Gets an array containing the routine to run the jade CLI. If this file is
+ * being processed with istanbul then this function will return a routine
+ * asking istanbul to store coverage data to a unique directory
+ * (cov-pt<covCount>/).
+ */
+function getRunner() {
+  var jadeExe = __dirname + '/../bin/jade.js';
+
+  if (!isIstanbul) return ['node', jadeExe];
+  else {
+    return ['istanbul', 'cover',
+            '--print',  'none',
+            '--root',   process.cwd(),
+            '--dir',    process.cwd() + '/cov-pt' + (covCount++),
+            jadeExe,
+            '--'];
+  }
+}
+
 function run(args, stdin, callback) {
   if (arguments.length === 2) {
     callback = stdin;
     stdin    = null;
   }
-  cp.exec((stdin || '') + 'node ' + JSON.stringify(path.resolve(__dirname + '/../bin/jade.js')) + ' ' + args, {
+  var runner = getRunner().join(' ');
+  cp.exec((stdin || '') + runner + ' ' + args, {
     cwd: __dirname + '/temp'
   }, callback);
 }
@@ -24,6 +50,12 @@ try {
 }
 
 describe('command line with HTML output', function () {
+  if (isIstanbul) {
+    this.timeout(6000);
+    this.slow(4500);
+  } else {
+    this.slow(250);
+  }
   it('jade --no-debug input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
@@ -55,6 +87,12 @@ describe('command line with HTML output', function () {
 });
 
 describe('command line with client JS output', function () {
+  if (isIstanbul) {
+    this.timeout(6000);
+    this.slow(4500);
+  } else {
+    this.slow(250);
+  }
   it('jade --no-debug --client --name myTemplate input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
@@ -104,10 +142,18 @@ describe('command line watch mode', function () {
     watchProc.kill('SIGINT');
   });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
+    if (isIstanbul) {
+      this.timeout(6000);
+      this.slow(4500);
+    } else {
+      this.slow(300);
+    }
     fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 1)");');
-    var args = [__dirname + '/../bin/jade.js', '--no-debug', '--client', '--name-after-file', '--watch', 'input-file.jade']
-    watchProc = cp.spawn('node', args,  {
+    var cmd = getRunner();
+    cmd.push.apply(cmd,
+      ['--no-debug', '--client', '--name-after-file', '--watch', 'input-file.jade']);
+    watchProc = cp.spawn(cmd[0], cmd.slice(1),  {
       cwd: __dirname + '/temp'
     });
 
