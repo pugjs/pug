@@ -34,6 +34,16 @@ describe('command line with HTML output', function () {
       done();
     });
   });
+  it('jade --no-debug --obj "{\'loc\':\'str\'}" input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    run('--no-debug --obj "{\'loc\':\'str\'}" input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
+      assert(html === '<div class="foo">str</div>');
+      done();
+    });
+  });
 });
 
 describe('command line with client JS output', function () {
