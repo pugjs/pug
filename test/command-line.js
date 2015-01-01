@@ -5,8 +5,12 @@ var path = require('path');
 var assert = require('assert');
 var cp = require('child_process');
 
-function run(args, callback) {
-  cp.exec('node ' + JSON.stringify(path.resolve(__dirname + '/../bin/jade.js')) + ' ' + args, {
+function run(args, stdin, callback) {
+  if (arguments.length === 2) {
+    callback = stdin;
+    stdin    = null;
+  }
+  cp.exec((stdin || '') + 'node ' + JSON.stringify(path.resolve(__dirname + '/../bin/jade.js')) + ' ' + args, {
     cwd: __dirname + '/temp'
   }, callback);
 }
