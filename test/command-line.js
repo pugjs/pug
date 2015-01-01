@@ -23,7 +23,20 @@ try {
   }
 }
 
-describe('command line', function () {
+describe('command line with HTML output', function () {
+  it('jade --no-debug input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    run('--no-debug input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
+      assert(html === '<div class="foo">bar</div>');
+      done();
+    });
+  });
+});
+
+describe('command line with client JS output', function () {
   it('jade --no-debug --client --name myTemplate input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
