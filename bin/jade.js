@@ -126,6 +126,9 @@ if (files.length) {
         }
       });
     });
+    process.on('SIGINT', function() {
+      process.exit(1);
+    });
   } else {
     files.forEach(renderFile);
   }
