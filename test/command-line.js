@@ -66,6 +66,16 @@ describe('command line with HTML output', function () {
       done();
     });
   });
+  it('jade --no-debug -E special-html input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input.special-html', '<p>output not written</p>');
+    run('--no-debug -E special-html input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/input.special-html', 'utf8');
+      assert(html === '<div class="foo">bar</div>');
+      done();
+    });
+  });
   it('jade --no-debug --obj "{\'loc\':\'str\'}" input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
@@ -99,6 +109,16 @@ describe('command line with client JS output', function () {
     run('--no-debug --client --name myTemplate input.jade', function (err) {
       if (err) return done(err);
       var template = Function('', fs.readFileSync(__dirname + '/temp/input.js', 'utf8') + ';return myTemplate;')();
+      assert(template() === '<div class="foo">bar</div>');
+      done();
+    });
+  });
+  it('jade --no-debug --client -E special-js --name myTemplate input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input.special-js', 'throw new Error("output not written");');
+    run('--no-debug --client -E special-js --name myTemplate input.jade', function (err) {
+      if (err) return done(err);
+      var template = Function('', fs.readFileSync(__dirname + '/temp/input.special-js', 'utf8') + ';return myTemplate;')();
       assert(template() === '<div class="foo">bar</div>');
       done();
     });
