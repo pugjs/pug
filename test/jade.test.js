@@ -7,6 +7,14 @@ var jade = require('../');
 
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
+try {
+  fs.mkdirSync(__dirname + '/temp');
+} catch (ex) {
+  if (ex.code !== 'EEXIST') {
+    throw ex;
+  }
+}
+
 describe('jade', function(){
 
   describe('.properties', function(){
@@ -872,6 +880,21 @@ describe('jade', function(){
     it('does not produce warnings for issue-1593', function () {
       jade.compileFile(__dirname + '/fixtures/issue-1593/index.jade');
     });
+    it('should support caching (pass 1)', function () {
+      fs.writeFileSync(__dirname + '/temp/input-compileFile.jade', '.foo bar');
+      var fn = jade.compileFile(__dirname + '/temp/input-compileFile.jade',
+                                { cache: true });
+      var expected = '<div class="foo">bar</div>';
+      assert(fn() === expected);
+    });
+    it('should support caching (pass 2)', function () {
+      // Poison the input file
+      fs.writeFileSync(__dirname + '/temp/input-compileFile.jade', '.big fat hen');
+      var fn = jade.compileFile(__dirname + '/temp/input-compileFile.jade',
+                                { cache: true });
+      var expected = '<div class="foo">bar</div>';
+      assert(fn() === expected);
+    });
   });
 
   describe('.render()', function(){
@@ -962,6 +985,23 @@ describe('jade', function(){
         done();
       });
     });
+    it('should support caching (pass 1)', function (done) {
+      fs.writeFileSync(__dirname + '/temp/input-renderFile.jade', '.foo bar');
+      jade.renderFile(__dirname + '/temp/input-renderFile.jade', { cache: true }, function (err, actual) {
+        if (err) return done(err);
+        assert.equal('<div class="foo">bar</div>', actual);
+        done();
+      });
+    });
+    it('should support caching (pass 2)', function (done) {
+      // Poison the input file
+      fs.writeFileSync(__dirname + '/temp/input-renderFile.jade', '.big fat hen');
+      jade.renderFile(__dirname + '/temp/input-renderFile.jade', { cache: true }, function (err, actual) {
+        if (err) return done(err);
+        assert.equal('<div class="foo">bar</div>', actual);
+        done();
+      });
+    });
   });
 
   describe('.compileFileClient(path, options)', function () {
@@ -978,6 +1018,25 @@ describe('jade', function(){
       var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
       var actual = fn({name: 'foo'}).replace(/\s/g, '');
       assert(actual === expected);
+    });
+    it('should support caching (pass 1)', function () {
+      fs.writeFileSync(__dirname + '/temp/input-compileFileClient.jade', '.foo bar');
+      var src = jade.compileFileClient(__dirname + '/temp/input-compileFileClient.jade',
+                                        { name: 'myTemplateName',
+                                          cache: true });
+      var expected = '<div class="foo">bar</div>';
+      var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
+      assert(fn() === expected);
+    });
+    it('should support caching (pass 2)', function () {
+      // Poison the input file
+      fs.writeFileSync(__dirname + '/temp/input-compileFileClient.jade', '.big fat hen');
+      var src = jade.compileFileClient(__dirname + '/temp/input-compileFileClient.jade',
+                                        { name: 'myTemplateName',
+                                          cache: true });
+      var expected = '<div class="foo">bar</div>';
+      var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
+      assert(fn() === expected);
     });
   });
 
