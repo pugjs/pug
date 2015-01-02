@@ -27,7 +27,7 @@ describe('jade', function(){
     });
   });
 
-  describe('.compile()', function(){
+  describe('unit tests with .render()', function(){
     it('should support doctypes', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', jade.render('doctype xml'));
       assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
@@ -877,6 +877,13 @@ describe('jade', function(){
       , jade.render(str, { filename: __dirname + '/jade.test.js' }));
     });
 
+    it('should not fail on js newlines', function(){
+      assert.equal("<p>foo\u2028bar</p>", jade.render("p foo\u2028bar"));
+      assert.equal("<p>foo\u2029bar</p>", jade.render("p foo\u2029bar"));
+    });
+  });
+
+  describe('.compileFile()', function () {
     it('does not produce warnings for issue-1593', function () {
       jade.compileFile(__dirname + '/fixtures/issue-1593/index.jade');
     });
@@ -897,7 +904,7 @@ describe('jade', function(){
     });
   });
 
-  describe('.render()', function(){
+  describe('.render()', function () {
     it('should support .jade.render(str, fn)', function(){
       jade.render('p foo bar', function(err, str){
         assert.ok(!err);
@@ -922,7 +929,9 @@ describe('jade', function(){
         assert.equal('<p>foo bar</p>', str);
       });
     });
+  })
 
+  describe('.compile()', function(){
     it('should support .compile()', function(){
       var fn = jade.compile('p foo');
       assert.equal('<p>foo</p>', fn());
@@ -1121,10 +1130,6 @@ describe('jade', function(){
         path.resolve(__dirname + '/dependencies/dependency2.jade'),
         path.resolve(__dirname + '/dependencies/dependency3.jade')
       ],info.dependencies);
-    });
-    it('should not fail on js newlines', function(){
-      assert.equal("<p>foo\u2028bar</p>", jade.render("p foo\u2028bar"));
-      assert.equal("<p>foo\u2029bar</p>", jade.render("p foo\u2029bar"));
     });
   });
 });
