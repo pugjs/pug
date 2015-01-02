@@ -55,6 +55,9 @@ describe('deprecated functions', function () {
     tag.setAttribute('href', 'value');
     assert(tag.getAttribute('href') === 'value');
   });
+});
+
+describe('deprecated options or local names', function () {
   deprecate('jade.compile(str, {client: true})', function () {
     var fn = jade.compile('div', {client: true});
     var fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
