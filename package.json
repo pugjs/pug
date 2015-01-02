@@ -25,6 +25,8 @@
     "character-parser": "1.2.1",
     "commander": "~2.5.0",
     "constantinople": "~3.0.1",
+    "jade-lexer": "https://github.com/jadejs/jade-lexer/archive/master.tar.gz",
+    "jade-parser": "https://github.com/jadejs/jade-parser/archive/master.tar.gz",
     "mkdirp": "~0.5.0",
     "transformers": "2.1.0",
     "void-elements": "~1.0.0",
