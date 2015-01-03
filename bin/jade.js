@@ -190,19 +190,11 @@ function renderFile(path) {
         var dir = resolve(dirname(path));
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
-          try {
-            var output = options.client ? fn : fn(options);
-            fs.writeFile(path, output, function(err){
-              if (err) throw err;
-              console.log('  \033[90mrendered \033[36m%s\033[0m', path);
-            });
-          } catch (e) {
-            if (options.watch) {
-              console.error(e.stack || e.message || e);
-            } else {
-              throw e
-            }
-          }
+          var output = options.client ? fn : fn(options);
+          fs.writeFile(path, output, function(err){
+            if (err) throw err;
+            console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+          });
         });
       });
     // Found directory
