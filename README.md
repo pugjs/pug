@@ -9,10 +9,10 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
 
- [![Build Status](https://img.shields.io/travis/jadejs/jade/master.svg)](https://travis-ci.org/jadejs/jade)
- [![Dependency Status](https://img.shields.io/gemnasium/jadejs/jade.svg)](https://gemnasium.com/jadejs/jade)
- [![NPM version](https://img.shields.io/npm/v/jade.svg)](http://badge.fury.io/js/jade)
- [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/jadejs/jade?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+ [![Build Status](https://img.shields.io/travis/jadejs/jade/master.svg?style=flat)](https://travis-ci.org/jadejs/jade)
+ [![Dependency Status](https://img.shields.io/gemnasium/jadejs/jade.svg?style=flat)](https://gemnasium.com/jadejs/jade)
+ [![NPM version](https://img.shields.io/npm/v/jade.svg?style=flat)](http://badge.fury.io/js/jade)
+ [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/jadejs/jade?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Installation
 
