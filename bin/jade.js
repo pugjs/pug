@@ -113,6 +113,7 @@ if (files.length) {
       process.on('uncaughtException', function(err) {
         console.error(err.stack || err.message || err);
       });
+      renderFile(filename);
       fs.watchFile(filename, {persistent: true, interval: 200},
                    function (curr, prev) {
         if (curr.mtime === prev.mtime) return;
