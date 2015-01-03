@@ -966,6 +966,24 @@ describe('jade', function(){
     });
   });
 
+  describe('.compileClient()', function () {
+    it('should support .jade.compileClient(str)', function () {
+      var src = fs.readFileSync(__dirname + '/cases/basic.jade');
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      var fn = jade.compileClient(src);
+      fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
+      var actual = fn({name: 'foo'}).replace(/\s/g, '');
+      assert(actual === expected);
+    });
+    it('should support .jade.compileClient(str, options)', function () {
+      var src = '.bar= self.foo'
+      var fn = jade.compileClient(src, {self: true});
+      fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
+      var actual = fn({foo: 'baz'});
+      assert(actual === '<div class="bar">baz</div>');
+    });
+  });
+
   describe('.renderFile()', function () {
     it('will synchronously return a string', function () {
       var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
