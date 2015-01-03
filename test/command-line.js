@@ -164,7 +164,7 @@ describe('command line watch mode', function () {
     watchProc.stderr.removeAllListeners('data');
     watchProc.stdout.removeAllListeners('data');
     watchProc.removeAllListeners('error');
-    watchProc.removeAllListeners('exit');
+    watchProc.removeAllListeners('close');
 
     watchProc.kill('SIGINT');
   });
@@ -185,6 +185,7 @@ describe('command line watch mode', function () {
     });
 
     watchProc.stdout.setEncoding('utf8');
+    watchProc.stderr.setEncoding('utf8');
     watchProc
       .on('error', done)
       .stdout.on('data', function(buf) {
@@ -222,5 +223,47 @@ describe('command line watch mode', function () {
           return done();
         }
       });
+  });
+  it('jade --no-debug --client --name-after-file --watch input-file.jade (intentional errors in the jade file)', function (done) {
+    // Just to be sure
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+
+    var stderr = '';
+    var errored = false;
+    watchProc
+      .on('error', done)
+      .on('close', function() {
+        errored = true;
+        return done(new Error('Jade should not terminate in watch mode'));
+      })
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if (/.*rendered.*/.test(stdout)) {
+          stdout = '';
+          return done(new Error('Jade compiles an erroneous file w/o error'));
+        }
+      })
+    watchProc
+      .stderr.on('data', function(buf) {
+        stderr += buf;
+        if (!/.*Invalid indentation.*/.test(stderr)) return;
+        stderr = '';
+        var template = Function('', fs.readFileSync(__dirname + '/temp/input-file.js', 'utf8') + ';return inputFileTemplate;')();
+        assert(template() === '<div class="foo">baz</div>');
+
+        watchProc.stderr.removeAllListeners('data');
+        watchProc.stdout.removeAllListeners('data');
+        watchProc.removeAllListeners('error');
+        watchProc.removeAllListeners('exit');
+        // The stderr event will always fire sooner than the close event.
+        // Wait for it.
+        setTimeout(function() {
+          if (!errored) done();
+        }, 100);
+      });
+    fs.writeFileSync(__dirname + '/temp/input-file.jade',
+                     fs.readFileSync(__dirname
+                                     + '/anti-cases/tabs-and-spaces.jade'));
   });
 });
