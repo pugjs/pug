@@ -109,21 +109,14 @@ if (files.length) {
   console.log();
   if (options.watch) {
     files.forEach(function(filename) {
-      try {
-        renderFile(filename);
-      } catch (ex) {
-        // keep watching when error occured.
-        console.error(ex.stack || ex.message || ex);
-      }
+      // keep watching when error occured.
+      process.on('uncaughtException', function(err) {
+        console.error(err.stack || err.message || err);
+      });
       fs.watchFile(filename, {persistent: true, interval: 200},
                    function (curr, prev) {
         if (curr.mtime === prev.mtime) return;
-        try {
-          renderFile(filename);
-        } catch (ex) {
-          // keep watching when error occured.
-          console.error(ex.stack || ex.message || ex);
-        }
+        renderFile(filename);
       });
     });
     process.on('SIGINT', function() {
