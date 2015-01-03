@@ -23,6 +23,7 @@ function getRunner() {
   else {
     return ['istanbul', 'cover',
             '--print',  'none',
+            '--report', 'none',
             '--root',   process.cwd(),
             '--dir',    process.cwd() + '/cov-pt' + (covCount++),
             jadeExe,

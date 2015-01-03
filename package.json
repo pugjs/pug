@@ -66,7 +66,7 @@
   },
   "scripts": {
     "test": "mocha -R spec && npm run coverage",
-    "coverage": "rimraf cov-pt* && istanbul cover --dir cov-pt0 node_modules/mocha/bin/_mocha && istanbul report --include cov-pt\*/coverage.json",
+    "coverage": "rimraf cov-pt* && istanbul cover --report none --dir cov-pt0 node_modules/mocha/bin/_mocha && istanbul report --include cov-pt\*/coverage.json",
     "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
