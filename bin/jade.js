@@ -10,7 +10,7 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
-  , exists = fs.existsSync || path.existsSync
+  , exists = fs.existsSync || /* istanbul ignore next */ path.existsSync
   , join = path.join
   , mkdirp = require('mkdirp')
   , jade = require('../');
@@ -111,7 +111,8 @@ if (files.length) {
     files.forEach(function(filename) {
       // keep watching when error occured.
       process.on('uncaughtException', function(err) {
-        console.error(err.stack || err.message || err);
+        console.error(err.stack
+                      || /* istanbul ignore next */ (err.message || err));
       });
       renderFile(filename);
       fs.watchFile(filename, {persistent: true, interval: 200},
