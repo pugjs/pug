@@ -160,6 +160,12 @@ describe('command line watch mode', function () {
   var watchProc;
   var stdout = '';
   after(function() {
+    // Just to be sure
+    watchProc.stderr.removeAllListeners('data');
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+    watchProc.removeAllListeners('exit');
+
     watchProc.kill('SIGINT');
   });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
@@ -195,6 +201,10 @@ describe('command line watch mode', function () {
       });
   });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 2)', function (done) {
+    // Just to be sure
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+
     fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 2)");');
     fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo baz');
 
