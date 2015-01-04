@@ -7,7 +7,6 @@
 var fs = require('fs')
   , program = require('commander')
   , path = require('path')
-  , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
   , exists = fs.existsSync || /* istanbul ignore next */ path.existsSync
@@ -187,7 +186,7 @@ function renderFile(path) {
         else                     var extname = '.html';
 
         path = path.replace(re, extname);
-        if (program.out) path = join(program.out, basename(path));
+        if (program.out) path = join(program.out, path);
         var dir = resolve(dirname(path));
         mkdirp(dir, 0755, function(err){
           if (err) throw err;
