@@ -1,4 +1,4 @@
-# [![Jade - Node.js template engine](https://github.com/jadejs/jade/raw/logo/docs/logos/JadeBlack.svg)](http://jade-lang.com/)
+# [![Jade - Node.js template engine](http://jade-lang.com/logos/JadeBlack.svg)](http://jade-lang.com/)
 
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
