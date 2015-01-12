@@ -109,16 +109,21 @@ if (files.length) {
   console.log();
   if (options.watch) {
     files.forEach(function(filename) {
-      // keep watching when error occured.
-      process.on('uncaughtException', function(err) {
-        console.error(err.stack
-                      || /* istanbul ignore next */ (err.message || err));
-      });
-      renderFile(filename);
+      try {
+        renderFile(filename);
+      } catch (e) {
+        // keep watching when error occured.
+        console.error(e.stack || e.message || e);
+      }
       fs.watchFile(filename, {persistent: true, interval: 200},
                    function (curr, prev) {
-        if (curr.mtime === prev.mtime) return;
-        renderFile(filename);
+        if (curr.mtime.getTime() === prev.mtime.getTime()) return;
+        try {
+          renderFile(filename);
+        } catch (e) {
+          // keep watching when error occured.
+          console.error(e.stack || e.message || e);
+        }
       });
     });
     process.on('SIGINT', function() {
@@ -169,45 +174,35 @@ function stdin() {
 
 function renderFile(path) {
   var re = /\.jade$/;
-  fs.lstat(path, function(err, stat) {
-    if (err) throw err;
-    // Found jade file
-    if (stat.isFile() && re.test(path)) {
-      fs.readFile(path, 'utf8', function(err, str){
-        if (err) throw err;
-        options.filename = path;
-        if (program.nameAfterFile) {
-          options.name = getNameFromFileName(path);
-        }
-        var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
-
-        // --extension
-        if (program.extension)   var extname = '.' + program.extension;
-        else if (options.client) var extname = '.js';
-        else                     var extname = '.html';
-
-        path = path.replace(re, extname);
-        if (program.out) path = join(program.out, basename(path));
-        var dir = resolve(dirname(path));
-        mkdirp(dir, 0755, function(err){
-          if (err) throw err;
-          var output = options.client ? fn : fn(options);
-          fs.writeFile(path, output, function(err){
-            if (err) throw err;
-            console.log('  \033[90mrendered \033[36m%s\033[0m', path);
-          });
-        });
-      });
-    // Found directory
-    } else if (stat.isDirectory()) {
-      fs.readdir(path, function(err, files) {
-        if (err) throw err;
-        files.map(function(filename) {
-          return path + '/' + filename;
-        }).forEach(renderFile);
-      });
+  var stat = fs.lstatSync(path);
+  // Found jade file/\.jade$/
+  if (stat.isFile() && re.test(path)) {
+    var str = fs.readFileSync(path, 'utf8');
+    options.filename = path;
+    if (program.nameAfterFile) {
+      options.name = getNameFromFileName(path);
     }
-  });
+    var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
+
+    // --extension
+    if (program.extension)   var extname = '.' + program.extension;
+    else if (options.client) var extname = '.js';
+    else                     var extname = '.html';
+
+    path = path.replace(re, extname);
+    if (program.out) path = join(program.out, basename(path));
+    var dir = resolve(dirname(path));
+    mkdirp.sync(dir, 0755);
+    var output = options.client ? fn : fn(options);
+    fs.writeFileSync(path, output);
+    console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+  // Found directory
+  } else if (stat.isDirectory()) {
+    var files = fs.readdirSync(path);
+    files.map(function(filename) {
+      return path + '/' + filename;
+    }).forEach(renderFile);
+  }
 }
 
 /**

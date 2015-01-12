@@ -168,6 +168,10 @@ describe('command line watch mode', function () {
 
     watchProc.kill('SIGINT');
   });
+  afterEach(function (done) {
+    // jade --watch can only detect changes that are at least 1 second apart
+    setTimeout(done, 1000);
+  });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
     if (isIstanbul) {
       this.timeout(6000);
