@@ -117,7 +117,7 @@ if (files.length) {
       }
       fs.watchFile(filename, {persistent: true, interval: 200},
                    function (curr, prev) {
-        if (curr.mtime === prev.mtime) return;
+        if (curr.mtime.getTime() === prev.mtime.getTime()) return;
         try {
           renderFile(filename);
         } catch (e) {
