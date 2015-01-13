@@ -66,7 +66,7 @@
     }
   },
   "scripts": {
-    "test": "mocha -R spec && npm run coverage",
+    "test": "mocha -R spec",
     "precoverage": "rimraf coverage && rimraf cov-pt*",
     "coverage": "istanbul cover --report none --dir cov-pt0 node_modules/mocha/bin/_mocha -- -R dot",
     "postcoverage": "istanbul report --include cov-pt\\*/coverage.json && rimraf cov-pt*",
