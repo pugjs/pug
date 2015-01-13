@@ -52,8 +52,8 @@ try {
 
 describe('command line with HTML output', function () {
   if (isIstanbul) {
-    this.timeout(6000);
-    this.slow(4500);
+    this.timeout(8000);
+    this.slow(6000);
   } else {
     this.slow(250);
   }
@@ -99,8 +99,8 @@ describe('command line with HTML output', function () {
 
 describe('command line with client JS output', function () {
   if (isIstanbul) {
-    this.timeout(6000);
-    this.slow(4500);
+    this.timeout(8000);
+    this.slow(6000);
   } else {
     this.slow(250);
   }
@@ -174,8 +174,8 @@ describe('command line watch mode', function () {
   });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
     if (isIstanbul) {
-      this.timeout(6000);
-      this.slow(4500);
+      this.timeout(8000);
+      this.slow(6000);
     } else {
       this.slow(300);
     }
