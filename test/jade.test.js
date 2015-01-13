@@ -7,6 +7,14 @@ var jade = require('../');
 
 var perfTest = fs.readFileSync(__dirname + '/fixtures/perf.jade', 'utf8')
 
+try {
+  fs.mkdirSync(__dirname + '/temp');
+} catch (ex) {
+  if (ex.code !== 'EEXIST') {
+    throw ex;
+  }
+}
+
 describe('jade', function(){
 
   describe('.properties', function(){
@@ -19,7 +27,7 @@ describe('jade', function(){
     });
   });
 
-  describe('.compile()', function(){
+  describe('unit tests with .render()', function(){
     it('should support doctypes', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', jade.render('doctype xml'));
       assert.equal('<!DOCTYPE html>', jade.render('doctype html'));
@@ -869,12 +877,34 @@ describe('jade', function(){
       , jade.render(str, { filename: __dirname + '/jade.test.js' }));
     });
 
-    it('does not produce warnings for issue-1593', function () {
-      jade.compileFile(__dirname + '/fixtures/issue-1593/index.jade');
+    it('should not fail on js newlines', function(){
+      assert.equal("<p>foo\u2028bar</p>", jade.render("p foo\u2028bar"));
+      assert.equal("<p>foo\u2029bar</p>", jade.render("p foo\u2029bar"));
     });
   });
 
-  describe('.render()', function(){
+  describe('.compileFile()', function () {
+    it('does not produce warnings for issue-1593', function () {
+      jade.compileFile(__dirname + '/fixtures/issue-1593/index.jade');
+    });
+    it('should support caching (pass 1)', function () {
+      fs.writeFileSync(__dirname + '/temp/input-compileFile.jade', '.foo bar');
+      var fn = jade.compileFile(__dirname + '/temp/input-compileFile.jade',
+                                { cache: true });
+      var expected = '<div class="foo">bar</div>';
+      assert(fn() === expected);
+    });
+    it('should support caching (pass 2)', function () {
+      // Poison the input file
+      fs.writeFileSync(__dirname + '/temp/input-compileFile.jade', '.big fat hen');
+      var fn = jade.compileFile(__dirname + '/temp/input-compileFile.jade',
+                                { cache: true });
+      var expected = '<div class="foo">bar</div>';
+      assert(fn() === expected);
+    });
+  });
+
+  describe('.render()', function () {
     it('should support .jade.render(str, fn)', function(){
       jade.render('p foo bar', function(err, str){
         assert.ok(!err);
@@ -899,7 +929,9 @@ describe('jade', function(){
         assert.equal('<p>foo bar</p>', str);
       });
     });
+  })
 
+  describe('.compile()', function(){
     it('should support .compile()', function(){
       var fn = jade.compile('p foo');
       assert.equal('<p>foo</p>', fn());
@@ -934,6 +966,24 @@ describe('jade', function(){
     });
   });
 
+  describe('.compileClient()', function () {
+    it('should support .jade.compileClient(str)', function () {
+      var src = fs.readFileSync(__dirname + '/cases/basic.jade');
+      var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
+      var fn = jade.compileClient(src);
+      fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
+      var actual = fn({name: 'foo'}).replace(/\s/g, '');
+      assert(actual === expected);
+    });
+    it('should support .jade.compileClient(str, options)', function () {
+      var src = '.bar= self.foo'
+      var fn = jade.compileClient(src, {self: true});
+      fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
+      var actual = fn({foo: 'baz'});
+      assert(actual === '<div class="bar">baz</div>');
+    });
+  });
+
   describe('.renderFile()', function () {
     it('will synchronously return a string', function () {
       var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
@@ -962,6 +1012,23 @@ describe('jade', function(){
         done();
       });
     });
+    it('should support caching (pass 1)', function (done) {
+      fs.writeFileSync(__dirname + '/temp/input-renderFile.jade', '.foo bar');
+      jade.renderFile(__dirname + '/temp/input-renderFile.jade', { cache: true }, function (err, actual) {
+        if (err) return done(err);
+        assert.equal('<div class="foo">bar</div>', actual);
+        done();
+      });
+    });
+    it('should support caching (pass 2)', function (done) {
+      // Poison the input file
+      fs.writeFileSync(__dirname + '/temp/input-renderFile.jade', '.big fat hen');
+      jade.renderFile(__dirname + '/temp/input-renderFile.jade', { cache: true }, function (err, actual) {
+        if (err) return done(err);
+        assert.equal('<div class="foo">bar</div>', actual);
+        done();
+      });
+    });
   });
 
   describe('.compileFileClient(path, options)', function () {
@@ -978,6 +1045,25 @@ describe('jade', function(){
       var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
       var actual = fn({name: 'foo'}).replace(/\s/g, '');
       assert(actual === expected);
+    });
+    it('should support caching (pass 1)', function () {
+      fs.writeFileSync(__dirname + '/temp/input-compileFileClient.jade', '.foo bar');
+      var src = jade.compileFileClient(__dirname + '/temp/input-compileFileClient.jade',
+                                        { name: 'myTemplateName',
+                                          cache: true });
+      var expected = '<div class="foo">bar</div>';
+      var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
+      assert(fn() === expected);
+    });
+    it('should support caching (pass 2)', function () {
+      // Poison the input file
+      fs.writeFileSync(__dirname + '/temp/input-compileFileClient.jade', '.big fat hen');
+      var src = jade.compileFileClient(__dirname + '/temp/input-compileFileClient.jade',
+                                        { name: 'myTemplateName',
+                                          cache: true });
+      var expected = '<div class="foo">bar</div>';
+      var fn = Function('jade', src + '\nreturn myTemplateName;')(jade.runtime);
+      assert(fn() === expected);
     });
   });
 
@@ -1062,10 +1148,6 @@ describe('jade', function(){
         path.resolve(__dirname + '/dependencies/dependency2.jade'),
         path.resolve(__dirname + '/dependencies/dependency3.jade')
       ],info.dependencies);
-    });
-    it('should not fail on js newlines', function(){
-      assert.equal("<p>foo\u2028bar</p>", jade.render("p foo\u2028bar"));
-      assert.equal("<p>foo\u2029bar</p>", jade.render("p foo\u2029bar"));
     });
   });
 });
