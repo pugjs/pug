@@ -10,7 +10,6 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
-  , exists = fs.existsSync || /* istanbul ignore next */ path.existsSync
   , join = path.join
   , mkdirp = require('mkdirp')
   , jade = require('../');
@@ -62,7 +61,7 @@ program.parse(process.argv);
 // options given, parse them
 
 if (program.obj) {
-  if (exists(program.obj)) {
+  if (fs.existsSync(program.obj)) {
     options = JSON.parse(fs.readFileSync(program.obj));
   } else {
     options = eval('(' + program.obj + ')');
@@ -212,7 +211,7 @@ function renderFile(path) {
  * @returns {String}
  */
 function getNameFromFileName(filename) {
-  var file = path.basename(filename, '.jade');
+  var file = basename(filename, '.jade');
   return file.toLowerCase().replace(/[^a-z0-9]+([a-z])/g, function (_, character) {
     return character.toUpperCase();
   }) + 'Template';
