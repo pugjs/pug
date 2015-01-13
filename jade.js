@@ -789,7 +789,7 @@ exports.filters = require('./filters');
  * Utilities.
  */
 
-exports.utils = require('./utils');
+exports.utils = utils;
 
 /**
  * Expose `Compiler`.
@@ -899,6 +899,32 @@ function parse(str, options){
 }
 
 /**
+ * Get the template from a string or a file, either compiled on-the-fly or
+ * read from cache (if enabled), and cache the template if needed.
+ *
+ * If `str` is not set, the file specified in `options.filename` will be read.
+ *
+ * If `options.cache` is true, this function reads the file from
+ * `options.filename` so it must be set prior to calling this function.
+ *
+ * @param {Object} options
+ * @param {String=} str
+ * @return {Function}
+ * @api private
+ */
+function handleTemplateCache (options, str) {
+  var key = options.filename;
+  if (options.cache && exports.cache[key]) {
+    return exports.cache[key];
+  } else {
+    if (!str) str = fs.readFileSync(options.filename, 'utf8');
+    var templ = exports.compile(str, options);
+    if (options.cache) exports.cache[key] = templ;
+    return templ;
+  }
+}
+
+/**
  * Compile a `Function` representation of the given jade `str`.
  *
  * Options:
@@ -942,7 +968,7 @@ exports.compile = function(str, options){
     res.toString = function () {
       var err = new Error('The `client` option is deprecated, use the `jade.compileClient` method instead');
       err.name = 'Warning';
-      console.error(err.stack || err.message);
+      console.error(err.stack || /* istanbul ignore next */ err.message);
       return exports.compileClient(str, options);
     };
   }
@@ -1008,17 +1034,8 @@ exports.compileClient = function(str, options){
  */
 exports.compileFile = function (path, options) {
   options = options || {};
-
-  var key = path + ':string';
-
   options.filename = path;
-  var str = options.cache
-    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
-    : fs.readFileSync(path, 'utf8');
-
-  return options.cache
-    ? exports.cache[path] || (exports.cache[path] = exports.compile(str, options))
-    : exports.compile(str, options);
+  return handleTemplateCache(options);
 };
 
 /**
@@ -1058,11 +1075,7 @@ exports.render = function(str, options, fn){
     throw new Error('the "filename" option is required for caching');
   }
 
-  var path = options.filename;
-  var tmpl = options.cache
-    ? exports.cache[path] || (exports.cache[path] = exports.compile(str, options))
-    : exports.compile(str, options);
-  return tmpl(options);
+  return handleTemplateCache(options, str)(options);
 };
 
 /**
@@ -1092,13 +1105,8 @@ exports.renderFile = function(path, options, fn){
 
   options = options || {};
 
-  var key = path + ':string';
-
   options.filename = path;
-  var str = options.cache
-    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
-    : fs.readFileSync(path, 'utf8');
-  return exports.render(str, options);
+  return handleTemplateCache(options)(options);
 };
 
 
@@ -1112,16 +1120,19 @@ exports.renderFile = function(path, options, fn){
  */
 
 exports.compileFileClient = function(path, options){
+  var key = path + ':client';
   options = options || {};
 
-  var key = path + ':string';
-
   options.filename = path;
-  var str = options.cache
-    ? exports.cache[key] || (exports.cache[key] = fs.readFileSync(path, 'utf8'))
-    : fs.readFileSync(path, 'utf8');
 
-  return exports.compileClient(str, options);
+  if (options.cache && exports.cache[key]) {
+      return exports.cache[key];
+  }
+
+  var str = fs.readFileSync(options.filename, 'utf8');
+  var out = exports.compileClient(str, options);
+  if (options.cache) exports.cache[key] = out;
+  return out;
 };
 
 /**

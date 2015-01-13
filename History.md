@@ -1,3 +1,14 @@
+1.9.0 / 2014-01-13
+==================
+
+  * Fix `--watch` sometimes dying when there were file-system errors ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix `--watch` by using `fs.watchFile` correctly ([@TimothyGu](https://github.com/TimothyGu))
+  * Fix errors with using the CLI to compile from stdin
+  * Better looking badges ([@TimothyGu](https://github.com/TimothyGu))
+  * Added `--extension` to CLI([@nicocedron](https://github.com/nicocedron) and [@TimothyGu](https://github.com/TimothyGu))
+  * Refactor and improve internal cache handling ([@TimothyGu](https://github.com/TimothyGu))
+  * Loads more tests ([@TimothyGu](https://github.com/TimothyGu))
+
 1.8.2 / 2014-12-16
 ==================
 
