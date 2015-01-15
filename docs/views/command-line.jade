@@ -19,16 +19,19 @@ block content
         ### Options
 
         ```
-        -h, --help         output usage information
-        -V, --version      output the version number
-        -O, --obj <str>    javascript options object
-        -o, --out <dir>    output the compiled html to <dir>
-        -p, --path <path>  filename used to resolve includes
-        -P, --pretty       compile pretty html output
-        -c, --client       compile function for client-side runtime.js
-        -D, --no-debug     compile without debugging (smaller functions)
-        -w, --watch        watch files for changes and automatically re-render
-        --doctype          specify the doctype if it is not already specified by the template
+        -h, --help             output usage information
+        -V, --version          output the version number
+        -O, --obj <str>        javascript options object
+        -o, --out <dir>        output the compiled html to <dir>
+        -p, --path <path>      filename used to resolve includes
+        -P, --pretty           compile pretty html output
+        -c, --client           compile function for client-side runtime.js
+        -n, --name <str>       the name of the compiled template (requires --client)
+        -D, --no-debug         compile without debugging (smaller functions)
+        -w, --watch            watch files for changes and automatically re-render
+        -E, --extension <ext>  specify the output file extension
+        --name-after-file      name the template after the last section of the file path (requires --client and overriden by --name)
+        --doctype <str>        specify the doctype on the command line (useful if it is not specified by the template)
         ```
 
         ### Examples
