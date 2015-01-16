@@ -1,4 +1,4 @@
-1.9.0 / 2014-01-13
+1.9.0 / 2015-01-13
 ==================
 
   * Fix `--watch` sometimes dying when there were file-system errors ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
