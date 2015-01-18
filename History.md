@@ -1,3 +1,12 @@
+1.9.1 / 2015-01-17
+==================
+
+  * Clean up path/fs functions in CLI as we no longer support node@0.6 ([@TimothyGu](https://github.com/TimothyGu))
+  * Update commander ([@TimothyGu](https://github.com/TimothyGu))
+  * Document `cache` and `parser` options ([@TimothyGu](https://github.com/TimothyGu))
+  * Fix bug in 1.9.0 where we read the file if cache was enabled, even if a string was provided ([@TimothyGu](https://github.com/TimothyGu))
+  * Fix year in changelog ([@tomByrer](https://github.com/tomByrer))
+
 1.9.0 / 2015-01-13
 ==================
 

@@ -917,7 +917,7 @@ function handleTemplateCache (options, str) {
   if (options.cache && exports.cache[key]) {
     return exports.cache[key];
   } else {
-    if (!str) str = fs.readFileSync(options.filename, 'utf8');
+    if (str === undefined) str = fs.readFileSync(options.filename, 'utf8');
     var templ = exports.compile(str, options);
     if (options.cache) exports.cache[key] = templ;
     return templ;
