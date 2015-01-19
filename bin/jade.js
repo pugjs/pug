@@ -193,7 +193,7 @@ function renderFile(path, rootPath) {
     path = path.replace(re, extname);
     if (program.out) {
       if (typeof rootPath !== 'undefined') {
-        path = path.replace(rootPath, program.out);
+        path = join(program.out, path.replace(rootPath, ''));
       } else {
         path = join(program.out, basename(path));
       }
