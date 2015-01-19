@@ -42,13 +42,15 @@ function run(args, stdin, callback) {
   }, callback);
 }
 
-try {
-  fs.mkdirSync(__dirname + '/temp');
-} catch (ex) {
-  if (ex.code !== 'EEXIST') {
-    throw ex;
+['/temp', '/temp/inputs', '/temp/inputs/level-1-1', '/temp/inputs/level-1-2', '/temp/outputs'].forEach(function (path) {
+  try {
+    fs.mkdirSync(__dirname + path);
+  } catch (ex) {
+    if (ex.code !== 'EEXIST') {
+      throw ex;
+    }
   }
-}
+});
 
 describe('command line with HTML output', function () {
   if (isIstanbul) {
@@ -93,6 +95,34 @@ describe('command line with HTML output', function () {
       if (err) return done(err);
       assert(stdout === '<div class="foo">bar</div>');
       done();
+    });
+  });
+  it('jade --no-debug --out outputs input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    run('--no-debug --out outputs input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/outputs/input.html', 'utf8');
+      assert(html === '<div class="foo">bar</div>');
+      done();
+    });
+  });
+  context('when input is directory', function () {
+    it('jade --no-debug --client --out outputs inputs', function (done) {
+      fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar-1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input.jade', '.foo bar-1-1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input.jade', '.foo bar-1-2');
+      fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
+      run('--no-debug --out outputs inputs', function (err) {
+        if (err) return done(err);
+        var html = fs.readFileSync(__dirname + '/temp/outputs/input.html', 'utf8');
+        assert(html === '<div class="foo">bar-1</div>');
+        var html = fs.readFileSync(__dirname + '/temp/outputs/level-1-1/input.html', 'utf8');
+        assert(html === '<div class="foo">bar-1-1</div>');
+        var html = fs.readFileSync(__dirname + '/temp/outputs/level-1-2/input.html', 'utf8');
+        assert(html === '<div class="foo">bar-1-2</div>');
+        done();
+      });
     });
   });
 });
