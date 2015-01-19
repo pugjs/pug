@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 var path = require('path');
 var assert = require('assert');
 var cp = require('child_process');
@@ -42,15 +43,9 @@ function run(args, stdin, callback) {
   }, callback);
 }
 
-['/temp', '/temp/inputs', '/temp/inputs/level-1-1', '/temp/inputs/level-1-2', '/temp/outputs'].forEach(function (path) {
-  try {
-    fs.mkdirSync(__dirname + path);
-  } catch (ex) {
-    if (ex.code !== 'EEXIST') {
-      throw ex;
-    }
-  }
-});
+mkdirp.sync(__dirname + '/temp/inputs/level-1-1');
+mkdirp.sync(__dirname + '/temp/inputs/level-1-2');
+mkdirp.sync(__dirname + '/temp/outputs');
 
 describe('command line with HTML output', function () {
   if (isIstanbul) {
