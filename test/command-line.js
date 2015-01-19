@@ -103,7 +103,7 @@ describe('command line with HTML output', function () {
     });
   });
   context('when input is directory', function () {
-    it('jade --no-debug --client --out outputs inputs', function (done) {
+    it('jade --no-debug --out outputs inputs', function (done) {
       fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar-1');
       fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input.jade', '.foo bar-1-1');
       fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input.jade', '.foo bar-1-2');
