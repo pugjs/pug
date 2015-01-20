@@ -107,21 +107,42 @@ describe('command line with HTML output', function () {
       done();
     });
   });
-  it('jade --no-debug --obj "{\'loc\':\'str\'}" input.jade', function (done) {
+  it('jade --no-debug --locals "{\'loc\':\'str\'}" input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
-    run('--no-debug --obj "{\'loc\':\'str\'}" input.jade', function (err) {
+    run('--no-debug --locals "{\'loc\':\'str\'}" input.jade', function (err) {
       if (err) return done(err);
       var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
       assert(html === '<div class="foo">str</div>');
       done();
     });
   });
-  it('jade --no-debug --obj "obj.json" input.jade', function (done) {
-    fs.writeFileSync(__dirname + '/temp/obj.json', '{"loc":"str"}');
+  it('jade --no-debug --locals "locals.json" input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/locals.json', '{"loc":"str"}');
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
-    run('--no-debug --obj "'+__dirname+'/temp/obj.json" input.jade', function (err) {
+    run('--no-debug --locals "'+__dirname+'/temp/locals.json" input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
+      assert(html === '<div class="foo">str</div>');
+      done();
+    });
+  });
+  it('jade -O "{compileDebug: false, self: true}" input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= self.baz');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    run('-O "{compileDebug: false, self: true}" --locals "{baz: \'str\'}" input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
+      assert(html === '<div class="foo">str</div>');
+      done();
+    });
+  });
+  it('jade -O obj.json input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= self.baz');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    fs.writeFileSync(__dirname + '/temp/obj.json', '{"compileDebug": false, "self": true}');
+    run('-O obj.json --locals "{baz: \'str\'}" input.jade', function (err) {
       if (err) return done(err);
       var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
       assert(html === '<div class="foo">str</div>');
