@@ -10,9 +10,7 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
-  , exists = fs.existsSync || path.existsSync
   , join = path.join
-  , monocle = require('monocle')()
   , mkdirp = require('mkdirp')
   , jade = require('../');
 
@@ -34,6 +32,7 @@ program
   .option('-n, --name <str>', 'The name of the compiled template (requires --client)')
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
+  .option('-E, --extension <extension>', 'specify the output file extension')
   .option('--name-after-file', 'Name the template after the last section of the file path (requires --client and overriden by --name)')
   .option('--doctype <str>', 'Specify the doctype on the command line (useful if it is not specified by the template)')
 
@@ -64,7 +63,7 @@ program.parse(process.argv);
 
 var locals;
 if (program.locals) {
-  if (exists(program.locals)) {
+  if (fs.existsSync(program.locals)) {
     locals = JSON.parse(fs.readFileSync(program.locals));
   } else {
     locals = eval('(' + program.locals + ')');
@@ -74,7 +73,7 @@ if (program.locals) {
 // options given, parse them
 
 if (program.obj) {
-  if (exists(program.obj)) {
+  if (fs.existsSync(program.obj)) {
     options = JSON.parse(fs.readFileSync(program.obj));
   } else {
     options = eval('(' + program.obj + ')');
@@ -103,7 +102,9 @@ options.watch = program.watch;
 
 // --name
 
-options.name = program.name;
+if (typeof program.name === 'string') {
+  options.name = program.name;
+}
 
 // --doctype
 
@@ -118,16 +119,30 @@ var files = program.args;
 if (files.length) {
   console.log();
   if (options.watch) {
-    // keep watching when error occured.
-    process.on('uncaughtException', function(err) {
-      console.error(err);
-    });
-    files.forEach(renderFile);
-    monocle.watchFiles({
-      files: files,
-      listener: function(file) {
-        renderFile(file.absolutePath);
+    files.forEach(function(filename) {
+      function errorToString(e) {
+        return e.stack || /* istanbul ignore next */ (e.message || e);
       }
+      try {
+        renderFile(filename);
+      } catch (e) {
+        // keep watching when error occured.
+        console.error(errorToString(e));
+      }
+      fs.watchFile(filename, {persistent: true, interval: 200},
+                   function (curr, prev) {
+        // istanbul ignore if
+        if (curr.mtime.getTime() === prev.mtime.getTime()) return;
+        try {
+          renderFile(filename);
+        } catch (e) {
+          // keep watching when error occured.
+          console.error(errorToString(e));
+        }
+      });
+    });
+    process.on('SIGINT', function() {
+      process.exit(1);
     });
   } else {
     files.forEach(renderFile);
@@ -174,48 +189,35 @@ function stdin() {
 
 function renderFile(path) {
   var re = /\.jade$/;
-  fs.lstat(path, function(err, stat) {
-    if (err) throw err;
-    // Found jade file
-    if (stat.isFile() && re.test(path)) {
-      fs.readFile(path, 'utf8', function(err, str){
-        if (err) throw err;
-        options.filename = path;
-        if (program.nameAfterFile) {
-          options.name = getNameFromFileName(path);
-        }
-        var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
-        var extname = options.client ? '.js' : '.html';
-        path = path.replace(re, extname);
-        if (program.out) path = join(program.out, basename(path));
-        var dir = resolve(dirname(path));
-        mkdirp(dir, 0755, function(err){
-          if (err) throw err;
-          try {
-            var output = options.client ? fn : fn(locals);
-            fs.writeFile(path, output, function(err){
-              if (err) throw err;
-              console.log('  \033[90mrendered \033[36m%s\033[0m', path);
-            });
-          } catch (e) {
-            if (options.watch) {
-              console.error(e.stack || e.message || e);
-            } else {
-              throw e
-            }
-          }
-        });
-      });
-    // Found directory
-    } else if (stat.isDirectory()) {
-      fs.readdir(path, function(err, files) {
-        if (err) throw err;
-        files.map(function(filename) {
-          return path + '/' + filename;
-        }).forEach(renderFile);
-      });
+  var stat = fs.lstatSync(path);
+  // Found jade file/\.jade$/
+  if (stat.isFile() && re.test(path)) {
+    var str = fs.readFileSync(path, 'utf8');
+    options.filename = path;
+    if (program.nameAfterFile) {
+      options.name = getNameFromFileName(path);
     }
-  });
+    var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
+
+    // --extension
+    if (program.extension)   var extname = '.' + program.extension;
+    else if (options.client) var extname = '.js';
+    else                     var extname = '.html';
+
+    path = path.replace(re, extname);
+    if (program.out) path = join(program.out, basename(path));
+    var dir = resolve(dirname(path));
+    mkdirp.sync(dir, 0755);
+    var output = options.client ? fn : fn(locals);
+    fs.writeFileSync(path, output);
+    console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+  // Found directory
+  } else if (stat.isDirectory()) {
+    var files = fs.readdirSync(path);
+    files.map(function(filename) {
+      return path + '/' + filename;
+    }).forEach(renderFile);
+  }
 }
 
 /**
@@ -225,7 +227,7 @@ function renderFile(path) {
  * @returns {String}
  */
 function getNameFromFileName(filename) {
-  var file = path.basename(filename, '.jade');
+  var file = basename(filename, '.jade');
   return file.toLowerCase().replace(/[^a-z0-9]+([a-z])/g, function (_, character) {
     return character.toUpperCase();
   }) + 'Template';

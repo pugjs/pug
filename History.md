@@ -1,3 +1,33 @@
+1.9.1 / 2015-01-17
+==================
+
+  * Clean up path/fs functions in CLI as we no longer support node@0.6 ([@TimothyGu](https://github.com/TimothyGu))
+  * Update commander ([@TimothyGu](https://github.com/TimothyGu))
+  * Document `cache` and `parser` options ([@TimothyGu](https://github.com/TimothyGu))
+  * Fix bug in 1.9.0 where we read the file if cache was enabled, even if a string was provided ([@TimothyGu](https://github.com/TimothyGu))
+  * Fix year in changelog ([@tomByrer](https://github.com/tomByrer))
+
+1.9.0 / 2015-01-13
+==================
+
+  * Fix `--watch` sometimes dying when there were file-system errors ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix `--watch` by using `fs.watchFile` correctly ([@TimothyGu](https://github.com/TimothyGu))
+  * Fix errors with using the CLI to compile from stdin
+  * Better looking badges ([@TimothyGu](https://github.com/TimothyGu))
+  * Added `--extension` to CLI([@nicocedron](https://github.com/nicocedron) and [@TimothyGu](https://github.com/TimothyGu))
+  * Refactor and improve internal cache handling ([@TimothyGu](https://github.com/TimothyGu))
+  * Loads more tests ([@TimothyGu](https://github.com/TimothyGu))
+
+1.8.2 / 2014-12-16
+==================
+
+  * Use `-` as the default filename when using stdin on CLI ([@TimothyGu](https://github.com/TimothyGu))
+  * Prevent some compiler errors being silenced ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove use of non-standard `string.trimLeft()` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix bug in CLI when no name was provided for child template ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Remove dependency on monocle (hopefully fixing installation on 0.8) ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add gitter chat room ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+
 1.8.1 / 2014-11-30
 ==================
 

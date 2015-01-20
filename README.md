@@ -1,15 +1,20 @@
-# [![Jade - template engine ](http://i.imgur.com/5zf2aVt.png)](http://jade-lang.com/)
+# [![Jade - Node Template Engine](http://jade-lang.com/logos/JadeBlack.svg)](http://jade-lang.com/)
 
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
- and implemented with JavaScript for [node](http://nodejs.org). For discussion join the [Google Group](http://groups.google.com/group/jadejs).
+ and implemented with JavaScript for [node](http://nodejs.org) and browsers. For bug reports,
+ feature requests and questions, [open an issue](https://github.com/jadejs/jade/issues/new).
+ For discussion join the [chat room](https://gitter.im/jadejs/jade).
 
  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
 
- [![Build Status](https://img.shields.io/travis/jadejs/jade/master.svg)](https://travis-ci.org/jadejs/jade)
- [![Dependency Status](https://img.shields.io/gemnasium/jadejs/jade.svg)](https://gemnasium.com/jadejs/jade)
- [![NPM version](https://img.shields.io/npm/v/jade.svg)](http://badge.fury.io/js/jade)
+ [![Build Status](https://img.shields.io/travis/jadejs/jade/master.svg?style=flat)](https://travis-ci.org/jadejs/jade)
+ [![Coverage Status](https://img.shields.io/coveralls/jadejs/jade/master.svg?style=flat)](https://coveralls.io/r/jadejs/jade?branch=master)
+ [![Dependency Status](https://img.shields.io/david/jadejs/jade.svg?style=flat)](https://david-dm.org/jadejs/jade)
+ [![devDependencies Status](https://img.shields.io/david/dev/jadejs/jade.svg?style=flat)](https://david-dm.org/jadejs/jade#info=devDependencies)
+ [![NPM version](https://img.shields.io/npm/v/jade.svg?style=flat)](http://badge.fury.io/js/jade)
+ [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/jadejs/jade?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Installation
 
