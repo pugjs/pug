@@ -52,8 +52,8 @@ try {
 
 describe('command line', function () {
   if (isIstanbul) {
-    this.timeout(8000);
-    this.slow(6000);
+    this.timeout(11000);
+    this.slow(9000);
   } else {
     this.slow(250);
   }

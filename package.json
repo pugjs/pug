@@ -27,7 +27,7 @@
     "constantinople": "~3.0.1",
     "coveralls": "^2.11.2",
     "mkdirp": "~0.5.0",
-    "transformers": "~3.1.0",
+    "transformers": "ForbesLindesay/transformers#e30cf28f7f0e74dca4bca902e3768244d14ec973",
     "void-elements": "~1.0.0",
     "with": "~4.0.0"
   },
