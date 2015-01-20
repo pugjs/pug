@@ -50,6 +50,36 @@ try {
   }
 }
 
+describe('command line', function () {
+  if (isIstanbul) {
+    this.timeout(8000);
+    this.slow(6000);
+  } else {
+    this.slow(250);
+  }
+  it('jade --version', function (done) {
+    run('-V', function (err, stdout) {
+      if (err) done(err);
+      assert.equal(stdout.trim(), require('../package.json').version);
+      run('--version', function (err, stdout) {
+        if (err) done(err);
+        assert.equal(stdout.trim(), require('../package.json').version);
+        done()
+      });
+    });
+  });
+  it('jade --help', function (done) {
+    // only check that it doesn't crash
+    run('-h', function (err, stdout) {
+      if (err) done(err);
+      run('--help', function (err, stdout) {
+        if (err) done(err);
+        done()
+      });
+    });
+  });
+});
+
 describe('command line with HTML output', function () {
   if (isIstanbul) {
     this.timeout(8000);
@@ -81,6 +111,17 @@ describe('command line with HTML output', function () {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
     run('--no-debug --obj "{\'loc\':\'str\'}" input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
+      assert(html === '<div class="foo">str</div>');
+      done();
+    });
+  });
+  it('jade --no-debug --obj "obj.json" input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/obj.json', '{"loc":"str"}');
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    run('--no-debug --obj "'+__dirname+'/temp/obj.json" input.jade', function (err) {
       if (err) return done(err);
       var html = fs.readFileSync(__dirname + '/temp/input.html', 'utf8');
       assert(html === '<div class="foo">str</div>');

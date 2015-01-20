@@ -108,20 +108,24 @@ if (files.length) {
   console.log();
   if (options.watch) {
     files.forEach(function(filename) {
+      function errorToString(e) {
+        return e.stack || /* istanbul ignore next */ (e.message || e);
+      }
       try {
         renderFile(filename);
       } catch (e) {
         // keep watching when error occured.
-        console.error(e.stack || e.message || e);
+        console.error(errorToString(e));
       }
       fs.watchFile(filename, {persistent: true, interval: 200},
                    function (curr, prev) {
+        // istanbul ignore if
         if (curr.mtime.getTime() === prev.mtime.getTime()) return;
         try {
           renderFile(filename);
         } catch (e) {
           // keep watching when error occured.
-          console.error(e.stack || e.message || e);
+          console.error(errorToString(e));
         }
       });
     });
