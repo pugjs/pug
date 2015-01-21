@@ -133,6 +133,21 @@ block content
       // Render the function
       var html = fn(locals);
       // => 'function template(locals) { return "<string>of jade</string>"; }'
+  
+  h3 jade.compileClientWithDependenciesTracked(source, options)
+  
+  p See #[code jade.compileClient] except that this method returns an object of the form:
+  
+  +js
+    :jssrc
+      {
+        'body': 'function (locals) {...}',
+        'dependencies': ['filename.jade']
+      }
+
+  p.
+    You should only use this method if you need to implement something
+    like watching for changes to the jade files.
 
   h3 jade.render(source, options)
 
