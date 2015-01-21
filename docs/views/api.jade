@@ -134,6 +134,83 @@ block content
       var html = fn(locals);
       // => 'function template(locals) { return "<string>of jade</string>"; }'
 
+  h3 jade.compileFileClient(path, options)
+
+  p Compile a jade template file to a string of Javascript that can be used client side along with the jade runtime.
+
+  dl.parameter-list
+    dt path
+    dd.type.string string
+    dd.description The path to a jade file
+    dt options
+    dd.type.object options
+    dd.description An options object (see above)
+    dt options.name
+    dd.type.string string
+    dd.description.
+      If you pass a #[code .name] property on the options object, it will be
+      used as the function name for your client side template function.
+  dl.returns
+    dt returns
+    dd.type.string string
+    dd.description A Javascript function body.
+
+  p First, our template file.
+
+  +jade
+    :jadesrc
+      h1 This is a Jade template
+      h2 By \#{author}
+
+  p Then, we compile the jade file into a function string.
+
+  +js
+    :jssrc
+      var fs   = require('fs');
+      var jade = require('jade');
+
+      // Compile the template to a function string
+      var jsFunctionString = jade.compileFileClient('/path/to/jadeFile.jade', {name: "fancyTemplateFun"});
+
+      // Maybe you want to compile all of your templates to a templates.js file and serve it to the client
+      fs.writeFileSync("templates.js", jsFunctionString);
+
+  p Here's what the output function string looks like (written to #[code templates.js]).
+
+  +js
+    :jssrc
+      function fancyTemplateFun(locals) {
+      var buf = [];
+      var jade_mixins = {};
+      var jade_interp;
+      ;var locals_for_with = (locals || {});(function (author) {
+      buf.push("<h1>This is a Jade template</h1><h2>By " + (jade.escape((jade_interp = author) == null ? '' : jade_interp)) + "</h2>");}.call(this,"author" in locals_for_with?locals_for_with.author:typeof author!=="undefined"?author:undefined));;return buf.join("");
+      }
+
+
+  p Be sure to send the Jade runtime (#[code node_modules/jade/runtime.js]) to the client in addtion to the template that you just compiled.
+
+  +html
+    :htmlsrc
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <script src="/runtime.js"></script>
+          <script src="/templates.js"></script>
+        </head>
+
+        <body>
+          <h1>This is one fancy template.</h1>
+
+          <script type="text/javascript">
+            var html = window.fancyTemplateFun({author: "enlore"});
+            var div = document.createElement("div");
+            div.innerHTML = html;
+            document.body.appendChild(div);
+          </script>
+        </body>
+      </html>
+
   h3 jade.render(source, options)
 
   dl.parameter-list
