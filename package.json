@@ -26,6 +26,7 @@
     "commander": "~2.6.0",
     "constantinople": "~3.0.1",
     "coveralls": "^2.11.2",
+    "doctypes": "^1.0.0",
     "jade-lexer": "https://github.com/jadejs/jade-lexer/archive/master.tar.gz",
     "jade-load": "0.0.1",
     "jade-parser": "https://github.com/jadejs/jade-parser/archive/master.tar.gz",
