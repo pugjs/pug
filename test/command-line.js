@@ -104,18 +104,20 @@ describe('command line with HTML output', function () {
   });
   context('when input is directory', function () {
     it('jade --no-debug --out outputs inputs', function (done) {
-      fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar-1');
-      fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input.jade', '.foo bar-1-1');
-      fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input.jade', '.foo bar-1-2');
-      fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
+      fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar 1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input.jade', '.foo bar 1-1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input.jade', '.foo bar 1-2');
+      fs.writeFileSync(__dirname + '/temp/outputs/input.html', 'BIG FAT HEN 1');
+      fs.writeFileSync(__dirname + '/temp/outputs/level-1-1/input.html', 'BIG FAT HEN 1-1');
+      fs.writeFileSync(__dirname + '/temp/outputs/level-1-2/input.html', 'BIG FAT HEN 1-2');
       run('--no-debug --out outputs inputs', function (err) {
         if (err) return done(err);
         var html = fs.readFileSync(__dirname + '/temp/outputs/input.html', 'utf8');
-        assert(html === '<div class="foo">bar-1</div>');
+        assert(html === '<div class="foo">bar 1</div>');
         var html = fs.readFileSync(__dirname + '/temp/outputs/level-1-1/input.html', 'utf8');
-        assert(html === '<div class="foo">bar-1-1</div>');
+        assert(html === '<div class="foo">bar 1-1</div>');
         var html = fs.readFileSync(__dirname + '/temp/outputs/level-1-2/input.html', 'utf8');
-        assert(html === '<div class="foo">bar-1-2</div>');
+        assert(html === '<div class="foo">bar 1-2</div>');
         done();
       });
     });
