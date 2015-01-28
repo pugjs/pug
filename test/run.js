@@ -29,7 +29,6 @@ try {
   }
 }
 
-var mixinsUnusedTestRan = false;
 cases.forEach(function(test){
   var name = test.replace(/[-.]/g, ' ');
   it(name, function(){
@@ -63,7 +62,6 @@ cases.forEach(function(test){
       html = html.replace(/\n| /g, '');
     }
     if (/mixins-unused/.test(test)) {
-      mixinsUnusedTestRan = true;
       assert(/never-called/.test(str), 'never-called is in the jade file for mixins-unused');
       assert(!/never-called/.test(clientCode), 'never-called should be removed from the code');
     }
@@ -78,11 +76,8 @@ cases.forEach(function(test){
       actual = actual.replace(/\n| /g, '');
     }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
-  })
+  });
 });
-after(function () {
-  assert(mixinsUnusedTestRan, 'mixins-unused test should run');
-})
 
 // test cases
 
