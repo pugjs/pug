@@ -102,45 +102,59 @@ options.doctype = program.doctype;
 
 var files = program.args;
 
+var watchList = [];
+
 // compile files
 
 if (files.length) {
   console.log();
   if (options.watch) {
-    files.forEach(function(filename) {
-      function errorToString(e) {
-        return e.stack || /* istanbul ignore next */ (e.message || e);
-      }
-      try {
-        renderFile(filename);
-      } catch (e) {
-        // keep watching when error occured.
-        console.error(errorToString(e));
-      }
-      fs.watchFile(filename, {persistent: true, interval: 200},
-                   function (curr, prev) {
-        // istanbul ignore if
-        if (curr.mtime.getTime() === prev.mtime.getTime()) return;
-        try {
-          renderFile(filename);
-        } catch (e) {
-          // keep watching when error occured.
-          console.error(errorToString(e));
-        }
-      });
-    });
     process.on('SIGINT', function() {
       process.exit(1);
     });
-  } else {
-    files.forEach(renderFile);
+    process.on("exit", function () {
+      watchList.forEach(fs.unwatchFile);
+    });
   }
+  files.forEach(renderFile);
   process.on('exit', function () {
     console.log();
   });
 // stdio
 } else {
   stdin();
+}
+
+function watchFile(path, base) {
+  if (watchList.indexOf(path) !== -1) return;
+  console.log("  \033[90mwatching \033[36m%s\033[0m", path);
+  fs.watchFile(path, {persistent: true, interval: 200},
+               function (curr, prev) {
+    // istanbul ignore if
+    if (curr.mtime.getTime() === prev.mtime.getTime()) return;
+    if (!fs.existsSync(path)) {
+      // file was removed or moved
+      console.log("  \033[90munwatching \033[36m%s\033[0m", path);
+      watchList.splice(watchList.indexOf(path), 1);
+      fs.unwatchFile(path);
+      return;
+    }
+    tryRender(base || path);
+  });
+  watchList.push(path);
+}
+
+function errorToString(e) {
+  return e.stack || /* istanbul ignore next */ (e.message || e);
+}
+
+function tryRender(path) {
+  try {
+    renderFile(path);
+  } catch (e) {
+    // keep watching when error occured.
+    console.error(errorToString(e));
+  }
 }
 
 /**
@@ -180,12 +194,18 @@ function renderFile(path) {
   var stat = fs.lstatSync(path);
   // Found jade file/\.jade$/
   if (stat.isFile() && re.test(path)) {
+    if (options.watch) watchFile(path);
     var str = fs.readFileSync(path, 'utf8');
     options.filename = path;
     if (program.nameAfterFile) {
       options.name = getNameFromFileName(path);
     }
     var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
+    if (fn.dependencies) {
+      fn.dependencies.forEach(function (dep) {
+        watchFile(dep, path);
+      });
+    }
 
     // --extension
     if (program.extension)   var extname = '.' + program.extension;
