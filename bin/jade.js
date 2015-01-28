@@ -10,6 +10,7 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
+  , normalize = path.normalize
   , join = path.join
   , mkdirp = require('mkdirp')
   , jade = require('../');
@@ -102,6 +103,8 @@ options.doctype = program.doctype;
 
 var files = program.args;
 
+// array of paths that are being watched
+
 var watchList = [];
 
 // compile files
@@ -112,6 +115,7 @@ if (files.length) {
     process.on('SIGINT', function() {
       process.exit(1);
     });
+    // unwatch what's watched on exit
     process.on("exit", function () {
       watchList.forEach(fs.unwatchFile);
     });
@@ -125,7 +129,13 @@ if (files.length) {
   stdin();
 }
 
+/**
+ * Watch for changes on path
+ * Renders base if specified, otherwise renders path
+ * If watched path was moved or removed, unwatches the path
+ */
 function watchFile(path, base) {
+  path = normalize(path);
   if (watchList.indexOf(path) !== -1) return;
   console.log("  \033[90mwatching \033[36m%s\033[0m", path);
   fs.watchFile(path, {persistent: true, interval: 200},
@@ -144,10 +154,17 @@ function watchFile(path, base) {
   watchList.push(path);
 }
 
+/**
+ * Convert error to string
+ */
 function errorToString(e) {
   return e.stack || /* istanbul ignore next */ (e.message || e);
 }
 
+/**
+ * Used in watch mode
+ * Displays error, but doesn't stop the cli
+ */
 function tryRender(path) {
   try {
     renderFile(path);
@@ -202,6 +219,7 @@ function renderFile(path) {
     }
     var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
     if (fn.dependencies) {
+      // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {
         watchFile(dep, path);
       });
@@ -218,7 +236,7 @@ function renderFile(path) {
     mkdirp.sync(dir, 0755);
     var output = options.client ? fn : fn(options);
     fs.writeFileSync(path, output);
-    console.log('  \033[90mrendered \033[36m%s\033[0m', path);
+    console.log('  \033[90mrendered \033[36m%s\033[0m', normalize(path));
   // Found directory
   } else if (stat.isDirectory()) {
     var files = fs.readdirSync(path);
