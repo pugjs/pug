@@ -201,6 +201,7 @@ describe('command line watch mode', function () {
   var watchProc;
   var stdout = '';
   after(function() {
+    if (!watchProc) return
     // Just to be sure
     watchProc.stderr.removeAllListeners('data');
     watchProc.stdout.removeAllListeners('data');
