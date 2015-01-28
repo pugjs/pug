@@ -45,7 +45,8 @@ function run(args, stdin, callback) {
 
 mkdirp.sync(__dirname + '/temp/inputs/level-1-1');
 mkdirp.sync(__dirname + '/temp/inputs/level-1-2');
-mkdirp.sync(__dirname + '/temp/outputs');
+mkdirp.sync(__dirname + '/temp/outputs/level-1-1');
+mkdirp.sync(__dirname + '/temp/outputs/level-1-2');
 
 describe('command line with HTML output', function () {
   if (isIstanbul) {
