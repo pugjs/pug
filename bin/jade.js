@@ -218,7 +218,7 @@ function renderFile(path) {
       options.name = getNameFromFileName(path);
     }
     var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
-    if (fn.dependencies) {
+    if (options.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {
         watchFile(dep, path);
