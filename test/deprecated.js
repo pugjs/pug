@@ -57,18 +57,6 @@ describe('deprecated functions', function () {
   });
 });
 
-describe('deprecated options or local names', function () {
-  deprecate('jade.compile(str, {client: true})', function () {
-    var fn = jade.compile('div', {client: true});
-    var fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
-    assert(fn() === '<div></div>');
-  }, /The `client` option is deprecated/);
-  deprecate('jade.render(str, {lexer: \'this is a local\'})', function () {
-    var str = jade.render('div', {lexer: 'this is a local'});
-    assert(str === '<div></div>');
-  }, /Using `lexer` as a local in render\(\) is deprecated/);
-});
-
 describe('warnings that will become errors', function () {
   deprecate('block that is never actually used', function () {
     jade.renderFile(__dirname + '/fixtures/invalid-block-in-extends.jade');
