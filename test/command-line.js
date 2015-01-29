@@ -52,10 +52,11 @@ try {
 
 describe('command line', function () {
   if (isIstanbul) {
-    this.timeout(11000);
-    this.slow(9000);
+    this.timeout(60000);
+    this.slow(6000);
   } else {
-    this.slow(250);
+    this.timeout(30000);
+    this.slow(3000);
   }
   it('jade --version', function (done) {
     run('-V', function (err, stdout) {
@@ -82,10 +83,11 @@ describe('command line', function () {
 
 describe('command line with HTML output', function () {
   if (isIstanbul) {
-    this.timeout(8000);
+    this.timeout(60000);
     this.slow(6000);
   } else {
-    this.slow(250);
+    this.timeout(30000);
+    this.slow(3000);
   }
   it('jade --no-debug input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
@@ -140,10 +142,11 @@ describe('command line with HTML output', function () {
 
 describe('command line with client JS output', function () {
   if (isIstanbul) {
-    this.timeout(8000);
+    this.timeout(60000);
     this.slow(6000);
   } else {
-    this.slow(250);
+    this.timeout(30000);
+    this.slow(3000);
   }
   it('jade --no-debug --client --name myTemplate input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
@@ -215,10 +218,11 @@ describe('command line watch mode', function () {
   });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
     if (isIstanbul) {
-      this.timeout(8000);
+      this.timeout(60000);
       this.slow(6000);
     } else {
-      this.slow(300);
+      this.timeout(30000);
+      this.slow(3000);
     }
     fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 1)");');
