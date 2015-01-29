@@ -50,14 +50,21 @@ try {
   }
 }
 
-describe('command line', function () {
+/**
+ * Set timing limits for a test case
+ */
+function timing(testCase) {
   if (isIstanbul) {
-    this.timeout(60000);
-    this.slow(6000);
+    testCase.timeout(20000);
+    testCase.slow(3000);
   } else {
-    this.timeout(30000);
-    this.slow(3000);
+    testCase.timeout(12500);
+    testCase.slow(2000);
   }
+}
+
+describe('command line', function () {
+  timing(this);
   it('jade --version', function (done) {
     run('-V', function (err, stdout) {
       if (err) done(err);
@@ -82,13 +89,7 @@ describe('command line', function () {
 });
 
 describe('command line with HTML output', function () {
-  if (isIstanbul) {
-    this.timeout(60000);
-    this.slow(6000);
-  } else {
-    this.timeout(30000);
-    this.slow(3000);
-  }
+  timing(this);
   it('jade --no-debug input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
@@ -141,13 +142,7 @@ describe('command line with HTML output', function () {
 });
 
 describe('command line with client JS output', function () {
-  if (isIstanbul) {
-    this.timeout(60000);
-    this.slow(6000);
-  } else {
-    this.timeout(30000);
-    this.slow(3000);
-  }
+  timing(this);
   it('jade --no-debug --client --name myTemplate input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
@@ -217,13 +212,7 @@ describe('command line watch mode', function () {
     setTimeout(done, 1000);
   });
   it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
-    if (isIstanbul) {
-      this.timeout(60000);
-      this.slow(6000);
-    } else {
-      this.timeout(30000);
-      this.slow(3000);
-    }
+    timing(this);
     fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 1)");');
     var cmd = getRunner();
