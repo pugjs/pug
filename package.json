@@ -30,6 +30,7 @@
     "jade-lexer": "https://github.com/jadejs/jade-lexer/archive/master.tar.gz",
     "jade-load": "0.0.1",
     "jade-parser": "https://github.com/jadejs/jade-parser/archive/master.tar.gz",
+    "jade-runtime": "^1.0.0",
     "jade-walk": "0.0.1",
     "js-stringify": "^1.0.0",
     "mkdirp": "~0.5.0",
@@ -81,7 +82,7 @@
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
     "compile-full": "browserify ./lib/index.js --standalone jade -x ./node_modules/transformers > jade.js",
-    "compile-runtime": "browserify ./lib/runtime.js --standalone jade > runtime.js"
+    "compile-runtime": "browserify node_modules/jade-runtime/index.js --standalone jade > runtime.js"
   },
   "browser": {
     "fs": false,
