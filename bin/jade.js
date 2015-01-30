@@ -126,6 +126,15 @@ if (files.length) {
 }
 
 /**
+ * Unwatches a file, specified by a path
+ */
+function unwatchFile(path) {
+  console.log("  \033[90munwatching \033[36m%s\033[0m", path);
+  watchList.splice(watchList.indexOf(path), 1);
+  fs.unwatchFile(path);
+}
+
+/**
  * Watch for changes on path
  * Renders base if specified, otherwise renders path
  * If watched path was moved or removed, unwatches the path
@@ -137,14 +146,17 @@ function watchFile(path, base) {
   fs.watchFile(path, {persistent: true, interval: 200},
                function (curr, prev) {
     // istanbul ignore if
-    if (curr.mtime.getTime() === prev.mtime.getTime()) return;
-    if (!fs.existsSync(path)) {
-      // file was removed or moved
-      console.log("  \033[90munwatching \033[36m%s\033[0m", path);
-      watchList.splice(watchList.indexOf(path), 1);
-      fs.unwatchFile(path);
+    if (curr.mtime.getTime() === 0) {
+      // file has no time in stat, probably it was removed
+      // try to unwatch later if file is still missing (#1854)
+      setTimeout(function () {
+        if (fs.existsSync(path)) return;
+        unwatchFile(path);
+      }, 200);
       return;
     }
+    // istanbul ignore if
+    if (curr.mtime.getTime() === prev.mtime.getTime()) return;
     tryRender(base || path);
   });
   watchList.push(path);
