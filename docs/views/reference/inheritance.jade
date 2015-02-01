@@ -8,7 +8,7 @@ block documentation
     of Jade that may be replaced within a child template, this process is recursive.
 
   p.
-    Jade blocks can provide default content if desired, however optional as shown below by `block scripts`, `block content`, and `block foot`.
+    Jade blocks can provide default content if desired, however optional as shown below by #[code block scripts], #[code block content], and #[code block foot].
 
   p layout.jade
   +jade
@@ -24,7 +24,7 @@ block documentation
             #footer
               p some footer content
 
-  p Now to extend the layout, simply create a new file and use the `extends` directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the `foot` block is _not_ redefined and will output "some footer content".
+  p Now to extend the layout, simply create a new file and use the #[code extends] directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the #[code foot] block is #[em not] redefined and will output "some footer content".
 
   p page-a.jade
   +jade
@@ -41,7 +41,7 @@ block documentation
           include pet
 
   p.
-    It's also possible to override a block to provide additional blocks, as shown in the following example where `content` now exposes a `sidebar` and `primary` block for overriding, or the child template could override `content` all together.
+    It's also possible to override a block to provide additional blocks, as shown in the following example where #[code content] now exposes a #[code sidebar] and #[code primary] block for overriding, or the child template could override #[code content] all together.
 
   p sub-layout.jade
   +jade
@@ -83,7 +83,7 @@ block documentation
         body
           block content
 
-  p Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply `append` the block:
+  p Now suppose you have a page of your application for a JavaScript game, you want some game related scripts as well as these defaults, you can simply #[code append] the block:
 
   +jade
     :jadesrc
@@ -93,7 +93,7 @@ block documentation
         script(src='/vendor/three.js')
         script(src='/game.js')
 
-  p When using `block append` or `block prepend` the `block` is optional:
+  p When using #[code block append] or #[code block prepend] the #[code block] is optional:
 
   +jade
     :jadesrc
