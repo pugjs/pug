@@ -115,8 +115,9 @@ if (files.length) {
     process.on('SIGINT', function() {
       process.exit(1);
     });
+    files.forEach(tryRender);
   }
-  files.forEach(options.watch ? tryRender : renderFile);
+  files.forEach(renderFile);
   process.on('exit', function () {
     console.log();
   });
