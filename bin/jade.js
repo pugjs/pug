@@ -62,10 +62,16 @@ program.parse(process.argv);
 // options given, parse them
 
 if (program.obj) {
-  if (fs.existsSync(program.obj)) {
-    options = JSON.parse(fs.readFileSync(program.obj));
-  } else {
+  var str;
+  try {
+    str = fs.readFileSync(program.obj);
+  } catch (e) {
     options = eval('(' + program.obj + ')');
+  }
+  if (str !== undefined)  {
+    // We don't want to catch exceptions thrown in JSON.parse() so have to
+    // use this two-step approach.
+    options = JSON.parse(str);
   }
 }
 
