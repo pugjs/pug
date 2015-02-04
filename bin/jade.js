@@ -135,7 +135,7 @@ function watchFile(path, base) {
   console.log("  \033[90mwatching \033[36m%s\033[0m", path);
   fs.watchFile(path, {persistent: true, interval: 200},
                function (curr, prev) {
-    // istanbul ignore if
+    // File doesn't exist anymore. Keep watching.
     if (curr.mtime.getTime() === 0) return;
     // istanbul ignore if
     if (curr.mtime.getTime() === prev.mtime.getTime()) return;
