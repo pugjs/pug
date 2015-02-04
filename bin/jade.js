@@ -69,7 +69,7 @@ if (program.obj) {
   }
 }
 
-// --filename
+// --path
 
 if (program.path) options.filename = program.path;
 
