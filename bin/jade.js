@@ -62,17 +62,23 @@ program.parse(process.argv);
 // options given, parse them
 
 if (program.obj) {
-  var str;
+  options = parseObj(program.obj);
+}
+
+/**
+ * Parse object either in `input` or in the file called `input`. The latter is
+ * searched first.
+ */
+function parseObj (input) {
+  var str, out;
   try {
     str = fs.readFileSync(program.obj);
   } catch (e) {
-    options = eval('(' + program.obj + ')');
+    return eval('(' + program.obj + ')');
   }
-  if (str !== undefined)  {
-    // We don't want to catch exceptions thrown in JSON.parse() so have to
-    // use this two-step approach.
-    options = JSON.parse(str);
-  }
+  // We don't want to catch exceptions thrown in JSON.parse() so have to
+  // use this two-step approach.
+  return JSON.parse(str);
 }
 
 // --path
