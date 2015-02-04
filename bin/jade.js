@@ -127,7 +127,8 @@ if (files.length) {
 
 /**
  * Watch for changes on path
- * Renders base if specified, otherwise renders path
+ *
+ * Renders `base` if specified, otherwise renders `path`.
  */
 function watchFile(path, base) {
   path = normalize(path);
@@ -152,8 +153,10 @@ function errorToString(e) {
 }
 
 /**
- * Used in watch mode
- * Displays error, but doesn't stop the cli
+ * Try to render `path`; if an exception is thrown it is printed to stderr and
+ * otherwise ignored.
+ *
+ * This is used in watch mode.
  */
 function tryRender(path) {
   try {
