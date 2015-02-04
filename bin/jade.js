@@ -128,8 +128,9 @@ if (files.length) {
       process.exit(1);
     });
     files.forEach(tryRender);
+  } else {
+    files.forEach(renderFile);
   }
-  files.forEach(renderFile);
   process.on('exit', function () {
     console.log();
   });
