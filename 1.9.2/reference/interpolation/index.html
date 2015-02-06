@@ -1,0 +1,58 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Jade - Template Engine</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style/bundle.css"></head><body></body><body><div id="wrap"><div id="content"><div class="logo-container"><a href="/1.9.2/"><img src="/style/logo.png" alt="Jade - Node Template Engine"></a></div><div class="navbar navbar-default navbar-static-top"><div class="container"><div class="navbar-header visible-sm visible-xs"><button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/1.9.2/" class="navbar-brand">JADE</a></div><div class="collapse navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a href="/1.9.2/reference">Language Reference</a></li><li class="false"><a href="/1.9.2/api">API</a></li><li class="false"><a href="/1.9.2/command-line">Command Line</a></li></ul><ul class="nav navbar-nav navbar-right"><li class="false"><a href="/history">Change Log</a></li><li><a href="https://coveralls.io/r/jadejs/jade?branch=master">Code Coverage</a></li><li><a href="https://travis-ci.org/jadejs/jade">Test Results</a></li><li><a href="https://github.com/jadejs/jade">GitHub Repository</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-2"><ul class="nav nav-pills nav-stacked"><li class="false"><a href="/1.9.2/reference/attributes">attributes</a></li><li class="false"><a href="/1.9.2/reference/case">case</a></li><li class="false"><a href="/1.9.2/reference/code">code</a></li><li class="false"><a href="/1.9.2/reference/comments">comments</a></li><li class="false"><a href="/1.9.2/reference/conditionals">conditionals</a></li><li class="false"><a href="/1.9.2/reference/doctype">doctype</a></li><li class="false"><a href="/1.9.2/reference/extends">extends</a></li><li class="false"><a href="/1.9.2/reference/filters">filters</a></li><li class="false"><a href="/1.9.2/reference/includes">includes</a></li><li class="false"><a href="/1.9.2/reference/inheritance">inheritance</a></li><li class="active"><a href="/1.9.2/reference/interpolation">interpolation</a></li><li class="false"><a href="/1.9.2/reference/iteration">iteration</a></li><li class="false"><a href="/1.9.2/reference/mixins">mixins</a></li><li class="false"><a href="/1.9.2/reference/plain-text">plain text</a></li><li class="false"><a href="/1.9.2/reference/tags">tags</a></li></ul></div><div class="col-md-10"><div class="row"><div class="col-lg-8 col-lg-offset-2"><div class="panel panel-info"><div class="panel-heading">Hey!</div><div class="panel-body"><p>The Jade source on display on this and many of the other pages in these
+docs is interactive. Edit it and see what happens.
+</p></div></div></div></div><h1>Interpolation</h1><p>Jade provides operators for a variety of your different interpolative
+needs.
+</p><h2>String Interpolation, Escaped</h2><p>Consider the placement of the template locals <code>title</code>, <code>author</code>,
+and <code>theGreat</code> in the following template.
+</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">title</span> <span class="cm-operator">=</span> <span class="cm-string">&quot;On Dogs: Man&#39;s Best Friend&quot;</span>;
+<span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">author</span> <span class="cm-operator">=</span> <span class="cm-string">&quot;enlore&quot;</span>;
+<span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">theGreat</span> <span class="cm-operator">=</span> <span class="cm-string">&quot;&lt;span&gt;escape!&lt;/span&gt;&quot;</span>;
+
+<span class="cm-tag">h1</span><span class="cm-punctuation">=</span> <span class="cm-variable">title</span>
+<span class="cm-tag">p</span><span class="cm-string"> Written with love by #{author}</span>
+<span class="cm-tag">p</span><span class="cm-string"> This will be safe: #{theGreat}</span>
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>On Dogs: Man&#39;s Best Friend<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Written with love by enlore<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>This will be safe: <span class="cm-atom">&amp;lt;</span>span<span class="cm-atom">&amp;gt;</span>escape!<span class="cm-atom">&amp;lt;</span>/span<span class="cm-atom">&amp;gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+</code></pre></div></div><p><code>title</code> follows the basic pattern for evaluating a template local,
+but the code in between <code>#{</code> and <code>}</code> is evaluated,
+escaped, and the result buffered into the output of the template being
+rendered.
+</p><p>This can be any valid Javascript expression, so you can do whatever feels good.
+</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">msg</span> <span class="cm-operator">=</span> <span class="cm-string">&quot;not my inside voice&quot;</span>;
+<span class="cm-tag">p</span><span class="cm-string"> This is #{msg.toUpperCase()}</span>
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>This is NOT MY INSIDE VOICE<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+</code></pre></div></div><h2>String Interpolation, Unescaped</h2><p>You don't have to play it safe. You can buffer unescaped values into your
+templates, too.
+</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">riskyBusiness</span> <span class="cm-operator">=</span> <span class="cm-string">&quot;&lt;em&gt;Some of the girls are wearing my mother&#39;s clothing.&lt;/em&gt;&quot;</span>;
+<span class="cm-qualifier">.quote</span>
+<span class="cm-indent">  </span><span class="cm-tag">p</span><span class="cm-string"> Joel: !{riskyBusiness}</span>
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;quote&quot;</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Joel: <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">em</span><span class="cm-tag cm-bracket">&gt;</span>Some of the girls are wearing my mother&#39;s clothing.<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">em</span><span class="cm-tag cm-bracket">&gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">div</span><span class="cm-tag cm-bracket">&gt;</span>
+</code></pre></div></div><div class="row"><div class="col-lg-8 col-lg-offset-2"><div class="panel panel-danger"><div class="panel-heading">Danger</div><div class="panel-body"><p>Keep in mind that buffering unescaped content into your templates
+can be mighty risky if that content comes fresh from your users.
+Never trust user input!
+</p></div></div></div></div><h2>Tag Interpolation</h2><p>If you take a look at this page's source <a target="_blank" href="https://github.com/jadejs/jade/blob/master/docs/views/reference/interpolation.jade">on GitHub</a>, you'll see
+several places where the tag interpolation operator is used, like so.
+</p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-tag">p</span><span class="cm-dot">.</span>
+<span class="cm-string">  If you take a look at this page&#39;s source #[a(target=&quot;_blank&quot;, href=&quot;https://github.com/jadejs/jade/blob/master/docs/views/reference/interpolation.jade&quot;) on GitHub],</span>
+<span class="cm-string">  you&#39;ll see several places where the tag interpolation operator is</span>
+<span class="cm-string">  used, like so.</span>
+
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>If you take a look at this page&#39;s source <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">a</span> <span class="cm-attribute">href</span>=<span class="cm-string">&quot;https://github.com/jadejs/jade/blob/master/docs/views/reference/interpolation.jade&quot;</span><span class="cm-tag cm-bracket">&gt;</span>on GitHub<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">a</span><span class="cm-tag cm-bracket">&gt;</span>,
+  you&#39;ll see several places where the tag interpolation operator is
+  used, like so.
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+</code></pre></div></div><p>You could accomplish the same thing by writing an HTML tag inline with your
+Jade, but then, what's the point of writing the Jade? Wrap an inline Jade
+tag declaration in <code>#[</code> and <code>]</code> and it'll be evaluated
+and buffered into the content of it's containing tag.</p></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>&nbsp;and contributed by&nbsp;<a href="https://github.com/jadejs/jade/graphs/contributors">many others</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-25261536-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();</script><script src="/1.9.2/client.js"></script><script src="http://code.jquery.com/jquery-2.1.1.min.js"></script><script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script></body></html>
