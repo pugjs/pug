@@ -1,3 +1,15 @@
+1.9.2 / 2015-01-18
+==================
+
+  * Do not ignore some parser errors for mismatched parenthesis ([@TimothyGu](https://github.com/TimothyGu))
+  * Warn for `:` that is not followed by a space ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix #1794 (a bizzare bug with a certain combination of inheritance, mixins and &attributes) ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Add `compileClientWithDependenciesTracked` ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Support comments in `case` blocks ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Fix blocks in nested mixins ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Lots more documentation ([@enlore](https://github.com/enlore))
+  * Fix watching in CLI ([@pavel](https://github.com/pavel))
+
 1.9.1 / 2015-01-17
 ==================
 

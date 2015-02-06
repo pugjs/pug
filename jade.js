@@ -344,7 +344,7 @@ Compiler.prototype = {
     var args = mixin.args || '';
     var block = mixin.block;
     var attrs = mixin.attrs;
-    var attrsBlocks = mixin.attributeBlocks;
+    var attrsBlocks = mixin.attributeBlocks.slice();
     var pp = this.pp;
     var dynamic = mixin.name[0]==='#';
     var key = mixin.name;
@@ -454,10 +454,10 @@ Compiler.prototype = {
     if (pp && !tag.isInline())
       this.prettyIndent(0, true);
 
-    if (tag.selfClosing || (!this.xml && selfClosing.indexOf(tag.name) !== -1)) {
+    if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
       this.buffer('<');
       bufferName();
-      this.visitAttributes(tag.attrs, tag.attributeBlocks);
+      this.visitAttributes(tag.attrs, tag.attributeBlocks.slice());
       this.terse
         ? this.buffer('>')
         : this.buffer('/>');
@@ -473,7 +473,7 @@ Compiler.prototype = {
       // Optimize attributes buffering
       this.buffer('<');
       bufferName();
-      this.visitAttributes(tag.attrs, tag.attributeBlocks);
+      this.visitAttributes(tag.attrs, tag.attributeBlocks.slice());
       this.buffer('>');
       if (tag.code) this.visitCode(tag.code);
       this.visit(tag.block);
@@ -771,7 +771,9 @@ var Parser = require('./parser')
  * Expose self closing tags.
  */
 
-exports.selfClosing = require('void-elements');
+// FIXME: either stop exporting selfClosing in v2 or export the new object
+// form
+exports.selfClosing = Object.keys(require('void-elements'));
 
 /**
  * Default supported doctypes.
@@ -988,34 +990,52 @@ exports.compile = function(str, options){
  *
  * @param {String} str
  * @param {Options} options
- * @return {String}
+ * @return {Object}
  * @api public
  */
 
-exports.compileClient = function(str, options){
+exports.compileClientWithDependenciesTracked = function(str, options){
   var options = options || {};
   var name = options.name || 'template';
   var filename = options.filename ? utils.stringify(options.filename) : 'undefined';
   var fn;
 
   str = String(str);
-
+  options.compileDebug = options.compileDebug ? true : false;
+  var parsed = parse(str, options);
   if (options.compileDebug) {
-    options.compileDebug = true;
     fn = [
         'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(str, options).body
+      , parsed.body
       , '} catch (err) {'
       , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + utils.stringify(str) + ');'
       , '}'
     ].join('\n');
   } else {
-    options.compileDebug = false;
-    fn = parse(str, options).body;
+    fn = parsed.body;
   }
 
-  return 'function ' + name + '(locals) {\n' + fn + '\n}';
+  return {body: 'function ' + name + '(locals) {\n' + fn + '\n}', dependencies: parsed.dependencies};
+};
+
+/**
+ * Compile a JavaScript source representation of the given jade `str`.
+ *
+ * Options:
+ *
+ *   - `compileDebug` When it is `true`, the source code is included in
+ *     the compiled template for better error messages.
+ *   - `filename` used to improve errors when `compileDebug` is not `true` and to resolve imports/extends
+ *   - `name` the name of the resulting function (defaults to "template")
+ *
+ * @param {String} str
+ * @param {Options} options
+ * @return {String}
+ * @api public
+ */
+exports.compileClient = function (str, options) {
+  return exports.compileClientWithDependenciesTracked(str, options).body;
 };
 
 /**
@@ -1366,12 +1386,7 @@ Lexer.prototype = {
 
   interpolation: function() {
     if (/^#\{/.test(this.input)) {
-      var match;
-      try {
-        match = this.bracketExpression(1);
-      } catch (ex) {
-        return;//not an interpolation expression, just an unmatched open interpolation
-      }
+      var match = this.bracketExpression(1);
 
       this.consume(match.end + 1);
       return this.tok('interpolation', match.src);
@@ -1391,6 +1406,10 @@ Lexer.prototype = {
         name = name.slice(0, -1);
         tok = this.tok('tag', name);
         this.defer(this.tok(':'));
+        if (this.input[0] !== ' ') {
+          console.warn('Warning: space required after `:` on line ' + this.lineno +
+              ' of jade file "' + this.filename + '"');
+        }
         while (' ' == this.input[0]) this.input = this.input.substr(1);
       } else {
         tok = this.tok('tag', name);
@@ -1624,12 +1643,7 @@ Lexer.prototype = {
         tok = this.tok('call', captures[3]);
       } else {
         // interpolated call
-        var match;
-        try {
-          match = this.bracketExpression(2 + captures[1].length);
-        } catch (ex) {
-          return;//not an interpolation expression, just an unmatched open interpolation
-        }
+        var match = this.bracketExpression(2 + captures[1].length);
         this.consume(match.end + 1);
         assertExpression(match.src);
         tok = this.tok('call', '#{'+match.src+'}');
@@ -1637,14 +1651,10 @@ Lexer.prototype = {
 
       // Check for args (not attributes)
       if (captures = /^ *\(/.exec(this.input)) {
-        try {
-          var range = this.bracketExpression(captures[0].length - 1);
-          if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
-            this.consume(range.end + 1);
-            tok.args = range.src;
-          }
-        } catch (ex) {
-          //not a bracket expcetion, just unmatched open parens
+        var range = this.bracketExpression(captures[0].length - 1);
+        if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
+          this.consume(range.end + 1);
+          tok.args = range.src;
         }
         if (tok.args) {
           assertExpression('[' + tok.args + ']');
@@ -2036,7 +2046,13 @@ Lexer.prototype = {
    */
 
   colon: function() {
-    return this.scan(/^: */, ':');
+    var good = /^: +/.test(this.input);
+    var res = this.scan(/^: */, ':');
+    if (res && !good) {
+      console.warn('Warning: space required after `:` on line ' + this.lineno +
+          ' of jade file "' + this.filename + '"');
+    }
+    return res;
   },
 
   fail: function () {
@@ -2753,7 +2769,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
   this.mixins = {};
   this.options = options;
   this.contexts = [this];
-  this.inMixin = false;
+  this.inMixin = 0;
   this.dependencies = [];
   this.inBlock = 0;
 };
@@ -3023,6 +3039,7 @@ Parser.prototype = {
     this.expect('indent');
     while ('outdent' != this.peek().type) {
       switch (this.peek().type) {
+        case 'comment':
         case 'newline':
           this.advance();
           break;
@@ -3359,10 +3376,10 @@ Parser.prototype = {
 
     // definition
     if ('indent' == this.peek().type) {
-      this.inMixin = true;
+      this.inMixin++;
       mixin = new nodes.Mixin(name, args, this.block(), false);
       this.mixins[name] = mixin;
-      this.inMixin = false;
+      this.inMixin--;
       return mixin;
     // call
     } else {
@@ -7449,28 +7466,28 @@ function findGlobals(source) {
 
 },{}],34:[function(require,module,exports){
 /**
- * This file automatically generated from `build.js`.
+ * This file automatically generated from `pre-publish.js`.
  * Do not manually edit.
  */
 
-module.exports = [
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "keygen",
-  "link",
-  "menuitem",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr"
-];
+module.exports = {
+  "area": true,
+  "base": true,
+  "br": true,
+  "col": true,
+  "embed": true,
+  "hr": true,
+  "img": true,
+  "input": true,
+  "keygen": true,
+  "link": true,
+  "menuitem": true,
+  "meta": true,
+  "param": true,
+  "source": true,
+  "track": true,
+  "wbr": true
+};
 
 },{}],35:[function(require,module,exports){
 'use strict';

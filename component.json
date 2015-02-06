@@ -2,7 +2,7 @@
   "name": "jade",
   "repo": "visionmedia/jade",
   "description": "Jade template runtime",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "keywords": [
     "template"
   ],
