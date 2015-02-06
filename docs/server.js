@@ -98,7 +98,6 @@ app.get('/history', function (req, res, next) {
 app.get('/client.js', browserify(__dirname + '/client/index.js'));
 app.use('/style', less(__dirname + '/style/index.less'));
 app.use('/style', express.static(__dirname + '/style'));
-app.use('/coverage', express.static(path.resolve(__dirname + '/../coverage/lcov-report')));
 
 app.use(function (err, req, res, next) {
   var msg = err.stack || err.toString();
