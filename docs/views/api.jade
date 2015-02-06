@@ -42,6 +42,9 @@ block content
       dt compiler:
       dd.type.function class
       dd.description Override the default compiler
+      dt parser:
+      dd.type.function class
+      dd.description Override the default parser. You MUST supply a #[code parse] function in it returning a string of js for evaluation.
       dt globals:
       dd.type.array= 'Array.<string>'
       dd.description Add a list of global names to make accessible in templates
