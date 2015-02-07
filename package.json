@@ -35,7 +35,6 @@
     "coveralls": "^2.11.2",
     "mocha": "*",
     "istanbul": "*",
-    "markdown": "*",
     "stylus": "*",
     "should": "*",
     "less": "<2.0.0",
