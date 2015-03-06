@@ -1,3 +1,5 @@
+Thiis is a for of Jade that adds a new debug option: `debugLines`.
+
 # [![Jade - Node Template Engine](http://jade-lang.com/logos/JadeBlack.svg)](http://jade-lang.com/)
 
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
