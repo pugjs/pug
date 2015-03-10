@@ -129,7 +129,9 @@ if (files.length) {
     });
     files.forEach(tryRender);
   } else {
-    files.forEach(renderFile);
+    files.forEach(function (file) {
+      renderFile(file);
+    });
   }
   process.on('exit', function () {
     console.log();
@@ -213,7 +215,7 @@ function stdin() {
  * Always walk the subdirectories.
  */
 
-function renderFile(path) {
+function renderFile(path, rootPath) {
   var re = /\.jade$/;
   var stat = fs.lstatSync(path);
   // Found jade file/\.jade$/
@@ -238,7 +240,13 @@ function renderFile(path) {
     else                     var extname = '.html';
 
     path = path.replace(re, extname);
-    if (program.out) path = join(program.out, basename(path));
+    if (program.out) {
+      if (typeof rootPath !== 'undefined') {
+        path = join(program.out, path.replace(rootPath, ''));
+      } else {
+        path = join(program.out, basename(path));
+      }
+    }
     var dir = resolve(dirname(path));
     mkdirp.sync(dir, 0755);
     var output = options.client ? fn : fn(options);
@@ -249,7 +257,9 @@ function renderFile(path) {
     var files = fs.readdirSync(path);
     files.map(function(filename) {
       return path + '/' + filename;
-    }).forEach(renderFile);
+    }).forEach(function (file) {
+      renderFile(file, rootPath || path);
+    });
   }
 }
 
