@@ -33,6 +33,7 @@ program
   .option('-D, --no-debug', 'compile without debugging (smaller functions)')
   .option('-w, --watch', 'watch files for changes and automatically re-render')
   .option('-E, --extension <ext>', 'specify the output file extension')
+  .option('-H, --hierarchy', 'keep directory hierarchy when a directory is specified')
   .option('--name-after-file', 'Name the template after the last section of the file path (requires --client and overriden by --name)')
   .option('--doctype <str>', 'Specify the doctype on the command line (useful if it is not specified by the template)')
 
@@ -210,6 +211,8 @@ function stdin() {
   })
 }
 
+var hierarchyWarned = false;
+
 /**
  * Process the given path, compiling the jade files found.
  * Always walk the subdirectories.
@@ -241,9 +244,13 @@ function renderFile(path, rootPath) {
 
     path = path.replace(re, extname);
     if (program.out) {
-      if (typeof rootPath !== 'undefined') {
+      if (rootPath && program.hierarchy) {
         path = join(program.out, path.replace(rootPath, ''));
       } else {
+        if (rootPath && !hierarchyWarned) {
+          console.warn('In Jade 2.0.0 --hierarchy will become the default.');
+          hierarchyWarned = true;
+        }
         path = join(program.out, basename(path));
       }
     }
