@@ -9,6 +9,10 @@ sudo: false
 
 script: "npm test && npm run coveralls"
 
+branches:
+  only:
+    - master
+
 notifications:
   webhooks:
     urls:
