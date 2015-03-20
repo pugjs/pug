@@ -1,6 +1,8 @@
 'use strict';
 
 var fs = require('fs');
+var mkdirp = require('mkdirp');
+var rimraf = require('rimraf');
 var path = require('path');
 var assert = require('assert');
 var cp = require('child_process');
@@ -42,13 +44,11 @@ function run(args, stdin, callback) {
   }, callback);
 }
 
-try {
-  fs.mkdirSync(__dirname + '/temp');
-} catch (ex) {
-  if (ex.code !== 'EEXIST') {
-    throw ex;
-  }
-}
+rimraf.sync(__dirname + '/temp');
+mkdirp.sync(__dirname + '/temp/inputs/level-1-1');
+mkdirp.sync(__dirname + '/temp/inputs/level-1-2');
+mkdirp.sync(__dirname + '/temp/outputs/level-1-1');
+mkdirp.sync(__dirname + '/temp/outputs/level-1-2');
 
 /**
  * Set timing limits for a test case
@@ -137,6 +137,56 @@ describe('command line with HTML output', function () {
       if (err) return done(err);
       assert(stdout === '<div class="foo">bar</div>');
       done();
+    });
+  });
+  it('jade --no-debug --out outputs input.jade', function (done) {
+    fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
+    fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
+    run('--no-debug --out outputs input.jade', function (err) {
+      if (err) return done(err);
+      var html = fs.readFileSync(__dirname + '/temp/outputs/input.html', 'utf8');
+      assert(html === '<div class="foo">bar</div>');
+      done();
+    });
+  });
+  context('when input is directory', function () {
+    it('jade --no-debug --out outputs inputs', function (done) {
+      fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar 1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input1-1.jade', '.foo bar 1-1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input1-2.jade', '.foo bar 1-2');
+      fs.writeFileSync(__dirname + '/temp/outputs/input.html', 'BIG FAT HEN 1');
+      fs.writeFileSync(__dirname + '/temp/outputs/input1-1.html', 'BIG FAT HEN 1-1');
+      fs.writeFileSync(__dirname + '/temp/outputs/input1-2.html', 'BIG FAT HEN 1-2');
+      run('--no-debug --out outputs inputs', function (err, stdout, stderr) {
+        if (err) return done(err);
+        var html = fs.readFileSync(__dirname + '/temp/outputs/input.html', 'utf8');
+        assert(html === '<div class="foo">bar 1</div>');
+        var html = fs.readFileSync(__dirname + '/temp/outputs/input1-1.html', 'utf8');
+        assert(html === '<div class="foo">bar 1-1</div>');
+        var html = fs.readFileSync(__dirname + '/temp/outputs/input1-2.html', 'utf8');
+        assert(html === '<div class="foo">bar 1-2</div>');
+        assert(stderr.indexOf('--hierarchy will become the default') !== -1,
+               '--hierarchy default warning not shown');
+        done();
+      });
+    });
+    it('jade --no-debug --hierarchy --out outputs inputs', function (done) {
+      fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar 1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input.jade', '.foo bar 1-1');
+      fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input.jade', '.foo bar 1-2');
+      fs.writeFileSync(__dirname + '/temp/outputs/input.html', 'BIG FAT HEN 1');
+      fs.writeFileSync(__dirname + '/temp/outputs/level-1-1/input.html', 'BIG FAT HEN 1-1');
+      fs.writeFileSync(__dirname + '/temp/outputs/level-1-2/input.html', 'BIG FAT HEN 1-2');
+      run('--no-debug --hierarchy --out outputs inputs', function (err) {
+        if (err) return done(err);
+        var html = fs.readFileSync(__dirname + '/temp/outputs/input.html', 'utf8');
+        assert(html === '<div class="foo">bar 1</div>');
+        var html = fs.readFileSync(__dirname + '/temp/outputs/level-1-1/input.html', 'utf8');
+        assert(html === '<div class="foo">bar 1-1</div>');
+        var html = fs.readFileSync(__dirname + '/temp/outputs/level-1-2/input.html', 'utf8');
+        assert(html === '<div class="foo">bar 1-2</div>');
+        done();
+      });
     });
   });
 });
