@@ -19,9 +19,7 @@ module.exports = stop.getWebsiteStream('http://localhost:3000', {
   parallel: 1
 })
 .on('data', function (page) {
-  if (page.url === 'http://localhost:3000/style/files/1/glyphicons-halflings-regular.eot?' && page.statusCode === 404) {
-    //todo: fix this
-  } else if (page.statusCode !== 200) {
+  if (page.statusCode !== 200) {
     throw new Error('Unexpected status code ' + page.statusCode +
                     ' for ' + page.url);
   }
