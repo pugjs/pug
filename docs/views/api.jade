@@ -51,6 +51,12 @@ block content
       dt globals:
       dd.type.array= 'Array.<string>'
       dd.description Add a list of global names to make accessible in templates
+      dt debugLines:
+      dd.type.string string
+      dd.description Adds #[code data-jade-file] and #[code data-jade-line] attributes to the generated HTML elements. This indicates the source jade 
+        | template file name and the line number that generated that HTML element. To minimize the size of the output not all 
+        | elements contain this information. If a node doesn't have any of these attributes it means that the inforation will be found in 
+        | one of its ancestors.
     div }
 
   h3 jade.compile(source, options)
