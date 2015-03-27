@@ -238,9 +238,10 @@ function renderFile(path, rootPath) {
     }
 
     // --extension
-    if (program.extension)   var extname = '.' + program.extension;
-    else if (options.client) var extname = '.js';
-    else                     var extname = '.html';
+    var extname;
+    if (program.extension)   extname = '.' + program.extension;
+    else if (options.client) extname = '.js';
+    else                     extname = '.html';
 
     path = path.replace(re, extname);
     if (program.out) {
