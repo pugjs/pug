@@ -120,6 +120,9 @@ var files = program.args;
 
 var watchList = [];
 
+// function for rendering
+var render = program.watch ? tryRender : renderFile;
+
 // compile files
 
 if (files.length) {
@@ -128,14 +131,10 @@ if (files.length) {
     process.on('SIGINT', function() {
       process.exit(1);
     });
-    files.forEach(function (file) {
-      tryRender(file);
-    });
-  } else {
-    files.forEach(function (file) {
-      renderFile(file);
-    });
   }
+  files.forEach(function (file) {
+    render(file);
+  });
   process.on('exit', function () {
     console.log();
   });
@@ -276,8 +275,7 @@ function renderFile(path, rootPath) {
     files.map(function(filename) {
       return path + '/' + filename;
     }).forEach(function (file) {
-      var fn = program.watch ? tryRender : renderFile;
-      fn(file, rootPath || path);
+      render(file, rootPath || path);
     });
   }
 }
