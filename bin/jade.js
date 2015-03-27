@@ -216,6 +216,9 @@ var hierarchyWarned = false;
 /**
  * Process the given path, compiling the jade files found.
  * Always walk the subdirectories.
+ *
+ * @param path      path of the file, might be relative
+ * @param rootPath  path relative to the directory specified in the command
  */
 
 function renderFile(path, rootPath) {
@@ -223,6 +226,7 @@ function renderFile(path, rootPath) {
   var stat = fs.lstatSync(path);
   // Found jade file/\.jade$/
   if (stat.isFile() && re.test(path)) {
+    // Try to watch the file if needed. watchFile takes care of duplicates.
     if (options.watch) watchFile(path);
     var str = fs.readFileSync(path, 'utf8');
     options.filename = path;
@@ -242,15 +246,19 @@ function renderFile(path, rootPath) {
     else if (options.client) var extname = '.js';
     else                     var extname = '.html';
 
+    // path: foo.jade -> foo.<ext>
     path = path.replace(re, extname);
     if (program.out) {
+      // prepend output directory
       if (rootPath && program.hierarchy) {
+        // replace the rootPath of the resolved path with output directory
         path = join(program.out, path.replace(rootPath, ''));
       } else {
         if (rootPath && !hierarchyWarned) {
           console.warn('In Jade 2.0.0 --hierarchy will become the default.');
           hierarchyWarned = true;
         }
+        // old behavior or if no rootPath handling is needed
         path = join(program.out, basename(path));
       }
     }
