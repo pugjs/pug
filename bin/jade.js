@@ -252,7 +252,8 @@ function renderFile(path, rootPath) {
       // prepend output directory
       if (rootPath && program.hierarchy) {
         // replace the rootPath of the resolved path with output directory
-        path = join(program.out, path.replace(rootPath, ''));
+        path = resolve(path).replace(new RegExp('^' + resolve(rootPath)), '');
+        path = join(program.out, path);
       } else {
         if (rootPath && !hierarchyWarned) {
           console.warn('In Jade 2.0.0 --hierarchy will become the default.');
