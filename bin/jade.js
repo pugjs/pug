@@ -128,7 +128,9 @@ if (files.length) {
     process.on('SIGINT', function() {
       process.exit(1);
     });
-    files.forEach(tryRender);
+    files.forEach(function (file) {
+      tryRender(file);
+    });
   } else {
     files.forEach(function (file) {
       renderFile(file);
@@ -147,7 +149,7 @@ if (files.length) {
  *
  * Renders `base` if specified, otherwise renders `path`.
  */
-function watchFile(path, base) {
+function watchFile(path, base, rootPath) {
   path = normalize(path);
   if (watchList.indexOf(path) !== -1) return;
   console.log("  \033[90mwatching \033[36m%s\033[0m", path);
@@ -157,7 +159,7 @@ function watchFile(path, base) {
     if (curr.mtime.getTime() === 0) return;
     // istanbul ignore if
     if (curr.mtime.getTime() === prev.mtime.getTime()) return;
-    tryRender(base || path);
+    tryRender(base || path, rootPath);
   });
   watchList.push(path);
 }
@@ -175,9 +177,9 @@ function errorToString(e) {
  *
  * This is used in watch mode.
  */
-function tryRender(path) {
+function tryRender(path, rootPath) {
   try {
-    renderFile(path);
+    renderFile(path, rootPath);
   } catch (e) {
     // keep watching when error occured.
     console.error(errorToString(e));
@@ -227,7 +229,7 @@ function renderFile(path, rootPath) {
   // Found jade file/\.jade$/
   if (stat.isFile() && re.test(path)) {
     // Try to watch the file if needed. watchFile takes care of duplicates.
-    if (options.watch) watchFile(path);
+    if (options.watch) watchFile(path, null, rootPath);
     var str = fs.readFileSync(path, 'utf8');
     options.filename = path;
     if (program.nameAfterFile) {
@@ -237,7 +239,7 @@ function renderFile(path, rootPath) {
     if (options.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {
-        watchFile(dep, path);
+        watchFile(dep, path, rootPath);
       });
     }
 
@@ -274,7 +276,8 @@ function renderFile(path, rootPath) {
     files.map(function(filename) {
       return path + '/' + filename;
     }).forEach(function (file) {
-      renderFile(file, rootPath || path);
+      var fn = program.watch ? tryRender : renderFile;
+      fn(file, rootPath || path);
     });
   }
 }
