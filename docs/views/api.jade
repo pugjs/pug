@@ -5,16 +5,16 @@ block content
 
   p This page details how to render Jade using the JavaScript API.
 
-  h2 Installation
+  h2#Installation Installation
 
   p via npm:
 
   pre
     code npm install jade
 
-  h2 Usage
+  h2#Usage Usage
 
-  h3 options
+  h3#options options
 
   p All API methods take the following set of options:
 
@@ -53,7 +53,7 @@ block content
       dd.description Add a list of global names to make accessible in templates
     div }
 
-  h3 jade.compile(source[, options])
+  h3#compile jade.compile(source[, options])
 
   p.
     Compile a Jade template to a function which can be rendered multiple
@@ -65,7 +65,7 @@ block content
     dd.description The source Jade template to compile
     dt options
     dd.type.object options
-    dd.description An options object (see above)
+    dd.description An #[a(href="options") options] object
   dl.returns
     dt returns
     dd.type.function function
@@ -82,7 +82,7 @@ block content
       var html = fn(locals);
       // => '<string>of jade</string>'
 
-  h3 jade.compileFile(path[, options])
+  h3#compileFile jade.compileFile(path[, options])
 
   p.
     Compile a Jade template from a file to a function which can be rendered
@@ -94,7 +94,7 @@ block content
     dd.description The path to a Jade file
     dt options
     dd.type.object options
-    dd.description An options object (see above)
+    dd.description An #[a(href="options") options] object
   dl.returns
     dt returns
     dd.type.function function
@@ -111,7 +111,7 @@ block content
       var html = fn(locals);
       // => '<string>of jade</string>'
 
-  h3 jade.compileClient(source[, options])
+  h3#compileClient jade.compileClient(source[, options])
 
   p.
     Compile a Jade template to a string of JavaScript that can be used client
@@ -123,7 +123,7 @@ block content
     dd.description The Jade template to compile
     dt options
     dd.type.object options
-    dd.description An options object (see above)
+    dd.description An #[a(href="options") options] object
   dl.returns
     dt returns
     dd.type.string string
@@ -140,10 +140,10 @@ block content
       var html = fn(locals);
       // => 'function template(locals) { return "<string>of jade</string>"; }'
   
-  h3 jade.compileClientWithDependenciesTracked(source[, options])
+  h3#compileClientWithDependenciesTracked jade.compileClientWithDependenciesTracked(source[, options])
   
   p.
-    Same as #[code jade.compileClient] except that
+    Same as #[code: a(href='#compileClient') jade.compileClient] except that
     this method returns an object of the form:
   
   +js
@@ -169,7 +169,7 @@ block content
     dd.description The path to a Jade file
     dt options
     dd.type.object options
-    dd.description An options object (see above)
+    dd.description An #[a(href="options") options] object
     dt options.name
     dd.type.string string
     dd.description.
@@ -249,7 +249,7 @@ block content
         </body>
       </html>
 
-  h3 jade.render(source[, options])
+  h3#render jade.render(source[, options])
 
   dl.parameter-list
     dt source
@@ -257,7 +257,7 @@ block content
     dd.description The source Jade template to render
     dt options
     dd.type.object options
-    dd.description An options object (see above), also used as the locals object
+    dd.description An #[a(href="options") options] object, also used as the locals object
   dl.returns
     dt returns
     dd.type.string string
@@ -270,7 +270,7 @@ block content
       var html = jade.render('string of jade', options);
       // => '<string>of jade</string>'
 
-  h3 jade.renderFile(filename[, options])
+  h3#renderFile jade.renderFile(filename[, options])
 
   dl.parameter-list
     dt filename
@@ -278,7 +278,7 @@ block content
     dd.description The path to the Jade file to render
     dt options
     dd.type.object options
-    dd.description An options object (see above), also used as the locals object
+    dd.description An #[a(href="options") options] object, also used as the locals object
   dl.returns
     dt returns
     dd.type.string string
