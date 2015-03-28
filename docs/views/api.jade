@@ -249,7 +249,7 @@ block content
         </body>
       </html>
 
-  h3#render jade.render(source[, options])
+  h3#render jade.render(source[, options][, callback])
 
   dl.parameter-list
     dt source
@@ -258,10 +258,16 @@ block content
     dt options
     dd.type.object options
     dd.description An #[a(href="options") options] object, also used as the locals object
+    dt callback
+    dd.type.function function
+    dd.description Callback to receive rendered string or error, with signature #[code (err, data)]. This callback is called #[strong synchronously!]
   dl.returns
     dt returns
     dd.type.string string
     dd.description The resulting HTML string
+    dt &nbsp;
+    dd.type user-defined
+    dd.description If a callback is specified, whatever the callback returns is returned.
 
   +js
     :jssrc
@@ -270,7 +276,16 @@ block content
       var html = jade.render('string of jade', options);
       // => '<string>of jade</string>'
 
-  h3#renderFile jade.renderFile(filename[, options])
+      var cbReturned;
+      var returned = jade.render('string of jade', options, function (err, data) {
+        if (err) throw err;
+        cbReturned = data;
+        return 'yay';
+      });
+      // cbReturned === '<string>of jade</string>'
+      // returned   === 'yay'
+
+  h3#renderFile jade.renderFile(filename[, options][, callback])
 
   dl.parameter-list
     dt filename
@@ -279,10 +294,16 @@ block content
     dt options
     dd.type.object options
     dd.description An #[a(href="options") options] object, also used as the locals object
+    dt callback
+    dd.type.function function
+    dd.description Callback to receive rendered string or error, with signature #[code (err, data)]. This callback is called #[strong synchronously!]
   dl.returns
     dt returns
     dd.type.string string
-    dd.description The resulting HTML string
+    dd.description The resulting html string
+    dt &nbsp;
+    dd.type user-defined
+    dd.description If a callback is specified, whatever the callback returns is returned.
 
   +js
     :jssrc
