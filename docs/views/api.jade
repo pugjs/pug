@@ -3,7 +3,7 @@ extends ./layout.jade
 block content
   h1 API Documentation
 
-  p This page details how to render jade using the JavaScript API in node.js
+  p This page details how to render Jade using the JavaScript API.
 
   h2 Installation
 
@@ -29,7 +29,7 @@ block content
       dd.description If the doctype is not specified as part of the template, you can specify it here.  It is sometimes useful to get self-closing tags and remove mirroring of boolean attributes.
       dt pretty:
       dd.type boolean | string
-      dd.description Adds whitespace to the resulting html to make it easier for a human to read using #[code '&nbsp;&nbsp;'] as indentation. If a string is specified, that will be used as indentation instead (e.g. #[code '\t']).
+      dd.description Adds whitespace to the resulting HTML to make it easier for a human to read using #[code '&nbsp;&nbsp;'] as indentation. If a string is specified, that will be used as indentation instead (e.g. #[code '\t']).
       dt self:
       dd.type.boolean boolean
       dd.description Use a #[code self] namespace to hold the locals (false by default)
@@ -55,19 +55,19 @@ block content
 
   h3 jade.compile(source[, options])
 
-  p Compile some jade source to a function which can be rendered multiple times with different locals.
+  p Compile a Jade template to a function which can be rendered multiple times with different locals.
 
   dl.parameter-list
     dt source
     dd.type.string string
-    dd.description The source jade to compile
+    dd.description The source Jade template to compile
     dt options
     dd.type.object options
     dd.description An options object (see above)
   dl.returns
     dt returns
     dd.type.function function
-    dd.description A function to generate the html from an object containing locals
+    dd.description A function to generate the HTML from an object containing locals
 
   +js
     :jssrc
@@ -82,19 +82,19 @@ block content
 
   h3 jade.compileFile(path[, options])
 
-  p Compile some jade source from a file to a function which can be rendered multiple times with different locals.
+  p Compile a Jade template from a file to a function which can be rendered multiple times with different locals.
 
   dl.parameter-list
     dt source
     dd.type.string path
-    dd.description The path to a jade file
+    dd.description The path to a Jade file
     dt options
     dd.type.object options
     dd.description An options object (see above)
   dl.returns
     dt returns
     dd.type.function function
-    dd.description A function to generate the html from an object containing locals
+    dd.description A function to generate the HTML from an object containing locals
 
   +js
     :jssrc
@@ -109,12 +109,12 @@ block content
 
   h3 jade.compileClient(source[, options])
 
-  p Compile some jade source to a string of JavaScript that can be used client side along with the jade runtime.
+  p Compile a Jade template to a string of JavaScript that can be used client side along with the Jade runtime.
 
   dl.parameter-list
     dt source
     dd.type.string string
-    dd.description The source jade to compile
+    dd.description The Jade template to compile
     dt options
     dd.type.object options
     dd.description An options object (see above)
@@ -136,7 +136,7 @@ block content
 
   h3 jade.compileClientWithDependenciesTracked(source[, options])
 
-  p See #[code jade.compileClient] except that this method returns an object of the form:
+  p Same as #[code jade.compileClient] except that this method returns an object of the form:
 
   +js
     :jssrc
@@ -145,18 +145,16 @@ block content
         'dependencies': ['filename.jade']
       }
 
-  p.
-    You should only use this method if you need to implement something
-    like watching for changes to the jade files.
+  p You should only use this method if you need to implement something like watching for changes to the Jade files.
 
   h3 jade.compileFileClient(path[, options])
 
-  p Compile a jade template file to a string of Javascript that can be used client side along with the jade runtime.
+  p Compile a Jade template file to a string of JavaScript that can be used client side along with the Jade runtime.
 
   dl.parameter-list
     dt path
     dd.type.string string
-    dd.description The path to a jade file
+    dd.description The path to a Jade file
     dt options
     dd.type.object options
     dd.description An options object (see above)
@@ -168,7 +166,7 @@ block content
   dl.returns
     dt returns
     dd.type.string string
-    dd.description A Javascript function body.
+    dd.description A JavaScript function body.
 
   p First, our template file.
 
@@ -177,7 +175,7 @@ block content
       h1 This is a Jade template
       h2 By \#{author}
 
-  p Then, we compile the jade file into a function string.
+  p Then, we compile the Jade file into a function string.
 
   +js
     :jssrc
@@ -214,9 +212,7 @@ block content
       }
 
 
-  p.
-    Be sure to send the Jade runtime (#[code node_modules/jade/runtime.js]) to
-    the client in addition to the template that you just compiled.
+  p Be sure to send the Jade runtime (#[code node_modules/jade/runtime.js]) to the client in addition to the template that you just compiled.
 
   +html
     :htmlsrc
@@ -244,14 +240,14 @@ block content
   dl.parameter-list
     dt source
     dd.type.string string
-    dd.description The source jade to render
+    dd.description The source Jade template to render
     dt options
     dd.type.object options
     dd.description An options object (see above), also used as the locals object
   dl.returns
     dt returns
     dd.type.string string
-    dd.description The resulting html string
+    dd.description The resulting HTML string
 
   +js
     :jssrc
@@ -265,14 +261,14 @@ block content
   dl.parameter-list
     dt filename
     dd.type.string string
-    dd.description The path to the jade file to render
+    dd.description The path to the Jade file to render
     dt options
     dd.type.object options
     dd.description An options object (see above), also used as the locals object
   dl.returns
     dt returns
     dd.type.string string
-    dd.description The resulting html string
+    dd.description The resulting HTML string
 
   +js
     :jssrc
