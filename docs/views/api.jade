@@ -53,7 +53,7 @@ block content
       dd.description Add a list of global names to make accessible in templates
     div }
 
-  h3 jade.compile(source, options)
+  h3 jade.compile(source[, options])
 
   p Compile some jade source to a function which can be rendered multiple times with different locals.
 
@@ -80,7 +80,7 @@ block content
       var html = fn(locals);
       // => '<string>of jade</string>'
 
-  h3 jade.compileFile(path, options)
+  h3 jade.compileFile(path[, options])
 
   p Compile some jade source from a file to a function which can be rendered multiple times with different locals.
 
@@ -107,7 +107,7 @@ block content
       var html = fn(locals);
       // => '<string>of jade</string>'
 
-  h3 jade.compileClient(source, options)
+  h3 jade.compileClient(source[, options])
 
   p Compile some jade source to a string of JavaScript that can be used client side along with the jade runtime.
 
@@ -134,7 +134,7 @@ block content
       var html = fn(locals);
       // => 'function template(locals) { return "<string>of jade</string>"; }'
   
-  h3 jade.compileClientWithDependenciesTracked(source, options)
+  h3 jade.compileClientWithDependenciesTracked(source[, options])
   
   p See #[code jade.compileClient] except that this method returns an object of the form:
   
@@ -149,7 +149,7 @@ block content
     You should only use this method if you need to implement something
     like watching for changes to the jade files.
 
-  h3 jade.compileFileClient(path, options)
+  h3 jade.compileFileClient(path[, options])
 
   p Compile a jade template file to a string of Javascript that can be used client side along with the jade runtime.
 
@@ -239,7 +239,7 @@ block content
         </body>
       </html>
 
-  h3 jade.render(source, options)
+  h3 jade.render(source[, options])
 
   dl.parameter-list
     dt source
@@ -260,7 +260,7 @@ block content
       var html = jade.render('string of jade', options);
       // => '<string>of jade</string>'
 
-  h3 jade.renderFile(filename, options)
+  h3 jade.renderFile(filename[, options])
 
   dl.parameter-list
     dt filename
