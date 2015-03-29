@@ -224,12 +224,12 @@ function renderFile(path, rootPath) {
   // Found jade file/\.jade$/
   if (stat.isFile() && re.test(path)) {
     if (options.watch) watchFile(path);
-    var str = fs.readFileSync(path, 'utf8');
-    options.filename = path;
     if (program.nameAfterFile) {
       options.name = getNameFromFileName(path);
     }
-    var fn = options.client ? jade.compileClient(str, options) : jade.compile(str, options);
+    var fn = options.client
+           ? jade.compileFileClient(path, options)
+           : jade.compileFile(path, options);
     if (options.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {
