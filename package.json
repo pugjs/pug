@@ -22,13 +22,14 @@
     "jade": "./bin/jade.js"
   },
   "dependencies": {
+    "acorn-globals": "~1.0.0 <1.0.2",
     "character-parser": "1.2.1",
     "commander": "~2.6.0",
     "constantinople": "~3.0.1",
     "mkdirp": "~0.5.0",
     "transformers": "2.1.0",
     "void-elements": "~2.0.1",
-    "with": "~4.0.0"
+    "with": "~4.0.0 <4.0.2"
   },
   "devDependencies": {
     "coffee-script": "*",
