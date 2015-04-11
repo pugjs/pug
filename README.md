@@ -1,4 +1,4 @@
-# [![Jade - Node Template Engine](http://jade-lang.com/logos/JadeBlack.svg)](http://jade-lang.com/)
+# [![Jade - Node Template Engine](http://garthdb.com/img/jade_branding/jade-01.svg)](http://jade-lang.com/)
 
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
