@@ -1,6 +1,6 @@
 @import (npm) "twbs";
 
-@jade: #00a86b;
+@jade: #589983;
 @brand-primary: @jade;
 @grid-float-breakpoint: @screen-md-min;
 
@@ -37,10 +37,23 @@
 
 .logo-container {
   text-align: center;
-  background-color: @jade;
+  background: url('./bg.jpg');
   padding-top: 50px;
   padding-bottom: 50px;
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 300px
+  }
 }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .logo-container {
+    background: url('./bg@2X.jpg');
+    background-size: 250px 250px;
+  }
+}
+
 
 p {
   font-size: 1.2em;
