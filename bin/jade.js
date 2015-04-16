@@ -120,6 +120,9 @@ var files = program.args;
 
 var watchList = [];
 
+// function for rendering
+var render = program.watch ? tryRender : renderFile;
+
 // compile files
 
 if (files.length) {
@@ -128,12 +131,10 @@ if (files.length) {
     process.on('SIGINT', function() {
       process.exit(1);
     });
-    files.forEach(tryRender);
-  } else {
-    files.forEach(function (file) {
-      renderFile(file);
-    });
   }
+  files.forEach(function (file) {
+    render(file);
+  });
   process.on('exit', function () {
     console.log();
   });
@@ -147,7 +148,7 @@ if (files.length) {
  *
  * Renders `base` if specified, otherwise renders `path`.
  */
-function watchFile(path, base) {
+function watchFile(path, base, rootPath) {
   path = normalize(path);
   if (watchList.indexOf(path) !== -1) return;
   console.log("  \033[90mwatching \033[36m%s\033[0m", path);
@@ -157,7 +158,7 @@ function watchFile(path, base) {
     if (curr.mtime.getTime() === 0) return;
     // istanbul ignore if
     if (curr.mtime.getTime() === prev.mtime.getTime()) return;
-    tryRender(base || path);
+    tryRender(base || path, rootPath);
   });
   watchList.push(path);
 }
@@ -175,9 +176,9 @@ function errorToString(e) {
  *
  * This is used in watch mode.
  */
-function tryRender(path) {
+function tryRender(path, rootPath) {
   try {
-    renderFile(path);
+    renderFile(path, rootPath);
   } catch (e) {
     // keep watching when error occured.
     console.error(errorToString(e));
@@ -216,6 +217,9 @@ var hierarchyWarned = false;
 /**
  * Process the given path, compiling the jade files found.
  * Always walk the subdirectories.
+ *
+ * @param path      path of the file, might be relative
+ * @param rootPath  path relative to the directory specified in the command
  */
 
 function renderFile(path, rootPath) {
@@ -223,7 +227,8 @@ function renderFile(path, rootPath) {
   var stat = fs.lstatSync(path);
   // Found jade file/\.jade$/
   if (stat.isFile() && re.test(path)) {
-    if (options.watch) watchFile(path);
+    // Try to watch the file if needed. watchFile takes care of duplicates.
+    if (options.watch) watchFile(path, null, rootPath);
     if (program.nameAfterFile) {
       options.name = getNameFromFileName(path);
     }
@@ -233,7 +238,7 @@ function renderFile(path, rootPath) {
     if (options.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {
-        watchFile(dep, path);
+        watchFile(dep, path, rootPath);
       });
     }
 
@@ -243,15 +248,20 @@ function renderFile(path, rootPath) {
     else if (options.client) extname = '.js';
     else                     extname = '.html';
 
+    // path: foo.jade -> foo.<ext>
     path = path.replace(re, extname);
     if (program.out) {
+      // prepend output directory
       if (rootPath && program.hierarchy) {
-        path = join(program.out, path.replace(rootPath, ''));
+        // replace the rootPath of the resolved path with output directory
+        path = resolve(path).replace(new RegExp('^' + resolve(rootPath)), '');
+        path = join(program.out, path);
       } else {
         if (rootPath && !hierarchyWarned) {
           console.warn('In Jade 2.0.0 --hierarchy will become the default.');
           hierarchyWarned = true;
         }
+        // old behavior or if no rootPath handling is needed
         path = join(program.out, basename(path));
       }
     }
@@ -266,7 +276,7 @@ function renderFile(path, rootPath) {
     files.map(function(filename) {
       return path + '/' + filename;
     }).forEach(function (file) {
-      renderFile(file, rootPath || path);
+      render(file, rootPath || path);
     });
   }
 }
