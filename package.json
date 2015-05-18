@@ -22,13 +22,13 @@
     "jade": "./bin/jade.js"
   },
   "dependencies": {
-    "character-parser": "1.2.1",
-    "commander": "~2.6.0",
+    "character-parser": "~1.2.2",
+    "commander": "~2.8.0",
     "constantinople": "~3.0.1",
     "mkdirp": "~0.5.0",
     "transformers": "2.1.0",
     "void-elements": "~2.0.1",
-    "with": "~4.0.0"
+    "with": "~5.0.0"
   },
   "devDependencies": {
     "coffee-script": "*",
@@ -42,7 +42,7 @@
     "browserify": "*",
     "linify": "*",
     "less-file": "0.0.9",
-    "express": "~4.10.4",
+    "express": "~4.12.3",
     "browserify-middleware": "~4.1.0",
     "twbs": "0.0.6",
     "highlight-codemirror": "~4.1.0",
