@@ -93,9 +93,9 @@ describe('error reporting', function () {
     });
     describe('Include filtered', function () {
       it('includes details of where the error was thrown', function () {
-        var err = getError('include:js()!', {});
+        var err = getError('include:verbatim()!', {});
         assert(err.message.indexOf('expected space after include:filter but got "!"') !== -1);
-        var err = getError('include:js ', {});
+        var err = getError('include:verbatim ', {});
         assert(err.message.indexOf('missing path for include:filter') !== -1);
       });
     });
