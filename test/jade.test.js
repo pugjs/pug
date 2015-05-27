@@ -686,7 +686,8 @@ describe('jade', function(){
           '-',
           '  var a =',
           '    5;',
-          'p= a'
+          'p= a',
+          '-'
       ].join('\n')
 
       var html = [
