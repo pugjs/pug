@@ -681,6 +681,19 @@ describe('jade', function(){
       ].join('');
 
       assert.equal(html, jade.render(str));
+      
+      var str = [
+          '-',
+          '  var a =',
+          '    5;',
+          'p= a'
+      ].join('\n')
+
+      var html = [
+          '<p>5</p>'
+      ].join('');
+
+      assert.equal(html, jade.render(str));
     });
 
     it('should support - each', function(){
