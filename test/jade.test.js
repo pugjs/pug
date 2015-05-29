@@ -881,6 +881,32 @@ describe('jade', function(){
       assert.equal("<p>foo\u2028bar</p>", jade.render("p foo\u2028bar"));
       assert.equal("<p>foo\u2029bar</p>", jade.render("p foo\u2029bar"));
     });
+    
+    it('should display error line number correctly up to token level', function() {
+      var str = [
+        'p.',
+        '  Lorem ipsum dolor sit amet, consectetur',
+        '  adipisicing elit, sed do eiusmod tempor',
+        '  incididunt ut labore et dolore magna aliqua.',
+        'p.',
+        '  Ut enim ad minim veniam, quis nostrud',
+        '  exercitation ullamco laboris nisi ut aliquip',
+        '  ex ea commodo consequat.',
+        'p.',
+        '  Duis aute irure dolor in reprehenderit',
+        '  in voluptate velit esse cillum dolore eu',
+        '  fugiat nulla pariatur.',
+        'a(href="#" Next',
+      ].join('\n');
+      var errorLocation = function(str) {
+        try {
+          jade.render(str);
+        } catch (err) {
+          return err.message.split('\n')[0];
+        }
+      };
+      assert.equal(errorLocation(str), "Jade:13");
+    });
   });
 
   describe('.compileFile()', function () {
