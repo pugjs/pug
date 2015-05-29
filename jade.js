@@ -1781,6 +1781,21 @@ Lexer.prototype = {
     }
   },
 
+
+  /**
+   * Block code.
+   */
+
+  blockCode: function() {
+    var captures;
+    if (captures = /^-[ \t]*(\n|$)/.exec(this.input)) {
+      this.consume(captures[0].length - captures[1].length);
+      var tok = this.tok('blockCode');
+      this.pipeless = true;
+      return tok;
+    }
+  },
+
   /**
    * Attributes.
    */
@@ -2111,6 +2126,7 @@ Lexer.prototype = {
       || this["while"]()
       || this.tag()
       || this.filter()
+      || this.blockCode()
       || this.code()
       || this.id()
       || this.className()
@@ -2982,6 +2998,8 @@ Parser.prototype = {
         return this.parseEach();
       case 'code':
         return this.parseCode();
+      case 'blockCode':
+        return this.parseBlockCode();
       case 'call':
         return this.parseCall();
       case 'interpolation':
@@ -3125,6 +3143,25 @@ Parser.prototype = {
     return node;
   },
 
+  /**
+   * block code
+   */
+
+  parseBlockCode: function(){
+    var tok = this.expect('blockCode');
+    var node;
+    var body = this.peek();
+    var text;
+    if (body.type === 'pipeless-text') {
+      this.advance();
+      text = body.val.join('\n');
+    } else {
+      text = '';
+    }
+      node = new nodes.Code(text, false, false);
+      return node;
+  },
+  
   /**
    * comment
    */
@@ -4148,7 +4185,7 @@ process.nextTick = function (fun) {
         }
     }
     queue.push(new Item(fun, args));
-    if (!draining) {
+    if (queue.length === 1 && !draining) {
         setTimeout(drainQueue, 0);
     }
 };
@@ -4718,7 +4755,7 @@ var _whitespace = _dereq_("./whitespace");
 exports.isNewLine = _whitespace.isNewLine;
 exports.lineBreak = _whitespace.lineBreak;
 exports.lineBreakG = _whitespace.lineBreakG;
-var version = "1.1.0";exports.version = version;
+var version = "1.2.1";exports.version = version;
 
 function parse(input, options) {
   var p = parser(options, input);
@@ -5276,12 +5313,12 @@ pp.parsePropertyName = function (prop) {
       prop.computed = true;
       prop.key = this.parseMaybeAssign();
       this.expect(tt.bracketR);
-      return;
+      return prop.key;
     } else {
       prop.computed = false;
     }
   }
-  prop.key = this.type === tt.num || this.type === tt.string ? this.parseExprAtom() : this.parseIdent(true);
+  return prop.key = this.type === tt.num || this.type === tt.string ? this.parseExprAtom() : this.parseIdent(true);
 };
 
 // Initialize empty function node.
@@ -6172,18 +6209,19 @@ var _identifier = _dereq_("./identifier");
 var reservedWords = _identifier.reservedWords;
 var keywords = _identifier.keywords;
 
-var _tokentype = _dereq_("./tokentype");
+var tt = _dereq_("./tokentype").types;
 
-var tt = _tokentype.types;
-var lineBreak = _tokentype.lineBreak;
+var lineBreak = _dereq_("./whitespace").lineBreak;
 
 function Parser(options, input, startPos) {
   this.options = options;
-  this.loadPlugins(this.options.plugins);
   this.sourceFile = this.options.sourceFile || null;
   this.isKeyword = keywords[this.options.ecmaVersion >= 6 ? 6 : 5];
   this.isReservedWord = reservedWords[this.options.ecmaVersion];
   this.input = input;
+
+  // Load plugins
+  this.loadPlugins(this.options.plugins);
 
   // Set up token state
 
@@ -6250,7 +6288,7 @@ Parser.prototype.loadPlugins = function (plugins) {
   }
 };
 
-},{"./identifier":3,"./tokentype":13}],10:[function(_dereq_,module,exports){
+},{"./identifier":3,"./tokentype":13,"./whitespace":15}],10:[function(_dereq_,module,exports){
 "use strict";
 
 var tt = _dereq_("./tokentype").types;
@@ -6680,32 +6718,37 @@ pp.parseClass = function (node, isStatement) {
   this.parseClassId(node, isStatement);
   this.parseClassSuper(node);
   var classBody = this.startNode();
+  var hadConstructor = false;
   classBody.body = [];
   this.expect(tt.braceL);
   while (!this.eat(tt.braceR)) {
     if (this.eat(tt.semi)) continue;
     var method = this.startNode();
     var isGenerator = this.eat(tt.star);
+    var isMaybeStatic = this.type === tt.name && this.value === "static";
     this.parsePropertyName(method);
-    if (this.type !== tt.parenL && !method.computed && method.key.type === "Identifier" && method.key.name === "static") {
+    method["static"] = isMaybeStatic && this.type !== tt.parenL;
+    if (method["static"]) {
       if (isGenerator) this.unexpected();
-      method["static"] = true;
       isGenerator = this.eat(tt.star);
       this.parsePropertyName(method);
-    } else {
-      method["static"] = false;
     }
     method.kind = "method";
-    if (!method.computed && !isGenerator) {
-      if (method.key.type === "Identifier") {
-        if (this.type !== tt.parenL && (method.key.name === "get" || method.key.name === "set")) {
-          method.kind = method.key.name;
-          this.parsePropertyName(method);
-        } else if (!method["static"] && method.key.name === "constructor") {
-          method.kind = "constructor";
-        }
-      } else if (!method["static"] && method.key.type === "Literal" && method.key.value === "constructor") {
+    if (!method.computed) {
+      var key = method.key;
+
+      var isGetSet = false;
+      if (!isGenerator && key.type === "Identifier" && this.type !== tt.parenL && (key.name === "get" || key.name === "set")) {
+        isGetSet = true;
+        method.kind = key.name;
+        key = this.parsePropertyName(method);
+      }
+      if (!method["static"] && (key.type === "Identifier" && key.name === "constructor" || key.type === "Literal" && key.value === "constructor")) {
+        if (hadConstructor) this.raise(key.start, "Duplicate constructor in the same class");
+        if (isGetSet) this.raise(key.start, "Constructor can't have get/set modifier");
+        if (isGenerator) this.raise(key.start, "Constructor can't be a generator");
         method.kind = "constructor";
+        hadConstructor = true;
       }
     }
     this.parseClassMethod(classBody, method, isGenerator);
@@ -7005,6 +7048,9 @@ var Token = exports.Token = function Token(p) {
 // ## Tokenizer
 
 var pp = Parser.prototype;
+
+// Are we running under Rhino?
+var isRhino = typeof Packages !== "undefined";
 
 // Move to the next token
 
@@ -7425,19 +7471,21 @@ pp.readRegexp = function () {
     }
   }
   // Detect invalid regular expressions.
-  try {
-    new RegExp(tmp);
-  } catch (e) {
-    if (e instanceof SyntaxError) this.raise(start, "Error parsing regular expression: " + e.message);
-    this.raise(e);
-  }
-  // Get a regular expression object for this pattern-flag pair, or `null` in
-  // case the current environment doesn't support the flags it uses.
-  var value = undefined;
-  try {
-    value = new RegExp(content, mods);
-  } catch (err) {
-    value = null;
+  var value = null;
+  // Rhino's regular expression parser is flaky and throws uncatchable exceptions,
+  // so don't do detection if we are running under Rhino
+  if (!isRhino) {
+    try {
+      new RegExp(tmp);
+    } catch (e) {
+      if (e instanceof SyntaxError) this.raise(start, "Error parsing regular expression: " + e.message);
+      this.raise(e);
+    }
+    // Get a regular expression object for this pattern-flag pair, or `null` in
+    // case the current environment doesn't support the flags it uses.
+    try {
+      value = new RegExp(content, mods);
+    } catch (err) {}
   }
   return this.finishToken(tt.regexp, { pattern: content, flags: mods, value: value });
 };
@@ -7957,13 +8005,13 @@ exports.findNodeBefore = findNodeBefore;
 exports.make = make;
 exports.__esModule = true;
 
-function simple(node, visitors, base, state, override) {
+function simple(node, visitors, base, state) {
   if (!base) base = exports.base;(function c(node, st, override) {
     var type = override || node.type,
         found = visitors[type];
     base[type](node, st, c);
     if (found) found(node, st);
-  })(node, state, override);
+  })(node, state);
 }
 
 function ancestor(node, visitors, base, state) {
@@ -7980,10 +8028,10 @@ function ancestor(node, visitors, base, state) {
   })(node, state);
 }
 
-function recursive(node, state, funcs, base, override) {
+function recursive(node, state, funcs, base) {
   var visitor = funcs ? exports.make(funcs, base) : base;(function c(node, st, override) {
     visitor[override || node.type](node, st, c);
-  })(node, state, override);
+  })(node, state);
 }
 
 function makeTest(test) {
@@ -8125,15 +8173,12 @@ base.SwitchStatement = function (node, st, c) {
 base.ReturnStatement = base.YieldExpression = function (node, st, c) {
   if (node.argument) c(node.argument, st, "Expression");
 };
-base.ThrowStatement = base.SpreadElement = function (node, st, c) {
+base.ThrowStatement = base.SpreadElement = base.RestElement = function (node, st, c) {
   return c(node.argument, st, "Expression");
 };
 base.TryStatement = function (node, st, c) {
   c(node.block, st, "Statement");
-  if (node.handler) {
-    c(node.handler.param, st, "Pattern");
-    c(node.handler.body, st, "ScopeBody");
-  }
+  if (node.handler) c(node.handler.body, st, "ScopeBody");
   if (node.finalizer) c(node.finalizer, st, "Statement");
 };
 base.WhileStatement = base.DoWhileStatement = function (node, st, c) {
@@ -8162,49 +8207,26 @@ base.FunctionDeclaration = function (node, st, c) {
 base.VariableDeclaration = function (node, st, c) {
   for (var i = 0; i < node.declarations.length; ++i) {
     var decl = node.declarations[i];
-    c(decl.id, st, "Pattern");
     if (decl.init) c(decl.init, st, "Expression");
   }
 };
 
 base.Function = function (node, st, c) {
-  for (var i = 0; i < node.params.length; i++) {
-    c(node.params[i], st, "Pattern");
-  }c(node.body, st, "ScopeBody");
+  return c(node.body, st, "ScopeBody");
 };
 base.ScopeBody = function (node, st, c) {
   return c(node, st, "Statement");
 };
 
-base.Pattern = function (node, st, c) {
-  if (node.type == "Identifier") c(node, st, "VariablePattern");else if (node.type == "MemberExpression") c(node, st, "MemberPattern");else c(node, st);
-};
-base.VariablePattern = ignore;
-base.MemberPattern = skipThrough;
-base.RestElement = function (node, st, c) {
-  return c(node.argument, st, "Pattern");
-};
-base.ArrayPattern = function (node, st, c) {
-  for (var i = 0; i < node.elements.length; ++i) {
-    var elt = node.elements[i];
-    if (elt) c(elt, st, "Pattern");
-  }
-};
-base.ObjectPattern = function (node, st, c) {
-  for (var i = 0; i < node.properties.length; ++i) {
-    c(node.properties[i].value, st, "Pattern");
-  }
-};
-
 base.Expression = skipThrough;
 base.ThisExpression = base.Super = base.MetaProperty = ignore;
-base.ArrayExpression = function (node, st, c) {
+base.ArrayExpression = base.ArrayPattern = function (node, st, c) {
   for (var i = 0; i < node.elements.length; ++i) {
     var elt = node.elements[i];
     if (elt) c(elt, st, "Expression");
   }
 };
-base.ObjectExpression = function (node, st, c) {
+base.ObjectExpression = base.ObjectPattern = function (node, st, c) {
   for (var i = 0; i < node.properties.length; ++i) {
     c(node.properties[i], st);
   }
@@ -8218,12 +8240,8 @@ base.SequenceExpression = base.TemplateLiteral = function (node, st, c) {
 base.UnaryExpression = base.UpdateExpression = function (node, st, c) {
   c(node.argument, st, "Expression");
 };
-base.BinaryExpression = base.LogicalExpression = function (node, st, c) {
+base.BinaryExpression = base.AssignmentExpression = base.AssignmentPattern = base.LogicalExpression = function (node, st, c) {
   c(node.left, st, "Expression");
-  c(node.right, st, "Expression");
-};
-base.AssignmentExpression = base.AssignmentPattern = function (node, st, c) {
-  c(node.left, st, "Pattern");
   c(node.right, st, "Expression");
 };
 base.ConditionalExpression = function (node, st, c) {
@@ -8242,7 +8260,7 @@ base.MemberExpression = function (node, st, c) {
   if (node.computed) c(node.property, st, "Expression");
 };
 base.ExportNamedDeclaration = base.ExportDefaultDeclaration = function (node, st, c) {
-  if (node.declaration) c(node.declaration, st);
+  return c(node.declaration, st);
 };
 base.ImportDeclaration = function (node, st, c) {
   for (var i = 0; i < node.specifiers.length; i++) {
@@ -8256,10 +8274,6 @@ base.TaggedTemplateExpression = function (node, st, c) {
   c(node.quasi, st);
 };
 base.ClassDeclaration = base.ClassExpression = function (node, st, c) {
-  return c(node, st, "Class");
-};
-base.Class = function (node, st, c) {
-  c(node.id, st, "Pattern");
   if (node.superClass) c(node.superClass, st, "Expression");
   for (var i = 0; i < node.body.body.length; i++) {
     c(node.body.body[i], st);
