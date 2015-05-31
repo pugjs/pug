@@ -120,6 +120,8 @@ var files = program.args;
 
 var watchList = [];
 
+var watchDependencies = {};
+
 // function for rendering
 var render = program.watch ? tryRender : renderFile;
 
@@ -144,23 +146,49 @@ if (files.length) {
 }
 
 /**
- * Watch for changes on path
- *
- * Renders `base` if specified, otherwise renders `path`.
+ * Watch `path` for changes, execute `fn` on change
  */
-function watchFile(path, base, rootPath) {
-  path = normalize(path);
-  if (watchList.indexOf(path) !== -1) return;
-  console.log("  \033[90mwatching \033[36m%s\033[0m", path);
+function watch(path, rootPath, fn) {
   fs.watchFile(path, {persistent: true, interval: 200},
                function (curr, prev) {
     // File doesn't exist anymore. Keep watching.
     if (curr.mtime.getTime() === 0) return;
     // istanbul ignore if
     if (curr.mtime.getTime() === prev.mtime.getTime()) return;
-    tryRender(base || path, rootPath);
+    fn(path, rootPath);
   });
+}
+
+/**
+ * Watch a base file for changes
+ */
+function watchFile(path, rootPath) {
+  path = normalize(path);
+  if (watchList.indexOf(path) !== -1) return;
+  watch(path, rootPath, tryRender);
   watchList.push(path);
+  console.log("  \033[90mwatching \033[36m%s\033[0m", path);
+}
+
+/**
+ * Watch a dependency for changes
+ *
+ * If already watched, add base file to list of files to render
+ */
+function watchDependency(path, base, rootPath) {
+  path = normalize(path);
+  if (path in watchDependencies) {
+    if (watchDependencies[path].indexOf(base) !== -1) return;
+    watchDependencies[path].push(base);
+  } else {
+    watch(path, rootPath, function () {
+      watchDependencies[path].forEach(function (baseFile) {
+        tryRender(baseFile, rootPath);
+      });
+    });
+    watchDependencies[path] = [ base ];
+    console.log("  \033[90mwatching \033[36m%s\033[0m", path);
+  }
 }
 
 /**
@@ -228,7 +256,7 @@ function renderFile(path, rootPath) {
   // Found jade file/\.jade$/
   if (stat.isFile() && re.test(path)) {
     // Try to watch the file if needed. watchFile takes care of duplicates.
-    if (options.watch) watchFile(path, null, rootPath);
+    if (options.watch) watchFile(path, rootPath);
     if (program.nameAfterFile) {
       options.name = getNameFromFileName(path);
     }
@@ -238,7 +266,7 @@ function renderFile(path, rootPath) {
     if (options.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {
-        watchFile(dep, path, rootPath);
+        watchDependency(dep, path, rootPath);
       });
     }
 
