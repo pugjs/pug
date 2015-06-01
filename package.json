@@ -1,7 +1,7 @@
 {
   "name": "jade",
   "description": "A clean, whitespace-sensitive template language for writing HTML",
-  "version": "1.10.0",
+  "version": "2.0.0-alpha.0",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
     "Forbes Lindesay <forbes@lindesay.co.uk>",
@@ -27,11 +27,19 @@
     "clean-css": "^3.1.9",
     "commander": "~2.6.0",
     "constantinople": "~3.0.1",
-    "jstransformer": "0.0.2",
+    "doctypes": "^1.0.0",
+    "jade-code-gen": "0.0.1",
+    "jade-filters": "0.0.2",
+    "jade-lexer": "0.0.6",
+    "jade-linker": "0.0.1",
+    "jade-load": "0.0.3",
+    "jade-parser": "0.0.8",
+    "jade-runtime": "^1.0.0",
+    "jade-walk": "0.0.2",
+    "js-stringify": "^1.0.0",
     "mkdirp": "~0.5.0",
-    "transformers": "2.1.0",
-    "uglify-js": "^2.4.19",
-    "void-elements": "~2.0.1",
+    "uglify-js": "^2.4.23",
+    "void-elements": "^2.0.1",
     "with": "~4.0.0"
   },
   "devDependencies": {
@@ -66,16 +74,10 @@
     "should": "*",
     "stop": "^3.0.0-rc1",
     "stylus": "*",
-    "twbs": "0.0.6",
-    "uglify-js": "*"
-  },
-  "component": {
-    "scripts": {
-      "jade": "runtime.js"
-    }
+    "twbs": "0.0.6"
   },
   "scripts": {
-    "test": "mocha -R spec",
+    "test": "mocha -R spec --bail",
     "precoverage": "rimraf coverage && rimraf cov-pt*",
     "coverage": "istanbul cover --report none --dir cov-pt0 node_modules/mocha/bin/_mocha -- -R dot",
     "postcoverage": "istanbul report --include cov-pt\\*/coverage.json && rimraf cov-pt*",
@@ -84,7 +86,7 @@
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
     "compile-full": "browserify ./lib/index.js --standalone jade -x ./node_modules/transformers > jade.js",
-    "compile-runtime": "browserify ./lib/runtime.js --standalone jade > runtime.js"
+    "compile-runtime": "browserify node_modules/jade-runtime/index.js --standalone jade > runtime.js"
   },
   "browser": {
     "fs": false,
