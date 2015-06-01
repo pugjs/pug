@@ -32,7 +32,7 @@ Jade is a clean, whitespace sensitive syntax for writing html.  Here is a simple
 doctype html
 html(lang="en")
   head
-    title= pageTitle
+    title pageTitle
     script(type='text/javascript').
       if (foo) bar(1 + 5)
   body
