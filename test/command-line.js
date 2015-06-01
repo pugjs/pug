@@ -45,6 +45,7 @@ function run(args, stdin, callback) {
 }
 
 rimraf.sync(__dirname + '/temp');
+mkdirp.sync(__dirname + '/temp/depwatch');
 mkdirp.sync(__dirname + '/temp/inputs/level-1-1');
 mkdirp.sync(__dirname + '/temp/inputs/level-1-2');
 mkdirp.sync(__dirname + '/temp/outputs/level-1-1');
@@ -354,5 +355,145 @@ describe('command line watch mode', function () {
     fs.writeFileSync(__dirname + '/temp/input-file.jade',
                      fs.readFileSync(__dirname
                                      + '/anti-cases/tabs-and-spaces.jade'));
+  });
+});
+
+describe('command line watch mode with dependencies', function () {
+  var watchProc;
+  var stdout = '';
+  after(function() {
+    if (!watchProc) return
+    // Just to be sure
+    watchProc.stderr.removeAllListeners('data');
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+    watchProc.removeAllListeners('close');
+
+    watchProc.kill('SIGINT');
+  });
+  afterEach(function (done) {
+    // jade --watch can only detect changes that are at least 1 second apart
+    setTimeout(done, 1000);
+  });
+  it('jade --watch include2.jade dependency2.jade (pass 1)', function (done) {
+    timing(this);
+    function copy (file) {
+      fs.writeFileSync(__dirname + '/temp/depwatch/' + file,
+        fs.readFileSync(__dirname + '/dependencies/' + file));
+    }
+    copy('include2.jade');
+    copy('dependency2.jade');
+    copy('dependency3.jade');
+    fs.writeFileSync(__dirname + '/temp/depwatch/include2.html',    'output not written (pass 1)');
+    fs.writeFileSync(__dirname + '/temp/depwatch/dependency2.html', 'output not written (pass 1)');
+    var cmd = getRunner();
+    cmd.push('--watch', 'include2.jade', 'dependency2.jade');
+    watchProc = cp.spawn(cmd[0], cmd.slice(1),  {
+      cwd: __dirname + '/temp/depwatch'
+    });
+
+    watchProc.stdout.setEncoding('utf8');
+    watchProc.stderr.setEncoding('utf8');
+    watchProc
+      .on('error', done)
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if ((stdout.match(/rendered/g) || []).length === 2) {
+          stdout = '';
+
+          var output = fs.readFileSync(__dirname + '/temp/depwatch/include2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong>');
+          output = fs.readFileSync(__dirname + '/temp/depwatch/dependency2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong>');
+
+          watchProc.stdout.removeAllListeners('data');
+          watchProc.removeAllListeners('error');
+          return done();
+        }
+      });
+  });
+  it('jade --watch include2.jade dependency2.jade (pass 2)', function (done) {
+    timing(this);
+    // Just to be sure
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+
+    fs.writeFileSync(__dirname + '/temp/depwatch/include2.html',    'output not written (pass 2)');
+    fs.writeFileSync(__dirname + '/temp/depwatch/dependency2.html', 'output not written (pass 2)');
+
+    watchProc
+      .on('error', done)
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if ((stdout.match(/rendered/g) || []).length === 2) {
+          stdout = '';
+
+          var output = fs.readFileSync(__dirname + '/temp/depwatch/include2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong><p>Hey</p>');
+          output = fs.readFileSync(__dirname + '/temp/depwatch/dependency2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong><p>Hey</p>');
+
+          watchProc.stdout.removeAllListeners('data');
+          watchProc.removeAllListeners('error');
+          return done();
+        }
+      });
+    fs.appendFileSync(__dirname + '/temp/depwatch/dependency2.jade', '\np Hey\n');
+  });
+  it('jade --watch include2.jade dependency2.jade (pass 3)', function (done) {
+    timing(this);
+    // Just to be sure
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+
+    fs.writeFileSync(__dirname + '/temp/depwatch/include2.html',    'output not written (pass 3)');
+    fs.writeFileSync(__dirname + '/temp/depwatch/dependency2.html', 'output not written (pass 3)');
+
+    watchProc
+      .on('error', done)
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if ((stdout.match(/rendered/g) || []).length === 2) {
+          stdout = '';
+
+          var output = fs.readFileSync(__dirname + '/temp/depwatch/include2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong><p>Foo</p><p>Hey</p>');
+          output = fs.readFileSync(__dirname + '/temp/depwatch/dependency2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong><p>Foo</p><p>Hey</p>');
+
+          watchProc.stdout.removeAllListeners('data');
+          watchProc.removeAllListeners('error');
+          return done();
+        }
+      });
+    fs.appendFileSync(__dirname + '/temp/depwatch/dependency3.jade', '\np Foo\n');
+  });
+  it('jade --watch include2.jade dependency2.jade (pass 4)', function (done) {
+    timing(this);
+    // Just to be sure
+    watchProc.stdout.removeAllListeners('data');
+    watchProc.removeAllListeners('error');
+
+    fs.writeFileSync(__dirname + '/temp/depwatch/include2.html',    'output not written (pass 4)');
+    fs.writeFileSync(__dirname + '/temp/depwatch/dependency2.html', 'output not written (pass 4)');
+
+    watchProc
+      .on('error', done)
+      .stdout.on('data', function(buf) {
+        stdout += buf;
+        if ((stdout.match(/rendered/g) || []).length === 1) {
+          stdout = '';
+
+          var output = fs.readFileSync(__dirname + '/temp/depwatch/include2.html', 'utf8');
+          assert.equal(output.trim(), '<strong>dependency3</strong><p>Foo</p><p>Hey</p><p>Baz</p>');
+          output = fs.readFileSync(__dirname + '/temp/depwatch/dependency2.html', 'utf8');
+          assert.equal(output.trim(), 'output not written (pass 4)');
+
+          watchProc.stdout.removeAllListeners('data');
+          watchProc.removeAllListeners('error');
+          return done();
+        }
+      });
+    fs.appendFileSync(__dirname + '/temp/depwatch/include2.jade', '\np Baz\n');
   });
 });
