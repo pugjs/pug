@@ -7,7 +7,8 @@ node_js:
 # Use faster Docker architecture on Travis.
 sudo: false
 
-script: "npm test && npm run coveralls"
+script:        npm test
+after_success: npm run coveralls
 
 notifications:
   webhooks:
