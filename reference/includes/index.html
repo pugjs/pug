@@ -13,20 +13,20 @@
 </code></pre><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">//- includes/foot.jade</span>
 <span class="cm-builtin">#footer</span>
 <span class="cm-indent">  </span><span class="cm-tag">p</span><span class="cm-string"> Copyright (c) foobar</span></code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-meta">&lt;!doctype html&gt;</span>
-<span class="cm-tag">&lt;html</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;head</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span>My Site<span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;script</span> <span class="cm-attribute">src</span>=<span class="cm-string">&#39;/javascripts/jquery.js&#39;</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/script</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;script</span> <span class="cm-attribute">src</span>=<span class="cm-string">&#39;/javascripts/app.js&#39;</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/script</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;/head</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;body</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>My Site<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Welcome to my super lame site.<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;div</span> <span class="cm-attribute">id</span>=<span class="cm-string">&quot;footer&quot;</span><span class="cm-tag">&gt;</span>
-      <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Copyright (c) foobar<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;/body</span><span class="cm-tag">&gt;</span>
-<span class="cm-tag">&lt;/html</span><span class="cm-tag">&gt;</span></code></pre></div></div><h2>Including Plain Text</h2><p>Including files that are not jade just includes the raw text.</p><div class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">//- index.jade</span>
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">html</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">head</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span>My Site<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">script</span> <span class="cm-attribute">src</span>=<span class="cm-string">&#39;/javascripts/jquery.js&#39;</span><span class="cm-tag cm-bracket">&gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">script</span> <span class="cm-attribute">src</span>=<span class="cm-string">&#39;/javascripts/app.js&#39;</span><span class="cm-tag cm-bracket">&gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">head</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">body</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>My Site<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Welcome to my super lame site.<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">div</span> <span class="cm-attribute">id</span>=<span class="cm-string">&quot;footer&quot;</span><span class="cm-tag cm-bracket">&gt;</span>
+      <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Copyright (c) foobar<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">div</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">body</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">html</span><span class="cm-tag cm-bracket">&gt;</span></code></pre></div></div><h2>Including Plain Text</h2><p>Including files that are not jade just includes the raw text.</p><div class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">//- index.jade</span>
 <span class="cm-meta">doctype html</span>
 <span class="cm-tag">html</span>
 <span class="cm-indent">  </span><span class="cm-tag">head</span>
@@ -37,25 +37,25 @@
 <span class="cm-indent">    </span><span class="cm-tag">p</span><span class="cm-string"> Welcome to my super lame site.</span>
 <span class="cm-indent">    </span><span class="cm-tag">script</span>
 <span class="cm-indent">      </span><span class="cm-keyword">include</span><span class="cm-string"> script.js</span></code></pre><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">/* style.css */</span>
-<span class="cm-tag">h1</span> { <span class="cm-property">color</span><span class="cm-operator">:</span> <span class="cm-keyword">red</span>; }
+<span class="cm-tag">h1</span> { <span class="cm-property">color</span>: <span class="cm-keyword">red</span>; }
 </code></pre><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">// script.js</span>
 <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&#39;You are awesome&#39;</span>);</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-meta">&lt;!doctype html&gt;</span>
-<span class="cm-tag">&lt;html</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;head</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;style</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">html</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">head</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">style</span><span class="cm-tag cm-bracket">&gt;</span>
       <span class="cm-comment">/* style.css */</span>
-      <span class="cm-tag">h1</span> { <span class="cm-property">color</span><span class="cm-operator">:</span> <span class="cm-keyword">red</span>; }
-    <span class="cm-tag">&lt;/style</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;/head</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;body</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>My Site<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Welcome to my super lame site.<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;script</span><span class="cm-tag">&gt;</span>
+      <span class="cm-tag">h1</span> { <span class="cm-property">color</span>: <span class="cm-keyword">red</span>; }
+    <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">style</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">head</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">body</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>My Site<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Welcome to my super lame site.<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span>
       <span class="cm-comment">// script.js</span>
       <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&#39;You are awesome&#39;</span>);
-    <span class="cm-tag">&lt;/script</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;/body</span><span class="cm-tag">&gt;</span>
-<span class="cm-tag">&lt;/html</span><span class="cm-tag">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">script</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">body</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">html</span><span class="cm-tag cm-bracket">&gt;</span>
 </code></pre></div></div><h2>Including Filtered Text</h2><p>You can combine filters with includes to filter things as you include them.</p><div class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-comment">//- index.jade</span>
 <span class="cm-meta">doctype html</span>
 <span class="cm-tag">html</span>
@@ -68,15 +68,15 @@
 This is an article written in markdown.
 
 </code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-meta">&lt;!doctype html&gt;</span>
-<span class="cm-tag">&lt;html</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;head</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;title</span><span class="cm-tag">&gt;</span>An Article<span class="cm-tag">&lt;/title</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;/head</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;body</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>article.md<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
-    <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>This is an article written in markdown.<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;/body</span><span class="cm-tag">&gt;</span>
-<span class="cm-tag">&lt;/html</span><span class="cm-tag">&gt;</span></code></pre></div></div></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>&nbsp;and contributed by&nbsp;<a href="https://github.com/jadejs/jade/graphs/contributors">many others</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">html</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">head</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span>An Article<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">title</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">head</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">body</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>article.md<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>
+    <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>This is an article written in markdown.<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">body</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">html</span><span class="cm-tag cm-bracket">&gt;</span></code></pre></div></div></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>&nbsp;and contributed by&nbsp;<a href="https://github.com/jadejs/jade/graphs/contributors">many others</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-25261536-1']);
 _gaq.push(['_trackPageview']);
 

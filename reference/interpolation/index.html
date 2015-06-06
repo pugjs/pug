@@ -11,9 +11,9 @@ and <code>theGreat</code> in the following template.
 <span class="cm-tag">h1</span><span class="cm-punctuation">=</span> <span class="cm-variable">title</span>
 <span class="cm-tag">p</span><span class="cm-string"> Written with love by #{author}</span>
 <span class="cm-tag">p</span><span class="cm-string"> This will be safe: #{theGreat}</span>
-</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;h1</span><span class="cm-tag">&gt;</span>On Dogs: Man&#39;s Best Friend<span class="cm-tag">&lt;/h1</span><span class="cm-tag">&gt;</span>
-<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Written with love by enlore<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
-<span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>This will be safe: <span class="cm-atom">&amp;lt;</span>span<span class="cm-atom">&amp;gt;</span>escape!<span class="cm-atom">&amp;lt;</span>/span<span class="cm-atom">&amp;gt;</span><span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>On Dogs: Man&#39;s Best Friend<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">h1</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Written with love by enlore<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>This will be safe: <span class="cm-atom">&amp;lt;</span>span<span class="cm-atom">&amp;gt;</span>escape!<span class="cm-atom">&amp;lt;</span>/span<span class="cm-atom">&amp;gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
 </code></pre></div></div><p><code>title</code> follows the basic pattern for evaluating a template local,
 but the code in between <code>#{</code> and <code>}</code> is evaluated,
 escaped, and the result buffered into the output of the template being
@@ -21,15 +21,15 @@ rendered.
 </p><p>This can be any valid Javascript expression, so you can do whatever feels good.
 </p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">msg</span> = <span class="cm-string">&quot;not my inside voice&quot;</span>;
 <span class="cm-tag">p</span><span class="cm-string"> This is #{msg.toUpperCase()}</span>
-</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>This is NOT MY INSIDE VOICE<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>This is NOT MY INSIDE VOICE<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
 </code></pre></div></div><h2>String Interpolation, Unescaped</h2><p>You don't have to play it safe. You can buffer unescaped values into your
 templates, too.
 </p><div data-control="interactive" class="row"><div class="col-lg-6"><pre data-control="input-jade" class="cm-s-default"><code><span class="cm-punctuation">-</span> <span class="cm-keyword">var</span> <span class="cm-variable">riskyBusiness</span> = <span class="cm-string">&quot;&lt;em&gt;Some of the girls are wearing my mother&#39;s clothing.&lt;/em&gt;&quot;</span>;
 <span class="cm-qualifier">.quote</span>
 <span class="cm-indent">  </span><span class="cm-tag">p</span><span class="cm-string"> Joel: !{riskyBusiness}</span>
-</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;quote&quot;</span><span class="cm-tag">&gt;</span>
-  <span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>Joel: <span class="cm-tag">&lt;em</span><span class="cm-tag">&gt;</span>Some of the girls are wearing my mother&#39;s clothing.<span class="cm-tag">&lt;/em</span><span class="cm-tag">&gt;</span><span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
-<span class="cm-tag">&lt;/div</span><span class="cm-tag">&gt;</span>
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">div</span> <span class="cm-attribute">class</span>=<span class="cm-string">&quot;quote&quot;</span><span class="cm-tag cm-bracket">&gt;</span>
+  <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>Joel: <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">em</span><span class="cm-tag cm-bracket">&gt;</span>Some of the girls are wearing my mother&#39;s clothing.<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">em</span><span class="cm-tag cm-bracket">&gt;</span><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">div</span><span class="cm-tag cm-bracket">&gt;</span>
 </code></pre></div></div><div class="row"><div class="col-lg-8 col-lg-offset-2"><div class="panel panel-danger"><div class="panel-heading">Danger</div><div class="panel-body"><p>Keep in mind that buffering unescaped content into your templates
 can be mighty risky if that content comes fresh from your users.
 Never trust user input!
@@ -40,10 +40,10 @@ several places where the tag interpolation operator is used, like so.
 <span class="cm-string">  you&#39;ll see several places where the tag interpolation operator is</span>
 <span class="cm-string">  used, like so.</span>
 
-</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag">&lt;p</span><span class="cm-tag">&gt;</span>If you take a look at this page&#39;s source <span class="cm-tag">&lt;a</span> <span class="cm-attribute">href</span>=<span class="cm-string">&quot;https://github.com/jadejs/jade/blob/master/docs/views/reference/interpolation.jade&quot;</span><span class="cm-tag">&gt;</span>on GitHub<span class="cm-tag">&lt;/a</span><span class="cm-tag">&gt;</span>,
+</code></pre></div><div class="col-lg-6"><pre data-control="output-html" class="cm-s-default"><code><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>If you take a look at this page&#39;s source <span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">a</span> <span class="cm-attribute">href</span>=<span class="cm-string">&quot;https://github.com/jadejs/jade/blob/master/docs/views/reference/interpolation.jade&quot;</span><span class="cm-tag cm-bracket">&gt;</span>on GitHub<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">a</span><span class="cm-tag cm-bracket">&gt;</span>,
   you&#39;ll see several places where the tag interpolation operator is
   used, like so.
-<span class="cm-tag">&lt;/p</span><span class="cm-tag">&gt;</span>
+<span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">p</span><span class="cm-tag cm-bracket">&gt;</span>
 </code></pre></div></div><p>You could accomplish the same thing by writing an HTML tag inline with your
 Jade, but then what's the point of writing the Jade? Wrap an inline Jade
 tag declaration in <code>#[</code> and <code>]</code> and it'll be evaluated

@@ -5,20 +5,20 @@ and <a href="/reference/attributes#booleanattribs">boolean attributes</a>).
 For this reason, you might sometimes want to specify it manually. You can do this via the
 <code>doctype</code> option.  e.g.
 
-</p><pre data-control="input-js" class="cm-s-default"><code><span class="cm-keyword">var</span> <span class="cm-variable">jade</span> = <span class="cm-variable">require</span>(<span class="cm-string">&#39;./&#39;</span>);
+</p><pre data-control="input-js" class="cm-s-default"><code><span class="cm-keyword">var</span> <span class="cm-variable">jade</span> <span class="cm-operator">=</span> <span class="cm-variable">require</span>(<span class="cm-string">&#39;./&#39;</span>);
 
 <span class="cm-comment">// Compile a function</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">fn</span> = <span class="cm-variable">jade</span>.<span class="cm-property">compile</span>(<span class="cm-string">&#39;img(src=&quot;foo.png&quot;)&#39;</span>, {<span class="cm-property">doctype</span>: <span class="cm-string">&#39;xml&#39;</span>});
+<span class="cm-keyword">var</span> <span class="cm-variable">fn</span> <span class="cm-operator">=</span> <span class="cm-variable">jade</span>.<span class="cm-property">compile</span>(<span class="cm-string">&#39;img(src=&quot;foo.png&quot;)&#39;</span>, {<span class="cm-property">doctype</span>: <span class="cm-string">&#39;xml&#39;</span>});
 
 <span class="cm-comment">// Render the function</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">html</span> = <span class="cm-variable">fn</span>({});
+<span class="cm-keyword">var</span> <span class="cm-variable">html</span> <span class="cm-operator">=</span> <span class="cm-variable">fn</span>({});
 <span class="cm-comment">// =&gt; &#39;&lt;img src=&quot;foo.png&quot;&gt;&lt;/img&gt;&#39;</span>
 
 <span class="cm-comment">// Compile a function</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">fn</span> = <span class="cm-variable">jade</span>.<span class="cm-property">compile</span>(<span class="cm-string">&#39;img(src=&quot;foo.png&quot;)&#39;</span>, {<span class="cm-property">doctype</span>: <span class="cm-string">&#39;html&#39;</span>});
+<span class="cm-keyword">var</span> <span class="cm-variable">fn</span> <span class="cm-operator">=</span> <span class="cm-variable">jade</span>.<span class="cm-property">compile</span>(<span class="cm-string">&#39;img(src=&quot;foo.png&quot;)&#39;</span>, {<span class="cm-property">doctype</span>: <span class="cm-string">&#39;html&#39;</span>});
 
 <span class="cm-comment">// Render the function</span>
-<span class="cm-keyword">var</span> <span class="cm-variable">html</span> = <span class="cm-variable">fn</span>({});
+<span class="cm-keyword">var</span> <span class="cm-variable">html</span> <span class="cm-operator">=</span> <span class="cm-variable">fn</span>({});
 <span class="cm-comment">// =&gt; &#39;&lt;img src=&quot;foo.png&quot;&gt;&#39;</span></code></pre></div></div></div></div><div id="push"></div></div><div id="footer-wrapper"><footer><div class="container"><p>Jade is a template language maintained by&nbsp;<a href="http://www.forbeslindesay.co.uk">@ForbesLindesay</a>&nbsp;and contributed by&nbsp;<a href="https://github.com/jadejs/jade/graphs/contributors">many others</a>.</p></div></footer></div><script>var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-25261536-1']);
 _gaq.push(['_trackPageview']);
