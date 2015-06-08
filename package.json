@@ -23,12 +23,8 @@
     "jade": "./bin/jade.js"
   },
   "dependencies": {
-    "character-parser": "1.2.1",
-    "clean-css": "^3.1.9",
     "commander": "~2.6.0",
-    "constantinople": "~3.0.1",
-    "doctypes": "^1.0.0",
-    "jade-code-gen": "0.0.1",
+    "jade-code-gen": "0.0.2",
     "jade-filters": "0.0.2",
     "jade-lexer": "0.0.6",
     "jade-linker": "0.0.1",
@@ -36,11 +32,7 @@
     "jade-parser": "0.0.8",
     "jade-runtime": "^1.0.0",
     "jade-walk": "0.0.2",
-    "js-stringify": "^1.0.0",
-    "mkdirp": "~0.5.0",
-    "uglify-js": "^2.4.23",
-    "void-elements": "^2.0.1",
-    "with": "~4.0.0"
+    "mkdirp": "~0.5.0"
   },
   "devDependencies": {
     "browserify": "*",
@@ -74,7 +66,8 @@
     "should": "*",
     "stop": "^3.0.0-rc1",
     "stylus": "*",
-    "twbs": "0.0.6"
+    "twbs": "0.0.6",
+    "uglify-js": "^2.4.23"
   },
   "scripts": {
     "test": "mocha -R spec --bail",
@@ -89,8 +82,7 @@
     "compile-runtime": "browserify node_modules/jade-runtime/index.js --standalone jade > runtime.js"
   },
   "browser": {
-    "fs": false,
-    "./lib/filters.js": "./lib/filters-client.js"
+    "fs": false
   },
   "homepage": "http://jade-lang.com"
 }
