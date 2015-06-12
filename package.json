@@ -71,9 +71,7 @@
   },
   "scripts": {
     "test": "mocha -R spec --bail",
-    "precoverage": "rimraf coverage && rimraf cov-pt*",
-    "coverage": "istanbul cover --report none --dir cov-pt0 node_modules/mocha/bin/_mocha -- -R dot",
-    "postcoverage": "istanbul report --include cov-pt\\*/coverage.json && rimraf cov-pt*",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R dot",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
     "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
