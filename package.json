@@ -75,11 +75,7 @@
     "coverage": "istanbul cover --report none --dir cov-pt0 node_modules/mocha/bin/_mocha -- -R dot",
     "postcoverage": "istanbul report --include cov-pt\\*/coverage.json && rimraf cov-pt*",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
-    "prepublish": "npm prune && linify transform bin && npm run build",
-    "build": "npm run compile",
-    "compile": "npm run compile-full && npm run compile-runtime",
-    "compile-full": "browserify ./lib/index.js --standalone jade -x ./node_modules/transformers > jade.js",
-    "compile-runtime": "browserify node_modules/jade-runtime/index.js --standalone jade > runtime.js"
+    "prepublish": "npm prune && linify transform bin"
   },
   "browser": {
     "fs": false
