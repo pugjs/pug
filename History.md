@@ -1,3 +1,12 @@
+1.11.0 / 2015-06-12
+==================
+
+  * Added block code support ([@alephyud](https://github.com/alephyud))
+  * Improved runtime performance of mixins significantly ([Andreas Lubbe](https://github.com/alubbe))
+  * Improved runtime performance of jade's string escaping ([Andreas Lubbe](https://github.com/alubbe)) and ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Better line number counting for pipeless text ([@alephyud](https://github.com/alephyud))
+
+
 1.10.0 / 2015-05-25
 ==================
 
