@@ -38,7 +38,7 @@ block content
       dd.description If set to true, the tokens and function body is logged to stdout
       dt compileDebug:
       dd.type.boolean boolean
-      dd.description Set this to false to disable debugging instrumentation (recommended in production).  Set it to true to include the function source in the compiled template for better error messages (sometimes useful in development).
+      dd.description If set to true, the function source will be included in the compiled template for better error messages (sometimes useful in development). It is enabled by default unless used with express in production mode.
       dt cache:
       dd.type.boolean boolean
       dd.description If set to true, compiled functions are cached. #[code filename] must be set as the cache key.
@@ -145,7 +145,7 @@ block content
   p.
     Same as #[code: a(href='#compileClient') jade.compileClient] except that
     this method returns an object of the form:
-  
+
   +js
     :jssrc
       {

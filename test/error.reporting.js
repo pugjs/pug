@@ -54,7 +54,7 @@ describe('error reporting', function () {
       it('includes detail of where the error was thrown including the filename', function () {
         var err = getFileError(__dirname + '/fixtures/compile.with.layout.locals.error.jade', {})
         assert(/[\\\/]layout.locals.error.jade:2/.test(err.message))
-        assert(/undefined is not a function/.test(err.message))
+        assert(/is not a function/.test(err.message))
       });
     });
     describe('with a include (syntax)', function () {
@@ -93,9 +93,9 @@ describe('error reporting', function () {
     });
     describe('Include filtered', function () {
       it('includes details of where the error was thrown', function () {
-        var err = getError('include:js()!', {});
+        var err = getError('include:verbatim()!', {});
         assert(err.message.indexOf('expected space after include:filter but got "!"') !== -1);
-        var err = getError('include:js ', {});
+        var err = getError('include:verbatim ', {});
         assert(err.message.indexOf('missing path for include:filter') !== -1);
       });
     });

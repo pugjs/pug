@@ -1,6 +1,5 @@
 .DS_Store
 .idea
-lib-cov
 testing
 node_modules
 lib-cov

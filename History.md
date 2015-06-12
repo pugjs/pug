@@ -1,3 +1,21 @@
+1.11.0 / 2015-06-12
+==================
+
+  * Added block code support ([@alephyud](https://github.com/alephyud))
+  * Improved runtime performance of mixins significantly ([Andreas Lubbe](https://github.com/alubbe))
+  * Improved runtime performance of jade's string escaping ([Andreas Lubbe](https://github.com/alubbe)) and ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * Better line number counting for pipeless text ([@alephyud](https://github.com/alephyud))
+
+
+1.10.0 / 2015-05-25
+==================
+
+  * Now supports jstransformers, which allows improved handling of embedded languages such as Coffee-Script, and deprecated Transformers support in filters - to be removed in 2.0.0 ([@ForbesLindesay](http://www.forbeslindesay.co.uk/))
+  * CLI: added a flag to keep directory hierarchy when a directory is specified - this behavior will be the default in 2.0.0 ([@TimothyGu](https://github.com/TimothyGu))
+  * disabled 'compileDebug' flag by default when used with express in production mode ([Andreas Lubbe](https://github.com/alubbe))
+  * Fixed a memory leak on modern versions of Chrome as well as node 0.12 and iojs ([Andreas Lubbe](https://github.com/alubbe))
+  * update website ([@GarthDB](https://github.com/GarthDB))
+
 1.9.2 / 2015-01-18
 ==================
 
