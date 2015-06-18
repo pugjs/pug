@@ -65,29 +65,33 @@ test should *fail* before the change, and *pass* after the change.
 
 ### Building documentation
 
-Create a file with the name ```.release.json``` and put your GitHub token
-into it so that it be read with JSON.parse:
+For local builds run ```node docs/server.js```.
+
+To update the live page, create a file with the name ```.release.json```,
+[generate a GitHub token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
+and put it into the file so that it be read with JSON.parse:
 
 ```
 "abc123..."
 ```
 
-Run ```node release.js``` which will build it from the "docs" directory and then commit it to gh-pages automatically.
+Then run ```node release.js``` which will build it from the "docs" directory
+and commit it to gh-pages automatically.
 
 ### Releasing
 
 Open an issue with a proposed changelog and semver-compatible version number.
 
 Once this has been approved by the Collaborators, run ```npm prepublish```,
-update ```History.md``` with the new changelog and bump the version number in
-```package.json``` and ```component.json```.
+update ```History.md``` with the new changelog, bump the version number in
+```package.json``` as well as ```component.json``` and tag the new release.
 
 Commit these changes and run ```npm publish```.
 
 ### I just made a mistake
 
 With git, there's a way to override remote trees by force pushing
-(`git push -f`). This should generally be seen as forbidden (since
+(`git push -f`). On master, this should be seen as forbidden (since
 you're rewriting history on a repository other people are working
 against) but is allowed for simpler slip-ups such as typos in commit
 messages. However, you are only allowed to force push to any jade

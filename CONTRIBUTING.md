@@ -1,5 +1,12 @@
 # Contributing to jade
 
+Please feel free to open an issue with jade for *any* communication, such as
+questions or bugs.
+
+For bugs, please search the docs first. If the bug persists, please create an
+issue and post the entire error message, log and source code, so that it can
+be reproduced as accurately as possible.
+
 ### Step 1: Fork
 
 Fork the project [on GitHub](https://github.com/jadejs/jade) and check out your
@@ -51,9 +58,6 @@ structured (license boilerplate, common includes, etc.).
 ```text
 $ npm test
 ```
-
-Make sure that all tests pass.  Please, do not submit patches that fail.
-
 
 ### Step 6: Push
 
@@ -113,11 +117,10 @@ CoC](http://www.rust-lang.org/conduct.html).
   excludes people in socially marginalized groups.
 * Private harassment is also unacceptable. No matter who you are, if
   you feel you have been or are being harassed or made uncomfortable
-  by a community member, please contact one of the channel ops or any
-  of the TC members immediately with a capture (log, photo, email) of
-  the harassment if possible.  Whether you're a regular contributor or
-  a newcomer, we care about making this community a safe place for you
-  and we've got your back.
+  by a community member, please open an issue immediately with a capture
+  (log, photo, email) of the harassment if possible.  Whether you're a
+  regular contributor or a newcomer, we care about making this community
+  a safe place for you and we've got your back.
 * Likewise any spamming, trolling, flaming, baiting or other
   attention-stealing behaviour is not welcome.
 * Avoid the use of personal pronouns in code comments or
