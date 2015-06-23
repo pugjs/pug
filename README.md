@@ -97,7 +97,7 @@ var html = jade.renderFile('filename.jade', merge(options, locals));
 
 ## Browser Support
 
- The latest version of jade can be download for the browser in standalone form from [here](https://github.com/jadejs/jade/raw/master/jade.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your jade templates to JavaScript and then just use the [runtime.js](https://github.com/jadejs/jade/raw/master/runtime.js) library on the client.
+ The latest version of jade can be download for the browser in standalone form from [here](https://raw.githubusercontent.com/jadejs/jade/1.11.0/jade.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your jade templates to JavaScript and then just use the [runtime.js](https://raw.githubusercontent.com/jadejs/jade/1.11.0/runtime.js) library on the client.
 
  To compile a template for use on the client using the command line, do:
 
