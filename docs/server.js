@@ -6,7 +6,7 @@ var marked = require('marked');
 var express = require('express');
 var less = require('less-file');
 var browserify = require('browserify-middleware');
-var CodeMirror = require('highlight-codemirror');
+var highlight = require('highlight-codemirror');
 var highlightJade = require('jade-highlighter');
 var jade = require('../');
 
@@ -16,20 +16,20 @@ var app = express();
 
 var filters = jade.filters;
 
-CodeMirror.loadMode('xml');//dep of htmlmixed
-CodeMirror.loadMode('htmlmixed');
-CodeMirror.loadMode('javascript');
-CodeMirror.loadMode('css');
+highlight.loadMode('xml');//dep of htmlmixed
+highlight.loadMode('htmlmixed');
+highlight.loadMode('javascript');
+highlight.loadMode('css');
 
 filters.jadesrc = highlightJade
 filters.htmlsrc = function (html) {
-  return CodeMirror.highlight(html, {name: 'htmlmixed'});
+  return highlight(html, 'htmlmixed');
 };
 filters.jssrc = function (js) {
-  return CodeMirror.highlight(js, {name: 'javascript'});
+  return highlight(js, 'javascript');
 };
 filters.csssrc = function (css) {
-  return CodeMirror.highlight(css, {name: 'css'});
+  return highlight(css, 'css');
 };
 
 app.engine('jade', jade.renderFile);

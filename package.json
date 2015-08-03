@@ -44,7 +44,7 @@
     "express": "~4.10.4",
     "github-basic": "^4.1.2",
     "handle": "~1.0.0",
-    "highlight-codemirror": "~4.1.0",
+    "highlight-codemirror": "^4.6.1",
     "inconsolata": "0.0.2",
     "istanbul": "*",
     "jade-code-mirror": "~1.0.5",
