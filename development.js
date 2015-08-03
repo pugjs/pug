@@ -11,7 +11,6 @@ var modules = [
   'jade-load',
   'jade-parser',
   'jade-runtime',
-  'jade-walk',
   'jade-filters',
   'jade-linker',
   'jade-code-gen'
