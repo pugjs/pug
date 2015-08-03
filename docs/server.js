@@ -35,7 +35,7 @@ filters.csssrc = function (css) {
 app.engine('jade', jade.renderFile);
 app.set('views', __dirname + '/views');
 
-app.locals.doctypes = jade.doctypes;
+app.locals.doctypes = require('doctypes');
 
 app.use(function (req, res, next) {
   if (req.url.substr(0, version.length + 2) === '/' + version + '/') {

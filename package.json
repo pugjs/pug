@@ -40,6 +40,7 @@
     "code-mirror": "~3.22.0",
     "coffee-script": "*",
     "coveralls": "^2.11.2",
+    "doctypes": "^1.0.0",
     "express": "~4.10.4",
     "github-basic": "^4.1.2",
     "handle": "~1.0.0",
