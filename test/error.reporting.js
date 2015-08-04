@@ -178,17 +178,6 @@ describe('error reporting', function () {
       assert(/You should not have jade tags with multiple attributes/.test(log));
       assert(res === '<div attr="val" foo="bar"></div>');
     });
-    it('warns about missing space at the start of a line', function () {
-      var consoleWarn = console.warn;
-      var log = '';
-      console.warn = function (str) {
-        log += str;
-      };
-      var res = jade.render('%This line is plain text, but it should not be', {filename: 'foo.jade'});
-      console.warn = consoleWarn;
-      assert(log === 'Warning: missing space before text for line 1 of jade file "foo.jade"');
-      assert(res === '%This line is plain text, but it should not be');
-    });
   });
   describe('if you throw something that isn\'t an error', function () {
     it('just rethrows without modification', function () {
