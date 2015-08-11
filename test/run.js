@@ -34,11 +34,12 @@ cases.forEach(function(test){
   it(name, function(){
     var path = 'test/cases/' + test + '.jade';
     var str = fs.readFileSync(path, 'utf8');
-    var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
     var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
     var actual = fn({ title: 'Jade' });
 
     fs.writeFileSync(__dirname + '/output/' + test + '.html', actual);
+
+    var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
     var clientCode = uglify.minify(jade.compileClient(str, {
       filename: path,
       pretty: true,
