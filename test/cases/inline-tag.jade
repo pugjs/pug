@@ -3,11 +3,15 @@ p bing #[strong foo] bong
 p.
   bing
   #[strong foo]
+  #[strong= '[foo]']
+  #[- var foo = 'foo]']
   bong
 
 p
   | bing
   | #[strong foo]
+  | #[strong= '[foo]']
+  | #[- var foo = 'foo]']
   | bong
 
 p.
