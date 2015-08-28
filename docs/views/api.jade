@@ -244,7 +244,7 @@ block content
         </body>
       </html>
 
-  +funcHeading('render', 'source')
+  +funcHeading('render', 'source', '[, callback]')
 
   dl.parameter-list
     dt source
@@ -253,6 +253,9 @@ block content
     dt options
     dd.type.object: a(href='#options') options
     dd.description An options object, also used as the locals object
+    dt callback
+    dd.type.function function
+    dd.description Node.js-style callback receiving the rendered results. #[strong This callback is called synchronously.]
   dl.returns
     dt returns
     dd.type.string string
@@ -265,7 +268,7 @@ block content
       var html = jade.render('string of jade', options);
       // => '<string>of jade</string>'
 
-  +funcHeading('renderFile', 'path')
+  +funcHeading('renderFile', 'path', '[, callback]')
 
   dl.parameter-list
     dt path
@@ -274,6 +277,9 @@ block content
     dt options
     dd.type.object: a(href='#options') options
     dd.description An options object, also used as the locals object
+    dt callback
+    dd.type.function function
+    dd.description Node.js-style callback receiving the rendered results. #[strong This callback is called synchronously.]
   dl.returns
     dt returns
     dd.type.string string
