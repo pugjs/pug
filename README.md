@@ -2,7 +2,7 @@
 
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
- Jade is a high performance template engine heavily influenced by [Haml](http://haml-lang.com)
+ Jade is a high performance template engine heavily influenced by [Haml](http://haml.info/)
  and implemented with JavaScript for [node](http://nodejs.org) and browsers. For bug reports,
  feature requests and questions, [open an issue](https://github.com/jadejs/jade/issues/new).
  For discussion join the [chat room](https://gitter.im/jadejs/jade).
