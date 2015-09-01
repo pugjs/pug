@@ -99,11 +99,11 @@ describe('jade', function(){
       assert.equal('<div id="something"></div>', jade.render('div#something'), 'Test ids');
       assert.equal('<div class="something"></div>', jade.render('.something'), 'Test stand-alone classes');
       assert.equal('<div id="something"></div>', jade.render('#something'), 'Test stand-alone ids');
-      assert.equal('<div id="foo" class="bar"></div>', jade.render('#foo.bar'));
-      assert.equal('<div id="foo" class="bar"></div>', jade.render('.bar#foo'));
-      assert.equal('<div id="foo" class="bar"></div>', jade.render('div#foo(class="bar")'));
-      assert.equal('<div id="foo" class="bar"></div>', jade.render('div(class="bar")#foo'));
-      assert.equal('<div id="bar" class="foo"></div>', jade.render('div(id="bar").foo'));
+      assert.equal('<div class="bar" id="foo"></div>', jade.render('#foo.bar'));
+      assert.equal('<div class="bar" id="foo"></div>', jade.render('.bar#foo'));
+      assert.equal('<div class="bar" id="foo"></div>', jade.render('div#foo(class="bar")'));
+      assert.equal('<div class="bar" id="foo"></div>', jade.render('div(class="bar")#foo'));
+      assert.equal('<div class="foo" id="bar"></div>', jade.render('div(id="bar").foo'));
       assert.equal('<div class="foo bar baz"></div>', jade.render('div.foo.bar.baz'));
       assert.equal('<div class="foo bar baz"></div>', jade.render('div(class="foo").bar.baz'));
       assert.equal('<div class="foo bar baz"></div>', jade.render('div.foo(class="bar").baz'));
@@ -382,10 +382,10 @@ describe('jade', function(){
 
       assert.equal('<p data-lang="en"></p>', jade.render('p(data-lang = "en")'));
       assert.equal('<p data-dynamic="true"></p>', jade.render('p("data-dynamic"= "true")'));
-      assert.equal('<p data-dynamic="true" class="name"></p>', jade.render('p("class"= "name", "data-dynamic"= "true")'));
+      assert.equal('<p class="name" data-dynamic="true"></p>', jade.render('p("class"= "name", "data-dynamic"= "true")'));
       assert.equal('<p data-dynamic="true"></p>', jade.render('p(\'data-dynamic\'= "true")'));
-      assert.equal('<p data-dynamic="true" class="name"></p>', jade.render('p(\'class\'= "name", \'data-dynamic\'= "true")'));
-      assert.equal('<p data-dynamic="true" yay="yay" class="name"></p>', jade.render('p(\'class\'= "name", \'data-dynamic\'= "true", yay)'));
+      assert.equal('<p class="name" data-dynamic="true"></p>', jade.render('p(\'class\'= "name", \'data-dynamic\'= "true")'));
+      assert.equal('<p class="name" data-dynamic="true" yay="yay"></p>', jade.render('p(\'class\'= "name", \'data-dynamic\'= "true", yay)'));
 
       assert.equal('<input checked="checked" type="checkbox"/>', jade.render('input(checked, type="checkbox")'));
 
