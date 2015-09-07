@@ -31,6 +31,10 @@ filters.jssrc = function (js) {
 filters.csssrc = function (css) {
   return highlight(css, 'css');
 };
+filters.highlight = function (src, opt) {
+  highlight.loadMode(opt.mode);
+  return highlight(src, opt.mode)
+};
 
 app.engine('jade', jade.renderFile);
 app.set('views', __dirname + '/views');

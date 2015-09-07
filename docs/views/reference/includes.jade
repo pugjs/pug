@@ -48,6 +48,7 @@ block documentation
               </div>
             </body>
           </html>
+
   h2 Including Plain Text
 
   p Including files that are not Jade just includes the raw text.
@@ -113,7 +114,7 @@ block documentation
             body
               include:markdown-it article.md
       +jade
-        :verbatim
+        :highlight(mode='markdown')
           # article.md
 
           This is an article written in markdown.
