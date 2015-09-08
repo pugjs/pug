@@ -12,15 +12,22 @@ block documentation
   p.
     All #[a(href='https://www.npmjs.com/browse/keyword/jstransformer') JSTransformers] can be used as Jade filters.
     Popular filters include #[code :coffee-script], #[code :babel], #[code :uglify-js], #[code :less], and #[code :markdown-it].
+  p.
+    Check out the documentation for the JSTransformer for the options
+    supported for the specific filter.
 
   .row
     .col-lg-6
       +jade
         :jadesrc
-          :markdown-it
+          :markdown-it(linkify langPrefix='highlight-')
             # Markdown
 
-            I often like including markdown documents.
+            Markdown document with http://links.com and
+
+            ```js
+            var codeBlocks;
+            ```
           script
             :coffee-script
               console.log 'This is coffee script'
@@ -28,12 +35,95 @@ block documentation
       +html
         :htmlsrc
           <h1>Markdown</h1>
-          <p>I often like including markdown documents.</p>
-          <script>console.log('This is coffee script')</script>
+          <p>
+            Markdown document with
+            <a href="http://links.com">http://links.com</a>
+            and code blocks:
+          </p>
+          <pre>
+            <code class="highlight-js">console.log('hey');</code>
+          </pre>
+          <script>console.log('This is coffee script');</script>
+
   .panel.panel-warning
     .panel-heading Warning
     .panel-body
-      p Filters are compile time.  This makes them fast but means they cannot support dynamic content.
       p.
-        Built in filters are not available in the browser as they would not all work.
-        Providing you compile your templates server side, they will still work fine though.
+        Filters are rendered at compile time, which makes them fast
+        but also means that they cannot support dynamic content or options.
+      p.
+        JSTransformer filters are also not available during
+        compilation in the browser, although templates pre-compiled
+        on the server work.
+
+  h2 Tag Syntax
+
+  p.
+    If the content of the filter is short, one can even use filters
+    as if they are tags:
+
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          script: :coffee-script alert 'crazy!'
+          :markdown-it **BOLD TEXT**
+    .col-lg-6
+      +html
+        :htmlsrc
+          <script>alert('crazy!');</script>
+          <p><strong>BOLD TEXT</strong></p>
+
+  h2 Nested Filters
+
+  p.
+    Multiple filters can be applied to the same block of text by
+    specifying them on the same line. Filters are rendered from
+    right to left.
+
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          script
+            :cdata-js:coffee-script
+              console.log 'This is coffee script in a CDATA'
+    .col-lg-6
+      +html
+        :htmlsrc
+          <script>//<![CDATA[
+            console.log('This is coffee script in a CDATA');
+          //]]></script>
+
+  h2 Custom Filters
+
+  p.
+    You can add your own filters to Jade as well:
+
+  .row
+    .col-lg-12
+      +js
+        :jssrc
+          var jade = require('jade');
+          jade.filters['my-own-filter'] = function (text, options) {
+            if (options.addStart) text = 'Start\n' + text;
+            if (options.addEnd)   text = text + '\nEnd';
+            return text;
+          };
+  .row
+    .col-lg-6
+      +jade
+        :jadesrc
+          p
+            :my-own-filter(addStart addEnd)
+              Filter
+              Body
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>
+            Start
+            Filter
+            Body
+            End
+          </p>
