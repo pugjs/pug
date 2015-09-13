@@ -84,13 +84,15 @@ describe('jade', function(){
       var str = [
           'p',
           'div',
-          'img'
+          'img',
+          'br/'
       ].join('\n');
 
       var html = [
           '<p></p>',
           '<div></div>',
-          '<img/>'
+          '<img/>',
+          '<br/>'
       ].join('');
 
       assert.equal(html, jade.render(str), 'Test basic tags');
