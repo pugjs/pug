@@ -692,11 +692,11 @@ describe('jade', function(){
       assert.equal(html, jade.render(str));
     });
 
-    it('should support - each', function(){
+    it('should support each', function(){
       // Array
       var str = [
           '- var items = ["one", "two", "three"];',
-          '- each item in items',
+          'each item in items',
           '  li= item'
       ].join('\n');
 
@@ -711,7 +711,7 @@ describe('jade', function(){
       // Any enumerable (length property)
       var str = [
           '- var jQuery = { length: 3, 0: 1, 1: 2, 2: 3 };',
-          '- each item in jQuery',
+          'each item in jQuery',
           '  li= item'
       ].join('\n');
 
@@ -726,7 +726,7 @@ describe('jade', function(){
       // Empty array
       var str = [
           '- var items = [];',
-          '- each item in items',
+          'each item in items',
           '  li= item'
       ].join('\n');
 
@@ -735,7 +735,7 @@ describe('jade', function(){
       // Object
       var str = [
           '- var obj = { foo: "bar", baz: "raz" };',
-          '- each val in obj',
+          'each val in obj',
           '  li= val'
       ].join('\n');
 
@@ -749,7 +749,7 @@ describe('jade', function(){
       // Complex
       var str = [
           '- var obj = { foo: "bar", baz: "raz" };',
-          '- each key in Object.keys(obj)',
+          'each key in Object.keys(obj)',
           '  li= key'
       ].join('\n');
 
@@ -763,7 +763,7 @@ describe('jade', function(){
       // Keys
       var str = [
           '- var obj = { foo: "bar", baz: "raz" };',
-          '- each val, key in obj',
+          'each val, key in obj',
           '  li #{key}: #{val}'
       ].join('\n');
 
@@ -777,8 +777,8 @@ describe('jade', function(){
       // Nested
       var str = [
           '- var users = [{ name: "tj" }]',
-          '- each user in users',
-          '  - each val, key in user',
+          'each user in users',
+          '  each val, key in user',
           '    li #{key} #{val}',
       ].join('\n');
 
