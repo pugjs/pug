@@ -77,6 +77,9 @@ function handleChanges(jadeInput, js, html, jsOut) {
       jsObjA = Function('', 'return ' + js.getValue())() || {};
       jsObjB = Function('', 'return ' + js.getValue())() || {};
       jsObjC = Function('', 'return ' + js.getValue())() || {};
+      jsObjA.externalRuntime = true;
+      jsObjB.externalRuntime = true;
+      jsObjC.externalRuntime = true;
       if (jsObjA.compileDebug === undefined) jsObjA.compileDebug = true;
       jade.compileClient(jadeSrc, jsObjA);
       if (jsObjB.compileDebug === undefined) jsObjB.compileDebug = false;
