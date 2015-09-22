@@ -37,8 +37,14 @@ block documentation
 
       block content
         h1= title
-        each pet in pets
+        - var pets = ['cat', 'dog']
+        each petName in pets
           include pet
+
+  p pet.jade
+  +jade
+    :jadesrc
+      p= petName
 
   p.
     It's also possible to override a block to provide additional blocks, as shown in the following example where #[code content] now exposes a #[code sidebar] and #[code primary] block for overriding, or the child template could override #[code content] all together.
