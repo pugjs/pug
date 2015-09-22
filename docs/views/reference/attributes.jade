@@ -3,18 +3,20 @@ extends ../reference.jade
 block documentation
   h1 Attributes
 
-  p Tag attributes look similar to html, however their values are just regular JavaScript.
+  p Tag attributes look similar to html (with optional comma),
+    | however their values are just regular JavaScript.
 
   .row(data-control='interactive')
     .col-lg-6
       +jade
         :jadesrc
-          a(href='google.com') Google
+          a(class='button' href='google.com') Google
           a(class='button', href='google.com') Google
     .col-lg-6
       +html
         :htmlsrc
-          <a href="google.com">Google</a><a class="button" href="google.com">Google</a>
+          <a class="button" href="google.com">Google</a>
+          <a class="button" href="google.com">Google</a>
 
   p All the normal JavaScript expressions work fine too:
 
