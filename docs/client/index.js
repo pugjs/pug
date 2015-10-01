@@ -53,7 +53,29 @@ function cm(el, mode, readonly) {
   }
 }
 
+var features = {
+  'templatestrings': (function () {
+    // Taken from Modernizr, which is MIT-licensed
+    var supports;
+    try {
+      // A number of tools, including uglifyjs and require, break on a raw "`", so
+      // use an eval to get around that.
+      eval('``');
+      supports = true;
+    } catch (e) {}
+    return !!supports;
+  })()
+};
+function checkFeature(control) {
+  var featureStr = control.dataset.features;
+  if (!featureStr) return true;
+  return featureStr.split(' ').every(function (feature) {
+    return features[feature];
+  });
+}
+
 $('[data-control="interactive"]').forEach(function (control) {
+  if (!checkFeature(control)) return;
   var jade = _('[data-control="input-jade"]', control);
   var js = _('[data-control="input-js"]', control) || {textContent: '{ pageTitle: "Jade", youAreUsingJade: true }'};
   var html = _('[data-control="output-html"]', control) || {};

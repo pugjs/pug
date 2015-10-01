@@ -46,6 +46,42 @@ block documentation
         :htmlsrc
           <input type="checkbox" name="agreement" checked="checked" />
 
+  p If you have a very long attribute or need text interpolation, and your JavaScript runtime supports ES2015 template strings (including Node.js/io.js 1.0.0 and later), you can also use that:
+
+  .row(data-control='interactive' data-features='templatestrings')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var btnType = 'info'
+          - var btnSize = 'lg'
+          button(type='button' class='btn btn-' + btnType + ' btn-' + btnSize)
+          button(type='button' class=`btn btn-${btnType} btn-${btnSize}`)
+    .col-lg-6
+      +html
+        :htmlsrc
+          <button type="button" class="btn btn-info btn-lg"></button>
+          <button type="button" class="btn btn-info btn-lg"></button>
+
+  .row(data-control='interactive' data-features='templatestrings')
+    .col-lg-6
+      +jade
+        :jadesrc
+          input(data-json=`
+            {
+              "very-long": "piece of ",
+              "data": true
+            }
+          `)
+    .col-lg-6
+      +html
+        :htmlsrc
+          <input data-json="
+            {
+              &quot;very-long&quot;: &quot;piece of &quot;,
+              &quot;data&quot;: true
+            }
+          "/>
+
   h2#unescaped Unescaped Attributes
 
   p By default, all attributes are escaped (replacing special characters with escape sequences) to prevent attacks such as cross site scripting.  If you need to use special characters you can use #[code !=] instead of #[code =].
