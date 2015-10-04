@@ -1,8 +1,9 @@
-var jade = require('jade');
+var jade = require('./');
+var resolvedJade = require.resolve('./');
 
 function compileTemplate(module, filename) {
-  var template = jade.compileFileClient(filename);
-  var body = "var jade = require('jade/runtime');\n\n" +
+  var template = jade.compileFileClient(filename, {externalRuntime: true});
+  var body = "var jade = require('" + resolvedJade + "').runtime;\n\n" +
              "module.exports = " + template + ";";
   module._compile(body, filename);
 }
