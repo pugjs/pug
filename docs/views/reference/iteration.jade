@@ -83,6 +83,25 @@ block documentation
             <li>There are no values</li>
           </ul>
 
+  p One can also add an #[code else] block that will be executed if the array or object does not contain values to be iterated over. The following is equivalent to the example above:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +jade
+        :jadesrc
+          - var values = [];
+          ul
+            each val in values
+              li= val
+            else
+              li There are no values
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>There are no values</li>
+          </ul>
+
   p You can also use #[code for] as an alias of #[code each].
 
   h2 while
