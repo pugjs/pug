@@ -14,7 +14,7 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
  [![Dependency Status](https://img.shields.io/david/jadejs/jade.svg?style=flat)](https://david-dm.org/jadejs/jade)
  [![devDependencies Status](https://img.shields.io/david/dev/jadejs/jade.svg?style=flat)](https://david-dm.org/jadejs/jade#info=devDependencies)
  [![NPM version](https://img.shields.io/npm/v/jade.svg?style=flat)](http://badge.fury.io/js/jade)
- [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/jadejs/jade?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+ [![Join Discord Chat](https://img.shields.io/badge/discord-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://discord.gg/0ZoydftNZA2f2mRJ)
 
 ## Installation
 
