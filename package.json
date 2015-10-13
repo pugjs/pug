@@ -47,7 +47,6 @@
     "istanbul": "*",
     "jade-code-mirror": "~1.0.5",
     "jade-highlighter": "~1.0.5",
-    "jstransformer-cdata": "^1.0.0",
     "jstransformer-coffee-script": "^1.0.0",
     "jstransformer-less": "^2.1.0",
     "jstransformer-marked": "^1.0.1",
@@ -70,7 +69,7 @@
     "uglify-js": "^2.4.24"
   },
   "scripts": {
-    "test": "mocha -R spec --bail",
+    "test": "mocha -R spec",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R dot",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
     "prepublish": "npm prune && linify transform bin"
