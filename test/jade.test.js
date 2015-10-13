@@ -416,34 +416,6 @@ describe('jade', function(){
       assert.equal('<body class="foo bar baz"></body>', jade.render('body(class=["foo", "bar", "baz"])'));
     });
 
-    it('should support attr interpolation', function(){
-      // Test single quote interpolation
-      assert.equal('<a href="/user/12">tj</a>'
-        , jade.render("a(href='/user/#{id}') #{name}", { name: 'tj', id: 12 }));
-
-      assert.equal('<a href="/user/12-tj">tj</a>'
-        , jade.render("a(href='/user/#{id}-#{name}') #{name}", { name: 'tj', id: 12 }));
-
-      assert.equal('<a href="/user/&lt;script&gt;">tj</a>'
-        , jade.render("a(href='/user/#{id}') #{name}", { name: 'tj', id: '<script>' }));
-
-      // Test double quote interpolation
-      assert.equal('<a href="/user/13">ds</a>'
-        , jade.render('a(href="/user/#{id}") #{name}', { name: 'ds', id: 13 }));
-
-      assert.equal('<a href="/user/13-ds">ds</a>'
-        , jade.render('a(href="/user/#{id}-#{name}") #{name}', { name: 'ds', id: 13 }));
-
-      assert.equal('<a href="/user/&lt;script&gt;">ds</a>'
-        , jade.render('a(href="/user/#{id}") #{name}', { name: 'ds', id: '<script>' }));
-
-      // Test escaping the interpolation
-      assert.equal('<a href="/user/#{id}">#{name}</a>'
-        , jade.render('a(href="/user/\\#{id}") \\#{name}', {}));
-      assert.equal('<a href="/user/#{id}">ds</a>'
-        , jade.render('a(href="/user/\\#{id}") #{name}', {name: 'ds'}));
-    });
-
     it('should support attr parens', function(){
       assert.equal('<p foo="bar">baz</p>', jade.render('p(foo=((("bar"))))= ((("baz")))'));
     });
