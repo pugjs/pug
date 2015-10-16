@@ -88,15 +88,15 @@ describe('error reporting', function () {
     describe('Unexpected character', function () {
       it('includes details of where the error was thrown', function () {
         var err = getError('ul?', {});
-        assert(err.message.indexOf('unexpected text ?') !== -1);
+        assert(err.message.indexOf('unexpected text "?"') !== -1);
       });
     });
     describe('Include filtered', function () {
       it('includes details of where the error was thrown', function () {
         var err = getError('include:verbatim()!', {});
-        assert(err.message.indexOf('expected space after include:filter but got "!"') !== -1);
+        assert(err.message.indexOf('unexpected text "!"') !== -1);
         var err = getError('include:verbatim ', {});
-        assert(err.message.indexOf('missing path for include:filter') !== -1);
+        assert(err.message.indexOf('missing path for include') !== -1);
       });
     });
     describe('mixin block followed by a lot of blank lines', function () {
