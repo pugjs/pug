@@ -391,28 +391,26 @@ p bar
 ```jade
 body
   //
-    #content
-      h1 Example
+    注释
 ```
 
 渲染为：
 
 ```html
 <body>
-  <!--
-  <div id="content">
-    <h1>Example</h1>
-  </div>
+  <!--注释
   -->
 </body>
 ```
 
-Jade 同样很好的支持了条件注释：
+### 条件注释
+对于条件注释，Jade 没有任何特殊的语法。因为 Jade 会把所有以 `<` 开始的代码处理为纯文本，您可以直接使用 HTML：：
 
 ```jade
 body
-  //if IE
-    a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
+  <!--[if IE]>
+  a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
+  <![endif]-->
 ```
 
 渲染为：
@@ -420,7 +418,7 @@ body
 ```html
 <body>
   <!--[if IE]>
-    <a href="http://www.mozilla.com/en-US/firefox/">Get Firefox</a>
+  <a href="http://www.mozilla.com/en-US/firefox/">Get Firefox</a>
   <![endif]-->
 </body>
 ```
