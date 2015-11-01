@@ -12,11 +12,11 @@ block documentation
           //- index.jade
           doctype html
           html
-            include ./includes/head.jade
+            include ./includes/head
             body
               h1 My Site
               p Welcome to my super lame site.
-              include ./includes/foot.jade
+              include ./includes/foot
       +jade
         :jadesrc
           //- includes/head.jade
@@ -48,6 +48,10 @@ block documentation
               </div>
             </body>
           </html>
+
+  p The path of the included file, if specified absolutely (e.g. #[code include /root]), is resolved by prepending #[code options.basedir] to the file name provided. Otherwise, the path is relative to the current file being compiled.
+
+  p If no file extension is provided, #[code .jade] is automatically appended.
 
   h2 Including Plain Text
 
