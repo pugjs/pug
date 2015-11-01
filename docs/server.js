@@ -2,7 +2,7 @@
 
 var path = require('path');
 var fs = require('fs');
-var marked = require('marked');
+var md = require('markdown-it')();
 var express = require('express');
 var less = require('less-file');
 var browserify = require('browserify-middleware');
@@ -83,7 +83,7 @@ app.get('/history', function (req, res, next) {
     versions.push(version);
     fs.writeFileSync(__dirname + '/versions.json', JSON.stringify(versions, null, '  '));
   }
-  var history = marked(fs.readFileSync(__dirname + '/../History.md', 'utf8'))
+  var history = md.render(fs.readFileSync(__dirname + '/../History.md', 'utf8'))
     .replace(/h1/g, 'h2')
     .replace(versionHeader, function (_, version) {
       if (versions.indexOf(version) !== -1) {
