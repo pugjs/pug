@@ -33,6 +33,9 @@ block content
       dt filename:
       dd.type.string string
       dd.description Used in exceptions, and required for relative includes and extends
+      dt basedir:
+      dd.type.string string
+      dd.description The base directory of all absolute inclusion
       dt doctype:
       dd.type.string string
       dd.description If the doctype is not specified as part of the template, you can specify it here.  It is sometimes useful to get self-closing tags and remove mirroring of boolean attributes.
@@ -48,18 +51,18 @@ block content
       dt compileDebug:
       dd.type.boolean boolean
       dd.description If set to true, the function source will be included in the compiled template for better error messages (sometimes useful in development). It is enabled by default unless used with express in production mode.
-      dt cache:
-      dd.type.boolean boolean
-      dd.description If set to true, compiled functions are cached. #[code filename] must be set as the cache key.
-      dt compiler:
-      dd.type.function class
-      dd.description Override the default compiler
-      dt parser:
-      dd.type.function class
-      dd.description Override the default parser
       dt globals:
       dd.type.array= 'Array.<string>'
       dd.description Add a list of global names to make accessible in templates
+      dt cache:
+      dd.type.boolean boolean
+      dd.description If set to true, compiled functions are cached. #[code filename] must be set as the cache key. Only applies to #[code render*]
+      dt inlineRuntimeFunctions:
+      dd.type.boolean boolean
+      dd.description Inline runtime functions instead of #[code require]-ing them from a shared version. For client-side compilation, the default is true so that one does not have to include the runtime. For all other compilation or rendering types, the default is false.
+      dt name:
+      dd.type.string string
+      dd.description The name of the template function. Only applies to #[code compile*Client*]
     div }
 
   +funcHeading('compile', 'source')
@@ -95,7 +98,7 @@ block content
 
   dl.parameter-list
     dt source
-    dd.type.string path
+    dd.type.string string
     dd.description The path to a Jade file
     dt options
     dd.type.object: a(href='#options') options
