@@ -852,7 +852,7 @@ describe('jade', function(){
       var str = [
           'html',
           '  head',
-          '    include fixtures/scripts',
+          '    include fixtures/scripts.jade',
           '      scripts(src="/app.js")',
       ].join('\n');
 

@@ -40,7 +40,20 @@ mixin work_filmstrip_item(work)
   div&attributes(attributes)= work
 +work_filmstrip_item('work')("data-profile"='profile', "data-creator-name"='name')
 
+mixin my-mixin(arg1, arg2, arg3, arg4)
+  p= arg1
+  p= arg2
+  p= arg3
+  p= arg4
+
 +foo(
   attr3="qux"
   class="baz"
+)
+
++my-mixin(
+'1',
+      '2',
+  '3',
+      '4'
 )
