@@ -1,5 +1,5 @@
 
-extends extend-layout
+extends extend-layout.jade
 
 block scripts
   script(src='/jquery.js')
@@ -8,4 +8,4 @@ block scripts
 block content
   h1= title
   each pet in pets
-    include pet
+    include pet.jade

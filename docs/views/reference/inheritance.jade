@@ -24,7 +24,9 @@ block documentation
             #footer
               p some footer content
 
-  p Now to extend the layout, simply create a new file and use the #[code extends] directive as shown below, giving the path (with or without the .jade extension). You may now define one or more blocks that will override the parent block content, note that here the #[code foot] block is #[em not] redefined and will output "some footer content".
+  p Now to extend the layout, simply create a new file and use the #[code extends] directive as shown below, giving the path. You may now define one or more blocks that will override the parent block content, note that here the #[code foot] block is #[em not] redefined and will output "some footer content".
+
+  p In Jade v1, if no file extension is given, #[code .jade] is automatically appended to the path, but in Jade v2 this is behavior is removed.
 
   p page-a.jade
   +jade
@@ -39,7 +41,7 @@ block documentation
         h1= title
         - var pets = ['cat', 'dog']
         each petName in pets
-          include pet
+          include pet.jade
 
   p pet.jade
   +jade
