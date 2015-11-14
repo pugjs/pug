@@ -45,6 +45,8 @@
     "istanbul": "*",
     "jade-code-mirror": "~1.0.5",
     "jade-highlighter": "~1.0.5",
+    "jquery": "^2.1.4",
+    "jstransformer-cdata": "^1.0.0",
     "jstransformer-coffee-script": "^1.0.0",
     "jstransformer-less": "^2.1.0",
     "jstransformer-markdown-it": "^0.2.2",
