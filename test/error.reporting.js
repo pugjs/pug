@@ -156,16 +156,6 @@ describe('error reporting', function () {
     });
   });
   describe('deprecated features', function () {
-    it('deprecates `!!!` in favour of `doctype`', function () {
-      var err = getError('!!! 5', {filename: 'test.jade'})
-      assert(/test\.jade:1/.test(err.message))
-      assert(/`!!!` is deprecated, you must now use `doctype`/.test(err.message))
-    });
-    it('deprecates `doctype 5` in favour of `doctype html`', function () {
-      var err = getError('doctype 5', {filename: 'test.jade'})
-      assert(/test\.jade:1/.test(err.message))
-      assert(/`doctype 5` is deprecated, you must now use `doctype html`/.test(err.message))
-    });
     it('warns about element-with-multiple-attributes', function () {
       var consoleWarn = console.warn;
       var log = '';
