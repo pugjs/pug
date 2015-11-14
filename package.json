@@ -23,13 +23,13 @@
     "jade": "./bin/jade.js"
   },
   "dependencies": {
-    "jade-code-gen": "0.0.3",
-    "jade-filters": "0.0.3",
-    "jade-lexer": "0.0.8",
-    "jade-linker": "0.0.1",
-    "jade-load": "0.0.3",
-    "jade-parser": "0.0.8",
-    "jade-runtime": "^1.1.0",
+    "jade-code-gen": "0.0.4",
+    "jade-filters": "1.1.0",
+    "jade-lexer": "0.0.9",
+    "jade-linker": "0.0.2",
+    "jade-load": "0.0.4",
+    "jade-parser": "0.0.9",
+    "jade-runtime": "^2.0.0",
     "jade-strip-comments": "^1.0.0"
   },
   "devDependencies": {
