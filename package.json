@@ -64,7 +64,7 @@
     "stop": "^3.0.0-rc1",
     "stylus": "*",
     "twbs": "0.0.6",
-    "uglify-js": "^2.4.24"
+    "uglify-js": "^2.6.1"
   },
   "scripts": {
     "test": "mocha -R spec",
