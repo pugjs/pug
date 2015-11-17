@@ -7,4 +7,4 @@ mixin pets(pets)
 mixin profile(user)
   .user
     h2= user.name
-    mixin pets(user.pets)
+    +pets(user.pets)
