@@ -51,7 +51,7 @@
     "jstransformer-less": "^2.1.0",
     "jstransformer-markdown-it": "^0.2.2",
     "jstransformer-stylus": "^1.0.0",
-    "jstransformer-uglify-js": "^1.0.0",
+    "jstransformer-uglify-js": "^1.1.1",
     "jstransformer-verbatim": "^1.0.0",
     "less-file": "0.0.9",
     "linify": "*",
