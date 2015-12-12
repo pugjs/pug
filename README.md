@@ -9,7 +9,7 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  You can test drive Jade online [here](http://naltatis.github.com/jade-syntax-docs).
 
- [![Build Status](https://img.shields.io/travis/jadejs/jade/master.svg?style=flat)](https://travis-ci.org/jadejs/jade)
+ [![Build Status](https://img.shields.io/travis/pugjs/jade/master.svg?style=flat)](https://travis-ci.org/pugjs/jade)
  [![Coverage Status](https://img.shields.io/coveralls/jadejs/jade/master.svg?style=flat)](https://coveralls.io/r/jadejs/jade?branch=master)
  [![Dependency Status](https://img.shields.io/david/jadejs/jade.svg?style=flat)](https://david-dm.org/jadejs/jade)
  [![devDependencies Status](https://img.shields.io/david/dev/jadejs/jade.svg?style=flat)](https://david-dm.org/jadejs/jade#info=devDependencies)
