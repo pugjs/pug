@@ -740,7 +740,7 @@ Jade 同样是设计师友好的，它可以使 JavaScript 更直接更富表现
 
 ```jade
 - var foo = 'foo ' + 'bar'
-foo = 'foo ' + 'bar'
+foo= 'foo ' + 'bar'
 ```
 
 Jade 会把 `if`, `else if`, `else`, `until`, `while`, `unless` 同别的优先对待, 但是你得记住它们还是普通的 JavaScript：
@@ -796,7 +796,7 @@ each item, i in items
 <li>three: 2</li>
 ```
 
-遍历一个数组的键值：
+遍历一个对象的键值：
 
 ```jade
 obj = { foo: 'bar' }
