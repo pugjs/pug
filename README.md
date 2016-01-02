@@ -132,7 +132,7 @@ Tutorials:
 
 Implementations in other languages:
 
-  - [php](http://github.com/everzet/jade.php)
+  - [php](https://github.com/kylekatarnls/jade-php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
