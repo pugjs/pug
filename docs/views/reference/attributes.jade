@@ -172,11 +172,11 @@ block documentation
           - var classes = ['foo', 'bar', 'baz']
           a(class=classes)
           //- the class attribute may also be repeated to merge arrays
-          a.bing(class=classes class=['bing'])
+          a.bang(class=classes class=['bing'])
     .col-lg-6
       +html
         :htmlsrc
-          <a class="foo bar baz"></a><a class="foo bar baz bing"></a>
+          <a class="foo bar baz"></a><a class="bang foo bar baz bing"></a>
 
   p It can also be an object mapping class names to true or false values, which is useful for applying conditional classes
 
