@@ -103,7 +103,7 @@ block documentation
         :jadesrc
           mixin link(href, name)
             //- attributes == {class: "btn"}
-            a(class!=attributes.class, href=href)= name
+            a(class!=attributes.class href=href)= name
 
           +link('/foo', 'foo')(class="btn")
     .col-lg-6
