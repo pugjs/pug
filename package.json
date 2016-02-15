@@ -30,7 +30,8 @@
     "jade-load": "0.0.4",
     "jade-parser": "0.0.9",
     "jade-runtime": "^2.0.0",
-    "jade-strip-comments": "^1.0.0"
+    "jade-strip-comments": "^1.0.0",
+    "resolve": "^1.1.7"
   },
   "devDependencies": {
     "browserify": "*",
