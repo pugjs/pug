@@ -7,21 +7,21 @@ var express = require('express');
 var less = require('less-file');
 var browserify = require('browserify-middleware');
 var highlight = require('highlight-codemirror');
-var highlightJade = require('jade-highlighter');
-var jade = require('../');
+var highlightPug = require('pug-highlighter');
+var pug = require('../');
 
 
 var version = require('../package.json').version;
 var app = express();
 
-var filters = jade.filters;
+var filters = pug.filters;
 
 highlight.loadMode('xml');//dep of htmlmixed
 highlight.loadMode('htmlmixed');
 highlight.loadMode('javascript');
 highlight.loadMode('css');
 
-filters.jadesrc = highlightJade
+filters.pugsrc = highlightPug
 filters.htmlsrc = function (html) {
   return highlight(html, 'htmlmixed');
 };
@@ -36,7 +36,7 @@ filters.highlight = function (src, opt) {
   return highlight(src, opt.mode)
 };
 
-app.engine('jade', jade.renderFile);
+app.engine('pug', pug.renderFile);
 app.set('views', __dirname + '/views');
 
 app.locals.doctypes = require('doctypes');
@@ -59,22 +59,22 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res, next) {
-  res.render('home.jade');
+  res.render('home.pug');
 });
 app.get('/reference', function (req, res, next) {
-  res.render('reference.jade', {section: 'reference'});
+  res.render('reference.pug', {section: 'reference'});
 });
 app.get('/reference/:name', function (req, res, next) {
-  res.render('reference/' + req.params.name + '.jade', {
+  res.render('reference/' + req.params.name + '.pug', {
     section: 'reference',
     currentDocumentation: req.params.name
   });
 });
 app.get('/api', function (req, res, next) {
-  res.render('api.jade', {section: 'api'});
+  res.render('api.pug', {section: 'api'});
 });
 app.get('/command-line', function (req, res, next) {
-  res.render('command-line.jade', {section: 'command-line'});
+  res.render('command-line.pug', {section: 'command-line'});
 });
 app.get('/history', function (req, res, next) {
   var versionHeader = /(\d+\.\d+\.\d+) *\/ *\d\d\d\d\-\d\d\-\d\d\<\/h2\>/g;
@@ -93,7 +93,7 @@ app.get('/history', function (req, res, next) {
         return _;
       }
     });
-  res.render('history.jade', {
+  res.render('history.pug', {
     section: 'history',
     history: history
   });

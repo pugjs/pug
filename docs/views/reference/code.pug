@@ -1,0 +1,107 @@
+extends ../reference.pug
+
+block documentation
+  h1 Code
+
+  p Pug makes it possible to write inline JavaScript code in your templates.  There are three types of code.
+
+  h2 Unbuffered Code
+
+  p Unbuffered code starts with <code>-</code> does not add any output directly, e.g.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          - for (var x = 0; x < 3; x++)
+            li item
+    .col-lg-6
+      +html
+        :htmlsrc
+          <li>item</li>
+          <li>item</li>
+          <li>item</li>
+  
+  p Pug also supports block unbuffered code:
+  
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          -
+            list = ["Uno", "Dos", "Tres",
+                    "Cuatro", "Cinco", "Seis"]
+          each item in list
+            li= item
+    .col-lg-6
+      +html
+        :htmlsrc
+          <li>Uno</li>
+          <li>Dos</li>
+          <li>Tres</li>
+          <li>Cuatro</li>
+          <li>Cinco</li>
+          <li>Seis</li>
+
+  h2 Buffered Code
+
+  p Buffered code starts with <code>=</code> and outputs the result of evaluating the JavaScript expression in the template.  For security, it is first HTML escaped:
+
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          p
+            = 'This code is <escaped>!'
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>This code is &lt;escaped&gt;!</p>
+
+  p It can also be written inline with attributes, and supports the full range of JavaScript expressions:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          p= 'This code is' + ' <escaped>!'
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>This code is &lt;escaped&gt;!</p>
+
+  h2 Unescaped Buffered Code
+
+  p Unescaped buffered code starts with <code>!=</code> and outputs the result of evaluating the JavaScript expression in the template.  This does not do any escaping, so is not safe for user input:
+
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          p
+            != 'This code is <strong>not</strong> escaped!'
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>This code is <strong>not</strong> escaped!</p>
+
+  p It can also be written inline with attributes, and supports the full range of JavaScript expressions:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          p!= 'This code is' + ' <strong>not</strong> escaped!'
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>This code is <strong>not</strong> escaped!</p>
+  .panel.panel-danger
+    .panel-heading Danger
+    .panel-body
+      p.
+        Unescaped buffered code can be dangerous.
+        You must be sure to sanitize any user inputs to avoid
+        #[a(href='http://en.wikipedia.org/wiki/Cross-site_scripting') cross-site scripting].

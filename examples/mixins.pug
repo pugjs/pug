@@ -1,0 +1,14 @@
+include mixins/dialog.pug
+include mixins/profile.pug
+
+.one
+  +dialog
+
+.two
+  +dialog-title('Whoop')
+
+.three
+  +dialog-title-desc('Whoop', 'Just a mixin')
+
+#profile
+  +profile(user)

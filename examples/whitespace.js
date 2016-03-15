@@ -3,9 +3,9 @@
  * Module dependencies.
  */
 
-var jade = require('../')
-  , path = __dirname + '/whitespace.jade'
+var pug = require('../')
+  , path = __dirname + '/whitespace.pug'
   , str = require('fs').readFileSync(path, 'utf8')
-  , fn = jade.compile(str, { filename: path, pretty: true });
+  , fn = pug.compile(str, { filename: path, pretty: true });
 
 console.log(fn());

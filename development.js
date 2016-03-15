@@ -3,17 +3,17 @@
 var fs = require('fs');
 
 console.log('This module can be used during development\n' +
-            'to link the jade modules to your local development\n' +
+            'to link the pug modules to your local development\n' +
             'copies rather than the versions downloaded from npm');
 
 var modules = [
-  'jade-lexer',
-  'jade-load',
-  'jade-parser',
-  'jade-runtime',
-  'jade-filters',
-  'jade-linker',
-  'jade-code-gen'
+  'pug-lexer',
+  'pug-loader',
+  'pug-parser',
+  'pug-runtime',
+  'pug-filters',
+  'pug-linker',
+  'pug-code-gen'
 ];
 
 modules.forEach(function (id) {

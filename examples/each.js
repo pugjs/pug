@@ -3,10 +3,10 @@
  * Module dependencies.
  */
 
-var jade = require('../')
-  , path = __dirname + '/each.jade'
+var pug = require('../')
+  , path = __dirname + '/each.pug'
   , str = require('fs').readFileSync(path, 'utf8')
-  , fn = jade.compile(str, { filename: path, pretty: true });
+  , fn = pug.compile(str, { filename: path, pretty: true });
 
 var users = {
   tj: { age: 23, email: 'tj@vision-media.ca', isA: 'human' },

@@ -4,7 +4,7 @@
  */
 
 var uubench = require('uubench')
-  , jade = require('../');
+  , pug = require('../');
 
 
 var suite = new uubench.Suite({
@@ -21,7 +21,7 @@ function setup(self) {
     , options = { self: self };
 
   var str = 'html\n  body\n    h1 Title'
-    , fn = jade.compile(str, options);
+    , fn = pug.compile(str, options);
 
   suite.bench('tiny' + suffix, function(next){
     fn();
@@ -40,7 +40,7 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-  var fn2 = jade.compile(str, options);
+  var fn2 = pug.compile(str, options);
 
   suite.bench('small' + suffix, function(next){
     fn2();
@@ -67,7 +67,7 @@ html\n\
 ';
   }
 
-  var fn3 = jade.compile(str, options);
+  var fn3 = pug.compile(str, options);
 
   suite.bench('small locals' + suffix, function(next){
     fn3({ title: 'Title', links: ['Home', 'About Us', 'Store', 'FAQ', 'Contact'] });
@@ -87,7 +87,7 @@ html\n\
 ';
 
   str = Array(30).join(str);
-  var fn4 = jade.compile(str, options);
+  var fn4 = pug.compile(str, options);
 
   suite.bench('medium' + suffix, function(next){
     fn4();
@@ -107,7 +107,7 @@ html\n\
 ';
 
   str = Array(100).join(str);
-  var fn5 = jade.compile(str, options);
+  var fn5 = pug.compile(str, options);
 
   suite.bench('large' + suffix, function(next){
     fn5();
