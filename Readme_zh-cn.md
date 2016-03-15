@@ -1,22 +1,22 @@
-# Jade - 模板引擎
+# Pug - 模板引擎
 
-Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 影响，它是用 JavaScript 实现的, 并且可以供 [Node](http://nodejs.org) 使用.
+Pug 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 影响，它是用 JavaScript 实现的, 并且可以供 [Node](http://nodejs.org) 使用.
 
 翻译: [草依山](http://jser.me) 等
 
 ## 声明
 
-**本文档已经非常过时了，所以很多例子都有可能无法使用。最新的范例可以在[官方英文文档](http://jade-lang.com/reference/)找到。**
+**本文档已经非常过时了，所以很多例子都有可能无法使用。最新的范例可以在[官方英文文档](http://pug-lang.com/reference/)找到。**
 
-从 Jade `v0.31.0` 开始放弃了对于 `<script>` 和 `<style>` 标签的平文本支持. 这个问题你可以在 `<script> <style>` 标签后加上 `.` 来解决.
+从 Pug `v0.31.0` 开始放弃了对于 `<script>` 和 `<style>` 标签的平文本支持. 这个问题你可以在 `<script> <style>` 标签后加上 `.` 来解决.
 
-希望这一点能让 Jade 对新手更友好, 同时也不影响到 Jade 本身的能力或者导致过度冗长.
+希望这一点能让 Pug 对新手更友好, 同时也不影响到 Pug 本身的能力或者导致过度冗长.
 
-如果你有大量的文件需要转换你可以用下 [fix-jade](https://github.com/ForbesLindesay/fix-jade) 尝试自动完成这个过程.
+如果你有大量的文件需要转换你可以用下 [fix-pug](https://github.com/ForbesLindesay/fix-pug) 尝试自动完成这个过程.
 
 ## Test drive
 
-你可以在网上[试玩 Jade](http://naltatis.github.com/jade-syntax-docs).
+你可以在网上[试玩 Pug](http://naltatis.github.com/pug-syntax-docs).
 
 ## README 目录
 
@@ -47,7 +47,7 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
 - [Mixins](#a14)
 - [产生输出](#a15)
 - [Makefile 的一个例子](#a16)
-- [命令行的 Jade](#a17)
+- [命令行的 Pug](#a17)
 - [教程](#a18)
 - [License](#a19)
 
@@ -63,7 +63,7 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
   - 属性改写
   - 安全，默认代码是转义的
   - 运行时和编译时上下文错误报告 
-  - 命令行下编译jade模板
+  - 命令行下编译pug模板
   - HTML5 模式 (使用 ~~`!!! 5`~~ `doctype html` 文档类型)
   - 在内存中缓存(可选)
   - 合并动态和静态标签类
@@ -80,21 +80,21 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
     - `:markdown` 必须已经安装 [markdown-js](http://github.com/evilstreak/markdown-js) 或者 [node-discount](http://github.com/visionmedia/node-discount) 
     - `:cdata`
     - `:coffeescript` 必须已经安装[coffee-script](http://jashkenas.github.com/coffee-script/) 
-  - [Emacs Mode](https://github.com/brianc/jade-mode)
-  - [Vim Syntax](https://github.com/digitaltoad/vim-jade)
-  - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
-  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
-  - [Screencasts](http://tjholowaychuk.com/post/1004255394/jade-screencast-template-engine-for-nodejs)
-  - [html2jade](https://github.com/donpark/html2jade) converter
+  - [Emacs Mode](https://github.com/brianc/pug-mode)
+  - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
+  - [TextMate Bundle](http://github.com/miksago/pug-tmbundle)
+  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/pug.mode)
+  - [Screencasts](http://tjholowaychuk.com/post/1004255394/pug-screencast-template-engine-for-nodejs)
+  - [html2pug](https://github.com/donpark/html2pug) converter
 
 <a name="a2"/>
 ## 其它实现
 
-  - [php](http://github.com/everzet/jade.php)
+  - [php](http://github.com/everzet/pug.php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
-  - [python](https://github.com/SyrusAkbary/pyjade)
-  - [java](https://github.com/neuland/jade4j)
+  - [python](https://github.com/SyrusAkbary/pypug)
+  - [java](https://github.com/neuland/pug4j)
 
 <a name="a3"/>
 ## 安装
@@ -102,25 +102,25 @@ Jade 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) 
 通过 NPM:
 
 ```sh
-npm install jade
+npm install pug
 ```
 
 <a name="a4"/>
 ## 浏览器支持
 
-把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:
+把 Pug 编译为一个可供浏览器使用的单文件，只需要简单的执行:
 
 ```sh 
-$ make jade.js
+$ make pug.js
 ```
 
 如果你已经安装了 uglifyjs (`npm install uglify-js`)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。 
  
 ```sh
-make jade.min.js
+make pug.min.js
 ```
 
-默认情况下，为了方便调试Jade会把模板组织成带有形如 `__.lineno = 3` 的行号的形式。 
+默认情况下，为了方便调试Pug会把模板组织成带有形如 `__.lineno = 3` 的行号的形式。 
 在浏览器里使用的时候，你可以通过传递一个选项 `{ compileDebug: false }` 来去掉这个。
 下面的模板
 
@@ -141,11 +141,11 @@ function anonymous(locals, attrs, escape, rethrow) {
 }
 ```
 
-通过使用 Jade 的 `./runtime.js`你可以在浏览器使用这些预编译的模板而不需要使用 Jade, 你只需要使用 `runtime.js` 里的工具函数, 它们会放在 `jade.attrs`, `jade.escape` 这些里。 把选项 `{ client: true }` 传递给 `jade.compile()`, Jade 会把这些帮助函数的引用放在`jade.attrs`, `jade.escape`.
+通过使用 Pug 的 `./runtime.js`你可以在浏览器使用这些预编译的模板而不需要使用 Pug, 你只需要使用 `runtime.js` 里的工具函数, 它们会放在 `pug.attrs`, `pug.escape` 这些里。 把选项 `{ client: true }` 传递给 `pug.compile()`, Pug 会把这些帮助函数的引用放在`pug.attrs`, `pug.escape`.
 
 ```js
 function anonymous(locals, attrs, escape, rethrow) {
-  var attrs = jade.attrs, escape = jade.escape, rethrow = jade.rethrow;
+  var attrs = pug.attrs, escape = pug.escape, rethrow = pug.rethrow;
   var buf = [];
   with (locals || {}) {
     var interp;
@@ -159,10 +159,10 @@ function anonymous(locals, attrs, escape, rethrow) {
 ## 公开 API
 
 ```javascript
-var jade = require('jade');
+var pug = require('pug');
 
 // Compile a function
-var fn = jade.compile('string of jade', options);
+var fn = pug.compile('string of pug', options);
 fn(locals);
 ```
 
@@ -172,7 +172,7 @@ fn(locals);
  - `locals`    本地变量对象
  - `filename`  异常发生时使用，includes 时必需
  - `debug`     输出 token 和翻译后的函数体
- - `compiler`  替换掉 jade 默认的编译器
+ - `compiler`  替换掉 pug 默认的编译器
  - `compileDebug`  `false`的时候调试的结构不会被输出
  - `pretty`    为输出加上了漂亮的空格缩进 _(默认为 `false`)_
 
@@ -189,7 +189,7 @@ fn(locals);
 
 标签就是一个简单的单词:
 
-```jade
+```pug
 html
 ```
 
@@ -197,7 +197,7 @@ html
 
 标签也是可以有 id 的:
 
-```jade
+```pug
 div#container
 ```
 
@@ -205,7 +205,7 @@ div#container
 
 怎么加 class 呢？
 
-```jade
+```pug
 div.user-details
 ```
 
@@ -219,7 +219,7 @@ div.user-details
 
 不停的 `div div div` 很讨厌啊 , 可以这样:
 
-```jade
+```pug
 #foo
 .bar
 ```
@@ -235,7 +235,7 @@ div.user-details
 
 只需要简单的把内容放在标签之后：
 
-```jade
+```pug
 p wahoo!
 ```
 
@@ -243,19 +243,19 @@ p wahoo!
 
 很帅吧，但是大段的文本怎么办呢：
 
-```jade
+```pug
 p
   | foo bar baz
   | rawr rawr
   | super cool
-  | go jade go
+  | go pug go
 ```
 
 渲染为 `<p>foo bar baz rawr.....</p>`
 
 怎么和数据结合起来？ 所有类型的文本展示都可以和数据结合起来，如果我们把 `{ name: 'tj', email: 'tj@vision-media.ca' }` 传给编译函数，下面是模板上的写法:
 
-```jade
+```pug
 #user #{name} &lt;#{email}&gt;
 ```
 
@@ -269,14 +269,14 @@ p
 
 同样可以使用非转义的变量 `!{html}`, 下面的模板将直接输出一个 `<script>` 标签:
 
-```jade
+```pug
 - var html = "<script></script>"
 | !{html}
 ```
 
 内联标签同样可以使用文本块来包含文本：
 
-```jade
+```pug
 label
   | Username:
   input(name='user[name]')
@@ -284,14 +284,14 @@ label
 
 或者直接使用标签文本:
 
-```jade
+```pug
 label Username:
   input(name='user[name]')
 ```
 
 _只_ 包含文本的标签，比如 `<script>`, `<style>`, 和 `<textarea>` 不需要前缀 `|` 字符, 比如:
 
-```jade
+```pug
 html
   head
     title Example
@@ -305,7 +305,7 @@ html
 
 这里还有一种选择，可以使用 `.` 来开始一段文本块，比如：
 
-```jade
+```pug
 p.
   foo asdf
   asdf
@@ -316,7 +316,7 @@ p.
 
 会被渲染为:
 
-```jade
+```pug
 <p>foo asdf
 asdf
   asdfasdfaf
@@ -326,27 +326,27 @@ asd
 </p>
 ```
 
-这和带一个空格的 `.` 是不一样的, 带空格的会被 Jade 的解析器忽略，当作一个普通的文字: 
+这和带一个空格的 `.` 是不一样的, 带空格的会被 Pug 的解析器忽略，当作一个普通的文字: 
 
-```jade
+```pug
 p .
 ```
     
 渲染为:
 
-```jade
+```pug
 <p>.</p>
 ```
 
 需要注意的是文本块需要两次转义。比如想要输出下面的文本：
 
-```jade
+```pug
 <p>foo\bar</p>
 ```
 
 使用:
 
-```jade
+```pug
 p.
   foo\\bar
 ```
@@ -356,7 +356,7 @@ p.
 
 单行注释和 JavaScript 里是一样的，通过 `//` 来开始，并且必须单独一行：
 
-```jade
+```pug
 // just some paragraphs
 p foo
 p bar
@@ -370,9 +370,9 @@ p bar
 <p>bar</p>
 ```
 
-Jade 同样支持不输出的注释，加一个短横线就行了：
+Pug 同样支持不输出的注释，加一个短横线就行了：
 
-```jade
+```pug
 //- will not output within markup
 p foo
 p bar
@@ -390,7 +390,7 @@ p bar
 
 块注释也是支持的：
 
-```jade
+```pug
 body
   //
     注释
@@ -406,9 +406,9 @@ body
 ```
 
 ### 条件注释
-对于条件注释，Jade 没有任何特殊的语法。因为 Jade 会把所有以 `<` 开始的代码处理为纯文本，您可以直接使用 HTML：：
+对于条件注释，Pug 没有任何特殊的语法。因为 Pug 会把所有以 `<` 开始的代码处理为纯文本，您可以直接使用 HTML：：
 
-```jade
+```pug
 body
   <!--[if IE]>
   a(href='http://www.mozilla.com/en-US/firefox/') Get Firefox
@@ -428,9 +428,9 @@ body
 <a name="a6-6"/>
 ### 内联
 
-Jade 支持以自然的方式定义标签嵌套:
+Pug 支持以自然的方式定义标签嵌套:
 
-```jade
+```pug
 ul
   li.first
     a(href='#') foo
@@ -445,7 +445,7 @@ ul
 
 块展开可以帮助你在一行内创建嵌套的标签，下面的例子和上面的是一样的：
 
-```jade
+```pug
 ul
   li.first: a(href='#') foo
   li: a(href='#') bar
@@ -457,7 +457,7 @@ ul
 
 `case` 表达式按下面这样的形式写:
 
-```jade
+```pug
 html
   body
     friends = 10
@@ -472,7 +472,7 @@ html
 
 块展开在这里也可以使用:
 
-```jade
+```pug
 friends = 5
 
 html
@@ -486,34 +486,34 @@ html
 <a name="a6-9"/>
 ### 属性
 
-Jade 现在支持使用 `(` 和 `)` 作为属性分隔符
+Pug 现在支持使用 `(` 和 `)` 作为属性分隔符
 
-```jade
+```pug
 a(href='/login', title='View login page') Login
 ```
 
 当一个值是 `undefined` 或者 `null` 属性 _不_ 会被加上,
 所以呢，它不会编译出 'something="null"'.
 
-```jade
+```pug
 div(something=null)
 ```
 
 Boolean 属性也是支持的:
 
-```jade
+```pug
 input(type="checkbox", checked)
 ```
 
 使用代码的 Boolean 属性只有当属性为 `true` 时才会输出：
 
-```jade
+```pug
 input(type="checkbox", checked=someValue)
 ```
     
 多行同样也是可用的：
 
-```jade
+```pug
 input(type='checkbox',
   name='agreement',
   checked)
@@ -521,7 +521,7 @@ input(type='checkbox',
 
 多行的时候可以不加逗号：
 
-```jade
+```pug
 input(type='checkbox'
   name='agreement'
   checked)
@@ -529,7 +529,7 @@ input(type='checkbox'
 
 加点空格，格式好看一点？同样支持
 
-```jade
+```pug
 input(
   type='checkbox'
   name='agreement'
@@ -538,26 +538,26 @@ input(
 
 冒号也是支持的:
 
-```jade
+```pug
 rss(xmlns:atom="atom")
 ```
 
 假如我有一个 `user` 对象 `{ id: 12, name: 'tobi' }`
 我们希望创建一个指向 `/user/12` 的链接 `href`, 我们可以使用普通的 JavaScript 字符串连接，如下:
 
-```jade
+```pug
 a(href='/user/' + user.id)= user.name
 ```
 
-或者我们使用 Jade 的修改方式, 这个我想很多使用 Ruby 或者 CoffeeScript 的人会看起来像普通的 JS..:
+或者我们使用 Pug 的修改方式, 这个我想很多使用 Ruby 或者 CoffeeScript 的人会看起来像普通的 JS..:
 
-```jade
+```pug
 a(href='/user/#{user.id}')= user.name
 ```
 
 `class` 属性是一个特殊的属性，你可以直接传递一个数组，比如 `bodyClasses = ['user', 'authenticated']` :
 
-```jade
+```pug
 body(class=bodyClasses)
 ```
 
@@ -566,16 +566,16 @@ body(class=bodyClasses)
 
 内联的 HTML 是可以的，我们可以使用管道定义一段文本 :
 
-```jade
+```pug
 html
   body
     | <h1>Title</h1>
     | <p>foo bar baz</p>
 ```
 
-或者我们可以使用 `.` 来告诉 Jade 我们需要一段文本：
+或者我们可以使用 `.` 来告诉 Pug 我们需要一段文本：
 
-```jade
+```pug
 html
   body.
     <h1>Title</h1>
@@ -584,13 +584,13 @@ html
 
 上面的两个例子都会渲染成相同的结果：
 
-```jade
+```pug
 <html><body><h1>Title</h1>
 <p>foo bar baz</p>
 </body></html>
 ```
 
- 这条规则适应于在 Jade 里的任何文本：
+ 这条规则适应于在 Pug 里的任何文本：
 
 ```
 html
@@ -603,38 +603,38 @@ html
 
 添加文档类型只需要简单的使用 `!!!`, 或者 `doctype` 跟上下面的可选项:
 
-```jade
+```pug
 !!!
 ```
 
 会渲染出 _transitional_ 文档类型, 或者:
 
-```jade
+```pug
 !!! 5
 ```
 
 或
 
-```jade
+```pug
 !!! html
 ```
 
 或
 
-```jade
+```pug
 doctype html
 ```
 
 Doctype 是大小写不敏感的, 所以下面两个是一样的:
 
-```jade
+```pug
 doctype Basic
 doctype basic
 ```
 
 当然也是可以直接传递一段文档类型的文本：
 
-```jade
+```pug
 doctype html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
 ```
 
@@ -663,7 +663,7 @@ var doctypes = exports.doctypes = {
 通过下面的代码可以很简单的改变默认的文档类型：
 
 ```javascript
-    jade.doctypes.default = 'whatever you want';
+    pug.doctypes.default = 'whatever you want';
 ```
 
 <a name="a7"/>
@@ -671,38 +671,38 @@ var doctypes = exports.doctypes = {
 
 过滤器前缀 `:`, 比如 `:markdown` 会把下面块里的文本交给专门的函数进行处理。查看顶部 _特性_ 里有哪些可用的过滤器。
 
-```jade
+```pug
 body
   :markdown
-    Woah! jade _and_ markdown, very **cool**
+    Woah! pug _and_ markdown, very **cool**
     we can even link to [stuff](http://google.com)
 ```
 
 渲染为:
 
 ```html
-<body><p>Woah! jade <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
+<body><p>Woah! pug <em>and</em> markdown, very <strong>cool</strong> we can even link to <a href="http://google.com">stuff</a></p></body>
 ```
 
 <a name="a8"/>
 ## 代码
 
-Jade 目前支持三种类型的可执行代码。第一种是前缀 `-`， 这是不会被输出的：
+Pug 目前支持三种类型的可执行代码。第一种是前缀 `-`， 这是不会被输出的：
 
-```jade
+```pug
 - var foo = 'bar';
 ```
 
 这可以用在条件语句或者循环中：
 
-```jade
+```pug
 - for (var key in obj)
   p= obj[key]
 ```
 
-由于 Jade 的缓存技术，下面的代码也是可以的：
+由于 Pug 的缓存技术，下面的代码也是可以的：
 
-```jade
+```pug
 - if (foo)
   ul
     li yay
@@ -724,7 +724,7 @@ Jade 目前支持三种类型的可执行代码。第一种是前缀 `-`， 这�
 
 下一步我们要 _转义_ 输出的代码，比如我们返回一个值，只要前缀一个 `=`：   
 
-```jade
+```pug
 - var foo = 'bar'
 = foo
 h1= foo
@@ -732,20 +732,20 @@ h1= foo
 
 它会渲染为 `bar<h1>bar</h1>`. 为了安全起见，使用 `=` 输出的代码默认是转义的,如果想直接输出不转义的值可以使用 `!=`：
 
-```jade
+```pug
 p!= aVarContainingMoreHTML
 ```
 
-Jade 同样是设计师友好的，它可以使 JavaScript 更直接更富表现力。比如下面的赋值语句是相等的，同时表达式还是通常的 JavaScript：
+Pug 同样是设计师友好的，它可以使 JavaScript 更直接更富表现力。比如下面的赋值语句是相等的，同时表达式还是通常的 JavaScript：
 
-```jade
+```pug
 - var foo = 'foo ' + 'bar'
 foo= 'foo ' + 'bar'
 ```
 
-Jade 会把 `if`, `else if`, `else`, `until`, `while`, `unless` 同别的优先对待, 但是你得记住它们还是普通的 JavaScript：
+Pug 会把 `if`, `else if`, `else`, `until`, `while`, `unless` 同别的优先对待, 但是你得记住它们还是普通的 JavaScript：
 
-```jade
+```pug
 if foo == 'bar'
   ul
     li yay
@@ -758,15 +758,15 @@ else
 <a name="a9"/>
 ## 循环
 
-尽管已经支持 JavaScript 原生代码，Jade 还是支持了一些特殊的标签，它们可以让模板更加易于理解，其中之一就是 `each`, 这种形式：
+尽管已经支持 JavaScript 原生代码，Pug 还是支持了一些特殊的标签，它们可以让模板更加易于理解，其中之一就是 `each`, 这种形式：
 
-```jade
+```pug
 each VAL[, KEY] in OBJ
 ```
 
 一个遍历数组的例子 ：
 
-```jade
+```pug
 - var items = ["one", "two", "three"]
 each item in items
   li= item
@@ -782,7 +782,7 @@ each item in items
 
 遍历一个数组同时带上索引：
 
-```jade
+```pug
 items = ["one", "two", "three"]
 each item, i in items
   li #{item}: #{i}
@@ -798,7 +798,7 @@ each item, i in items
 
 遍历一个对象的键值：
 
-```jade
+```pug
 obj = { foo: 'bar' }
 each val, key in obj
   li #{key}: #{val}
@@ -806,9 +806,9 @@ each val, key in obj
 
 将会渲染为：`<li>foo: bar</li>`
 
-Jade 在内部会把这些语句转换成原生的 JavaScript 语句，就像使用 `users.forEach(function(user){`, 词法作用域和嵌套会像在普通的 JavaScript 中一样：
+Pug 在内部会把这些语句转换成原生的 JavaScript 语句，就像使用 `users.forEach(function(user){`, 词法作用域和嵌套会像在普通的 JavaScript 中一样：
 
-```jade
+```pug
 each user in users
   each role in user.roles
     li= role
@@ -816,7 +816,7 @@ each user in users
 
 如果你喜欢，也可以使用 `for` ：
 
-```jade
+```pug
 for user in users
   for role in user.roles
     li= role
@@ -825,10 +825,10 @@ for user in users
 <a name="a10"/>
 ## 条件语句
 
-Jade 条件语句和使用了(`-`) 前缀的 JavaScript 语句是一致的,然后它允许你不使用圆括号，这样会看上去对设计师更友好一点，
+Pug 条件语句和使用了(`-`) 前缀的 JavaScript 语句是一致的,然后它允许你不使用圆括号，这样会看上去对设计师更友好一点，
 同时要在心里记住这个表达式渲染出的是 _常规_ JavaScript：
 
-```jade
+```pug
 for user in users
   if user.role == 'admin'
     p #{user.name} is an admin
@@ -838,7 +838,7 @@ for user in users
 
 和下面的使用了常规 JavaScript 的代码是相等的：
 
-```jade
+```pug
 for user in users
   - if (user.role == 'admin')
     p #{user.name} is an admin
@@ -846,9 +846,9 @@ for user in users
     p= user.name
 ```
 
-Jade 同时支持 `unless`, 这和 `if (!(expr))` 是等价的：
+Pug 同时支持 `unless`, 这和 `if (!(expr))` 是等价的：
 
-```jade
+```pug
 for user in users
   unless user.isAnonymous
     p
@@ -859,11 +859,11 @@ for user in users
 <a name="a11"/>
 ## 模板继承
 
-Jade 支持通过 `block` 和 `extends` 关键字来实现模板继承。 一个块就是一个 Jade 的 block ，它将在子模板中实现，同时是支持递归的。
+Pug 支持通过 `block` 和 `extends` 关键字来实现模板继承。 一个块就是一个 Pug 的 block ，它将在子模板中实现，同时是支持递归的。
   
-Jade 块如果没有内容，Jade 会添加默认内容，下面的代码默认会输出 `block scripts`, `block content`, 和 `block foot`.
+Pug 块如果没有内容，Pug 会添加默认内容，下面的代码默认会输出 `block scripts`, `block content`, 和 `block foot`.
 
-```jade
+```pug
 html
   head
     h1 My Site - #{title}
@@ -876,9 +876,9 @@ html
         p some footer content
 ```
 
-现在我们来继承这个布局，简单创建一个新文件，像下面那样直接使用 `extends`，给定路径（可以选择带 `.jade` 扩展名或者不带）. 你可以定义一个或者更多的块来覆盖父级块内容, 注意到这里的 `foot` 块 _没有_ 定义，所以它还会输出父级的 "some footer content"。
+现在我们来继承这个布局，简单创建一个新文件，像下面那样直接使用 `extends`，给定路径（可以选择带 `.pug` 扩展名或者不带）. 你可以定义一个或者更多的块来覆盖父级块内容, 注意到这里的 `foot` 块 _没有_ 定义，所以它还会输出父级的 "some footer content"。
 
-```jade
+```pug
 extends extend-layout
 
 block scripts
@@ -893,7 +893,7 @@ block content
 
 同样可以在一个子块里添加块，就像下面实现的块 `content` 里又定义了两个可以被实现的块 `sidebar` 和 `primary`，或者子模板直接实现 `content`。
 
-```jade
+```pug
 extends regular-layout
 
 block content
@@ -909,10 +909,10 @@ block content
 
 ## 前置、追加代码块
 
-Jade允许你 _替换_ （默认）、 _前置_ 和 _追加_ blocks. 比如，假设你希望在 _所有_ 页面的头部都加上默认的脚本，你可以这么做：
+Pug允许你 _替换_ （默认）、 _前置_ 和 _追加_ blocks. 比如，假设你希望在 _所有_ 页面的头部都加上默认的脚本，你可以这么做：
 
 
-```jade
+```pug
 html
   head
     block head
@@ -925,7 +925,7 @@ html
 现在假设你有一个Javascript游戏的页面，你希望在默认的脚本之外添加一些游戏相关的脚本，你可以直接`append`上代码块：
 
 
-```jade
+```pug
 extends layout
 
 block append head
@@ -935,7 +935,7 @@ block append head
 
 使用 `block append` 或 `block prepend` 时 `block` 是可选的:
 
-```jade
+```pug
 extends layout
 
 append head
@@ -946,18 +946,18 @@ append head
 <a name="a13"/>
 ## 包含
 
-Includes 允许你静态包含一段 Jade, 或者别的存放在单个文件中的东西比如 CSS, HTML 非常常见的例子是包含头部和页脚。 假设我们有一个下面目录结构的文件夹：
+Includes 允许你静态包含一段 Pug, 或者别的存放在单个文件中的东西比如 CSS, HTML 非常常见的例子是包含头部和页脚。 假设我们有一个下面目录结构的文件夹：
 
 ```
-./layout.jade
+./layout.pug
 ./includes/
-  ./head.jade
-  ./tail.jade
+  ./head.pug
+  ./tail.pug
 ```
 
-下面是 `layout.jade` 的内容:
+下面是 `layout.pug` 的内容:
 
-```jade
+```pug
 html
   include includes/head  
   body
@@ -966,7 +966,7 @@ html
     include includes/foot
 ```
 
-这两个包含 `includes/head` 和 `includes/foot` 都会读取相对于给 `layout.jade` 参数`filename` 的路径的文件, 这是一个绝对路径，不用担心Express帮你搞定这些了。Include 会解析这些文件，并且插入到已经生成的语法树中，然后渲染为你期待的内容：
+这两个包含 `includes/head` 和 `includes/foot` 都会读取相对于给 `layout.pug` 参数`filename` 的路径的文件, 这是一个绝对路径，不用担心Express帮你搞定这些了。Include 会解析这些文件，并且插入到已经生成的语法树中，然后渲染为你期待的内容：
 
 ```html
 <html>
@@ -985,7 +985,7 @@ html
 </html>
 ```
 
-前面已经提到，`include` 可以包含比如 HTML 或者 CSS 这样的内容。给定一个扩展名后，Jade 不会把这个文件当作一个 Jade 源代码，并且会把它当作一个普通文本包含进来：
+前面已经提到，`include` 可以包含比如 HTML 或者 CSS 这样的内容。给定一个扩展名后，Pug 不会把这个文件当作一个 Pug 源代码，并且会把它当作一个普通文本包含进来：
 
 ```
 html
@@ -1002,9 +1002,9 @@ html
     include content.html
 ```
 
-Include 也可以接受块内容，给定的块将会附加到包含文件 _最后_ 的块里。 举个例子，`head.jade` 包含下面的内容：
+Include 也可以接受块内容，给定的块将会附加到包含文件 _最后_ 的块里。 举个例子，`head.pug` 包含下面的内容：
 
-```jade
+```pug
 head
   script(src='/jquery.js')
 ```
@@ -1023,17 +1023,17 @@ html
 
 在被包含的模板中，你也可以使用`yield`语句。`yield`语句允许你明确地标明`include`的代码块的放置位置。比如，假设你希望把代码块放在scripts之前，而不是附加在scripts之后：
 
-```jade
+```pug
 head
   yield
   script(src='/jquery.js')
   script(src='/jquery.ui.js')
 ```
 
-由于被包含的Jade会按字面解析并合并到AST中，词法范围的变量的效果和直接写在同一个文件中的相同。这就意味着`include`可以用作partial的替代，例如，假设我们有一个引用了`user`变量的user.jade`文件：
+由于被包含的Pug会按字面解析并合并到AST中，词法范围的变量的效果和直接写在同一个文件中的相同。这就意味着`include`可以用作partial的替代，例如，假设我们有一个引用了`user`变量的user.pug`文件：
 
 
-```jade
+```pug
 h1= user.name
 p= user.occupation
 ```
@@ -1042,7 +1042,7 @@ p= user.occupation
 
 
 
-```jade
+```pug
 users = [{ name: 'Tobi', occupation: 'Ferret' }]
 
 each user in users
@@ -1059,9 +1059,9 @@ each user in users
 </div>
 ```
 
-`user.jade`引用了`user`变量，如果我们希望使用一个不同的变量`user`，那么我们可以直接定义一个新变量`user = person`，如下所示：
+`user.pug`引用了`user`变量，如果我们希望使用一个不同的变量`user`，那么我们可以直接定义一个新变量`user = person`，如下所示：
 
-```jade
+```pug
 each person in users
   .user
     user = person
@@ -1072,9 +1072,9 @@ each person in users
 <a name="a14"/>
 ## Mixins
 
-Mixins 在编译的模板里会被 Jade 转换为普通的 JavaScript 函数。 Mixins 可以还参数，但不是必需的：
+Mixins 在编译的模板里会被 Pug 转换为普通的 JavaScript 函数。 Mixins 可以还参数，但不是必需的：
 
-```jade
+```pug
 mixin list
   ul
     li foo
@@ -1084,14 +1084,14 @@ mixin list
 
 使用不带参数的 mixin 看上去非常简单，在一个块外：
 
-```jade  
+```pug  
 h2 Groceries
 mixin list
 ```
 
 Mixins 也可以带一个或者多个参数，参数就是普通的 JavaScript 表达式，比如下面的例子：
 
-```jade
+```pug
 mixin pets(pets)
   ul.pets
     - each pet in pets
@@ -1121,22 +1121,22 @@ mixin profile(user)
 <a name="a15"/>
 ## 产生输出 
 
-假设我们有下面的 Jade 源码：
+假设我们有下面的 Pug 源码：
 
-```jade
+```pug
 - var title = 'yay'
 h1.title #{title}
 p Just an example
 ```
 
-当 `compileDebug` 选项不是 `false`, Jade 会编译时会把函数里加上 `__.lineno = n;`, 这个参数会在编译出错时传递给 `rethrow()`, 而这个函数会在 Jade 初始输出时给出一个有用的错误信息。
+当 `compileDebug` 选项不是 `false`, Pug 会编译时会把函数里加上 `__.lineno = n;`, 这个参数会在编译出错时传递给 `rethrow()`, 而这个函数会在 Pug 初始输出时给出一个有用的错误信息。
 
 ```js
 function anonymous(locals) {
   var __ = { lineno: 1, input: "- var title = 'yay'\nh1.title #{title}\np Just an example", filename: "testing/test.js" };
-  var rethrow = jade.rethrow;
+  var rethrow = pug.rethrow;
   try {
-    var attrs = jade.attrs, escape = jade.escape;
+    var attrs = pug.attrs, escape = pug.escape;
     var buf = [];
     with (locals || {}) {
       var interp;
@@ -1160,11 +1160,11 @@ function anonymous(locals) {
 }
 ```
 
-当 `compileDebug` 参数是 `false`, 这个参数会被去掉，这样对于轻量级的浏览器端模板是非常有用的。结合 Jade 的参数和当前源码库里的 `./runtime.js` 文件，你可以通过 `toString()` 来编译模板而不需要在浏览器端运行整个 Jade 库，这样可以提高性能，也可以减少载入的 JavaScript 数量。
+当 `compileDebug` 参数是 `false`, 这个参数会被去掉，这样对于轻量级的浏览器端模板是非常有用的。结合 Pug 的参数和当前源码库里的 `./runtime.js` 文件，你可以通过 `toString()` 来编译模板而不需要在浏览器端运行整个 Pug 库，这样可以提高性能，也可以减少载入的 JavaScript 数量。
 
 ```js
 function anonymous(locals) {
-  var attrs = jade.attrs, escape = jade.escape;
+  var attrs = pug.attrs, escape = pug.escape;
   var buf = [];
   with (locals || {}) {
     var interp;
@@ -1185,16 +1185,16 @@ function anonymous(locals) {
 <a name="a16"/>
 ##  Makefile 的一个例子
 
-通过执行 `make`， 下面的 Makefile 例子可以把 `pages/*.jade` 编译为 `pages/*.html` 。
+通过执行 `make`， 下面的 Makefile 例子可以把 `pages/*.pug` 编译为 `pages/*.html` 。
  
 ```make
-JADE = $(shell find pages/*.jade)
-HTML = $(JADE:.jade=.html)
+PUG = $(shell find pages/*.pug)
+HTML = $(PUG:.pug=.html)
 
 all: $(HTML)
 	
-%.html: %.jade
-	jade < $< --path $< > $@
+%.html: %.pug
+	pug < $< --path $< > $@
 
 clean:
 	rm -f $(HTML)
@@ -1209,11 +1209,11 @@ $ watch make
 ```
 
 <a name="a17"/>
-## 命令行的 Jade
+## 命令行的 Pug
 
 ```
 
-使用: jade [options] [dir|file ...]
+使用: pug [options] [dir|file ...]
 
 选项:
 
@@ -1230,22 +1230,22 @@ $ watch make
 Examples:
 
   # 编译整个目录
-  $ jade templates
+  $ pug templates
 
   # 生成 {foo,bar}.html
-  $ jade {foo,bar}.jade
+  $ pug {foo,bar}.pug
 
-  # 在标准IO下使用jade 
-  $ jade < my.jade > my.html
+  # 在标准IO下使用pug 
+  $ pug < my.pug > my.html
 
-  # 在标准IO下使用jade, 同时指定用于查找包含的文件
-  $ jade < my.jade -p my.jade > my.html
+  # 在标准IO下使用pug, 同时指定用于查找包含的文件
+  $ pug < my.pug -p my.pug > my.html
 
-  # 在标准IO下使用jade 
-  $ echo "h1 Jade!" | jade
+  # 在标准IO下使用pug 
+  $ echo "h1 Pug!" | pug
 
   # foo, bar 目录渲染到 /tmp
-  $ jade foo bar --out /tmp 
+  $ pug foo bar --out /tmp 
 
 ```
 
@@ -1254,9 +1254,9 @@ Examples:
 <a name="a18"/>
 ## 教程
 
-  - cssdeck interactive [Jade syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
-  - cssdeck interactive [Jade logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
-  - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bjade%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
+  - cssdeck interactive [Pug syntax tutorial](http://cssdeck.com/labs/learning-the-pug-templating-engine-syntax)
+  - cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/pug-templating-tutorial-codecast-part-2)
+  - in [Japanese](http://blog.craftgear.net/4f501e97c1347ec934000001/title/10%E5%88%86%E3%81%A7%E3%82%8F%E3%81%8B%E3%82%8Bpug%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3)
 
 <a name="a19"/>
 ## License 

@@ -1,0 +1,65 @@
+extends ../reference.pug
+
+block documentation
+  h1 Tags
+
+  p By default, text at the start of a line (or after only white space) represents an html tag.  Indented tags are nested, creating the tree like structure of html.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          ul
+            li Item A
+            li Item B
+            li Item C
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>Item A</li>
+            <li>Item B</li>
+            <li>Item C</li>
+          </ul>
+
+  p Pug also knows which elements are self closing:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          img
+    .col-lg-6
+      +html
+        :htmlsrc
+          <img/>
+
+  h2 Block Expansion
+
+  p To save space, Pug provides an inline syntax for nested tags.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          a: img
+    .col-lg-6
+      +html
+        :htmlsrc
+          <a><img/></a>
+
+  h2 Self Closing Tags
+
+  p Tags such as #[code img], #[code meta], #[code link] and so on are automatically self-closing (unless you use the xml doctype).  You can also explicitly self close a tag by simply appending the #[code /] character.  Only do this if you know what you're doing.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          foo/
+          foo(bar='baz')/
+    .col-lg-6
+      +html
+        :htmlsrc
+          <foo/>
+          <foo bar="baz"/>

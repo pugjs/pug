@@ -1,0 +1,37 @@
+extends ./layout.pug
+
+block content
+  mixin link(name)
+    - var id = name.replace(/ /g, '-')
+    li(class=(id === currentDocumentation ? 'active' : false))
+      a(href=path('/reference/' + id))= name
+  .row
+    .col-md-2
+      ul.nav.nav-pills.nav-stacked
+        +link('attributes')
+        +link('case')
+        +link('code')
+        +link('comments')
+        +link('conditionals')
+        +link('doctype')
+        +link('extends')
+        +link('filters')
+        +link('includes')
+        +link('inheritance')
+        +link('interpolation')
+        +link('iteration')
+        +link('mixins')
+        +link('plain text')
+        +link('tags')
+    .col-md-10
+      block documentation
+        h1 Language Reference
+        p.
+          Pug is a terse language for writing HTML templates.
+        ul
+          li Produces HTML
+          li Supports dynamic code
+          li Supports reusability (DRY)
+        p.
+          To read about the features of the language, select them from
+          the navigation menu on the left.

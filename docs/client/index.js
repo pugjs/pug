@@ -7,9 +7,9 @@ if (!(typeof Function.prototype.bind === 'function' && typeof Array.isArray === 
 
 var CodeMirror = require('code-mirror');
 require('code-mirror/mode/htmlmixed');
-require('jade-code-mirror');
+require('pug-code-mirror');
 var uglify = require('uglify-js')
-var jade = require('../../')
+var pug = require('../../')
 
 function $(selector, parent) {
   return Array.prototype.slice.call((parent || document).querySelectorAll(selector));
@@ -76,22 +76,22 @@ function checkFeature(control) {
 
 $('[data-control="interactive"]').forEach(function (control) {
   if (!checkFeature(control)) return;
-  var jade = _('[data-control="input-jade"]', control);
-  var js = _('[data-control="input-js"]', control) || {textContent: '{ pageTitle: "Jade", youAreUsingJade: true }'};
+  var pug = _('[data-control="input-pug"]', control);
+  var js = _('[data-control="input-js"]', control) || {textContent: '{ pageTitle: "Pug", youAreUsingPug: true }'};
   var html = _('[data-control="output-html"]', control) || {};
   var jsOut = _('[data-control="output-js"]', control) || {};
   var editable = false;
   if (editable) return;
   editable = true;
-  handleChanges(cm(jade, 'jade'), cm(js, 'javascript'), cm(html, 'htmlmixed', true), cm(jsOut, 'javascript', true));
+  handleChanges(cm(pug, 'pug'), cm(js, 'javascript'), cm(html, 'htmlmixed', true), cm(jsOut, 'javascript', true));
 });
 
-function handleChanges(jadeInput, js, html, jsOut) {
-  jadeInput.on('change', update);
+function handleChanges(pugInput, js, html, jsOut) {
+  pugInput.on('change', update);
   js.on('change', update);
   update();
   function update() {
-    var jadeSrc = jadeInput.getValue();
+    var pugSrc = pugInput.getValue();
     var jsSrc = js.getValue();
     
     var jsObjA, jsObjB, jsObjC;
@@ -100,9 +100,9 @@ function handleChanges(jadeInput, js, html, jsOut) {
       jsObjB = Function('', 'return ' + js.getValue())() || {};
       jsObjC = Function('', 'return ' + js.getValue())() || {};
       if (jsObjA.compileDebug === undefined) jsObjA.compileDebug = true;
-      jade.compileClient(jadeSrc, jsObjA);
+      pug.compileClient(pugSrc, jsObjA);
       if (jsObjB.compileDebug === undefined) jsObjB.compileDebug = false;
-      var jsOutSrc = jade.compileClient(jadeSrc, jsObjB);
+      var jsOutSrc = pug.compileClient(pugSrc, jsObjB);
       try {
         jsOutSrc = uglify.minify(jsOutSrc, {
           fromString: true,
@@ -120,7 +120,7 @@ function handleChanges(jadeInput, js, html, jsOut) {
     try {
       if (jsObjC.compileDebug === undefined) jsObjC.compileDebug = true;
       if (jsObjC.pretty === undefined) jsObjC.pretty = true;
-      var htmlOutSrc = jade.render(jadeSrc, jsObjC);
+      var htmlOutSrc = pug.render(pugSrc, jsObjC);
       html.setValue(htmlOutSrc.trim());
     } catch (ex) {
       html.setValue(ex.message || ex);

@@ -3,9 +3,9 @@
  * Module dependencies.
  */
 
-var jade = require('../');
+var pug = require('../');
 
-jade.renderFile(__dirname + '/layout.jade', { debug: true }, function(err, html){
+pug.renderFile(__dirname + '/layout.pug', { debug: true }, function(err, html){
     if (err) throw err;
     console.log(html);
 });

@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var jade = require('../');
+var pug = require('../');
 
 var locals = {
   users: {
@@ -12,5 +12,5 @@ var locals = {
   }
 };
 
-var fn = jade.compileFile(__dirname + '/dynamicscript.jade');
+var fn = pug.compileFile(__dirname + '/dynamicscript.pug');
 console.log(fn(locals));

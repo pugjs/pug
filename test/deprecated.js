@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 var util = require('util');
-var jade = require('../');
+var pug = require('../');
 
 function deprecate(name, fn, regex) {
   it(name, function () {
@@ -27,6 +27,6 @@ function deprecate(name, fn, regex) {
 
 describe('warnings that will become errors', function () {
   deprecate('block that is never actually used', function () {
-    jade.renderFile(__dirname + '/fixtures/invalid-block-in-extends.jade');
+    pug.renderFile(__dirname + '/fixtures/invalid-block-in-extends.pug');
   }, /Warning\: Unexpected block .* on line.*of.*This warning will be an error in v2\.0\.0/);
 });

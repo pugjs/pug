@@ -1,0 +1,124 @@
+extends ../reference.pug
+
+block documentation
+  .row
+    .col-lg-8.col-lg-offset-2
+      .panel.panel-info
+        .panel-heading Hey!
+        .panel-body
+          p.
+            The Pug source code displayed in this, and many of the other pages
+            in these docs, is interactive. Edit it and see what happens!
+
+  h1 Interpolation
+
+  p.
+    Pug provides operators for a variety of your different interpolative
+    needs.
+
+  h2 String Interpolation, Escaped
+
+  p.
+    Consider the placement of the template locals #[code title], #[code author],
+    and #[code theGreat] in the following template.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          - var title = "On Dogs: Man's Best Friend";
+          - var author = "enlore";
+          - var theGreat = "<span>escape!</span>";
+
+          h1= title
+          p Written with love by \#{author}
+          p This will be safe: \#{theGreat}
+
+    .col-lg-6
+      +html
+        :htmlsrc
+          <h1>On Dogs: Man's Best Friend</h1>
+          <p>Written with love by enlore</p>
+          <p>This will be safe: &lt;span&gt;escape!&lt;/span&gt;</p>
+
+  p.
+    #[code title] follows the basic pattern for evaluating a template local,
+    but the code in between <code>\#{</code> and <code>}</code> is evaluated,
+    escaped, and the result buffered into the output of the template being
+    rendered.
+
+  p.
+    This can be any valid Javascript expression, so you can do whatever feels good.
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          - var msg = "not my inside voice";
+          p This is \#{msg.toUpperCase()}
+
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>This is NOT MY INSIDE VOICE</p>
+
+  h2 String Interpolation, Unescaped
+
+  p.
+    You don't have to play it safe. You can buffer unescaped values into your
+    templates, too.
+
+  .row(data-control="interactive")
+    .col-lg-6
+      +pug
+        :pugsrc
+          - var riskyBusiness = "<em>Some of the girls are wearing my mother's clothing.</em>";
+          .quote
+            p Joel: \!{riskyBusiness}
+
+    .col-lg-6
+      +html
+        :htmlsrc
+          <div class="quote">
+            <p>Joel: <em>Some of the girls are wearing my mother's clothing.</em></p>
+          </div>
+
+  .row
+    .col-lg-8.col-lg-offset-2
+      .panel.panel-danger
+        .panel-heading Danger
+        .panel-body
+          p.
+            Keep in mind that buffering unescaped content into your templates
+            can be mighty risky if that content comes fresh from your users.
+            Never trust user input!
+
+  h2 Tag Interpolation
+
+  p.
+    If you take a look at this page's source #[a(target="_blank", href="https://github.com/pugjs/pug/blob/master/docs/views/reference/interpolation.pug") on GitHub], you'll see
+    several places where the tag interpolation operator is used, like so.
+
+  .row(data-control="interactive")
+    .col-lg-6
+      +pug
+        :pugsrc
+          p.
+            If you take a look at this page's source \#[a(target="_blank", href="https://github.com/pugjs/pug/blob/master/docs/views/reference/interpolation.pug") on GitHub],
+            you'll see several places where the tag interpolation operator is
+            used, like so.
+
+
+    .col-lg-6
+      +html
+        :htmlsrc
+          <p>If you take a look at this page's source <a href="https://github.com/pugjs/pug/blob/master/docs/views/reference/interpolation.pug">on GitHub</a>,
+            you'll see several places where the tag interpolation operator is
+            used, like so.
+          </p>
+
+  p.
+    You could accomplish the same thing by writing an HTML tag inline with your
+    Pug, but then what's the point of writing the Pug? Wrap an inline Pug
+    tag declaration in <code>\#[</code> and <code>]</code> and it'll be evaluated
+    and buffered into the content of its containing tag.

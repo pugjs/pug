@@ -1,0 +1,11 @@
+
+extends extend-layout.pug
+
+block scripts
+  script(src='/jquery.js')
+  script(src='/pets.js')
+
+block content
+  h1= title
+  each pet in pets
+    include pet.pug

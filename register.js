@@ -1,13 +1,13 @@
-var jade = require('./');
-var resolvedJade = require.resolve('./');
+var pug = require('./');
+var resolvedPug = require.resolve('./');
 
 function compileTemplate(module, filename) {
-  var template = jade.compileFileClient(filename, {inlineRuntimeFunctions: false});
-  var body = "var jade = require('" + resolvedJade + "').runtime;\n\n" +
+  var template = pug.compileFileClient(filename, {inlineRuntimeFunctions: false});
+  var body = "var pug = require('" + resolvedPug + "').runtime;\n\n" +
              "module.exports = " + template + ";";
   module._compile(body, filename);
 }
 
 if (require.extensions) {
-  require.extensions['.jade'] = compileTemplate
+  require.extensions['.pug'] = compileTemplate
 };

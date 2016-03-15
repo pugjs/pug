@@ -23,7 +23,7 @@ compiledWebsite.then(function () {
       content: fs.readFileSync(info.fullPath)
     };
   });
-  return pr.commit('jadejs', 'jade', {
+  return pr.commit('pugjs', 'pug', {
     branch: 'gh-pages',
     message: 'Update website for ' + version,
     updates: fileUpdates

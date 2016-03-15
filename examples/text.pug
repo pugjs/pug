@@ -1,0 +1,36 @@
+| An example of an
+a(href='#') inline
+| link.
+
+form
+  label Username:
+    input(type='text', name='user[name]')
+    p
+      | Just an example of some text usage.
+      | You can have <em>inline</em> html,
+      | as well as
+      strong tags
+      | .
+
+      | Interpolation is also supported. The 
+      | username is currently "#{name}".
+
+  label Email:
+    input(type='text', name='user[email]')
+    p
+      | Email is currently
+      em= email
+      | .
+
+  // alternatively, if we plan on having only
+  // text or inline-html, we can use a trailing
+  // "." to let pug know we want to omit pipes
+  
+  label Username:
+    input(type='text')
+    p.
+      Just an example, like before
+      however now we can omit those
+      annoying pipes!.
+      
+      Wahoo.

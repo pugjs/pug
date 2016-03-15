@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var jade = require('../');
+var pug = require('../');
 
 describe('examples', function () {
   fs.readdirSync(__dirname + '/../examples').forEach(function (example) {

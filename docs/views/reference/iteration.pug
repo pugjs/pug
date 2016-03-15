@@ -1,0 +1,127 @@
+extends ../reference.pug
+
+block documentation
+  h1 Iteration
+
+  p Pug supports two primary methods of iteration, #[code each] and #[code while].
+
+  h2 each
+
+  p.
+    Pug's first-class iteration syntax makes it easier to iterate over
+    arrays and objects within a template:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          ul
+            each val in [1, 2, 3, 4, 5]
+              li= val
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+          </ul>
+
+  p You can also get the index as you iterate:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          ul
+            each val, index in ['zero', 'one', 'two']
+              li= index + ': ' + val
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>0: zero</li>
+            <li>1: one</li>
+            <li>2: two</li>
+          </ul>
+
+  p Pug also lets you iterate over the keys in an object:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          ul
+            each val, index in {1:'one',2:'two',3:'three'}
+              li= index + ': ' + val
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>1: one</li>
+            <li>2: two</li>
+            <li>3: three</li>
+          </ul>
+
+  p The object or array to iterate over is just plain JavaScript so it can be a variable or the result of a function call or almost anything else.  e.g.
+
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          - var values = [];
+          ul
+            each val in values.length ? values : ['There are no values']
+              li= val
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>There are no values</li>
+          </ul>
+
+  p One can also add an #[code else] block that will be executed if the array or object does not contain values to be iterated over. The following is equivalent to the example above:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          - var values = [];
+          ul
+            each val in values
+              li= val
+            else
+              li There are no values
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>There are no values</li>
+          </ul>
+
+  p You can also use #[code for] as an alias of #[code each].
+
+  h2 while
+
+  p You can also use #[code while] to create a loop:
+
+  .row(data-control='interactive')
+    .col-lg-6
+      +pug
+        :pugsrc
+          - var n = 0
+          ul
+            while n < 4
+              li= n++
+    .col-lg-6
+      +html
+        :htmlsrc
+          <ul>
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
