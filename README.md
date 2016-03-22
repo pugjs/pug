@@ -125,28 +125,28 @@ $ pug --help
 
 Tutorials:
 
-  - cssdeck interactive [Pug syntax tutorial](http://cssdeck.com/labs/learning-the-pug-templating-engine-syntax)
-  - cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/pug-templating-tutorial-codecast-part-2)
+  - cssdeck interactive [Pug syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
+  - cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - [Pug について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
   - [Pug - 模板引擎](https://github.com/pugjs/pug/blob/master/Readme_zh-cn.md)
 
 Implementations in other languages:
 
-  - [php](https://github.com/kylekatarnls/pug-php)
+  - [php](https://github.com/kylekatarnls/jade-php)
   - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
-  - [python](https://github.com/SyrusAkbary/pypug)
-  - [java](https://github.com/neuland/pug4j)
+  - [python](https://github.com/SyrusAkbary/pyjade)
+  - [java](https://github.com/neuland/jade4j)
 
 Other:
 
-  - [Emacs Mode](https://github.com/brianc/pug-mode)
+  - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
-  - [TextMate Bundle](http://github.com/miksago/pug-tmbundle)
-  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/pug.mode)
-  - [html2pug](https://github.com/donpark/html2pug) converter
-  - [pug2php](https://github.com/SE7ENSKY/pug2php) converter
-  - [Pug Server](https://github.com/ded/pug-server)  Ideal for building local prototypes apart from any application
+  - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
+  - [html2pug](https://github.com/donpark/html2jade) converter
+  - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
+  - [Pug Server](https://github.com/ded/jade-server)  Ideal for building local prototypes apart from any application
 
 ## License
 
