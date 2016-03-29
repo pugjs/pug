@@ -29,7 +29,7 @@
     "constantinople": "~3.0.1",
     "jstransformer": "0.0.2",
     "mkdirp": "~0.5.0",
-    "transformers": "2.1.0",
+    "transformers": "3.1.0",
     "uglify-js": "^2.4.19",
     "void-elements": "~2.0.1",
     "with": "~4.0.0"
