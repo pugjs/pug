@@ -9,7 +9,7 @@ var pug = require('../');
 var uglify = require('uglify-js');
 
 var filters = {
-  ['custom-filter']: function (str, options) {
+  'custom-filter': function (str, options) {
     assert(str === 'foo bar');
     assert(options.foo === 'bar');
     return 'bar baz';
