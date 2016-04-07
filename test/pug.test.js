@@ -17,12 +17,6 @@ try {
 
 describe('pug', function(){
 
-  describe('.properties', function(){
-    it('should have exports', function(){
-      assert.equal('object', typeof pug.filters, 'exports.filters missing');
-    });
-  });
-
   describe('unit tests with .render()', function(){
     it('should support doctypes', function(){
       assert.equal('<?xml version="1.0" encoding="utf-8" ?>', pug.render('doctype xml'));
@@ -1096,8 +1090,10 @@ describe('pug', function(){
 
   describe('filter indentation', function () {
     it('is maintained', function () {
-      pug.filters.indents = function(str){
-        return str.split(/\n/).map(function (line) { return line.match(/^ */)[0].length; }).join(",");
+      var filters = {
+        indents: function(str){
+          return str.split(/\n/).map(function (line) { return line.match(/^ */)[0].length; }).join(",");
+        }
       };
 
       var indents = [
@@ -1119,7 +1115,7 @@ describe('pug', function(){
         '   x'
       ].join('\n');
 
-      assert.equal(pug.render(indents), '0,1,2,3,0,4,4,3,3,4,2,0,2,0,1');
+      assert.equal(pug.render(indents, {filters: filters}), '0,1,2,3,0,4,4,3,3,4,2,0,2,0,1');
     });
   });
 

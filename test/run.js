@@ -8,10 +8,12 @@ var assert = require('assert');
 var pug = require('../');
 var uglify = require('uglify-js');
 
-pug.filters['custom-filter'] = function (str, options) {
-  assert(str === 'foo bar');
-  assert(options.foo === 'bar');
-  return 'bar baz';
+var filters = {
+  'custom-filter': function (str, options) {
+    assert(str === 'foo bar');
+    assert(options.foo === 'bar');
+    return 'bar baz';
+  }
 };
 
 // test cases
@@ -34,7 +36,12 @@ cases.forEach(function(test){
   it(name, function(){
     var path = 'test/cases/' + test + '.pug';
     var str = fs.readFileSync(path, 'utf8');
-    var fn = pug.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
+    var fn = pug.compile(str, {
+      filename: path,
+      pretty: true,
+      basedir: 'test/cases',
+      filters: filters
+    });
     var actual = fn({ title: 'Pug' });
 
     fs.writeFileSync(__dirname + '/output/' + test + '.html', actual);
@@ -44,19 +51,22 @@ cases.forEach(function(test){
       filename: path,
       pretty: true,
       compileDebug: false,
-      basedir: 'test/cases'
+      basedir: 'test/cases',
+      filters: filters
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
     var clientCodeDebug = uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: true,
-      basedir: 'test/cases'
+      basedir: 'test/cases',
+      filters: filters
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
     fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
-      basedir: 'test/cases'
+      basedir: 'test/cases',
+      filters: filters
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code);
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '');
@@ -95,7 +105,12 @@ describe('certain syntax is not allowed and will throw a compile time error', fu
       var path = 'test/anti-cases/' + test + '.pug';
       var str = fs.readFileSync(path, 'utf8');
       try {
-        var fn = pug.compile(str, { filename: path, pretty: true, basedir: 'test/anti-cases' });
+        var fn = pug.compile(str, {
+          filename: path,
+          pretty: true,
+          basedir: 'test/anti-cases',
+          filters: filters
+        });
       } catch (ex) {
         assert(ex instanceof Error, 'Should throw a real Error');
         assert(ex.code.indexOf('PUG:') === 0, 'It should have a code of "PUG:SOMETHING"');
