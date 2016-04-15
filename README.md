@@ -112,7 +112,7 @@ which will produce `filename.js` containing the compiled template.
 After installing the latest version of [node](http://nodejs.org/), install with:
 
 ```console
-$ npm install pug -g
+$ npm install pug-cli -g
 ```
 
 and run with
