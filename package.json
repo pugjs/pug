@@ -24,7 +24,7 @@
     "pug-filters": "1.1.1",
     "pug-lexer": "1.0.0",
     "pug-linker": "0.0.4",
-    "pug-loader": "1.0.0",
+    "pug-loader": "1.0.2",
     "pug-parser": "1.0.0",
     "pug-runtime": "2.0.0",
     "pug-strip-comments": "0.0.1"
