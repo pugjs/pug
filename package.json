@@ -59,7 +59,7 @@
     "stop": "^3.0.0-rc1",
     "stylus": "*",
     "twbs": "0.0.6",
-    "uglify-js": "^2.6.1"
+    "uglify-js": "mishoo/UglifyJS2#eaf3911c3141a9b735e6e33c7147461d60c833c1"
   },
   "scripts": {
     "test": "mocha -R spec",
