@@ -1,6 +1,8 @@
-# [![Pug - Node Template Engine](http://garthdb.com/img/pug_branding/pug-01.svg)](http://pug-lang.com/)
+# [![Pug - Node Template Engine](https://cdn.rawgit.com/pugjs/pug-logo/3ea2d3a86c6227020dd5b20743a5aa458808ca4e/SVG/__pug-logo-colour-wide.svg)](http://jade-lang.com/)
 
-Full documentation is at [pug-lang.com](http://pug-lang.com/)
+> Pug has been recently re-named from Jade.  The website and documentation is still being updated, but if you're new to pug, you should install the pug package on npm.
+
+Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Pug is a high performance template engine heavily influenced by [Haml](http://haml.info/)
  and implemented with JavaScript for [node](http://nodejs.org) and browsers. For bug reports,
