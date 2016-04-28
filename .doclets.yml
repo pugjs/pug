@@ -1,0 +1,4 @@
+dir: lib
+articles:
+  - About: README.md
+  - History: History.md
