@@ -8,7 +8,7 @@ console.log('This module can be used during development\n' +
 
 var modules = [
   'pug-lexer',
-  'pug-loader',
+  'pug-load',
   'pug-parser',
   'pug-runtime',
   'pug-filters',
