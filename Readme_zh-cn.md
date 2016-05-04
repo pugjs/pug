@@ -6,7 +6,7 @@ Pug 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) �
 
 ## 声明
 
-**本文档已经非常过时了，所以很多例子都有可能无法使用。最新的范例可以在[官方英文文档](http://pug-lang.com/reference/)找到。**
+**本文档已经非常过时了，所以很多例子都有可能无法使用。最新的范例可以在[官方英文文档](http://jade-lang.com/reference/)找到。**
 
 从 Pug `v0.31.0` 开始放弃了对于 `<script>` 和 `<style>` 标签的平文本支持. 这个问题你可以在 `<script> <style>` 标签后加上 `.` 来解决.
 
@@ -16,7 +16,7 @@ Pug 是一个高性能的模板引擎，它深受 [Haml](http://haml-lang.com) �
 
 ## Test drive
 
-你可以在网上[试玩 Pug](http://naltatis.github.com/pug-syntax-docs).
+你可以在网上[试玩 Pug](http://jade-lang.com/).
 
 ## README 目录
 

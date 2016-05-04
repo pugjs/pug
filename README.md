@@ -9,7 +9,7 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
  feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
- You can test drive Pug online [here](http://naltatis.github.com/pug-syntax-docs).
+ You can test drive Pug online [here](http://jade-lang.com/).
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
  [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
@@ -71,11 +71,11 @@ becomes
 </html>
 ```
 
-The official [pug tutorial](http://pug-lang.com/tutorial/) is a great place to start.  While that (and the syntax documentation) is being finished, you can view some of the old documentation [here](https://github.com/pugjs/pug/blob/master/pug.md) and [here](https://github.com/pugjs/pug/blob/master/pug-language.md)
+The official [Pug tutorial](http://jade-lang.com/tutorial/) is a great place to start.
 
 ## API
 
-For full API, see [pug-lang.com/api](http://pug-lang.com/api/)
+For full API, see [jade-lang.com/api](http://jade-lang.com/api/)
 
 ```js
 var pug = require('pug');
