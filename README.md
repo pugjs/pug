@@ -135,7 +135,7 @@ Tutorials:
 Implementations in other languages:
 
   - [php](https://github.com/kylekatarnls/jade-php)
-  - [scala](http://scalate.fusesource.org/versions/snapshot/documentation/scaml-reference.html)
+  - [scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
   - [java](https://github.com/neuland/jade4j)
