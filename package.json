@@ -22,10 +22,10 @@
   "dependencies": {
     "pug-code-gen": "0.0.7",
     "pug-filters": "^1.2.1",
-    "pug-lexer": "^1.0.1",
+    "pug-lexer": "^2.0.0",
     "pug-linker": "0.0.4",
-    "pug-load": "^1.0.3",
-    "pug-parser": "^1.0.0",
+    "pug-load": "https://github.com/pugjs/pug-load/archive/ab666ce8999913363465e7d6c0ea2eb4b486631d.tar.gz",
+    "pug-parser": "^2.0.0",
     "pug-runtime": "^2.0.1",
     "pug-strip-comments": "0.0.1"
   },
