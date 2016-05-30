@@ -1,7 +1,5 @@
 # [![Pug - Node Template Engine](https://cdn.rawgit.com/pugjs/pug-logo/3ea2d3a86c6227020dd5b20743a5aa458808ca4e/SVG/__pug-logo-colour-wide.svg)](http://jade-lang.com/)
 
-> Pug has been recently re-named from Jade.  The website and documentation are still being updated, but if you're new to pug, you should install the pug package on npm.
-
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Pug is a high performance template engine heavily influenced by [Haml](http://haml.info/)
@@ -17,6 +15,16 @@ Full documentation is at [jade-lang.com](http://jade-lang.com/)
  [![devDependencies Status](https://img.shields.io/david/dev/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug#info=devDependencies)
  [![NPM version](https://img.shields.io/npm/v/pug.svg?style=flat)](https://www.npmjs.com/package/pug)
  [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/pugjs/pug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## Rename from "Jade"
+
+This project was formerly known as "Jade." However, it has been revealed to us that "Jade" is a registered trademark, and as a result a rename is needed. After some discussion among the maintainers, **"Pug"** has been chosen as the new name for this project. The next major version will carry "pug" as the package name.
+
+If your package or app currently uses `jade`, don't worry: we have secured permissions to continue to occupy that package name, although all new versions will be released under `pug`.
+
+Pug 2.0.0 is still under alpha stage, and there are several syntactic differences we have deprecated and removed. Such differences are documented at [#2305](https://github.com/pugjs/pug/issues/2305).
+
+The website and documentation for Pug are still being updated, but if you are new to Pug, you should get started with the new syntax and install the Pug package on npm.
 
 ## Installation
 
