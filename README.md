@@ -142,7 +142,7 @@ Tutorials:
 
 Implementations in other languages:
 
-  - [php](https://github.com/kylekatarnls/jade-php)
+  - [php](https://github.com/pug-php/pug)
   - [scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/SyrusAkbary/pyjade)
