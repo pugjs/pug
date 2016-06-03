@@ -85,6 +85,13 @@ describe('error reporting', function () {
         assert(/foo\(/.test(err.message))
       });
     });
+    describe('block that is never actually used', function () {
+      it('includes detail of where the error was thrown including the filename', function () {
+        var err = getFileError(__dirname + '/fixtures/invalid-block-in-extends.pug', {});
+        assert(/invalid-block-in-extends.pug:6/.test(err.message));
+        assert(/content/.test(err.message));
+      });
+    });
     describe('Unexpected character', function () {
       it('includes details of where the error was thrown', function () {
         var err = getError('ul?', {});

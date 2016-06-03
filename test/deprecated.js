@@ -13,7 +13,7 @@ function deprecate(name, fn, regex) {
     console.error = function (msg) { log += msg; };
     try {
       fn();
-      regex = regex || new RegExp(name + ' is deprecated and will be removed in v2.0.0');
+      regex = regex || new RegExp(name + ' is deprecated and will be removed in v3.0.0');
       assert(regex.test(log), 'Expected ' + JSON.stringify(log) + ' to match ' + util.inspect(regex));
     } catch (ex) {
       console.error = consoleError;
@@ -26,7 +26,4 @@ function deprecate(name, fn, regex) {
 }
 
 describe('warnings that will become errors', function () {
-  deprecate('block that is never actually used', function () {
-    pug.renderFile(__dirname + '/fixtures/invalid-block-in-extends.pug');
-  }, /Warning\: Unexpected block .* on line.*of.*This warning will be an error in v2\.0\.0/);
 });
