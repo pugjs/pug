@@ -7,6 +7,7 @@ var fs = require('fs');
 var assert = require('assert');
 var pug = require('../');
 var uglify = require('uglify-js');
+var mkdirp = require('mkdirp').sync;
 
 var filters = {
   'custom-filter': function (str, options) {
@@ -18,54 +19,56 @@ var filters = {
 
 // test cases
 
-var cases = fs.readdirSync('test/cases').filter(function(file){
-  return ~file.indexOf('.pug');
-}).map(function(file){
-  return file.replace('.pug', '');
-});
-try {
-  fs.mkdirSync(__dirname + '/output');
-} catch (ex) {
-  if (ex.code !== 'EEXIST') {
-    throw ex;
-  }
+function findCases(dir) {
+  return fs.readdirSync(dir).filter(function(file){
+    return ~file.indexOf('.pug');
+  }).map(function(file){
+    return file.replace('.pug', '');
+  });
 }
 
-cases.forEach(function(test){
+var cases = findCases(__dirname + '/cases');
+var es2015 = findCases(__dirname + '/cases-es2015');
+var anti = findCases(__dirname + '/anti-cases');
+
+mkdirp(__dirname + '/output');
+mkdirp(__dirname + '/output-es2015');
+
+function testSingle(it, suffix, test){
   var name = test.replace(/[-.]/g, ' ');
   it(name, function(){
-    var path = 'test/cases/' + test + '.pug';
+    var path = 'test/cases' + suffix + '/' + test + '.pug';
     var str = fs.readFileSync(path, 'utf8');
     var fn = pug.compile(str, {
       filename: path,
       pretty: true,
-      basedir: 'test/cases',
+      basedir: 'test/cases' + suffix,
       filters: filters
     });
     var actual = fn({ title: 'Pug' });
 
-    fs.writeFileSync(__dirname + '/output/' + test + '.html', actual);
+    fs.writeFileSync(__dirname + '/output' + suffix + '/' + test + '.html', actual);
 
-    var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
+    var html = fs.readFileSync('test/cases' + suffix + '/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
     var clientCode = uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: false,
-      basedir: 'test/cases',
+      basedir: 'test/cases' + suffix,
       filters: filters
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
     var clientCodeDebug = uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: true,
-      basedir: 'test/cases',
+      basedir: 'test/cases' + suffix,
       filters: filters
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
-    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(pug.compileClient(str, {
+    fs.writeFileSync(__dirname + '/output' + suffix + '/' + test + '.js', uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
-      basedir: 'test/cases',
+      basedir: 'test/cases' + suffix,
       filters: filters
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code);
     if (/filter/.test(test)) {
@@ -88,14 +91,19 @@ cases.forEach(function(test){
     }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
   });
+}
+
+describe('test cases', function () {
+  cases.forEach(testSingle.bind(null, it, ''));
 });
 
-// test cases
-
-var anti = fs.readdirSync('test/anti-cases').filter(function(file){
-  return ~file.indexOf('.pug');
-}).map(function(file){
-  return file.replace('.pug', '');
+describe('test cases for ECMAScript 2015', function () {
+  try {
+    eval('``');
+    es2015.forEach(testSingle.bind(null, it, '-es2015'));
+  } catch (ex) {
+    es2015.forEach(testSingle.bind(null, it.skip, '-es2015'));
+  }
 });
 
 describe('certain syntax is not allowed and will throw a compile time error', function () {
