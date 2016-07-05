@@ -28,10 +28,26 @@ The website and documentation for Pug are still being updated, but if you are ne
 
 ## Installation
 
+### Package
+
 via npm:
 
 ```bash
 $ npm install pug
+```
+
+### Command Line
+
+After installing the latest version of [node](http://nodejs.org/), install with:
+
+```console
+$ npm install pug-cli -g
+```
+
+and run with
+
+```console
+$ pug --help
 ```
 
 ## Syntax
@@ -116,20 +132,6 @@ $ pug --client --no-debug filename.pug
 ```
 
 which will produce `filename.js` containing the compiled template.
-
-## Command Line
-
-After installing the latest version of [node](http://nodejs.org/), install with:
-
-```console
-$ npm install pug-cli -g
-```
-
-and run with
-
-```console
-$ pug --help
-```
 
 ## Additional Resources
 
