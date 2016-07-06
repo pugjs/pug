@@ -3,7 +3,7 @@
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Pug is a high performance template engine heavily influenced by [Haml](http://haml.info/)
- and implemented with JavaScript for [node](http://nodejs.org) and browsers. For bug reports,
+ and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. For bug reports,
  feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
@@ -38,7 +38,7 @@ $ npm install pug
 
 ### Command Line
 
-After installing the latest version of [node](http://nodejs.org/), install with:
+After installing the latest version of [Node.js](http://nodejs.org/), install with:
 
 ```bash
 $ npm install pug-cli -g
