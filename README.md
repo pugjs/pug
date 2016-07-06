@@ -40,13 +40,13 @@ $ npm install pug
 
 After installing the latest version of [node](http://nodejs.org/), install with:
 
-```console
+```bash
 $ npm install pug-cli -g
 ```
 
 and run with
 
-```console
+```bash
 $ pug --help
 ```
 
@@ -127,7 +127,7 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
 
  To compile a template for use on the client using the command line, do:
 
-```console
+```bash
 $ pug --client --no-debug filename.pug
 ```
 
