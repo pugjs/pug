@@ -3,7 +3,7 @@
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Pug is a high performance template engine heavily influenced by [Haml](http://haml.info/)
- and implemented with JavaScript for [node](http://nodejs.org) and browsers. For bug reports,
+ and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. For bug reports,
  feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
@@ -28,10 +28,26 @@ The website and documentation for Pug are still being updated, but if you are ne
 
 ## Installation
 
+### Package
+
 via npm:
 
 ```bash
 $ npm install pug
+```
+
+### Command Line
+
+After installing the latest version of [Node.js](http://nodejs.org/), install with:
+
+```bash
+$ npm install pug-cli -g
+```
+
+and run with
+
+```bash
+$ pug --help
 ```
 
 ## Syntax
@@ -111,25 +127,11 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
 
  To compile a template for use on the client using the command line, do:
 
-```console
+```bash
 $ pug --client --no-debug filename.pug
 ```
 
 which will produce `filename.js` containing the compiled template.
-
-## Command Line
-
-After installing the latest version of [node](http://nodejs.org/), install with:
-
-```console
-$ npm install pug-cli -g
-```
-
-and run with
-
-```console
-$ pug --help
-```
 
 ## Additional Resources
 
