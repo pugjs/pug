@@ -10,10 +10,10 @@ var uglify = require('uglify-js');
 var mkdirp = require('mkdirp').sync;
 
 var filters = {
-  'custom-filter': function (str, options) {
-    assert(str === 'foo bar');
-    assert(options.foo === 'bar');
-    return 'bar baz';
+  custom: function (str, options) {
+    assert(options.opt === 'val');
+    assert(options.num === 2);
+    return 'BEGIN' + str + 'END';
   }
 };
 
