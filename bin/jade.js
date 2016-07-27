@@ -10,6 +10,7 @@ var fs = require('fs')
   , basename = path.basename
   , dirname = path.dirname
   , resolve = path.resolve
+  , relative = path.relative
   , normalize = path.normalize
   , join = path.join
   , mkdirp = require('mkdirp')
