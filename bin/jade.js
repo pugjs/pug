@@ -254,7 +254,7 @@ function renderFile(path, rootPath) {
       // prepend output directory
       if (rootPath && program.hierarchy) {
         // replace the rootPath of the resolved path with output directory
-        path = resolve(path).replace(new RegExp('^' + resolve(rootPath)), '');
+        path = relative(rootPath, path);
         path = join(program.out, path);
       } else {
         if (rootPath && !hierarchyWarned) {
