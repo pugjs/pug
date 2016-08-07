@@ -99,6 +99,9 @@ function handleChanges(pugInput, js, html, jsOut) {
       jsObjA = Function('', 'return ' + js.getValue())() || {};
       jsObjB = Function('', 'return ' + js.getValue())() || {};
       jsObjC = Function('', 'return ' + js.getValue())() || {};
+      jsObjA.externalRuntime = true;
+      jsObjB.externalRuntime = true;
+      jsObjC.externalRuntime = true;
       if (jsObjA.compileDebug === undefined) jsObjA.compileDebug = true;
       pug.compileClient(pugSrc, jsObjA);
       if (jsObjB.compileDebug === undefined) jsObjB.compileDebug = false;
