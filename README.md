@@ -1,6 +1,8 @@
 <a href="http://jade-lang.com"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 # Pug
 
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/jadejs/jade?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Full documentation is at [jade-lang.com](http://jade-lang.com/)
 
  Pug is a high performance template engine heavily influenced by [Haml](http://haml.info/)
