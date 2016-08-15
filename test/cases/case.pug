@@ -12,3 +12,8 @@ html
         p you have very few friends
       default
         p you have #{friends} friends
+
+    - var friend = 'Tim:G'
+    case friend
+      when 'Tim:G':    p Friend is a string
+      when {tim: 'g'}: p Friend is an object
