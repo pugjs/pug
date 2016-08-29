@@ -1,14 +1,14 @@
-<a href="http://jade-lang.com"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
+<a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 # Pug
 
-Full documentation is at [jade-lang.com](http://jade-lang.com/)
+Full documentation is at [pugjs.org](https://pugjs.org/)
 
  Pug is a high performance template engine heavily influenced by [Haml](http://haml.info/)
  and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. For bug reports,
  feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
- You can test drive Pug online [here](http://jade-lang.com/).
+ You can test drive Pug online [here](https://pugjs.org/).
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
  [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
@@ -96,11 +96,9 @@ becomes
 </html>
 ```
 
-The official [Pug tutorial](http://jade-lang.com/tutorial/) is a great place to start.
-
 ## API
 
-For full API, see [jade-lang.com/api](http://jade-lang.com/api/)
+For full API, see [pugjs.org/api/reference.html](https://pugjs.org/api/reference.html)
 
 ```js
 var pug = require('pug');
