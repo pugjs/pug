@@ -151,6 +151,7 @@ Implementations in other languages:
 
 Other:
 
+  - [Larpug - Pug for Laravel](https://github.com/acidjazz/larpug)
   - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
