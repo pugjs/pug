@@ -143,6 +143,7 @@ Tutorials:
 
 Implementations in other languages:
 
+  - [Larpug - Pug for Laravel](https://github.com/acidjazz/larpug)
   - [php](https://github.com/pug-php/pug)
   - [scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
@@ -151,7 +152,6 @@ Implementations in other languages:
 
 Other:
 
-  - [Larpug - Pug for Laravel](https://github.com/acidjazz/larpug)
   - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
   - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
