@@ -8,12 +8,12 @@ html
           != myName
     pre(style='background: #ECECEC;width: 100%; min-height: 400px;')
       code#output
-    script(src='../../jade.js')
+    script(src='../../pug.js')
     script.
       var input = document.getElementById('input');
       var output = document.getElementById('output');
       setInterval(function () {
-        jade.render(input.value, {myName: 'Forbes Lindesay', pretty: true}, function (err, res) {
+        pug.render(input.value, {myName: 'Forbes Lindesay', pretty: true}, function (err, res) {
           if (err) throw err;
           output.textContent = res;
         })

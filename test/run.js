@@ -5,10 +5,10 @@
 
 var fs = require('fs');
 var assert = require('assert');
-var jade = require('../');
+var pug = require('../');
 var uglify = require('uglify-js');
 
-jade.filters['custom-filter'] = function (str, options) {
+pug.filters['custom-filter'] = function (str, options) {
   assert(str === 'foo bar');
   assert(options.foo === 'bar');
   return 'bar baz';
@@ -35,23 +35,23 @@ cases.forEach(function(test){
     var path = 'test/cases/' + test + '.jade';
     var str = fs.readFileSync(path, 'utf8');
     var html = fs.readFileSync('test/cases/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
-    var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
-    var actual = fn({ title: 'Jade' });
+    var fn = pug.compile(str, { filename: path, pretty: true, basedir: 'test/cases' });
+    var actual = fn({ title: 'Pug' });
 
     fs.writeFileSync(__dirname + '/output/' + test + '.html', actual);
-    var clientCode = uglify.minify(jade.compileClient(str, {
+    var clientCode = uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: false,
       basedir: 'test/cases'
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
-    var clientCodeDebug = uglify.minify(jade.compileClient(str, {
+    var clientCodeDebug = uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: true,
       basedir: 'test/cases'
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
-    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(jade.compileClient(str, {
+    fs.writeFileSync(__dirname + '/output/' + test + '.js', uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
@@ -62,16 +62,16 @@ cases.forEach(function(test){
       html = html.replace(/\n| /g, '');
     }
     if (/mixins-unused/.test(test)) {
-      assert(/never-called/.test(str), 'never-called is in the jade file for mixins-unused');
+      assert(/never-called/.test(str), 'never-called is in the pug file for mixins-unused');
       assert(!/never-called/.test(clientCode), 'never-called should be removed from the code');
     }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
-    actual = Function('jade', clientCode + '\nreturn template;')(jade.runtime)({ title: 'Jade' });
+    actual = Function('pug', clientCode + '\nreturn template;')(pug.runtime)({ title: 'Pug' });
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '');
     }
     JSON.stringify(actual.trim()).should.equal(JSON.stringify(html));
-    actual = Function('jade', clientCodeDebug + '\nreturn template;')(jade.runtime)({ title: 'Jade' });
+    actual = Function('pug', clientCodeDebug + '\nreturn template;')(pug.runtime)({ title: 'Pug' });
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '');
     }
@@ -94,7 +94,7 @@ describe('certain syntax is not allowed and will throw a compile time error', fu
       var path = 'test/anti-cases/' + test + '.jade';
       var str = fs.readFileSync(path, 'utf8');
       try {
-        var fn = jade.compile(str, { filename: path, pretty: true, basedir: 'test/anti-cases' });
+        var fn = pug.compile(str, { filename: path, pretty: true, basedir: 'test/anti-cases' });
       } catch (ex) {
         assert(ex instanceof Error, 'Should throw a real Error');
         assert(ex.message.replace(/\\/g, '/').indexOf(path) === 0, 'it should start with the path');

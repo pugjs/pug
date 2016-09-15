@@ -1,7 +1,7 @@
 {
-  "name": "jade",
+  "name": "pug",
   "description": "A clean, whitespace-sensitive template language for writing HTML",
-  "version": "1.11.0",
+  "version": "1.0.0",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
     "Forbes Lindesay <forbes@lindesay.co.uk>",
@@ -16,11 +16,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jadejs/jade"
+    "url": "git://github.com/pugjs/pug"
   },
   "main": "lib",
   "bin": {
-    "jade": "./bin/jade.js"
+    "pug": "./bin/pug.js"
   },
   "dependencies": {
     "character-parser": "1.2.1",
@@ -71,7 +71,7 @@
   },
   "component": {
     "scripts": {
-      "jade": "runtime.js"
+      "pug": "runtime.js"
     }
   },
   "scripts": {
@@ -83,12 +83,12 @@
     "prepublish": "npm prune && linify transform bin && npm run build",
     "build": "npm run compile",
     "compile": "npm run compile-full && npm run compile-runtime",
-    "compile-full": "browserify ./lib/index.js --standalone jade -x ./node_modules/transformers > jade.js",
+    "compile-full": "browserify ./lib/index.js --standalone pug -x ./node_modules/transformers > pug.js",
     "compile-runtime": "browserify ./lib/runtime.js --standalone jade > runtime.js"
   },
   "browser": {
     "fs": false,
     "./lib/filters.js": "./lib/filters-client.js"
   },
-  "homepage": "http://jade-lang.com"
+  "homepage": "https://pugjs.org"
 }

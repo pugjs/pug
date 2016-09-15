@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var jade = require('../')
+var pug = require('../')
   , assert = require('assert')
   , fs = require('fs');
 
@@ -11,7 +11,7 @@ var jade = require('../')
 
 function getError(str, options){
   try {
-    jade.render(str, options);
+    pug.render(str, options);
   } catch (ex) {
     return ex;
   }
@@ -19,7 +19,7 @@ function getError(str, options){
 }
 function getFileError(name, options){
   try {
-    jade.renderFile(name, options);
+    pug.renderFile(name, options);
   } catch (ex) {
     return ex;
   }
@@ -32,7 +32,7 @@ describe('error reporting', function () {
     describe('with no filename', function () {
       it('includes detail of where the error was thrown', function () {
         var err = getError('foo(')
-        assert(/Jade:1/.test(err.message))
+        assert(/Pug:1/.test(err.message))
         assert(/foo\(/.test(err.message))
       });
     });
@@ -102,7 +102,7 @@ describe('error reporting', function () {
     describe('mixin block followed by a lot of blank lines', function () {
       it('reports the correct line number', function () {
         var err = getError('mixin test\n    block\n\ndiv()Test');
-        var line = /Jade\:(\d+)/.exec(err.message);
+        var line = /Pug\:(\d+)/.exec(err.message);
         assert(line, 'Line number must be included in error message');
         assert(line[1] === '4', 'The error should be reported on line 4, not line ' + line[1]);
       });
@@ -120,7 +120,7 @@ describe('error reporting', function () {
       it('includes detail of where the error was thrown', function () {
         var sentinel = new Error('sentinel');
         var err = getError('-foo()', {foo: function () { throw sentinel; }, compileDebug: true})
-        assert(/Jade:1/.test(err.message))
+        assert(/Pug:1/.test(err.message))
         assert(/-foo\(\)/.test(err.message))
       });
     });
@@ -172,10 +172,10 @@ describe('error reporting', function () {
       console.warn = function (str) {
         log += str;
       };
-      var res = jade.renderFile(__dirname + '/fixtures/element-with-multiple-attributes.jade');
+      var res = pug.renderFile(__dirname + '/fixtures/element-with-multiple-attributes.jade');
       console.warn = consoleWarn;
       assert(/element-with-multiple-attributes.jade, line 1:/.test(log));
-      assert(/You should not have jade tags with multiple attributes/.test(log));
+      assert(/You should not have pug tags with multiple attributes/.test(log));
       assert(res === '<div attr="val" foo="bar"></div>');
     });
     it('warns about missing space at the start of a line', function () {
@@ -184,9 +184,9 @@ describe('error reporting', function () {
       console.warn = function (str) {
         log += str;
       };
-      var res = jade.render('%This line is plain text, but it should not be', {filename: 'foo.jade'});
+      var res = pug.render('%This line is plain text, but it should not be', {filename: 'foo.jade'});
       console.warn = consoleWarn;
-      assert(log === 'Warning: missing space before text for line 1 of jade file "foo.jade"');
+      assert(log === 'Warning: missing space before text for line 1 of pug file "foo.jade"');
       assert(res === '%This line is plain text, but it should not be');
     });
   });

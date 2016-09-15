@@ -13,9 +13,9 @@ var fs = require('fs')
   , normalize = path.normalize
   , join = path.join
   , mkdirp = require('mkdirp')
-  , jade = require('../');
+  , pug = require('../');
 
-// jade options
+// pug options
 
 var options = {};
 
@@ -41,20 +41,20 @@ program
 program.on('--help', function(){
   console.log('  Examples:');
   console.log('');
-  console.log('    # translate jade the templates dir');
-  console.log('    $ jade templates');
+  console.log('    # translate pug the templates dir');
+  console.log('    $ pug templates');
   console.log('');
   console.log('    # create {foo,bar}.html');
-  console.log('    $ jade {foo,bar}.jade');
+  console.log('    $ pug {foo,bar}.jade');
   console.log('');
-  console.log('    # jade over stdio');
-  console.log('    $ jade < my.jade > my.html');
+  console.log('    # pug over stdio');
+  console.log('    $ pug < my.jade > my.html');
   console.log('');
-  console.log('    # jade over stdio');
-  console.log('    $ echo \'h1 Jade!\' | jade');
+  console.log('    # pug over stdio');
+  console.log('    $ echo \'h1 Pug!\' | pug');
   console.log('');
   console.log('    # foo, bar dirs rendering to /tmp');
-  console.log('    $ jade foo bar --out /tmp ');
+  console.log('    $ pug foo bar --out /tmp ');
   console.log('');
 });
 
@@ -196,9 +196,9 @@ function stdin() {
   process.stdin.on('end', function(){
     var output;
     if (options.client) {
-      output = jade.compileClient(buf, options);
+      output = pug.compileClient(buf, options);
     } else {
-      var fn = jade.compile(buf, options);
+      var fn = pug.compile(buf, options);
       var output = fn(options);
     }
     process.stdout.write(output);
@@ -215,7 +215,7 @@ function stdin() {
 var hierarchyWarned = false;
 
 /**
- * Process the given path, compiling the jade files found.
+ * Process the given path, compiling the pug files found.
  * Always walk the subdirectories.
  *
  * @param path      path of the file, might be relative
@@ -225,7 +225,7 @@ var hierarchyWarned = false;
 function renderFile(path, rootPath) {
   var re = /\.jade$/;
   var stat = fs.lstatSync(path);
-  // Found jade file/\.jade$/
+  // Found pug file/\.jade$/
   if (stat.isFile() && re.test(path)) {
     // Try to watch the file if needed. watchFile takes care of duplicates.
     if (options.watch) watchFile(path, null, rootPath);
@@ -233,8 +233,8 @@ function renderFile(path, rootPath) {
       options.name = getNameFromFileName(path);
     }
     var fn = options.client
-           ? jade.compileFileClient(path, options)
-           : jade.compileFile(path, options);
+           ? pug.compileFileClient(path, options)
+           : pug.compileFile(path, options);
     if (options.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
       fn.dependencies.forEach(function (dep) {

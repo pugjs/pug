@@ -42,7 +42,9 @@ describe('merge(a, b, escaped)', function(){
 
 describe('DebugItem', function(){
   it('should instantiate objects with lineno and filename properties', function(){
-    new DebugItem(42, "/path/to/file")
-      .should.eql({ lineno: 42, filename: "/path/to/file" });
+    var resultObj = new DebugItem(42, "/path/to/file");
+
+    resultObj.should.have.property('lineno').which.is.equal(42);
+    resultObj.should.have.property('filename').which.is.equal("/path/to/file");
   })
 })

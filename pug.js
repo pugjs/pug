@@ -1,9 +1,9 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.jade = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pug = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
 'use strict';
 
 /*!
- * Jade
+ * Pug
  * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
  * MIT Licensed
  */
@@ -71,7 +71,7 @@ exports.Lexer = Lexer;
 exports.nodes = require('./nodes');
 
 /**
- * Jade runtime helpers.
+ * Pug runtime helpers.
  */
 
 exports.runtime = runtime;
@@ -136,16 +136,16 @@ function parse(str, options){
     globals = options.globals.slice();
   }
 
-  globals.push('jade');
-  globals.push('jade_mixins');
-  globals.push('jade_interp');
-  globals.push('jade_debug');
+  globals.push('pug');
+  globals.push('pug_mixins');
+  globals.push('pug_interp');
+  globals.push('pug_debug');
   globals.push('buf');
 
   var body = ''
     + 'var buf = [];\n'
-    + 'var jade_mixins = {};\n'
-    + 'var jade_interp;\n'
+    + 'var pug_mixins = {};\n'
+    + 'var pug_interp;\n'
     + (options.self
       ? 'var self = locals || {};\n' + js
       : addWith('locals || {}', '\n' + js, globals)) + ';'
@@ -207,21 +207,21 @@ exports.compile = function(str, options){
   var parsed = parse(str, options);
   if (options.compileDebug !== false) {
     fn = [
-        'var jade_debug = [ new jade.DebugItem( 1, ' + filename + ' ) ];'
+        'var pug_debug = [ new pug.DebugItem( 1, ' + filename + ' ) ];'
       , 'try {'
       , parsed.body
       , '} catch (err) {'
-      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno' + (options.compileDebug === true ? ',' + utils.stringify(str) : '') + ');'
+      , '  pug.rethrow(err, pug_debug[0].filename, pug_debug[0].lineno' + (options.compileDebug === true ? ',' + utils.stringify(str) : '') + ');'
       , '}'
     ].join('\n');
   } else {
     fn = parsed.body;
   }
-  fn = new Function('locals, jade', fn)
+  fn = new Function('locals, pug', fn)
   var res = function(locals){ return fn(locals, Object.create(runtime)) };
   if (options.client) {
     res.toString = function () {
-      var err = new Error('The `client` option is deprecated, use the `jade.compileClient` method instead');
+      var err = new Error('The `client` option is deprecated, use the `pug.compileClient` method instead');
       err.name = 'Warning';
       console.error(err.stack || /* istanbul ignore next */ err.message);
       return exports.compileClient(str, options);
@@ -232,7 +232,7 @@ exports.compile = function(str, options){
 };
 
 /**
- * Compile a JavaScript source representation of the given jade `str`.
+ * Compile a JavaScript source representation of the given pug `str`.
  *
  * Options:
  *
@@ -258,11 +258,11 @@ exports.compileClientWithDependenciesTracked = function(str, options){
   var parsed = parse(str, options);
   if (options.compileDebug) {
     fn = [
-        'var jade_debug = [ new jade.DebugItem( 1, ' + filename + ' ) ];'
+        'var pug_debug = [ new pug.DebugItem( 1, ' + filename + ' ) ];'
       , 'try {'
       , parsed.body
       , '} catch (err) {'
-      , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + utils.stringify(str) + ');'
+      , '  pug.rethrow(err, pug_debug[0].filename, pug_debug[0].lineno, ' + utils.stringify(str) + ');'
       , '}'
     ].join('\n');
   } else {
@@ -273,7 +273,7 @@ exports.compileClientWithDependenciesTracked = function(str, options){
 };
 
 /**
- * Compile a JavaScript source representation of the given jade `str`.
+ * Compile a JavaScript source representation of the given pug `str`.
  *
  * Options:
  *
@@ -433,10 +433,10 @@ var parseJSExpression = require('character-parser').parseMax;
 var constantinople = require('constantinople');
 
 function isConstant(src) {
-  return constantinople(src, {jade: runtime, 'jade_interp': undefined});
+  return constantinople(src, {pug: runtime, 'pug_interp': undefined});
 }
 function toConstant(src) {
-  return constantinople.toConstant(src, {jade: runtime, 'jade_interp': undefined});
+  return constantinople.toConstant(src, {pug: runtime, 'pug_interp': undefined});
 }
 function errorAtNode(node, error) {
   error.line = node.line;
@@ -484,7 +484,7 @@ Compiler.prototype = {
 
   compile: function(){
     this.buf = [];
-    if (this.pp) this.buf.push("var jade_indent = [];");
+    if (this.pp) this.buf.push("var pug_indent = [];");
     this.lastBufferedIdx = -1;
     this.visit(this.node);
     if (!this.dynamicMixins) {
@@ -540,7 +540,7 @@ Compiler.prototype = {
         } else {
           var rest = match[3];
           var range = parseJSExpression(rest);
-          var code = ('!' == match[2] ? '' : 'jade.escape') + "((jade_interp = " + range.src + ") == null ? '' : jade_interp)";
+          var code = ('!' == match[2] ? '' : 'pug.escape') + "((pug_interp = " + range.src + ") == null ? '' : pug_interp)";
           this.bufferExpression(code);
           this.buffer(rest.substr(range.end + 1), true);
           return;
@@ -604,7 +604,7 @@ Compiler.prototype = {
     newline = newline ? '\n' : '';
     this.buffer(newline + Array(this.indents + offset).join(this.pp));
     if (this.parentIndents)
-      this.buf.push("buf.push.apply(buf, jade_indent);");
+      this.buf.push("buf.push.apply(buf, pug_indent);");
   },
 
   /**
@@ -618,10 +618,10 @@ Compiler.prototype = {
     var debug = this.debug;
 
     if (debug) {
-      this.buf.push('jade_debug.unshift(new jade.DebugItem( ' + node.line
+      this.buf.push('pug_debug.unshift(new pug.DebugItem( ' + node.line
         + ', ' + (node.filename
           ? utils.stringify(node.filename)
-          : 'jade_debug[0].filename')
+          : 'pug_debug[0].filename')
         + ' ));');
     }
 
@@ -634,7 +634,7 @@ Compiler.prototype = {
 
     this.visitNode(node);
 
-    if (debug) this.buf.push('jade_debug.shift();');
+    if (debug) this.buf.push('pug_debug.shift();');
   },
 
   /**
@@ -730,9 +730,9 @@ Compiler.prototype = {
    */
 
   visitMixinBlock: function(block){
-    if (this.pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join(this.pp) + "');");
+    if (this.pp) this.buf.push("pug_indent.push('" + Array(this.indents + 1).join(this.pp) + "');");
     this.buf.push('block && block();');
-    if (this.pp) this.buf.push("jade_indent.pop();");
+    if (this.pp) this.buf.push("pug_indent.pop();");
   },
 
   /**
@@ -762,7 +762,7 @@ Compiler.prototype = {
    */
 
   visitMixin: function(mixin){
-    var name = 'jade_mixins[';
+    var name = 'pug_mixins[';
     var args = mixin.args || '';
     var block = mixin.block;
     var attrs = mixin.attrs;
@@ -776,7 +776,7 @@ Compiler.prototype = {
     this.mixins[key] = this.mixins[key] || {used: false, instances: []};
     if (mixin.call) {
       this.mixins[key].used = true;
-      if (pp) this.buf.push("jade_indent.push('" + Array(this.indents + 1).join(pp) + "');")
+      if (pp) this.buf.push("pug_indent.push('" + Array(this.indents + 1).join(pp) + "');")
       if (block || attrs.length || attrsBlocks.length) {
 
         this.buf.push(name + '.call({');
@@ -804,7 +804,7 @@ Compiler.prototype = {
             var val = this.attrs(attrs);
             attrsBlocks.unshift(val);
           }
-          this.buf.push('attributes: jade.merge([' + attrsBlocks.join(',') + '])');
+          this.buf.push('attributes: pug.merge([' + attrsBlocks.join(',') + '])');
         } else if (attrs.length) {
           var val = this.attrs(attrs);
           this.buf.push('attributes: ' + val);
@@ -819,7 +819,7 @@ Compiler.prototype = {
       } else {
         this.buf.push(name + '(' + args + ');');
       }
-      if (pp) this.buf.push("jade_indent.pop();")
+      if (pp) this.buf.push("pug_indent.pop();")
     } else {
       var mixin_start = this.buf.length;
       args = args ? args.split(',') : [];
@@ -829,12 +829,12 @@ Compiler.prototype = {
       }
       // we need use jade_interp here for v8: https://code.google.com/p/v8/issues/detail?id=4165
       // once fixed, use this: this.buf.push(name + ' = function(' + args.join(',') + '){');
-      this.buf.push(name + ' = jade_interp = function(' + args.join(',') + '){');
+      this.buf.push(name + ' = pug_interp = function(' + args.join(',') + '){');
       this.buf.push('var block = (this && this.block), attributes = (this && this.attributes) || {};');
       if (rest) {
         this.buf.push('var ' + rest + ' = [];');
-        this.buf.push('for (jade_interp = ' + args.length + '; jade_interp < arguments.length; jade_interp++) {');
-        this.buf.push('  ' + rest + '.push(arguments[jade_interp]);');
+        this.buf.push('for (pug_interp = ' + args.length + '; pug_interp < arguments.length; pug_interp++) {');
+        this.buf.push('  ' + rest + '.push(arguments[pug_interp]);');
         this.buf.push('}');
       }
       this.parentIndents++;
@@ -992,8 +992,8 @@ Compiler.prototype = {
     // Buffer code
     if (code.buffer) {
       var val = code.val.trim();
-      val = 'null == (jade_interp = '+val+') ? "" : jade_interp';
-      if (code.escape) val = 'jade.escape(' + val + ')';
+      val = 'null == (pug_interp = '+val+') ? "" : pug_interp';
+      if (code.escape) val = 'pug.escape(' + val + ')';
       this.bufferExpression(val);
     } else {
       this.buf.push(code.val);
@@ -1070,7 +1070,7 @@ Compiler.prototype = {
         var val = this.attrs(attrs);
         attributeBlocks.unshift(val);
       }
-      this.bufferExpression('jade.attrs(jade.merge([' + attributeBlocks.join(',') + ']), ' + utils.stringify(this.terse) + ')');
+      this.bufferExpression('pug.attrs(pug.merge([' + attributeBlocks.join(',') + ']), ' + utils.stringify(this.terse) + ')');
     } else if (attrs.length) {
       this.attrs(attrs, true);
     }
@@ -1105,16 +1105,16 @@ Compiler.prototype = {
         }
       } else {
         if (buffer) {
-          this.bufferExpression('jade.attr("' + key + '", ' + attr.val + ', ' + utils.stringify(escaped) + ', ' + utils.stringify(this.terse) + ')');
+          this.bufferExpression('pug.attr("' + key + '", ' + attr.val + ', ' + utils.stringify(escaped) + ', ' + utils.stringify(this.terse) + ')');
         } else {
           var val = attr.val;
           if (key === 'style') {
-            val = 'jade.style(' + val + ')';
+            val = 'pug.style(' + val + ')';
           }
           if (escaped && !(key.indexOf('data') === 0)) {
-            val = 'jade.escape(' + val + ')';
+            val = 'pug.escape(' + val + ')';
           } else if (escaped) {
-            val = '(typeof (jade_interp = ' + val + ') == "string" ? jade.escape(jade_interp) : jade_interp)';
+            val = '(typeof (pug_interp = ' + val + ') == "string" ? pug.escape(pug_interp) : pug_interp)';
           }
           buf.push(utils.stringify(key) + ': ' + val);
         }
@@ -1124,7 +1124,7 @@ Compiler.prototype = {
       if (classes.every(isConstant)) {
         this.buffer(runtime.cls(classes.map(toConstant), classEscaping));
       } else {
-        this.bufferExpression('jade.cls([' + classes.join(',') + '], ' + utils.stringify(classEscaping) + ')');
+        this.bufferExpression('pug.cls([' + classes.join(',') + '], ' + utils.stringify(classEscaping) + ')');
       }
     } else if (classes.length) {
       if (classes.every(isConstant)) {
@@ -1132,9 +1132,9 @@ Compiler.prototype = {
           return classEscaping[i] ? runtime.escape(cls) : cls;
         })));
       } else {
-        classes = '(jade_interp = ' + utils.stringify(classEscaping) + ',' +
-          ' jade.joinClasses([' + classes.join(',') + '].map(jade.joinClasses).map(function (cls, i) {' +
-          '   return jade_interp[i] ? jade.escape(cls) : cls' +
+        classes = '(pug_interp = ' + utils.stringify(classEscaping) + ',' +
+          ' pug.joinClasses([' + classes.join(',') + '].map(pug.joinClasses).map(function (cls, i) {' +
+          '   return pug_interp[i] ? pug.escape(cls) : cls' +
           ' }))' +
           ')';
       }
@@ -1417,7 +1417,7 @@ Lexer.prototype = {
         this.defer(this.tok(':'));
         if (this.input[0] !== ' ') {
           console.warn('Warning: space required after `:` on line ' + this.lineno +
-              ' of jade file "' + this.filename + '"');
+              ' of pug file "' + this.filename + '"');
         }
         while (' ' == this.input[0]) this.input = this.input.substr(1);
       } else {
@@ -1485,7 +1485,7 @@ Lexer.prototype = {
     var tok;
     if (tok = this.scan(/^([^\.\n][^\n]+)/, 'text')) {
       console.warn('Warning: missing space before text for line ' + this.lineno +
-          ' of jade file "' + this.filename + '"');
+          ' of pug file "' + this.filename + '"');
       return tok;
     }
   },
@@ -2075,7 +2075,7 @@ Lexer.prototype = {
     var res = this.scan(/^: */, ':');
     if (res && !good) {
       console.warn('Warning: space required after `:` on line ' + this.lineno +
-          ' of jade file "' + this.filename + '"');
+          ' of pug file "' + this.filename + '"');
     }
     return res;
   },
@@ -2469,7 +2469,7 @@ Comment.prototype.type = 'Comment';
 var Node = require('./node');
 
 /**
- * Initialize a `Doctype` with the given `val`. 
+ * Initialize a `Doctype` with the given `val`.
  *
  * @param {String} val
  * @api public
@@ -3365,7 +3365,7 @@ Parser.prototype = {
       return new nodes.Literal(str);
     }
 
-    // non-jade
+    // non-pug
     if ('.jade' != path.substr(-5)) {
       var str = fs.readFileSync(path, 'utf8').replace(/\r/g, '');
       return new nodes.Literal(str);
@@ -3795,21 +3795,21 @@ exports.attrs = function attrs(obj, terse){
  * @api private
  */
 
-var jade_encode_html_rules = {
+var pug_encode_html_rules = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
   '"': '&quot;'
 };
-var jade_match_html = /[&<>"]/g;
+var pug_match_html = /[&<>"]/g;
 
-function jade_encode_char(c) {
-  return jade_encode_html_rules[c] || c;
+function pug_encode_char(c) {
+  return pug_encode_html_rules[c] || c;
 }
 
-exports.escape = jade_escape;
-function jade_escape(html){
-  var result = String(html).replace(jade_match_html, jade_encode_char);
+exports.escape = pug_escape;
+function pug_escape(html){
+  var result = String(html).replace(pug_match_html, pug_encode_char);
   if (result === '' + html) return html;
   else return result;
 };
@@ -3851,7 +3851,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
 
   // Alter exception message
   err.path = filename;
-  err.message = (filename || 'Jade') + ':' + lineno
+  err.message = (filename || 'Pug') + ':' + lineno
     + '\n' + context + '\n\n' + err.message;
   throw err;
 };
@@ -4573,8 +4573,8 @@ module.exports.parse = reallyParse;
 function findGlobals(source) {
   var globals = [];
   var ast = typeof source === 'string' ?
-    ast = reallyParse(source) :
-    source;
+    reallyParse(source) : source;
+
   if (!(ast && typeof ast === 'object' && ast.type === 'Program')) {
     throw new TypeError('Source must be either a string of JavaScript or an acorn AST');
   }

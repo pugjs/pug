@@ -19,16 +19,16 @@ var isIstanbul = process.env.running_under_istanbul;
  * (cov-pt<covCount>/).
  */
 function getRunner() {
-  var jadeExe = __dirname + '/../bin/jade.js';
+  var pugExe = __dirname + '/../bin/pug.js';
 
-  if (!isIstanbul) return ['node', jadeExe];
+  if (!isIstanbul) return ['node', pugExe];
   else {
     return ['istanbul', 'cover',
             '--print',  'none',
             '--report', 'none',
             '--root',   process.cwd(),
             '--dir',    process.cwd() + '/cov-pt' + (covCount++),
-            jadeExe,
+            pugExe,
             '--'];
   }
 }
@@ -65,7 +65,7 @@ function timing(testCase) {
 
 describe('command line', function () {
   timing(this);
-  it('jade --version', function (done) {
+  it('pug --version', function (done) {
     run('-V', function (err, stdout) {
       if (err) done(err);
       assert.equal(stdout.trim(), require('../package.json').version);
@@ -76,7 +76,7 @@ describe('command line', function () {
       });
     });
   });
-  it('jade --help', function (done) {
+  it('pug --help', function (done) {
     // only check that it doesn't crash
     run('-h', function (err, stdout) {
       if (err) done(err);
@@ -90,7 +90,7 @@ describe('command line', function () {
 
 describe('command line with HTML output', function () {
   timing(this);
-  it('jade --no-debug input.jade', function (done) {
+  it('pug --no-debug input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
     run('--no-debug input.jade', function (err) {
@@ -100,7 +100,7 @@ describe('command line with HTML output', function () {
       done();
     });
   });
-  it('jade --no-debug -E special-html input.jade', function (done) {
+  it('pug --no-debug -E special-html input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.special-html', '<p>output not written</p>');
     run('--no-debug -E special-html input.jade', function (err) {
@@ -110,7 +110,7 @@ describe('command line with HTML output', function () {
       done();
     });
   });
-  it('jade --no-debug --obj "{\'loc\':\'str\'}" input.jade', function (done) {
+  it('pug --no-debug --obj "{\'loc\':\'str\'}" input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
     run('--no-debug --obj "{\'loc\':\'str\'}" input.jade', function (err) {
@@ -120,7 +120,7 @@ describe('command line with HTML output', function () {
       done();
     });
   });
-  it('jade --no-debug --obj "obj.json" input.jade', function (done) {
+  it('pug --no-debug --obj "obj.json" input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/obj.json', '{"loc":"str"}');
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo= loc');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
@@ -131,7 +131,7 @@ describe('command line with HTML output', function () {
       done();
     });
   });
-  it('cat input.jade | jade --no-debug', function (done) {
+  it('cat input.jade | pug --no-debug', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     run('--no-debug', 'cat input.jade | ', function (err, stdout, stderr) {
       if (err) return done(err);
@@ -139,7 +139,7 @@ describe('command line with HTML output', function () {
       done();
     });
   });
-  it('jade --no-debug --out outputs input.jade', function (done) {
+  it('pug --no-debug --out outputs input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.html', '<p>output not written</p>');
     run('--no-debug --out outputs input.jade', function (err) {
@@ -150,7 +150,7 @@ describe('command line with HTML output', function () {
     });
   });
   context('when input is directory', function () {
-    it('jade --no-debug --out outputs inputs', function (done) {
+    it('pug --no-debug --out outputs inputs', function (done) {
       fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar 1');
       fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input1-1.jade', '.foo bar 1-1');
       fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input1-2.jade', '.foo bar 1-2');
@@ -170,7 +170,7 @@ describe('command line with HTML output', function () {
         done();
       });
     });
-    it('jade --no-debug --hierarchy --out outputs inputs', function (done) {
+    it('pug --no-debug --hierarchy --out outputs inputs', function (done) {
       fs.writeFileSync(__dirname + '/temp/inputs/input.jade', '.foo bar 1');
       fs.writeFileSync(__dirname + '/temp/inputs/level-1-1/input.jade', '.foo bar 1-1');
       fs.writeFileSync(__dirname + '/temp/inputs/level-1-2/input.jade', '.foo bar 1-2');
@@ -193,7 +193,7 @@ describe('command line with HTML output', function () {
 
 describe('command line with client JS output', function () {
   timing(this);
-  it('jade --no-debug --client --name myTemplate input.jade', function (done) {
+  it('pug --no-debug --client --name myTemplate input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
     run('--no-debug --client --name myTemplate input.jade', function (err) {
@@ -203,7 +203,7 @@ describe('command line with client JS output', function () {
       done();
     });
   });
-  it('jade --no-debug --client -E special-js --name myTemplate input.jade', function (done) {
+  it('pug --no-debug --client -E special-js --name myTemplate input.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.special-js', 'throw new Error("output not written");');
     run('--no-debug --client -E special-js --name myTemplate input.jade', function (err) {
@@ -213,7 +213,7 @@ describe('command line with client JS output', function () {
       done();
     });
   });
-  it('cat input.jade | jade --no-debug --client --name myTemplate', function (done) {
+  it('cat input.jade | pug --no-debug --client --name myTemplate', function (done) {
     fs.writeFileSync(__dirname + '/temp/input.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input.js', 'throw new Error("output not written");');
     run('--no-debug --client --name myTemplate', 'cat input.jade | ', function (err, stdout) {
@@ -223,7 +223,7 @@ describe('command line with client JS output', function () {
       done();
     });
   });
-  it('jade --no-debug --client --name-after-file input-file.jade', function (done) {
+  it('pug --no-debug --client --name-after-file input-file.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written");');
     run('--no-debug --client --name-after-file input-file.jade', function (err, stdout, stderr) {
@@ -233,7 +233,7 @@ describe('command line with client JS output', function () {
       return done();
     });
   });
-  it('jade --no-debug --client --name-after-file _InPuTwIthWEiRdNaMME.jade', function (done) {
+  it('pug --no-debug --client --name-after-file _InPuTwIthWEiRdNaMME.jade', function (done) {
     fs.writeFileSync(__dirname + '/temp/_InPuTwIthWEiRdNaMME.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/_InPuTwIthWEiRdNaMME.js', 'throw new Error("output not written");');
     run('--no-debug --client --name-after-file _InPuTwIthWEiRdNaMME.jade', function (err, stdout, stderr) {
@@ -259,10 +259,10 @@ describe('command line watch mode', function () {
     watchProc.kill('SIGINT');
   });
   afterEach(function (done) {
-    // jade --watch can only detect changes that are at least 1 second apart
+    // pug --watch can only detect changes that are at least 1 second apart
     setTimeout(done, 1000);
   });
-  it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
+  it('pug --no-debug --client --name-after-file --watch input-file.jade (pass 1)', function (done) {
     timing(this);
     fs.writeFileSync(__dirname + '/temp/input-file.jade', '.foo bar');
     fs.writeFileSync(__dirname + '/temp/input-file.js', 'throw new Error("output not written (pass 1)");');
@@ -290,7 +290,7 @@ describe('command line watch mode', function () {
         }
       });
   });
-  it('jade --no-debug --client --name-after-file --watch input-file.jade (pass 2)', function (done) {
+  it('pug --no-debug --client --name-after-file --watch input-file.jade (pass 2)', function (done) {
     // Just to be sure
     watchProc.stdout.removeAllListeners('data');
     watchProc.removeAllListeners('error');
@@ -313,7 +313,7 @@ describe('command line watch mode', function () {
         }
       });
   });
-  it('jade --no-debug --client --name-after-file --watch input-file.jade (intentional errors in the jade file)', function (done) {
+  it('jade --no-debug --client --name-after-file --watch input-file.jade (intentional errors in the pug file)', function (done) {
     // Just to be sure
     watchProc.stdout.removeAllListeners('data');
     watchProc.removeAllListeners('error');
@@ -324,13 +324,13 @@ describe('command line watch mode', function () {
       .on('error', done)
       .on('close', function() {
         errored = true;
-        return done(new Error('Jade should not terminate in watch mode'));
+        return done(new Error('Pug should not terminate in watch mode'));
       })
       .stdout.on('data', function(buf) {
         stdout += buf;
         if (/.*rendered.*/.test(stdout)) {
           stdout = '';
-          return done(new Error('Jade compiles an erroneous file w/o error'));
+          return done(new Error('Pug compiles an erroneous file w/o error'));
         }
       })
     watchProc

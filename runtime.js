@@ -1,4 +1,4 @@
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.jade = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pug = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 /**
@@ -180,28 +180,28 @@ exports.attrs = function attrs(obj, terse){
  * @api private
  */
 
-var jade_encode_html_rules = {
+var pug_encode_html_rules = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
   '"': '&quot;'
 };
-var jade_match_html = /[&<>"]/g;
+var pug_match_html = /[&<>"]/g;
 
-function jade_encode_char(c) {
-  return jade_encode_html_rules[c] || c;
+function pug_encode_char(c) {
+  return pug_encode_html_rules[c] || c;
 }
 
-exports.escape = jade_escape;
-function jade_escape(html){
-  var result = String(html).replace(jade_match_html, jade_encode_char);
+exports.escape = pug_escape;
+function pug_escape(html){
+  var result = String(html).replace(pug_match_html, pug_encode_char);
   if (result === '' + html) return html;
   else return result;
 };
 
 /**
  * Re-throw the given `err` in context to the
- * the jade in `filename` at the given `lineno`.
+ * the pug in `filename` at the given `lineno`.
  *
  * @param {Error} err
  * @param {String} filename

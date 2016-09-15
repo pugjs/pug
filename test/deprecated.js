@@ -2,7 +2,7 @@
 
 var assert = require('assert');
 var util = require('util');
-var jade = require('../');
+var pug = require('../');
 
 function deprecate(name, fn, regex) {
   it(name, function () {
@@ -26,23 +26,23 @@ function deprecate(name, fn, regex) {
 }
 describe('deprecated functions', function () {
   deprecate('tag.clone', function () {
-    var tag = new jade.nodes.Tag();
+    var tag = new pug.nodes.Tag();
     tag.clone();
   });
   deprecate('node.clone', function () {
-    var code = new jade.nodes.Code('var x = 10');
+    var code = new pug.nodes.Code('var x = 10');
     code.clone();
   });
   deprecate('block.clone', function () {
-    var block = new jade.nodes.Block(new jade.nodes.Code('var x = 10'));
+    var block = new pug.nodes.Block(new pug.nodes.Code('var x = 10'));
     block.clone();
   });
   deprecate('block.replace', function () {
-    var block = new jade.nodes.Block(new jade.nodes.Code('var x = 10'));
+    var block = new pug.nodes.Block(new pug.nodes.Code('var x = 10'));
     block.replace({});
   });
   deprecate('attrs.removeAttribute', function () {
-    var tag = new jade.nodes.Tag('a');
+    var tag = new pug.nodes.Tag('a');
     tag.setAttribute('foo', 'value');
     tag.removeAttribute('href');
     assert(!tag.getAttribute('href'));
@@ -51,26 +51,26 @@ describe('deprecated functions', function () {
     assert(!tag.getAttribute('href'));
   });
   deprecate('attrs.getAttribute', function () {
-    var tag = new jade.nodes.Tag('a');
+    var tag = new pug.nodes.Tag('a');
     tag.setAttribute('href', 'value');
     assert(tag.getAttribute('href') === 'value');
   });
 });
 
 describe('deprecated options or local names', function () {
-  deprecate('jade.compile(str, {client: true})', function () {
-    var fn = jade.compile('div', {client: true});
-    var fn = Function('jade', fn.toString() + '\nreturn template;')(jade.runtime);
+  deprecate('pug.compile(str, {client: true})', function () {
+    var fn = pug.compile('div', {client: true});
+    var fn = Function('pug', fn.toString() + '\nreturn template;')(pug.runtime);
     assert(fn() === '<div></div>');
   }, /The `client` option is deprecated/);
-  deprecate('jade.render(str, {lexer: \'this is a local\'})', function () {
-    var str = jade.render('div', {lexer: 'this is a local'});
+  deprecate('pug.render(str, {lexer: \'this is a local\'})', function () {
+    var str = pug.render('div', {lexer: 'this is a local'});
     assert(str === '<div></div>');
   }, /Using `lexer` as a local in render\(\) is deprecated/);
 });
 
 describe('warnings that will become errors', function () {
   deprecate('block that is never actually used', function () {
-    jade.renderFile(__dirname + '/fixtures/invalid-block-in-extends.jade');
+    pug.renderFile(__dirname + '/fixtures/invalid-block-in-extends.jade');
   }, /Warning\: Unexpected block .* on line.*of.*This warning will be an error in v2\.0\.0/);
 });
