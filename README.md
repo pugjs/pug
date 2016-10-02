@@ -139,7 +139,6 @@ Tutorials:
   - cssdeck interactive [Pug syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
   - cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - [Pug について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
-  - [Pug - 模板引擎](https://github.com/pugjs/pug/blob/master/Readme_zh-cn.md)
 
 Implementations in other languages:
 
