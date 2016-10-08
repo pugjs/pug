@@ -122,7 +122,7 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
 
 ## Browser Support
 
- The latest version of pug can be download for the browser in standalone form from [here](https://raw.githubusercontent.com/pugjs/pug/1.11.0/pug.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript and then just use the [runtime.js](https://raw.githubusercontent.com/pugjs/pug/1.11.0/runtime.js) library on the client.
+ The latest version of pug can be download for the browser in standalone form from [here](https://pugjs.org/js/pug.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
 
  To compile a template for use on the client using the command line, do:
 
