@@ -1,5 +1,5 @@
 var pug = require('./');
-var resolvedPug = require.resolve('./');
+var resolvedPug = require.resolve('./').replace(/\\/g, '/');
 
 function compileTemplate(module, filename) {
   var template = pug.compileFileClient(filename, {inlineRuntimeFunctions: false});
