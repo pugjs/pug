@@ -1,3 +1,8 @@
+2.0.0-alpha / 2016
+
+  * Better comment handling
+  * See **[Breaking Changes](https://github.com/pugjs/pug/issues/2305)**
+
 1.11.0 / 2015-06-12
 ==================
 
