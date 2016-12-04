@@ -1155,4 +1155,10 @@ describe('pug', function(){
       ],info.dependencies);
     });
   });
+
+  describe('.name', function() {
+    it('should have a name attribute', function() {
+      assert.strictEqual(pug.name, 'Pug');
+    });
+  });
 });
