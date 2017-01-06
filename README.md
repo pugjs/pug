@@ -159,7 +159,7 @@ Other:
   - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
   - [Pug Server](https://github.com/ded/jade-server)  Ideal for building local prototypes apart from any application
   - [pug-ruby](https://github.com/yivo/pug-ruby) gem: Allows to invoke Pug and Jade from Ruby
-  - [pug-rails](https://github.com/yivo/pug-rails) gem: Integrates Pug and Jade to your Rails application
+  - [pug-rails](https://github.com/yivo/pug-rails) gem: Integrates Pug and Jade into your Rails application
 
 ## License
 
