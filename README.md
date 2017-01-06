@@ -1,3 +1,15 @@
+First Pull Request
+=================
+
+Comment on the issue you want to take. It will get assigned to you.
+
+Follow the guide [here](http://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/).
+
+Run `npm install` or `yarn` to install dependencies.
+
+`npm test` or `yarn test` to run the test suite.
+
+
 <a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 # Pug
 
