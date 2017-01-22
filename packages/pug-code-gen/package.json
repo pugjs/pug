@@ -17,7 +17,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "echo No Tests Specified"
   },
   "repository": {
     "type": "git",

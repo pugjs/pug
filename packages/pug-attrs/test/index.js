@@ -40,8 +40,8 @@ withOptions({terse: true, format: 'html', runtime: function (name) { return 'pug
   test([{name: 'foo', val: '"foo"', mustEscape: true}, {name: 'bar', val: '"bar"', mustEscape: true}], ' foo="foo" bar="bar"');
   test([{name: 'foo', val: 'foo', mustEscape: true}], ' foo="fooo"', {foo: 'fooo'});
   test([{name: 'foo', val: 'foo', mustEscape: true}, {name: 'bar', val: 'bar', mustEscape: true}], ' foo="fooo" bar="baro"', {foo: 'fooo', bar: 'baro'});
-  test([{name: 'style', val: '{color: "red"}', mustEscape: true}], ' style="color:red"');
-  test([{name: 'style', val: '{color: color}', mustEscape: true}], ' style="color:red"', {color: 'red'});
+  test([{name: 'style', val: '{color: "red"}', mustEscape: true}], ' style="color:red;"');
+  test([{name: 'style', val: '{color: color}', mustEscape: true}], ' style="color:red;"', {color: 'red'});
   test([{name: 'class', val: '"foo"', mustEscape: true}, {name: 'class', val: '["bar", "baz"]', mustEscape: true}], ' class="foo bar baz"');
   test([{name: 'class', val: '{foo: foo}', mustEscape: true}, {name: 'class', val: '["bar", "baz"]', mustEscape: true}], ' class="foo bar baz"', {foo: true});
   test([{name: 'class', val: '{foo: foo}', mustEscape: true}, {name: 'class', val: '["bar", "baz"]', mustEscape: true}], ' class="bar baz"', {foo: false});
@@ -74,8 +74,8 @@ withOptions({terse: true, format: 'object', runtime: function (name) { return 'p
   test([{name: 'foo', val: '"foo"', mustEscape: true}, {name: 'bar', val: '"bar"', mustEscape: true}], {foo: 'foo', bar: 'bar'});
   test([{name: 'foo', val: 'foo', mustEscape: true}], {foo: 'fooo'}, {foo: 'fooo'});
   test([{name: 'foo', val: 'foo', mustEscape: true}, {name: 'bar', val: 'bar', mustEscape: true}], {foo: 'fooo', bar: 'baro'}, {foo: 'fooo', bar: 'baro'});
-  test([{name: 'style', val: '{color: "red"}', mustEscape: true}], {style: 'color:red'});
-  test([{name: 'style', val: '{color: color}', mustEscape: true}], {style: 'color:red'}, {color: 'red'});
+  test([{name: 'style', val: '{color: "red"}', mustEscape: true}], {style: 'color:red;'});
+  test([{name: 'style', val: '{color: color}', mustEscape: true}], {style: 'color:red;'}, {color: 'red'});
   test([{name: 'class', val: '"foo"', mustEscape: true}, {name: 'class', val: '["bar", "baz"]', mustEscape: true}], {'class': 'foo bar baz'});
   test([{name: 'class', val: '{foo: foo}', mustEscape: true}, {name: 'class', val: '["bar", "baz"]', mustEscape: true}], {'class': 'foo bar baz'}, {foo: true});
   test([{name: 'class', val: '{foo: foo}', mustEscape: true}, {name: 'class', val: '["bar", "baz"]', mustEscape: true}], {'class': 'bar baz'}, {foo: false});
