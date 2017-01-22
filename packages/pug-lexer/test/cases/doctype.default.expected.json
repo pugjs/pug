@@ -1,0 +1,11 @@
+{"type":"doctype","line":1,"col":1,"val":""}
+{"type":"newline","line":2,"col":1}
+{"type":"tag","line":2,"col":1,"val":"html"}
+{"type":"indent","line":3,"col":1,"val":2}
+{"type":"tag","line":3,"col":3,"val":"body"}
+{"type":"indent","line":4,"col":1,"val":4}
+{"type":"tag","line":4,"col":5,"val":"h1"}
+{"type":"text","line":4,"col":8,"val":"Title"}
+{"type":"outdent","line":4,"col":13}
+{"type":"outdent","line":4,"col":13}
+{"type":"eos","line":4,"col":13}

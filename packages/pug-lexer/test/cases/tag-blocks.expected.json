@@ -1,0 +1,16 @@
+{"type":"comment","line":1,"col":1,"val":" we should not get blocks within blocks","buffer":true}
+{"type":"newline","line":2,"col":1}
+{"type":"tag","line":2,"col":1,"val":"div"}
+{"type":"indent","line":3,"col":1,"val":2}
+{"type":"text","line":3,"col":5,"val":"We have sent an e-mail to "}
+{"type":"start-pug-interpolation","line":3,"col":31}
+{"type":"tag","line":3,"col":33,"val":"strong"}
+{"type":"code","line":3,"col":39,"val":"this.props.email","mustEscape":true,"buffer":true}
+{"type":"end-pug-interpolation","line":3,"col":57}
+{"type":"text","line":3,"col":58,"val":".  Please click the link in the e-mail"}
+{"type":"newline","line":4,"col":1}
+{"type":"code","line":4,"col":3,"val":"'  '","mustEscape":true,"buffer":true}
+{"type":"newline","line":5,"col":1}
+{"type":"text","line":5,"col":5,"val":"to confirm your e-mail address."}
+{"type":"outdent","line":6,"col":1}
+{"type":"eos","line":6,"col":1}

@@ -1,0 +1,850 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "contact",
+            "line": 1,
+            "filename": "attrs.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/contact'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 1,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "save",
+            "line": 2,
+            "filename": "attrs.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/save'",
+          "mustEscape": true
+        },
+        {
+          "name": "class",
+          "val": "'button'",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 2,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": true,
+          "mustEscape": false
+        },
+        {
+          "name": "baz",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 3,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 4,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "'foo, bar, baz'",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "1",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 4,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 5,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "'((foo))'",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "(1) ? 1 : 0",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 5,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "select",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "option",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Foo",
+                  "line": 7,
+                  "filename": "attrs.tokens.json"
+                }
+              ],
+              "line": 7,
+              "filename": "attrs.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "value",
+                "val": "'foo'",
+                "mustEscape": true
+              },
+              {
+                "name": "selected",
+                "val": true,
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 7,
+            "filename": "attrs.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "option",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Bar",
+                  "line": 8,
+                  "filename": "attrs.tokens.json"
+                }
+              ],
+              "line": 8,
+              "filename": "attrs.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "selected",
+                "val": true,
+                "mustEscape": true
+              },
+              {
+                "name": "value",
+                "val": "'bar'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 8,
+            "filename": "attrs.tokens.json"
+          }
+        ],
+        "line": 6,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 9,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "\"class:\"",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 9,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "input",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 10,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "pattern",
+          "val": "'\\\\S+'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 10,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "contact",
+            "line": 12,
+            "filename": "attrs.tokens.json"
+          }
+        ],
+        "line": 12,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/contact'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 12,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "save",
+            "line": 13,
+            "filename": "attrs.tokens.json"
+          }
+        ],
+        "line": 13,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/save'",
+          "mustEscape": true
+        },
+        {
+          "name": "class",
+          "val": "'button'",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 13,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 14,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": true,
+          "mustEscape": false
+        },
+        {
+          "name": "baz",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 14,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 15,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "'foo, bar, baz'",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "1",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 15,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 16,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "'((foo))'",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "(1) ? 1 : 0",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 16,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "select",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "option",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Foo",
+                  "line": 18,
+                  "filename": "attrs.tokens.json"
+                }
+              ],
+              "line": 18,
+              "filename": "attrs.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "value",
+                "val": "'foo'",
+                "mustEscape": true
+              },
+              {
+                "name": "selected",
+                "val": true,
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 18,
+            "filename": "attrs.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "option",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Bar",
+                  "line": 19,
+                  "filename": "attrs.tokens.json"
+                }
+              ],
+              "line": 19,
+              "filename": "attrs.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "selected",
+                "val": true,
+                "mustEscape": true
+              },
+              {
+                "name": "value",
+                "val": "'bar'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 19,
+            "filename": "attrs.tokens.json"
+          }
+        ],
+        "line": 17,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 17,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 20,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "\"class:\"",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 20,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "input",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 21,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "pattern",
+          "val": "'\\\\S+'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 21,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 22,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "terse",
+          "val": "\"true\"",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 22,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 23,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "date",
+          "val": "new Date(0)",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 23,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 25,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "abc",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "def",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 25,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 27,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "abc",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "def",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 27,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 29,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "abc",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "def",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 29,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 31,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "abc",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "def",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 31,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 33,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "abc",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "def",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 33,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 35,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "abc",
+          "val": true,
+          "mustEscape": true
+        },
+        {
+          "name": "def",
+          "val": true,
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 35,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var attrs = {foo: 'bar', bar: '<baz>'}",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 38,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 40,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [
+        "attrs"
+      ],
+      "isInline": false,
+      "line": 40,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 42,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "'foo'",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "\"bar\"",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 42,
+      "filename": "attrs.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 43,
+        "filename": "attrs.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "'foo'",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "'bar'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 43,
+      "filename": "attrs.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "attrs.tokens.json"
+}

@@ -1,0 +1,319 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Comment",
+      "val": " foo",
+      "buffer": true,
+      "line": 2,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Comment",
+            "val": " bar",
+            "buffer": true,
+            "line": 4,
+            "filename": "comments.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "one",
+                  "line": 5,
+                  "filename": "comments.tokens.json"
+                }
+              ],
+              "line": 5,
+              "filename": "comments.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 5,
+            "filename": "comments.tokens.json"
+          },
+          {
+            "type": "Comment",
+            "val": " baz",
+            "buffer": true,
+            "line": 6,
+            "filename": "comments.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "two",
+                  "line": 7,
+                  "filename": "comments.tokens.json"
+                }
+              ],
+              "line": 7,
+              "filename": "comments.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 7,
+            "filename": "comments.tokens.json"
+          }
+        ],
+        "line": 3,
+        "filename": "comments.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "BlockComment",
+      "val": "",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "ul",
+            "line": 10
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 11
+          },
+          {
+            "type": "Text",
+            "val": "  li foo",
+            "line": 11
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 12
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 12
+          }
+        ],
+        "line": 9,
+        "filename": "comments.tokens.json"
+      },
+      "buffer": true,
+      "line": 9,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "BlockComment",
+      "val": " block",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "// inline follow",
+            "line": 14
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 15
+          },
+          {
+            "type": "Text",
+            "val": "li three",
+            "line": 15
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 16
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 16
+          }
+        ],
+        "line": 13,
+        "filename": "comments.tokens.json"
+      },
+      "buffer": true,
+      "line": 13,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "BlockComment",
+      "val": " block",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "// inline followed by tags",
+            "line": 18
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 19
+          },
+          {
+            "type": "Text",
+            "val": "ul",
+            "line": 19
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 20
+          },
+          {
+            "type": "Text",
+            "val": "  li four",
+            "line": 20
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 21
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 21
+          }
+        ],
+        "line": 17,
+        "filename": "comments.tokens.json"
+      },
+      "buffer": true,
+      "line": 17,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "BlockComment",
+      "val": "if IE lt 9",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "// inline",
+            "line": 23
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 24
+          },
+          {
+            "type": "Text",
+            "val": "script(src='/lame.js')",
+            "line": 24
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 25
+          },
+          {
+            "type": "Text",
+            "val": "// end-inline",
+            "line": 25
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 26
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 26
+          }
+        ],
+        "line": 22,
+        "filename": "comments.tokens.json"
+      },
+      "buffer": true,
+      "line": 22,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "five",
+            "line": 27,
+            "filename": "comments.tokens.json"
+          }
+        ],
+        "line": 27,
+        "filename": "comments.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 27,
+      "filename": "comments.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "// not a comment",
+            "line": 29,
+            "filename": "comments.tokens.json"
+          }
+        ],
+        "line": 29,
+        "filename": "comments.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "'foo'",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 29,
+      "filename": "comments.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "comments.tokens.json"
+}

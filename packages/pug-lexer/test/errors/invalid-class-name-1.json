@@ -1,0 +1,6 @@
+{
+  "msg": "Class names must begin with \"-\", \"_\" or a letter.",
+  "code": "PUG:INVALID_CLASS_NAME",
+  "line": 1,
+  "column": 1
+}

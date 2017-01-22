@@ -1,0 +1,166 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "name": "cdata",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "name": "uglify-js",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "(function() {",
+                        "line": 3
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 4
+                      },
+                      {
+                        "type": "Text",
+                        "val": "  console.log('test')",
+                        "line": 4
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 5
+                      },
+                      {
+                        "type": "Text",
+                        "val": "})()",
+                        "line": 5
+                      }
+                    ],
+                    "line": 2,
+                    "filename": "filters.nested.tokens.json"
+                  },
+                  "attrs": [],
+                  "line": 2,
+                  "filename": "filters.nested.tokens.json",
+                  "val": "!function(){console.log(\"test\")}();"
+                }
+              ],
+              "line": 2,
+              "filename": "filters.nested.tokens.json"
+            },
+            "attrs": [],
+            "line": 2,
+            "filename": "filters.nested.tokens.json",
+            "val": "<![CDATA[!function(){console.log(\"test\")}();]]>"
+          }
+        ],
+        "line": 1,
+        "filename": "filters.nested.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "filters.nested.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "name": "cdata",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "name": "uglify-js",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "name": "coffee-script",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "(->",
+                              "line": 8
+                            },
+                            {
+                              "type": "Text",
+                              "val": "\n",
+                              "line": 9
+                            },
+                            {
+                              "type": "Text",
+                              "val": "  console.log 'test'",
+                              "line": 9
+                            },
+                            {
+                              "type": "Text",
+                              "val": "\n",
+                              "line": 10
+                            },
+                            {
+                              "type": "Text",
+                              "val": ")()",
+                              "line": 10
+                            }
+                          ],
+                          "line": 7,
+                          "filename": "filters.nested.tokens.json"
+                        },
+                        "attrs": [],
+                        "line": 7,
+                        "filename": "filters.nested.tokens.json",
+                        "val": "(function() {\n  (function() {\n    return console.log('test');\n  })();\n\n}).call(this);\n"
+                      }
+                    ],
+                    "line": 7,
+                    "filename": "filters.nested.tokens.json"
+                  },
+                  "attrs": [],
+                  "line": 7,
+                  "filename": "filters.nested.tokens.json",
+                  "val": "(function(){!function(){return console.log(\"test\")}()}).call(this);"
+                }
+              ],
+              "line": 7,
+              "filename": "filters.nested.tokens.json"
+            },
+            "attrs": [],
+            "line": 7,
+            "filename": "filters.nested.tokens.json",
+            "val": "<![CDATA[(function(){!function(){return console.log(\"test\")}()}).call(this);]]>"
+          }
+        ],
+        "line": 6,
+        "filename": "filters.nested.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "filters.nested.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "filters.nested.tokens.json"
+}

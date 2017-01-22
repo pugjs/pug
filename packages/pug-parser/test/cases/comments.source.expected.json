@@ -1,0 +1,82 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "BlockComment",
+      "val": "",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "s/s.",
+            "line": 2
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 3
+          }
+        ],
+        "line": 1,
+        "filename": "comments.source.tokens.json"
+      },
+      "buffer": false,
+      "line": 1,
+      "filename": "comments.source.tokens.json"
+    },
+    {
+      "type": "Comment",
+      "val": " test/cases/comments.source.pug",
+      "buffer": false,
+      "line": 4,
+      "filename": "comments.source.tokens.json"
+    },
+    {
+      "type": "BlockComment",
+      "val": "",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "test/cases/comments.source.pug",
+            "line": 7
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 8
+          },
+          {
+            "type": "Text",
+            "val": "when",
+            "line": 8
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 9
+          },
+          {
+            "type": "Text",
+            "val": "()",
+            "line": 9
+          }
+        ],
+        "line": 6,
+        "filename": "comments.source.tokens.json"
+      },
+      "buffer": false,
+      "line": 6,
+      "filename": "comments.source.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "comments.source.tokens.json"
+}

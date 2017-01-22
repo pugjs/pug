@@ -1,0 +1,28 @@
+{
+  "name": "pug-walk",
+  "version": "1.0.0",
+  "description": "Walk and transform a pug AST",
+  "keywords": [
+    "pug"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "istanbul": "*",
+    "pug-lexer": "^2.1.0",
+    "pug-parser": "^2.0.1",
+    "testit": "^2.1.2"
+  },
+  "scripts": {
+    "test": "node test",
+    "coverage": "istanbul cover test"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pugjs/pug-walk.git"
+  },
+  "author": "ForbesLindesay",
+  "license": "MIT"
+}

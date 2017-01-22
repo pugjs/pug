@@ -1,0 +1,6 @@
+{
+  "msg": "malformed extends",
+  "code": "PUG:MALFORMED_EXTENDS",
+  "line": 1,
+  "column": 7
+}

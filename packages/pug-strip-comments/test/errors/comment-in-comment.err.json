@@ -1,0 +1,5 @@
+{
+  "msg": "`comment` encountered when already in a comment",
+  "code": "PUG:UNEXPECTED_TOKEN",
+  "line": 2
+}

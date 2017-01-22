@@ -1,0 +1,619 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Mixin",
+      "name": "form",
+      "args": "method, action",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "form",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "var csrf_token_from_somewhere = 'hey'",
+                  "buffer": false,
+                  "mustEscape": false,
+                  "isInline": false,
+                  "line": 5,
+                  "filename": "mixin.blocks.tokens.json"
+                },
+                {
+                  "type": "Tag",
+                  "name": "input",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 6,
+                    "filename": "mixin.blocks.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "type",
+                      "val": "'hidden'",
+                      "mustEscape": true
+                    },
+                    {
+                      "name": "name",
+                      "val": "'_csrf'",
+                      "mustEscape": true
+                    },
+                    {
+                      "name": "value",
+                      "val": "csrf_token_from_somewhere",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 6,
+                  "filename": "mixin.blocks.tokens.json"
+                },
+                {
+                  "type": "MixinBlock",
+                  "line": 7,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 4,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "method",
+                "val": "method",
+                "mustEscape": true
+              },
+              {
+                "name": "action",
+                "val": "action",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 4,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 4,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "call": false,
+      "line": 3,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Mixin",
+                  "name": "form",
+                  "args": "'GET', '/search'",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "input",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [],
+                          "line": 12,
+                          "filename": "mixin.blocks.tokens.json"
+                        },
+                        "attrs": [
+                          {
+                            "name": "type",
+                            "val": "'text'",
+                            "mustEscape": true
+                          },
+                          {
+                            "name": "name",
+                            "val": "'query'",
+                            "mustEscape": true
+                          },
+                          {
+                            "name": "placeholder",
+                            "val": "'Search'",
+                            "mustEscape": true
+                          }
+                        ],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 12,
+                        "filename": "mixin.blocks.tokens.json"
+                      },
+                      {
+                        "type": "Tag",
+                        "name": "input",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [],
+                          "line": 13,
+                          "filename": "mixin.blocks.tokens.json"
+                        },
+                        "attrs": [
+                          {
+                            "name": "type",
+                            "val": "'submit'",
+                            "mustEscape": true
+                          },
+                          {
+                            "name": "value",
+                            "val": "'Search'",
+                            "mustEscape": true
+                          }
+                        ],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 13,
+                        "filename": "mixin.blocks.tokens.json"
+                      }
+                    ],
+                    "line": 11,
+                    "filename": "mixin.blocks.tokens.json"
+                  },
+                  "call": true,
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "line": 11,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 10,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 10,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 9,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 9,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Mixin",
+                  "name": "form",
+                  "args": "'POST', '/search'",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "input",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [],
+                          "line": 18,
+                          "filename": "mixin.blocks.tokens.json"
+                        },
+                        "attrs": [
+                          {
+                            "name": "type",
+                            "val": "'text'",
+                            "mustEscape": true
+                          },
+                          {
+                            "name": "name",
+                            "val": "'query'",
+                            "mustEscape": true
+                          },
+                          {
+                            "name": "placeholder",
+                            "val": "'Search'",
+                            "mustEscape": true
+                          }
+                        ],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 18,
+                        "filename": "mixin.blocks.tokens.json"
+                      },
+                      {
+                        "type": "Tag",
+                        "name": "input",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [],
+                          "line": 19,
+                          "filename": "mixin.blocks.tokens.json"
+                        },
+                        "attrs": [
+                          {
+                            "name": "type",
+                            "val": "'submit'",
+                            "mustEscape": true
+                          },
+                          {
+                            "name": "value",
+                            "val": "'Search'",
+                            "mustEscape": true
+                          }
+                        ],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 19,
+                        "filename": "mixin.blocks.tokens.json"
+                      }
+                    ],
+                    "line": 17,
+                    "filename": "mixin.blocks.tokens.json"
+                  },
+                  "call": true,
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "line": 17,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 16,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 16,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 15,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 15,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Mixin",
+                  "name": "form",
+                  "args": "'POST', '/search'",
+                  "block": null,
+                  "call": true,
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "line": 23,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 22,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 22,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 21,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 21,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Mixin",
+      "name": "bar",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "MixinBlock",
+                  "line": 27,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 26,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "id",
+                "val": "'bar'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 26,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 26,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "call": false,
+      "line": 25,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Mixin",
+      "name": "foo",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Mixin",
+                  "name": "bar",
+                  "args": null,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "MixinBlock",
+                        "line": 32,
+                        "filename": "mixin.blocks.tokens.json"
+                      }
+                    ],
+                    "line": 31,
+                    "filename": "mixin.blocks.tokens.json"
+                  },
+                  "call": true,
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "line": 31,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 30,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "id",
+                "val": "'foo'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 30,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 30,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "call": false,
+      "line": 29,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Mixin",
+      "name": "foo",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "one",
+                  "line": 35,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 35,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 35,
+            "filename": "mixin.blocks.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "two",
+                  "line": 36,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 36,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 36,
+            "filename": "mixin.blocks.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "three",
+                  "line": 37,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 37,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 37,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 34,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "call": true,
+      "attrs": [],
+      "attributeBlocks": [],
+      "line": 34,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Mixin",
+      "name": "baz",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "MixinBlock",
+                  "line": 42,
+                  "filename": "mixin.blocks.tokens.json"
+                }
+              ],
+              "line": 41,
+              "filename": "mixin.blocks.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "id",
+                "val": "'baz'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 41,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 41,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "call": false,
+      "line": 40,
+      "filename": "mixin.blocks.tokens.json"
+    },
+    {
+      "type": "Mixin",
+      "name": "baz",
+      "args": "",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Code",
+            "val": "'123'",
+            "buffer": true,
+            "mustEscape": true,
+            "isInline": true,
+            "line": 44,
+            "filename": "mixin.blocks.tokens.json"
+          }
+        ],
+        "line": 44,
+        "filename": "mixin.blocks.tokens.json"
+      },
+      "call": true,
+      "attrs": [],
+      "attributeBlocks": [],
+      "line": 44,
+      "filename": "mixin.blocks.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "mixin.blocks.tokens.json"
+}

@@ -1,0 +1,14 @@
+{"type":"newline","line":2,"col":1}
+{"type":"mixin","line":2,"col":1,"val":"foo","args":null}
+{"type":"indent","line":3,"col":1,"val":2}
+{"type":"tag","line":3,"col":3,"val":"h1"}
+{"type":"code","line":3,"col":5,"val":"title","mustEscape":true,"buffer":true}
+{"type":"outdent","line":5,"col":1}
+{"type":"tag","line":5,"col":1,"val":"html"}
+{"type":"indent","line":6,"col":1,"val":2}
+{"type":"tag","line":6,"col":3,"val":"body"}
+{"type":"indent","line":7,"col":1,"val":4}
+{"type":"call","line":7,"col":5,"val":"foo","args":null}
+{"type":"outdent","line":8,"col":3}
+{"type":"outdent","line":8,"col":1}
+{"type":"eos","line":8,"col":1}

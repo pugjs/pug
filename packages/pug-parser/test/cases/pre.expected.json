@@ -1,0 +1,120 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "pre",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "foo",
+            "line": 2
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "bar",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 4
+          },
+          {
+            "type": "Text",
+            "val": "baz",
+            "line": 4
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 5
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 5
+          }
+        ],
+        "line": 1,
+        "filename": "pre.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "pre.tokens.json",
+      "textOnly": true
+    },
+    {
+      "type": "Tag",
+      "name": "pre",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "code",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 8
+                },
+                {
+                  "type": "Text",
+                  "val": "\n",
+                  "line": 9
+                },
+                {
+                  "type": "Text",
+                  "val": "bar",
+                  "line": 9
+                },
+                {
+                  "type": "Text",
+                  "val": "\n",
+                  "line": 10
+                },
+                {
+                  "type": "Text",
+                  "val": "baz",
+                  "line": 10
+                }
+              ],
+              "line": 7,
+              "filename": "pre.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 7,
+            "filename": "pre.tokens.json",
+            "textOnly": true
+          }
+        ],
+        "line": 6,
+        "filename": "pre.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "pre.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "pre.tokens.json"
+}

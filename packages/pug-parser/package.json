@@ -1,0 +1,27 @@
+{
+  "name": "pug-parser",
+  "version": "2.0.1",
+  "description": "The pug parser (takes an array of tokens and converts it to an abstract syntax tree)",
+  "keywords": [
+    "pug"
+  ],
+  "dependencies": {
+    "pug-error": "^1.3.0",
+    "token-stream": "0.0.1"
+  },
+  "devDependencies": {
+    "get-repo": "^1.0.0",
+    "istanbul": "*"
+  },
+  "scripts": {
+    "update-test-cases": "node test/update-test-cases",
+    "test": "node test && npm run coverage",
+    "coverage": "istanbul cover test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pugjs/pug-parser.git"
+  },
+  "author": "ForbesLindesay",
+  "license": "MIT"
+}

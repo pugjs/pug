@@ -1,0 +1,131 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "if (foo) {",
+            "line": 2
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "  bar();",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 4
+          },
+          {
+            "type": "Text",
+            "val": "}",
+            "line": 4
+          }
+        ],
+        "line": 1,
+        "filename": "scripts.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "scripts.tokens.json",
+      "textOnly": true
+    },
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Code",
+            "val": "'foo()'",
+            "buffer": true,
+            "mustEscape": false,
+            "isInline": true,
+            "line": 5,
+            "filename": "scripts.tokens.json"
+          }
+        ],
+        "line": 5,
+        "filename": "scripts.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "scripts.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "foo()",
+            "line": 6,
+            "filename": "scripts.tokens.json"
+          }
+        ],
+        "line": 6,
+        "filename": "scripts.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "scripts.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 7,
+        "filename": "scripts.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 7,
+      "filename": "scripts.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 8,
+        "filename": "scripts.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 8,
+      "filename": "scripts.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "scripts.tokens.json"
+}

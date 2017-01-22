@@ -1,0 +1,41 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 1,
+        "filename": "include-extends-of-common-template.tokens.json",
+        "path": "auxiliary/extends-empty-block-1.pug"
+      },
+      "line": 1,
+      "filename": "include-extends-of-common-template.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 1,
+        "filename": "include-extends-of-common-template.tokens.json"
+      }
+    },
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 2,
+        "filename": "include-extends-of-common-template.tokens.json",
+        "path": "auxiliary/extends-empty-block-2.pug"
+      },
+      "line": 2,
+      "filename": "include-extends-of-common-template.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 2,
+        "filename": "include-extends-of-common-template.tokens.json"
+      }
+    }
+  ],
+  "line": 0,
+  "filename": "include-extends-of-common-template.tokens.json"
+}

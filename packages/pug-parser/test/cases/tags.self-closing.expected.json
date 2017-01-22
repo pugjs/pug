@@ -1,0 +1,318 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "body",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "foo",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 3,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "foo",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 4,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "bar",
+                "val": "'baz'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 4,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "foo",
+            "selfClosing": true,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 5,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 5,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "foo",
+            "selfClosing": true,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 6,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "bar",
+                "val": "'baz'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 6,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "foo",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "/",
+                  "line": 7,
+                  "filename": "tags.self-closing.tokens.json"
+                }
+              ],
+              "line": 7,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 7,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "foo",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "/",
+                  "line": 8,
+                  "filename": "tags.self-closing.tokens.json"
+                }
+              ],
+              "line": 8,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "bar",
+                "val": "'baz'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 8,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "InterpolatedTag",
+            "expr": "'foo'",
+            "selfClosing": true,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 9,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 9,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "InterpolatedTag",
+            "expr": "'foo'",
+            "selfClosing": true,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 10,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "bar",
+                "val": "'baz'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 10,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "InterpolatedTag",
+            "expr": "'foo'",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "/",
+                  "line": 11,
+                  "filename": "tags.self-closing.tokens.json"
+                }
+              ],
+              "line": 11,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 11,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "InterpolatedTag",
+            "expr": "'foo'",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "/",
+                  "line": 12,
+                  "filename": "tags.self-closing.tokens.json"
+                }
+              ],
+              "line": 12,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "bar",
+                "val": "'baz'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 12,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Comment",
+            "val": " can have a single space after them",
+            "buffer": false,
+            "line": 13,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "img",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": " ",
+                  "line": 14,
+                  "filename": "tags.self-closing.tokens.json"
+                }
+              ],
+              "line": 14,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 14,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Comment",
+            "val": " can have lots of white space after them",
+            "buffer": false,
+            "line": 15,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "img",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "   ",
+                  "line": 16,
+                  "filename": "tags.self-closing.tokens.json"
+                }
+              ],
+              "line": 16,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 16,
+            "filename": "tags.self-closing.tokens.json"
+          },
+          {
+            "type": "InterpolatedTag",
+            "expr": "\n    'foo'\n  ",
+            "selfClosing": true,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 17,
+              "filename": "tags.self-closing.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 17,
+            "filename": "tags.self-closing.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "tags.self-closing.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "tags.self-closing.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "tags.self-closing.tokens.json"
+}

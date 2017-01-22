@@ -1,0 +1,44 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "./auxiliary/1794-extends.pug",
+        "line": 1,
+        "filename": "regression.1794.tokens.json"
+      },
+      "line": 1,
+      "filename": "regression.1794.tokens.json"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Include",
+          "file": {
+            "type": "FileReference",
+            "line": 4,
+            "filename": "regression.1794.tokens.json",
+            "path": "./auxiliary/1794-include.pug"
+          },
+          "line": 4,
+          "filename": "regression.1794.tokens.json",
+          "block": {
+            "type": "Block",
+            "nodes": [],
+            "line": 4,
+            "filename": "regression.1794.tokens.json"
+          }
+        }
+      ],
+      "line": 3,
+      "filename": "regression.1794.tokens.json",
+      "name": "content",
+      "mode": "replace"
+    }
+  ],
+  "line": 0,
+  "filename": "regression.1794.tokens.json"
+}

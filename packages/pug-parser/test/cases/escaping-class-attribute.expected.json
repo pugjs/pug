@@ -1,0 +1,139 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 1,
+        "filename": "escaping-class-attribute.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "attr",
+          "val": "\"<%= bar %>\"",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "escaping-class-attribute.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 2,
+        "filename": "escaping-class-attribute.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "\"<%= bar %>\"",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "escaping-class-attribute.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "escaping-class-attribute.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "attr",
+          "val": "\"<%= bar %>\"",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "escaping-class-attribute.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 4,
+        "filename": "escaping-class-attribute.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "\"<%= bar %>\"",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 4,
+      "filename": "escaping-class-attribute.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 5,
+        "filename": "escaping-class-attribute.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "\"<%= bar %> lol rofl\"",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "escaping-class-attribute.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 6,
+        "filename": "escaping-class-attribute.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "\"<%= bar %> lol rofl <%= lmao %>\"",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "escaping-class-attribute.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "escaping-class-attribute.tokens.json"
+}

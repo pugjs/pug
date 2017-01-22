@@ -1,0 +1,9 @@
+{"type":"include","line":1,"col":1}
+{"type":"path","line":1,"col":9,"val":"./auxiliary/mixin-at-end-of-file.pug"}
+{"type":"newline","line":3,"col":1}
+{"type":"call","line":3,"col":1,"val":"slide","args":""}
+{"type":"indent","line":4,"col":1,"val":2}
+{"type":"tag","line":4,"col":3,"val":"p"}
+{"type":"text","line":4,"col":5,"val":"some awesome content"}
+{"type":"outdent","line":5,"col":1}
+{"type":"eos","line":5,"col":1}

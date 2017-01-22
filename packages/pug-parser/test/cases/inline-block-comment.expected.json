@@ -1,0 +1,52 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "NamedBlock",
+      "nodes": [],
+      "line": 1,
+      "filename": "inline-block-comment.tokens.json",
+      "name": "content",
+      "mode": "replace"
+    },
+    {
+      "type": "Comment",
+      "val": " Main content goes here",
+      "buffer": true,
+      "line": 1,
+      "filename": "inline-block-comment.tokens.json"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [],
+      "line": 2,
+      "filename": "inline-block-comment.tokens.json",
+      "name": "content",
+      "mode": "append"
+    },
+    {
+      "type": "Comment",
+      "val": " adding something to content",
+      "buffer": true,
+      "line": 2,
+      "filename": "inline-block-comment.tokens.json"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [],
+      "line": 3,
+      "filename": "inline-block-comment.tokens.json",
+      "name": "content",
+      "mode": "prepend"
+    },
+    {
+      "type": "Comment",
+      "val": " adding something to other end of content",
+      "buffer": true,
+      "line": 3,
+      "filename": "inline-block-comment.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "inline-block-comment.tokens.json"
+}

@@ -1,0 +1,314 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "head",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "style",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "body {",
+                        "line": 4
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 5
+                      },
+                      {
+                        "type": "Text",
+                        "val": "  padding: 50px;",
+                        "line": 5
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 6
+                      },
+                      {
+                        "type": "Text",
+                        "val": "}",
+                        "line": 6
+                      }
+                    ],
+                    "line": 3,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 3,
+                  "filename": "styles.tokens.json",
+                  "textOnly": true
+                }
+              ],
+              "line": 2,
+              "filename": "styles.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "styles.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 8,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "style",
+                      "val": "'color:red;background:green'",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 8,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 9,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "style",
+                      "val": "{color: 'red', background: 'green'}",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 9,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 10,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [
+                    "{style: 'color:red;background:green'}"
+                  ],
+                  "isInline": false,
+                  "line": 10,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 11,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [
+                    "{style: {color: 'red', background: 'green'}}"
+                  ],
+                  "isInline": false,
+                  "line": 11,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Mixin",
+                  "name": "div",
+                  "args": null,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "div",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [],
+                          "line": 13,
+                          "filename": "styles.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [
+                          "attributes"
+                        ],
+                        "isInline": false,
+                        "line": 13,
+                        "filename": "styles.tokens.json"
+                      }
+                    ],
+                    "line": 13,
+                    "filename": "styles.tokens.json"
+                  },
+                  "call": false,
+                  "line": 12,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Mixin",
+                  "name": "div",
+                  "args": null,
+                  "block": null,
+                  "call": true,
+                  "attrs": [
+                    {
+                      "name": "style",
+                      "val": "'color:red;background:green'",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "line": 14,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Mixin",
+                  "name": "div",
+                  "args": null,
+                  "block": null,
+                  "call": true,
+                  "attrs": [
+                    {
+                      "name": "style",
+                      "val": "{color: 'red', background: 'green'}",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "line": 15,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Code",
+                  "val": "var bg = 'green';",
+                  "buffer": false,
+                  "mustEscape": false,
+                  "isInline": false,
+                  "line": 16,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 17,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "style",
+                      "val": "{color: 'red', background: bg}",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 17,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 18,
+                    "filename": "styles.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [
+                    "{style: {color: 'red', background: bg}}"
+                  ],
+                  "isInline": false,
+                  "line": 18,
+                  "filename": "styles.tokens.json"
+                },
+                {
+                  "type": "Mixin",
+                  "name": "div",
+                  "args": null,
+                  "block": null,
+                  "call": true,
+                  "attrs": [
+                    {
+                      "name": "style",
+                      "val": "{color: 'red', background: bg}",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "line": 19,
+                  "filename": "styles.tokens.json"
+                }
+              ],
+              "line": 7,
+              "filename": "styles.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 7,
+            "filename": "styles.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "styles.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "styles.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "styles.tokens.json"
+}

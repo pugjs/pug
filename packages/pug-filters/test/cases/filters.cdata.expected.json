@@ -1,0 +1,84 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "users = [{ name: 'tobi', age: 2 }]",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 2,
+      "filename": "filters.cdata.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "fb:users",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Each",
+            "obj": "users",
+            "val": "user",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "fb:user",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "name": "cdata",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "#{user.name}",
+                              "line": 8
+                            }
+                          ]
+                        },
+                        "attrs": [],
+                        "line": 7,
+                        "filename": "filters.cdata.tokens.json",
+                        "val": "<![CDATA[#{user.name}]]>"
+                      }
+                    ]
+                  },
+                  "attrs": [
+                    {
+                      "name": "age",
+                      "val": "user.age",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 6,
+                  "filename": "filters.cdata.tokens.json"
+                }
+              ],
+              "line": 6,
+              "filename": "filters.cdata.tokens.json"
+            },
+            "line": 5,
+            "filename": "filters.cdata.tokens.json"
+          }
+        ]
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 4,
+      "filename": "filters.cdata.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "filters.cdata.tokens.json"
+}

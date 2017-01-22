@@ -1,0 +1,130 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Tag",
+                "name": "head",
+                "selfClosing": false,
+                "block": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Tag",
+                      "name": "script",
+                      "selfClosing": false,
+                      "block": {
+                        "type": "Block",
+                        "nodes": [
+                          {
+                            "type": "Text",
+                            "val": "alert('hello world');",
+                            "line": 3
+                          }
+                        ],
+                        "line": 2,
+                        "filename": "include-with-text-head.pug"
+                      },
+                      "attrs": [
+                        {
+                          "name": "type",
+                          "val": "'text/javascript'",
+                          "mustEscape": true
+                        }
+                      ],
+                      "attributeBlocks": [],
+                      "isInline": false,
+                      "line": 2,
+                      "filename": "include-with-text-head.pug",
+                      "textOnly": true
+                    },
+                    {
+                      "type": "Block",
+                      "nodes": [
+                        {
+                          "type": "Tag",
+                          "name": "script",
+                          "selfClosing": false,
+                          "block": {
+                            "type": "Block",
+                            "nodes": [],
+                            "line": 3,
+                            "filename": "include-with-text.pug"
+                          },
+                          "attrs": [
+                            {
+                              "name": "src",
+                              "val": "'/caustic.js'",
+                              "mustEscape": true
+                            }
+                          ],
+                          "attributeBlocks": [],
+                          "isInline": false,
+                          "line": 3,
+                          "filename": "include-with-text.pug"
+                        },
+                        {
+                          "type": "Tag",
+                          "name": "script",
+                          "selfClosing": false,
+                          "block": {
+                            "type": "Block",
+                            "nodes": [],
+                            "line": 4,
+                            "filename": "include-with-text.pug"
+                          },
+                          "attrs": [
+                            {
+                              "name": "src",
+                              "val": "'/app.js'",
+                              "mustEscape": true
+                            }
+                          ],
+                          "attributeBlocks": [],
+                          "isInline": false,
+                          "line": 4,
+                          "filename": "include-with-text.pug"
+                        }
+                      ],
+                      "line": 3,
+                      "filename": "include-with-text.pug"
+                    }
+                  ],
+                  "line": 1,
+                  "filename": "include-with-text-head.pug"
+                },
+                "attrs": [],
+                "attributeBlocks": [],
+                "isInline": false,
+                "line": 1,
+                "filename": "include-with-text-head.pug"
+              }
+            ],
+            "line": 0,
+            "filename": "include-with-text-head.pug",
+            "declaredBlocks": {}
+          }
+        ],
+        "line": 1,
+        "filename": "include-with-text.pug"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "include-with-text.pug"
+    }
+  ],
+  "line": 0,
+  "filename": "include-with-text.pug",
+  "declaredBlocks": {}
+}

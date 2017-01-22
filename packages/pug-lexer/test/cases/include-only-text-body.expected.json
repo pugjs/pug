@@ -1,0 +1,7 @@
+{"type":"text","line":1,"col":3,"val":"The message is \""}
+{"type":"newline","line":2,"col":1}
+{"type":"yield","line":2,"col":1}
+{"type":"newline","line":3,"col":1}
+{"type":"text","line":3,"col":3,"val":"\""}
+{"type":"newline","line":4,"col":1}
+{"type":"eos","line":4,"col":1}

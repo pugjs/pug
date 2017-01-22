@@ -1,0 +1,73 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 1,
+        "filename": "classes-empty.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "''",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 1,
+      "filename": "classes-empty.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 2,
+        "filename": "classes-empty.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "null",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 2,
+      "filename": "classes-empty.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "classes-empty.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "undefined",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 3,
+      "filename": "classes-empty.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "classes-empty.tokens.json"
+}

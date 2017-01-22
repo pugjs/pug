@@ -1,0 +1,67 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Mixin",
+      "name": "never-called",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "This isn't something we ever want to output",
+                  "line": 2,
+                  "filename": "mixins-unused.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "mixins-unused.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'wtf'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "mixins-unused.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "mixins-unused.tokens.json"
+      },
+      "call": false,
+      "line": 1,
+      "filename": "mixins-unused.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "body",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "mixins-unused.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "mixins-unused.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "mixins-unused.tokens.json"
+}

@@ -1,0 +1,139 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "a",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "foo",
+                        "line": 2,
+                        "filename": "block-expansion.tokens.json"
+                      }
+                    ],
+                    "line": 2,
+                    "filename": "block-expansion.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "href",
+                      "val": "'#'",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": true,
+                  "line": 2,
+                  "filename": "block-expansion.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "block-expansion.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "block-expansion.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "a",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "bar",
+                        "line": 3,
+                        "filename": "block-expansion.tokens.json"
+                      }
+                    ],
+                    "line": 3,
+                    "filename": "block-expansion.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "href",
+                      "val": "'#'",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": true,
+                  "line": 3,
+                  "filename": "block-expansion.tokens.json"
+                }
+              ],
+              "line": 3,
+              "filename": "block-expansion.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "block-expansion.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "block-expansion.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "block-expansion.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "baz",
+            "line": 5,
+            "filename": "block-expansion.tokens.json"
+          }
+        ],
+        "line": 5,
+        "filename": "block-expansion.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "block-expansion.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "block-expansion.tokens.json"
+}

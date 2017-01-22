@@ -1,0 +1,70 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "figure",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "blockquote",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Try to define yourself by what you do, and you&#8217;ll burnout every time. You are. That is enough. I rest in that.",
+                  "line": 3,
+                  "filename": "blockquote.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "blockquote.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "blockquote.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "figcaption",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "from @thefray at 1:43pm on May 10",
+                  "line": 4,
+                  "filename": "blockquote.tokens.json"
+                }
+              ],
+              "line": 4,
+              "filename": "blockquote.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 4,
+            "filename": "blockquote.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "blockquote.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "blockquote.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "blockquote.tokens.json"
+}

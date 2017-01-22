@@ -1,0 +1,21 @@
+{"type":"tag","line":1,"col":1,"val":"a"}
+{"type":"start-attributes","line":1,"col":2}
+{"type":"attribute","line":1,"col":3,"name":"class","val":"['foo', 'bar', 'baz']","mustEscape":true}
+{"type":"end-attributes","line":1,"col":30}
+{"type":"newline","line":5,"col":1}
+{"type":"tag","line":5,"col":1,"val":"a"}
+{"type":"class","line":5,"col":2,"val":"foo"}
+{"type":"start-attributes","line":5,"col":6}
+{"type":"attribute","line":5,"col":7,"name":"class","val":"'bar'","mustEscape":true}
+{"type":"end-attributes","line":5,"col":18}
+{"type":"class","line":5,"col":19,"val":"baz"}
+{"type":"newline","line":9,"col":1}
+{"type":"tag","line":9,"col":1,"val":"a"}
+{"type":"class","line":9,"col":2,"val":"foo-bar_baz"}
+{"type":"newline","line":11,"col":1}
+{"type":"tag","line":11,"col":1,"val":"a"}
+{"type":"start-attributes","line":11,"col":2}
+{"type":"attribute","line":11,"col":3,"name":"class","val":"{foo: true, bar: false, baz: true}","mustEscape":true}
+{"type":"end-attributes","line":11,"col":43}
+{"type":"newline","line":12,"col":1}
+{"type":"eos","line":12,"col":1}

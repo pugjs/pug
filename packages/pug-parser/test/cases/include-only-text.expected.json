@@ -1,0 +1,99 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "p",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Include",
+                        "file": {
+                          "type": "FileReference",
+                          "line": 4,
+                          "filename": "include-only-text.tokens.json",
+                          "path": "include-only-text-body.pug"
+                        },
+                        "line": 4,
+                        "filename": "include-only-text.tokens.json",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Tag",
+                              "name": "em",
+                              "selfClosing": false,
+                              "block": {
+                                "type": "Block",
+                                "nodes": [
+                                  {
+                                    "type": "Text",
+                                    "val": "hello world",
+                                    "line": 5,
+                                    "filename": "include-only-text.tokens.json"
+                                  }
+                                ],
+                                "line": 5,
+                                "filename": "include-only-text.tokens.json"
+                              },
+                              "attrs": [],
+                              "attributeBlocks": [],
+                              "isInline": true,
+                              "line": 5,
+                              "filename": "include-only-text.tokens.json"
+                            }
+                          ],
+                          "line": 5,
+                          "filename": "include-only-text.tokens.json"
+                        }
+                      }
+                    ],
+                    "line": 3,
+                    "filename": "include-only-text.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 3,
+                  "filename": "include-only-text.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "include-only-text.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "include-only-text.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "include-only-text.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "include-only-text.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "include-only-text.tokens.json"
+}

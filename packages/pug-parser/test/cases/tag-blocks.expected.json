@@ -1,0 +1,91 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Comment",
+      "val": " we should not get blocks within blocks",
+      "buffer": true,
+      "line": 1,
+      "filename": "tag-blocks.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "We have sent an e-mail to ",
+                "line": 3,
+                "filename": "tag-blocks.tokens.json"
+              },
+              {
+                "type": "Tag",
+                "name": "strong",
+                "selfClosing": false,
+                "block": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Code",
+                      "val": "this.props.email",
+                      "buffer": true,
+                      "mustEscape": true,
+                      "isInline": true,
+                      "line": 3,
+                      "filename": "tag-blocks.tokens.json"
+                    }
+                  ],
+                  "line": 3,
+                  "filename": "tag-blocks.tokens.json"
+                },
+                "attrs": [],
+                "attributeBlocks": [],
+                "isInline": true,
+                "line": 3,
+                "filename": "tag-blocks.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": ".  Please click the link in the e-mail",
+                "line": 3,
+                "filename": "tag-blocks.tokens.json"
+              }
+            ],
+            "line": 3,
+            "filename": "tag-blocks.tokens.json"
+          },
+          {
+            "type": "Code",
+            "val": "'  '",
+            "buffer": true,
+            "mustEscape": true,
+            "isInline": false,
+            "line": 4,
+            "filename": "tag-blocks.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": "to confirm your e-mail address.",
+            "line": 5,
+            "filename": "tag-blocks.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "tag-blocks.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "tag-blocks.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "tag-blocks.tokens.json"
+}

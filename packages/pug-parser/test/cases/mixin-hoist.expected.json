@@ -1,0 +1,93 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Mixin",
+      "name": "foo",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "h1",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "title",
+                  "buffer": true,
+                  "mustEscape": true,
+                  "isInline": true,
+                  "line": 3,
+                  "filename": "mixin-hoist.tokens.json"
+                }
+              ],
+              "line": 3,
+              "filename": "mixin-hoist.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "mixin-hoist.tokens.json"
+          }
+        ],
+        "line": 3,
+        "filename": "mixin-hoist.tokens.json"
+      },
+      "call": false,
+      "line": 2,
+      "filename": "mixin-hoist.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Mixin",
+                  "name": "foo",
+                  "args": null,
+                  "block": null,
+                  "call": true,
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "line": 7,
+                  "filename": "mixin-hoist.tokens.json"
+                }
+              ],
+              "line": 6,
+              "filename": "mixin-hoist.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 6,
+            "filename": "mixin-hoist.tokens.json"
+          }
+        ],
+        "line": 5,
+        "filename": "mixin-hoist.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "mixin-hoist.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "mixin-hoist.tokens.json"
+}

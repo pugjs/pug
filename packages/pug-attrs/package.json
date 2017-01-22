@@ -1,0 +1,27 @@
+{
+  "name": "pug-attrs",
+  "version": "2.0.1",
+  "description": "Generate code for Pug attributes",
+  "keywords": [
+    "pug"
+  ],
+  "dependencies": {
+    "constantinople": "^3.0.1",
+    "pug-runtime": "^2.0.0",
+    "js-stringify": "^1.0.1"
+  },
+  "devDependencies": {
+    "istanbul": "*",
+    "testit": "^2.0.2"
+  },
+  "scripts": {
+    "test": "node test",
+    "coverage": "istanbul cover test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pugjs/pug-attrs.git"
+  },
+  "author": "Forbes Lindesay",
+  "license": "MIT"
+}

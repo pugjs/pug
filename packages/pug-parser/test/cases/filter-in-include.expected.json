@@ -1,0 +1,24 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 1,
+        "filename": "filter-in-include.tokens.json",
+        "path": "./auxiliary/filter-in-include.pug"
+      },
+      "line": 1,
+      "filename": "filter-in-include.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 1,
+        "filename": "filter-in-include.tokens.json"
+      }
+    }
+  ],
+  "line": 0,
+  "filename": "filter-in-include.tokens.json"
+}

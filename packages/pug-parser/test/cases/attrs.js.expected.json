@@ -1,0 +1,347 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "var id = 5",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 1,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "function answer() { return 42; }",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 2,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/user/' + id",
+          "mustEscape": true
+        },
+        {
+          "name": "class",
+          "val": "'button'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 3,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 4,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/user/' + id",
+          "mustEscape": true
+        },
+        {
+          "name": "class",
+          "val": "'button'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 4,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "meta",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 5,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "key",
+          "val": "'answer'",
+          "mustEscape": true
+        },
+        {
+          "name": "value",
+          "val": "answer()",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 6,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "['class1', 'class2']",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 6,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 7,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "'tag-class'",
+          "mustEscape": false
+        },
+        {
+          "name": "class",
+          "val": "['class1', 'class2']",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 7,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 9,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/user/' + id",
+          "mustEscape": true
+        },
+        {
+          "name": "class",
+          "val": "'button'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 9,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 10,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "href",
+          "val": "'/user/' + id",
+          "mustEscape": true
+        },
+        {
+          "name": "class",
+          "val": "'button'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 10,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "meta",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 11,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "key",
+          "val": "'answer'",
+          "mustEscape": true
+        },
+        {
+          "name": "value",
+          "val": "answer()",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 11,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 12,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "['class1', 'class2']",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 12,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "a",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 13,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "'tag-class'",
+          "mustEscape": false
+        },
+        {
+          "name": "class",
+          "val": "['class1', 'class2']",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 13,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 15,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "id",
+          "val": "id",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [
+        "{foo: 'bar'}"
+      ],
+      "isInline": false,
+      "line": 15,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var bar = null",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 16,
+      "filename": "attrs.js.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 17,
+        "filename": "attrs.js.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "foo",
+          "val": "null",
+          "mustEscape": true
+        },
+        {
+          "name": "bar",
+          "val": "bar",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [
+        "{baz: 'baz'}"
+      ],
+      "isInline": false,
+      "line": 17,
+      "filename": "attrs.js.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "attrs.js.tokens.json"
+}

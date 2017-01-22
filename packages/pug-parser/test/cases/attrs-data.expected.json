@@ -1,0 +1,148 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "var user = { name: 'tobi' }",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 1,
+      "filename": "attrs-data.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 2,
+        "filename": "attrs-data.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "data-user",
+          "val": "user",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "attrs-data.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "attrs-data.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "data-items",
+          "val": "[1,2,3]",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "attrs-data.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 4,
+        "filename": "attrs-data.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "data-username",
+          "val": "'tobi'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 4,
+      "filename": "attrs-data.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 5,
+        "filename": "attrs-data.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "data-escaped",
+          "val": "{message: \"Let's rock!\"}",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "attrs-data.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 6,
+        "filename": "attrs-data.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "data-ampersand",
+          "val": "{message: \"a quote: &quot; this & that\"}",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "attrs-data.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 7,
+        "filename": "attrs-data.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "data-epoc",
+          "val": "new Date(0)",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 7,
+      "filename": "attrs-data.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "attrs-data.tokens.json"
+}

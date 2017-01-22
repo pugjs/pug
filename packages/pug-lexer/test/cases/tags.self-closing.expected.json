@@ -1,0 +1,60 @@
+{"type":"newline","line":2,"col":1}
+{"type":"tag","line":2,"col":1,"val":"body"}
+{"type":"indent","line":3,"col":1,"val":2}
+{"type":"tag","line":3,"col":3,"val":"foo"}
+{"type":"newline","line":4,"col":1}
+{"type":"tag","line":4,"col":3,"val":"foo"}
+{"type":"start-attributes","line":4,"col":6}
+{"type":"attribute","line":4,"col":7,"name":"bar","val":"'baz'","mustEscape":true}
+{"type":"end-attributes","line":4,"col":16}
+{"type":"newline","line":5,"col":1}
+{"type":"tag","line":5,"col":3,"val":"foo"}
+{"type":"slash","line":5,"col":6}
+{"type":"newline","line":6,"col":1}
+{"type":"tag","line":6,"col":3,"val":"foo"}
+{"type":"start-attributes","line":6,"col":6}
+{"type":"attribute","line":6,"col":7,"name":"bar","val":"'baz'","mustEscape":true}
+{"type":"end-attributes","line":6,"col":16}
+{"type":"slash","line":6,"col":17}
+{"type":"newline","line":7,"col":1}
+{"type":"tag","line":7,"col":3,"val":"foo"}
+{"type":"text","line":7,"col":7,"val":"/"}
+{"type":"newline","line":8,"col":1}
+{"type":"tag","line":8,"col":3,"val":"foo"}
+{"type":"start-attributes","line":8,"col":6}
+{"type":"attribute","line":8,"col":7,"name":"bar","val":"'baz'","mustEscape":true}
+{"type":"end-attributes","line":8,"col":16}
+{"type":"text","line":8,"col":18,"val":"/"}
+{"type":"newline","line":9,"col":1}
+{"type":"interpolation","line":9,"col":3,"val":"'foo'"}
+{"type":"slash","line":9,"col":11}
+{"type":"newline","line":10,"col":1}
+{"type":"interpolation","line":10,"col":3,"val":"'foo'"}
+{"type":"start-attributes","line":10,"col":11}
+{"type":"attribute","line":10,"col":12,"name":"bar","val":"'baz'","mustEscape":true}
+{"type":"end-attributes","line":10,"col":21}
+{"type":"slash","line":10,"col":22}
+{"type":"newline","line":11,"col":1}
+{"type":"interpolation","line":11,"col":3,"val":"'foo'"}
+{"type":"text","line":11,"col":12,"val":"/"}
+{"type":"newline","line":12,"col":1}
+{"type":"interpolation","line":12,"col":3,"val":"'foo'"}
+{"type":"start-attributes","line":12,"col":11}
+{"type":"attribute","line":12,"col":12,"name":"bar","val":"'baz'","mustEscape":true}
+{"type":"end-attributes","line":12,"col":21}
+{"type":"text","line":12,"col":23,"val":"/"}
+{"type":"newline","line":13,"col":1}
+{"type":"comment","line":13,"col":3,"val":" can have a single space after them","buffer":false}
+{"type":"newline","line":14,"col":1}
+{"type":"tag","line":14,"col":3,"val":"img"}
+{"type":"text","line":14,"col":6,"val":" "}
+{"type":"newline","line":15,"col":1}
+{"type":"comment","line":15,"col":3,"val":" can have lots of white space after them","buffer":false}
+{"type":"newline","line":16,"col":1}
+{"type":"tag","line":16,"col":3,"val":"img"}
+{"type":"text","line":16,"col":7,"val":"   "}
+{"type":"newline","line":17,"col":1}
+{"type":"interpolation","line":17,"col":3,"val":"\n    'foo'\n  "}
+{"type":"slash","line":19,"col":4}
+{"type":"outdent","line":20,"col":1}
+{"type":"eos","line":20,"col":1}

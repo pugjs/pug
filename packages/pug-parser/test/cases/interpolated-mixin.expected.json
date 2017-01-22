@@ -1,0 +1,94 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Mixin",
+      "name": "linkit",
+      "args": "url",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "a",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "url",
+                  "buffer": true,
+                  "mustEscape": true,
+                  "isInline": true,
+                  "line": 2,
+                  "filename": "interpolated-mixin.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "interpolated-mixin.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "href",
+                "val": "url",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 2,
+            "filename": "interpolated-mixin.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "interpolated-mixin.tokens.json"
+      },
+      "call": false,
+      "line": 1,
+      "filename": "interpolated-mixin.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "This also works ",
+            "line": 4,
+            "filename": "interpolated-mixin.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "linkit",
+            "args": "'http://www.bing.com'",
+            "block": null,
+            "call": true,
+            "attrs": [],
+            "attributeBlocks": [],
+            "line": 4,
+            "filename": "interpolated-mixin.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": " so hurrah for Pug",
+            "line": 4,
+            "filename": "interpolated-mixin.tokens.json"
+          }
+        ],
+        "line": 4,
+        "filename": "interpolated-mixin.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 4,
+      "filename": "interpolated-mixin.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "interpolated-mixin.tokens.json"
+}

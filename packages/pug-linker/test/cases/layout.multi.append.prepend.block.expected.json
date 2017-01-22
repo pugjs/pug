@@ -1,0 +1,282 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Tag",
+          "name": "p",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Last prepend must appear at top",
+                "line": 13,
+                "filename": "layout.multi.append.prepend.block.pug"
+              }
+            ],
+            "line": 13,
+            "filename": "layout.multi.append.prepend.block.pug"
+          },
+          "attrs": [
+            {
+              "name": "class",
+              "val": "'last'",
+              "mustEscape": false
+            },
+            {
+              "name": "class",
+              "val": "'prepend'",
+              "mustEscape": false
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 13,
+          "filename": "layout.multi.append.prepend.block.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "p",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Something prepended to content",
+                "line": 7,
+                "filename": "layout.multi.append.prepend.block.pug"
+              }
+            ],
+            "line": 7,
+            "filename": "layout.multi.append.prepend.block.pug"
+          },
+          "attrs": [
+            {
+              "name": "class",
+              "val": "'first'",
+              "mustEscape": false
+            },
+            {
+              "name": "class",
+              "val": "'prepend'",
+              "mustEscape": false
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 7,
+          "filename": "layout.multi.append.prepend.block.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "div",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Defined content",
+                "line": 5,
+                "filename": "../fixtures/multi-append-prepend-block/redefine.pug"
+              }
+            ],
+            "line": 4,
+            "filename": "../fixtures/multi-append-prepend-block/redefine.pug"
+          },
+          "attrs": [
+            {
+              "name": "class",
+              "val": "'content'",
+              "mustEscape": false
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 4,
+          "filename": "../fixtures/multi-append-prepend-block/redefine.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "p",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Something appended to content",
+                "line": 4,
+                "filename": "layout.multi.append.prepend.block.pug"
+              }
+            ],
+            "line": 4,
+            "filename": "layout.multi.append.prepend.block.pug"
+          },
+          "attrs": [
+            {
+              "name": "class",
+              "val": "'first'",
+              "mustEscape": false
+            },
+            {
+              "name": "class",
+              "val": "'append'",
+              "mustEscape": false
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 4,
+          "filename": "layout.multi.append.prepend.block.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "p",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Last append must be most last",
+                "line": 10,
+                "filename": "layout.multi.append.prepend.block.pug"
+              }
+            ],
+            "line": 10,
+            "filename": "layout.multi.append.prepend.block.pug"
+          },
+          "attrs": [
+            {
+              "name": "class",
+              "val": "'last'",
+              "mustEscape": false
+            },
+            {
+              "name": "class",
+              "val": "'append'",
+              "mustEscape": false
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 10,
+          "filename": "layout.multi.append.prepend.block.pug"
+        }
+      ],
+      "line": 1,
+      "filename": "../fixtures/multi-append-prepend-block/root.pug",
+      "name": "content",
+      "mode": "replace"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Tag",
+          "name": "script",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [],
+            "line": 19,
+            "filename": "layout.multi.append.prepend.block.pug"
+          },
+          "attrs": [
+            {
+              "name": "src",
+              "val": "'foo.js'",
+              "mustEscape": true
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 19,
+          "filename": "layout.multi.append.prepend.block.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "script",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [],
+            "line": 5,
+            "filename": "../fixtures/multi-append-prepend-block/root.pug"
+          },
+          "attrs": [
+            {
+              "name": "src",
+              "val": "'/app.js'",
+              "mustEscape": true
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 5,
+          "filename": "../fixtures/multi-append-prepend-block/root.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "script",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [],
+            "line": 16,
+            "filename": "layout.multi.append.prepend.block.pug"
+          },
+          "attrs": [
+            {
+              "name": "src",
+              "val": "'jquery.js'",
+              "mustEscape": true
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 16,
+          "filename": "layout.multi.append.prepend.block.pug"
+        }
+      ],
+      "line": 4,
+      "filename": "../fixtures/multi-append-prepend-block/root.pug",
+      "name": "head",
+      "mode": "replace"
+    }
+  ],
+  "line": 0,
+  "filename": "../fixtures/multi-append-prepend-block/root.pug",
+  "declaredBlocks": {
+    "content": {
+      "type": "NamedBlock",
+      "nodes": "<NODES>",
+      "line": 3,
+      "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
+      "name": "content",
+      "mode": "replace",
+      "parent": {
+        "type": "NamedBlock",
+        "nodes": "<NODES>",
+        "line": 1,
+        "filename": "../fixtures/multi-append-prepend-block/root.pug",
+        "name": "content",
+        "mode": "replace"
+      }
+    },
+    "head": {
+      "type": "NamedBlock",
+      "nodes": "<NODES>",
+      "line": 4,
+      "filename": "../fixtures/multi-append-prepend-block/root.pug",
+      "name": "head",
+      "mode": "replace"
+    }
+  }
+}

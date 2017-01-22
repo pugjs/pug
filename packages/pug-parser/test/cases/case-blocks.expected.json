@@ -1,0 +1,189 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "var friends = 1",
+                  "buffer": false,
+                  "mustEscape": false,
+                  "isInline": false,
+                  "line": 3,
+                  "filename": "case-blocks.tokens.json"
+                },
+                {
+                  "type": "Case",
+                  "expr": "friends",
+                  "line": 4,
+                  "filename": "case-blocks.tokens.json",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "When",
+                        "expr": "0",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Tag",
+                              "name": "p",
+                              "selfClosing": false,
+                              "block": {
+                                "type": "Block",
+                                "nodes": [
+                                  {
+                                    "type": "Text",
+                                    "val": "you have no friends",
+                                    "line": 6,
+                                    "filename": "case-blocks.tokens.json"
+                                  }
+                                ],
+                                "line": 6,
+                                "filename": "case-blocks.tokens.json"
+                              },
+                              "attrs": [],
+                              "attributeBlocks": [],
+                              "isInline": false,
+                              "line": 6,
+                              "filename": "case-blocks.tokens.json"
+                            }
+                          ],
+                          "line": 6,
+                          "filename": "case-blocks.tokens.json"
+                        },
+                        "debug": false,
+                        "line": 5,
+                        "filename": "case-blocks.tokens.json"
+                      },
+                      {
+                        "type": "When",
+                        "expr": "1",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Tag",
+                              "name": "p",
+                              "selfClosing": false,
+                              "block": {
+                                "type": "Block",
+                                "nodes": [
+                                  {
+                                    "type": "Text",
+                                    "val": "you have a friend",
+                                    "line": 8,
+                                    "filename": "case-blocks.tokens.json"
+                                  }
+                                ],
+                                "line": 8,
+                                "filename": "case-blocks.tokens.json"
+                              },
+                              "attrs": [],
+                              "attributeBlocks": [],
+                              "isInline": false,
+                              "line": 8,
+                              "filename": "case-blocks.tokens.json"
+                            }
+                          ],
+                          "line": 8,
+                          "filename": "case-blocks.tokens.json"
+                        },
+                        "debug": false,
+                        "line": 7,
+                        "filename": "case-blocks.tokens.json"
+                      },
+                      {
+                        "type": "When",
+                        "expr": "default",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Tag",
+                              "name": "p",
+                              "selfClosing": false,
+                              "block": {
+                                "type": "Block",
+                                "nodes": [
+                                  {
+                                    "type": "Text",
+                                    "val": "you have ",
+                                    "line": 10,
+                                    "filename": "case-blocks.tokens.json"
+                                  },
+                                  {
+                                    "type": "Code",
+                                    "val": "friends",
+                                    "buffer": true,
+                                    "mustEscape": true,
+                                    "isInline": true,
+                                    "line": 10,
+                                    "filename": "case-blocks.tokens.json"
+                                  },
+                                  {
+                                    "type": "Text",
+                                    "val": " friends",
+                                    "line": 10,
+                                    "filename": "case-blocks.tokens.json"
+                                  }
+                                ],
+                                "line": 10,
+                                "filename": "case-blocks.tokens.json"
+                              },
+                              "attrs": [],
+                              "attributeBlocks": [],
+                              "isInline": false,
+                              "line": 10,
+                              "filename": "case-blocks.tokens.json"
+                            }
+                          ],
+                          "line": 10,
+                          "filename": "case-blocks.tokens.json"
+                        },
+                        "debug": false,
+                        "line": 9,
+                        "filename": "case-blocks.tokens.json"
+                      }
+                    ],
+                    "line": 5,
+                    "filename": "case-blocks.tokens.json"
+                  }
+                }
+              ],
+              "line": 2,
+              "filename": "case-blocks.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "case-blocks.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "case-blocks.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "case-blocks.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "case-blocks.tokens.json"
+}

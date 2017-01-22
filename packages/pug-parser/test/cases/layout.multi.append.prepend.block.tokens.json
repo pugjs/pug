@@ -1,0 +1,46 @@
+{"type":"extends","line":1,"col":1}
+{"type":"path","line":1,"col":9,"val":"../fixtures/multi-append-prepend-block/redefine.pug"}
+{"type":"newline","line":3,"col":1}
+{"type":"block","line":3,"col":1,"val":"content","mode":"append"}
+{"type":"indent","line":4,"col":1,"val":1}
+{"type":"tag","line":4,"col":2,"val":"p"}
+{"type":"class","line":4,"col":3,"val":"first"}
+{"type":"class","line":4,"col":9,"val":"append"}
+{"type":"text","line":4,"col":17,"val":"Something appended to content"}
+{"type":"outdent","line":6,"col":1}
+{"type":"block","line":6,"col":1,"val":"content","mode":"prepend"}
+{"type":"indent","line":7,"col":1,"val":1}
+{"type":"tag","line":7,"col":2,"val":"p"}
+{"type":"class","line":7,"col":3,"val":"first"}
+{"type":"class","line":7,"col":9,"val":"prepend"}
+{"type":"text","line":7,"col":18,"val":"Something prepended to content"}
+{"type":"outdent","line":9,"col":1}
+{"type":"block","line":9,"col":1,"val":"content","mode":"append"}
+{"type":"indent","line":10,"col":1,"val":1}
+{"type":"tag","line":10,"col":2,"val":"p"}
+{"type":"class","line":10,"col":3,"val":"last"}
+{"type":"class","line":10,"col":8,"val":"append"}
+{"type":"text","line":10,"col":16,"val":"Last append must be most last"}
+{"type":"outdent","line":12,"col":1}
+{"type":"block","line":12,"col":1,"val":"content","mode":"prepend"}
+{"type":"indent","line":13,"col":1,"val":1}
+{"type":"tag","line":13,"col":2,"val":"p"}
+{"type":"class","line":13,"col":3,"val":"last"}
+{"type":"class","line":13,"col":8,"val":"prepend"}
+{"type":"text","line":13,"col":17,"val":"Last prepend must appear at top"}
+{"type":"outdent","line":15,"col":1}
+{"type":"block","line":15,"col":1,"val":"head","mode":"append"}
+{"type":"indent","line":16,"col":1,"val":1}
+{"type":"tag","line":16,"col":2,"val":"script"}
+{"type":"start-attributes","line":16,"col":8}
+{"type":"attribute","line":16,"col":9,"name":"src","val":"'jquery.js'","mustEscape":true}
+{"type":"end-attributes","line":16,"col":24}
+{"type":"outdent","line":18,"col":1}
+{"type":"block","line":18,"col":1,"val":"head","mode":"prepend"}
+{"type":"indent","line":19,"col":1,"val":1}
+{"type":"tag","line":19,"col":2,"val":"script"}
+{"type":"start-attributes","line":19,"col":8}
+{"type":"attribute","line":19,"col":9,"name":"src","val":"'foo.js'","mustEscape":true}
+{"type":"end-attributes","line":19,"col":21}
+{"type":"outdent","line":20,"col":1}
+{"type":"eos","line":20,"col":1}

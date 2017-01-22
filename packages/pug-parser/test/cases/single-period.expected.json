@@ -1,0 +1,30 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "span",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": ".",
+            "line": 1,
+            "filename": "single-period.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "single-period.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": true,
+      "line": 1,
+      "filename": "single-period.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "single-period.tokens.json"
+}

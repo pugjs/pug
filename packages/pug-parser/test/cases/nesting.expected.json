@@ -1,0 +1,173 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "a",
+                  "line": 2,
+                  "filename": "nesting.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "nesting.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "nesting.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "b",
+                  "line": 3,
+                  "filename": "nesting.tokens.json"
+                }
+              ],
+              "line": 3,
+              "filename": "nesting.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "nesting.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "ul",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "li",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "c",
+                              "line": 6,
+                              "filename": "nesting.tokens.json"
+                            }
+                          ],
+                          "line": 6,
+                          "filename": "nesting.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 6,
+                        "filename": "nesting.tokens.json"
+                      },
+                      {
+                        "type": "Tag",
+                        "name": "li",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "d",
+                              "line": 7,
+                              "filename": "nesting.tokens.json"
+                            }
+                          ],
+                          "line": 7,
+                          "filename": "nesting.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 7,
+                        "filename": "nesting.tokens.json"
+                      }
+                    ],
+                    "line": 5,
+                    "filename": "nesting.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 5,
+                  "filename": "nesting.tokens.json"
+                }
+              ],
+              "line": 4,
+              "filename": "nesting.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 4,
+            "filename": "nesting.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "e",
+                  "line": 8,
+                  "filename": "nesting.tokens.json"
+                }
+              ],
+              "line": 8,
+              "filename": "nesting.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 8,
+            "filename": "nesting.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "nesting.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "nesting.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "nesting.tokens.json"
+}

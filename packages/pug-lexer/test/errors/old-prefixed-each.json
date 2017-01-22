@@ -1,0 +1,6 @@
+{
+  "msg": "Pug each and for should no longer be prefixed with a dash (\"-\"). They are pug keywords and not part of JavaScript.",
+  "code": "PUG:MALFORMED_EACH",
+  "line": 2,
+  "column": 3
+}

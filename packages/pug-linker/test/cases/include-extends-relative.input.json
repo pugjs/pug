@@ -1,0 +1,166 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 1,
+        "filename": "include-extends-relative.pug",
+        "path": "../cases-src/auxiliary/extends-relative.pug",
+        "fullPath": "../cases-src/auxiliary/extends-relative.pug",
+        "str": "extends ../../cases-src/auxiliary/layout\n\nblock content\n    include ../../cases-src/auxiliary/include-from-root\n",
+        "ast": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Extends",
+              "file": {
+                "type": "FileReference",
+                "path": "../../cases-src/auxiliary/layout",
+                "line": 1,
+                "filename": "../cases-src/auxiliary/extends-relative.pug",
+                "fullPath": "../cases-src/auxiliary/layout.pug",
+                "str": "html\n  head\n    title My Application\n    block head\n  body\n    block content",
+                "ast": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Tag",
+                      "name": "html",
+                      "selfClosing": false,
+                      "block": {
+                        "type": "Block",
+                        "nodes": [
+                          {
+                            "type": "Tag",
+                            "name": "head",
+                            "selfClosing": false,
+                            "block": {
+                              "type": "Block",
+                              "nodes": [
+                                {
+                                  "type": "Tag",
+                                  "name": "title",
+                                  "selfClosing": false,
+                                  "block": {
+                                    "type": "Block",
+                                    "nodes": [
+                                      {
+                                        "type": "Text",
+                                        "val": "My Application",
+                                        "line": 3,
+                                        "filename": "../cases-src/auxiliary/layout.pug"
+                                      }
+                                    ],
+                                    "line": 3,
+                                    "filename": "../cases-src/auxiliary/layout.pug"
+                                  },
+                                  "attrs": [],
+                                  "attributeBlocks": [],
+                                  "isInline": false,
+                                  "line": 3,
+                                  "filename": "../cases-src/auxiliary/layout.pug"
+                                },
+                                {
+                                  "type": "NamedBlock",
+                                  "nodes": [],
+                                  "line": 4,
+                                  "filename": "../cases-src/auxiliary/layout.pug",
+                                  "name": "head",
+                                  "mode": "replace"
+                                }
+                              ],
+                              "line": 2,
+                              "filename": "../cases-src/auxiliary/layout.pug"
+                            },
+                            "attrs": [],
+                            "attributeBlocks": [],
+                            "isInline": false,
+                            "line": 2,
+                            "filename": "../cases-src/auxiliary/layout.pug"
+                          },
+                          {
+                            "type": "Tag",
+                            "name": "body",
+                            "selfClosing": false,
+                            "block": {
+                              "type": "Block",
+                              "nodes": [
+                                {
+                                  "type": "NamedBlock",
+                                  "nodes": [],
+                                  "line": 6,
+                                  "filename": "../cases-src/auxiliary/layout.pug",
+                                  "name": "content",
+                                  "mode": "replace"
+                                }
+                              ],
+                              "line": 5,
+                              "filename": "../cases-src/auxiliary/layout.pug"
+                            },
+                            "attrs": [],
+                            "attributeBlocks": [],
+                            "isInline": false,
+                            "line": 5,
+                            "filename": "../cases-src/auxiliary/layout.pug"
+                          }
+                        ],
+                        "line": 1,
+                        "filename": "../cases-src/auxiliary/layout.pug"
+                      },
+                      "attrs": [],
+                      "attributeBlocks": [],
+                      "isInline": false,
+                      "line": 1,
+                      "filename": "../cases-src/auxiliary/layout.pug"
+                    }
+                  ],
+                  "line": 0,
+                  "filename": "../cases-src/auxiliary/layout.pug"
+                }
+              },
+              "line": 1,
+              "filename": "../cases-src/auxiliary/extends-relative.pug"
+            },
+            {
+              "type": "NamedBlock",
+              "nodes": [
+                {
+                  "type": "RawInclude",
+                  "file": {
+                    "type": "FileReference",
+                    "line": 4,
+                    "filename": "../cases-src/auxiliary/extends-relative.pug",
+                    "path": "../../cases-src/auxiliary/include-from-root",
+                    "fullPath": "../cases-src/auxiliary/include-from-root.pug",
+                    "str": "h1 hello"
+                  },
+                  "line": 4,
+                  "filename": "../cases-src/auxiliary/extends-relative.pug",
+                  "filters": []
+                }
+              ],
+              "line": 3,
+              "filename": "../cases-src/auxiliary/extends-relative.pug",
+              "name": "content",
+              "mode": "replace"
+            }
+          ],
+          "line": 0,
+          "filename": "../cases-src/auxiliary/extends-relative.pug"
+        }
+      },
+      "line": 1,
+      "filename": "include-extends-relative.pug",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 1,
+        "filename": "include-extends-relative.pug"
+      }
+    }
+  ],
+  "line": 0,
+  "filename": "include-extends-relative.pug"
+}

@@ -1,0 +1,17 @@
+{"type":"newline","line":2,"col":1}
+{"type":"extends","line":2,"col":1}
+{"type":"path","line":2,"col":9,"val":"../fixtures/prepend/app-layout.pug"}
+{"type":"newline","line":4,"col":1}
+{"type":"block","line":4,"col":1,"val":"head","mode":"prepend"}
+{"type":"indent","line":5,"col":1,"val":2}
+{"type":"tag","line":5,"col":3,"val":"script"}
+{"type":"start-attributes","line":5,"col":9}
+{"type":"attribute","line":5,"col":10,"name":"src","val":"'foo.js'","mustEscape":true}
+{"type":"end-attributes","line":5,"col":22}
+{"type":"newline","line":6,"col":1}
+{"type":"tag","line":6,"col":3,"val":"script"}
+{"type":"start-attributes","line":6,"col":9}
+{"type":"attribute","line":6,"col":10,"name":"src","val":"'bar.js'","mustEscape":true}
+{"type":"end-attributes","line":6,"col":22}
+{"type":"outdent","line":7,"col":1}
+{"type":"eos","line":7,"col":1}

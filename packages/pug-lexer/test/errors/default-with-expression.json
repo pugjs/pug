@@ -1,0 +1,6 @@
+{
+  "msg": "default should not have an expression",
+  "code": "PUG:DEFAULT_WITH_EXPRESSION",
+  "line": 1,
+  "column": 8
+}

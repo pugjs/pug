@@ -1,0 +1,63 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Doctype",
+      "val": "html",
+      "line": 1,
+      "filename": "self-closing-html.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "br",
+                  "selfClosing": true,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 4,
+                    "filename": "self-closing-html.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": true,
+                  "line": 4,
+                  "filename": "self-closing-html.tokens.json"
+                }
+              ],
+              "line": 3,
+              "filename": "self-closing-html.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "self-closing-html.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "self-closing-html.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "self-closing-html.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "self-closing-html.tokens.json"
+}

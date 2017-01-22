@@ -1,0 +1,46 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "BlockComment",
+      "val": "",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "     .foo",
+            "line": 2
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "\t.bar",
+            "line": 3
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 4
+          },
+          {
+            "type": "Text",
+            "val": ".hey",
+            "line": 4
+          }
+        ],
+        "line": 1,
+        "filename": "pipeless-comments.tokens.json"
+      },
+      "buffer": true,
+      "line": 1,
+      "filename": "pipeless-comments.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "pipeless-comments.tokens.json"
+}

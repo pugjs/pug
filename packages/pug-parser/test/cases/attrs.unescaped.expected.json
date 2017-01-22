@@ -1,0 +1,76 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "script",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "h1",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "<%= user.title %>",
+                        "line": 3,
+                        "filename": "attrs.unescaped.tokens.json"
+                      }
+                    ],
+                    "line": 3,
+                    "filename": "attrs.unescaped.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 3,
+                  "filename": "attrs.unescaped.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "attrs.unescaped.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "id",
+                "val": "'user-<%= user.id %>'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "attrs.unescaped.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "attrs.unescaped.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "type",
+          "val": "'text/x-template'",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "attrs.unescaped.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "attrs.unescaped.tokens.json"
+}

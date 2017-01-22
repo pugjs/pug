@@ -1,0 +1,24 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 1,
+        "filename": "include-extends-relative.tokens.json",
+        "path": "../cases/auxiliary/extends-relative.pug"
+      },
+      "line": 1,
+      "filename": "include-extends-relative.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 1,
+        "filename": "include-extends-relative.tokens.json"
+      }
+    }
+  ],
+  "line": 0,
+  "filename": "include-extends-relative.tokens.json"
+}

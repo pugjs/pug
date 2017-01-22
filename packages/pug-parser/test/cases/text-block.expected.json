@@ -1,0 +1,107 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "label",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "Username:",
+            "line": 2,
+            "filename": "text-block.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "input",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 3,
+              "filename": "text-block.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "type",
+                "val": "'text'",
+                "mustEscape": true
+              },
+              {
+                "name": "name",
+                "val": "'user[name]'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "text-block.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "text-block.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "text-block.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "label",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "Password:",
+            "line": 5,
+            "filename": "text-block.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "input",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 6,
+              "filename": "text-block.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "type",
+                "val": "'text'",
+                "mustEscape": true
+              },
+              {
+                "name": "name",
+                "val": "'user[pass]'",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 6,
+            "filename": "text-block.tokens.json"
+          }
+        ],
+        "line": 5,
+        "filename": "text-block.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 5,
+      "filename": "text-block.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "text-block.tokens.json"
+}

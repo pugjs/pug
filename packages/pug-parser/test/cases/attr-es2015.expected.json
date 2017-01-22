@@ -1,0 +1,43 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "var avatar = '219b77f9d21de75e81851b6b886057c7'",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 1,
+      "filename": "attr-es2015.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 3,
+        "filename": "attr-es2015.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "'avatar-div'",
+          "mustEscape": false
+        },
+        {
+          "name": "style",
+          "val": "`background-image: url(https://www.gravatar.com/avatar/${avatar})`",
+          "mustEscape": true
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "attr-es2015.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "attr-es2015.tokens.json"
+}

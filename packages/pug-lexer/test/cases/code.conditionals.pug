@@ -1,0 +1,43 @@
+
+- if (true)
+  p foo
+- else
+  p bar
+
+- if (true) {
+  p foo
+- } else {
+  p bar
+- }
+
+if true
+  p foo
+  p bar
+  p baz
+else
+  p bar
+
+unless true
+  p foo
+else
+  p bar
+
+if 'nested'
+  if 'works'
+    p yay
+
+//- allow empty blocks
+if false
+else
+  .bar
+if true
+  .bar
+else
+.bing
+
+if false
+  .bing
+else if false
+  .bar
+else
+  .foo

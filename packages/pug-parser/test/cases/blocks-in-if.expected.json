@@ -1,0 +1,236 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Comment",
+      "val": " see https://github.com/pugjs/pug/issues/1589",
+      "buffer": false,
+      "line": 1,
+      "filename": "blocks-in-if.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var ajax = true",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 3,
+      "filename": "blocks-in-if.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "if( ajax )",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 5,
+      "filename": "blocks-in-if.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Comment",
+            "val": " return only contents if ajax requests",
+            "buffer": false,
+            "line": 6,
+            "filename": "blocks-in-if.tokens.json"
+          },
+          {
+            "type": "NamedBlock",
+            "nodes": [
+              {
+                "type": "Tag",
+                "name": "p",
+                "selfClosing": false,
+                "block": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Text",
+                      "val": "ajax contents",
+                      "line": 8,
+                      "filename": "blocks-in-if.tokens.json"
+                    }
+                  ],
+                  "line": 8,
+                  "filename": "blocks-in-if.tokens.json"
+                },
+                "attrs": [],
+                "attributeBlocks": [],
+                "isInline": false,
+                "line": 8,
+                "filename": "blocks-in-if.tokens.json"
+              }
+            ],
+            "line": 7,
+            "filename": "blocks-in-if.tokens.json",
+            "name": "contents",
+            "mode": "replace"
+          }
+        ],
+        "line": 6,
+        "filename": "blocks-in-if.tokens.json"
+      }
+    },
+    {
+      "type": "Code",
+      "val": "else",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 10,
+      "filename": "blocks-in-if.tokens.json",
+      "debug": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Comment",
+            "val": " return all html",
+            "buffer": false,
+            "line": 11,
+            "filename": "blocks-in-if.tokens.json"
+          },
+          {
+            "type": "Doctype",
+            "val": "html",
+            "line": 12,
+            "filename": "blocks-in-if.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "html",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "head",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "meta",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [],
+                          "line": 15,
+                          "filename": "blocks-in-if.tokens.json"
+                        },
+                        "attrs": [
+                          {
+                            "name": "charset",
+                            "val": "'utf8'",
+                            "mustEscape": true
+                          }
+                        ],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 15,
+                        "filename": "blocks-in-if.tokens.json"
+                      },
+                      {
+                        "type": "Tag",
+                        "name": "title",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "sample",
+                              "line": 16,
+                              "filename": "blocks-in-if.tokens.json"
+                            }
+                          ],
+                          "line": 16,
+                          "filename": "blocks-in-if.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 16,
+                        "filename": "blocks-in-if.tokens.json"
+                      },
+                      {
+                        "type": "Tag",
+                        "name": "body",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "NamedBlock",
+                              "nodes": [
+                                {
+                                  "type": "Tag",
+                                  "name": "p",
+                                  "selfClosing": false,
+                                  "block": {
+                                    "type": "Block",
+                                    "nodes": [
+                                      {
+                                        "type": "Text",
+                                        "val": "all contetns",
+                                        "line": 19,
+                                        "filename": "blocks-in-if.tokens.json"
+                                      }
+                                    ],
+                                    "line": 19,
+                                    "filename": "blocks-in-if.tokens.json"
+                                  },
+                                  "attrs": [],
+                                  "attributeBlocks": [],
+                                  "isInline": false,
+                                  "line": 19,
+                                  "filename": "blocks-in-if.tokens.json"
+                                }
+                              ],
+                              "line": 18,
+                              "filename": "blocks-in-if.tokens.json",
+                              "name": "contents",
+                              "mode": "replace"
+                            }
+                          ],
+                          "line": 17,
+                          "filename": "blocks-in-if.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 17,
+                        "filename": "blocks-in-if.tokens.json"
+                      }
+                    ],
+                    "line": 14,
+                    "filename": "blocks-in-if.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 14,
+                  "filename": "blocks-in-if.tokens.json"
+                }
+              ],
+              "line": 13,
+              "filename": "blocks-in-if.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 13,
+            "filename": "blocks-in-if.tokens.json"
+          }
+        ],
+        "line": 11,
+        "filename": "blocks-in-if.tokens.json"
+      }
+    }
+  ],
+  "line": 0,
+  "filename": "blocks-in-if.tokens.json"
+}

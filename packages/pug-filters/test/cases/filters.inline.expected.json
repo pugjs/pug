@@ -1,0 +1,57 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "before ",
+            "line": 1,
+            "filename": "filters.inline.tokens.json"
+          },
+          {
+            "type": "Text",
+            "name": "cdata",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "inside",
+                  "line": 1,
+                  "filename": "filters.inline.tokens.json"
+                }
+              ],
+              "line": 1,
+              "filename": "filters.inline.tokens.json"
+            },
+            "attrs": [],
+            "line": 1,
+            "filename": "filters.inline.tokens.json",
+            "val": "<![CDATA[inside]]>"
+          },
+          {
+            "type": "Text",
+            "val": " after",
+            "line": 1,
+            "filename": "filters.inline.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "filters.inline.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "filters.inline.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "filters.inline.tokens.json"
+}

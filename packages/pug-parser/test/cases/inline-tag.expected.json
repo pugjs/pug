@@ -1,0 +1,420 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "bing ",
+            "line": 1,
+            "filename": "inline-tag.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "strong",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 1,
+                  "filename": "inline-tag.tokens.json"
+                }
+              ],
+              "line": 1,
+              "filename": "inline-tag.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 1,
+            "filename": "inline-tag.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": " bong",
+            "line": 1,
+            "filename": "inline-tag.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "inline-tag.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "inline-tag.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "bing",
+            "line": 4
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 5
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 5
+          },
+          {
+            "type": "Tag",
+            "name": "strong",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 5,
+                  "filename": "inline-tag.tokens.json"
+                }
+              ],
+              "line": 5,
+              "filename": "inline-tag.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 5,
+            "filename": "inline-tag.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 5
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 6
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 6
+          },
+          {
+            "type": "Tag",
+            "name": "strong",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "'[foo]'",
+                  "buffer": true,
+                  "mustEscape": true,
+                  "isInline": true,
+                  "line": 6,
+                  "filename": "inline-tag.tokens.json"
+                }
+              ],
+              "line": 6,
+              "filename": "inline-tag.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 6,
+            "filename": "inline-tag.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 6
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 7
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 7
+          },
+          {
+            "type": "Code",
+            "val": "var foo = 'foo]'",
+            "buffer": false,
+            "mustEscape": false,
+            "isInline": false,
+            "line": 7,
+            "filename": "inline-tag.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 7
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 8
+          },
+          {
+            "type": "Text",
+            "val": "bong",
+            "line": 8
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 9
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 9
+          }
+        ],
+        "line": 3,
+        "filename": "inline-tag.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "inline-tag.tokens.json",
+      "textOnly": true
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "bing",
+                "line": 11,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 12,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "",
+                "line": 12,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Tag",
+                "name": "strong",
+                "selfClosing": false,
+                "block": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Text",
+                      "val": "foo",
+                      "line": 12,
+                      "filename": "inline-tag.tokens.json"
+                    }
+                  ],
+                  "line": 12,
+                  "filename": "inline-tag.tokens.json"
+                },
+                "attrs": [],
+                "attributeBlocks": [],
+                "isInline": true,
+                "line": 12,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "",
+                "line": 12,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 13,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "",
+                "line": 13,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Tag",
+                "name": "strong",
+                "selfClosing": false,
+                "block": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Code",
+                      "val": "'[foo]'",
+                      "buffer": true,
+                      "mustEscape": true,
+                      "isInline": true,
+                      "line": 13,
+                      "filename": "inline-tag.tokens.json"
+                    }
+                  ],
+                  "line": 13,
+                  "filename": "inline-tag.tokens.json"
+                },
+                "attrs": [],
+                "attributeBlocks": [],
+                "isInline": true,
+                "line": 13,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "",
+                "line": 13,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 14,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "",
+                "line": 14,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Code",
+                "val": "var foo = 'foo]'",
+                "buffer": false,
+                "mustEscape": false,
+                "isInline": false,
+                "line": 14,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "",
+                "line": 14,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 15,
+                "filename": "inline-tag.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "bong",
+                "line": 15,
+                "filename": "inline-tag.tokens.json"
+              }
+            ],
+            "line": 11,
+            "filename": "inline-tag.tokens.json"
+          }
+        ],
+        "line": 10,
+        "filename": "inline-tag.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 10,
+      "filename": "inline-tag.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "#[strong escaped]",
+            "line": 18
+          },
+          {
+            "type": "Text",
+            "val": "\n",
+            "line": 19
+          },
+          {
+            "type": "Text",
+            "val": "#[",
+            "line": 19
+          },
+          {
+            "type": "Tag",
+            "name": "strong",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "escaped",
+                  "line": 19,
+                  "filename": "inline-tag.tokens.json"
+                }
+              ],
+              "line": 19,
+              "filename": "inline-tag.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 19,
+            "filename": "inline-tag.tokens.json"
+          },
+          {
+            "type": "Text",
+            "val": "",
+            "line": 19
+          }
+        ],
+        "line": 17,
+        "filename": "inline-tag.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 17,
+      "filename": "inline-tag.tokens.json",
+      "textOnly": true
+    }
+  ],
+  "line": 0,
+  "filename": "inline-tag.tokens.json"
+}

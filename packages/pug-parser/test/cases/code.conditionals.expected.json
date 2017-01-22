@@ -1,0 +1,607 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "if (true)",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 2,
+      "filename": "code.conditionals.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 3,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 3,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 3,
+        "filename": "code.conditionals.tokens.json"
+      }
+    },
+    {
+      "type": "Code",
+      "val": "else",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 4,
+      "filename": "code.conditionals.tokens.json",
+      "debug": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "bar",
+                  "line": 5,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 5,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 5,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 5,
+        "filename": "code.conditionals.tokens.json"
+      }
+    },
+    {
+      "type": "Code",
+      "val": "if (true) {",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 7,
+      "filename": "code.conditionals.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 8,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 8,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 8,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 8,
+        "filename": "code.conditionals.tokens.json"
+      }
+    },
+    {
+      "type": "Code",
+      "val": "} else {",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 9,
+      "filename": "code.conditionals.tokens.json",
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "bar",
+                  "line": 10,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 10,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 10,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 10,
+        "filename": "code.conditionals.tokens.json"
+      }
+    },
+    {
+      "type": "Code",
+      "val": "}",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 11,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "true",
+      "consequent": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 14,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 14,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 14,
+            "filename": "code.conditionals.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "bar",
+                  "line": 15,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 15,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 15,
+            "filename": "code.conditionals.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "baz",
+                  "line": 16,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 16,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 16,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 14,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "alternate": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "bar",
+                  "line": 18,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 18,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 18,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 18,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "line": 13,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "!(true)",
+      "consequent": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "foo",
+                  "line": 21,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 21,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 21,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 21,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "alternate": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "bar",
+                  "line": 23,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 23,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 23,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 23,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "line": 20,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "'nested'",
+      "consequent": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Conditional",
+            "test": "'works'",
+            "consequent": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "p",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "yay",
+                        "line": 27,
+                        "filename": "code.conditionals.tokens.json"
+                      }
+                    ],
+                    "line": 27,
+                    "filename": "code.conditionals.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 27,
+                  "filename": "code.conditionals.tokens.json"
+                }
+              ],
+              "line": 27,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "alternate": null,
+            "line": 26,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 26,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "alternate": null,
+      "line": 25,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Comment",
+      "val": " allow empty blocks",
+      "buffer": false,
+      "line": 29,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "false",
+      "consequent": {
+        "type": "Block",
+        "nodes": [],
+        "line": 30,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "alternate": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 32,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'bar'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 32,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 32,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "line": 30,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "true",
+      "consequent": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 34,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'bar'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 34,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 34,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "alternate": null,
+      "line": 33,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 36,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "'bing'",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 36,
+      "filename": "code.conditionals.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "false",
+      "consequent": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "div",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [],
+              "line": 39,
+              "filename": "code.conditionals.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'bing'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 39,
+            "filename": "code.conditionals.tokens.json"
+          }
+        ],
+        "line": 39,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "alternate": {
+        "type": "Conditional",
+        "test": "false",
+        "consequent": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Tag",
+              "name": "div",
+              "selfClosing": false,
+              "block": {
+                "type": "Block",
+                "nodes": [],
+                "line": 41,
+                "filename": "code.conditionals.tokens.json"
+              },
+              "attrs": [
+                {
+                  "name": "class",
+                  "val": "'bar'",
+                  "mustEscape": false
+                }
+              ],
+              "attributeBlocks": [],
+              "isInline": false,
+              "line": 41,
+              "filename": "code.conditionals.tokens.json"
+            }
+          ],
+          "line": 41,
+          "filename": "code.conditionals.tokens.json"
+        },
+        "alternate": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Tag",
+              "name": "div",
+              "selfClosing": false,
+              "block": {
+                "type": "Block",
+                "nodes": [],
+                "line": 43,
+                "filename": "code.conditionals.tokens.json"
+              },
+              "attrs": [
+                {
+                  "name": "class",
+                  "val": "'foo'",
+                  "mustEscape": false
+                }
+              ],
+              "attributeBlocks": [],
+              "isInline": false,
+              "line": 43,
+              "filename": "code.conditionals.tokens.json"
+            }
+          ],
+          "line": 43,
+          "filename": "code.conditionals.tokens.json"
+        },
+        "line": 40,
+        "filename": "code.conditionals.tokens.json"
+      },
+      "line": 38,
+      "filename": "code.conditionals.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "code.conditionals.tokens.json"
+}

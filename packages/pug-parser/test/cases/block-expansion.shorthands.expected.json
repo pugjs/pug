@@ -1,0 +1,99 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "div",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "div",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "baz",
+                              "line": 2,
+                              "filename": "block-expansion.shorthands.tokens.json"
+                            }
+                          ],
+                          "line": 2,
+                          "filename": "block-expansion.shorthands.tokens.json"
+                        },
+                        "attrs": [
+                          {
+                            "name": "id",
+                            "val": "'bar'",
+                            "mustEscape": false
+                          }
+                        ],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 2,
+                        "filename": "block-expansion.shorthands.tokens.json"
+                      }
+                    ],
+                    "line": 2,
+                    "filename": "block-expansion.shorthands.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "class",
+                      "val": "'foo'",
+                      "mustEscape": false
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 2,
+                  "filename": "block-expansion.shorthands.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "block-expansion.shorthands.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'list-item'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "block-expansion.shorthands.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "block-expansion.shorthands.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "block-expansion.shorthands.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "block-expansion.shorthands.tokens.json"
+}

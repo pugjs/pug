@@ -1,0 +1,308 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Mixin",
+      "name": "foo",
+      "args": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "One",
+                  "line": 2,
+                  "filename": "mixin.merge.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "mixin.merge.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'bar'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [
+              "attributes"
+            ],
+            "isInline": false,
+            "line": 2,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Two",
+                  "line": 3,
+                  "filename": "mixin.merge.tokens.json"
+                }
+              ],
+              "line": 3,
+              "filename": "mixin.merge.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'baz'",
+                "mustEscape": false
+              },
+              {
+                "name": "class",
+                "val": "'quux'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [
+              "attributes"
+            ],
+            "isInline": false,
+            "line": 3,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Three",
+                  "line": 4,
+                  "filename": "mixin.merge.tokens.json"
+                }
+              ],
+              "line": 4,
+              "filename": "mixin.merge.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [
+              "attributes"
+            ],
+            "isInline": false,
+            "line": 4,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "p",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Text",
+                  "val": "Four",
+                  "line": 5,
+                  "filename": "mixin.merge.tokens.json"
+                }
+              ],
+              "line": 5,
+              "filename": "mixin.merge.tokens.json"
+            },
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'bar'",
+                "mustEscape": false
+              },
+              {
+                "name": "class",
+                "val": "\"baz\"",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [
+              "attributes"
+            ],
+            "isInline": false,
+            "line": 5,
+            "filename": "mixin.merge.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "mixin.merge.tokens.json"
+      },
+      "call": false,
+      "line": 1,
+      "filename": "mixin.merge.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "body",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'hello'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "line": 8,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [
+              {
+                "name": "id",
+                "val": "'world'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "line": 9,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'hello'",
+                "mustEscape": false
+              },
+              {
+                "name": "id",
+                "val": "'world'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "line": 10,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'hello'",
+                "mustEscape": false
+              },
+              {
+                "name": "class",
+                "val": "'world'",
+                "mustEscape": false
+              }
+            ],
+            "attributeBlocks": [],
+            "line": 11,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [
+              {
+                "name": "class",
+                "val": "\"hello\"",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "line": 12,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [
+              {
+                "name": "class",
+                "val": "'hello'",
+                "mustEscape": false
+              },
+              {
+                "name": "class",
+                "val": "\"world\"",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "line": 13,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [],
+            "attributeBlocks": [],
+            "line": 14,
+            "filename": "mixin.merge.tokens.json"
+          },
+          {
+            "type": "Mixin",
+            "name": "foo",
+            "args": null,
+            "block": null,
+            "call": true,
+            "attrs": [],
+            "attributeBlocks": [
+              "{class: \"hello\"}"
+            ],
+            "line": 15,
+            "filename": "mixin.merge.tokens.json"
+          }
+        ],
+        "line": 7,
+        "filename": "mixin.merge.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 7,
+      "filename": "mixin.merge.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "mixin.merge.tokens.json"
+}

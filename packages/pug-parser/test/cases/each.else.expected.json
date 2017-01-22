@@ -1,0 +1,560 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "var users = []",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 2,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Each",
+            "obj": "users",
+            "val": "user",
+            "key": null,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Code",
+                        "val": "user.name",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 6,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 6,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 6,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 6,
+              "filename": "each.else.tokens.json"
+            },
+            "line": 5,
+            "filename": "each.else.tokens.json",
+            "alternate": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "no users!",
+                        "line": 8,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 8,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 8,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 8,
+              "filename": "each.else.tokens.json"
+            }
+          }
+        ],
+        "line": 4,
+        "filename": "each.else.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 4,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var users = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 11,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Conditional",
+      "test": "users",
+      "consequent": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "ul",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Each",
+                  "obj": "users",
+                  "val": "user",
+                  "key": null,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "li",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Code",
+                              "val": "user.name",
+                              "buffer": true,
+                              "mustEscape": true,
+                              "isInline": true,
+                              "line": 16,
+                              "filename": "each.else.tokens.json"
+                            }
+                          ],
+                          "line": 16,
+                          "filename": "each.else.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 16,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 16,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "line": 15,
+                  "filename": "each.else.tokens.json",
+                  "alternate": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Tag",
+                        "name": "li",
+                        "selfClosing": false,
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "no users!",
+                              "line": 18,
+                              "filename": "each.else.tokens.json"
+                            }
+                          ],
+                          "line": 18,
+                          "filename": "each.else.tokens.json"
+                        },
+                        "attrs": [],
+                        "attributeBlocks": [],
+                        "isInline": false,
+                        "line": 18,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 18,
+                    "filename": "each.else.tokens.json"
+                  }
+                }
+              ],
+              "line": 14,
+              "filename": "each.else.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 14,
+            "filename": "each.else.tokens.json"
+          }
+        ],
+        "line": 14,
+        "filename": "each.else.tokens.json"
+      },
+      "alternate": null,
+      "line": 13,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var user = { name: 'tobi', age: 10 }",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 20,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Each",
+            "obj": "user",
+            "val": "val",
+            "key": "key",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Code",
+                        "val": "key",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 24,
+                        "filename": "each.else.tokens.json"
+                      },
+                      {
+                        "type": "Text",
+                        "val": ": ",
+                        "line": 24,
+                        "filename": "each.else.tokens.json"
+                      },
+                      {
+                        "type": "Code",
+                        "val": "val",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 24,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 24,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 24,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 24,
+              "filename": "each.else.tokens.json"
+            },
+            "line": 23,
+            "filename": "each.else.tokens.json",
+            "alternate": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "user has no details!",
+                        "line": 26,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 26,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 26,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 26,
+              "filename": "each.else.tokens.json"
+            }
+          }
+        ],
+        "line": 22,
+        "filename": "each.else.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 22,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var user = {}",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 28,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Each",
+            "obj": "user",
+            "val": "prop",
+            "key": "key",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Code",
+                        "val": "key",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 32,
+                        "filename": "each.else.tokens.json"
+                      },
+                      {
+                        "type": "Text",
+                        "val": ": ",
+                        "line": 32,
+                        "filename": "each.else.tokens.json"
+                      },
+                      {
+                        "type": "Code",
+                        "val": "val",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 32,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 32,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 32,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 32,
+              "filename": "each.else.tokens.json"
+            },
+            "line": 31,
+            "filename": "each.else.tokens.json",
+            "alternate": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "user has no details!",
+                        "line": 34,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 34,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 34,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 34,
+              "filename": "each.else.tokens.json"
+            }
+          }
+        ],
+        "line": 30,
+        "filename": "each.else.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 30,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "var user = Object.create(null)",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 36,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "user.name = 'tobi'",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 37,
+      "filename": "each.else.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "ul",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Each",
+            "obj": "user",
+            "val": "val",
+            "key": "key",
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Code",
+                        "val": "key",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 41,
+                        "filename": "each.else.tokens.json"
+                      },
+                      {
+                        "type": "Text",
+                        "val": ": ",
+                        "line": 41,
+                        "filename": "each.else.tokens.json"
+                      },
+                      {
+                        "type": "Code",
+                        "val": "val",
+                        "buffer": true,
+                        "mustEscape": true,
+                        "isInline": true,
+                        "line": 41,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 41,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 41,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 41,
+              "filename": "each.else.tokens.json"
+            },
+            "line": 40,
+            "filename": "each.else.tokens.json",
+            "alternate": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "li",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "user has no details!",
+                        "line": 43,
+                        "filename": "each.else.tokens.json"
+                      }
+                    ],
+                    "line": 43,
+                    "filename": "each.else.tokens.json"
+                  },
+                  "attrs": [],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 43,
+                  "filename": "each.else.tokens.json"
+                }
+              ],
+              "line": 43,
+              "filename": "each.else.tokens.json"
+            }
+          }
+        ],
+        "line": 39,
+        "filename": "each.else.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 39,
+      "filename": "each.else.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "each.else.tokens.json"
+}

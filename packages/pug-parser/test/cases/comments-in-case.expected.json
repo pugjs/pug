@@ -1,0 +1,143 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Doctype",
+      "val": "html",
+      "line": 1,
+      "filename": "comments-in-case.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "var s = 'this'",
+                  "buffer": false,
+                  "mustEscape": false,
+                  "isInline": false,
+                  "line": 4,
+                  "filename": "comments-in-case.tokens.json"
+                },
+                {
+                  "type": "Case",
+                  "expr": "s",
+                  "line": 5,
+                  "filename": "comments-in-case.tokens.json",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "When",
+                        "expr": "'this'",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Tag",
+                              "name": "p",
+                              "selfClosing": false,
+                              "block": {
+                                "type": "Block",
+                                "nodes": [
+                                  {
+                                    "type": "Text",
+                                    "val": "It's this!",
+                                    "line": 8,
+                                    "filename": "comments-in-case.tokens.json"
+                                  }
+                                ],
+                                "line": 8,
+                                "filename": "comments-in-case.tokens.json"
+                              },
+                              "attrs": [],
+                              "attributeBlocks": [],
+                              "isInline": false,
+                              "line": 8,
+                              "filename": "comments-in-case.tokens.json"
+                            }
+                          ],
+                          "line": 8,
+                          "filename": "comments-in-case.tokens.json"
+                        },
+                        "debug": false,
+                        "line": 7,
+                        "filename": "comments-in-case.tokens.json"
+                      },
+                      {
+                        "type": "When",
+                        "expr": "'that'",
+                        "block": {
+                          "type": "Block",
+                          "nodes": [
+                            {
+                              "type": "Tag",
+                              "name": "p",
+                              "selfClosing": false,
+                              "block": {
+                                "type": "Block",
+                                "nodes": [
+                                  {
+                                    "type": "Text",
+                                    "val": "It's that!",
+                                    "line": 10,
+                                    "filename": "comments-in-case.tokens.json"
+                                  }
+                                ],
+                                "line": 10,
+                                "filename": "comments-in-case.tokens.json"
+                              },
+                              "attrs": [],
+                              "attributeBlocks": [],
+                              "isInline": false,
+                              "line": 10,
+                              "filename": "comments-in-case.tokens.json"
+                            }
+                          ],
+                          "line": 10,
+                          "filename": "comments-in-case.tokens.json"
+                        },
+                        "debug": false,
+                        "line": 9,
+                        "filename": "comments-in-case.tokens.json"
+                      }
+                    ],
+                    "line": 6,
+                    "filename": "comments-in-case.tokens.json"
+                  }
+                }
+              ],
+              "line": 3,
+              "filename": "comments-in-case.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 3,
+            "filename": "comments-in-case.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "comments-in-case.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "comments-in-case.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "comments-in-case.tokens.json"
+}

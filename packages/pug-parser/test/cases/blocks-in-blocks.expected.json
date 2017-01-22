@@ -1,0 +1,50 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "./auxiliary/blocks-in-blocks-layout.pug",
+        "line": 1,
+        "filename": "blocks-in-blocks.tokens.json"
+      },
+      "line": 1,
+      "filename": "blocks-in-blocks.tokens.json"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Tag",
+          "name": "h1",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Page 2",
+                "line": 4,
+                "filename": "blocks-in-blocks.tokens.json"
+              }
+            ],
+            "line": 4,
+            "filename": "blocks-in-blocks.tokens.json"
+          },
+          "attrs": [],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 4,
+          "filename": "blocks-in-blocks.tokens.json"
+        }
+      ],
+      "line": 3,
+      "filename": "blocks-in-blocks.tokens.json",
+      "name": "body",
+      "mode": "replace"
+    }
+  ],
+  "line": 0,
+  "filename": "blocks-in-blocks.tokens.json"
+}

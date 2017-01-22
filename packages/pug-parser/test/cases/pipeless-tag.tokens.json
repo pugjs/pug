@@ -1,0 +1,14 @@
+{"type":"tag","line":1,"col":1,"val":"pre"}
+{"type":"dot","line":1,"col":4}
+{"type":"start-pipeless-text","line":1,"col":5}
+{"type":"text","line":2,"col":3,"val":"  what"}
+{"type":"newline","line":3,"col":1}
+{"type":"text","line":3,"col":3,"val":"is "}
+{"type":"interpolated-code","line":3,"col":6,"val":"'going'","mustEscape":true,"buffer":true}
+{"type":"text","line":3,"col":16,"val":" "}
+{"type":"start-pug-interpolation","line":3,"col":17}
+{"type":"interpolated-code","line":3,"col":21,"val":"'on'","mustEscape":true,"buffer":true}
+{"type":"end-pug-interpolation","line":3,"col":28}
+{"type":"text","line":3,"col":29,"val":""}
+{"type":"end-pipeless-text","line":3,"col":29}
+{"type":"eos","line":3,"col":29}

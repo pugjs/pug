@@ -1,0 +1,73 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "auxiliary/dialog.pug",
+        "line": 2,
+        "filename": "inheritance.alert-dialog.tokens.json"
+      },
+      "line": 2,
+      "filename": "inheritance.alert-dialog.tokens.json"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Tag",
+          "name": "h1",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Alert!",
+                "line": 5,
+                "filename": "inheritance.alert-dialog.tokens.json"
+              }
+            ],
+            "line": 5,
+            "filename": "inheritance.alert-dialog.tokens.json"
+          },
+          "attrs": [],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 5,
+          "filename": "inheritance.alert-dialog.tokens.json"
+        },
+        {
+          "type": "Tag",
+          "name": "p",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "I'm an alert!",
+                "line": 6,
+                "filename": "inheritance.alert-dialog.tokens.json"
+              }
+            ],
+            "line": 6,
+            "filename": "inheritance.alert-dialog.tokens.json"
+          },
+          "attrs": [],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 6,
+          "filename": "inheritance.alert-dialog.tokens.json"
+        }
+      ],
+      "line": 4,
+      "filename": "inheritance.alert-dialog.tokens.json",
+      "name": "content",
+      "mode": "replace"
+    }
+  ],
+  "line": 0,
+  "filename": "inheritance.alert-dialog.tokens.json"
+}

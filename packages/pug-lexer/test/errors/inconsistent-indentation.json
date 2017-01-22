@@ -1,0 +1,6 @@
+{
+  "msg": "Inconsistent indentation. Expecting either 2 or 6 spaces/tabs.",
+  "code": "PUG:INCONSISTENT_INDENTATION",
+  "line": 4,
+  "column": 1
+}

@@ -1,0 +1,91 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "var id = 42;",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 2,
+      "filename": "interpolation.escape.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "foo",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "some",
+                "line": 4,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 5,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "#{text}",
+                "line": 5,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 6,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "here",
+                "line": 6,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "\n",
+                "line": 7,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Text",
+                "val": "My ID ",
+                "line": 7,
+                "filename": "interpolation.escape.tokens.json"
+              },
+              {
+                "type": "Code",
+                "val": "\"is {\" + id + \"}\"",
+                "buffer": true,
+                "mustEscape": true,
+                "isInline": true,
+                "line": 7,
+                "filename": "interpolation.escape.tokens.json"
+              }
+            ],
+            "line": 4,
+            "filename": "interpolation.escape.tokens.json"
+          }
+        ],
+        "line": 3,
+        "filename": "interpolation.escape.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 3,
+      "filename": "interpolation.escape.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "interpolation.escape.tokens.json"
+}

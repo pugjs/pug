@@ -1,0 +1,28 @@
+{
+  "name": "pug-code-gen",
+  "version": "1.1.0",
+  "description": "Default code-generator for pug.  It generates HTML via a JavaScript template function.",
+  "keywords": [
+    "pug"
+  ],
+  "dependencies": {
+    "constantinople": "^3.0.1",
+    "doctypes": "^1.1.0",
+    "js-stringify": "^1.0.1",
+    "pug-attrs": "^2.0.1",
+    "pug-error": "^1.3.0",
+    "pug-runtime": "^2.0.0",
+    "void-elements": "^2.0.1",
+    "with": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pugjs/pug-code-gen.git"
+  },
+  "author": "Forbes Lindesay",
+  "license": "MIT"
+}

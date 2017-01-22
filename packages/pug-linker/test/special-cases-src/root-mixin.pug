@@ -1,0 +1,9 @@
+extend ../fixtures/layout.pug
+
+mixin myMixin
+  p Hello world
+
+block body
+  p Before
+  +myMixin
+  p After

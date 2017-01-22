@@ -1,0 +1,9 @@
+{"type":"filter","line":1,"col":1,"val":"markdown-it"}
+{"type":"start-pipeless-text","line":1,"col":13}
+{"type":"text","line":2,"col":3,"val":"    code sample"}
+{"type":"newline","line":3,"col":1}
+{"type":"text","line":3,"col":3,"val":""}
+{"type":"newline","line":4,"col":1}
+{"type":"text","line":4,"col":3,"val":"# Heading"}
+{"type":"end-pipeless-text","line":4,"col":12}
+{"type":"eos","line":4,"col":12}

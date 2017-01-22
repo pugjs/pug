@@ -1,0 +1,82 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "list = [\"uno\", \"dos\", \"tres\",\n        \"cuatro\", \"cinco\", \"seis\"];",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 1,
+      "filename": "block-code.tokens.json"
+    },
+    {
+      "type": "Comment",
+      "val": " Without a block, the element is accepted and no code is generated",
+      "buffer": false,
+      "line": 4,
+      "filename": "block-code.tokens.json"
+    },
+    {
+      "type": "Code",
+      "val": "",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 5,
+      "filename": "block-code.tokens.json"
+    },
+    {
+      "type": "Each",
+      "obj": "list",
+      "val": "item",
+      "key": null,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Code",
+            "val": "string = item.charAt(0)\n\n  .toUpperCase() +\nitem.slice(1);",
+            "buffer": false,
+            "mustEscape": false,
+            "isInline": false,
+            "line": 7,
+            "filename": "block-code.tokens.json"
+          },
+          {
+            "type": "Tag",
+            "name": "li",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Code",
+                  "val": "string",
+                  "buffer": true,
+                  "mustEscape": true,
+                  "isInline": true,
+                  "line": 12,
+                  "filename": "block-code.tokens.json"
+                }
+              ],
+              "line": 12,
+              "filename": "block-code.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 12,
+            "filename": "block-code.tokens.json"
+          }
+        ],
+        "line": 7,
+        "filename": "block-code.tokens.json"
+      },
+      "line": 6,
+      "filename": "block-code.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "block-code.tokens.json"
+}

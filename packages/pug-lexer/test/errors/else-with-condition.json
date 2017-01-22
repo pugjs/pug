@@ -1,0 +1,6 @@
+{
+  "msg": "`else` cannot have a condition, perhaps you meant `else if`",
+  "code": "PUG:ELSE_CONDITION",
+  "line": 3,
+  "column": 6
+}

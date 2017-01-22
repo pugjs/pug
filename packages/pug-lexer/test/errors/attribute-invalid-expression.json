@@ -1,0 +1,6 @@
+{
+  "msg": "Syntax Error: Unterminated string constant",
+  "code": "PUG:SYNTAX_ERROR",
+  "line": 2,
+  "column": 5
+}

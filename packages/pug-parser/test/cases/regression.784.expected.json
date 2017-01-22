@@ -1,0 +1,48 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Code",
+      "val": "var url = 'http://www.google.com'",
+      "buffer": false,
+      "mustEscape": false,
+      "isInline": false,
+      "line": 1,
+      "filename": "regression.784.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "div",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Code",
+            "val": "url.replace('http://', '').replace(/^www\\./, '')",
+            "buffer": true,
+            "mustEscape": true,
+            "isInline": true,
+            "line": 2,
+            "filename": "regression.784.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "regression.784.tokens.json"
+      },
+      "attrs": [
+        {
+          "name": "class",
+          "val": "'url'",
+          "mustEscape": false
+        }
+      ],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "regression.784.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "regression.784.tokens.json"
+}

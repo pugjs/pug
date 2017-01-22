@@ -1,0 +1,6 @@
+{
+  "msg": "Mismatched Bracket: ]",
+  "code": "PUG:BRACKET_MISMATCH",
+  "line": 5,
+  "column": 11
+}

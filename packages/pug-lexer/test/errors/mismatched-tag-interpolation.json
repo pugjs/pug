@@ -1,0 +1,6 @@
+{
+  "msg": "The end of the string reached with no closing bracket } found.",
+  "code": "PUG:NO_END_BRACKET",
+  "line": 3,
+  "column": 1
+}

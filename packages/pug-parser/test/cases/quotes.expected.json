@@ -1,0 +1,53 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "\"foo\"",
+            "line": 1,
+            "filename": "quotes.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "quotes.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "quotes.tokens.json"
+    },
+    {
+      "type": "Tag",
+      "name": "p",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Text",
+            "val": "'foo'",
+            "line": 2,
+            "filename": "quotes.tokens.json"
+          }
+        ],
+        "line": 2,
+        "filename": "quotes.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 2,
+      "filename": "quotes.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "quotes.tokens.json"
+}
