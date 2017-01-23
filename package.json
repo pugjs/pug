@@ -16,6 +16,7 @@
     "watch": "jest --watch"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "snapshotSerializers": ["./scripts/filename-serializer.js"]
   }
 }
