@@ -1,5 +1,3 @@
-<!-- Coppied from root directory -->
-
 <a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 # Pug
 
