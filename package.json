@@ -6,6 +6,10 @@
     "jest": "^18.1.0",
     "lerna": "2.0.0-beta.32"
   },
+  "repository":{
+	"type": "git"
+	"url": "https://github.com/pugjs/pug.git"
+  },
   "scripts": {
     "clean": "lerna clean",
     "postinstall": "lerna bootstrap",
@@ -17,5 +21,6 @@
   },
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "license": "MIT"
 }
