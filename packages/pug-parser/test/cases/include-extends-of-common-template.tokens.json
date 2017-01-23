@@ -1,0 +1,7 @@
+{"type":"include","line":1,"col":1}
+{"type":"path","line":1,"col":9,"val":"auxiliary/extends-empty-block-1.pug"}
+{"type":"newline","line":2,"col":1}
+{"type":"include","line":2,"col":1}
+{"type":"path","line":2,"col":9,"val":"auxiliary/extends-empty-block-2.pug"}
+{"type":"newline","line":3,"col":1}
+{"type":"eos","line":3,"col":1}

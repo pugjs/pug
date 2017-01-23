@@ -1,0 +1,24 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Text",
+      "val": "The message is \"",
+      "line": 1,
+      "filename": "include-only-text-body.pug"
+    },
+    {
+      "type": "YieldBlock",
+      "line": 2,
+      "filename": "include-only-text-body.pug"
+    },
+    {
+      "type": "Text",
+      "val": "\"",
+      "line": 3,
+      "filename": "include-only-text-body.pug"
+    }
+  ],
+  "line": 0,
+  "filename": "include-only-text-body.pug"
+}

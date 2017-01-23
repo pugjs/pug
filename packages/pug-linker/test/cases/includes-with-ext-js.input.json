@@ -1,0 +1,55 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "pre",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "code",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "RawInclude",
+                  "file": {
+                    "type": "FileReference",
+                    "line": 3,
+                    "filename": "includes-with-ext-js.pug",
+                    "path": "javascript-new-lines.js",
+                    "fullPath": "javascript-new-lines.js",
+                    "str": "var x = \"\\n here is some \\n new lined text\";\n"
+                  },
+                  "line": 3,
+                  "filename": "includes-with-ext-js.pug",
+                  "filters": []
+                }
+              ],
+              "line": 2,
+              "filename": "includes-with-ext-js.pug"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": true,
+            "line": 2,
+            "filename": "includes-with-ext-js.pug"
+          }
+        ],
+        "line": 1,
+        "filename": "includes-with-ext-js.pug"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "includes-with-ext-js.pug"
+    }
+  ],
+  "line": 0,
+  "filename": "includes-with-ext-js.pug"
+}

@@ -1,0 +1,204 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "../fixtures/layout.pug",
+        "line": 1,
+        "filename": "extending-include.pug",
+        "fullPath": "../fixtures/layout.pug",
+        "str": "doctype\n\nhtml\n  head\n    block head\n      <title>Hello world!</title>\n  body\n    block body\n",
+        "ast": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Doctype",
+              "val": "",
+              "line": 1,
+              "filename": "../fixtures/layout.pug"
+            },
+            {
+              "type": "Tag",
+              "name": "html",
+              "selfClosing": false,
+              "block": {
+                "type": "Block",
+                "nodes": [
+                  {
+                    "type": "Tag",
+                    "name": "head",
+                    "selfClosing": false,
+                    "block": {
+                      "type": "Block",
+                      "nodes": [
+                        {
+                          "type": "NamedBlock",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "<title>Hello world!</title>",
+                              "filename": "../fixtures/layout.pug",
+                              "line": 6,
+                              "isHtml": true
+                            }
+                          ],
+                          "line": 5,
+                          "filename": "../fixtures/layout.pug",
+                          "name": "head",
+                          "mode": "replace"
+                        }
+                      ],
+                      "line": 4,
+                      "filename": "../fixtures/layout.pug"
+                    },
+                    "attrs": [],
+                    "attributeBlocks": [],
+                    "isInline": false,
+                    "line": 4,
+                    "filename": "../fixtures/layout.pug"
+                  },
+                  {
+                    "type": "Tag",
+                    "name": "body",
+                    "selfClosing": false,
+                    "block": {
+                      "type": "Block",
+                      "nodes": [
+                        {
+                          "type": "NamedBlock",
+                          "nodes": [],
+                          "line": 8,
+                          "filename": "../fixtures/layout.pug",
+                          "name": "body",
+                          "mode": "replace"
+                        }
+                      ],
+                      "line": 7,
+                      "filename": "../fixtures/layout.pug"
+                    },
+                    "attrs": [],
+                    "attributeBlocks": [],
+                    "isInline": false,
+                    "line": 7,
+                    "filename": "../fixtures/layout.pug"
+                  }
+                ],
+                "line": 3,
+                "filename": "../fixtures/layout.pug"
+              },
+              "attrs": [],
+              "attributeBlocks": [],
+              "isInline": false,
+              "line": 3,
+              "filename": "../fixtures/layout.pug"
+            }
+          ],
+          "line": 0,
+          "filename": "../fixtures/layout.pug"
+        }
+      },
+      "line": 1,
+      "filename": "extending-include.pug"
+    },
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 2,
+        "filename": "extending-include.pug",
+        "path": "../fixtures/mixins.pug",
+        "fullPath": "../fixtures/mixins.pug",
+        "str": "mixin image(src)\n  img(cl-src=src)&attributes(attributes)\n",
+        "ast": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Mixin",
+              "name": "image",
+              "args": "src",
+              "block": {
+                "type": "Block",
+                "nodes": [
+                  {
+                    "type": "Tag",
+                    "name": "img",
+                    "selfClosing": false,
+                    "block": {
+                      "type": "Block",
+                      "nodes": [],
+                      "line": 2,
+                      "filename": "../fixtures/mixins.pug"
+                    },
+                    "attrs": [
+                      {
+                        "name": "cl-src",
+                        "val": "src",
+                        "mustEscape": true
+                      }
+                    ],
+                    "attributeBlocks": [
+                      "attributes"
+                    ],
+                    "isInline": true,
+                    "line": 2,
+                    "filename": "../fixtures/mixins.pug"
+                  }
+                ],
+                "line": 2,
+                "filename": "../fixtures/mixins.pug"
+              },
+              "call": false,
+              "line": 1,
+              "filename": "../fixtures/mixins.pug"
+            }
+          ],
+          "line": 0,
+          "filename": "../fixtures/mixins.pug"
+        }
+      },
+      "line": 2,
+      "filename": "extending-include.pug",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 2,
+        "filename": "extending-include.pug"
+      }
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Mixin",
+          "name": "image",
+          "args": "'myimg.png'",
+          "block": null,
+          "call": true,
+          "attrs": [
+            {
+              "name": "class",
+              "val": "'with-border'",
+              "mustEscape": false
+            },
+            {
+              "name": "alt",
+              "val": "\"My image\"",
+              "mustEscape": true
+            }
+          ],
+          "attributeBlocks": [],
+          "line": 5,
+          "filename": "extending-include.pug"
+        }
+      ],
+      "line": 4,
+      "filename": "extending-include.pug",
+      "name": "body",
+      "mode": "replace"
+    }
+  ],
+  "line": 0,
+  "filename": "extending-include.pug"
+}

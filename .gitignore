@@ -6,7 +6,7 @@ lib-cov
 coverage
 cov-pt*
 npm-debug.log
-/test/output*
-/test/temp
-/docs/out
+**/test/output*
+**/test/temp
 .release.json
+lerna-debug.log

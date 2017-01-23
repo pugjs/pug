@@ -1,0 +1,15 @@
+{"type":"tag","line":1,"col":1,"val":"script"}
+{"type":"start-attributes","line":1,"col":7}
+{"type":"attribute","line":1,"col":8,"name":"type","val":"'text/x-template'","mustEscape":true}
+{"type":"end-attributes","line":1,"col":30}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"div"}
+{"type":"start-attributes","line":2,"col":6}
+{"type":"attribute","line":2,"col":7,"name":"id","val":"'user-<%= user.id %>'","mustEscape":false}
+{"type":"end-attributes","line":2,"col":32}
+{"type":"indent","line":3,"col":1,"val":4}
+{"type":"tag","line":3,"col":5,"val":"h1"}
+{"type":"text","line":3,"col":8,"val":"<%= user.title %>"}
+{"type":"outdent","line":3,"col":25}
+{"type":"outdent","line":3,"col":25}
+{"type":"eos","line":3,"col":25}

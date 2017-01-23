@@ -1,0 +1,6 @@
+{"type":"tag","line":1,"col":1,"val":"p"}
+{"type":"code","line":1,"col":2,"val":"'<script>'","mustEscape":true,"buffer":true}
+{"type":"newline","line":2,"col":1}
+{"type":"tag","line":2,"col":1,"val":"p"}
+{"type":"code","line":2,"col":2,"val":"'<script>'","mustEscape":false,"buffer":true}
+{"type":"eos","line":2,"col":15}

@@ -1,0 +1,1072 @@
+exports[`test cases/filters.cdata.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Code\",
+      \"val\": \"users = [{ name: \'tobi\', age: 2 }]\",
+      \"buffer\": false,
+      \"mustEscape\": false,
+      \"isInline\": false,
+      \"line\": 2,
+      \"filename\": \"filters.cdata.tokens.json\"
+    },
+    {
+      \"type\": \"Tag\",
+      \"name\": \"fb:users\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Each\",
+            \"obj\": \"users\",
+            \"val\": \"user\",
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"fb:user\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"name\": \"cdata\",
+                        \"block\": {
+                          \"type\": \"Block\",
+                          \"nodes\": [
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"#{user.name}\",
+                              \"line\": 8
+                            }
+                          ]
+                        },
+                        \"attrs\": [],
+                        \"line\": 7,
+                        \"filename\": \"filters.cdata.tokens.json\",
+                        \"val\": \"<![CDATA[#{user.name}]]>\"
+                      }
+                    ]
+                  },
+                  \"attrs\": [
+                    {
+                      \"name\": \"age\",
+                      \"val\": \"user.age\",
+                      \"mustEscape\": true
+                    }
+                  ],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 6,
+                  \"filename\": \"filters.cdata.tokens.json\"
+                }
+              ],
+              \"line\": 6,
+              \"filename\": \"filters.cdata.tokens.json\"
+            },
+            \"line\": 5,
+            \"filename\": \"filters.cdata.tokens.json\"
+          }
+        ]
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 4,
+      \"filename\": \"filters.cdata.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.cdata.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.coffeescript.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"script\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Text\",
+            \"name\": \"coffee-script\",
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"val\": \"regexp = /\\\\n/\",
+                  \"line\": 3
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.coffeescript.tokens.json\"
+            },
+            \"attrs\": [],
+            \"line\": 2,
+            \"filename\": \"filters.coffeescript.tokens.json\",
+            \"val\": \"(function() {\\n  var regexp;\\n\\n  regexp = /\\\\n/;\\n\\n}).call(this);\\n\"
+          },
+          {
+            \"type\": \"Text\",
+            \"name\": \"coffee-script\",
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"val\": \"math =\",
+                  \"line\": 5
+                },
+                {
+                  \"type\": \"Text\",
+                  \"val\": \"\\n\",
+                  \"line\": 6
+                },
+                {
+                  \"type\": \"Text\",
+                  \"val\": \"  square: (value) -> value * value\",
+                  \"line\": 6
+                }
+              ],
+              \"line\": 4,
+              \"filename\": \"filters.coffeescript.tokens.json\"
+            },
+            \"attrs\": [
+              {
+                \"name\": \"minify\",
+                \"val\": \"true\",
+                \"mustEscape\": true
+              }
+            ],
+            \"line\": 4,
+            \"filename\": \"filters.coffeescript.tokens.json\",
+            \"val\": \"(function(){var n;n={square:function(n){return n*n}}}).call(this);\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.coffeescript.tokens.json\"
+      },
+      \"attrs\": [
+        {
+          \"name\": \"type\",
+          \"val\": \"\'text/javascript\'\",
+          \"mustEscape\": true
+        }
+      ],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.coffeescript.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.coffeescript.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.custom.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"html\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Tag\",
+            \"name\": \"body\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"name\": \"custom\",
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"Line 1\",
+                        \"line\": 4
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\\n\",
+                        \"line\": 5
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"Line 2\",
+                        \"line\": 5
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\\n\",
+                        \"line\": 6
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\",
+                        \"line\": 6
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\\n\",
+                        \"line\": 7
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"Line 4\",
+                        \"line\": 7
+                      }
+                    ],
+                    \"line\": 3,
+                    \"filename\": \"filters.custom.tokens.json\"
+                  },
+                  \"attrs\": [
+                    {
+                      \"name\": \"opt\",
+                      \"val\": \"\'val\'\",
+                      \"mustEscape\": true
+                    },
+                    {
+                      \"name\": \"num\",
+                      \"val\": \"2\",
+                      \"mustEscape\": true
+                    }
+                  ],
+                  \"line\": 3,
+                  \"filename\": \"filters.custom.tokens.json\",
+                  \"val\": \"BEGINLine 1\\nLine 2\\n\\nLine 4END\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.custom.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 2,
+            \"filename\": \"filters.custom.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.custom.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.custom.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.custom.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.include.custom.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"html\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Tag\",
+            \"name\": \"body\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"pre\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"line\": 4,
+                        \"filename\": \"filters.include.custom.tokens.json\",
+                        \"val\": \"BEGINhtml\\n  body\\n    pre\\n      include:custom(opt=\'val\' num=2) filters.include.custom.pug\\nEND\"
+                      }
+                    ],
+                    \"line\": 3,
+                    \"filename\": \"filters.include.custom.tokens.json\"
+                  },
+                  \"attrs\": [],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 3,
+                  \"filename\": \"filters.include.custom.tokens.json\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.include.custom.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 2,
+            \"filename\": \"filters.include.custom.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.include.custom.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.include.custom.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.include.custom.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.include.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"html\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Tag\",
+            \"name\": \"body\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"line\": 3,
+                  \"filename\": \"filters.include.tokens.json\",
+                  \"val\": \"<p>Just <em>some</em> markdown <strong>tests</strong>.</p>\\n<p>With new line.</p>\\n\"
+                },
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"script\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"line\": 5,
+                        \"filename\": \"filters.include.tokens.json\",
+                        \"val\": \"(function(){var n;n={square:function(n){return n*n}}}).call(this);\"
+                      }
+                    ],
+                    \"line\": 4,
+                    \"filename\": \"filters.include.tokens.json\"
+                  },
+                  \"attrs\": [],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 4,
+                  \"filename\": \"filters.include.tokens.json\"
+                },
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"script\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"line\": 7,
+                        \"filename\": \"filters.include.tokens.json\",
+                        \"val\": \"(function() {\\n  var math;\\n\\n  math = {\\n    square: function(value) {\\n      return value * value;\\n    }\\n  };\\n\\n}).call(this);\\n\"
+                      }
+                    ],
+                    \"line\": 6,
+                    \"filename\": \"filters.include.tokens.json\"
+                  },
+                  \"attrs\": [],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 6,
+                  \"filename\": \"filters.include.tokens.json\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.include.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 2,
+            \"filename\": \"filters.include.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.include.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.include.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.include.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.inline.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"p\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Text\",
+            \"val\": \"before \",
+            \"line\": 1,
+            \"filename\": \"filters.inline.tokens.json\"
+          },
+          {
+            \"type\": \"Text\",
+            \"name\": \"cdata\",
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"val\": \"inside\",
+                  \"line\": 1,
+                  \"filename\": \"filters.inline.tokens.json\"
+                }
+              ],
+              \"line\": 1,
+              \"filename\": \"filters.inline.tokens.json\"
+            },
+            \"attrs\": [],
+            \"line\": 1,
+            \"filename\": \"filters.inline.tokens.json\",
+            \"val\": \"<![CDATA[inside]]>\"
+          },
+          {
+            \"type\": \"Text\",
+            \"val\": \" after\",
+            \"line\": 1,
+            \"filename\": \"filters.inline.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.inline.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.inline.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.inline.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.less.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"html\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Tag\",
+            \"name\": \"head\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"style\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"name\": \"less\",
+                        \"block\": {
+                          \"type\": \"Block\",
+                          \"nodes\": [
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"@pad: 15px;\",
+                              \"line\": 5
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"\\n\",
+                              \"line\": 6
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"body {\",
+                              \"line\": 6
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"\\n\",
+                              \"line\": 7
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"  padding: @pad;\",
+                              \"line\": 7
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"\\n\",
+                              \"line\": 8
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"}\",
+                              \"line\": 8
+                            }
+                          ],
+                          \"line\": 4,
+                          \"filename\": \"filters.less.tokens.json\"
+                        },
+                        \"attrs\": [],
+                        \"line\": 4,
+                        \"filename\": \"filters.less.tokens.json\",
+                        \"val\": \"body {\\n  padding: 15px;\\n}\\n\"
+                      }
+                    ],
+                    \"line\": 3,
+                    \"filename\": \"filters.less.tokens.json\"
+                  },
+                  \"attrs\": [
+                    {
+                      \"name\": \"type\",
+                      \"val\": \"\\\"text/css\\\"\",
+                      \"mustEscape\": true
+                    }
+                  ],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 3,
+                  \"filename\": \"filters.less.tokens.json\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.less.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 2,
+            \"filename\": \"filters.less.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.less.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.less.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.less.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.markdown.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"html\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Tag\",
+            \"name\": \"body\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"name\": \"markdown-it\",
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"This is _some_ awesome **markdown**\",
+                        \"line\": 4
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\\n\",
+                        \"line\": 5
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"whoop.\",
+                        \"line\": 5
+                      }
+                    ],
+                    \"line\": 3,
+                    \"filename\": \"filters.markdown.tokens.json\"
+                  },
+                  \"attrs\": [],
+                  \"line\": 3,
+                  \"filename\": \"filters.markdown.tokens.json\",
+                  \"val\": \"<p>This is <em>some</em> awesome <strong>markdown</strong>\\nwhoop.</p>\\n\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.markdown.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 2,
+            \"filename\": \"filters.markdown.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.markdown.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.markdown.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.markdown.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.nested.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"script\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Text\",
+            \"name\": \"cdata\",
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"name\": \"uglify-js\",
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"(function() {\",
+                        \"line\": 3
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\\n\",
+                        \"line\": 4
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"  console.log(\'test\')\",
+                        \"line\": 4
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"\\n\",
+                        \"line\": 5
+                      },
+                      {
+                        \"type\": \"Text\",
+                        \"val\": \"})()\",
+                        \"line\": 5
+                      }
+                    ],
+                    \"line\": 2,
+                    \"filename\": \"filters.nested.tokens.json\"
+                  },
+                  \"attrs\": [],
+                  \"line\": 2,
+                  \"filename\": \"filters.nested.tokens.json\",
+                  \"val\": \"!function(){console.log(\\\"test\\\")}();\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.nested.tokens.json\"
+            },
+            \"attrs\": [],
+            \"line\": 2,
+            \"filename\": \"filters.nested.tokens.json\",
+            \"val\": \"<![CDATA[!function(){console.log(\\\"test\\\")}();]]>\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.nested.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.nested.tokens.json\"
+    },
+    {
+      \"type\": \"Tag\",
+      \"name\": \"script\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Text\",
+            \"name\": \"cdata\",
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Text\",
+                  \"name\": \"uglify-js\",
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"name\": \"coffee-script\",
+                        \"block\": {
+                          \"type\": \"Block\",
+                          \"nodes\": [
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"(->\",
+                              \"line\": 8
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"\\n\",
+                              \"line\": 9
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"  console.log \'test\'\",
+                              \"line\": 9
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"\\n\",
+                              \"line\": 10
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \")()\",
+                              \"line\": 10
+                            }
+                          ],
+                          \"line\": 7,
+                          \"filename\": \"filters.nested.tokens.json\"
+                        },
+                        \"attrs\": [],
+                        \"line\": 7,
+                        \"filename\": \"filters.nested.tokens.json\",
+                        \"val\": \"(function() {\\n  (function() {\\n    return console.log(\'test\');\\n  })();\\n\\n}).call(this);\\n\"
+                      }
+                    ],
+                    \"line\": 7,
+                    \"filename\": \"filters.nested.tokens.json\"
+                  },
+                  \"attrs\": [],
+                  \"line\": 7,
+                  \"filename\": \"filters.nested.tokens.json\",
+                  \"val\": \"(function(){!function(){return console.log(\\\"test\\\")}()}).call(this);\"
+                }
+              ],
+              \"line\": 7,
+              \"filename\": \"filters.nested.tokens.json\"
+            },
+            \"attrs\": [],
+            \"line\": 7,
+            \"filename\": \"filters.nested.tokens.json\",
+            \"val\": \"<![CDATA[(function(){!function(){return console.log(\\\"test\\\")}()}).call(this);]]>\"
+          }
+        ],
+        \"line\": 6,
+        \"filename\": \"filters.nested.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 6,
+      \"filename\": \"filters.nested.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.nested.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters.stylus.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Tag\",
+      \"name\": \"html\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Tag\",
+            \"name\": \"head\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"style\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"name\": \"stylus\",
+                        \"block\": {
+                          \"type\": \"Block\",
+                          \"nodes\": [
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"body\",
+                              \"line\": 5
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"\\n\",
+                              \"line\": 6
+                            },
+                            {
+                              \"type\": \"Text\",
+                              \"val\": \"  padding: 50px\",
+                              \"line\": 6
+                            }
+                          ],
+                          \"line\": 4,
+                          \"filename\": \"filters.stylus.tokens.json\"
+                        },
+                        \"attrs\": [],
+                        \"line\": 4,
+                        \"filename\": \"filters.stylus.tokens.json\",
+                        \"val\": \"body {\\n  padding: 50px;\\n}\\n\"
+                      }
+                    ],
+                    \"line\": 3,
+                    \"filename\": \"filters.stylus.tokens.json\"
+                  },
+                  \"attrs\": [
+                    {
+                      \"name\": \"type\",
+                      \"val\": \"\\\"text/css\\\"\",
+                      \"mustEscape\": true
+                    }
+                  ],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 3,
+                  \"filename\": \"filters.stylus.tokens.json\"
+                }
+              ],
+              \"line\": 2,
+              \"filename\": \"filters.stylus.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 2,
+            \"filename\": \"filters.stylus.tokens.json\"
+          },
+          {
+            \"type\": \"Tag\",
+            \"name\": \"body\",
+            \"selfClosing\": false,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [],
+              \"line\": 7,
+              \"filename\": \"filters.stylus.tokens.json\"
+            },
+            \"attrs\": [],
+            \"attributeBlocks\": [],
+            \"isInline\": false,
+            \"line\": 7,
+            \"filename\": \"filters.stylus.tokens.json\"
+          }
+        ],
+        \"line\": 1,
+        \"filename\": \"filters.stylus.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters.stylus.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters.stylus.tokens.json\"
+}"
+`;
+
+exports[`test cases/filters-empty.input.json 1`] = `
+"{
+  \"type\": \"Block\",
+  \"nodes\": [
+    {
+      \"type\": \"Code\",
+      \"val\": \"var users = [{ name: \'tobi\', age: 2 }]\",
+      \"buffer\": false,
+      \"mustEscape\": false,
+      \"isInline\": false,
+      \"line\": 1,
+      \"filename\": \"filters-empty.tokens.json\"
+    },
+    {
+      \"type\": \"Tag\",
+      \"name\": \"fb:users\",
+      \"selfClosing\": false,
+      \"block\": {
+        \"type\": \"Block\",
+        \"nodes\": [
+          {
+            \"type\": \"Each\",
+            \"obj\": \"users\",
+            \"val\": \"user\",
+            \"key\": null,
+            \"block\": {
+              \"type\": \"Block\",
+              \"nodes\": [
+                {
+                  \"type\": \"Tag\",
+                  \"name\": \"fb:user\",
+                  \"selfClosing\": false,
+                  \"block\": {
+                    \"type\": \"Block\",
+                    \"nodes\": [
+                      {
+                        \"type\": \"Text\",
+                        \"name\": \"cdata\",
+                        \"block\": {
+                          \"type\": \"Block\",
+                          \"nodes\": [],
+                          \"line\": 6,
+                          \"filename\": \"filters-empty.tokens.json\"
+                        },
+                        \"attrs\": [],
+                        \"line\": 6,
+                        \"filename\": \"filters-empty.tokens.json\",
+                        \"val\": \"<![CDATA[]]>\"
+                      }
+                    ],
+                    \"line\": 5,
+                    \"filename\": \"filters-empty.tokens.json\"
+                  },
+                  \"attrs\": [
+                    {
+                      \"name\": \"age\",
+                      \"val\": \"user.age\",
+                      \"mustEscape\": true
+                    }
+                  ],
+                  \"attributeBlocks\": [],
+                  \"isInline\": false,
+                  \"line\": 5,
+                  \"filename\": \"filters-empty.tokens.json\"
+                }
+              ],
+              \"line\": 5,
+              \"filename\": \"filters-empty.tokens.json\"
+            },
+            \"line\": 4,
+            \"filename\": \"filters-empty.tokens.json\"
+          }
+        ],
+        \"line\": 3,
+        \"filename\": \"filters-empty.tokens.json\"
+      },
+      \"attrs\": [],
+      \"attributeBlocks\": [],
+      \"isInline\": false,
+      \"line\": 3,
+      \"filename\": \"filters-empty.tokens.json\"
+    }
+  ],
+  \"line\": 0,
+  \"filename\": \"filters-empty.tokens.json\"
+}"
+`;
+
+exports[`test errors/dynamic-option.input.json 1`] = `
+Object {
+  "code": "PUG:FILTER_OPTION_NOT_CONSTANT",
+  "line": 2,
+  "msg": "\"opt\" is not constant. All filters are rendered compile-time so filter options must be constants.",
+}
+`;

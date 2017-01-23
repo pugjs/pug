@@ -1,0 +1,101 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Tag",
+      "name": "html",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "Tag",
+            "name": "body",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "Filter",
+                  "name": "custom",
+                  "block": {
+                    "type": "Block",
+                    "nodes": [
+                      {
+                        "type": "Text",
+                        "val": "Line 1",
+                        "line": 4
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 5
+                      },
+                      {
+                        "type": "Text",
+                        "val": "Line 2",
+                        "line": 5
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 6
+                      },
+                      {
+                        "type": "Text",
+                        "val": "",
+                        "line": 6
+                      },
+                      {
+                        "type": "Text",
+                        "val": "\n",
+                        "line": 7
+                      },
+                      {
+                        "type": "Text",
+                        "val": "Line 4",
+                        "line": 7
+                      }
+                    ],
+                    "line": 3,
+                    "filename": "filters.custom.tokens.json"
+                  },
+                  "attrs": [
+                    {
+                      "name": "opt",
+                      "val": "'val'",
+                      "mustEscape": true
+                    },
+                    {
+                      "name": "num",
+                      "val": "2",
+                      "mustEscape": true
+                    }
+                  ],
+                  "line": 3,
+                  "filename": "filters.custom.tokens.json"
+                }
+              ],
+              "line": 2,
+              "filename": "filters.custom.tokens.json"
+            },
+            "attrs": [],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 2,
+            "filename": "filters.custom.tokens.json"
+          }
+        ],
+        "line": 1,
+        "filename": "filters.custom.tokens.json"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 1,
+      "filename": "filters.custom.tokens.json"
+    }
+  ],
+  "line": 0,
+  "filename": "filters.custom.tokens.json"
+}

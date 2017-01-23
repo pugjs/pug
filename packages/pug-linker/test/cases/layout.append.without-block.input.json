@@ -1,0 +1,226 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "../fixtures/append-without-block/app-layout.pug",
+        "line": 2,
+        "filename": "layout.append.without-block.pug",
+        "fullPath": "../fixtures/append-without-block/app-layout.pug",
+        "str": "\nextends layout.pug\n\nappend head\n  script(src='app.js')\n",
+        "ast": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Extends",
+              "file": {
+                "type": "FileReference",
+                "path": "layout.pug",
+                "line": 2,
+                "filename": "../fixtures/append-without-block/app-layout.pug",
+                "fullPath": "../fixtures/append-without-block/layout.pug",
+                "str": "\nhtml\n  block head\n    script(src='vendor/jquery.js')\n    script(src='vendor/caustic.js')\n  body\n    block body",
+                "ast": {
+                  "type": "Block",
+                  "nodes": [
+                    {
+                      "type": "Tag",
+                      "name": "html",
+                      "selfClosing": false,
+                      "block": {
+                        "type": "Block",
+                        "nodes": [
+                          {
+                            "type": "NamedBlock",
+                            "nodes": [
+                              {
+                                "type": "Tag",
+                                "name": "script",
+                                "selfClosing": false,
+                                "block": {
+                                  "type": "Block",
+                                  "nodes": [],
+                                  "line": 4,
+                                  "filename": "../fixtures/append-without-block/layout.pug"
+                                },
+                                "attrs": [
+                                  {
+                                    "name": "src",
+                                    "val": "'vendor/jquery.js'",
+                                    "mustEscape": true
+                                  }
+                                ],
+                                "attributeBlocks": [],
+                                "isInline": false,
+                                "line": 4,
+                                "filename": "../fixtures/append-without-block/layout.pug"
+                              },
+                              {
+                                "type": "Tag",
+                                "name": "script",
+                                "selfClosing": false,
+                                "block": {
+                                  "type": "Block",
+                                  "nodes": [],
+                                  "line": 5,
+                                  "filename": "../fixtures/append-without-block/layout.pug"
+                                },
+                                "attrs": [
+                                  {
+                                    "name": "src",
+                                    "val": "'vendor/caustic.js'",
+                                    "mustEscape": true
+                                  }
+                                ],
+                                "attributeBlocks": [],
+                                "isInline": false,
+                                "line": 5,
+                                "filename": "../fixtures/append-without-block/layout.pug"
+                              }
+                            ],
+                            "line": 3,
+                            "filename": "../fixtures/append-without-block/layout.pug",
+                            "name": "head",
+                            "mode": "replace"
+                          },
+                          {
+                            "type": "Tag",
+                            "name": "body",
+                            "selfClosing": false,
+                            "block": {
+                              "type": "Block",
+                              "nodes": [
+                                {
+                                  "type": "NamedBlock",
+                                  "nodes": [],
+                                  "line": 7,
+                                  "filename": "../fixtures/append-without-block/layout.pug",
+                                  "name": "body",
+                                  "mode": "replace"
+                                }
+                              ],
+                              "line": 6,
+                              "filename": "../fixtures/append-without-block/layout.pug"
+                            },
+                            "attrs": [],
+                            "attributeBlocks": [],
+                            "isInline": false,
+                            "line": 6,
+                            "filename": "../fixtures/append-without-block/layout.pug"
+                          }
+                        ],
+                        "line": 2,
+                        "filename": "../fixtures/append-without-block/layout.pug"
+                      },
+                      "attrs": [],
+                      "attributeBlocks": [],
+                      "isInline": false,
+                      "line": 2,
+                      "filename": "../fixtures/append-without-block/layout.pug"
+                    }
+                  ],
+                  "line": 0,
+                  "filename": "../fixtures/append-without-block/layout.pug"
+                }
+              },
+              "line": 2,
+              "filename": "../fixtures/append-without-block/app-layout.pug"
+            },
+            {
+              "type": "NamedBlock",
+              "nodes": [
+                {
+                  "type": "Tag",
+                  "name": "script",
+                  "selfClosing": false,
+                  "block": {
+                    "type": "Block",
+                    "nodes": [],
+                    "line": 5,
+                    "filename": "../fixtures/append-without-block/app-layout.pug"
+                  },
+                  "attrs": [
+                    {
+                      "name": "src",
+                      "val": "'app.js'",
+                      "mustEscape": true
+                    }
+                  ],
+                  "attributeBlocks": [],
+                  "isInline": false,
+                  "line": 5,
+                  "filename": "../fixtures/append-without-block/app-layout.pug"
+                }
+              ],
+              "line": 4,
+              "filename": "../fixtures/append-without-block/app-layout.pug",
+              "name": "head",
+              "mode": "append"
+            }
+          ],
+          "line": 0,
+          "filename": "../fixtures/append-without-block/app-layout.pug"
+        }
+      },
+      "line": 2,
+      "filename": "layout.append.without-block.pug"
+    },
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Tag",
+          "name": "script",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [],
+            "line": 5,
+            "filename": "layout.append.without-block.pug"
+          },
+          "attrs": [
+            {
+              "name": "src",
+              "val": "'foo.js'",
+              "mustEscape": true
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 5,
+          "filename": "layout.append.without-block.pug"
+        },
+        {
+          "type": "Tag",
+          "name": "script",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [],
+            "line": 6,
+            "filename": "layout.append.without-block.pug"
+          },
+          "attrs": [
+            {
+              "name": "src",
+              "val": "'bar.js'",
+              "mustEscape": true
+            }
+          ],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 6,
+          "filename": "layout.append.without-block.pug"
+        }
+      ],
+      "line": 4,
+      "filename": "layout.append.without-block.pug",
+      "name": "head",
+      "mode": "append"
+    }
+  ],
+  "line": 0,
+  "filename": "layout.append.without-block.pug"
+}

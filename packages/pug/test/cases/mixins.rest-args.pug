@@ -1,0 +1,6 @@
+mixin list(tag, ...items)
+  #{tag}
+    each item in items
+      li= item
+
++list('ul', 1, 2, 3, 4)

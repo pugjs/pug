@@ -1,0 +1,10 @@
+{"type":"tag","line":1,"col":1,"val":"figure"}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"blockquote"}
+{"type":"indent","line":3,"col":1,"val":4}
+{"type":"text","line":3,"col":7,"val":"Try to define yourself by what you do, and you&#8217;ll burnout every time. You are. That is enough. I rest in that."}
+{"type":"outdent","line":4,"col":3}
+{"type":"tag","line":4,"col":3,"val":"figcaption"}
+{"type":"text","line":4,"col":14,"val":"from @thefray at 1:43pm on May 10"}
+{"type":"outdent","line":4,"col":47}
+{"type":"eos","line":4,"col":47}

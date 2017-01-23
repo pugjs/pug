@@ -1,0 +1,10 @@
+{"type":"code","line":1,"col":1,"val":"var foo = 'bar'","mustEscape":false,"buffer":false}
+{"type":"newline","line":2,"col":1}
+{"type":"code","line":2,"col":1,"val":"var list = [1,2,3]","mustEscape":false,"buffer":false}
+{"type":"newline","line":3,"col":1}
+{"type":"tag","line":3,"col":1,"val":"a"}
+{"type":"start-attributes","line":3,"col":2}
+{"type":"attribute","line":3,"col":3,"name":"class","val":"list","mustEscape":true}
+{"type":"attribute","line":3,"col":15,"name":"id","val":"foo","mustEscape":true}
+{"type":"end-attributes","line":3,"col":21}
+{"type":"eos","line":3,"col":22}

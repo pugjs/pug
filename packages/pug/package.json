@@ -1,0 +1,48 @@
+{
+  "name": "pug",
+  "description": "A clean, whitespace-sensitive template language for writing HTML",
+  "version": "2.0.0-beta6",
+  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+  "maintainers": [
+    "Forbes Lindesay <forbes@lindesay.co.uk>",
+    "Matthias Le Brun <mlbli@me.com>",
+    "Joshua Appelman <joshua@jbna.nl>",
+    "Jonathan Ong <jonathanrichardong@gmail.com>",
+    "Alex Kocharin <alex@kocharin.ru>",
+    "Hemanth <hemanth.hm@gmail.com>",
+    "Timothy Gu <timothygu99@gmail.com>",
+    "Andreas Lubbe <git@lubbe.org>"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pugjs/pug"
+  },
+  "main": "lib",
+  "dependencies": {
+    "pug-code-gen": "^1.1.0",
+    "pug-filters": "^1.2.4",
+    "pug-lexer": "^2.2.0",
+    "pug-linker": "^1.0.1",
+    "pug-load": "^2.0.3",
+    "pug-parser": "^2.0.1",
+    "pug-runtime": "^2.0.2",
+    "pug-strip-comments": "^1.0.1"
+  },
+  "devDependencies": {
+    "jstransformer-cdata": "^1.0.0",
+    "jstransformer-coffee-script": "^1.0.0",
+    "jstransformer-less": "^2.1.0",
+    "jstransformer-markdown-it": "^1.0.0",
+    "jstransformer-stylus": "^1.0.0",
+    "jstransformer-uglify-js": "^1.1.1",
+    "jstransformer-verbatim": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.2.8",
+    "uglify-js": "mishoo/UglifyJS2#1c15d0db456ce32f1b9b507aad97e5ee5c8285f7"
+  },
+  "browser": {
+    "fs": false
+  },
+  "homepage": "https://pugjs.org"
+}

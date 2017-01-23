@@ -1,0 +1,12 @@
+{"type":"mixin","line":1,"col":1,"val":"m","args":"id"}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"div"}
+{"type":"indent","line":3,"col":1,"val":4}
+{"type":"mixin-block","line":3,"col":5}
+{"type":"outdent","line":5,"col":3}
+{"type":"outdent","line":5,"col":1}
+{"type":"call","line":5,"col":1,"val":"m","args":""}
+{"type":"indent","line":6,"col":1,"val":2}
+{"type":"text","line":6,"col":5,"val":"This text should appear"}
+{"type":"outdent","line":6,"col":28}
+{"type":"eos","line":6,"col":28}
