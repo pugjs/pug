@@ -7,8 +7,6 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "istanbul": "*",
-    "testit": "^2.0.2",
     "uglify-js": "^2.6.1"
   },
   "files": [
@@ -21,10 +19,7 @@
   ],
   "scripts": {
     "prepublish": "node prepublish",
-    "pretest": "npm run prepublish",
-    "test": "node test",
-    "posttest": "npm run coverage",
-    "coverage": "istanbul cover test"
+    "pretest": "npm run prepublish"
   },
   "repository": {
     "type": "git",

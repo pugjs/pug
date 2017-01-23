@@ -1,5 +1,0 @@
-{
-  "msg": "Only named blocks and mixins can appear at the top level of an extending template",
-  "code": "PUG:UNEXPECTED_NODES_IN_EXTENDING_ROOT",
-  "line": 6
-}

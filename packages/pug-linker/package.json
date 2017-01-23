@@ -10,15 +10,9 @@
     "pug-walk": "^1.0.0"
   },
   "devDependencies": {
-    "istanbul": "*",
     "pug-lexer": "^2.0.2",
     "pug-load": "^2.0.0",
-    "pug-parser": "^2.0.1",
-    "testit": "^2.0.2"
-  },
-  "scripts": {
-    "coverage": "istanbul cover test",
-    "test": "node test"
+    "pug-parser": "^2.0.1"
   },
   "repository": {
     "type": "git",

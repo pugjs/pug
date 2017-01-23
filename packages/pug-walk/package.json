@@ -7,14 +7,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "istanbul": "*",
     "pug-lexer": "^2.1.0",
-    "pug-parser": "^2.0.1",
-    "testit": "^2.1.2"
-  },
-  "scripts": {
-    "test": "node test",
-    "coverage": "istanbul cover test"
+    "pug-parser": "^2.0.1"
   },
   "files": [
     "index.js"

@@ -1,9 +1,0 @@
-{"type":"comment","line":1,"col":1,"val":"","buffer":true}
-{"type":"start-pipeless-text","line":1,"col":3}
-{"type":"text","line":2,"col":3,"val":"     .foo"}
-{"type":"newline","line":3,"col":1}
-{"type":"text","line":3,"col":3,"val":"\t.bar"}
-{"type":"newline","line":4,"col":1}
-{"type":"text","line":4,"col":3,"val":".hey"}
-{"type":"end-pipeless-text","line":4,"col":7}
-{"type":"eos","line":4,"col":7}

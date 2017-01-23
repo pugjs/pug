@@ -1,9 +1,0 @@
-{"type":"extends","line":1,"col":1}
-{"type":"path","line":1,"col":9,"val":"/auxiliary/inheritance.extend.recursive-parent.pug"}
-{"type":"newline","line":3,"col":1}
-{"type":"block","line":3,"col":1,"val":"parent","mode":"replace"}
-{"type":"indent","line":4,"col":1,"val":4}
-{"type":"tag","line":4,"col":5,"val":"h4"}
-{"type":"text","line":4,"col":8,"val":"child"}
-{"type":"outdent","line":4,"col":13}
-{"type":"eos","line":4,"col":13}

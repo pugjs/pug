@@ -1,6 +1,0 @@
-{
-  "msg": "End of line was reached with no closing bracket for interpolation.",
-  "code": "PUG:NO_END_BRACKET",
-  "line": 2,
-  "column": 14
-}

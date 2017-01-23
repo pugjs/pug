@@ -24,11 +24,7 @@
     "jstransformer-uglify-js": "^1.1.1",
     "pug-lexer": "^2.0.2",
     "pug-load": "^2.0.0",
-    "pug-parser": "^2.0.1",
-    "testit": "^2.0.0"
-  },
-  "scripts": {
-    "test": "node test"
+    "pug-parser": "^2.0.1"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,0 @@
-{"type":"tag","line":1,"col":1,"val":"script"}
-{"type":"dot","line":1,"col":7}
-{"type":"start-pipeless-text","line":1,"col":8}
-{"type":"text","line":2,"col":3,"val":"var re = /\\d+/;"}
-{"type":"end-pipeless-text","line":2,"col":18}
-{"type":"eos","line":2,"col":18}

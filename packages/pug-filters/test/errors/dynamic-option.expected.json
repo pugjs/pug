@@ -1,5 +1,0 @@
-{
-  "msg": "\"opt\" is not constant. All filters are rendered compile-time so filter options must be constants.",
-  "code": "PUG:FILTER_OPTION_NOT_CONSTANT",
-  "line": 2
-}

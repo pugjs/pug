@@ -2,11 +2,20 @@
   "name": "pug-monorepo",
   "private": true,
   "devDependencies": {
+    "coveralls": "^2.11.2",
+    "jest": "^18.1.0",
     "lerna": "2.0.0-beta.32"
   },
   "scripts": {
     "clean": "lerna clean",
     "postinstall": "lerna bootstrap",
-    "test": "lerna run test"
+    "pretest": "lerna run pretest",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
+    "watch": "jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

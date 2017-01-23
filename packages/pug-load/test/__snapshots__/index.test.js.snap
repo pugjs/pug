@@ -1,0 +1,135 @@
+exports[`test pug-load 1`] = `
+Object {
+  "filename": "<dirname>/foo.pug",
+  "line": 0,
+  "nodes": Array [
+    Object {
+      "file": Object {
+        "ast": Object {
+          "filename": "<dirname>/bar.pug",
+          "line": 0,
+          "nodes": Array [
+            Object {
+              "filename": "<dirname>/bar.pug",
+              "line": 1,
+              "mode": "replace",
+              "name": "bing",
+              "nodes": Array [],
+              "type": "NamedBlock",
+            },
+          ],
+          "type": "Block",
+        },
+        "filename": "<dirname>/foo.pug",
+        "fullPath": "<dirname>/bar.pug",
+        "line": 1,
+        "path": "bar.pug",
+        "str": "block bing
+",
+        "type": "FileReference",
+      },
+      "filename": "<dirname>/foo.pug",
+      "line": 1,
+      "type": "Extends",
+    },
+    Object {
+      "filename": "<dirname>/foo.pug",
+      "line": 3,
+      "mode": "replace",
+      "name": "bing",
+      "nodes": Array [
+        Object {
+          "block": Object {
+            "filename": "<dirname>/foo.pug",
+            "line": 4,
+            "nodes": Array [],
+            "type": "Block",
+          },
+          "file": Object {
+            "ast": Object {
+              "filename": "<dirname>/bing.pug",
+              "line": 0,
+              "nodes": Array [
+                Object {
+                  "attributeBlocks": Array [],
+                  "attrs": Array [
+                    Object {
+                      "mustEscape": false,
+                      "name": "class",
+                      "val": "\'bing\'",
+                    },
+                  ],
+                  "block": Object {
+                    "filename": "<dirname>/bing.pug",
+                    "line": 1,
+                    "nodes": Array [
+                      Object {
+                        "filename": "<dirname>/bing.pug",
+                        "line": 1,
+                        "type": "Text",
+                        "val": "bong",
+                      },
+                    ],
+                    "type": "Block",
+                  },
+                  "filename": "<dirname>/bing.pug",
+                  "isInline": false,
+                  "line": 1,
+                  "name": "div",
+                  "selfClosing": false,
+                  "type": "Tag",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "<dirname>/foo.pug",
+            "fullPath": "<dirname>/bing.pug",
+            "line": 4,
+            "path": "bing.pug",
+            "str": ".bing bong
+",
+            "type": "FileReference",
+          },
+          "filename": "<dirname>/foo.pug",
+          "line": 4,
+          "type": "Include",
+        },
+        Object {
+          "attributeBlocks": Array [],
+          "attrs": Array [],
+          "block": Object {
+            "filename": "<dirname>/foo.pug",
+            "line": 5,
+            "nodes": Array [
+              Object {
+                "file": Object {
+                  "filename": "<dirname>/foo.pug",
+                  "fullPath": "<dirname>/script.js",
+                  "line": 6,
+                  "path": "script.js",
+                  "str": "document.write(\'hello world!\');
+",
+                  "type": "FileReference",
+                },
+                "filename": "<dirname>/foo.pug",
+                "filters": Array [],
+                "line": 6,
+                "type": "RawInclude",
+              },
+            ],
+            "type": "Block",
+          },
+          "filename": "<dirname>/foo.pug",
+          "isInline": false,
+          "line": 5,
+          "name": "script",
+          "selfClosing": false,
+          "type": "Tag",
+        },
+      ],
+      "type": "NamedBlock",
+    },
+  ],
+  "type": "Block",
+}
+`;

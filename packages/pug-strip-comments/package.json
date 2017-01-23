@@ -9,13 +9,7 @@
     "pug-error": "^1.0.0"
   },
   "devDependencies": {
-    "istanbul": "^0.3.2",
-    "line-json": "^1.0.0",
-    "testit": "^2.0.2"
-  },
-  "scripts": {
-    "test": "node test && npm run coverage",
-    "coverage": "istanbul cover test"
+    "line-json": "^1.0.0"
   },
   "repository": {
     "type": "git",

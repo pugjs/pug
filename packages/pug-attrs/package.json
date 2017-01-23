@@ -10,14 +10,6 @@
     "pug-runtime": "^2.0.0",
     "js-stringify": "^1.0.1"
   },
-  "devDependencies": {
-    "istanbul": "*",
-    "testit": "^2.0.2"
-  },
-  "scripts": {
-    "test": "node test",
-    "coverage": "istanbul cover test"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-attrs.git"

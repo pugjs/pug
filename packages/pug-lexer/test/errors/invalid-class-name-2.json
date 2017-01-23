@@ -1,6 +1,0 @@
-{
-  "msg": "If a class name begins with a \"-\" or \"--\", it must be followed by a letter or underscore.",
-  "code": "PUG:INVALID_CLASS_NAME",
-  "line": 1,
-  "column": 1
-}

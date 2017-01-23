@@ -1,9 +1,0 @@
-{"type":"extends","line":1,"col":1}
-{"type":"path","line":1,"col":9,"val":"./auxiliary/1794-extends.pug"}
-{"type":"newline","line":3,"col":1}
-{"type":"block","line":3,"col":1,"val":"content","mode":"replace"}
-{"type":"indent","line":4,"col":1,"val":2}
-{"type":"include","line":4,"col":3}
-{"type":"path","line":4,"col":11,"val":"./auxiliary/1794-include.pug"}
-{"type":"outdent","line":4,"col":39}
-{"type":"eos","line":4,"col":39}

@@ -1,9 +1,0 @@
-{"type":"extends","line":1,"col":1}
-{"type":"path","line":1,"col":8,"val":"auxiliary/inheritance.extend.mixin.block.pug"}
-{"type":"newline","line":3,"col":1}
-{"type":"block","line":3,"col":1,"val":"content","mode":"replace"}
-{"type":"indent","line":4,"col":1,"val":2}
-{"type":"tag","line":4,"col":3,"val":"p"}
-{"type":"text","line":4,"col":5,"val":"Hello World!"}
-{"type":"outdent","line":5,"col":1}
-{"type":"eos","line":5,"col":1}

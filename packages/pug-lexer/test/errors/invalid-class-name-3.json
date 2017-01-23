@@ -1,6 +1,0 @@
-{
-  "msg": "\"ä\" is not a valid class name.  Class names must begin with \"-\", \"_\" or a letter and can only contain \"_\", \"-\", a-z and 0-9.",
-  "code": "PUG:INVALID_CLASS_NAME",
-  "line": 1,
-  "column": 1
-}

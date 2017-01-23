@@ -1,7 +1,0 @@
-{"type":"comment","line":1,"col":1,"val":" regression test for https://github.com/pugjs/pug/issues/1435","buffer":false}
-{"type":"newline","line":3,"col":1}
-{"type":"include","line":3,"col":1}
-{"type":"path","line":3,"col":9,"val":"../fixtures/mixin-include.pug"}
-{"type":"newline","line":5,"col":1}
-{"type":"call","line":5,"col":1,"val":"bang","args":null}
-{"type":"eos","line":5,"col":6}

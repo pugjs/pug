@@ -1,6 +1,0 @@
-{
-  "msg": "missing expression for while",
-  "code": "PUG:NO_WHILE_EXPRESSION",
-  "line": 1,
-  "column": 6
-}

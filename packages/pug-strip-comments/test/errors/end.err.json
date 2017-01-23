@@ -1,5 +1,0 @@
-{
-  "msg": "`end-pipeless-text` encountered when not in pipeless text mode",
-  "code": "PUG:UNEXPECTED_TOKEN",
-  "line": 4
-}

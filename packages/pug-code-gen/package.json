@@ -15,10 +15,6 @@
     "void-elements": "^2.0.1",
     "with": "^5.0.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo No Tests Specified"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-code-gen.git"
