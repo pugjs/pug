@@ -8,6 +8,7 @@
   },
   "scripts": {
     "clean": "lerna clean",
+    "release": "lerna publish",
     "postinstall": "lerna bootstrap",
     "pretest": "lerna run pretest",
     "test": "jest",
