@@ -1,8 +1,6 @@
 var assert = require('assert');
 var fs = require('fs');
 var link = require('../');
-var prettyStringify = require('./common').prettyStringify;
-var assertObjEqual = require('./common').assertObjEqual;
 
 function testDir (dir) {
   fs.readdirSync(dir).forEach(function (name) {
