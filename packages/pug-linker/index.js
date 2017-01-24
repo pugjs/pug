@@ -69,6 +69,7 @@ function findDeclaredBlocks(ast) {
   });
   return definitions;
 }
+
 function extend(parentBlocks, ast) {
   var stack = {};
   walk(ast, function before(node) {
@@ -100,6 +101,7 @@ function extend(parentBlocks, ast) {
     }
   });
 }
+
 function applyIncludes(ast, child) {
   return walk(ast, function before(node, replace) {
     if (node.type === 'RawInclude') {
@@ -111,6 +113,7 @@ function applyIncludes(ast, child) {
     }
   });
 }
+
 function applyYield(ast, block) {
   if (!block || !block.nodes.length) return ast;
   var replaced = false;
@@ -139,6 +142,7 @@ function applyYield(ast, block) {
   }
   return ast;
 }
+
 function checkExtendPosition(ast, hasExtends) {
   var legitExtendsReached = false;
   walk(ast, function (node) {
