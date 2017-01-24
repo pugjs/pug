@@ -44,7 +44,8 @@ function testSingle(it, suffix, test){
       filename: path,
       pretty: true,
       basedir: __dirname + '/cases' + suffix,
-      filters: filters
+      filters: filters,
+      filterAliases: {'markdown': 'markdown-it'},
     });
     var actual = fn({ title: 'Pug' });
 
@@ -56,21 +57,24 @@ function testSingle(it, suffix, test){
       pretty: true,
       compileDebug: false,
       basedir: __dirname + '/cases' + suffix,
-      filters: filters
+      filters: filters,
+      filterAliases: {'markdown': 'markdown-it'},
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
     var clientCodeDebug = uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: true,
       basedir: __dirname + '/cases' + suffix,
-      filters: filters
+      filters: filters,
+      filterAliases: {'markdown': 'markdown-it'},
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
     writeFileSync(__dirname + '/output' + suffix + '/' + test + '.js', uglify.minify(pug.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
       basedir: __dirname + '/cases' + suffix,
-      filters: filters
+      filters: filters,
+      filterAliases: {'markdown': 'markdown-it'},
     }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code);
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '');
