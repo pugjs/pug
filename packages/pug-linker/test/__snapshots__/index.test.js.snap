@@ -371,101 +371,68 @@ Object {
 exports[`cases from pug include-extends-from-root.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "content": Object {
-      "filename": "auxiliary/layout.pug",
-      "line": 6,
-      "mode": "replace",
-      "name": "content",
-      "nodes": Array [
-        Object {
-          "declaredBlocks": Object {},
-          "filename": "auxiliary/include-from-root.pug",
-          "line": 0,
-          "nodes": Array [
-            Object {
-              "attributeBlocks": Array [],
-              "attrs": Array [],
-              "block": Object {
+    "content": Array [
+      Object {
+        "filename": "auxiliary/layout.pug",
+        "line": 6,
+        "mode": "replace",
+        "name": "content",
+        "nodes": Array [
+          Object {
+            "declaredBlocks": Object {},
+            "filename": "auxiliary/include-from-root.pug",
+            "line": 0,
+            "nodes": Array [
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [],
+                "block": Object {
+                  "filename": "auxiliary/include-from-root.pug",
+                  "line": 1,
+                  "nodes": Array [
+                    Object {
+                      "filename": "auxiliary/include-from-root.pug",
+                      "line": 1,
+                      "type": "Text",
+                      "val": "hello",
+                    },
+                  ],
+                  "type": "Block",
+                },
                 "filename": "auxiliary/include-from-root.pug",
+                "isInline": false,
                 "line": 1,
-                "nodes": Array [
-                  Object {
-                    "filename": "auxiliary/include-from-root.pug",
-                    "line": 1,
-                    "type": "Text",
-                    "val": "hello",
-                  },
-                ],
-                "type": "Block",
+                "name": "h1",
+                "selfClosing": false,
+                "type": "Tag",
               },
-              "filename": "auxiliary/include-from-root.pug",
-              "isInline": false,
-              "line": 1,
-              "name": "h1",
-              "selfClosing": false,
-              "type": "Tag",
-            },
-          ],
-          "type": "Block",
-        },
-      ],
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "auxiliary/layout.pug",
-      "line": 4,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [],
-      "type": "NamedBlock",
-    },
+            ],
+            "type": "Block",
+          },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "auxiliary/layout.pug",
+        "line": 4,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "include-extends-from-root.pug",
   "line": 0,
   "nodes": Array [
     Object {
       "declaredBlocks": Object {
-        "content": Object {
-          "filename": "auxiliary/extends-from-root.pug",
-          "line": 3,
-          "mode": "replace",
-          "name": "content",
-          "nodes": Array [
-            Object {
-              "declaredBlocks": Object {},
-              "filename": "auxiliary/include-from-root.pug",
-              "line": 0,
-              "nodes": Array [
-                Object {
-                  "attributeBlocks": Array [],
-                  "attrs": Array [],
-                  "block": Object {
-                    "filename": "auxiliary/include-from-root.pug",
-                    "line": 1,
-                    "nodes": Array [
-                      Object {
-                        "filename": "auxiliary/include-from-root.pug",
-                        "line": 1,
-                        "type": "Text",
-                        "val": "hello",
-                      },
-                    ],
-                    "type": "Block",
-                  },
-                  "filename": "auxiliary/include-from-root.pug",
-                  "isInline": false,
-                  "line": 1,
-                  "name": "h1",
-                  "selfClosing": false,
-                  "type": "Tag",
-                },
-              ],
-              "type": "Block",
-            },
-          ],
-          "parent": Object {
-            "filename": "auxiliary/layout.pug",
-            "line": 6,
+        "content": Array [
+          Object {
+            "filename": "auxiliary/extends-from-root.pug",
+            "line": 3,
             "mode": "replace",
             "name": "content",
             "nodes": Array [
@@ -501,18 +468,61 @@ Object {
                 "type": "Block",
               },
             ],
+            "parents": Array [
+              Object {
+                "filename": "auxiliary/layout.pug",
+                "line": 6,
+                "mode": "replace",
+                "name": "content",
+                "nodes": Array [
+                  Object {
+                    "declaredBlocks": Object {},
+                    "filename": "auxiliary/include-from-root.pug",
+                    "line": 0,
+                    "nodes": Array [
+                      Object {
+                        "attributeBlocks": Array [],
+                        "attrs": Array [],
+                        "block": Object {
+                          "filename": "auxiliary/include-from-root.pug",
+                          "line": 1,
+                          "nodes": Array [
+                            Object {
+                              "filename": "auxiliary/include-from-root.pug",
+                              "line": 1,
+                              "type": "Text",
+                              "val": "hello",
+                            },
+                          ],
+                          "type": "Block",
+                        },
+                        "filename": "auxiliary/include-from-root.pug",
+                        "isInline": false,
+                        "line": 1,
+                        "name": "h1",
+                        "selfClosing": false,
+                        "type": "Tag",
+                      },
+                    ],
+                    "type": "Block",
+                  },
+                ],
+                "type": "NamedBlock",
+              },
+            ],
             "type": "NamedBlock",
           },
-          "type": "NamedBlock",
-        },
-        "head": Object {
-          "filename": "auxiliary/layout.pug",
-          "line": 4,
-          "mode": "replace",
-          "name": "head",
-          "nodes": Array [],
-          "type": "NamedBlock",
-        },
+        ],
+        "head": Array [
+          Object {
+            "filename": "auxiliary/layout.pug",
+            "line": 4,
+            "mode": "replace",
+            "name": "head",
+            "nodes": Array [],
+            "type": "NamedBlock",
+          },
+        ],
       },
       "filename": "auxiliary/layout.pug",
       "line": 0,
@@ -650,77 +660,82 @@ Object {
 exports[`cases from pug include-extends-of-common-template.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "test": Object {
-      "filename": "auxiliary/empty-block.pug",
-      "line": 1,
-      "mode": "replace",
-      "name": "test",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [],
-          "block": Object {
-            "filename": "auxiliary/extends-empty-block-2.pug",
+    "test": Array [
+      Object {
+        "filename": "auxiliary/empty-block.pug",
+        "line": 1,
+        "mode": "replace",
+        "name": "test",
+        "nodes": Array [
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [],
+            "block": Object {
+              "filename": "auxiliary/extends-empty-block-1.pug",
+              "line": 4,
+              "nodes": Array [
+                Object {
+                  "filename": "auxiliary/extends-empty-block-1.pug",
+                  "line": 4,
+                  "type": "Text",
+                  "val": "test1",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "auxiliary/extends-empty-block-1.pug",
+            "isInline": false,
             "line": 4,
-            "nodes": Array [
-              Object {
-                "filename": "auxiliary/extends-empty-block-2.pug",
-                "line": 4,
-                "type": "Text",
-                "val": "test2",
-              },
-            ],
-            "type": "Block",
+            "name": "div",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "auxiliary/extends-empty-block-2.pug",
-          "isInline": false,
-          "line": 4,
-          "name": "div",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+        ],
+        "type": "NamedBlock",
+      },
+      Object {
+        "filename": "auxiliary/empty-block.pug",
+        "line": 1,
+        "mode": "replace",
+        "name": "test",
+        "nodes": Array [
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [],
+            "block": Object {
+              "filename": "auxiliary/extends-empty-block-2.pug",
+              "line": 4,
+              "nodes": Array [
+                Object {
+                  "filename": "auxiliary/extends-empty-block-2.pug",
+                  "line": 4,
+                  "type": "Text",
+                  "val": "test2",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "auxiliary/extends-empty-block-2.pug",
+            "isInline": false,
+            "line": 4,
+            "name": "div",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "include-extends-of-common-template.pug",
   "line": 0,
   "nodes": Array [
     Object {
       "declaredBlocks": Object {
-        "test": Object {
-          "filename": "auxiliary/extends-empty-block-1.pug",
-          "line": 3,
-          "mode": "replace",
-          "name": "test",
-          "nodes": Array [
-            Object {
-              "attributeBlocks": Array [],
-              "attrs": Array [],
-              "block": Object {
-                "filename": "auxiliary/extends-empty-block-1.pug",
-                "line": 4,
-                "nodes": Array [
-                  Object {
-                    "filename": "auxiliary/extends-empty-block-1.pug",
-                    "line": 4,
-                    "type": "Text",
-                    "val": "test1",
-                  },
-                ],
-                "type": "Block",
-              },
-              "filename": "auxiliary/extends-empty-block-1.pug",
-              "isInline": false,
-              "line": 4,
-              "name": "div",
-              "selfClosing": false,
-              "type": "Tag",
-            },
-          ],
-          "parent": Object {
-            "filename": "auxiliary/empty-block.pug",
-            "line": 1,
+        "test": Array [
+          Object {
+            "filename": "auxiliary/extends-empty-block-1.pug",
+            "line": 3,
             "mode": "replace",
             "name": "test",
             "nodes": Array [
@@ -748,10 +763,43 @@ Object {
                 "type": "Tag",
               },
             ],
+            "parents": Array [
+              Object {
+                "filename": "auxiliary/empty-block.pug",
+                "line": 1,
+                "mode": "replace",
+                "name": "test",
+                "nodes": Array [
+                  Object {
+                    "attributeBlocks": Array [],
+                    "attrs": Array [],
+                    "block": Object {
+                      "filename": "auxiliary/extends-empty-block-1.pug",
+                      "line": 4,
+                      "nodes": Array [
+                        Object {
+                          "filename": "auxiliary/extends-empty-block-1.pug",
+                          "line": 4,
+                          "type": "Text",
+                          "val": "test1",
+                        },
+                      ],
+                      "type": "Block",
+                    },
+                    "filename": "auxiliary/extends-empty-block-1.pug",
+                    "isInline": false,
+                    "line": 4,
+                    "name": "div",
+                    "selfClosing": false,
+                    "type": "Tag",
+                  },
+                ],
+                "type": "NamedBlock",
+              },
+            ],
             "type": "NamedBlock",
           },
-          "type": "NamedBlock",
-        },
+        ],
       },
       "filename": "auxiliary/empty-block.pug",
       "line": 0,
@@ -793,39 +841,10 @@ Object {
     },
     Object {
       "declaredBlocks": Object {
-        "test": Object {
-          "filename": "auxiliary/extends-empty-block-2.pug",
-          "line": 3,
-          "mode": "replace",
-          "name": "test",
-          "nodes": Array [
-            Object {
-              "attributeBlocks": Array [],
-              "attrs": Array [],
-              "block": Object {
-                "filename": "auxiliary/extends-empty-block-2.pug",
-                "line": 4,
-                "nodes": Array [
-                  Object {
-                    "filename": "auxiliary/extends-empty-block-2.pug",
-                    "line": 4,
-                    "type": "Text",
-                    "val": "test2",
-                  },
-                ],
-                "type": "Block",
-              },
-              "filename": "auxiliary/extends-empty-block-2.pug",
-              "isInline": false,
-              "line": 4,
-              "name": "div",
-              "selfClosing": false,
-              "type": "Tag",
-            },
-          ],
-          "parent": Object {
-            "filename": "auxiliary/empty-block.pug",
-            "line": 1,
+        "test": Array [
+          Object {
+            "filename": "auxiliary/extends-empty-block-2.pug",
+            "line": 3,
             "mode": "replace",
             "name": "test",
             "nodes": Array [
@@ -853,10 +872,43 @@ Object {
                 "type": "Tag",
               },
             ],
+            "parents": Array [
+              Object {
+                "filename": "auxiliary/empty-block.pug",
+                "line": 1,
+                "mode": "replace",
+                "name": "test",
+                "nodes": Array [
+                  Object {
+                    "attributeBlocks": Array [],
+                    "attrs": Array [],
+                    "block": Object {
+                      "filename": "auxiliary/extends-empty-block-2.pug",
+                      "line": 4,
+                      "nodes": Array [
+                        Object {
+                          "filename": "auxiliary/extends-empty-block-2.pug",
+                          "line": 4,
+                          "type": "Text",
+                          "val": "test2",
+                        },
+                      ],
+                      "type": "Block",
+                    },
+                    "filename": "auxiliary/extends-empty-block-2.pug",
+                    "isInline": false,
+                    "line": 4,
+                    "name": "div",
+                    "selfClosing": false,
+                    "type": "Tag",
+                  },
+                ],
+                "type": "NamedBlock",
+              },
+            ],
             "type": "NamedBlock",
           },
-          "type": "NamedBlock",
-        },
+        ],
       },
       "filename": "auxiliary/empty-block.pug",
       "line": 0,
@@ -904,47 +956,41 @@ Object {
 exports[`cases from pug include-extends-relative.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "content": Object {
-      "filename": "../cases-src/auxiliary/layout.pug",
-      "line": 6,
-      "mode": "replace",
-      "name": "content",
-      "nodes": Array [
-        Object {
-          "type": "Text",
-          "val": "h1 hello",
-        },
-      ],
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../cases-src/auxiliary/layout.pug",
-      "line": 4,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [],
-      "type": "NamedBlock",
-    },
+    "content": Array [
+      Object {
+        "filename": "../cases-src/auxiliary/layout.pug",
+        "line": 6,
+        "mode": "replace",
+        "name": "content",
+        "nodes": Array [
+          Object {
+            "type": "Text",
+            "val": "h1 hello",
+          },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../cases-src/auxiliary/layout.pug",
+        "line": 4,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "include-extends-relative.pug",
   "line": 0,
   "nodes": Array [
     Object {
       "declaredBlocks": Object {
-        "content": Object {
-          "filename": "../cases-src/auxiliary/extends-relative.pug",
-          "line": 3,
-          "mode": "replace",
-          "name": "content",
-          "nodes": Array [
-            Object {
-              "type": "Text",
-              "val": "h1 hello",
-            },
-          ],
-          "parent": Object {
-            "filename": "../cases-src/auxiliary/layout.pug",
-            "line": 6,
+        "content": Array [
+          Object {
+            "filename": "../cases-src/auxiliary/extends-relative.pug",
+            "line": 3,
             "mode": "replace",
             "name": "content",
             "nodes": Array [
@@ -953,18 +999,34 @@ Object {
                 "val": "h1 hello",
               },
             ],
+            "parents": Array [
+              Object {
+                "filename": "../cases-src/auxiliary/layout.pug",
+                "line": 6,
+                "mode": "replace",
+                "name": "content",
+                "nodes": Array [
+                  Object {
+                    "type": "Text",
+                    "val": "h1 hello",
+                  },
+                ],
+                "type": "NamedBlock",
+              },
+            ],
             "type": "NamedBlock",
           },
-          "type": "NamedBlock",
-        },
-        "head": Object {
-          "filename": "../cases-src/auxiliary/layout.pug",
-          "line": 4,
-          "mode": "replace",
-          "name": "head",
-          "nodes": Array [],
-          "type": "NamedBlock",
-        },
+        ],
+        "head": Array [
+          Object {
+            "filename": "../cases-src/auxiliary/layout.pug",
+            "line": 4,
+            "mode": "replace",
+            "name": "head",
+            "nodes": Array [],
+            "type": "NamedBlock",
+          },
+        ],
       },
       "filename": "../cases-src/auxiliary/layout.pug",
       "line": 0,
@@ -1729,133 +1791,137 @@ Object {
 exports[`cases from pug layout.append.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "body": Object {
-      "filename": "../fixtures/append/layout.pug",
-      "line": 7,
-      "mode": "replace",
-      "name": "body",
-      "nodes": Array [],
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/append/layout.pug",
-      "line": 3,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/jquery.js\'",
+    "body": Array [
+      Object {
+        "filename": "../fixtures/append/layout.pug",
+        "line": 7,
+        "mode": "replace",
+        "name": "body",
+        "nodes": Array [],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/append/layout.pug",
+        "line": 3,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/jquery.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/append/layout.pug",
+              "line": 4,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/append/layout.pug",
+            "isInline": false,
             "line": 4,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/append/layout.pug",
-          "isInline": false,
-          "line": 4,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/caustic.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/caustic.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/append/layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/append/layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/append/layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'app.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'app.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/append/app-layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/append/app-layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/append/app-layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'foo.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'foo.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.append.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.append.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.append.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'bar.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'bar.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.append.pug",
+              "line": 6,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.append.pug",
+            "isInline": false,
             "line": 6,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.append.pug",
-          "isInline": false,
-          "line": 6,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "../fixtures/append/layout.pug",
   "line": 0,
@@ -2029,133 +2095,137 @@ Object {
 exports[`cases from pug layout.append.without-block.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "body": Object {
-      "filename": "../fixtures/append-without-block/layout.pug",
-      "line": 7,
-      "mode": "replace",
-      "name": "body",
-      "nodes": Array [],
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/append-without-block/layout.pug",
-      "line": 3,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/jquery.js\'",
+    "body": Array [
+      Object {
+        "filename": "../fixtures/append-without-block/layout.pug",
+        "line": 7,
+        "mode": "replace",
+        "name": "body",
+        "nodes": Array [],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/append-without-block/layout.pug",
+        "line": 3,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/jquery.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/append-without-block/layout.pug",
+              "line": 4,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/append-without-block/layout.pug",
+            "isInline": false,
             "line": 4,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/append-without-block/layout.pug",
-          "isInline": false,
-          "line": 4,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/caustic.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/caustic.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/append-without-block/layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/append-without-block/layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/append-without-block/layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'app.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'app.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/append-without-block/app-layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/append-without-block/app-layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/append-without-block/app-layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'foo.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'foo.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.append.without-block.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.append.without-block.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.append.without-block.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'bar.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'bar.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.append.without-block.pug",
+              "line": 6,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.append.without-block.pug",
+            "isInline": false,
             "line": 6,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.append.without-block.pug",
-          "isInline": false,
-          "line": 6,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "../fixtures/append-without-block/layout.pug",
   "line": 0,
@@ -2329,116 +2399,13 @@ Object {
 exports[`cases from pug layout.multi.append.prepend.block.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "content": Object {
-      "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
-      "line": 3,
-      "mode": "replace",
-      "name": "content",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": false,
-              "name": "class",
-              "val": "\'content\'",
-            },
-          ],
-          "block": Object {
-            "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
-            "line": 4,
-            "nodes": Array [
-              Object {
-                "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
-                "line": 5,
-                "type": "Text",
-                "val": "Defined content",
-              },
-            ],
-            "type": "Block",
-          },
-          "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
-          "isInline": false,
-          "line": 4,
-          "name": "div",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "parent": Object {
-        "filename": "../fixtures/multi-append-prepend-block/root.pug",
-        "line": 1,
+    "content": Array [
+      Object {
+        "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
+        "line": 3,
         "mode": "replace",
         "name": "content",
         "nodes": Array [
-          Object {
-            "attributeBlocks": Array [],
-            "attrs": Array [
-              Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'last\'",
-              },
-              Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'prepend\'",
-              },
-            ],
-            "block": Object {
-              "filename": "layout.multi.append.prepend.block.pug",
-              "line": 13,
-              "nodes": Array [
-                Object {
-                  "filename": "layout.multi.append.prepend.block.pug",
-                  "line": 13,
-                  "type": "Text",
-                  "val": "Last prepend must appear at top",
-                },
-              ],
-              "type": "Block",
-            },
-            "filename": "layout.multi.append.prepend.block.pug",
-            "isInline": false,
-            "line": 13,
-            "name": "p",
-            "selfClosing": false,
-            "type": "Tag",
-          },
-          Object {
-            "attributeBlocks": Array [],
-            "attrs": Array [
-              Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'first\'",
-              },
-              Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'prepend\'",
-              },
-            ],
-            "block": Object {
-              "filename": "layout.multi.append.prepend.block.pug",
-              "line": 7,
-              "nodes": Array [
-                Object {
-                  "filename": "layout.multi.append.prepend.block.pug",
-                  "line": 7,
-                  "type": "Text",
-                  "val": "Something prepended to content",
-                },
-              ],
-              "type": "Block",
-            },
-            "filename": "layout.multi.append.prepend.block.pug",
-            "isInline": false,
-            "line": 7,
-            "name": "p",
-            "selfClosing": false,
-            "type": "Tag",
-          },
           Object {
             "attributeBlocks": Array [],
             "attrs": Array [
@@ -2468,37 +2435,212 @@ Object {
             "selfClosing": false,
             "type": "Tag",
           },
+        ],
+        "parents": Array [
+          Object {
+            "filename": "../fixtures/multi-append-prepend-block/root.pug",
+            "line": 1,
+            "mode": "replace",
+            "name": "content",
+            "nodes": Array [
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'last\'",
+                  },
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'prepend\'",
+                  },
+                ],
+                "block": Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 13,
+                  "nodes": Array [
+                    Object {
+                      "filename": "layout.multi.append.prepend.block.pug",
+                      "line": 13,
+                      "type": "Text",
+                      "val": "Last prepend must appear at top",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "layout.multi.append.prepend.block.pug",
+                "isInline": false,
+                "line": 13,
+                "name": "p",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'first\'",
+                  },
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'prepend\'",
+                  },
+                ],
+                "block": Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 7,
+                  "nodes": Array [
+                    Object {
+                      "filename": "layout.multi.append.prepend.block.pug",
+                      "line": 7,
+                      "type": "Text",
+                      "val": "Something prepended to content",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "layout.multi.append.prepend.block.pug",
+                "isInline": false,
+                "line": 7,
+                "name": "p",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'content\'",
+                  },
+                ],
+                "block": Object {
+                  "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
+                  "line": 4,
+                  "nodes": Array [
+                    Object {
+                      "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
+                      "line": 5,
+                      "type": "Text",
+                      "val": "Defined content",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "../fixtures/multi-append-prepend-block/redefine.pug",
+                "isInline": false,
+                "line": 4,
+                "name": "div",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'first\'",
+                  },
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'append\'",
+                  },
+                ],
+                "block": Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 4,
+                  "nodes": Array [
+                    Object {
+                      "filename": "layout.multi.append.prepend.block.pug",
+                      "line": 4,
+                      "type": "Text",
+                      "val": "Something appended to content",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "layout.multi.append.prepend.block.pug",
+                "isInline": false,
+                "line": 4,
+                "name": "p",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'last\'",
+                  },
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'append\'",
+                  },
+                ],
+                "block": Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 10,
+                  "nodes": Array [
+                    Object {
+                      "filename": "layout.multi.append.prepend.block.pug",
+                      "line": 10,
+                      "type": "Text",
+                      "val": "Last append must be most last",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "layout.multi.append.prepend.block.pug",
+                "isInline": false,
+                "line": 10,
+                "name": "p",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+            ],
+            "type": "NamedBlock",
+          },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/multi-append-prepend-block/root.pug",
+        "line": 4,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
           Object {
             "attributeBlocks": Array [],
             "attrs": Array [
               Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'first\'",
-              },
-              Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'append\'",
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'foo.js\'",
               },
             ],
             "block": Object {
               "filename": "layout.multi.append.prepend.block.pug",
-              "line": 4,
-              "nodes": Array [
-                Object {
-                  "filename": "layout.multi.append.prepend.block.pug",
-                  "line": 4,
-                  "type": "Text",
-                  "val": "Something appended to content",
-                },
-              ],
+              "line": 19,
+              "nodes": Array [],
               "type": "Block",
             },
             "filename": "layout.multi.append.prepend.block.pug",
             "isInline": false,
-            "line": 4,
-            "name": "p",
+            "line": 19,
+            "name": "script",
             "selfClosing": false,
             "type": "Tag",
           },
@@ -2506,116 +2648,50 @@ Object {
             "attributeBlocks": Array [],
             "attrs": Array [
               Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'last\'",
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'/app.js\'",
               },
+            ],
+            "block": Object {
+              "filename": "../fixtures/multi-append-prepend-block/root.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
+            },
+            "filename": "../fixtures/multi-append-prepend-block/root.pug",
+            "isInline": false,
+            "line": 5,
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
               Object {
-                "mustEscape": false,
-                "name": "class",
-                "val": "\'append\'",
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'jquery.js\'",
               },
             ],
             "block": Object {
               "filename": "layout.multi.append.prepend.block.pug",
-              "line": 10,
-              "nodes": Array [
-                Object {
-                  "filename": "layout.multi.append.prepend.block.pug",
-                  "line": 10,
-                  "type": "Text",
-                  "val": "Last append must be most last",
-                },
-              ],
+              "line": 16,
+              "nodes": Array [],
               "type": "Block",
             },
             "filename": "layout.multi.append.prepend.block.pug",
             "isInline": false,
-            "line": 10,
-            "name": "p",
+            "line": 16,
+            "name": "script",
             "selfClosing": false,
             "type": "Tag",
           },
         ],
         "type": "NamedBlock",
       },
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/multi-append-prepend-block/root.pug",
-      "line": 4,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'foo.js\'",
-            },
-          ],
-          "block": Object {
-            "filename": "layout.multi.append.prepend.block.pug",
-            "line": 19,
-            "nodes": Array [],
-            "type": "Block",
-          },
-          "filename": "layout.multi.append.prepend.block.pug",
-          "isInline": false,
-          "line": 19,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'/app.js\'",
-            },
-          ],
-          "block": Object {
-            "filename": "../fixtures/multi-append-prepend-block/root.pug",
-            "line": 5,
-            "nodes": Array [],
-            "type": "Block",
-          },
-          "filename": "../fixtures/multi-append-prepend-block/root.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'jquery.js\'",
-            },
-          ],
-          "block": Object {
-            "filename": "layout.multi.append.prepend.block.pug",
-            "line": 16,
-            "nodes": Array [],
-            "type": "Block",
-          },
-          "filename": "layout.multi.append.prepend.block.pug",
-          "isInline": false,
-          "line": 16,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+    ],
   },
   "filename": "../fixtures/multi-append-prepend-block/root.pug",
   "line": 0,
@@ -2877,133 +2953,137 @@ Object {
 exports[`cases from pug layout.prepend.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "body": Object {
-      "filename": "../fixtures/prepend/layout.pug",
-      "line": 7,
-      "mode": "replace",
-      "name": "body",
-      "nodes": Array [],
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/prepend/layout.pug",
-      "line": 3,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'foo.js\'",
+    "body": Array [
+      Object {
+        "filename": "../fixtures/prepend/layout.pug",
+        "line": 7,
+        "mode": "replace",
+        "name": "body",
+        "nodes": Array [],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/prepend/layout.pug",
+        "line": 3,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'foo.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.prepend.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.prepend.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.prepend.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'bar.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'bar.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.prepend.pug",
+              "line": 6,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.prepend.pug",
+            "isInline": false,
             "line": 6,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.prepend.pug",
-          "isInline": false,
-          "line": 6,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'app.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'app.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/prepend/app-layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/prepend/app-layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/prepend/app-layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/jquery.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/jquery.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/prepend/layout.pug",
+              "line": 4,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/prepend/layout.pug",
+            "isInline": false,
             "line": 4,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/prepend/layout.pug",
-          "isInline": false,
-          "line": 4,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/caustic.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/caustic.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/prepend/layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/prepend/layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/prepend/layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "../fixtures/prepend/layout.pug",
   "line": 0,
@@ -3177,133 +3257,137 @@ Object {
 exports[`cases from pug layout.prepend.without-block.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "body": Object {
-      "filename": "../fixtures/prepend-without-block/layout.pug",
-      "line": 7,
-      "mode": "replace",
-      "name": "body",
-      "nodes": Array [],
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/prepend-without-block/layout.pug",
-      "line": 3,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'foo.js\'",
+    "body": Array [
+      Object {
+        "filename": "../fixtures/prepend-without-block/layout.pug",
+        "line": 7,
+        "mode": "replace",
+        "name": "body",
+        "nodes": Array [],
+        "type": "NamedBlock",
+      },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/prepend-without-block/layout.pug",
+        "line": 3,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'foo.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.prepend.without-block.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.prepend.without-block.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.prepend.without-block.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'bar.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'bar.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.prepend.without-block.pug",
+              "line": 6,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "layout.prepend.without-block.pug",
+            "isInline": false,
             "line": 6,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "layout.prepend.without-block.pug",
-          "isInline": false,
-          "line": 6,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'app.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'app.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/prepend-without-block/app-layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/prepend-without-block/app-layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/prepend-without-block/app-layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/jquery.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/jquery.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/prepend-without-block/layout.pug",
+              "line": 4,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/prepend-without-block/layout.pug",
+            "isInline": false,
             "line": 4,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/prepend-without-block/layout.pug",
-          "isInline": false,
-          "line": 4,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": true,
-              "name": "src",
-              "val": "\'vendor/caustic.js\'",
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": true,
+                "name": "src",
+                "val": "\'vendor/caustic.js\'",
+              },
+            ],
+            "block": Object {
+              "filename": "../fixtures/prepend-without-block/layout.pug",
+              "line": 5,
+              "nodes": Array [],
+              "type": "Block",
             },
-          ],
-          "block": Object {
             "filename": "../fixtures/prepend-without-block/layout.pug",
+            "isInline": false,
             "line": 5,
-            "nodes": Array [],
-            "type": "Block",
+            "name": "script",
+            "selfClosing": false,
+            "type": "Tag",
           },
-          "filename": "../fixtures/prepend-without-block/layout.pug",
-          "isInline": false,
-          "line": 5,
-          "name": "script",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "../fixtures/prepend-without-block/layout.pug",
   "line": 0,
@@ -3511,38 +3595,10 @@ Object {
 exports[`special cases extending-include.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "body": Object {
-      "filename": "extending-include.pug",
-      "line": 4,
-      "mode": "replace",
-      "name": "body",
-      "nodes": Array [
-        Object {
-          "args": "\'myimg.png\'",
-          "attributeBlocks": Array [],
-          "attrs": Array [
-            Object {
-              "mustEscape": false,
-              "name": "class",
-              "val": "\'with-border\'",
-            },
-            Object {
-              "mustEscape": true,
-              "name": "alt",
-              "val": "\"My image\"",
-            },
-          ],
-          "block": null,
-          "call": true,
-          "filename": "extending-include.pug",
-          "line": 5,
-          "name": "image",
-          "type": "Mixin",
-        },
-      ],
-      "parent": Object {
-        "filename": "../fixtures/layout.pug",
-        "line": 8,
+    "body": Array [
+      Object {
+        "filename": "extending-include.pug",
+        "line": 4,
         "mode": "replace",
         "name": "body",
         "nodes": Array [
@@ -3569,26 +3625,60 @@ Object {
             "type": "Mixin",
           },
         ],
+        "parents": Array [
+          Object {
+            "filename": "../fixtures/layout.pug",
+            "line": 8,
+            "mode": "replace",
+            "name": "body",
+            "nodes": Array [
+              Object {
+                "args": "\'myimg.png\'",
+                "attributeBlocks": Array [],
+                "attrs": Array [
+                  Object {
+                    "mustEscape": false,
+                    "name": "class",
+                    "val": "\'with-border\'",
+                  },
+                  Object {
+                    "mustEscape": true,
+                    "name": "alt",
+                    "val": "\"My image\"",
+                  },
+                ],
+                "block": null,
+                "call": true,
+                "filename": "extending-include.pug",
+                "line": 5,
+                "name": "image",
+                "type": "Mixin",
+              },
+            ],
+            "type": "NamedBlock",
+          },
+        ],
         "type": "NamedBlock",
       },
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/layout.pug",
-      "line": 5,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "filename": "../fixtures/layout.pug",
-          "isHtml": true,
-          "line": 6,
-          "type": "Text",
-          "val": "<title>Hello world!</title>",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/layout.pug",
+        "line": 5,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
+          Object {
+            "filename": "../fixtures/layout.pug",
+            "isHtml": true,
+            "line": 6,
+            "type": "Text",
+            "val": "<title>Hello world!</title>",
+          },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "../fixtures/layout.pug",
   "line": 0,
@@ -3744,73 +3834,10 @@ Object {
 exports[`special cases root-mixin.input.json 1`] = `
 Object {
   "declaredBlocks": Object {
-    "body": Object {
-      "filename": "root-mixin.pug",
-      "line": 6,
-      "mode": "replace",
-      "name": "body",
-      "nodes": Array [
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [],
-          "block": Object {
-            "filename": "root-mixin.pug",
-            "line": 7,
-            "nodes": Array [
-              Object {
-                "filename": "root-mixin.pug",
-                "line": 7,
-                "type": "Text",
-                "val": "Before",
-              },
-            ],
-            "type": "Block",
-          },
-          "filename": "root-mixin.pug",
-          "isInline": false,
-          "line": 7,
-          "name": "p",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-        Object {
-          "args": null,
-          "attributeBlocks": Array [],
-          "attrs": Array [],
-          "block": null,
-          "call": true,
-          "filename": "root-mixin.pug",
-          "line": 8,
-          "name": "myMixin",
-          "type": "Mixin",
-        },
-        Object {
-          "attributeBlocks": Array [],
-          "attrs": Array [],
-          "block": Object {
-            "filename": "root-mixin.pug",
-            "line": 9,
-            "nodes": Array [
-              Object {
-                "filename": "root-mixin.pug",
-                "line": 9,
-                "type": "Text",
-                "val": "After",
-              },
-            ],
-            "type": "Block",
-          },
-          "filename": "root-mixin.pug",
-          "isInline": false,
-          "line": 9,
-          "name": "p",
-          "selfClosing": false,
-          "type": "Tag",
-        },
-      ],
-      "parent": Object {
-        "filename": "../fixtures/layout.pug",
-        "line": 8,
+    "body": Array [
+      Object {
+        "filename": "root-mixin.pug",
+        "line": 6,
         "mode": "replace",
         "name": "body",
         "nodes": Array [
@@ -3872,26 +3899,95 @@ Object {
             "type": "Tag",
           },
         ],
+        "parents": Array [
+          Object {
+            "filename": "../fixtures/layout.pug",
+            "line": 8,
+            "mode": "replace",
+            "name": "body",
+            "nodes": Array [
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [],
+                "block": Object {
+                  "filename": "root-mixin.pug",
+                  "line": 7,
+                  "nodes": Array [
+                    Object {
+                      "filename": "root-mixin.pug",
+                      "line": 7,
+                      "type": "Text",
+                      "val": "Before",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "root-mixin.pug",
+                "isInline": false,
+                "line": 7,
+                "name": "p",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+              Object {
+                "args": null,
+                "attributeBlocks": Array [],
+                "attrs": Array [],
+                "block": null,
+                "call": true,
+                "filename": "root-mixin.pug",
+                "line": 8,
+                "name": "myMixin",
+                "type": "Mixin",
+              },
+              Object {
+                "attributeBlocks": Array [],
+                "attrs": Array [],
+                "block": Object {
+                  "filename": "root-mixin.pug",
+                  "line": 9,
+                  "nodes": Array [
+                    Object {
+                      "filename": "root-mixin.pug",
+                      "line": 9,
+                      "type": "Text",
+                      "val": "After",
+                    },
+                  ],
+                  "type": "Block",
+                },
+                "filename": "root-mixin.pug",
+                "isInline": false,
+                "line": 9,
+                "name": "p",
+                "selfClosing": false,
+                "type": "Tag",
+              },
+            ],
+            "type": "NamedBlock",
+          },
+        ],
         "type": "NamedBlock",
       },
-      "type": "NamedBlock",
-    },
-    "head": Object {
-      "filename": "../fixtures/layout.pug",
-      "line": 5,
-      "mode": "replace",
-      "name": "head",
-      "nodes": Array [
-        Object {
-          "filename": "../fixtures/layout.pug",
-          "isHtml": true,
-          "line": 6,
-          "type": "Text",
-          "val": "<title>Hello world!</title>",
-        },
-      ],
-      "type": "NamedBlock",
-    },
+    ],
+    "head": Array [
+      Object {
+        "filename": "../fixtures/layout.pug",
+        "line": 5,
+        "mode": "replace",
+        "name": "head",
+        "nodes": Array [
+          Object {
+            "filename": "../fixtures/layout.pug",
+            "isHtml": true,
+            "line": 6,
+            "type": "Text",
+            "val": "<title>Hello world!</title>",
+          },
+        ],
+        "type": "NamedBlock",
+      },
+    ],
   },
   "filename": "../fixtures/layout.pug",
   "line": 0,
