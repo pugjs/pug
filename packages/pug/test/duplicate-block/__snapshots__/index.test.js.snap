@@ -1,0 +1,3 @@
+exports[`test layout with duplicate block 1`] = `"<div>Hello World</div>"`;
+
+exports[`test layout with duplicate block 2`] = `"<!DOCTYPE html><html><head></head><body><div>Hello World</div></body></html>"`;
