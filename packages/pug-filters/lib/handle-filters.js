@@ -7,12 +7,12 @@ var error = require('pug-error');
 var runFilter = require('./run-filter');
 
 module.exports = handleFilters;
-function handleFilters(ast, filters, options) {
+function handleFilters(ast, filters, options, filterAliases) {
   options = options || {};
   walk(ast, function (node) {
     var dir = node.filename ? dirname(node.filename) : null;
     if (node.type === 'Filter') {
-      handleNestedFilters(node, filters, options);
+      handleNestedFilters(node, filters, options, filterAliases);
       var text = getBodyAsText(node);
       var attrs = getAttributes(node, options);
       attrs.filename = node.filename;
@@ -36,10 +36,11 @@ function handleFilters(ast, filters, options) {
 
     function filterWithFallback(filter, text, attrs, funcName) {
       try {
-        if (filters && filters[filter.name]) {
-          return filters[filter.name](text, attrs);
+        var filterName = getFilterName(filter);
+        if (filters && filters[filterName]) {
+          return filters[filterName](text, attrs);
         } else {
-          return runFilter(filter.name, text, attrs, dir, funcName);
+          return runFilter(filterName, text, attrs, dir, funcName);
         }
       } catch (ex) {
         if (ex.code === 'UNKNOWN_FILTER') {
@@ -50,19 +51,36 @@ function handleFilters(ast, filters, options) {
     }
 
     function filterFileWithFallback(filter, filename, text, attrs) {
-      if (filters && filters[filter.name]) {
-        return filters[filter.name](text, attrs);
+      var filterName = getFilterName(filter);
+      if (filters && filters[filterName]) {
+        return filters[filterName](text, attrs);
       } else {
         return filterWithFallback(filter, filename, attrs, 'renderFile');
       }
     }
   }, {includeDependencies: true});
+  function getFilterName(filter) {
+    var filterName = filter.name;
+    if (filterAliases && filterAliases[filterName]) {
+      filterName = filterAliases[filterName];
+      if (filterAliases[filterName]) {
+        throw error(
+          'FILTER_ALISE_CHAIN',
+          'The filter "' + filter.name + '" is an alias for "' + filterName +
+          '", which is an alias for "' + filterAliases[filterName] +
+          '".  Pug does not support chains of filter aliases.',
+          filter
+        );
+      }
+    }
+    return filterName;
+  }
   return ast;
 };
 
-function handleNestedFilters(node, filters, options) {
+function handleNestedFilters(node, filters, options, filterAliases) {
   if (node.block.nodes[0] && node.block.nodes[0].type === 'Filter') {
-    node.block.nodes[0] = handleFilters(node.block, filters, options).nodes[0];
+    node.block.nodes[0] = handleFilters(node.block, filters, options, filterAliases).nodes[0];
   }
 }
 
