@@ -25,7 +25,7 @@ var runtimeWrap = require('pug-runtime/wrap');
 /**
  * Name for detection
  */
- 
+
 exports.name = 'Pug';
 
 /**
@@ -164,7 +164,7 @@ function compileBody(str, options){
       filtersSet[key] = options.filters[key];
     });
   }
-  ast = filters.handleFilters(ast, filtersSet, options.filterOptions);
+  ast = filters.handleFilters(ast, filtersSet, options.filterOptions, options.filterAliases);
 
   ast = applyPlugins(ast, options, plugins, 'postFilters');
   ast = applyPlugins(ast, options, plugins, 'preLink');
@@ -254,6 +254,7 @@ exports.compile = function(str, options){
     templateName: 'template',
     filters: options.filters,
     filterOptions: options.filterOptions,
+    filterAliases: options.filterAliases,
     plugins: options.plugins,
   });
 
@@ -300,6 +301,7 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     templateName: options.name || 'template',
     filters: options.filters,
     filterOptions: options.filterOptions,
+    filterAliases: options.filterAliases,
     plugins: options.plugins,
   });
 
