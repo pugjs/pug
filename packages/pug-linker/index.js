@@ -94,7 +94,7 @@ function extend(parentBlocks, ast) {
       var parentBlockList = parentBlocks[node.name] ? flattenParentBlocks(parentBlocks[node.name]) : [];
       if (parentBlockList.length) {
         node.parents = parentBlockList;
-        parentBlockList.forEach(parentBlock => {
+        parentBlockList.forEach(function (parentBlock) {
           switch (node.mode) {
             case 'append':
               parentBlock.nodes = parentBlock.nodes.concat(node.nodes);
