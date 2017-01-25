@@ -12,6 +12,7 @@
   },
   "scripts": {
     "clean": "lerna clean",
+    "release": "lerna publish",
     "postinstall": "lerna bootstrap",
     "pretest": "lerna run pretest",
     "test": "jest",
@@ -20,7 +21,8 @@
     "watch": "jest --watch"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "snapshotSerializers": ["./scripts/filename-serializer.js"]
   },
   "license": "MIT"
 }

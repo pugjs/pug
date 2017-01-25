@@ -1,13 +1,13 @@
 {
   "name": "pug-attrs",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Generate code for Pug attributes",
   "keywords": [
     "pug"
   ],
   "dependencies": {
     "constantinople": "^3.0.1",
-    "pug-runtime": "^2.0.0",
+    "pug-runtime": "^2.0.3",
     "js-stringify": "^1.0.1"
   },
   "repository": {

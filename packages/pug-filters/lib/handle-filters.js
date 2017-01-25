@@ -12,27 +12,21 @@ function handleFilters(ast, filters, options) {
   walk(ast, function (node) {
     var dir = node.filename ? dirname(node.filename) : null;
     if (node.type === 'Filter') {
-      handleNestedFilters(node, filters);
+      handleNestedFilters(node, filters, options);
       var text = getBodyAsText(node);
-      var attrs = getAttributes(node);
-      var opts = options[node.name] || {};
-      Object.keys(opts).forEach(function (opt) {
-        if (!attrs.hasOwnProperty(opt)) {
-          attrs[opt] = opts[opt];
-        }
-      });
+      var attrs = getAttributes(node, options);
       attrs.filename = node.filename;
       node.type = 'Text';
       node.val = filterWithFallback(node, text, attrs);
     } else if (node.type === 'RawInclude' && node.filters.length) {
       var firstFilter = node.filters.shift();
-      var attrs = getAttributes(firstFilter);
+      var attrs = getAttributes(firstFilter, options);
       var filename = attrs.filename = node.file.fullPath;
       var str = node.file.str;
       node.type = 'Text';
       node.val = filterFileWithFallback(firstFilter, filename, str, attrs);
       node.filters.forEach(function (filter) {
-        var attrs = getAttributes(filter);
+        var attrs = getAttributes(filter, options);
         attrs.filename = filename;
         node.val = filterWithFallback(filter, node.val, attrs);
       });
@@ -66,9 +60,9 @@ function handleFilters(ast, filters, options) {
   return ast;
 };
 
-function handleNestedFilters(node, filters) {
+function handleNestedFilters(node, filters, options) {
   if (node.block.nodes[0] && node.block.nodes[0].type === 'Filter') {
-    node.block.nodes[0] = handleFilters(node.block, filters).nodes[0];
+    node.block.nodes[0] = handleFilters(node.block, filters, options).nodes[0];
   }
 }
 
@@ -78,7 +72,7 @@ function getBodyAsText(node) {
   ).join('');
 }
 
-function getAttributes(node) {
+function getAttributes(node, options) {
   var attrs = {};
   node.attrs.forEach(function (attr) {
     try {
@@ -88,6 +82,12 @@ function getAttributes(node) {
         throw error('FILTER_OPTION_NOT_CONSTANT', ex.message + ' All filters are rendered compile-time so filter options must be constants.', node);
       }
       throw ex;
+    }
+  });
+  var opts = options[node.name] || {};
+  Object.keys(opts).forEach(function (opt) {
+    if (!attrs.hasOwnProperty(opt)) {
+      attrs[opt] = opts[opt];
     }
   });
   return attrs;
