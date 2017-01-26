@@ -9,7 +9,7 @@ describe('certain syntax is not allowed and will throw a compile time error', fu
   anti.forEach(function(test){
     var name = test.replace(/[-.]/g, ' ');
     it(name, function(){
-      var path = __dirname + '/anti-cases/' + test + '.pug';
+      var path = __dirname.replace(/\\/g, '/') + '/anti-cases/' + test + '.pug';
       var str = fs.readFileSync(path, 'utf8');
       try {
         var fn = pug.compile(str, {
