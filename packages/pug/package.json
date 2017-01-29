@@ -1,7 +1,7 @@
 {
   "name": "pug",
   "description": "A clean, whitespace-sensitive template language for writing HTML",
-  "version": "2.0.0-beta9",
+  "version": "2.0.0-beta10",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
     "Forbes Lindesay <forbes@lindesay.co.uk>",
@@ -22,7 +22,7 @@
   "dependencies": {
     "pug-code-gen": "^1.1.1",
     "pug-filters": "^2.1.0",
-    "pug-lexer": "^2.3.1",
+    "pug-lexer": "^2.3.2",
     "pug-linker": "^2.0.1",
     "pug-load": "^2.0.4",
     "pug-parser": "^2.0.2",
