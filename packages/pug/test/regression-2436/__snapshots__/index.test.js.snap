@@ -1,7 +1,7 @@
 exports[`test #2436 - block with a same name extends from different layout in nesting 1`] = `
 "
 <h1>layout </h1>
-<p>Other A</p>
+<p>Main A</p>
 <h1>other layout</h1>
 <p>Other A</p>"
 `;
@@ -9,7 +9,7 @@ exports[`test #2436 - block with a same name extends from different layout in ne
 exports[`test #2436 - block with a same name extends from the same layout in nesting 1`] = `
 "
 <h1>layout </h1>
-<p>Other A</p>
+<p>Main A</p>
 <h1>layout </h1>
 <p>Other A</p>"
 `;
