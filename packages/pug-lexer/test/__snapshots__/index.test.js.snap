@@ -7517,6 +7517,83 @@ Array [
 ]
 `;
 
+exports[`test filters.verbatim.pug 1`] = `
+Array [
+  Object {
+    "col": 1,
+    "line": 1,
+    "type": "tag",
+    "val": "html",
+  },
+  Object {
+    "col": 1,
+    "line": 2,
+    "type": "indent",
+    "val": 1,
+  },
+  Object {
+    "col": 2,
+    "line": 2,
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "col": 1,
+    "line": 3,
+    "type": "indent",
+    "val": 2,
+  },
+  Object {
+    "col": 3,
+    "line": 3,
+    "type": "filter",
+    "val": "verbatim",
+  },
+  Object {
+    "col": 12,
+    "line": 3,
+    "type": "start-pipeless-text",
+  },
+  Object {
+    "col": 5,
+    "line": 4,
+    "type": "text",
+    "val": "filters are applied at compile time",
+  },
+  Object {
+    "col": 1,
+    "line": 5,
+    "type": "newline",
+  },
+  Object {
+    "col": 5,
+    "line": 5,
+    "type": "text",
+    "val": "with no #[b interpolation] at #{all}",
+  },
+  Object {
+    "col": 41,
+    "line": 5,
+    "type": "end-pipeless-text",
+  },
+  Object {
+    "col": 41,
+    "line": 5,
+    "type": "outdent",
+  },
+  Object {
+    "col": 41,
+    "line": 5,
+    "type": "outdent",
+  },
+  Object {
+    "col": 41,
+    "line": 5,
+    "type": "eos",
+  },
+]
+`;
+
 exports[`test filters-empty.pug 1`] = `
 Array [
   Object {

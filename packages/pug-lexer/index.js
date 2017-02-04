@@ -39,7 +39,7 @@ function Lexer(str, options) {
   this.plugins = options.plugins || [];
   this.indentStack = [0];
   this.indentRe = null;
-  // If #{} or !{} syntax is allowed when adding text
+  // If #{}, !{} or #[] syntax is allowed when adding text
   this.interpolationAllowed = true;
 
   this.tokens = [];
@@ -434,8 +434,8 @@ Lexer.prototype = {
     if (value + prefix === '') return;
     prefix = prefix || '';
     var indexOfEnd = this.interpolated ? value.indexOf(']') : -1;
-    var indexOfStart = value.indexOf('#[');
-    var indexOfEscaped = value.indexOf('\\#[');
+    var indexOfStart = this.interpolationAllowed ? value.indexOf('#[') : -1;
+    var indexOfEscaped = this.interpolationAllowed ? value.indexOf('\\#[') : -1;
     var matchOfStringInterp = /(\\)?([#!]){((?:.|\n)*)$/.exec(value);
     var indexOfStringInterp = this.interpolationAllowed && matchOfStringInterp ? matchOfStringInterp.index : Infinity;
 
