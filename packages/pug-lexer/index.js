@@ -1059,22 +1059,25 @@ Lexer.prototype = {
         } else if (loc === 'value') {
           // if the character is in a string or in parentheses/brackets/braces
           if (state.isNesting() || state.isString()) return false;
+
           // if the current value expression is not valid JavaScript, then
-          // assume that the user did not end the value
-          if (!self.assertExpression(val, true)) return false;
+          // assume that the user did not end the value.  To enforce this,
+          // we call `self.assertExpression(val, true)`, but since the other
+          // tests are much faster, we run the other tests first.
+
           if (whitespaceRe.test(str[i])) {
             // find the first non-whitespace character
             for (var x = i; x < str.length; x++) {
               if (!whitespaceRe.test(str[x])) {
                 // if it is a JavaScript punctuator, then assume that it is
                 // a part of the value
-                return !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
+                return (!characterParser.isPunctuator(str[x]) || quoteRe.test(str[x])) && self.assertExpression(val, true);
               }
             }
           }
           // if there's no whitespace and the character is not ',', the
           // attribute did not end.
-          return str[i] === ',';
+          return str[i] === ',' && self.assertExpression(val, true);
         }
       }
 
