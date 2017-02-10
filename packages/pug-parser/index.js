@@ -575,6 +575,13 @@ loop:
     var line = this.expect('blockcode').line;
     var body = this.peek();
     var text = '';
+    var preFilter = '';
+    if (body.type === 'filter') {
+      var filter = this.advance();
+      preFilter = filter.val;
+      // re-peek body
+      body = this.peek();
+    }
     if (body.type === 'start-pipeless-text') {
       this.advance();
       while (this.peek().type !== 'end-pipeless-text') {
@@ -599,6 +606,7 @@ loop:
     }
     return {
       type: 'Code',
+      preFilter: preFilter,
       val: text,
       buffer: false,
       mustEscape: false,
