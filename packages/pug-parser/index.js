@@ -575,7 +575,7 @@ loop:
     var line = this.expect('blockcode').line;
     var body = this.peek();
     var text = '';
-    var preFilter = '';
+    var preFilter = undefined;
     if (body.type === 'filter') {
       var filter = this.advance();
       preFilter = filter.val;
