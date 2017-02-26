@@ -1,0 +1,35 @@
+
+- var items = [1,2,3]
+
+ul
+  - items.forEach(function(item){
+    li= item
+  - })
+
+- var items = [1,2,3]
+
+ul
+  for item, i in items
+    li(class='item-' + i)= item
+
+ul
+  each item, i in items
+    li= item
+
+ul
+  each $item in items
+    li= $item
+
+- var nums = [1, 2, 3]
+- var letters = ['a', 'b', 'c']
+
+ul
+  for l in letters
+    for n in nums
+      li #{n}: #{l}
+
+- var count = 1
+- var counter = function() { return [count++, count++, count++] }
+ul
+  for n in counter()
+    li #{n}

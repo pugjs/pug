@@ -1,0 +1,26 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "../fixtures/empty.pug",
+        "line": 1,
+        "filename": "extending-empty.pug",
+        "fullPath": "../fixtures/empty.pug",
+        "str": "",
+        "ast": {
+          "type": "Block",
+          "nodes": [],
+          "line": 0,
+          "filename": "../fixtures/empty.pug"
+        }
+      },
+      "line": 1,
+      "filename": "extending-empty.pug"
+    }
+  ],
+  "line": 0,
+  "filename": "extending-empty.pug"
+}

@@ -1,0 +1,21 @@
+{"type":"tag","line":1,"col":1,"val":"script"}
+{"type":"start-attributes","line":1,"col":7}
+{"type":"attribute","line":1,"col":8,"name":"type","val":"'text/javascript'","mustEscape":true}
+{"type":"end-attributes","line":1,"col":30}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"filter","line":2,"col":3,"val":"coffee-script"}
+{"type":"start-pipeless-text","line":2,"col":17}
+{"type":"text","line":3,"col":5,"val":"regexp = /\\n/"}
+{"type":"end-pipeless-text","line":3,"col":18}
+{"type":"newline","line":4,"col":1}
+{"type":"filter","line":4,"col":3,"val":"coffee-script"}
+{"type":"start-attributes","line":4,"col":17}
+{"type":"attribute","line":4,"col":18,"name":"minify","val":"true","mustEscape":true}
+{"type":"end-attributes","line":4,"col":29}
+{"type":"start-pipeless-text","line":4,"col":30}
+{"type":"text","line":5,"col":5,"val":"math ="}
+{"type":"newline","line":6,"col":1}
+{"type":"text","line":6,"col":5,"val":"  square: (value) -> value * value"}
+{"type":"end-pipeless-text","line":6,"col":39}
+{"type":"outdent","line":6,"col":39}
+{"type":"eos","line":6,"col":39}

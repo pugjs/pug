@@ -1,0 +1,7 @@
+html
+  body
+    include:markdown-it some.md
+    script
+      include:coffee-script(minify=true) include-filter-coffee.coffee
+    script
+      include:coffee-script(minify=false) include-filter-coffee.coffee

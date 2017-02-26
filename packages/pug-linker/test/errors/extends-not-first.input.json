@@ -1,0 +1,140 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "NamedBlock",
+      "nodes": [
+        {
+          "type": "Tag",
+          "name": "p",
+          "selfClosing": false,
+          "block": {
+            "type": "Block",
+            "nodes": [
+              {
+                "type": "Text",
+                "val": "Hey",
+                "line": 2,
+                "filename": "extends-not-first.pug"
+              }
+            ],
+            "line": 2,
+            "filename": "extends-not-first.pug"
+          },
+          "attrs": [],
+          "attributeBlocks": [],
+          "isInline": false,
+          "line": 2,
+          "filename": "extends-not-first.pug"
+        }
+      ],
+      "line": 1,
+      "filename": "extends-not-first.pug",
+      "name": "body",
+      "mode": "replace"
+    },
+    {
+      "type": "Extends",
+      "file": {
+        "type": "FileReference",
+        "path": "../fixtures/layout",
+        "line": 4,
+        "filename": "extends-not-first.pug",
+        "fullPath": "../fixtures/layout.pug",
+        "str": "doctype\n\nhtml\n  head\n    block head\n      <title>Hello world!</title>\n  body\n    block body\n",
+        "ast": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Doctype",
+              "val": "",
+              "line": 1,
+              "filename": "../fixtures/layout.pug"
+            },
+            {
+              "type": "Tag",
+              "name": "html",
+              "selfClosing": false,
+              "block": {
+                "type": "Block",
+                "nodes": [
+                  {
+                    "type": "Tag",
+                    "name": "head",
+                    "selfClosing": false,
+                    "block": {
+                      "type": "Block",
+                      "nodes": [
+                        {
+                          "type": "NamedBlock",
+                          "nodes": [
+                            {
+                              "type": "Text",
+                              "val": "<title>Hello world!</title>",
+                              "filename": "../fixtures/layout.pug",
+                              "line": 6,
+                              "isHtml": true
+                            }
+                          ],
+                          "line": 5,
+                          "filename": "../fixtures/layout.pug",
+                          "name": "head",
+                          "mode": "replace"
+                        }
+                      ],
+                      "line": 4,
+                      "filename": "../fixtures/layout.pug"
+                    },
+                    "attrs": [],
+                    "attributeBlocks": [],
+                    "isInline": false,
+                    "line": 4,
+                    "filename": "../fixtures/layout.pug"
+                  },
+                  {
+                    "type": "Tag",
+                    "name": "body",
+                    "selfClosing": false,
+                    "block": {
+                      "type": "Block",
+                      "nodes": [
+                        {
+                          "type": "NamedBlock",
+                          "nodes": [],
+                          "line": 8,
+                          "filename": "../fixtures/layout.pug",
+                          "name": "body",
+                          "mode": "replace"
+                        }
+                      ],
+                      "line": 7,
+                      "filename": "../fixtures/layout.pug"
+                    },
+                    "attrs": [],
+                    "attributeBlocks": [],
+                    "isInline": false,
+                    "line": 7,
+                    "filename": "../fixtures/layout.pug"
+                  }
+                ],
+                "line": 3,
+                "filename": "../fixtures/layout.pug"
+              },
+              "attrs": [],
+              "attributeBlocks": [],
+              "isInline": false,
+              "line": 3,
+              "filename": "../fixtures/layout.pug"
+            }
+          ],
+          "line": 0,
+          "filename": "../fixtures/layout.pug"
+        }
+      },
+      "line": 4,
+      "filename": "extends-not-first.pug"
+    }
+  ],
+  "line": 0,
+  "filename": "extends-not-first.pug"
+}

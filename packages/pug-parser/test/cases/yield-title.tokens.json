@@ -1,0 +1,12 @@
+{"type":"tag","line":1,"col":1,"val":"html"}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"body"}
+{"type":"indent","line":3,"col":1,"val":4}
+{"type":"include","line":3,"col":5}
+{"type":"path","line":3,"col":13,"val":"yield-title-head.pug"}
+{"type":"indent","line":4,"col":1,"val":6}
+{"type":"text","line":4,"col":9,"val":"My Title"}
+{"type":"outdent","line":5,"col":5}
+{"type":"outdent","line":5,"col":3}
+{"type":"outdent","line":5,"col":1}
+{"type":"eos","line":5,"col":1}

@@ -1,0 +1,22 @@
+
+- var tag = 'p'
+- var foo = 'bar'
+
+#{tag} value
+#{tag}(foo='bar') value
+#{foo ? 'a' : 'li'}(something) here
+
+mixin item(icon)
+  li
+    if attributes.href
+      a&attributes(attributes)
+        img.icon(src=icon)
+        block
+    else
+      span&attributes(attributes)
+        img.icon(src=icon)
+        block
+
+ul
+  +item('contact') Contact
+  +item(href='/contact') Contact

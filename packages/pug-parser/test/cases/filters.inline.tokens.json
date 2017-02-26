@@ -1,0 +1,8 @@
+{"type":"tag","line":1,"col":1,"val":"p"}
+{"type":"text","line":1,"col":3,"val":"before "}
+{"type":"start-pug-interpolation","line":1,"col":10}
+{"type":"filter","line":1,"col":12,"val":"cdata"}
+{"type":"text","line":1,"col":19,"val":"inside"}
+{"type":"end-pug-interpolation","line":1,"col":25}
+{"type":"text","line":1,"col":26,"val":" after"}
+{"type":"eos","line":1,"col":32}

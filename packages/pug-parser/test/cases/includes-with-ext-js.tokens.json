@@ -1,0 +1,9 @@
+{"type":"tag","line":1,"col":1,"val":"pre"}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"code"}
+{"type":"indent","line":3,"col":1,"val":4}
+{"type":"include","line":3,"col":5}
+{"type":"path","line":3,"col":13,"val":"javascript-new-lines.js"}
+{"type":"outdent","line":4,"col":3}
+{"type":"outdent","line":4,"col":1}
+{"type":"eos","line":4,"col":1}

@@ -1,0 +1,172 @@
+{
+  "type": "Block",
+  "nodes": [
+    {
+      "type": "Include",
+      "file": {
+        "type": "FileReference",
+        "line": 2,
+        "filename": "includes.pug",
+        "path": "auxiliary/mixins.pug",
+        "fullPath": "auxiliary/mixins.pug",
+        "str": "\nmixin foo()\n  p bar",
+        "ast": {
+          "type": "Block",
+          "nodes": [
+            {
+              "type": "Mixin",
+              "name": "foo",
+              "args": null,
+              "block": {
+                "type": "Block",
+                "nodes": [
+                  {
+                    "type": "Tag",
+                    "name": "p",
+                    "selfClosing": false,
+                    "block": {
+                      "type": "Block",
+                      "nodes": [
+                        {
+                          "type": "Text",
+                          "val": "bar",
+                          "line": 3,
+                          "filename": "auxiliary/mixins.pug"
+                        }
+                      ],
+                      "line": 3,
+                      "filename": "auxiliary/mixins.pug"
+                    },
+                    "attrs": [],
+                    "attributeBlocks": [],
+                    "isInline": false,
+                    "line": 3,
+                    "filename": "auxiliary/mixins.pug"
+                  }
+                ],
+                "line": 3,
+                "filename": "auxiliary/mixins.pug"
+              },
+              "call": false,
+              "line": 2,
+              "filename": "auxiliary/mixins.pug"
+            }
+          ],
+          "line": 0,
+          "filename": "auxiliary/mixins.pug"
+        }
+      },
+      "line": 2,
+      "filename": "includes.pug",
+      "block": {
+        "type": "Block",
+        "nodes": [],
+        "line": 2,
+        "filename": "includes.pug"
+      }
+    },
+    {
+      "type": "Mixin",
+      "name": "foo",
+      "args": null,
+      "block": null,
+      "call": true,
+      "attrs": [],
+      "attributeBlocks": [],
+      "line": 4,
+      "filename": "includes.pug"
+    },
+    {
+      "type": "Tag",
+      "name": "body",
+      "selfClosing": false,
+      "block": {
+        "type": "Block",
+        "nodes": [
+          {
+            "type": "RawInclude",
+            "file": {
+              "type": "FileReference",
+              "line": 7,
+              "filename": "includes.pug",
+              "path": "auxiliary/smile.html",
+              "fullPath": "auxiliary/smile.html",
+              "str": "<p>:)</p>\n"
+            },
+            "line": 7,
+            "filename": "includes.pug",
+            "filters": []
+          },
+          {
+            "type": "RawInclude",
+            "file": {
+              "type": "FileReference",
+              "line": 8,
+              "filename": "includes.pug",
+              "path": "auxiliary/escapes.html",
+              "fullPath": "auxiliary/escapes.html",
+              "str": "<script>\n  console.log(\"foo\\nbar\")\n</script>\n"
+            },
+            "line": 8,
+            "filename": "includes.pug",
+            "filters": []
+          },
+          {
+            "type": "Tag",
+            "name": "script",
+            "selfClosing": false,
+            "block": {
+              "type": "Block",
+              "nodes": [
+                {
+                  "type": "RawInclude",
+                  "file": {
+                    "type": "FileReference",
+                    "line": 10,
+                    "filename": "includes.pug",
+                    "path": "auxiliary/includable.js",
+                    "fullPath": "auxiliary/includable.js",
+                    "str": "var STRING_SUBSTITUTIONS = {    // table of character substitutions\n  '\\t': '\\\\t',\n  '\\r': '\\\\r',\n  '\\n': '\\\\n',\n  '\"' : '\\\\\"',\n  '\\\\': '\\\\\\\\'\n};"
+                  },
+                  "line": 10,
+                  "filename": "includes.pug",
+                  "filters": [
+                    {
+                      "type": "IncludeFilter",
+                      "name": "verbatim",
+                      "attrs": [],
+                      "line": 10,
+                      "filename": "includes.pug"
+                    }
+                  ]
+                }
+              ],
+              "line": 9,
+              "filename": "includes.pug"
+            },
+            "attrs": [
+              {
+                "name": "type",
+                "val": "\"text/javascript\"",
+                "mustEscape": true
+              }
+            ],
+            "attributeBlocks": [],
+            "isInline": false,
+            "line": 9,
+            "filename": "includes.pug"
+          }
+        ],
+        "line": 6,
+        "filename": "includes.pug"
+      },
+      "attrs": [],
+      "attributeBlocks": [],
+      "isInline": false,
+      "line": 6,
+      "filename": "includes.pug"
+    }
+  ],
+  "line": 0,
+  "filename": "includes.pug"
+}

@@ -1,72 +1,28 @@
 {
-  "name": "pug",
-  "description": "A clean, whitespace-sensitive template language for writing HTML",
-  "version": "2.0.0-alpha7",
-  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-  "maintainers": [
-    "Forbes Lindesay <forbes@lindesay.co.uk>",
-    "Matthias Le Brun <mlbli@me.com>",
-    "Joshua Appelman <joshua@jbna.nl>",
-    "Jonathan Ong <jonathanrichardong@gmail.com>",
-    "Alex Kocharin <alex@kocharin.ru>",
-    "Hemanth <hemanth.hm@gmail.com>",
-    "Timothy Gu <timothygu99@gmail.com>",
-    "Andreas Lubbe <git@lubbe.org>"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/pugjs/pug"
-  },
-  "main": "lib",
-  "dependencies": {
-    "pug-code-gen": "0.0.7",
-    "pug-filters": "^1.2.1",
-    "pug-lexer": "^1.0.1",
-    "pug-linker": "0.0.4",
-    "pug-load": "^1.0.3",
-    "pug-parser": "^1.0.0",
-    "pug-runtime": "^2.0.1",
-    "pug-strip-comments": "0.0.1"
-  },
+  "name": "pug-monorepo",
+  "private": true,
   "devDependencies": {
-    "browserify": "*",
-    "browserify-middleware": "~4.1.0",
-    "code-mirror": "~3.22.0",
     "coveralls": "^2.11.2",
-    "doctypes": "^1.0.0",
-    "express": "^4.10.4",
-    "github-basic": "^5.0.0",
-    "highlight-codemirror": "^4.6.1",
-    "inconsolata": "0.0.2",
-    "istanbul": "*",
-    "jquery": "^2.1.4",
-    "jstransformer-cdata": "^1.0.0",
-    "jstransformer-coffee-script": "^1.0.0",
-    "jstransformer-less": "^2.1.0",
-    "jstransformer-markdown-it": "^0.2.2",
-    "jstransformer-stylus": "^1.0.0",
-    "jstransformer-uglify-js": "^1.1.1",
-    "jstransformer-verbatim": "^1.0.0",
-    "less-file": "0.0.9",
-    "lsr": "^1.0.0",
-    "markdown-it": "^5.0.1",
-    "mocha": "*",
-    "pull-request": "^3.0.0",
-    "rimraf": "^2.2.8",
-    "should": "*",
-    "stop": "^3.0.0-rc1",
-    "stylus": "*",
-    "twbs": "0.0.6",
-    "uglify-js": "^2.6.1"
+    "jest": "^18.1.0",
+    "lerna": "2.0.0-beta.32"
+  },
+  "repository": {
+	   "type": "git",
+	   "url": "https://github.com/pugjs/pug.git"
   },
   "scripts": {
-    "test": "mocha -R spec",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R dot",
-    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls"
+    "clean": "lerna clean",
+    "release": "lerna publish",
+    "postinstall": "lerna bootstrap",
+    "pretest": "lerna run pretest",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls",
+    "watch": "jest --watch"
   },
-  "browser": {
-    "fs": false
+  "jest": {
+    "testEnvironment": "node",
+    "snapshotSerializers": ["./scripts/filename-serializer.js"]
   },
-  "homepage": "http://jade-lang.com"
+  "license": "MIT"
 }

@@ -1,0 +1,16 @@
+{"type":"code","line":1,"col":1,"val":"var users = [{ name: 'tobi', age: 2 }]","mustEscape":false,"buffer":false}
+{"type":"newline","line":3,"col":1}
+{"type":"tag","line":3,"col":1,"val":"fb:users"}
+{"type":"indent","line":4,"col":1,"val":2}
+{"type":"each","line":4,"col":3,"val":"user","key":null,"code":"users"}
+{"type":"indent","line":5,"col":1,"val":4}
+{"type":"tag","line":5,"col":5,"val":"fb:user"}
+{"type":"start-attributes","line":5,"col":12}
+{"type":"attribute","line":5,"col":13,"name":"age","val":"user.age","mustEscape":true}
+{"type":"end-attributes","line":5,"col":25}
+{"type":"indent","line":6,"col":1,"val":6}
+{"type":"filter","line":6,"col":7,"val":"cdata"}
+{"type":"outdent","line":7,"col":5}
+{"type":"outdent","line":7,"col":3}
+{"type":"outdent","line":7,"col":1}
+{"type":"eos","line":7,"col":1}
