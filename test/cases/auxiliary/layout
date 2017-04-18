@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title Something has gone wrong
+
+  body
+    block header
+      p
+      p
+        a(href='/') Home
+
+
+    block content
