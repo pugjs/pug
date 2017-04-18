@@ -150,7 +150,7 @@ exports[`test cases/filters.coffeescript.input.json 1`] = `
             ],
             \"line\": 4,
             \"filename\": \"filters.coffeescript.tokens.json\",
-            \"val\": \"(function(){var n;n={square:function(n){return n*n}}}).call(this);\"
+            \"val\": \"(function(){}).call(this);\"
           }
         ],
         \"line\": 1,
@@ -381,7 +381,7 @@ exports[`test cases/filters.include.input.json 1`] = `
                         \"type\": \"Text\",
                         \"line\": 5,
                         \"filename\": \"filters.include.tokens.json\",
-                        \"val\": \"(function(){var n;n={square:function(n){return n*n}}}).call(this);\"
+                        \"val\": \"(function(){}).call(this);\"
                       }
                     ],
                     \"line\": 4,
@@ -835,7 +835,7 @@ exports[`test cases/filters.nested.input.json 1`] = `
                   \"attrs\": [],
                   \"line\": 7,
                   \"filename\": \"filters.nested.tokens.json\",
-                  \"val\": \"(function(){!function(){return console.log(\\\"test\\\")}()}).call(this);\"
+                  \"val\": \"(function(){!function(){console.log(\\\"test\\\")}()}).call(this);\"
                 }
               ],
               \"line\": 7,
@@ -844,7 +844,7 @@ exports[`test cases/filters.nested.input.json 1`] = `
             \"attrs\": [],
             \"line\": 7,
             \"filename\": \"filters.nested.tokens.json\",
-            \"val\": \"<![CDATA[(function(){!function(){return console.log(\\\"test\\\")}()}).call(this);]]>\"
+            \"val\": \"<![CDATA[(function(){!function(){console.log(\\\"test\\\")}()}).call(this);]]>\"
           }
         ],
         \"line\": 6,
