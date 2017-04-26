@@ -890,15 +890,6 @@ describe('pug', function(){
     it('does not produce warnings for issue-1593', function () {
       pug.compileFile(__dirname + '/fixtures/issue-1593/index.pug');
     });
-    it('does throw error for issue-2404', function () {
-      var message = '';
-      try {
-        pug.compileFile(__dirname + '/fixtures/issue-2404/mixin.call.extends.pug');
-      } catch (e) {
-        message = e.message;
-      }
-      assert(message.indexOf('Declaration of template inheritance ("extends") should be the first thing in the file.') !== -1);
-    });
     it('should support caching (pass 1)', function () {
       fs.writeFileSync(__dirname + '/temp/input-compileFile.pug', '.foo bar');
       var fn = pug.compileFile(__dirname + '/temp/input-compileFile.pug',
