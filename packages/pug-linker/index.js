@@ -13,10 +13,10 @@ function link(ast) {
   var extendsNode = null;
   if (ast.nodes.length) {
     var hasExtends = ast.nodes[0].type === 'Extends';
+    checkExtendPosition(ast, hasExtends);
     if (hasExtends) {
       extendsNode = ast.nodes.shift();
     }
-    checkExtendPosition(ast, hasExtends);
   }
   ast = applyIncludes(ast);
   ast.declaredBlocks = findDeclaredBlocks(ast);
@@ -164,7 +164,7 @@ function checkExtendPosition(ast, hasExtends) {
       if (hasExtends && !legitExtendsReached) {
         legitExtendsReached = true;
       } else {
-        error('EXTENDS_NOT_FIRST', 'Declaration of template inheritance ("extends") should be the first thing in the file.', node);
+        error('EXTENDS_NOT_FIRST', 'Declaration of template inheritance ("extends") should be the first thing in the file. There can only be one extends statement per file.', node);
       }
     }
   });

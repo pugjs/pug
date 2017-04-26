@@ -3570,7 +3570,7 @@ exports[`error handling extends-not-first.input.json 1`] = `
 Object {
   "code": "PUG:EXTENDS_NOT_FIRST",
   "line": 4,
-  "msg": "Declaration of template inheritance (\"extends\") should be the first thing in the file.",
+  "msg": "Declaration of template inheritance (\"extends\") should be the first thing in the file. There can only be one extends statement per file.",
 }
 `;
 
