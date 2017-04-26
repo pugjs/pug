@@ -55,6 +55,7 @@ function link(ast) {
       parent.declaredBlocks[name] = ast.declaredBlocks[name];
     });
     parent.nodes = mixins.concat(parent.nodes);
+    parent.hasExtends = true;
     return parent;
   }
   return ast;
@@ -123,7 +124,21 @@ function applyIncludes(ast, child) {
     }
   }, function after(node, replace) {
     if (node.type === 'Include') {
-      replace(applyYield(link(node.file.ast), node.block));
+      var childAST = link(node.file.ast);
+      if (childAST.hasExtends) {
+        childAST = removeBlocks(childAST);
+      }
+      replace(applyYield(childAST, node.block));
+    }
+  });
+}
+function removeBlocks(ast) {
+  return walk(ast, function (node, replace) {
+    if (node.type === 'NamedBlock') {
+      replace({
+        type: 'Block',
+        nodes: node.nodes
+      });
     }
   });
 }
