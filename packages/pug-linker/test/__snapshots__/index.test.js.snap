@@ -2412,6 +2412,74 @@ Object {
               Object {
                 "mustEscape": false,
                 "name": "class",
+                "val": "\'last\'",
+              },
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'prepend\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.multi.append.prepend.block.pug",
+              "line": 13,
+              "nodes": Array [
+                Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 13,
+                  "type": "Text",
+                  "val": "Last prepend must appear at top",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "layout.multi.append.prepend.block.pug",
+            "isInline": false,
+            "line": 13,
+            "name": "p",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'first\'",
+              },
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'prepend\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.multi.append.prepend.block.pug",
+              "line": 7,
+              "nodes": Array [
+                Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 7,
+                  "type": "Text",
+                  "val": "Something prepended to content",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "layout.multi.append.prepend.block.pug",
+            "isInline": false,
+            "line": 7,
+            "name": "p",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": false,
+                "name": "class",
                 "val": "\'content\'",
               },
             ],
@@ -2432,6 +2500,74 @@ Object {
             "isInline": false,
             "line": 4,
             "name": "div",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'first\'",
+              },
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'append\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.multi.append.prepend.block.pug",
+              "line": 4,
+              "nodes": Array [
+                Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 4,
+                  "type": "Text",
+                  "val": "Something appended to content",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "layout.multi.append.prepend.block.pug",
+            "isInline": false,
+            "line": 4,
+            "name": "p",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'last\'",
+              },
+              Object {
+                "mustEscape": false,
+                "name": "class",
+                "val": "\'append\'",
+              },
+            ],
+            "block": Object {
+              "filename": "layout.multi.append.prepend.block.pug",
+              "line": 10,
+              "nodes": Array [
+                Object {
+                  "filename": "layout.multi.append.prepend.block.pug",
+                  "line": 10,
+                  "type": "Text",
+                  "val": "Last append must be most last",
+                },
+              ],
+              "type": "Block",
+            },
+            "filename": "layout.multi.append.prepend.block.pug",
+            "isInline": false,
+            "line": 10,
+            "name": "p",
             "selfClosing": false,
             "type": "Tag",
           },
