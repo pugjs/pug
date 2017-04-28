@@ -181,7 +181,8 @@ function compileBody(str, options){
     globals: options.globals,
     self: options.self,
     includeSources: options.includeSources ? debug_sources : false,
-    templateName: options.templateName
+    templateName: options.templateName,
+    module: options.module
   });
   js = applyPlugins(js, options, plugins, 'postCodeGen');
 
