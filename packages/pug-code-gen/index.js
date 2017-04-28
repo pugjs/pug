@@ -146,7 +146,7 @@ Compiler.prototype = {
         ');' +
         '}';
     }
-    return buildRuntime(this.runtimeFunctionsUsed) + 'function ' + (this.options.templateName || 'template') + '(locals) {var pug_html = "", pug_mixins = {}, pug_interp;' + js + ';return pug_html;}';
+    return (this.options.module && !this.inlineRuntimeFunctions ? 'var pug = require("pug-runtime");' : '') + buildRuntime(this.runtimeFunctionsUsed) + 'function ' + (this.options.templateName || 'template') + '(locals) {var pug_html = "", pug_mixins = {}, pug_interp;' + js + ';return pug_html;}' + (this.options.module ? ' module.exports = ' + (this.options.templateName || 'template') + ';' : '');
   },
 
   /**
