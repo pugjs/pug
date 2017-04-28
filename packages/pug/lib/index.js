@@ -276,6 +276,7 @@ exports.compile = function(str, options){
  *     the compiled template for better error messages.
  *   - `filename` used to improve errors when `compileDebug` is not `true` and to resolve imports/extends
  *   - `name` the name of the resulting function (defaults to "template")
+ *   - `module` when it is explicitly `true`, the source code include export module syntax
  *
  * @param {String} str
  * @param {Options} options
@@ -303,6 +304,7 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
     plugins: options.plugins,
+    module: options.module
   });
 
   return {body: parsed.body, dependencies: parsed.dependencies};
