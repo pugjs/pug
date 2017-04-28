@@ -979,11 +979,19 @@ describe('pug', function(){
       assert(actual === expected);
     });
     it('should support .pug.compileClient(str, options)', function () {
-      var src = '.bar= self.foo'
+      var src = '.bar= self.foo';
       var fn = pug.compileClient(src, {self: true});
       fn = Function('pug', fn.toString() + '\nreturn template;')(pug.runtime);
       var actual = fn({foo: 'baz'});
       assert(actual === '<div class="bar">baz</div>');
+    });
+    it('should support module syntax .pug.compileClient(str, options)', function () {
+      var src = '.bar= self.foo';
+      var fn = pug.compileClient(src, {self: true, module: true, inlineRuntimeFunctions: false});
+      fs.writeFileSync(__dirname + '/temp/input-compileModuleFileClient.js', fn.toString());
+      var expected = '<div class="bar">baz</div>';
+      var fn = require(__dirname + '/temp/input-compileModuleFileClient.js')
+      assert(fn({foo: 'baz'}) === expected);
     });
   });
 
