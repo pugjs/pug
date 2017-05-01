@@ -77,9 +77,8 @@ function flattenParentBlocks(parentBlocks, accumulator) {
   parentBlocks.forEach(function (parentBlock) {
     if (parentBlock.parents) {
       flattenParentBlocks(parentBlock.parents, accumulator);
-    } else {
-      accumulator.push(parentBlock);
     }
+    accumulator.push(parentBlock);
   });
   return accumulator;
 }
