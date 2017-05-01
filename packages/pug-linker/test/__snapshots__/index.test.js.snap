@@ -370,60 +370,7 @@ Object {
 
 exports[`cases from pug include-extends-from-root.input.json 1`] = `
 Object {
-  "declaredBlocks": Object {
-    "content": Array [
-      Object {
-        "filename": "auxiliary/layout.pug",
-        "line": 6,
-        "mode": "replace",
-        "name": "content",
-        "nodes": Array [
-          Object {
-            "declaredBlocks": Object {},
-            "filename": "auxiliary/include-from-root.pug",
-            "line": 0,
-            "nodes": Array [
-              Object {
-                "attributeBlocks": Array [],
-                "attrs": Array [],
-                "block": Object {
-                  "filename": "auxiliary/include-from-root.pug",
-                  "line": 1,
-                  "nodes": Array [
-                    Object {
-                      "filename": "auxiliary/include-from-root.pug",
-                      "line": 1,
-                      "type": "Text",
-                      "val": "hello",
-                    },
-                  ],
-                  "type": "Block",
-                },
-                "filename": "auxiliary/include-from-root.pug",
-                "isInline": false,
-                "line": 1,
-                "name": "h1",
-                "selfClosing": false,
-                "type": "Tag",
-              },
-            ],
-            "type": "Block",
-          },
-        ],
-        "type": "NamedBlock",
-      },
-    ],
-    "head": Array [
-      Object {
-        "filename": "auxiliary/layout.pug",
-        "line": 4,
-        "mode": "replace",
-        "name": "head",
-        "nodes": Array [],
-        "type": "NamedBlock",
-      },
-    ],
-  },
+  "declaredBlocks": Object {},
   "filename": "include-extends-from-root.pug",
   "line": 0,
   "nodes": Array [
@@ -525,6 +472,7 @@ Object {
         ],
       },
       "filename": "auxiliary/layout.pug",
+      "hasExtends": true,
       "line": 0,
       "nodes": Array [
         Object {
@@ -565,12 +513,8 @@ Object {
                       "type": "Tag",
                     },
                     Object {
-                      "filename": "auxiliary/layout.pug",
-                      "line": 4,
-                      "mode": "replace",
-                      "name": "head",
                       "nodes": Array [],
-                      "type": "NamedBlock",
+                      "type": "Block",
                     },
                   ],
                   "type": "Block",
@@ -590,10 +534,6 @@ Object {
                   "line": 5,
                   "nodes": Array [
                     Object {
-                      "filename": "auxiliary/layout.pug",
-                      "line": 6,
-                      "mode": "replace",
-                      "name": "content",
                       "nodes": Array [
                         Object {
                           "declaredBlocks": Object {},
@@ -627,7 +567,7 @@ Object {
                           "type": "Block",
                         },
                       ],
-                      "type": "NamedBlock",
+                      "type": "Block",
                     },
                   ],
                   "type": "Block",
@@ -659,74 +599,7 @@ Object {
 
 exports[`cases from pug include-extends-of-common-template.input.json 1`] = `
 Object {
-  "declaredBlocks": Object {
-    "test": Array [
-      Object {
-        "filename": "auxiliary/empty-block.pug",
-        "line": 1,
-        "mode": "replace",
-        "name": "test",
-        "nodes": Array [
-          Object {
-            "attributeBlocks": Array [],
-            "attrs": Array [],
-            "block": Object {
-              "filename": "auxiliary/extends-empty-block-1.pug",
-              "line": 4,
-              "nodes": Array [
-                Object {
-                  "filename": "auxiliary/extends-empty-block-1.pug",
-                  "line": 4,
-                  "type": "Text",
-                  "val": "test1",
-                },
-              ],
-              "type": "Block",
-            },
-            "filename": "auxiliary/extends-empty-block-1.pug",
-            "isInline": false,
-            "line": 4,
-            "name": "div",
-            "selfClosing": false,
-            "type": "Tag",
-          },
-        ],
-        "type": "NamedBlock",
-      },
-      Object {
-        "filename": "auxiliary/empty-block.pug",
-        "line": 1,
-        "mode": "replace",
-        "name": "test",
-        "nodes": Array [
-          Object {
-            "attributeBlocks": Array [],
-            "attrs": Array [],
-            "block": Object {
-              "filename": "auxiliary/extends-empty-block-2.pug",
-              "line": 4,
-              "nodes": Array [
-                Object {
-                  "filename": "auxiliary/extends-empty-block-2.pug",
-                  "line": 4,
-                  "type": "Text",
-                  "val": "test2",
-                },
-              ],
-              "type": "Block",
-            },
-            "filename": "auxiliary/extends-empty-block-2.pug",
-            "isInline": false,
-            "line": 4,
-            "name": "div",
-            "selfClosing": false,
-            "type": "Tag",
-          },
-        ],
-        "type": "NamedBlock",
-      },
-    ],
-  },
+  "declaredBlocks": Object {},
   "filename": "include-extends-of-common-template.pug",
   "line": 0,
   "nodes": Array [
@@ -802,13 +675,10 @@ Object {
         ],
       },
       "filename": "auxiliary/empty-block.pug",
+      "hasExtends": true,
       "line": 0,
       "nodes": Array [
         Object {
-          "filename": "auxiliary/empty-block.pug",
-          "line": 1,
-          "mode": "replace",
-          "name": "test",
           "nodes": Array [
             Object {
               "attributeBlocks": Array [],
@@ -834,7 +704,7 @@ Object {
               "type": "Tag",
             },
           ],
-          "type": "NamedBlock",
+          "type": "Block",
         },
       ],
       "type": "Block",
@@ -911,13 +781,10 @@ Object {
         ],
       },
       "filename": "auxiliary/empty-block.pug",
+      "hasExtends": true,
       "line": 0,
       "nodes": Array [
         Object {
-          "filename": "auxiliary/empty-block.pug",
-          "line": 1,
-          "mode": "replace",
-          "name": "test",
           "nodes": Array [
             Object {
               "attributeBlocks": Array [],
@@ -943,7 +810,7 @@ Object {
               "type": "Tag",
             },
           ],
-          "type": "NamedBlock",
+          "type": "Block",
         },
       ],
       "type": "Block",
@@ -955,33 +822,7 @@ Object {
 
 exports[`cases from pug include-extends-relative.input.json 1`] = `
 Object {
-  "declaredBlocks": Object {
-    "content": Array [
-      Object {
-        "filename": "../cases-src/auxiliary/layout.pug",
-        "line": 6,
-        "mode": "replace",
-        "name": "content",
-        "nodes": Array [
-          Object {
-            "type": "Text",
-            "val": "h1 hello",
-          },
-        ],
-        "type": "NamedBlock",
-      },
-    ],
-    "head": Array [
-      Object {
-        "filename": "../cases-src/auxiliary/layout.pug",
-        "line": 4,
-        "mode": "replace",
-        "name": "head",
-        "nodes": Array [],
-        "type": "NamedBlock",
-      },
-    ],
-  },
+  "declaredBlocks": Object {},
   "filename": "include-extends-relative.pug",
   "line": 0,
   "nodes": Array [
@@ -1029,6 +870,7 @@ Object {
         ],
       },
       "filename": "../cases-src/auxiliary/layout.pug",
+      "hasExtends": true,
       "line": 0,
       "nodes": Array [
         Object {
@@ -1069,12 +911,8 @@ Object {
                       "type": "Tag",
                     },
                     Object {
-                      "filename": "../cases-src/auxiliary/layout.pug",
-                      "line": 4,
-                      "mode": "replace",
-                      "name": "head",
                       "nodes": Array [],
-                      "type": "NamedBlock",
+                      "type": "Block",
                     },
                   ],
                   "type": "Block",
@@ -1094,17 +932,13 @@ Object {
                   "line": 5,
                   "nodes": Array [
                     Object {
-                      "filename": "../cases-src/auxiliary/layout.pug",
-                      "line": 6,
-                      "mode": "replace",
-                      "name": "content",
                       "nodes": Array [
                         Object {
                           "type": "Text",
                           "val": "h1 hello",
                         },
                       ],
-                      "type": "NamedBlock",
+                      "type": "Block",
                     },
                   ],
                   "type": "Block",
@@ -1924,6 +1758,7 @@ Object {
     ],
   },
   "filename": "../fixtures/append/layout.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
@@ -2228,6 +2063,7 @@ Object {
     ],
   },
   "filename": "../fixtures/append-without-block/layout.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
@@ -2694,6 +2530,7 @@ Object {
     ],
   },
   "filename": "../fixtures/multi-append-prepend-block/root.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
@@ -3086,6 +2923,7 @@ Object {
     ],
   },
   "filename": "../fixtures/prepend/layout.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
@@ -3390,6 +3228,7 @@ Object {
     ],
   },
   "filename": "../fixtures/prepend-without-block/layout.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
@@ -3586,6 +3425,7 @@ exports[`special cases extending-empty.input.json 1`] = `
 Object {
   "declaredBlocks": Object {},
   "filename": "../fixtures/empty.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [],
   "type": "Block",
@@ -3681,6 +3521,7 @@ Object {
     ],
   },
   "filename": "../fixtures/layout.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
@@ -3990,6 +3831,7 @@ Object {
     ],
   },
   "filename": "../fixtures/layout.pug",
+  "hasExtends": true,
   "line": 0,
   "nodes": Array [
     Object {
