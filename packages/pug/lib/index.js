@@ -181,8 +181,7 @@ function compileBody(str, options){
     globals: options.globals,
     self: options.self,
     includeSources: options.includeSources ? debug_sources : false,
-    templateName: options.templateName,
-    module: options.module
+    templateName: options.templateName
   });
   js = applyPlugins(js, options, plugins, 'postCodeGen');
 
@@ -304,11 +303,19 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     filters: options.filters,
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
-    plugins: options.plugins,
-    module: options.module
+    plugins: options.plugins
   });
 
-  return {body: parsed.body, dependencies: parsed.dependencies};
+  var body = parsed.body;
+
+  if(options.module) {
+    if(!options.inlineRuntimeFunctions) {
+      body = 'var pug = require("pug-runtime");' + body;
+    }
+    body += ' module.exports = ' + (options.templateName || 'template') + ';';
+  }
+
+  return {body: body, dependencies: parsed.dependencies};
 };
 
 /**
