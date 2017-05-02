@@ -985,10 +985,18 @@ describe('pug', function(){
       var actual = fn({foo: 'baz'});
       assert(actual === '<div class="bar">baz</div>');
     });
-    it('should support module syntax .pug.compileClient(str, options)', function () {
+    it('should support module syntax .pug.compileClient(str, options) when inlineRuntimeFunctions its true', function () {
+      var src = '.bar= self.foo';
+      var fn = pug.compileClient(src, {self: true, module: true, inlineRuntimeFunctions: true});
+      fs.writeFileSync(__dirname + '/temp/input-compileModuleFileClient.js', fn);
+      var expected = '<div class="bar">baz</div>';
+      var fn = require(__dirname + '/temp/input-compileModuleFileClient.js')
+      assert(fn({foo: 'baz'}) === expected);
+    });
+    it('should support module syntax .pug.compileClient(str, options) when inlineRuntimeFunctions its false', function () {
       var src = '.bar= self.foo';
       var fn = pug.compileClient(src, {self: true, module: true, inlineRuntimeFunctions: false});
-      fs.writeFileSync(__dirname + '/temp/input-compileModuleFileClient.js', fn.toString());
+      fs.writeFileSync(__dirname + '/temp/input-compileModuleFileClient.js', fn);
       var expected = '<div class="bar">baz</div>';
       var fn = require(__dirname + '/temp/input-compileModuleFileClient.js')
       assert(fn({foo: 'baz'}) === expected);
