@@ -312,7 +312,7 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     if(!options.inlineRuntimeFunctions) {
       body = 'var pug = require("pug-runtime");' + body;
     }
-    body += ' module.exports = ' + (options.templateName || 'template') + ';';
+    body += ' module.exports = ' + (options.name || 'template') + ';';
   }
 
   return {body: body, dependencies: parsed.dependencies};
