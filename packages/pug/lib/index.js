@@ -309,7 +309,7 @@ exports.compileClientWithDependenciesTracked = function(str, options){
   var body = parsed.body;
 
   if(options.module) {
-    if(!options.inlineRuntimeFunctions) {
+    if(options.inlineRuntimeFunctions === false) {
       body = 'var pug = require("pug-runtime");' + body;
     }
     body += ' module.exports = ' + (options.name || 'template') + ';';
