@@ -970,20 +970,37 @@ describe('pug', function(){
   });
 
   describe('.compileClient()', function () {
-    it('should support .pug.compileClient(str)', function () {
+    it('should support pug.compileClient(str)', function () {
       var src = fs.readFileSync(__dirname + '/cases/basic.pug');
       var expected = fs.readFileSync(__dirname + '/cases/basic.html', 'utf8').replace(/\s/g, '');
       var fn = pug.compileClient(src);
       fn = Function('pug', fn.toString() + '\nreturn template;')(pug.runtime);
       var actual = fn({name: 'foo'}).replace(/\s/g, '');
-      assert(actual === expected);
+      expect(actual).toBe(expected);
     });
-    it('should support .pug.compileClient(str, options)', function () {
-      var src = '.bar= self.foo'
+    it('should support pug.compileClient(str, options)', function () {
+      var src = '.bar= self.foo';
       var fn = pug.compileClient(src, {self: true});
       fn = Function('pug', fn.toString() + '\nreturn template;')(pug.runtime);
       var actual = fn({foo: 'baz'});
-      assert(actual === '<div class="bar">baz</div>');
+      expect(actual).toBe('<div class="bar">baz</div>');
+    });
+    it('should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it true', function () {
+      var src = '.bar= self.foo';
+      var fn = pug.compileClient(src, {self: true, module: true, inlineRuntimeFunctions: true});
+      expect(fn).toMatchSnapshot();
+      fs.writeFileSync(__dirname + '/temp/input-compileModuleFileClient.js', fn);
+      var expected = '<div class="bar">baz</div>';
+      var fn = require(__dirname + '/temp/input-compileModuleFileClient.js');
+      expect(fn({foo: 'baz'})).toBe('<div class="bar">baz</div>');
+    });
+    it('should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it false', function () {
+      var src = '.bar= self.foo';
+      var fn = pug.compileClient(src, {self: true, module: true, inlineRuntimeFunctions: false});
+      expect(fn).toMatchSnapshot();
+      fs.writeFileSync(__dirname + '/temp/input-compileModuleFileClient.js', fn);
+      var fn = require(__dirname + '/temp/input-compileModuleFileClient.js');
+      expect(fn({foo: 'baz'})).toBe('<div class="bar">baz</div>');
     });
   });
 
