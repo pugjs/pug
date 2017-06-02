@@ -7097,17 +7097,10 @@ Object {
         "nodes": Array [
           Object {
             "filename": "html.tokens.json",
+            "isHtml": true,
             "line": 13,
-            "nodes": Array [
-              Object {
-                "filename": "html.tokens.json",
-                "isHtml": true,
-                "line": 13,
-                "type": "Text",
-                "val": "<strong>Even</strong> as the body of a block expansion.",
-              },
-            ],
-            "type": "Block",
+            "type": "Text",
+            "val": "<strong>Even</strong> as the body of a block expansion.",
           },
         ],
         "type": "Block",
@@ -9087,143 +9080,136 @@ Object {
           Object {
             "filename": "inline-tag.tokens.json",
             "line": 11,
-            "nodes": Array [
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 11,
-                "type": "Text",
-                "val": "bing",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 12,
-                "type": "Text",
-                "val": "
+            "type": "Text",
+            "val": "bing",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 12,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 12,
-                "type": "Text",
-                "val": "",
-              },
-              Object {
-                "attributeBlocks": Array [],
-                "attrs": Array [],
-                "block": Object {
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 12,
+            "type": "Text",
+            "val": "",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [],
+            "block": Object {
+              "filename": "inline-tag.tokens.json",
+              "line": 12,
+              "nodes": Array [
+                Object {
                   "filename": "inline-tag.tokens.json",
                   "line": 12,
-                  "nodes": Array [
-                    Object {
-                      "filename": "inline-tag.tokens.json",
-                      "line": 12,
-                      "type": "Text",
-                      "val": "foo",
-                    },
-                  ],
-                  "type": "Block",
+                  "type": "Text",
+                  "val": "foo",
                 },
-                "filename": "inline-tag.tokens.json",
-                "isInline": true,
-                "line": 12,
-                "name": "strong",
-                "selfClosing": false,
-                "type": "Tag",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 12,
-                "type": "Text",
-                "val": "",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 13,
-                "type": "Text",
-                "val": "
+              ],
+              "type": "Block",
+            },
+            "filename": "inline-tag.tokens.json",
+            "isInline": true,
+            "line": 12,
+            "name": "strong",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 12,
+            "type": "Text",
+            "val": "",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 13,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 13,
-                "type": "Text",
-                "val": "",
-              },
-              Object {
-                "attributeBlocks": Array [],
-                "attrs": Array [],
-                "block": Object {
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 13,
+            "type": "Text",
+            "val": "",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [],
+            "block": Object {
+              "filename": "inline-tag.tokens.json",
+              "line": 13,
+              "nodes": Array [
+                Object {
+                  "buffer": true,
                   "filename": "inline-tag.tokens.json",
+                  "isInline": true,
                   "line": 13,
-                  "nodes": Array [
-                    Object {
-                      "buffer": true,
-                      "filename": "inline-tag.tokens.json",
-                      "isInline": true,
-                      "line": 13,
-                      "mustEscape": true,
-                      "type": "Code",
-                      "val": "\'[foo]\'",
-                    },
-                  ],
-                  "type": "Block",
+                  "mustEscape": true,
+                  "type": "Code",
+                  "val": "\'[foo]\'",
                 },
-                "filename": "inline-tag.tokens.json",
-                "isInline": true,
-                "line": 13,
-                "name": "strong",
-                "selfClosing": false,
-                "type": "Tag",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 13,
-                "type": "Text",
-                "val": "",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 14,
-                "type": "Text",
-                "val": "
+              ],
+              "type": "Block",
+            },
+            "filename": "inline-tag.tokens.json",
+            "isInline": true,
+            "line": 13,
+            "name": "strong",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 13,
+            "type": "Text",
+            "val": "",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 14,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 14,
-                "type": "Text",
-                "val": "",
-              },
-              Object {
-                "buffer": false,
-                "filename": "inline-tag.tokens.json",
-                "isInline": false,
-                "line": 14,
-                "mustEscape": false,
-                "type": "Code",
-                "val": "var foo = \'foo]\'",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 14,
-                "type": "Text",
-                "val": "",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 15,
-                "type": "Text",
-                "val": "
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 14,
+            "type": "Text",
+            "val": "",
+          },
+          Object {
+            "buffer": false,
+            "filename": "inline-tag.tokens.json",
+            "isInline": false,
+            "line": 14,
+            "mustEscape": false,
+            "type": "Code",
+            "val": "var foo = \'foo]\'",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 14,
+            "type": "Text",
+            "val": "",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 15,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "inline-tag.tokens.json",
-                "line": 15,
-                "type": "Text",
-                "val": "bong",
-              },
-            ],
-            "type": "Block",
+          },
+          Object {
+            "filename": "inline-tag.tokens.json",
+            "line": 15,
+            "type": "Text",
+            "val": "bong",
           },
         ],
         "type": "Block",
@@ -9630,63 +9616,56 @@ Object {
           Object {
             "filename": "interpolation.escape.tokens.json",
             "line": 4,
-            "nodes": Array [
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 4,
-                "type": "Text",
-                "val": "some",
-              },
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 5,
-                "type": "Text",
-                "val": "
+            "type": "Text",
+            "val": "some",
+          },
+          Object {
+            "filename": "interpolation.escape.tokens.json",
+            "line": 5,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 5,
-                "type": "Text",
-                "val": "#{text}",
-              },
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 6,
-                "type": "Text",
-                "val": "
+          },
+          Object {
+            "filename": "interpolation.escape.tokens.json",
+            "line": 5,
+            "type": "Text",
+            "val": "#{text}",
+          },
+          Object {
+            "filename": "interpolation.escape.tokens.json",
+            "line": 6,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 6,
-                "type": "Text",
-                "val": "here",
-              },
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 7,
-                "type": "Text",
-                "val": "
+          },
+          Object {
+            "filename": "interpolation.escape.tokens.json",
+            "line": 6,
+            "type": "Text",
+            "val": "here",
+          },
+          Object {
+            "filename": "interpolation.escape.tokens.json",
+            "line": 7,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "interpolation.escape.tokens.json",
-                "line": 7,
-                "type": "Text",
-                "val": "My ID ",
-              },
-              Object {
-                "buffer": true,
-                "filename": "interpolation.escape.tokens.json",
-                "isInline": true,
-                "line": 7,
-                "mustEscape": true,
-                "type": "Code",
-                "val": "\"is {\" + id + \"}\"",
-              },
-            ],
-            "type": "Block",
+          },
+          Object {
+            "filename": "interpolation.escape.tokens.json",
+            "line": 7,
+            "type": "Text",
+            "val": "My ID ",
+          },
+          Object {
+            "buffer": true,
+            "filename": "interpolation.escape.tokens.json",
+            "isInline": true,
+            "line": 7,
+            "mustEscape": true,
+            "type": "Code",
+            "val": "\"is {\" + id + \"}\"",
           },
         ],
         "type": "Block",
@@ -15300,47 +15279,40 @@ Object {
           Object {
             "filename": "tag-blocks.tokens.json",
             "line": 3,
-            "nodes": Array [
-              Object {
-                "filename": "tag-blocks.tokens.json",
-                "line": 3,
-                "type": "Text",
-                "val": "We have sent an e-mail to ",
-              },
-              Object {
-                "attributeBlocks": Array [],
-                "attrs": Array [],
-                "block": Object {
+            "type": "Text",
+            "val": "We have sent an e-mail to ",
+          },
+          Object {
+            "attributeBlocks": Array [],
+            "attrs": Array [],
+            "block": Object {
+              "filename": "tag-blocks.tokens.json",
+              "line": 3,
+              "nodes": Array [
+                Object {
+                  "buffer": true,
                   "filename": "tag-blocks.tokens.json",
+                  "isInline": true,
                   "line": 3,
-                  "nodes": Array [
-                    Object {
-                      "buffer": true,
-                      "filename": "tag-blocks.tokens.json",
-                      "isInline": true,
-                      "line": 3,
-                      "mustEscape": true,
-                      "type": "Code",
-                      "val": "this.props.email",
-                    },
-                  ],
-                  "type": "Block",
+                  "mustEscape": true,
+                  "type": "Code",
+                  "val": "this.props.email",
                 },
-                "filename": "tag-blocks.tokens.json",
-                "isInline": true,
-                "line": 3,
-                "name": "strong",
-                "selfClosing": false,
-                "type": "Tag",
-              },
-              Object {
-                "filename": "tag-blocks.tokens.json",
-                "line": 3,
-                "type": "Text",
-                "val": ".  Please click the link in the e-mail",
-              },
-            ],
-            "type": "Block",
+              ],
+              "type": "Block",
+            },
+            "filename": "tag-blocks.tokens.json",
+            "isInline": true,
+            "line": 3,
+            "name": "strong",
+            "selfClosing": false,
+            "type": "Tag",
+          },
+          Object {
+            "filename": "tag-blocks.tokens.json",
+            "line": 3,
+            "type": "Text",
+            "val": ".  Please click the link in the e-mail",
           },
           Object {
             "buffer": true,
@@ -15919,41 +15891,34 @@ Object {
           Object {
             "filename": "text.tokens.json",
             "line": 8,
-            "nodes": Array [
-              Object {
-                "filename": "text.tokens.json",
-                "line": 8,
-                "type": "Text",
-                "val": "foo",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 9,
-                "type": "Text",
-                "val": "
+            "type": "Text",
+            "val": "foo",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 9,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 9,
-                "type": "Text",
-                "val": "bar",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 10,
-                "type": "Text",
-                "val": "
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 9,
+            "type": "Text",
+            "val": "bar",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 10,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 10,
-                "type": "Text",
-                "val": "baz",
-              },
-            ],
-            "type": "Block",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 10,
+            "type": "Text",
+            "val": "baz",
           },
         ],
         "type": "Block",
@@ -16044,71 +16009,64 @@ Object {
       "type": "Tag",
     },
     Object {
-      "filename": "text.tokens.json",
-      "line": 21,
-      "nodes": Array [
-        Object {
-          "line": 22,
-          "type": "Text",
-          "val": "foo",
-        },
-        Object {
-          "line": 23,
-          "type": "Text",
-          "val": "
+      "line": 22,
+      "type": "Text",
+      "val": "foo",
+    },
+    Object {
+      "line": 23,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 23,
-          "type": "Text",
-          "val": "",
-        },
-        Object {
-          "line": 24,
-          "type": "Text",
-          "val": "
+    },
+    Object {
+      "line": 23,
+      "type": "Text",
+      "val": "",
+    },
+    Object {
+      "line": 24,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 24,
-          "type": "Text",
-          "val": "",
-        },
-        Object {
-          "line": 25,
-          "type": "Text",
-          "val": "
+    },
+    Object {
+      "line": 24,
+      "type": "Text",
+      "val": "",
+    },
+    Object {
+      "line": 25,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 25,
-          "type": "Text",
-          "val": "bar",
-        },
-        Object {
-          "line": 26,
-          "type": "Text",
-          "val": "
+    },
+    Object {
+      "line": 25,
+      "type": "Text",
+      "val": "bar",
+    },
+    Object {
+      "line": 26,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 26,
-          "type": "Text",
-          "val": "baz",
-        },
-        Object {
-          "line": 27,
-          "type": "Text",
-          "val": "
+    },
+    Object {
+      "line": 26,
+      "type": "Text",
+      "val": "baz",
+    },
+    Object {
+      "line": 27,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 27,
-          "type": "Text",
-          "val": "",
-        },
-      ],
-      "type": "Block",
+    },
+    Object {
+      "line": 27,
+      "type": "Text",
+      "val": "",
     },
     Object {
       "attributeBlocks": Array [],
@@ -16120,54 +16078,47 @@ Object {
           Object {
             "filename": "text.tokens.json",
             "line": 29,
-            "nodes": Array [
-              Object {
-                "filename": "text.tokens.json",
-                "line": 29,
-                "type": "Text",
-                "val": "foo",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 30,
-                "type": "Text",
-                "val": "
+            "type": "Text",
+            "val": "foo",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 30,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 30,
-                "type": "Text",
-                "val": "  bar",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 31,
-                "type": "Text",
-                "val": "
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 30,
+            "type": "Text",
+            "val": "  bar",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 31,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 31,
-                "type": "Text",
-                "val": "    baz",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 32,
-                "type": "Text",
-                "val": "
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 31,
+            "type": "Text",
+            "val": "    baz",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 32,
+            "type": "Text",
+            "val": "
 ",
-              },
-              Object {
-                "filename": "text.tokens.json",
-                "line": 32,
-                "type": "Text",
-                "val": ".",
-              },
-            ],
-            "type": "Block",
+          },
+          Object {
+            "filename": "text.tokens.json",
+            "line": 32,
+            "type": "Text",
+            "val": ".",
           },
         ],
         "type": "Block",
@@ -16247,49 +16198,42 @@ Object {
       "type": "Tag",
     },
     Object {
-      "filename": "text.tokens.json",
-      "line": 40,
-      "nodes": Array [
-        Object {
-          "line": 41,
-          "type": "Text",
-          "val": "foo",
-        },
-        Object {
-          "line": 42,
-          "type": "Text",
-          "val": "
+      "line": 41,
+      "type": "Text",
+      "val": "foo",
+    },
+    Object {
+      "line": 42,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 42,
-          "type": "Text",
-          "val": "  bar",
-        },
-        Object {
-          "line": 43,
-          "type": "Text",
-          "val": "
+    },
+    Object {
+      "line": 42,
+      "type": "Text",
+      "val": "  bar",
+    },
+    Object {
+      "line": 43,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 43,
-          "type": "Text",
-          "val": "    baz",
-        },
-        Object {
-          "line": 44,
-          "type": "Text",
-          "val": "
+    },
+    Object {
+      "line": 43,
+      "type": "Text",
+      "val": "    baz",
+    },
+    Object {
+      "line": 44,
+      "type": "Text",
+      "val": "
 ",
-        },
-        Object {
-          "line": 44,
-          "type": "Text",
-          "val": ".",
-        },
-      ],
-      "type": "Block",
+    },
+    Object {
+      "line": 44,
+      "type": "Text",
+      "val": ".",
     },
   ],
   "type": "Block",

@@ -1,0 +1,38 @@
+exports[`test no uncessessary blocks should be added 1`] = `
+Object {
+  "line": 0,
+  "nodes": Array [
+    Object {
+      "attributeBlocks": Array [],
+      "attrs": Array [],
+      "block": Object {
+        "line": 2,
+        "nodes": Array [
+          Object {
+            "line": 3,
+            "type": "Text",
+            "val": "Hello",
+          },
+          Object {
+            "line": 4,
+            "type": "Text",
+            "val": "\n",
+          },
+          Object {
+            "line": 4,
+            "type": "Text",
+            "val": "World",
+          },
+        ],
+        "type": "Block",
+      },
+      "isInline": false,
+      "line": 2,
+      "name": "div",
+      "selfClosing": false,
+      "type": "Tag",
+    },
+  ],
+  "type": "Block",
+}
+`;
