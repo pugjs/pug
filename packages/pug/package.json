@@ -39,7 +39,7 @@
     "jstransformer-verbatim": "^1.0.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.2.8",
-    "uglify-js": "mishoo/UglifyJS2#1c15d0db456ce32f1b9b507aad97e5ee5c8285f7"
+    "uglify-js": "github:mishoo/UglifyJS2#1c15d0db456ce32f1b9b507aad97e5ee5c8285f7"
   },
   "browser": {
     "fs": false

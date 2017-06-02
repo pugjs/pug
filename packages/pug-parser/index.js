@@ -110,7 +110,13 @@ Parser.prototype = {
         block.nodes = block.nodes.concat(this.parseTextHtml());
       } else {
         var expr = this.parseExpr();
-        if (expr) block.nodes.push(expr);
+        if (expr) {
+          if (expr.type === 'Block') {
+            block.nodes = block.nodes.concat(expr.nodes);
+          } else {
+            block.nodes.push(expr);
+          }
+        }
       }
     }
 
@@ -382,7 +388,8 @@ loop:
   parseBlockExpansion: function(){
     var tok = this.accept(':');
     if (tok) {
-      return this.initBlock(tok.line, [this.parseExpr()]);
+      const expr = this.parseExpr();
+      return expr.type === 'Block' ? expr : this.initBlock(tok.line, [expr]);
     } else {
       return this.block();
     }
@@ -928,7 +935,11 @@ loop:
         block.nodes = block.nodes.concat(this.parseTextHtml());
       } else {
         var expr = this.parseExpr();
-        block.nodes.push(expr);
+        if (expr.type === 'Block') {
+          block.nodes = block.nodes.concat(expr.nodes);
+        } else {
+          block.nodes.push(expr);
+        }
       }
     }
     this.expect('outdent');
@@ -1044,7 +1055,8 @@ loop:
         break;
       case ':':
         this.advance();
-        tag.block = this.initBlock(tag.line, [this.parseExpr()]);
+        const expr = this.parseExpr();
+        tag.block = expr.type === 'Block' ? expr : this.initBlock(tag.line, [expr]);
         break;
       case 'newline':
       case 'indent':
