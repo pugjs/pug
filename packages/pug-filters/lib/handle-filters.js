@@ -32,6 +32,9 @@ function handleFilters(ast, filters, options, filterAliases) {
       });
       node.filters = undefined;
       node.file = undefined;
+    } else if (node.type === 'Code' && node.preFilter) {
+      var attrs = { filename: node.filename };
+      node.val = filterWithFallback(node, node.val, attrs);
     }
 
     function filterWithFallback(filter, text, attrs, funcName) {
@@ -60,18 +63,24 @@ function handleFilters(ast, filters, options, filterAliases) {
     }
   }, {includeDependencies: true});
   function getFilterName(filter) {
-    var filterName = filter.name;
+    var filterName;
+    if (filter.type == 'Code') {
+      filterName = filter.preFilter;
+    } else {
+      filterName = filter.name;
+    }
     if (filterAliases && filterAliases[filterName]) {
-      filterName = filterAliases[filterName];
-      if (filterAliases[filterName]) {
+      var filterNameAlias = filterAliases[filterName];
+      if (filterAliases[filterNameAlias]) {
         throw error(
           'FILTER_ALISE_CHAIN',
-          'The filter "' + filter.name + '" is an alias for "' + filterName +
-          '", which is an alias for "' + filterAliases[filterName] +
+          'The filter "' + filterName + '" is an alias for "' + filterNameAlias +
+          '", which is an alias for "' + filterAliases[filterNameAlias] +
           '".  Pug does not support chains of filter aliases.',
           filter
         );
       }
+      return filterNameAlias;
     }
     return filterName;
   }
