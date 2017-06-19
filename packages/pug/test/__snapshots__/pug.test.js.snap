@@ -1,7 +1,9 @@
 exports[`pug .compileClient() should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it false 1`] = `
 "var pug = require(\"pug-runtime\");
 function template(locals) {
-  var pug_html = \"\", pug_mixins = {}, pug_interp;
+  var pug_html = \"\",
+    pug_mixins = {},
+    pug_interp;
   var pug_debug_filename, pug_debug_line;
   try {
     var self = locals || {};
@@ -23,10 +25,14 @@ module.exports = template;
 
 exports[`pug .compileClient() should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it true 1`] = `
 "function pug_escape(e) {
-  var a = \"\" + e, t = pug_match_html.exec(a);
+  var a = \"\" + e,
+    t = pug_match_html.exec(a);
   if (!t) return e;
-  var r, c, n, s = \"\";
-  for ((r = t.index), (c = 0); r < a.length; r++) {
+  var r,
+    c,
+    n,
+    s = \"\";
+  for (r = t.index, c = 0; r < a.length; r++) {
     switch (a.charCodeAt(r)) {
       case 34:
         n = \"&quot;\";
@@ -68,11 +74,16 @@ function pug_rethrow(n, e, r, t) {
         return (t == r ? \"  > \" : \"    \") + t + \"| \" + n;
       })
       .join(\"\\n\");
-  throw ((n.path = e), (n.message =
-    (e || \"Pug\") + \":\" + r + \"\\n\" + i + \"\\n\\n\" + n.message), n);
+  throw (
+    (n.path = e),
+    (n.message = (e || \"Pug\") + \":\" + r + \"\\n\" + i + \"\\n\\n\" + n.message),
+    n
+  );
 }
 function template(locals) {
-  var pug_html = \"\", pug_mixins = {}, pug_interp;
+  var pug_html = \"\",
+    pug_mixins = {},
+    pug_interp;
   var pug_debug_filename, pug_debug_line;
   try {
     var self = locals || {};
