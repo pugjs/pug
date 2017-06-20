@@ -66,8 +66,7 @@
     "should": "*",
     "stop": "^3.0.0-rc1",
     "stylus": "*",
-    "twbs": "0.0.6",
-    "uglify-js": "*"
+    "twbs": "0.0.6"
   },
   "component": {
     "scripts": {
