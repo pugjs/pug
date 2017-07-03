@@ -2,6 +2,7 @@ language: node_js
 node_js:
   - "4"
   - "6"
+  - "8"
 
 # Use faster Docker architecture on Travis.
 sudo: false
