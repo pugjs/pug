@@ -388,7 +388,7 @@ loop:
   parseBlockExpansion: function(){
     var tok = this.accept(':');
     if (tok) {
-      const expr = this.parseExpr();
+      var expr = this.parseExpr();
       return expr.type === 'Block' ? expr : this.initBlock(tok.line, [expr]);
     } else {
       return this.block();
@@ -1055,7 +1055,7 @@ loop:
         break;
       case ':':
         this.advance();
-        const expr = this.parseExpr();
+        var expr = this.parseExpr();
         tag.block = expr.type === 'Block' ? expr : this.initBlock(tag.line, [expr]);
         break;
       case 'newline':
