@@ -11,7 +11,12 @@ test('simple', function () {
     // to replace the node, call `replace(newNode)`
     // return `false` to skip descending
     if (node.type === 'Text') {
-      replace({ type: 'Text', val: 'bar', line: node.line });
+      replace({
+        type: 'Text',
+        val: 'bar',
+        line: node.line,
+        column: node.column
+      });
     }
   }, function after(node, replace) {
     // called before walking the children of `node`
@@ -114,18 +119,22 @@ describe('replace([])', function () {
       if (node.type === 'IncludeFilter') {
         assert(replace.arrayAllowed);
         if (node.name === 'filter1') {
+          var firstFilter = 'filter3';
+
           replace([
             {
               type: 'IncludeFilter',
-              name: 'filter3',
+              name: firstFilter,
               attrs: [],
-              line: node.line
+              line: node.line,
+              column: node.column
             },
             {
               type: 'IncludeFilter',
               name: 'filter4',
               attrs: [],
-              line: node.line
+              line: node.line,
+              column: node.column + firstFilter.length + 1
             }
           ]);
         } else if (node.name === 'filter2') {
