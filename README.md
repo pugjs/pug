@@ -150,6 +150,7 @@ Implementations in other languages:
   - [ruby](https://github.com/slim-template/slim)
   - [python](https://github.com/matannoam/pypugjs)
   - [java](https://github.com/neuland/jade4j)
+  - [C# ASP.NET Core](https://github.com/AspNetMonsters/pugzor)
 
 Other:
 
