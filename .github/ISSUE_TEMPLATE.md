@@ -4,7 +4,7 @@
 
 **Pug Version:** your version number here
 
-**Node Vesrion:** your version number here
+**Node Version:** your version number here
 
 ## Input JavaScript Values
 
