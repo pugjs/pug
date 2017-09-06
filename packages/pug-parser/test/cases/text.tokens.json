@@ -84,4 +84,8 @@
 {"type":"newline","line":44,"col":1}
 {"type":"text","line":44,"col":3,"val":"."}
 {"type":"end-pipeless-text","line":44,"col":4}
-{"type":"eos","line":44,"col":4}
+{"type":"newline","line":45,"col": 1}
+{"type":"text","line":45,"col": 3,"val":"foo"}
+{"type":"newline","line":46,"col": 1}
+{"type":"interpolated-code","line":46,"col":3,"val":"bar","mustEscape":true,"buffer":true}
+{"type":"eos","line":46,"col":9}

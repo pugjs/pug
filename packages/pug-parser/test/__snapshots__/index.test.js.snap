@@ -16235,6 +16235,28 @@ Object {
       "type": "Text",
       "val": ".",
     },
+    Object {
+      "filename": "text.tokens.json",
+      "line": 45,
+      "type": "Text",
+      "val": "foo",
+    },
+    Object {
+      "filename": "text.tokens.json",
+      "line": 46,
+      "type": "Text",
+      "val": "
+",
+    },
+    Object {
+      "buffer": true,
+      "filename": "text.tokens.json",
+      "isInline": true,
+      "line": 46,
+      "mustEscape": true,
+      "type": "Code",
+      "val": "bar",
+    },
   ],
   "type": "Block",
 }

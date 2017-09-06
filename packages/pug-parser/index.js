@@ -304,7 +304,8 @@ Parser.prototype = {
           case 'newline':
             if (!options || !options.block) break loop;
             var tok = this.advance();
-            if (this.peek().type === 'text') {
+            var nextType = this.peek().type;
+            if (nextType === 'text' || nextType === 'interpolated-code') {
               tags.push({
                 type: 'Text',
                 val: '\n',
