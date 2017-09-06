@@ -23,28 +23,38 @@ Object {
                     "line": 3,
                     "nodes": Array [
                       Object {
+                        "column": 5,
+                        "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
                         "line": 4,
                         "type": "Text",
                         "val": "function myFunc(foo) {",
                       },
                       Object {
+                        "column": 1,
+                        "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
                         "line": 5,
                         "type": "Text",
                         "val": "
 ",
                       },
                       Object {
+                        "column": 5,
+                        "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
                         "line": 5,
                         "type": "Text",
                         "val": "  return foo;",
                       },
                       Object {
+                        "column": 1,
+                        "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
                         "line": 6,
                         "type": "Text",
                         "val": "
 ",
                       },
                       Object {
+                        "column": 5,
+                        "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
                         "line": 6,
                         "type": "Text",
                         "val": "}",
@@ -52,6 +62,7 @@ Object {
                     ],
                     "type": "Block",
                   },
+                  "column": 9,
                   "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
                   "line": 3,
                   "name": "uglify-js",
@@ -63,6 +74,7 @@ Object {
               ],
               "type": "Block",
             },
+            "column": 3,
             "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
             "line": 3,
             "name": "cdata",
@@ -74,6 +86,7 @@ Object {
         ],
         "type": "Block",
       },
+      "column": 1,
       "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
       "isInline": false,
       "line": 2,

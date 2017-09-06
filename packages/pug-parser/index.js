@@ -254,6 +254,7 @@ Parser.prototype = {
           type: 'tag',
           val: 'div',
           line: this.peek().line,
+          col: this.peek().col,
           filename: this.filename
         });
         return this.parseExpr();
@@ -286,6 +287,7 @@ Parser.prototype = {
               type: 'Text',
               val: tok.val,
               line: tok.line,
+              column: tok.col,
               filename: this.filename
             });
             break;
@@ -298,6 +300,7 @@ Parser.prototype = {
               mustEscape: tok.mustEscape !== false,
               isInline: true,
               line: tok.line,
+              column: tok.col,
               filename: this.filename
             });
             break;
@@ -310,6 +313,7 @@ Parser.prototype = {
                 type: 'Text',
                 val: '\n',
                 line: tok.line,
+                column: tok.col,
                 filename: this.filename
               });
             }
@@ -344,6 +348,7 @@ loop:
               val: text.val,
               filename: this.filename,
               line: text.line,
+              column: text.col,
               isHtml: true
             };
             nodes.push(currentNode);
@@ -402,7 +407,13 @@ loop:
 
   parseCase: function(){
     var tok = this.expect('case');
-    var node = {type: 'Case', expr: tok.val, line: tok.line, filename: this.filename};
+    var node = {
+      type: 'Case',
+      expr: tok.val,
+      line: tok.line,
+      column: tok.col,
+      filename: this.filename
+    };
 
     var block = this.emptyBlock(tok.line + 1);
     this.expect('indent');
@@ -445,6 +456,7 @@ loop:
         block: this.parseBlockExpansion(),
         debug: false,
         line: tok.line,
+        column: tok.col,
         filename: this.filename
       };
     } else {
@@ -453,6 +465,7 @@ loop:
         expr: tok.val,
         debug: false,
         line: tok.line,
+        column: tok.col,
         filename: this.filename
       };
     }
@@ -470,6 +483,7 @@ loop:
       block: this.parseBlockExpansion(),
       debug: false,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
   },
@@ -488,6 +502,7 @@ loop:
       mustEscape: tok.mustEscape !== false,
       isInline: !!noBlock,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
     // todo: why is this here?  It seems like a hacky workaround
@@ -516,6 +531,7 @@ loop:
       consequent: this.emptyBlock(tok.line),
       alternate: null,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
 
@@ -537,6 +553,7 @@ loop:
             consequent: this.emptyBlock(tok.line),
             alternate: null,
             line: tok.line,
+            column: tok.col,
             filename: this.filename
           }
         );
@@ -562,6 +579,7 @@ loop:
       type: 'While',
       test: tok.val,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
 
@@ -580,13 +598,15 @@ loop:
    */
 
   parseBlockCode: function(){
-    var line = this.expect('blockcode').line;
+    var tok = this.expect('blockcode');
+    var line = tok.line;
+    var column = tok.col;
     var body = this.peek();
     var text = '';
     if (body.type === 'start-pipeless-text') {
       this.advance();
       while (this.peek().type !== 'end-pipeless-text') {
-        var tok = this.advance();
+        tok = this.advance();
         switch (tok.type) {
           case 'text':
             text += tok.val;
@@ -612,6 +632,7 @@ loop:
       mustEscape: false,
       isInline: false,
       line: line,
+      column: column,
       filename: this.filename
     };
   },
@@ -629,6 +650,7 @@ loop:
         block: block,
         buffer: tok.buffer,
         line: tok.line,
+        column: tok.col,
         filename: this.filename
       };
     } else {
@@ -637,6 +659,7 @@ loop:
         val: tok.val,
         buffer: tok.buffer,
         line: tok.line,
+        column: tok.col,
         filename: this.filename
       };
     }
@@ -652,6 +675,7 @@ loop:
       type: 'Doctype',
       val: tok.val,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
   },
@@ -669,6 +693,7 @@ loop:
       name: tok.val,
       attrs: attrs,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
   },
@@ -692,6 +717,7 @@ loop:
           type: 'Text',
           val: textToken.val,
           line: textToken.line,
+          column: textToken.col,
           filename: this.filename
         }
       ]);
@@ -707,6 +733,7 @@ loop:
       block: block,
       attrs: attrs,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
   },
@@ -724,6 +751,7 @@ loop:
       key: tok.key,
       block: this.block(),
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
     if (this.peek().type == 'else') {
@@ -745,10 +773,12 @@ loop:
       file: {
         type: 'FileReference',
         path: path.val.trim(),
-        line: tok.line,
+        line: path.line,
+        column: path.col,
         filename: this.filename
       },
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
   },
@@ -765,6 +795,7 @@ loop:
     node.name = tok.val.trim();
     node.mode = tok.mode;
     node.line = tok.line;
+    node.column = tok.col;
 
     return node;
   },
@@ -774,12 +805,22 @@ loop:
     if (!this.inMixin) {
       this.error('BLOCK_OUTISDE_MIXIN', 'Anonymous blocks are not allowed unless they are part of a mixin.', tok);
     }
-    return {type: 'MixinBlock', line: tok.line, filename: this.filename};
+    return {
+      type: 'MixinBlock',
+      line: tok.line,
+      column: tok.col,
+      filename: this.filename
+    };
   },
 
   parseYield: function() {
     var tok = this.expect('yield');
-    return {type: 'YieldBlock', line: tok.line, filename: this.filename};
+    return {
+      type: 'YieldBlock',
+      line: tok.line,
+      column: tok.col,
+      filename: this.filename
+    };
   },
 
   /**
@@ -792,10 +833,10 @@ loop:
       type: 'Include',
       file: {
         type: 'FileReference',
-        line: tok.line,
         filename: this.filename
       },
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
     var filters = [];
@@ -805,6 +846,8 @@ loop:
     var path = this.expect('path');
 
     node.file.path = path.val.trim();
+    node.file.line = path.line;
+    node.file.column = path.col;
 
     if ((/\.jade$/.test(node.file.path) || /\.pug$/.test(node.file.path)) && !filters.length) {
       node.block = 'indent' == this.peek().type ? this.block() : this.emptyBlock(tok.line);
@@ -841,6 +884,7 @@ loop:
       attrs: [],
       attributeBlocks: [],
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
 
@@ -871,6 +915,7 @@ loop:
         block: this.block(),
         call: false,
         line: tok.line,
+        column: tok.col,
         filename: this.filename
       };
       this.inMixin--;
@@ -892,10 +937,22 @@ loop:
       var tok = this.advance();
       switch (tok.type) {
         case 'text':
-          block.nodes.push({type: 'Text', val: tok.val, line: tok.line});
+          block.nodes.push({
+            type: 'Text',
+            val: tok.val,
+            line: tok.line,
+            column: tok.col,
+            filename: this.filename
+          });
           break;
         case 'newline':
-          block.nodes.push({type: 'Text', val: '\n', line: tok.line});
+          block.nodes.push({
+            type: 'Text',
+            val: '\n',
+            line: tok.line,
+            column: tok.col,
+            filename: this.filename
+          });
           break;
         case 'start-pug-interpolation':
           block.nodes.push(this.parseExpr());
@@ -909,6 +966,7 @@ loop:
             mustEscape: tok.mustEscape !== false,
             isInline: true,
             line: tok.line,
+            column: tok.col,
             filename: this.filename
           });
           break;
@@ -962,6 +1020,7 @@ loop:
       attributeBlocks: [],
       isInline: false,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
 
@@ -983,6 +1042,7 @@ loop:
       attributeBlocks: [],
       isInline: inlineTags.indexOf(tok.val) !== -1,
       line: tok.line,
+      column: tok.col,
       filename: this.filename
     };
 
@@ -1013,6 +1073,9 @@ loop:
             tag.attrs.push({
               name: tok.type,
               val: "'" + tok.val + "'",
+              line: tok.line,
+              column: tok.col,
+              filename: this.filename,
               mustEscape: false
             });
             continue;
@@ -1025,7 +1088,13 @@ loop:
             continue;
           case '&attributes':
             var tok = this.advance();
-            tag.attributeBlocks.push(tok.val);
+            tag.attributeBlocks.push({
+              type: 'AttributeBlock',
+              val: tok.val,
+              line: tok.line,
+              column: tok.col,
+              filename: this.filename
+            });
             break;
           default:
             var pluginResult = this.runPlugin('tagAttributeTokens', this.peek(), tag, attributeNames);
@@ -1109,6 +1178,9 @@ loop:
       attrs.push({
         name: tok.name,
         val: tok.val,
+        line: tok.line,
+        column: tok.col,
+        filename: this.filename,
         mustEscape: tok.mustEscape !== false
       });
       tok = this.advance();

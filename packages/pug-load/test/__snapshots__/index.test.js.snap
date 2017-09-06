@@ -4,12 +4,14 @@ Object {
   "line": 0,
   "nodes": Array [
     Object {
+      "column": 1,
       "file": Object {
         "ast": Object {
           "filename": "<dirname>/bar.pug",
           "line": 0,
           "nodes": Array [
             Object {
+              "column": 1,
               "filename": "<dirname>/bar.pug",
               "line": 1,
               "mode": "replace",
@@ -20,6 +22,7 @@ Object {
           ],
           "type": "Block",
         },
+        "column": 9,
         "filename": "<dirname>/foo.pug",
         "fullPath": "<dirname>/bar.pug",
         "line": 1,
@@ -33,6 +36,7 @@ Object {
       "type": "Extends",
     },
     Object {
+      "column": 1,
       "filename": "<dirname>/foo.pug",
       "line": 3,
       "mode": "replace",
@@ -45,6 +49,7 @@ Object {
             "nodes": Array [],
             "type": "Block",
           },
+          "column": 3,
           "file": Object {
             "ast": Object {
               "filename": "<dirname>/bing.pug",
@@ -54,6 +59,9 @@ Object {
                   "attributeBlocks": Array [],
                   "attrs": Array [
                     Object {
+                      "column": 1,
+                      "filename": "<basedir>/packages/pug-load/test/bing.pug",
+                      "line": 1,
                       "mustEscape": false,
                       "name": "class",
                       "val": "\'bing\'",
@@ -64,6 +72,7 @@ Object {
                     "line": 1,
                     "nodes": Array [
                       Object {
+                        "column": 7,
                         "filename": "<dirname>/bing.pug",
                         "line": 1,
                         "type": "Text",
@@ -72,6 +81,7 @@ Object {
                     ],
                     "type": "Block",
                   },
+                  "column": 1,
                   "filename": "<dirname>/bing.pug",
                   "isInline": false,
                   "line": 1,
@@ -82,6 +92,7 @@ Object {
               ],
               "type": "Block",
             },
+            "column": 11,
             "filename": "<dirname>/foo.pug",
             "fullPath": "<dirname>/bing.pug",
             "line": 4,
@@ -102,7 +113,9 @@ Object {
             "line": 5,
             "nodes": Array [
               Object {
+                "column": 5,
                 "file": Object {
+                  "column": 13,
                   "filename": "<dirname>/foo.pug",
                   "fullPath": "<dirname>/script.js",
                   "line": 6,
@@ -119,6 +132,7 @@ Object {
             ],
             "type": "Block",
           },
+          "column": 3,
           "filename": "<dirname>/foo.pug",
           "isInline": false,
           "line": 5,

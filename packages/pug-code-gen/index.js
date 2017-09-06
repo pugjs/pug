@@ -91,6 +91,7 @@ Compiler.prototype = {
   error: function (message, code, node) {
     var err = makeError(code, message, {
       line: node.line,
+      column: node.column,
       filename: node.filename,
     });
     throw err;
@@ -424,7 +425,7 @@ Compiler.prototype = {
     var args = mixin.args || '';
     var block = mixin.block;
     var attrs = mixin.attrs;
-    var attrsBlocks = mixin.attributeBlocks && mixin.attributeBlocks.slice();
+    var attrsBlocks = this.attributeBlocks(mixin.attributeBlocks);
     var pp = this.pp;
     var dynamic = mixin.name[0]==='#';
     var key = mixin.name;
@@ -543,7 +544,7 @@ Compiler.prototype = {
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
       this.buffer('<');
       bufferName();
-      this.visitAttributes(tag.attrs, tag.attributeBlocks.slice());
+      this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks));
       if (this.terse && !tag.selfClosing) {
         this.buffer('>');
       } else {
@@ -562,7 +563,7 @@ Compiler.prototype = {
       // Optimize attributes buffering
       this.buffer('<');
       bufferName();
-      this.visitAttributes(tag.attrs, tag.attributeBlocks.slice());
+      this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks));
       this.buffer('>');
       if (tag.code) this.visitCode(tag.code);
       this.visit(tag.block, tag);
@@ -803,6 +804,16 @@ Compiler.prototype = {
       this.bufferExpression(res);
     }
     return res;
+  },
+
+  /**
+   * Compile attribute blocks.
+   */
+
+  attributeBlocks(attributeBlocks) {
+    return attributeBlocks && attributeBlocks.slice().map(function(attrBlock){
+      return attrBlock.val;
+    });
   }
 };
 

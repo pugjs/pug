@@ -9,16 +9,20 @@ Object {
         "line": 2,
         "nodes": Array [
           Object {
+            "column": 5,
             "line": 3,
             "type": "Text",
             "val": "Hello",
           },
           Object {
+            "column": 1,
             "line": 4,
             "type": "Text",
-            "val": "\n",
+            "val": "
+",
           },
           Object {
+            "column": 5,
             "line": 4,
             "type": "Text",
             "val": "World",
@@ -26,6 +30,7 @@ Object {
         ],
         "type": "Block",
       },
+      "column": 1,
       "isInline": false,
       "line": 2,
       "name": "div",
