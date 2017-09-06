@@ -18580,12 +18580,14 @@ Object {
       "val": ".",
     },
     Object {
+      "column": 3,
       "filename": "text.tokens.json",
       "line": 45,
       "type": "Text",
       "val": "foo",
     },
     Object {
+      "column": 1,
       "filename": "text.tokens.json",
       "line": 46,
       "type": "Text",
@@ -18594,6 +18596,7 @@ Object {
     },
     Object {
       "buffer": true,
+      "column": 3,
       "filename": "text.tokens.json",
       "isInline": true,
       "line": 46,
