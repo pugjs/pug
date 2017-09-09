@@ -810,7 +810,7 @@ Compiler.prototype = {
    * Compile attribute blocks.
    */
 
-  attributeBlocks(attributeBlocks) {
+  attributeBlocks: function (attributeBlocks) {
     return attributeBlocks && attributeBlocks.slice().map(function(attrBlock){
       return attrBlock.val;
     });
