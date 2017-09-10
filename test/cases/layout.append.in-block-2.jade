@@ -1,0 +1,10 @@
+extends ../fixtures/block-in-block/layout
+
+append head
+  p in head
+
+block body
+  p body
+  append head
+    p in body in append head
+  p body 2
