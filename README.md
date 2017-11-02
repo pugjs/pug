@@ -8,7 +8,7 @@ Full documentation is at [pugjs.org](https://pugjs.org/)
  feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
- You can test drive Pug online [here](https://pugjs.org/).
+ You can test drive Pug online [here](https://pugjs.org/api/reference.html).
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
  [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
