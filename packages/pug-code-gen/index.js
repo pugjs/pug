@@ -147,7 +147,7 @@ Compiler.prototype = {
         ');' +
         '}';
     }
-    return buildRuntime(this.runtimeFunctionsUsed) + 'function ' + (this.options.templateName || 'template') + '(locals) {var pug_html = "", pug_mixins = {}, pug_interp;' + js + ';return pug_html;}';
+    return buildRuntime(this.runtimeFunctionsUsed) + ';function ' + (this.options.templateName || 'template') + '(locals) {var pug_html = "", pug_mixins = {}, pug_interp;' + js + ';return pug_html;}';
   },
 
   /**
