@@ -661,6 +661,12 @@ Compiler.prototype = {
     // Buffer code
     if (code.buffer) {
       var val = code.val.trim();
+
+      //allow references to locals.locals
+      if (!this.options.self && val.startsWith('locals.')) {
+        val = 'locals.'+val;
+      }
+
       val = 'null == (pug_interp = '+val+') ? "" : pug_interp';
       if (code.mustEscape !== false) val = this.runtime('escape') + '(' + val + ')';
       this.bufferExpression(val);
