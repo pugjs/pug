@@ -134,25 +134,51 @@ $ pug --client --no-debug filename.pug
 
 which will produce `filename.js` containing the compiled template.
 
-## Additional Resources
-
-Tutorials:
+## Tutorials
 
   - cssdeck interactive [Pug syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
   - cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - [Pug について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
 
-Implementations in other languages:
+## Implementations in other languages
 
-  - [Larpug - Pug for Laravel](https://github.com/acidjazz/larpug)
-  - [php](https://github.com/pug-php/pug)
-  - [scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
-  - [ruby](https://github.com/slim-template/slim)
-  - [python](https://github.com/matannoam/pypugjs)
-  - [java](https://github.com/neuland/jade4j)
-  - [C# ASP.NET Core](https://github.com/AspNetMonsters/pugzor)
+### Ports in other languages
 
-Other:
+Ports with very close syntax, adapted to other languages:
+
+  - [PHP](https://github.com/pug-php/pug)
+  - [Java](https://github.com/neuland/jade4j)
+  - [Python](https://github.com/matannoam/pypugjs)
+  - [Ruby](https://github.com/yivo/pug-ruby)
+  - [C# (ASP.NET Core)](https://github.com/AspNetMonsters/pugzor)
+
+### Equivalents in other languages
+
+Templates engines available in other languages with a different syntax but a similar philosophy:
+
+  - [Scaml for Scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
+  - [Slim for Ruby](https://github.com/slim-template/slim) (should not be confused with Slim PHP framework)
+  - [HAML for Ruby](http://haml.info/)
+  
+### Framework implementations/adapters
+
+Embedded view engines for frameworks:
+
+  - [Laravel](https://github.com/BKWLD/laravel-pug)
+  - [Symfony](https://github.com/pug-php/pug-symfony)
+  - [Phalcon](https://github.com/pug-php/pug-phalcon)
+  - [CodeIgniter](https://github.com/pug-php/ci-pug-engine)
+  - [Yii 2](https://github.com/pug-php/pug-yii2)
+  - [Slim 3](https://github.com/pug-php/pug-slim)
+  - [Silex (implementation example)](https://gist.github.com/kylekatarnls/ba13e4361ab14f4ff5d2a5775eb0cc10)
+  - [Lumen](https://github.com/BKWLD/laravel-pug#use-in-lumen)
+  - [Rails](https://github.com/yivo/pug-rails)
+
+### CMS plugins
+
+  - [WordPress](https://github.com/welaika/wordless)
+
+## Additional Resources
 
   - [Emacs Mode](https://github.com/brianc/jade-mode)
   - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
@@ -161,8 +187,6 @@ Other:
   - [html2pug](https://github.com/donpark/html2jade) converter
   - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
   - [Pug Server](https://github.com/ded/jade-server)  Ideal for building local prototypes apart from any application
-  - [pug-ruby](https://github.com/yivo/pug-ruby) gem: Allows to invoke Pug and Jade from Ruby
-  - [pug-rails](https://github.com/yivo/pug-rails) gem: Integrates Pug and Jade into your Rails application
   - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io/)
 
 
