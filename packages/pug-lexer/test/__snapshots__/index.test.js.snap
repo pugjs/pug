@@ -6939,15 +6939,21 @@ Array [
     "col": 14,
     "line": 7,
     "type": "filter",
+    "val": "cdata",
+  },
+  Object {
+    "col": 20,
+    "line": 7,
+    "type": "filter",
     "val": "coffee-script",
   },
   Object {
-    "col": 28,
+    "col": 34,
     "line": 7,
     "type": "start-attributes",
   },
   Object {
-    "col": 29,
+    "col": 35,
     "line": 7,
     "mustEscape": true,
     "name": "minify",
@@ -6955,12 +6961,12 @@ Array [
     "val": "false",
   },
   Object {
-    "col": 41,
+    "col": 47,
     "line": 7,
     "type": "end-attributes",
   },
   Object {
-    "col": 43,
+    "col": 49,
     "line": 7,
     "type": "path",
     "val": "include-filter-coffee.coffee",

@@ -7205,7 +7205,7 @@ Object {
                       Object {
                         "column": 7,
                         "file": Object {
-                          "column": 43,
+                          "column": 49,
                           "filename": "filters.include.tokens.json",
                           "line": 7,
                           "path": "include-filter-coffee.coffee",
@@ -7214,9 +7214,17 @@ Object {
                         "filename": "filters.include.tokens.json",
                         "filters": Array [
                           Object {
+                            "attrs": Array [],
+                            "column": 14,
+                            "filename": "filters.include.tokens.json",
+                            "line": 7,
+                            "name": "cdata",
+                            "type": "IncludeFilter",
+                          },
+                          Object {
                             "attrs": Array [
                               Object {
-                                "column": 29,
+                                "column": 35,
                                 "filename": "filters.include.tokens.json",
                                 "line": 7,
                                 "mustEscape": true,
@@ -7224,7 +7232,7 @@ Object {
                                 "val": "false",
                               },
                             ],
-                            "column": 14,
+                            "column": 20,
                             "filename": "filters.include.tokens.json",
                             "line": 7,
                             "name": "coffee-script",
