@@ -187,7 +187,7 @@ Embedded view engines for frameworks:
   - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
   - [html2pug](https://github.com/donpark/html2jade) converter
   - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
-  - [Pug Server](https://github.com/ded/jade-server)  Ideal for building local prototypes apart from any application
+  - [Pug Server](https://github.com/ctrlaltdev/pug-server) Ideal for building local prototypes apart from any application
   - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io/)
 
 
