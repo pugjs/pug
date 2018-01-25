@@ -148,7 +148,7 @@ Implementations in other languages:
   - [php](https://github.com/pug-php/pug)
   - [scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [ruby](https://github.com/slim-template/slim)
-  - [python](https://github.com/matannoam/pypugjs)
+  - [python](https://github.com/kakulukia/pypugjs)
   - [java](https://github.com/neuland/jade4j)
   - [C# ASP.NET Core](https://github.com/AspNetMonsters/pugzor)
 
