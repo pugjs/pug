@@ -39,7 +39,7 @@ testCases.forEach(function (filename) {
       handleFilters(JSON.parse(read(filename)), customFilters);
       throw new Error('Expected ' + filename + ' to throw an exception.');
     } catch (ex) {
-      if (!ex || !ex.code || !ex.code.indexOf('PUG:') === 0) throw ex;
+      if (!ex || !ex.code || ex.code.indexOf('PUG:') !== 0) throw ex;
       actual = {
         msg: ex.msg,
         code: ex.code,

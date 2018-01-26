@@ -404,7 +404,7 @@ exports[`test cases/filters.include.input.json 1`] = `
                         \"type\": \"Text\",
                         \"line\": 7,
                         \"filename\": \"filters.include.tokens.json\",
-                        \"val\": \"(function() {\\n  var math;\\n\\n  math = {\\n    square: function(value) {\\n      return value * value;\\n    }\\n  };\\n\\n}).call(this);\\n\"
+                        \"val\": \"<![CDATA[(function() {\\n  var math;\\n\\n  math = {\\n    square: function(value) {\\n      return value * value;\\n    }\\n  };\\n\\n}).call(this);\\n]]>\"
                       }
                     ],
                     \"line\": 6,

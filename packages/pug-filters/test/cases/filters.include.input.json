@@ -104,6 +104,13 @@
                         "filters": [
                           {
                             "type": "IncludeFilter",
+                            "name": "cdata",
+                            "attrs": [],
+                            "line": 7,
+                            "filename": "filters.include.tokens.json"
+                          },
+                          {
+                            "type": "IncludeFilter",
                             "name": "coffee-script",
                             "attrs": [
                               {
