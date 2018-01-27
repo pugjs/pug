@@ -3464,12 +3464,46 @@ Array [
   },
   Object {
     "col": 1,
-    "line": 12,
+    "line": 13,
     "type": "newline",
   },
   Object {
     "col": 1,
-    "line": 12,
+    "line": 13,
+    "type": "tag",
+    "val": "a",
+  },
+  Object {
+    "col": 2,
+    "line": 13,
+    "type": "class",
+    "val": "-foo",
+  },
+  Object {
+    "col": 1,
+    "line": 14,
+    "type": "newline",
+  },
+  Object {
+    "col": 1,
+    "line": 14,
+    "type": "tag",
+    "val": "a",
+  },
+  Object {
+    "col": 2,
+    "line": 14,
+    "type": "class",
+    "val": "3foo",
+  },
+  Object {
+    "col": 1,
+    "line": 15,
+    "type": "newline",
+  },
+  Object {
+    "col": 1,
+    "line": 15,
     "type": "eos",
   },
 ]
@@ -10689,7 +10723,7 @@ Object {
   "code": "PUG:INVALID_CLASS_NAME",
   "column": 1,
   "line": 1,
-  "msg": "Class names must begin with \"-\", \"_\" or a letter.",
+  "msg": "Class names must contain at least one letter or underscore.",
 }
 `;
 
@@ -10698,7 +10732,7 @@ Object {
   "code": "PUG:INVALID_CLASS_NAME",
   "column": 1,
   "line": 1,
-  "msg": "If a class name begins with a \"-\" or \"--\", it must be followed by a letter or underscore.",
+  "msg": "Class names must contain at least one letter or underscore.",
 }
 `;
 
@@ -10707,7 +10741,7 @@ Object {
   "code": "PUG:INVALID_CLASS_NAME",
   "column": 1,
   "line": 1,
-  "msg": "\"ä\" is not a valid class name.  Class names must begin with \"-\", \"_\" or a letter and can only contain \"_\", \"-\", a-z and 0-9.",
+  "msg": "\"ä\" is not a valid class name.  Class names can only contain \"_\", \"-\", a-z and 0-9, and must contain at least one of \"_\", or a-z",
 }
 `;
 
