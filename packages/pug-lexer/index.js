@@ -403,20 +403,17 @@ Lexer.prototype = {
    */
 
   className: function() {
-    var tok = this.scan(/^\.(-?-?[_a-z][_a-z0-9\-]*)/i, 'class');
+    var tok = this.scan(/^\.([_a-z0-9\-]*[_a-z][_a-z0-9\-]*)/i, 'class');
     if (tok) {
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
       return true;
     }
-    if (/^\.\-/i.test(this.input)) {
-      this.error('INVALID_CLASS_NAME', 'If a class name begins with a "-" or "--", it must be followed by a letter or underscore.');
-    }
-    if (/^\.[0-9]/i.test(this.input)) {
-      this.error('INVALID_CLASS_NAME', 'Class names must begin with "-", "_" or a letter.');
+    if (/^\.[_a-z0-9\-]+/i.test(this.input)) {
+      this.error('INVALID_CLASS_NAME', 'Class names must contain at least one letter or underscore.');
     }
     if (/^\./.test(this.input)) {
-      this.error('INVALID_CLASS_NAME', '"' + /.[^ \t\(\#\.\:]*/.exec(this.input.substr(1))[0] + '" is not a valid class name.  Class names must begin with "-", "_" or a letter and can only contain "_", "-", a-z and 0-9.');
+      this.error('INVALID_CLASS_NAME', '"' + /.[^ \t\(\#\.\:]*/.exec(this.input.substr(1))[0] + '" is not a valid class name.  Class names can only contain "_", "-", a-z and 0-9, and must contain at least one of "_", or a-z');
     }
   },
 
