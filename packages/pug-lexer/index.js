@@ -1019,7 +1019,7 @@ Lexer.prototype = {
       var whitespaceRe = /[ \n\t]/;
       var quoteRe = /['"]/;
 
-      var escapedAttr = true
+      var escapedAttr = false
       var key = '';
       var val = '';
       var state = characterParser.defaultState();

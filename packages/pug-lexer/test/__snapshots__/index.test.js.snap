@@ -634,7 +634,7 @@ Array [
   Object {
     "col": 3,
     "line": 3,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "foo",
     "type": "attribute",
     "val": true,
@@ -808,7 +808,7 @@ Array [
   Object {
     "col": 10,
     "line": 8,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "selected",
     "type": "attribute",
     "val": true,
@@ -985,7 +985,7 @@ Array [
   Object {
     "col": 3,
     "line": 14,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "foo",
     "type": "attribute",
     "val": true,
@@ -1159,7 +1159,7 @@ Array [
   Object {
     "col": 10,
     "line": 19,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "selected",
     "type": "attribute",
     "val": true,
@@ -1318,7 +1318,7 @@ Array [
   Object {
     "col": 5,
     "line": 25,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "abc",
     "type": "attribute",
     "val": true,
@@ -1355,7 +1355,7 @@ Array [
   Object {
     "col": 5,
     "line": 27,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "abc",
     "type": "attribute",
     "val": true,
@@ -1392,7 +1392,7 @@ Array [
   Object {
     "col": 5,
     "line": 29,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "abc",
     "type": "attribute",
     "val": true,
@@ -1429,7 +1429,7 @@ Array [
   Object {
     "col": 5,
     "line": 31,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "abc",
     "type": "attribute",
     "val": true,
@@ -1466,7 +1466,7 @@ Array [
   Object {
     "col": 5,
     "line": 33,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "abc",
     "type": "attribute",
     "val": true,
@@ -1503,7 +1503,7 @@ Array [
   Object {
     "col": 5,
     "line": 35,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "abc",
     "type": "attribute",
     "val": true,
@@ -16354,7 +16354,7 @@ Array [
   Object {
     "col": 21,
     "line": 7,
-    "mustEscape": true,
+    "mustEscape": false,
     "name": "something",
     "type": "attribute",
     "val": true,
