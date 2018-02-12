@@ -11,3 +11,4 @@ npm-debug.log
 .release.json
 lerna-debug.log
 package-lock.json
+yarn.lock
