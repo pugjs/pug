@@ -103,8 +103,7 @@ function compileBody(str, options){
         if (token.type === 'path' && path.extname(token.val) === '') {
           return {
             type: 'path',
-            line: token.line,
-            col: token.col,
+            loc: token.loc,
             val: token.val + '.pug'
           };
         }
