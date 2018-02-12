@@ -61,8 +61,15 @@ function compileAttrs(attrs, options) {
         buf.push(stringify(key) + ': ' + stringify(val));
       }
     } else {
+      var filter =
+          options.bufferHooks
+          ? options.bufferHooks.attrFilter(key)
+          : null;
+      if (filter) {
+        val = options.runtime(filter) + '(' + val + ')';
+      }
       if (options.format === 'html') {
-        buf.push(options.runtime('attr') + '("' + key + '", ' + val + ', ' + stringify(mustEscape) + ', ' + stringify(options.terse) + ')');
+        buf.push(options.runtime('attr') + '(' + stringify(key) + ', ' + val + ', ' + stringify(mustEscape) + ', ' + stringify(options.terse) + ')');
       } else {
         if (mustEscape) {
           val = options.runtime('escape') + '(' + val + ')';

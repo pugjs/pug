@@ -51,7 +51,6 @@ function toConstant(src) {
 function Compiler(node, options) {
   this.options = options = options || {};
   this.node = node;
-  this.bufferedConcatenationCount = 0;
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
@@ -71,6 +70,68 @@ function Compiler(node, options) {
   if (this.debug && this.inlineRuntimeFunctions) {
     this.runtimeFunctionsUsed.push('rethrow');
   }
+  this.bufferHooks = options.bufferHooks || {
+    initialize:    function (buf, runtime) {
+      this.buf = buf;
+      this.runtime = runtime;
+      this.bufferedConcatenationCount = 0;
+      this.lastBufferedIdx = -1;
+      this.lastBuffered = null;
+      this.lastBufferedType = null;
+      this.bufferStartChar = '';
+
+      return 'pug_html = \"\"';
+    },
+    emitText: function (str) {
+      str = stringify(str);
+      str = str.substr(1, str.length - 2);
+
+      if (this.lastBufferedIdx == this.buf.length && this.bufferedConcatenationCount < 100) {
+        if (this.lastBufferedType === 'code') {
+          this.lastBuffered += ' + "';
+          this.bufferedConcatenationCount++;
+        }
+        this.lastBufferedType = 'text';
+        this.lastBuffered += str;
+        this.buf[this.lastBufferedIdx - 1] = 'pug_html = pug_html + ' + this.bufferStartChar + this.lastBuffered + '";';
+      } else {
+        this.bufferedConcatenationCount = 0;
+        this.buf.push('pug_html = pug_html + "' + str + '";');
+        this.lastBufferedType = 'text';
+        this.bufferStartChar = '"';
+        this.lastBuffered = str;
+        this.lastBufferedIdx = this.buf.length;
+      }
+    },
+    emitExpr: function (src, trusted, needsEscape) {
+      if (needsEscape) {
+        src = this.runtime('escape') + '(' + src + ')';
+      }
+      if (this.lastBufferedIdx == this.buf.length && this.bufferedConcatenationCount < 100) {
+        this.bufferedConcatenationCount++;
+        if (this.lastBufferedType === 'text') this.lastBuffered += '"';
+        this.lastBufferedType = 'code';
+        this.lastBuffered += ' + (' + src + ')';
+        this.buf[this.lastBufferedIdx - 1] = 'pug_html = pug_html + (' + this.bufferStartChar + this.lastBuffered + ');';
+      } else {
+        this.bufferedConcatenationCount = 0;
+        this.buf.push('pug_html = pug_html + (' + src + ');');
+        this.lastBufferedType = 'code';
+        this.bufferStartChar = '';
+        this.lastBuffered = '(' + src + ')';
+        this.lastBufferedIdx = this.buf.length;
+      }
+    },
+    attrFilter: function (key) {
+      return null;
+    },
+    attrMapFilter: function () {
+      return null;
+    },
+    result: function () {
+      return 'pug_html';
+    }
+  };
 };
 
 /**
@@ -105,8 +166,9 @@ Compiler.prototype = {
 
   compile: function(){
     this.buf = [];
+    var initCode = this.bufferHooks.initialize(
+        this.buf, this.runtime.bind(this));
     if (this.pp) this.buf.push("var pug_indent = [];");
-    this.lastBufferedIdx = -1;
     this.visit(this.node);
     if (!this.dynamicMixins) {
       // if there are no dynamic mixins we can remove any un-used mixins
@@ -147,7 +209,7 @@ Compiler.prototype = {
         ');' +
         '}';
     }
-    return buildRuntime(this.runtimeFunctionsUsed) + 'function ' + (this.options.templateName || 'template') + '(locals) {var pug_html = "", pug_mixins = {}, pug_interp;' + js + ';return pug_html;}';
+    return buildRuntime(this.runtimeFunctionsUsed) + 'function ' + (this.options.templateName || 'template') + '(locals) {var ' + initCode + ', pug_mixins = {}, pug_interp;' + js + ';return ' + this.bufferHooks.result() + ';}';
   },
 
   /**
@@ -174,54 +236,28 @@ Compiler.prototype = {
    */
 
   buffer: function (str) {
-    var self = this;
-
-    str = stringify(str);
-    str = str.substr(1, str.length - 2);
-
-    if (this.lastBufferedIdx == this.buf.length && this.bufferedConcatenationCount < 100) {
-      if (this.lastBufferedType === 'code') {
-        this.lastBuffered += ' + "';
-        this.bufferedConcatenationCount++;
-      }
-      this.lastBufferedType = 'text';
-      this.lastBuffered += str;
-      this.buf[this.lastBufferedIdx - 1] = 'pug_html = pug_html + ' + this.bufferStartChar + this.lastBuffered + '";';
-    } else {
-      this.bufferedConcatenationCount = 0;
-      this.buf.push('pug_html = pug_html + "' + str + '";');
-      this.lastBufferedType = 'text';
-      this.bufferStartChar = '"';
-      this.lastBuffered = str;
-      this.lastBufferedIdx = this.buf.length;
-    }
+    this.bufferHooks.emitText(str);
   },
 
   /**
    * Buffer the given `src` so it is evaluated at run time
    *
    * @param {String} src
+   * @param {Boolean} safe
+   * @param {Boolean} needsEscape
    * @api public
    */
 
-  bufferExpression: function (src) {
-    if (isConstant(src)) {
-      return this.buffer(toConstant(src) + '')
+  bufferExpression: function (src, safe, needsEscape) {
+    if (safe && isConstant(src)) {
+      src = toConstant(src + '');
+      if (needsEscape) {
+        src = rumtime.escape(src);
+      }
+      this.buffer(src);
+      return;
     }
-    if (this.lastBufferedIdx == this.buf.length && this.bufferedConcatenationCount < 100) {
-      this.bufferedConcatenationCount++;
-      if (this.lastBufferedType === 'text') this.lastBuffered += '"';
-      this.lastBufferedType = 'code';
-      this.lastBuffered += ' + (' + src + ')';
-      this.buf[this.lastBufferedIdx - 1] = 'pug_html = pug_html + (' + this.bufferStartChar + this.lastBuffered + ');';
-    } else {
-      this.bufferedConcatenationCount = 0;
-      this.buf.push('pug_html = pug_html + (' + src + ');');
-      this.lastBufferedType = 'code';
-      this.bufferStartChar = '';
-      this.lastBuffered = '(' + src + ')';
-      this.lastBufferedIdx = this.buf.length;
-    }
+    this.bufferHooks.emitExpr(src, safe === true, needsEscape);
   },
 
   /**
@@ -237,8 +273,9 @@ Compiler.prototype = {
     offset = offset || 0;
     newline = newline ? '\n' : '';
     this.buffer(newline + Array(this.indents + offset).join(this.pp));
-    if (this.parentIndents)
-      this.buf.push('pug_html = pug_html + pug_indent.join("");');
+    if (this.parentIndents) {
+      this.bufferHooks.emitExpr('pug_indent.join("")', true);
+    }
   },
 
   /**
@@ -614,6 +651,9 @@ Compiler.prototype = {
   visitComment: function(comment){
     if (!comment.buffer) return;
     if (this.pp) this.prettyIndent(1, true);
+    // TODO: make sure '>' does not appear after '--' in the output
+    // except at the end.
+    // This occurs if comment.val matches /^-?>|-->/.
     this.buffer('<!--' + comment.val + '-->');
   },
 
@@ -639,6 +679,8 @@ Compiler.prototype = {
     if (!comment.buffer) return;
     if (this.pp) this.prettyIndent(1, true);
     this.buffer('<!--' + (comment.val || ''));
+    // TODO: make sure '>' does not appear after '--' in the output
+    // except at the end.
     this.visit(comment.block, comment);
     if (this.pp) this.prettyIndent(1, true);
     this.buffer('-->');
@@ -662,8 +704,7 @@ Compiler.prototype = {
     if (code.buffer) {
       var val = code.val.trim();
       val = 'null == (pug_interp = '+val+') ? "" : pug_interp';
-      if (code.mustEscape !== false) val = this.runtime('escape') + '(' + val + ')';
-      this.bufferExpression(val);
+      this.bufferExpression(val, false, code.mustEscape !== false);
     } else {
       this.buf.push(code.val);
     }
@@ -776,15 +817,24 @@ Compiler.prototype = {
 
   visitAttributes: function(attrs, attributeBlocks){
     if (attributeBlocks.length) {
+      var dynamicFilter = this.bufferHooks.attrMapFilter();
+      if (dynamicFilter) {
+        for (var i = 0, n = attributeBlocks.length; i < n; ++i) {
+          attributeBlocks[i] = this.runtime(dynamicFilter) + '('
+              + attributeBlocks[i] + ')';
+        }
+      }
       if (attrs.length) {
         var val = this.attrs(attrs);
         attributeBlocks.unshift(val);
       }
-      if (attributeBlocks.length > 1) {
-        this.bufferExpression(this.runtime('attrs') + '(' + this.runtime('merge') + '([' + attributeBlocks.join(',') + ']), ' + stringify(this.terse) + ')');
-      } else {
-        this.bufferExpression(this.runtime('attrs') + '(' + attributeBlocks[0] + ', ' + stringify(this.terse) + ')');
-      }
+      var attributeBlockExpr =
+          (attributeBlocks.length > 1)
+          ? this.runtime('merge') + '([' + attributeBlocks.join(',') + '])'
+          : attributeBlocks[0];
+      this.bufferExpression(
+        this.runtime('attrs') + '(' + attributeBlockExpr + ', ' + stringify(this.terse) + ')',
+        true);
     } else if (attrs.length) {
       this.attrs(attrs, true);
     }
@@ -798,10 +848,11 @@ Compiler.prototype = {
     var res = compileAttrs(attrs, {
       terse: this.terse,
       format: buffer ? 'html' : 'object',
-      runtime: this.runtime.bind(this)
+      runtime: this.runtime.bind(this),
+      bufferHooks: this.bufferHooks
     });
     if (buffer)  {
-      this.bufferExpression(res);
+      this.bufferExpression(res, true);
     }
     return res;
   },

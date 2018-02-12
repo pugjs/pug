@@ -74,11 +74,9 @@ function pug_rethrow(n, e, r, t) {
         return (t == r ? \"  > \" : \"    \") + t + \"| \" + n;
       })
       .join(\"\\n\");
-  throw (
-    (n.path = e),
-    (n.message = (e || \"Pug\") + \":\" + r + \"\\n\" + i + \"\\n\\n\" + n.message),
-    n
-  );
+  throw ((n.path = e),
+  (n.message = (e || \"Pug\") + \":\" + r + \"\\n\" + i + \"\\n\\n\" + n.message),
+  n);
 }
 function template(locals) {
   var pug_html = \"\",
