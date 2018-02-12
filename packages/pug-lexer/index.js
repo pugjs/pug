@@ -41,6 +41,7 @@ function Lexer(str, options) {
   this.indentRe = null;
   // If #{}, !{} or #[] syntax is allowed when adding text
   this.interpolationAllowed = true;
+  this.whitespaceRe = /[ \n\t]/;
 
   this.tokens = [];
   this.ended = false;
@@ -106,11 +107,36 @@ Lexer.prototype = {
    */
 
   tok: function(type, val){
-    var res = {type: type, line: this.lineno, col: this.colno};
+    var res = {
+      type: type, 
+      loc: {
+        start: {
+          line: this.lineno, 
+          column: this.colno
+        },
+        filename: this.filename
+      }
+    };
 
     if (val !== undefined) res.val = val;
 
     return res;
+  },
+  
+  /**
+   * Set the token's `loc.end` value.
+   * 
+   * @param {Object} tok
+   * @returns {Object}
+   * @api private
+   */
+  
+  tokEnd: function(tok){
+    tok.loc.end = {
+      line: this.lineno,
+      column: this.colno
+    };
+    return tok;
   },
 
   /**
@@ -275,9 +301,9 @@ Lexer.prototype = {
       this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
     }
     for (var i = 0; this.indentStack[i]; i++) {
-      this.tokens.push(this.tok('outdent'));
+      this.tokens.push(this.tokEnd(this.tok('outdent')));
     }
-    this.tokens.push(this.tok('eos'));
+    this.tokens.push(this.tokEnd(this.tok('eos')));
     this.ended = true;
     return true;
   },
@@ -308,6 +334,7 @@ Lexer.prototype = {
       this.interpolationAllowed = tok.buffer;
       this.tokens.push(tok);
       this.incrementColumn(captures[0].length);
+      this.tokEnd(tok);
       this.callLexerFunction('pipelessText');
       return true;
     }
@@ -330,6 +357,7 @@ Lexer.prototype = {
       var lines = splitted.length - 1;
       this.incrementLine(lines);
       this.incrementColumn(splitted[lines].length + 1); // + 1 → '}'
+      this.tokEnd(tok);
       return true;
     }
   },
@@ -347,6 +375,7 @@ Lexer.prototype = {
       tok = this.tok('tag', name);
       this.tokens.push(tok);
       this.incrementColumn(len);
+      this.tokEnd(tok);
       return true;
     }
   },
@@ -361,6 +390,7 @@ Lexer.prototype = {
     if (tok) {
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
+      this.tokEnd(tok);
       this.callLexerFunction('attrs');
       if (!inInclude) {
         this.interpolationAllowed = false;
@@ -377,7 +407,7 @@ Lexer.prototype = {
   doctype: function() {
     var node = this.scanEndOfLine(/^doctype *([^\n]*)/, 'doctype');
     if (node) {
-      this.tokens.push(node);
+      this.tokens.push(this.tokEnd(node));
       return true;
     }
   },
@@ -391,6 +421,7 @@ Lexer.prototype = {
     if (tok) {
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
+      this.tokEnd(tok);
       return true;
     }
     if (/^#/.test(this.input)) {
@@ -407,6 +438,7 @@ Lexer.prototype = {
     if (tok) {
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
+      this.tokEnd(tok);
       return true;
     }
     if (/^\.[_a-z0-9\-]+/i.test(this.input)) {
@@ -428,8 +460,10 @@ Lexer.prototype = {
     }
   },
   addText: function (type, value, prefix, escaped) {
+    var tok;
     if (value + prefix === '') return;
     prefix = prefix || '';
+    escaped = escaped || 0;
     var indexOfEnd = this.interpolated ? value.indexOf(']') : -1;
     var indexOfStart = this.interpolationAllowed ? value.indexOf('#[') : -1;
     var indexOfEscaped = this.interpolationAllowed ? value.indexOf('\\#[') : -1;
@@ -442,14 +476,15 @@ Lexer.prototype = {
 
     if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart && indexOfEscaped < indexOfStringInterp) {
       prefix = prefix + value.substring(0, indexOfEscaped) + '#[';
-      return this.addText(type, value.substring(indexOfEscaped + 3), prefix, true);
+      return this.addText(type, value.substring(indexOfEscaped + 3), prefix, escaped + 1);
     }
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped && indexOfStart < indexOfStringInterp) {
-      this.tokens.push(this.tok(type, prefix + value.substring(0, indexOfStart)));
-      this.incrementColumn(prefix.length + indexOfStart);
-      if (escaped) this.incrementColumn(1);
-      this.tokens.push(this.tok('start-pug-interpolation'));
+      tok = this.tok(type, prefix + value.substring(0, indexOfStart));
+      this.incrementColumn(prefix.length + indexOfStart + escaped);
+      this.tokens.push(this.tokEnd(tok));
+      tok = this.tok('start-pug-interpolation');
       this.incrementColumn(2);
+      this.tokens.push(this.tokEnd(tok));
       var child = new this.constructor(value.substr(indexOfStart + 2), {
         filename: this.filename,
         interpolated: true,
@@ -468,8 +503,9 @@ Lexer.prototype = {
       }
       this.colno = child.colno;
       this.tokens = this.tokens.concat(interpolated);
-      this.tokens.push(this.tok('end-pug-interpolation'));
+      tok = this.tok('end-pug-interpolation');
       this.incrementColumn(1);
+      this.tokens.push(this.tokEnd(tok));
       this.addText(type, child.input);
       return;
     }
@@ -484,18 +520,19 @@ Lexer.prototype = {
     if (indexOfStringInterp !== Infinity) {
       if (matchOfStringInterp[1]) {
         prefix = prefix + value.substring(0, indexOfStringInterp) + '#{';
-        return this.addText(type, value.substring(indexOfStringInterp + 3), prefix);
+        return this.addText(type, value.substring(indexOfStringInterp + 3), prefix, escaped + 1);
       }
       var before = value.substr(0, indexOfStringInterp);
       if (prefix || before) {
         before = prefix + before;
-        this.tokens.push(this.tok(type, before));
-        this.incrementColumn(before.length);
+        tok = this.tok(type, before);
+        this.incrementColumn(before.length + escaped);
+        this.tokens.push(this.tokEnd(tok));
       }
 
       var rest = matchOfStringInterp[3];
       var range;
-      var tok = this.tok('interpolated-code');
+      tok = this.tok('interpolated-code');
       this.incrementColumn(2);
       try {
         range = characterParser.parseUntil(rest, '}');
@@ -515,21 +552,23 @@ Lexer.prototype = {
       tok.buffer = true;
       tok.val = range.src;
       this.assertExpression(range.src);
-      this.tokens.push(tok);
 
       if (range.end + 1 < rest.length) {
         rest = rest.substr(range.end + 1);
         this.incrementColumn(range.end + 1);
+        this.tokens.push(this.tokEnd(tok));
         this.addText(type, rest);
       } else {
         this.incrementColumn(rest.length);
+        this.tokens.push(this.tokEnd(tok));
       }
       return;
     }
 
     value = prefix + value;
-    this.tokens.push(this.tok(type, value));
-    this.incrementColumn(value.length);
+    tok = this.tok(type, value);
+    this.incrementColumn(value.length + escaped);
+    this.tokens.push(this.tokEnd(tok));
   },
 
   text: function() {
@@ -557,7 +596,7 @@ Lexer.prototype = {
   dot: function() {
     var tok;
     if (tok = this.scanEndOfLine(/^\./, 'dot')) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       this.callLexerFunction('pipelessText');
       return true;
     }
@@ -570,7 +609,7 @@ Lexer.prototype = {
   "extends": function() {
     var tok = this.scan(/^extends?(?= |$|\n)/, 'extends');
     if (tok) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       if (!this.callLexerFunction('path')) {
         this.error('NO_EXTENDS_PATH', 'missing path for extends');
       }
@@ -595,10 +634,14 @@ Lexer.prototype = {
         name = name.split('//')[0].trim();
       }
       if (!name) return;
-      this.consume(captures[0].length - comment.length);
       var tok = this.tok('block', name);
+      var len = captures[0].length - comment.length;
+      while(this.whitespaceRe.test(this.input.charAt(len - 1))) len--;
+      this.incrementColumn(len);
       tok.mode = 'prepend';
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
+      this.consume(captures[0].length - comment.length);
+      this.incrementColumn(captures[0].length - comment.length - len);
       return true;
     }
   },
@@ -617,10 +660,14 @@ Lexer.prototype = {
         name = name.split('//')[0].trim();
       }
       if (!name) return;
-      this.consume(captures[0].length - comment.length);
       var tok = this.tok('block', name);
+      var len = captures[0].length - comment.length;
+      while(this.whitespaceRe.test(this.input.charAt(len - 1))) len--;
+      this.incrementColumn(len);
       tok.mode = 'append';
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
+      this.consume(captures[0].length - comment.length);
+      this.incrementColumn(captures[0].length - comment.length - len);
       return true;
     }
   },
@@ -639,10 +686,14 @@ Lexer.prototype = {
         name = name.split('//')[0].trim();
       }
       if (!name) return;
-      this.consume(captures[0].length - comment.length);
       var tok = this.tok('block', name);
+      var len = captures[0].length - comment.length;
+      while(this.whitespaceRe.test(this.input.charAt(len - 1))) len--;
+      this.incrementColumn(len);
       tok.mode = 'replace';
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
+      this.consume(captures[0].length - comment.length);
+      this.incrementColumn(captures[0].length - comment.length - len);
       return true;
     }
   },
@@ -654,7 +705,7 @@ Lexer.prototype = {
   mixinBlock: function() {
     var tok;
     if (tok = this.scanEndOfLine(/^block/, 'mixin-block')) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -666,7 +717,7 @@ Lexer.prototype = {
   'yield': function() {
     var tok = this.scanEndOfLine(/^yield/, 'yield');
     if (tok) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -678,7 +729,7 @@ Lexer.prototype = {
   include: function() {
     var tok = this.scan(/^include(?=:| |$|\n)/, 'include');
     if (tok) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       while (this.callLexerFunction('filter', { inInclude: true }));
       if (!this.callLexerFunction('path')) {
         if (/^[^ \n]+/.test(this.input)) {
@@ -703,7 +754,7 @@ Lexer.prototype = {
   path: function() {
     var tok = this.scanEndOfLine(/^ ([^\n]+)/, 'path');
     if (tok && (tok.val = tok.val.trim())) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -718,7 +769,7 @@ Lexer.prototype = {
       this.incrementColumn(-tok.val.length);
       this.assertExpression(tok.val);
       this.incrementColumn(tok.val.length);
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
     if (this.scan(/^case\b/)) {
@@ -747,7 +798,7 @@ Lexer.prototype = {
       this.incrementColumn(-tok.val.length);
       this.assertExpression(tok.val);
       this.incrementColumn(tok.val.length);
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
     if (this.scan(/^when\b/)) {
@@ -762,7 +813,7 @@ Lexer.prototype = {
   "default": function() {
     var tok = this.scanEndOfLine(/^default/, 'default');
     if (tok) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
     if (this.scan(/^default\b/)) {
@@ -813,7 +864,7 @@ Lexer.prototype = {
           }
         }
       }
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -828,7 +879,8 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('mixin', captures[1]);
       tok.args = captures[2] || null;
-      this.tokens.push(tok);
+      this.incrementColumn(captures[0].length);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -866,7 +918,8 @@ Lexer.prototype = {
           }
           break;
       }
-      this.tokens.push(tok);
+      this.incrementColumn(js.length);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -876,11 +929,13 @@ Lexer.prototype = {
    */
 
   "while": function() {
-    var captures;
+    var captures, tok;
     if (captures = /^while +([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
-      this.assertExpression(captures[1])
-      this.tokens.push(this.tok('while', captures[1]));
+      this.assertExpression(captures[1]);
+      tok = this.tok('while', captures[1]);
+      this.incrementColumn(captures[0].length);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
     if (this.scan(/^while\b/)) {
@@ -902,7 +957,7 @@ Lexer.prototype = {
       this.assertExpression(captures[3])
       tok.code = captures[3];
       this.incrementColumn(captures[3].length);
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
     if (this.scan(/^(?:each|for)\b/)) {
@@ -980,6 +1035,7 @@ Lexer.prototype = {
       //     ---            code
       //        ^           after colno
       this.incrementColumn(code.length);
+      this.tokEnd(tok);
       return true;
     }
   },
@@ -990,172 +1046,244 @@ Lexer.prototype = {
   blockCode: function() {
     var tok
     if (tok = this.scanEndOfLine(/^-/, 'blockcode')) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       this.interpolationAllowed = false;
       this.callLexerFunction('pipelessText');
       return true;
     }
   },
+  
+  /**
+   * Attribute Name.
+   */
+  
+  attributeName: function(str){
+    var quote = '';
+    var quoteRe = /['"]/;
+    var key = '';
+    var i;
+    
+    characterParser.defaultState();
+    
+    // consume all whitespace before the key
+    for(i = 0; i < str.length; i++){
+      if(!this.whitespaceRe.test(str[i])) break;
+      if(str[i] === '\n'){
+        this.incrementLine(1);
+      } else {
+        this.incrementColumn(1);
+      }
+    }
+    
+    if(i === str.length){
+      return '';
+    }
+    
+    var tok = this.tok('attribute');
+    
+    // quote?
+    if(quoteRe.test(str[i])){
+      quote = str[i];
+      this.incrementColumn(1);
+      i++;
+    }
+    
+    // start looping through the key
+    for (; i < str.length; i++) {
+      
+      if(quote){
+        if (str[i] === quote) {
+          this.incrementColumn(1);
+          i++;
+          break;
+        }
+      } else {
+        if(this.whitespaceRe.test(str[i]) || str[i] === '!' || str[i] === '=' || str[i] === ',') {
+          break;
+        }
+      }
+      
+      key += str[i];
+        
+      if (str[i] === '\n') {
+        this.incrementLine(1);
+      } else {
+        this.incrementColumn(1);
+      }
+    }
+    
+    tok.name = key;
+    tok.mustEscape = true;
+    
+    str = this.attributeValue(tok, str.substr(i));
+    
+    tok.val = tok.val === '' ? true : tok.val;
+    
+    this.tokens.push(this.tokEnd(tok));
+    
+    for(i = 0; i < str.length; i++){
+      if(!this.whitespaceRe.test(str[i])) {
+        break;
+      }
+      if(str[i] === '\n'){
+        this.incrementLine(1);
+      } else {
+        this.incrementColumn(1);
+      }
+    }
+    
+    if(str[i] === ','){
+      this.incrementColumn(1);
+      i++;
+    }
+    
+    return str.substr(i);
+  },
+  
+  /**
+   * Attribute Value.
+   */
+  
+  attributeValue: function(tok, str){
+    var quoteRe = /['"]/;
+    var val = tok.val = '';
+    var done, i, x;
+    var escapeAttr = true;
+    var state = characterParser.defaultState();
+    var col = this.colno;
+    var line = this.lineno;
+    
+    characterParser.defaultState();
+    
+    // consume all whitespace before the equals sign
+    for(i = 0; i < str.length; i++){
+      if(!this.whitespaceRe.test(str[i])) break;
+      if(str[i] === '\n'){
+        line++;
+        col = 1;
+      } else {
+        col++;
+      }
+    }
+    
+    if(i === str.length){
+      return str;
+    }
+    
+    if(str[i] === '!'){
+      escapeAttr = false;
+      col++;
+      i++;
+      if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
+    }
+    
+    if(str[i] !== '='){
+      // check for anti-pattern `div("foo"bar)`
+      if (i === 0 && str && !this.whitespaceRe.test(str[0]) && str[0] !== ','){
+        this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[0] + ' expected `=`');
+      } else {
+        return str;
+      }
+    }
+    
+    this.lineno = line;
+    this.colno = col + 1;
+    i++;
+    
+    // consume all whitespace before the value
+    for(; i < str.length; i++){
+      if(!this.whitespaceRe.test(str[i])) break;
+      if(str[i] === '\n'){
+        this.incrementLine(1);
+      } else {
+        this.incrementColumn(1);
+      }
+    }
+    
+    line = this.lineno;
+    col = this.colno;
+    
+    // start looping through the value
+    for (; i < str.length; i++) {
+      // if the character is in a string or in parentheses/brackets/braces
+      if (!(state.isNesting() || state.isString())){
+        
+        if (this.whitespaceRe.test(str[i])) {
+          done = false;
+          
+          // find the first non-whitespace character
+          for (x = i; x < str.length; x++) {
+            if (!this.whitespaceRe.test(str[x])) {
+              // if it is a JavaScript punctuator, then assume that it is
+              // a part of the value
+              if((!characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]) || str[x] === ':') && this.assertExpression(val, true)){
+                done = true;
+              }
+              break;
+            }
+          }
+          
+          // if everything else is whitespace, return now so last attribute
+          // does not include trailing whitespace
+          if(done || x === str.length){
+            break;
+          }
+        }
+        
+        // if there's no whitespace and the character is not ',', the
+        // attribute did not end.
+        if(str[i] === ',' && this.assertExpression(val, true)){
+          break;
+        }
+      }
+      
+      state = characterParser.parseChar(str[i], state);
+      val += str[i];
+      
+      if (str[i] === '\n') {
+        line++;
+        col = 1;
+      } else {
+        col++;
+      }
+    }
+    
+    this.assertExpression(val);
+    
+    this.lineno = line;
+    this.colno = col;
+    
+    tok.val = val;
+    tok.mustEscape = escapeAttr;
+    
+    return str.substr(i);
+  },
 
   /**
    * Attributes.
    */
-
+  
   attrs: function() {
+    var tok;
+    
     if ('(' == this.input.charAt(0)) {
-      var startingLine = this.lineno;
-      this.tokens.push(this.tok('start-attributes'));
-      var index = this.bracketExpression().end
-        , str = this.input.substr(1, index-1);
+      tok = this.tok('start-attributes');
+      var index = this.bracketExpression().end;
+      var str = this.input.substr(1, index-1);
 
       this.incrementColumn(1);
+      this.tokens.push(this.tokEnd(tok));
       this.assertNestingCorrect(str);
-
-      var quote = '';
-      var self = this;
-
       this.consume(index + 1);
 
-      var whitespaceRe = /[ \n\t]/;
-      var quoteRe = /['"]/;
-
-      var escapedAttr = false
-      var key = '';
-      var val = '';
-      var state = characterParser.defaultState();
-      var lineno = startingLine;
-      var colnoBeginAttr = this.colno;
-      var colnoBeginVal;
-      var loc = 'key';
-      var isEndOfAttribute = function (i) {
-        // if the key is not started, then the attribute cannot be ended
-        if (key.trim() === '') {
-          colnoBeginAttr = this.colno;
-          return false;
-        }
-        // if there's nothing more then the attribute must be ended
-        if (i === str.length) return true;
-
-        if (loc === 'key') {
-          if (whitespaceRe.test(str[i])) {
-            // find the first non-whitespace character
-            for (var x = i; x < str.length; x++) {
-              if (!whitespaceRe.test(str[x])) {
-                // starts a `value`
-                if (str[x] === '=' || str[x] === '!') return false;
-                // will be handled when x === i
-                else if (str[x] === ',') return false;
-                // attribute ended
-                else return true;
-              }
-            }
-          }
-          // if there's no whitespace and the character is not ',', the
-          // attribute did not end.
-          return str[i] === ',';
-        } else if (loc === 'value') {
-          // if the character is in a string or in parentheses/brackets/braces
-          if (state.isNesting() || state.isString()) return false;
-
-          // if the current value expression is not valid JavaScript, then
-          // assume that the user did not end the value.  To enforce this,
-          // we call `self.assertExpression(val, true)`, but since the other
-          // tests are much faster, we run the other tests first.
-
-          if (whitespaceRe.test(str[i])) {
-            // find the first non-whitespace character
-            for (var x = i; x < str.length; x++) {
-              if (!whitespaceRe.test(str[x])) {
-                // if it is a JavaScript punctuator, then assume that it is
-                // a part of the value
-                return (!characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]) || str[x] === ':') && self.assertExpression(val, true);
-              }
-            }
-          }
-          // if there's no whitespace and the character is not ',', the
-          // attribute did not end.
-          return str[i] === ',' && self.assertExpression(val, true);
-        }
+      while(str){
+        str = this.attributeName(str);
       }
 
-      for (var i = 0; i <= str.length; i++) {
-        if (isEndOfAttribute.call(this, i)) {
-          if (val.trim()) {
-            var saved = this.colno;
-            this.colno = colnoBeginVal;
-            this.assertExpression(val);
-            this.colno = saved;
-          }
-
-          val = val.trim();
-
-          key = key.trim();
-          key = key.replace(/^['"]|['"]$/g, '');
-
-          var tok = this.tok('attribute');
-          tok.name = key;
-          tok.val = '' == val ? true : val;
-          tok.col = colnoBeginAttr;
-          tok.mustEscape = escapedAttr;
-          this.tokens.push(tok);
-
-          key = val = '';
-          loc = 'key';
-          escapedAttr = false;
-          this.lineno = lineno;
-        } else {
-          switch (loc) {
-            case 'key-char':
-              if (str[i] === quote) {
-                loc = 'key';
-                if (i + 1 < str.length && !/[ ,!=\n\t]/.test(str[i + 1]))
-                  this.error('INVALID_KEY_CHARACTER', 'Unexpected character "' + str[i + 1] + '" expected ` `, `\\n`, `\t`, `,`, `!` or `=`');
-              } else {
-                key += str[i];
-              }
-              break;
-            case 'key':
-              if (key === '' && quoteRe.test(str[i])) {
-                loc = 'key-char';
-                quote = str[i];
-              } else if (str[i] === '!' || str[i] === '=') {
-                escapedAttr = str[i] !== '!';
-                if (str[i] === '!') {
-                  this.incrementColumn(1);
-                  i++;
-                }
-                if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
-                loc = 'value';
-                colnoBeginVal = this.colno + 1;
-                state = characterParser.defaultState();
-              } else {
-                key += str[i]
-              }
-              break;
-            case 'value':
-              state = characterParser.parseChar(str[i], state);
-              val += str[i];
-              break;
-          }
-        }
-        if (str[i] === '\n') {
-          // Save the line number locally to keep this.lineno at the start of
-          // the attribute.
-          lineno++;
-          this.colno = 1;
-          // If the key has not been started, update this.lineno immediately.
-          if (!key.trim()) this.lineno = lineno;
-        } else if (str[i] !== undefined) {
-          this.incrementColumn(1);
-        }
-      }
-
-      // Reset the line numbers based on the line started on
-      // plus the number of newline characters encountered
-      this.lineno = startingLine + (str.match(/\n/g) || []).length;
-
-      this.tokens.push(this.tok('end-attributes'));
+      tok = this.tok('end-attributes');
       this.incrementColumn(1);
+      this.tokEnd(tok);
+      this.tokens.push(tok);
       return true;
     }
   },
@@ -1173,8 +1301,8 @@ Lexer.prototype = {
       consumed = args.end + 1;
       this.consume(consumed);
       tok.val = args.src;
-      this.tokens.push(tok);
       this.incrementColumn(consumed);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -1185,6 +1313,7 @@ Lexer.prototype = {
 
   indent: function() {
     var captures = this.scanIndentation();
+    var tok;
 
     if (captures) {
       var indents = captures[1].length;
@@ -1199,28 +1328,36 @@ Lexer.prototype = {
       // blank line
       if ('\n' == this.input[0]) {
         this.interpolationAllowed = true;
-        return this.tok('newline');
+        return this.tokEnd(this.tok('newline'));
       }
 
       // outdent
       if (indents < this.indentStack[0]) {
+        var outdent_count = 0;
         while (this.indentStack[0] > indents) {
           if (this.indentStack[1] < indents) {
             this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. Expecting either ' + this.indentStack[1] + ' or ' + this.indentStack[0] + ' spaces/tabs.');
           }
-          this.colno = this.indentStack[1] + 1;
-          this.tokens.push(this.tok('outdent'));
+          outdent_count++;
           this.indentStack.shift();
+        }
+        while(outdent_count--){
+          this.colno = 1;
+          tok = this.tok('outdent');
+          this.colno = this.indentStack[0] + 1;
+          this.tokens.push(this.tokEnd(tok));
         }
       // indent
       } else if (indents && indents != this.indentStack[0]) {
-        this.tokens.push(this.tok('indent', indents));
+        tok = this.tok('indent', indents);
         this.colno = 1 + indents;
+        this.tokens.push(this.tokEnd(tok));
         this.indentStack.unshift(indents);
       // newline
       } else {
-        this.tokens.push(this.tok('newline'));
-        this.colno = 1 + (this.indentStack[0] || 0);
+        tok = this.tok('newline');
+        this.colno = 1 + Math.min(this.indentStack[0] || 0, indents);
+        this.tokens.push(this.tokEnd(tok));
       }
 
       this.interpolationAllowed = true;
@@ -1235,8 +1372,9 @@ Lexer.prototype = {
 
     indents = indents || captures && captures[1].length;
     if (indents > this.indentStack[0]) {
-      this.tokens.push(this.tok('start-pipeless-text'));
+      this.tokens.push(this.tokEnd(this.tok('start-pipeless-text')));
       var tokens = [];
+      var token_indent = [];
       var isMatch;
       // Index in this.input. Can't use this.consume because we might need to
       // retry lexing the block.
@@ -1248,7 +1386,9 @@ Lexer.prototype = {
         var str = this.input.substr(stringPtr + 1, i);
         var lineCaptures = this.indentRe.exec('\n' + str);
         var lineIndents = lineCaptures && lineCaptures[1].length;
-        isMatch = lineIndents >= indents || !str.trim();
+        isMatch = lineIndents >= indents;
+        token_indent.push(isMatch);
+        isMatch = isMatch || !str.trim();
         if (isMatch) {
           // consume test along with `\n` prefix if match
           stringPtr += str.length + 1;
@@ -1263,12 +1403,14 @@ Lexer.prototype = {
       this.consume(stringPtr);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
       tokens.forEach(function (token, i) {
+        var tok;
         this.incrementLine(1);
-        if (i !== 0) this.tokens.push(this.tok('newline'));
-        this.incrementColumn(indents);
+        if (i !== 0) tok = this.tok('newline');
+        if (token_indent[i]) this.incrementColumn(indents);
+        if (tok) this.tokens.push(this.tokEnd(tok));
         this.addText('text', token);
       }.bind(this));
-      this.tokens.push(this.tok('end-pipeless-text'));
+      this.tokens.push(this.tokEnd(this.tok('end-pipeless-text')));
       return true;
     }
   },
@@ -1280,7 +1422,7 @@ Lexer.prototype = {
   slash: function() {
     var tok = this.scan(/^\//, 'slash');
     if (tok) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
@@ -1292,7 +1434,7 @@ Lexer.prototype = {
   colon: function() {
     var tok = this.scan(/^: +/, ':');
     if (tok) {
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
