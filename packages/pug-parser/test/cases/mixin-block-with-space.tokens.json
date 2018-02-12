@@ -1,12 +1,12 @@
-{"type":"mixin","line":1,"col":1,"val":"m","args":"id"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"div"}
-{"type":"indent","line":3,"col":1,"val":4}
-{"type":"mixin-block","line":3,"col":5}
-{"type":"outdent","line":5,"col":3}
-{"type":"outdent","line":5,"col":1}
-{"type":"call","line":5,"col":1,"val":"m","args":""}
-{"type":"indent","line":6,"col":1,"val":2}
-{"type":"text","line":6,"col":5,"val":"This text should appear"}
-{"type":"outdent","line":6,"col":28}
-{"type":"eos","line":6,"col":28}
+{"type":"mixin","loc":{"start":{"line":1,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":1,"column":12}},"val":"m","args":"id"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/mixin-block-with-space.pug","end":{"line":2,"column":6}},"val":"div"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":3,"column":5}},"val":4}
+{"type":"mixin-block","loc":{"start":{"line":3,"column":5},"filename":"/cases/mixin-block-with-space.pug","end":{"line":3,"column":10}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":5,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":5,"column":1}}}
+{"type":"call","loc":{"start":{"line":5,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":5,"column":5}},"val":"m","args":""}
+{"type":"indent","loc":{"start":{"line":6,"column":1},"filename":"/cases/mixin-block-with-space.pug","end":{"line":6,"column":3}},"val":2}
+{"type":"text","loc":{"start":{"line":6,"column":5},"filename":"/cases/mixin-block-with-space.pug","end":{"line":6,"column":28}},"val":"This text should appear"}
+{"type":"outdent","loc":{"start":{"line":6,"column":28},"filename":"/cases/mixin-block-with-space.pug","end":{"line":6,"column":28}}}
+{"type":"eos","loc":{"start":{"line":6,"column":28},"filename":"/cases/mixin-block-with-space.pug","end":{"line":6,"column":28}}}

@@ -1,15 +1,15 @@
-{"type":"mixin","line":1,"col":1,"val":"linkit","args":"url"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"a"}
-{"type":"start-attributes","line":2,"col":4}
-{"type":"attribute","line":2,"col":5,"name":"href","val":"url","mustEscape":true}
-{"type":"end-attributes","line":2,"col":13}
-{"type":"code","line":2,"col":14,"val":"url","mustEscape":true,"buffer":true}
-{"type":"outdent","line":4,"col":1}
-{"type":"tag","line":4,"col":1,"val":"p"}
-{"type":"text","line":4,"col":3,"val":"This also works "}
-{"type":"start-pug-interpolation","line":4,"col":19}
-{"type":"call","line":4,"col":21,"val":"linkit","args":"'http://www.bing.com'"}
-{"type":"end-pug-interpolation","line":4,"col":51}
-{"type":"text","line":4,"col":52,"val":" so hurrah for Pug"}
-{"type":"eos","line":4,"col":70}
+{"type":"mixin","loc":{"start":{"line":1,"column":1},"filename":"/cases/interpolated-mixin.pug","end":{"line":1,"column":18}},"val":"linkit","args":"url"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/interpolated-mixin.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/interpolated-mixin.pug","end":{"line":2,"column":4}},"val":"a"}
+{"type":"start-attributes","loc":{"start":{"line":2,"column":4},"filename":"/cases/interpolated-mixin.pug","end":{"line":2,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":2,"column":5},"filename":"/cases/interpolated-mixin.pug","end":{"line":2,"column":13}},"name":"href","mustEscape":true,"val":"url"}
+{"type":"end-attributes","loc":{"start":{"line":2,"column":13},"filename":"/cases/interpolated-mixin.pug","end":{"line":2,"column":14}}}
+{"type":"code","loc":{"start":{"line":2,"column":14},"filename":"/cases/interpolated-mixin.pug","end":{"line":2,"column":19}},"val":"url","mustEscape":true,"buffer":true}
+{"type":"outdent","loc":{"start":{"line":4,"column":1},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":1}}}
+{"type":"tag","loc":{"start":{"line":4,"column":1},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":2}},"val":"p"}
+{"type":"text","loc":{"start":{"line":4,"column":3},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":19}},"val":"This also works "}
+{"type":"start-pug-interpolation","loc":{"start":{"line":4,"column":19},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":21}}}
+{"type":"call","loc":{"start":{"line":4,"column":21},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":51}},"val":"linkit","args":"'http://www.bing.com'"}
+{"type":"end-pug-interpolation","loc":{"start":{"line":4,"column":51},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":52}}}
+{"type":"text","loc":{"start":{"line":4,"column":52},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":70}},"val":" so hurrah for Pug"}
+{"type":"eos","loc":{"start":{"line":4,"column":70},"filename":"/cases/interpolated-mixin.pug","end":{"line":4,"column":70}}}

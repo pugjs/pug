@@ -1,33 +1,33 @@
-{"type":"code","line":1,"col":1,"val":"var user = { name: 'tobi' }","mustEscape":false,"buffer":false}
-{"type":"newline","line":2,"col":1}
-{"type":"tag","line":2,"col":1,"val":"foo"}
-{"type":"start-attributes","line":2,"col":4}
-{"type":"attribute","line":2,"col":5,"name":"data-user","val":"user","mustEscape":true}
-{"type":"end-attributes","line":2,"col":19}
-{"type":"newline","line":3,"col":1}
-{"type":"tag","line":3,"col":1,"val":"foo"}
-{"type":"start-attributes","line":3,"col":4}
-{"type":"attribute","line":3,"col":5,"name":"data-items","val":"[1,2,3]","mustEscape":true}
-{"type":"end-attributes","line":3,"col":23}
-{"type":"newline","line":4,"col":1}
-{"type":"tag","line":4,"col":1,"val":"foo"}
-{"type":"start-attributes","line":4,"col":4}
-{"type":"attribute","line":4,"col":5,"name":"data-username","val":"'tobi'","mustEscape":true}
-{"type":"end-attributes","line":4,"col":25}
-{"type":"newline","line":5,"col":1}
-{"type":"tag","line":5,"col":1,"val":"foo"}
-{"type":"start-attributes","line":5,"col":4}
-{"type":"attribute","line":5,"col":5,"name":"data-escaped","val":"{message: \"Let's rock!\"}","mustEscape":true}
-{"type":"end-attributes","line":5,"col":42}
-{"type":"newline","line":6,"col":1}
-{"type":"tag","line":6,"col":1,"val":"foo"}
-{"type":"start-attributes","line":6,"col":4}
-{"type":"attribute","line":6,"col":5,"name":"data-ampersand","val":"{message: \"a quote: &quot; this & that\"}","mustEscape":true}
-{"type":"end-attributes","line":6,"col":60}
-{"type":"newline","line":7,"col":1}
-{"type":"tag","line":7,"col":1,"val":"foo"}
-{"type":"start-attributes","line":7,"col":4}
-{"type":"attribute","line":7,"col":5,"name":"data-epoc","val":"new Date(0)","mustEscape":true}
-{"type":"end-attributes","line":7,"col":26}
-{"type":"newline","line":8,"col":1}
-{"type":"eos","line":8,"col":1}
+{"type":"code","loc":{"start":{"line":1,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":1,"column":30}},"val":"var user = { name: 'tobi' }","mustEscape":false,"buffer":false}
+{"type":"newline","loc":{"start":{"line":2,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":2,"column":1}}}
+{"type":"tag","loc":{"start":{"line":2,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":2,"column":4}},"val":"foo"}
+{"type":"start-attributes","loc":{"start":{"line":2,"column":4},"filename":"/cases/attrs-data.pug","end":{"line":2,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":2,"column":5},"filename":"/cases/attrs-data.pug","end":{"line":2,"column":19}},"name":"data-user","mustEscape":true,"val":"user"}
+{"type":"end-attributes","loc":{"start":{"line":2,"column":19},"filename":"/cases/attrs-data.pug","end":{"line":2,"column":20}}}
+{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":3,"column":1}}}
+{"type":"tag","loc":{"start":{"line":3,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":3,"column":4}},"val":"foo"}
+{"type":"start-attributes","loc":{"start":{"line":3,"column":4},"filename":"/cases/attrs-data.pug","end":{"line":3,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":3,"column":5},"filename":"/cases/attrs-data.pug","end":{"line":3,"column":23}},"name":"data-items","mustEscape":true,"val":"[1,2,3]"}
+{"type":"end-attributes","loc":{"start":{"line":3,"column":23},"filename":"/cases/attrs-data.pug","end":{"line":3,"column":24}}}
+{"type":"newline","loc":{"start":{"line":4,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":4,"column":1}}}
+{"type":"tag","loc":{"start":{"line":4,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":4,"column":4}},"val":"foo"}
+{"type":"start-attributes","loc":{"start":{"line":4,"column":4},"filename":"/cases/attrs-data.pug","end":{"line":4,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":4,"column":5},"filename":"/cases/attrs-data.pug","end":{"line":4,"column":25}},"name":"data-username","mustEscape":true,"val":"'tobi'"}
+{"type":"end-attributes","loc":{"start":{"line":4,"column":25},"filename":"/cases/attrs-data.pug","end":{"line":4,"column":26}}}
+{"type":"newline","loc":{"start":{"line":5,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":5,"column":1}}}
+{"type":"tag","loc":{"start":{"line":5,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":5,"column":4}},"val":"foo"}
+{"type":"start-attributes","loc":{"start":{"line":5,"column":4},"filename":"/cases/attrs-data.pug","end":{"line":5,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":5,"column":5},"filename":"/cases/attrs-data.pug","end":{"line":5,"column":42}},"name":"data-escaped","mustEscape":true,"val":"{message: \"Let's rock!\"}"}
+{"type":"end-attributes","loc":{"start":{"line":5,"column":42},"filename":"/cases/attrs-data.pug","end":{"line":5,"column":43}}}
+{"type":"newline","loc":{"start":{"line":6,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":6,"column":1}}}
+{"type":"tag","loc":{"start":{"line":6,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":6,"column":4}},"val":"foo"}
+{"type":"start-attributes","loc":{"start":{"line":6,"column":4},"filename":"/cases/attrs-data.pug","end":{"line":6,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":6,"column":5},"filename":"/cases/attrs-data.pug","end":{"line":6,"column":60}},"name":"data-ampersand","mustEscape":true,"val":"{message: \"a quote: &quot; this & that\"}"}
+{"type":"end-attributes","loc":{"start":{"line":6,"column":60},"filename":"/cases/attrs-data.pug","end":{"line":6,"column":61}}}
+{"type":"newline","loc":{"start":{"line":7,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":7,"column":1}}}
+{"type":"tag","loc":{"start":{"line":7,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":7,"column":4}},"val":"foo"}
+{"type":"start-attributes","loc":{"start":{"line":7,"column":4},"filename":"/cases/attrs-data.pug","end":{"line":7,"column":5}}}
+{"type":"attribute","loc":{"start":{"line":7,"column":5},"filename":"/cases/attrs-data.pug","end":{"line":7,"column":26}},"name":"data-epoc","mustEscape":true,"val":"new Date(0)"}
+{"type":"end-attributes","loc":{"start":{"line":7,"column":26},"filename":"/cases/attrs-data.pug","end":{"line":7,"column":27}}}
+{"type":"newline","loc":{"start":{"line":8,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":8,"column":1}}}
+{"type":"eos","loc":{"start":{"line":8,"column":1},"filename":"/cases/attrs-data.pug","end":{"line":8,"column":1}}}

@@ -1,12 +1,12 @@
-{"type":"tag","line":1,"col":1,"val":"html"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"body"}
-{"type":"indent","line":3,"col":1,"val":4}
-{"type":"include","line":3,"col":5}
-{"type":"path","line":3,"col":13,"val":"yield-title-head.pug"}
-{"type":"indent","line":4,"col":1,"val":6}
-{"type":"text","line":4,"col":9,"val":"My Title"}
-{"type":"outdent","line":5,"col":5}
-{"type":"outdent","line":5,"col":3}
-{"type":"outdent","line":5,"col":1}
-{"type":"eos","line":5,"col":1}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/yield-title.pug","end":{"line":1,"column":5}},"val":"html"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/yield-title.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/yield-title.pug","end":{"line":2,"column":7}},"val":"body"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/yield-title.pug","end":{"line":3,"column":5}},"val":4}
+{"type":"include","loc":{"start":{"line":3,"column":5},"filename":"/cases/yield-title.pug","end":{"line":3,"column":12}}}
+{"type":"path","loc":{"start":{"line":3,"column":13},"filename":"/cases/yield-title.pug","end":{"line":3,"column":33}},"val":"yield-title-head.pug"}
+{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/yield-title.pug","end":{"line":4,"column":7}},"val":6}
+{"type":"text","loc":{"start":{"line":4,"column":9},"filename":"/cases/yield-title.pug","end":{"line":4,"column":17}},"val":"My Title"}
+{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/yield-title.pug","end":{"line":5,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/yield-title.pug","end":{"line":5,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/yield-title.pug","end":{"line":5,"column":1}}}
+{"type":"eos","loc":{"start":{"line":5,"column":1},"filename":"/cases/yield-title.pug","end":{"line":5,"column":1}}}

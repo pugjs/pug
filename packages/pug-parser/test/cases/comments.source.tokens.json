@@ -1,18 +1,18 @@
-{"type":"comment","line":1,"col":1,"val":"","buffer":false}
-{"type":"start-pipeless-text","line":1,"col":4}
-{"type":"text","line":2,"col":3,"val":"s/s."}
-{"type":"newline","line":3,"col":1}
-{"type":"text","line":3,"col":3,"val":""}
-{"type":"end-pipeless-text","line":3,"col":3}
-{"type":"newline","line":4,"col":1}
-{"type":"comment","line":4,"col":1,"val":" test/cases/comments.source.pug","buffer":false}
-{"type":"newline","line":6,"col":1}
-{"type":"comment","line":6,"col":1,"val":"","buffer":false}
-{"type":"start-pipeless-text","line":6,"col":4}
-{"type":"text","line":7,"col":3,"val":"test/cases/comments.source.pug"}
-{"type":"newline","line":8,"col":1}
-{"type":"text","line":8,"col":3,"val":"when"}
-{"type":"newline","line":9,"col":1}
-{"type":"text","line":9,"col":3,"val":"()"}
-{"type":"end-pipeless-text","line":9,"col":5}
-{"type":"eos","line":9,"col":5}
+{"type":"comment","loc":{"start":{"line":1,"column":1},"filename":"/cases/comments.source.pug","end":{"line":1,"column":4}},"val":"","buffer":false}
+{"type":"start-pipeless-text","loc":{"start":{"line":1,"column":4},"filename":"/cases/comments.source.pug","end":{"line":1,"column":4}}}
+{"type":"text","loc":{"start":{"line":2,"column":3},"filename":"/cases/comments.source.pug","end":{"line":2,"column":7}},"val":"s/s."}
+{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/comments.source.pug","end":{"line":3,"column":1}}}
+{"type":"text","loc":{"start":{"line":3,"column":1},"filename":"/cases/comments.source.pug","end":{"line":3,"column":1}},"val":""}
+{"type":"end-pipeless-text","loc":{"start":{"line":3,"column":1},"filename":"/cases/comments.source.pug","end":{"line":3,"column":1}}}
+{"type":"newline","loc":{"start":{"line":4,"column":1},"filename":"/cases/comments.source.pug","end":{"line":4,"column":1}}}
+{"type":"comment","loc":{"start":{"line":4,"column":1},"filename":"/cases/comments.source.pug","end":{"line":4,"column":35}},"val":" test/cases/comments.source.pug","buffer":false}
+{"type":"newline","loc":{"start":{"line":6,"column":1},"filename":"/cases/comments.source.pug","end":{"line":6,"column":1}}}
+{"type":"comment","loc":{"start":{"line":6,"column":1},"filename":"/cases/comments.source.pug","end":{"line":6,"column":4}},"val":"","buffer":false}
+{"type":"start-pipeless-text","loc":{"start":{"line":6,"column":4},"filename":"/cases/comments.source.pug","end":{"line":6,"column":4}}}
+{"type":"text","loc":{"start":{"line":7,"column":3},"filename":"/cases/comments.source.pug","end":{"line":7,"column":33}},"val":"test/cases/comments.source.pug"}
+{"type":"newline","loc":{"start":{"line":8,"column":1},"filename":"/cases/comments.source.pug","end":{"line":8,"column":3}}}
+{"type":"text","loc":{"start":{"line":8,"column":3},"filename":"/cases/comments.source.pug","end":{"line":8,"column":7}},"val":"when"}
+{"type":"newline","loc":{"start":{"line":9,"column":1},"filename":"/cases/comments.source.pug","end":{"line":9,"column":3}}}
+{"type":"text","loc":{"start":{"line":9,"column":3},"filename":"/cases/comments.source.pug","end":{"line":9,"column":5}},"val":"()"}
+{"type":"end-pipeless-text","loc":{"start":{"line":9,"column":5},"filename":"/cases/comments.source.pug","end":{"line":9,"column":5}}}
+{"type":"eos","loc":{"start":{"line":9,"column":5},"filename":"/cases/comments.source.pug","end":{"line":9,"column":5}}}

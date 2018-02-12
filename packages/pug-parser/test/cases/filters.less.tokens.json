@@ -1,23 +1,23 @@
-{"type":"tag","line":1,"col":1,"val":"html"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"head"}
-{"type":"indent","line":3,"col":1,"val":4}
-{"type":"tag","line":3,"col":5,"val":"style"}
-{"type":"start-attributes","line":3,"col":10}
-{"type":"attribute","line":3,"col":11,"name":"type","val":"\"text/css\"","mustEscape":true}
-{"type":"end-attributes","line":3,"col":26}
-{"type":"indent","line":4,"col":1,"val":6}
-{"type":"filter","line":4,"col":7,"val":"less"}
-{"type":"start-pipeless-text","line":4,"col":12}
-{"type":"text","line":5,"col":9,"val":"@pad: 15px;"}
-{"type":"newline","line":6,"col":1}
-{"type":"text","line":6,"col":9,"val":"body {"}
-{"type":"newline","line":7,"col":1}
-{"type":"text","line":7,"col":9,"val":"  padding: @pad;"}
-{"type":"newline","line":8,"col":1}
-{"type":"text","line":8,"col":9,"val":"}"}
-{"type":"end-pipeless-text","line":8,"col":10}
-{"type":"outdent","line":8,"col":10}
-{"type":"outdent","line":8,"col":10}
-{"type":"outdent","line":8,"col":10}
-{"type":"eos","line":8,"col":10}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/filters.less.pug","end":{"line":1,"column":5}},"val":"html"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/filters.less.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/filters.less.pug","end":{"line":2,"column":7}},"val":"head"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/filters.less.pug","end":{"line":3,"column":5}},"val":4}
+{"type":"tag","loc":{"start":{"line":3,"column":5},"filename":"/cases/filters.less.pug","end":{"line":3,"column":10}},"val":"style"}
+{"type":"start-attributes","loc":{"start":{"line":3,"column":10},"filename":"/cases/filters.less.pug","end":{"line":3,"column":11}}}
+{"type":"attribute","loc":{"start":{"line":3,"column":11},"filename":"/cases/filters.less.pug","end":{"line":3,"column":26}},"name":"type","mustEscape":true,"val":"\"text/css\""}
+{"type":"end-attributes","loc":{"start":{"line":3,"column":26},"filename":"/cases/filters.less.pug","end":{"line":3,"column":27}}}
+{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/filters.less.pug","end":{"line":4,"column":7}},"val":6}
+{"type":"filter","loc":{"start":{"line":4,"column":7},"filename":"/cases/filters.less.pug","end":{"line":4,"column":12}},"val":"less"}
+{"type":"start-pipeless-text","loc":{"start":{"line":4,"column":12},"filename":"/cases/filters.less.pug","end":{"line":4,"column":12}}}
+{"type":"text","loc":{"start":{"line":5,"column":9},"filename":"/cases/filters.less.pug","end":{"line":5,"column":20}},"val":"@pad: 15px;"}
+{"type":"newline","loc":{"start":{"line":6,"column":1},"filename":"/cases/filters.less.pug","end":{"line":6,"column":9}}}
+{"type":"text","loc":{"start":{"line":6,"column":9},"filename":"/cases/filters.less.pug","end":{"line":6,"column":15}},"val":"body {"}
+{"type":"newline","loc":{"start":{"line":7,"column":1},"filename":"/cases/filters.less.pug","end":{"line":7,"column":9}}}
+{"type":"text","loc":{"start":{"line":7,"column":9},"filename":"/cases/filters.less.pug","end":{"line":7,"column":25}},"val":"  padding: @pad;"}
+{"type":"newline","loc":{"start":{"line":8,"column":1},"filename":"/cases/filters.less.pug","end":{"line":8,"column":9}}}
+{"type":"text","loc":{"start":{"line":8,"column":9},"filename":"/cases/filters.less.pug","end":{"line":8,"column":10}},"val":"}"}
+{"type":"end-pipeless-text","loc":{"start":{"line":8,"column":10},"filename":"/cases/filters.less.pug","end":{"line":8,"column":10}}}
+{"type":"outdent","loc":{"start":{"line":8,"column":10},"filename":"/cases/filters.less.pug","end":{"line":8,"column":10}}}
+{"type":"outdent","loc":{"start":{"line":8,"column":10},"filename":"/cases/filters.less.pug","end":{"line":8,"column":10}}}
+{"type":"outdent","loc":{"start":{"line":8,"column":10},"filename":"/cases/filters.less.pug","end":{"line":8,"column":10}}}
+{"type":"eos","loc":{"start":{"line":8,"column":10},"filename":"/cases/filters.less.pug","end":{"line":8,"column":10}}}

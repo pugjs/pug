@@ -1,13 +1,13 @@
-{"type":"code","line":1,"col":1,"val":"var x = 1;","mustEscape":false,"buffer":false}
-{"type":"newline","line":2,"col":1}
-{"type":"tag","line":2,"col":1,"val":"ul"}
-{"type":"indent","line":3,"col":1,"val":2}
-{"type":"while","line":3,"col":3,"val":"x < 10"}
-{"type":"indent","line":4,"col":1,"val":4}
-{"type":"code","line":4,"col":5,"val":"x++;","mustEscape":false,"buffer":false}
-{"type":"newline","line":5,"col":1}
-{"type":"tag","line":5,"col":5,"val":"li"}
-{"type":"code","line":5,"col":7,"val":"x","mustEscape":true,"buffer":true}
-{"type":"outdent","line":6,"col":3}
-{"type":"outdent","line":6,"col":1}
-{"type":"eos","line":6,"col":1}
+{"type":"code","loc":{"start":{"line":1,"column":1},"filename":"/cases/while.pug","end":{"line":1,"column":13}},"val":"var x = 1;","mustEscape":false,"buffer":false}
+{"type":"newline","loc":{"start":{"line":2,"column":1},"filename":"/cases/while.pug","end":{"line":2,"column":1}}}
+{"type":"tag","loc":{"start":{"line":2,"column":1},"filename":"/cases/while.pug","end":{"line":2,"column":3}},"val":"ul"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/while.pug","end":{"line":3,"column":3}},"val":2}
+{"type":"while","loc":{"start":{"line":3,"column":3},"filename":"/cases/while.pug","end":{"line":3,"column":15}},"val":"x < 10"}
+{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/while.pug","end":{"line":4,"column":5}},"val":4}
+{"type":"code","loc":{"start":{"line":4,"column":5},"filename":"/cases/while.pug","end":{"line":4,"column":11}},"val":"x++;","mustEscape":false,"buffer":false}
+{"type":"newline","loc":{"start":{"line":5,"column":1},"filename":"/cases/while.pug","end":{"line":5,"column":5}}}
+{"type":"tag","loc":{"start":{"line":5,"column":5},"filename":"/cases/while.pug","end":{"line":5,"column":7}},"val":"li"}
+{"type":"code","loc":{"start":{"line":5,"column":7},"filename":"/cases/while.pug","end":{"line":5,"column":10}},"val":"x","mustEscape":true,"buffer":true}
+{"type":"outdent","loc":{"start":{"line":6,"column":1},"filename":"/cases/while.pug","end":{"line":6,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":6,"column":1},"filename":"/cases/while.pug","end":{"line":6,"column":1}}}
+{"type":"eos","loc":{"start":{"line":6,"column":1},"filename":"/cases/while.pug","end":{"line":6,"column":1}}}

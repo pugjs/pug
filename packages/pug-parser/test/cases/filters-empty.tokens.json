@@ -1,16 +1,16 @@
-{"type":"code","line":1,"col":1,"val":"var users = [{ name: 'tobi', age: 2 }]","mustEscape":false,"buffer":false}
-{"type":"newline","line":3,"col":1}
-{"type":"tag","line":3,"col":1,"val":"fb:users"}
-{"type":"indent","line":4,"col":1,"val":2}
-{"type":"each","line":4,"col":3,"val":"user","key":null,"code":"users"}
-{"type":"indent","line":5,"col":1,"val":4}
-{"type":"tag","line":5,"col":5,"val":"fb:user"}
-{"type":"start-attributes","line":5,"col":12}
-{"type":"attribute","line":5,"col":13,"name":"age","val":"user.age","mustEscape":true}
-{"type":"end-attributes","line":5,"col":25}
-{"type":"indent","line":6,"col":1,"val":6}
-{"type":"filter","line":6,"col":7,"val":"cdata"}
-{"type":"outdent","line":7,"col":5}
-{"type":"outdent","line":7,"col":3}
-{"type":"outdent","line":7,"col":1}
-{"type":"eos","line":7,"col":1}
+{"type":"code","loc":{"start":{"line":1,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":1,"column":41}},"val":"var users = [{ name: 'tobi', age: 2 }]","mustEscape":false,"buffer":false}
+{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":3,"column":1}}}
+{"type":"tag","loc":{"start":{"line":3,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":3,"column":9}},"val":"fb:users"}
+{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":4,"column":3}},"val":2}
+{"type":"each","loc":{"start":{"line":4,"column":3},"filename":"/cases/filters-empty.pug","end":{"line":4,"column":20}},"val":"user","key":null,"code":"users"}
+{"type":"indent","loc":{"start":{"line":5,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":5,"column":5}},"val":4}
+{"type":"tag","loc":{"start":{"line":5,"column":5},"filename":"/cases/filters-empty.pug","end":{"line":5,"column":12}},"val":"fb:user"}
+{"type":"start-attributes","loc":{"start":{"line":5,"column":12},"filename":"/cases/filters-empty.pug","end":{"line":5,"column":13}}}
+{"type":"attribute","loc":{"start":{"line":5,"column":13},"filename":"/cases/filters-empty.pug","end":{"line":5,"column":25}},"name":"age","mustEscape":true,"val":"user.age"}
+{"type":"end-attributes","loc":{"start":{"line":5,"column":25},"filename":"/cases/filters-empty.pug","end":{"line":5,"column":26}}}
+{"type":"indent","loc":{"start":{"line":6,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":6,"column":7}},"val":6}
+{"type":"filter","loc":{"start":{"line":6,"column":7},"filename":"/cases/filters-empty.pug","end":{"line":6,"column":13}},"val":"cdata"}
+{"type":"outdent","loc":{"start":{"line":7,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":7,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":7,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":7,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":7,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":7,"column":1}}}
+{"type":"eos","loc":{"start":{"line":7,"column":1},"filename":"/cases/filters-empty.pug","end":{"line":7,"column":1}}}

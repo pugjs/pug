@@ -1,6 +1,6 @@
-{"type":"tag","line":1,"col":1,"val":"p"}
-{"type":"code","line":1,"col":2,"val":"'<script>'","mustEscape":true,"buffer":true}
-{"type":"newline","line":2,"col":1}
-{"type":"tag","line":2,"col":1,"val":"p"}
-{"type":"code","line":2,"col":2,"val":"'<script>'","mustEscape":false,"buffer":true}
-{"type":"eos","line":2,"col":15}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/code.escape.pug","end":{"line":1,"column":2}},"val":"p"}
+{"type":"code","loc":{"start":{"line":1,"column":2},"filename":"/cases/code.escape.pug","end":{"line":1,"column":14}},"val":"'<script>'","mustEscape":true,"buffer":true}
+{"type":"newline","loc":{"start":{"line":2,"column":1},"filename":"/cases/code.escape.pug","end":{"line":2,"column":1}}}
+{"type":"tag","loc":{"start":{"line":2,"column":1},"filename":"/cases/code.escape.pug","end":{"line":2,"column":2}},"val":"p"}
+{"type":"code","loc":{"start":{"line":2,"column":2},"filename":"/cases/code.escape.pug","end":{"line":2,"column":15}},"val":"'<script>'","mustEscape":false,"buffer":true}
+{"type":"eos","loc":{"start":{"line":2,"column":15},"filename":"/cases/code.escape.pug","end":{"line":2,"column":15}}}
