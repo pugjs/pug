@@ -10,3 +10,4 @@ npm-debug.log
 **/test/temp
 .release.json
 lerna-debug.log
+package-lock.json
