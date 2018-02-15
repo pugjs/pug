@@ -1,12 +1,12 @@
-{"type":"tag","line":1,"col":1,"val":"head"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"script"}
-{"type":"start-attributes","line":2,"col":9}
-{"type":"attribute","line":2,"col":10,"name":"type","val":"'text/javascript'","mustEscape":true}
-{"type":"end-attributes","line":2,"col":32}
-{"type":"dot","line":2,"col":33}
-{"type":"start-pipeless-text","line":2,"col":34}
-{"type":"text","line":3,"col":5,"val":"alert('hello world');"}
-{"type":"end-pipeless-text","line":3,"col":26}
-{"type":"outdent","line":3,"col":26}
-{"type":"eos","line":3,"col":26}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/include-with-text-head.pug","end":{"line":1,"column":5}},"val":"head"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":9}},"val":"script"}
+{"type":"start-attributes","loc":{"start":{"line":2,"column":9},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":10}}}
+{"type":"attribute","loc":{"start":{"line":2,"column":10},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":32}},"name":"type","mustEscape":true,"val":"'text/javascript'"}
+{"type":"end-attributes","loc":{"start":{"line":2,"column":32},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":33}}}
+{"type":"dot","loc":{"start":{"line":2,"column":33},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":34}}}
+{"type":"start-pipeless-text","loc":{"start":{"line":2,"column":34},"filename":"/cases/include-with-text-head.pug","end":{"line":2,"column":34}}}
+{"type":"text","loc":{"start":{"line":3,"column":5},"filename":"/cases/include-with-text-head.pug","end":{"line":3,"column":26}},"val":"alert('hello world');"}
+{"type":"end-pipeless-text","loc":{"start":{"line":3,"column":26},"filename":"/cases/include-with-text-head.pug","end":{"line":3,"column":26}}}
+{"type":"outdent","loc":{"start":{"line":3,"column":26},"filename":"/cases/include-with-text-head.pug","end":{"line":3,"column":26}}}
+{"type":"eos","loc":{"start":{"line":3,"column":26},"filename":"/cases/include-with-text-head.pug","end":{"line":3,"column":26}}}

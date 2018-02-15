@@ -1,7 +1,7 @@
-{"type":"mixin","line":1,"col":1,"val":"never-called","args":null}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"class","line":2,"col":3,"val":"wtf"}
-{"type":"text","line":2,"col":8,"val":"This isn't something we ever want to output"}
-{"type":"outdent","line":3,"col":1}
-{"type":"tag","line":3,"col":1,"val":"body"}
-{"type":"eos","line":3,"col":5}
+{"type":"mixin","loc":{"start":{"line":1,"column":1},"filename":"/cases/mixins-unused.pug","end":{"line":1,"column":19}},"val":"never-called","args":null}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/mixins-unused.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"class","loc":{"start":{"line":2,"column":3},"filename":"/cases/mixins-unused.pug","end":{"line":2,"column":7}},"val":"wtf"}
+{"type":"text","loc":{"start":{"line":2,"column":8},"filename":"/cases/mixins-unused.pug","end":{"line":2,"column":51}},"val":"This isn't something we ever want to output"}
+{"type":"outdent","loc":{"start":{"line":3,"column":1},"filename":"/cases/mixins-unused.pug","end":{"line":3,"column":1}}}
+{"type":"tag","loc":{"start":{"line":3,"column":1},"filename":"/cases/mixins-unused.pug","end":{"line":3,"column":5}},"val":"body"}
+{"type":"eos","loc":{"start":{"line":3,"column":5},"filename":"/cases/mixins-unused.pug","end":{"line":3,"column":5}}}

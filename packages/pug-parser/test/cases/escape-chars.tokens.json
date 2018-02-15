@@ -1,6 +1,6 @@
-{"type":"tag","line":1,"col":1,"val":"script"}
-{"type":"dot","line":1,"col":7}
-{"type":"start-pipeless-text","line":1,"col":8}
-{"type":"text","line":2,"col":3,"val":"var re = /\\d+/;"}
-{"type":"end-pipeless-text","line":2,"col":18}
-{"type":"eos","line":2,"col":18}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/escape-chars.pug","end":{"line":1,"column":7}},"val":"script"}
+{"type":"dot","loc":{"start":{"line":1,"column":7},"filename":"/cases/escape-chars.pug","end":{"line":1,"column":8}}}
+{"type":"start-pipeless-text","loc":{"start":{"line":1,"column":8},"filename":"/cases/escape-chars.pug","end":{"line":1,"column":8}}}
+{"type":"text","loc":{"start":{"line":2,"column":3},"filename":"/cases/escape-chars.pug","end":{"line":2,"column":18}},"val":"var re = /\\d+/;"}
+{"type":"end-pipeless-text","loc":{"start":{"line":2,"column":18},"filename":"/cases/escape-chars.pug","end":{"line":2,"column":18}}}
+{"type":"eos","loc":{"start":{"line":2,"column":18},"filename":"/cases/escape-chars.pug","end":{"line":2,"column":18}}}

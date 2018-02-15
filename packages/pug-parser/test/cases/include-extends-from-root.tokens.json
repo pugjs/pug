@@ -1,4 +1,4 @@
-{"type":"include","line":1,"col":1}
-{"type":"path","line":1,"col":9,"val":"/auxiliary/extends-from-root.pug"}
-{"type":"newline","line":2,"col":1}
-{"type":"eos","line":2,"col":1}
+{"type":"include","loc":{"start":{"line":1,"column":1},"filename":"/cases/include-extends-from-root.pug","end":{"line":1,"column":8}}}
+{"type":"path","loc":{"start":{"line":1,"column":9},"filename":"/cases/include-extends-from-root.pug","end":{"line":1,"column":41}},"val":"/auxiliary/extends-from-root.pug"}
+{"type":"newline","loc":{"start":{"line":2,"column":1},"filename":"/cases/include-extends-from-root.pug","end":{"line":2,"column":1}}}
+{"type":"eos","loc":{"start":{"line":2,"column":1},"filename":"/cases/include-extends-from-root.pug","end":{"line":2,"column":1}}}

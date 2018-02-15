@@ -1,13 +1,13 @@
-{"type":"tag","line":1,"col":1,"val":"html"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"body"}
-{"type":"indent","line":3,"col":1,"val":4}
-{"type":"filter","line":3,"col":5,"val":"markdown-it"}
-{"type":"start-pipeless-text","line":3,"col":17}
-{"type":"text","line":4,"col":7,"val":"This is _some_ awesome **markdown**"}
-{"type":"newline","line":5,"col":1}
-{"type":"text","line":5,"col":7,"val":"whoop."}
-{"type":"end-pipeless-text","line":5,"col":13}
-{"type":"outdent","line":5,"col":13}
-{"type":"outdent","line":5,"col":13}
-{"type":"eos","line":5,"col":13}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/filters.markdown.pug","end":{"line":1,"column":5}},"val":"html"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/filters.markdown.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/filters.markdown.pug","end":{"line":2,"column":7}},"val":"body"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/filters.markdown.pug","end":{"line":3,"column":5}},"val":4}
+{"type":"filter","loc":{"start":{"line":3,"column":5},"filename":"/cases/filters.markdown.pug","end":{"line":3,"column":17}},"val":"markdown-it"}
+{"type":"start-pipeless-text","loc":{"start":{"line":3,"column":17},"filename":"/cases/filters.markdown.pug","end":{"line":3,"column":17}}}
+{"type":"text","loc":{"start":{"line":4,"column":7},"filename":"/cases/filters.markdown.pug","end":{"line":4,"column":42}},"val":"This is _some_ awesome **markdown**"}
+{"type":"newline","loc":{"start":{"line":5,"column":1},"filename":"/cases/filters.markdown.pug","end":{"line":5,"column":7}}}
+{"type":"text","loc":{"start":{"line":5,"column":7},"filename":"/cases/filters.markdown.pug","end":{"line":5,"column":13}},"val":"whoop."}
+{"type":"end-pipeless-text","loc":{"start":{"line":5,"column":13},"filename":"/cases/filters.markdown.pug","end":{"line":5,"column":13}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":13},"filename":"/cases/filters.markdown.pug","end":{"line":5,"column":13}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":13},"filename":"/cases/filters.markdown.pug","end":{"line":5,"column":13}}}
+{"type":"eos","loc":{"start":{"line":5,"column":13},"filename":"/cases/filters.markdown.pug","end":{"line":5,"column":13}}}

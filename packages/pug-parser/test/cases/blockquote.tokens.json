@@ -1,10 +1,10 @@
-{"type":"tag","line":1,"col":1,"val":"figure"}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"tag","line":2,"col":3,"val":"blockquote"}
-{"type":"indent","line":3,"col":1,"val":4}
-{"type":"text","line":3,"col":7,"val":"Try to define yourself by what you do, and you&#8217;ll burnout every time. You are. That is enough. I rest in that."}
-{"type":"outdent","line":4,"col":3}
-{"type":"tag","line":4,"col":3,"val":"figcaption"}
-{"type":"text","line":4,"col":14,"val":"from @thefray at 1:43pm on May 10"}
-{"type":"outdent","line":4,"col":47}
-{"type":"eos","line":4,"col":47}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/blockquote.pug","end":{"line":1,"column":7}},"val":"figure"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/blockquote.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"tag","loc":{"start":{"line":2,"column":3},"filename":"/cases/blockquote.pug","end":{"line":2,"column":13}},"val":"blockquote"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/blockquote.pug","end":{"line":3,"column":5}},"val":4}
+{"type":"text","loc":{"start":{"line":3,"column":7},"filename":"/cases/blockquote.pug","end":{"line":3,"column":123}},"val":"Try to define yourself by what you do, and you&#8217;ll burnout every time. You are. That is enough. I rest in that."}
+{"type":"outdent","loc":{"start":{"line":4,"column":1},"filename":"/cases/blockquote.pug","end":{"line":4,"column":3}}}
+{"type":"tag","loc":{"start":{"line":4,"column":3},"filename":"/cases/blockquote.pug","end":{"line":4,"column":13}},"val":"figcaption"}
+{"type":"text","loc":{"start":{"line":4,"column":14},"filename":"/cases/blockquote.pug","end":{"line":4,"column":47}},"val":"from @thefray at 1:43pm on May 10"}
+{"type":"outdent","loc":{"start":{"line":4,"column":47},"filename":"/cases/blockquote.pug","end":{"line":4,"column":47}}}
+{"type":"eos","loc":{"start":{"line":4,"column":47},"filename":"/cases/blockquote.pug","end":{"line":4,"column":47}}}

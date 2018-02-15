@@ -1,29 +1,29 @@
-{"type":"tag","line":1,"col":1,"val":"script"}
-{"type":"id","line":1,"col":7,"val":"user-template"}
-{"type":"start-attributes","line":1,"col":21}
-{"type":"attribute","line":1,"col":22,"name":"type","val":"'text/template'","mustEscape":true}
-{"type":"end-attributes","line":1,"col":42}
-{"type":"indent","line":2,"col":1,"val":2}
-{"type":"id","line":2,"col":3,"val":"user"}
-{"type":"indent","line":3,"col":1,"val":4}
-{"type":"tag","line":3,"col":5,"val":"h1"}
-{"type":"text","line":3,"col":8,"val":"<%= user.name %>"}
-{"type":"newline","line":4,"col":1}
-{"type":"tag","line":4,"col":5,"val":"p"}
-{"type":"text","line":4,"col":7,"val":"<%= user.description %>"}
-{"type":"outdent","line":6,"col":3}
-{"type":"outdent","line":6,"col":1}
-{"type":"tag","line":6,"col":1,"val":"script"}
-{"type":"id","line":6,"col":7,"val":"user-template"}
-{"type":"start-attributes","line":6,"col":21}
-{"type":"attribute","line":6,"col":22,"name":"type","val":"'text/template'","mustEscape":true}
-{"type":"end-attributes","line":6,"col":42}
-{"type":"dot","line":6,"col":43}
-{"type":"start-pipeless-text","line":6,"col":44}
-{"type":"text","line":7,"col":3,"val":"if (foo) {"}
-{"type":"newline","line":8,"col":1}
-{"type":"text","line":8,"col":3,"val":"  bar();"}
-{"type":"newline","line":9,"col":1}
-{"type":"text","line":9,"col":3,"val":"}"}
-{"type":"end-pipeless-text","line":9,"col":4}
-{"type":"eos","line":9,"col":4}
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":1,"column":7}},"val":"script"}
+{"type":"id","loc":{"start":{"line":1,"column":7},"filename":"/cases/scripts.non-js.pug","end":{"line":1,"column":21}},"val":"user-template"}
+{"type":"start-attributes","loc":{"start":{"line":1,"column":21},"filename":"/cases/scripts.non-js.pug","end":{"line":1,"column":22}}}
+{"type":"attribute","loc":{"start":{"line":1,"column":22},"filename":"/cases/scripts.non-js.pug","end":{"line":1,"column":42}},"name":"type","mustEscape":true,"val":"'text/template'"}
+{"type":"end-attributes","loc":{"start":{"line":1,"column":42},"filename":"/cases/scripts.non-js.pug","end":{"line":1,"column":43}}}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":2,"column":3}},"val":2}
+{"type":"id","loc":{"start":{"line":2,"column":3},"filename":"/cases/scripts.non-js.pug","end":{"line":2,"column":8}},"val":"user"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":3,"column":5}},"val":4}
+{"type":"tag","loc":{"start":{"line":3,"column":5},"filename":"/cases/scripts.non-js.pug","end":{"line":3,"column":7}},"val":"h1"}
+{"type":"text","loc":{"start":{"line":3,"column":8},"filename":"/cases/scripts.non-js.pug","end":{"line":3,"column":24}},"val":"<%= user.name %>"}
+{"type":"newline","loc":{"start":{"line":4,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":4,"column":5}}}
+{"type":"tag","loc":{"start":{"line":4,"column":5},"filename":"/cases/scripts.non-js.pug","end":{"line":4,"column":6}},"val":"p"}
+{"type":"text","loc":{"start":{"line":4,"column":7},"filename":"/cases/scripts.non-js.pug","end":{"line":4,"column":30}},"val":"<%= user.description %>"}
+{"type":"outdent","loc":{"start":{"line":6,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":1}}}
+{"type":"outdent","loc":{"start":{"line":6,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":1}}}
+{"type":"tag","loc":{"start":{"line":6,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":7}},"val":"script"}
+{"type":"id","loc":{"start":{"line":6,"column":7},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":21}},"val":"user-template"}
+{"type":"start-attributes","loc":{"start":{"line":6,"column":21},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":22}}}
+{"type":"attribute","loc":{"start":{"line":6,"column":22},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":42}},"name":"type","mustEscape":true,"val":"'text/template'"}
+{"type":"end-attributes","loc":{"start":{"line":6,"column":42},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":43}}}
+{"type":"dot","loc":{"start":{"line":6,"column":43},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":44}}}
+{"type":"start-pipeless-text","loc":{"start":{"line":6,"column":44},"filename":"/cases/scripts.non-js.pug","end":{"line":6,"column":44}}}
+{"type":"text","loc":{"start":{"line":7,"column":3},"filename":"/cases/scripts.non-js.pug","end":{"line":7,"column":13}},"val":"if (foo) {"}
+{"type":"newline","loc":{"start":{"line":8,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":8,"column":3}}}
+{"type":"text","loc":{"start":{"line":8,"column":3},"filename":"/cases/scripts.non-js.pug","end":{"line":8,"column":11}},"val":"  bar();"}
+{"type":"newline","loc":{"start":{"line":9,"column":1},"filename":"/cases/scripts.non-js.pug","end":{"line":9,"column":3}}}
+{"type":"text","loc":{"start":{"line":9,"column":3},"filename":"/cases/scripts.non-js.pug","end":{"line":9,"column":4}},"val":"}"}
+{"type":"end-pipeless-text","loc":{"start":{"line":9,"column":4},"filename":"/cases/scripts.non-js.pug","end":{"line":9,"column":4}}}
+{"type":"eos","loc":{"start":{"line":9,"column":4},"filename":"/cases/scripts.non-js.pug","end":{"line":9,"column":4}}}

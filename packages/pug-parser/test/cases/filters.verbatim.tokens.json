@@ -1,0 +1,13 @@
+{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/filters.verbatim.pug","end":{"line":1,"column":5}},"val":"html"}
+{"type":"indent","loc":{"start":{"line":2,"column":1},"filename":"/cases/filters.verbatim.pug","end":{"line":2,"column":2}},"val":1}
+{"type":"tag","loc":{"start":{"line":2,"column":2},"filename":"/cases/filters.verbatim.pug","end":{"line":2,"column":5}},"val":"div"}
+{"type":"indent","loc":{"start":{"line":3,"column":1},"filename":"/cases/filters.verbatim.pug","end":{"line":3,"column":3}},"val":2}
+{"type":"filter","loc":{"start":{"line":3,"column":3},"filename":"/cases/filters.verbatim.pug","end":{"line":3,"column":12}},"val":"verbatim"}
+{"type":"start-pipeless-text","loc":{"start":{"line":3,"column":12},"filename":"/cases/filters.verbatim.pug","end":{"line":3,"column":12}}}
+{"type":"text","loc":{"start":{"line":4,"column":5},"filename":"/cases/filters.verbatim.pug","end":{"line":4,"column":40}},"val":"filters are applied at compile time"}
+{"type":"newline","loc":{"start":{"line":5,"column":1},"filename":"/cases/filters.verbatim.pug","end":{"line":5,"column":5}}}
+{"type":"text","loc":{"start":{"line":5,"column":5},"filename":"/cases/filters.verbatim.pug","end":{"line":5,"column":41}},"val":"with no #[b interpolation] at #{all}"}
+{"type":"end-pipeless-text","loc":{"start":{"line":5,"column":41},"filename":"/cases/filters.verbatim.pug","end":{"line":5,"column":41}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":41},"filename":"/cases/filters.verbatim.pug","end":{"line":5,"column":41}}}
+{"type":"outdent","loc":{"start":{"line":5,"column":41},"filename":"/cases/filters.verbatim.pug","end":{"line":5,"column":41}}}
+{"type":"eos","loc":{"start":{"line":5,"column":41},"filename":"/cases/filters.verbatim.pug","end":{"line":5,"column":41}}}
