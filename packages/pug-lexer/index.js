@@ -1056,14 +1056,11 @@ Lexer.prototype = {
   /**
    * Attribute Name.
    */
-  
-  attributeName: function(str){
+  attribute: function(str){
     var quote = '';
     var quoteRe = /['"]/;
     var key = '';
     var i;
-    
-    characterParser.defaultState();
     
     // consume all whitespace before the key
     for(i = 0; i < str.length; i++){
@@ -1113,11 +1110,19 @@ Lexer.prototype = {
     }
     
     tok.name = key;
-    tok.mustEscape = true;
     
-    str = this.attributeValue(tok, str.substr(i));
+    var valueResponse = this.attributeValue(str.substr(i));
     
-    tok.val = tok.val === '' ? true : tok.val;
+    if (valueResponse.val) {
+      tok.val = valueResponse.val;
+      tok.mustEscape = valueResponse.mustEscape;
+    } else {
+      // was a boolean attribute (ex: `input(disabled)`)
+      tok.val = true;
+      tok.mustEscape = true;
+    }
+    
+    str = valueResponse.remainingSource;
     
     this.tokens.push(this.tokEnd(tok));
     
@@ -1143,17 +1148,14 @@ Lexer.prototype = {
   /**
    * Attribute Value.
    */
-  
-  attributeValue: function(tok, str){
+  attributeValue: function(str){
     var quoteRe = /['"]/;
-    var val = tok.val = '';
+    var val = '';
     var done, i, x;
     var escapeAttr = true;
     var state = characterParser.defaultState();
     var col = this.colno;
     var line = this.lineno;
-    
-    characterParser.defaultState();
     
     // consume all whitespace before the equals sign
     for(i = 0; i < str.length; i++){
@@ -1167,7 +1169,7 @@ Lexer.prototype = {
     }
     
     if(i === str.length){
-      return str;
+      return { remainingSource: str };
     }
     
     if(str[i] === '!'){
@@ -1182,7 +1184,7 @@ Lexer.prototype = {
       if (i === 0 && str && !this.whitespaceRe.test(str[0]) && str[0] !== ','){
         this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[0] + ' expected `=`');
       } else {
-        return str;
+        return { remainingSource: str };
       }
     }
     
@@ -1253,10 +1255,7 @@ Lexer.prototype = {
     this.lineno = line;
     this.colno = col;
     
-    tok.val = val;
-    tok.mustEscape = escapeAttr;
-    
-    return str.substr(i);
+    return { val: val, mustEscape: escapeAttr, remainingSource: str.substr(i) };
   },
 
   /**
@@ -1277,13 +1276,12 @@ Lexer.prototype = {
       this.consume(index + 1);
 
       while(str){
-        str = this.attributeName(str);
+        str = this.attribute(str);
       }
 
       tok = this.tok('end-attributes');
       this.incrementColumn(1);
-      this.tokEnd(tok);
-      this.tokens.push(tok);
+      this.tokens.push(this.tokEnd(tok));
       return true;
     }
   },
