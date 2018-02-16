@@ -132,7 +132,7 @@ addTest('merge', function (merge) {
 addTest('style', function (style) {
   expect(style(null)).toBe('');
   expect(style('')).toBe('');
-  expect(style('foo: bar')).toBe('foo: bar;');
+  expect(style('foo: bar')).toBe('foo: bar');
   expect(style('foo: bar;')).toBe('foo: bar;');
   expect(style({foo: 'bar'})).toBe('foo:bar;');
   expect(style({foo: 'bar', baz: 'bash'})).toBe('foo:bar;baz:bash;');

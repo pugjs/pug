@@ -371,8 +371,8 @@ describe('pug', function(){
       assert.equal('<a href="http://google.com" title="Some : weird = title"></a>', pug.render('a(href= "http://google.com", title= "Some : weird = title")'));
       assert.equal('<label for="name"></label>', pug.render('label(for="name")'));
       assert.equal('<meta name="viewport" content="width=device-width"/>', pug.render("meta(name= 'viewport', content='width=device-width')"), 'Test attrs that contain attr separators');
-      assert.equal('<div style="color= white;"></div>', pug.render("div(style='color= white')"));
-      assert.equal('<div style="color: white;"></div>', pug.render("div(style='color: white')"));
+      assert.equal('<div style="color= white"></div>', pug.render("div(style='color= white')"));
+      assert.equal('<div style="color: white"></div>', pug.render("div(style='color: white')"));
       assert.equal('<p class="foo"></p>', pug.render("p('class'='foo')"), 'Test keys with single quotes');
       assert.equal('<p class="foo"></p>', pug.render("p(\"class\"= 'foo')"), 'Test keys with double quotes');
 
@@ -389,10 +389,10 @@ describe('pug', function(){
 
       assert.equal('<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>', pug.render('meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")'));
 
-      assert.equal('<div style="background: url(/images/test.png);">Foo</div>', pug.render("div(style= 'background: url(/images/test.png)') Foo"));
-      assert.equal('<div style="background = url(/images/test.png);">Foo</div>', pug.render("div(style= 'background = url(/images/test.png)') Foo"));
-      assert.equal('<div style="foo;">Foo</div>', pug.render("div(style= ['foo', 'bar'][0]) Foo"));
-      assert.equal('<div style="bar;">Foo</div>', pug.render("div(style= { foo: 'bar', baz: 'raz' }['foo']) Foo"));
+      assert.equal('<div style="background: url(/images/test.png)">Foo</div>', pug.render("div(style= 'background: url(/images/test.png)') Foo"));
+      assert.equal('<div style="background = url(/images/test.png)">Foo</div>', pug.render("div(style= 'background = url(/images/test.png)') Foo"));
+      assert.equal('<div style="foo">Foo</div>', pug.render("div(style= ['foo', 'bar'][0]) Foo"));
+      assert.equal('<div style="bar">Foo</div>', pug.render("div(style= { foo: 'bar', baz: 'raz' }['foo']) Foo"));
       assert.equal('<a href="def">Foo</a>', pug.render("a(href='abcdefg'.substr(3,3)) Foo"));
       assert.equal('<a href="def">Foo</a>', pug.render("a(href={test: 'abcdefg'}.test.substr(3,3)) Foo"));
       assert.equal('<a href="def">Foo</a>', pug.render("a(href={test: 'abcdefg'}.test.substr(3,[0,3][1])) Foo"));
