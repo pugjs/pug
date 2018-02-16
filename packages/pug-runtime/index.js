@@ -30,11 +30,9 @@ function pug_merge(a, b) {
       a[key] = (Array.isArray(valA) ? valA : [valA]).concat(b[key] || []);
     } else if (key === 'style') {
       var valA = pug_style(a[key]);
-      if (valA !== '' && valA[valA.length - 1] !== ';')
-        valA += ';';
+      valA = valA && valA.slice(-1) !== ';' ? valA + ';' : valA;
       var valB = pug_style(b[key]);
-      if (valB !== '' && valB[valB.length - 1] !== ';')
-        valB += ';';
+      valB = valB && valB.slice(-1) !== ';' ? valB + ';' : valB;
       a[key] = valA + valB;
     } else {
       a[key] = b[key];
@@ -113,8 +111,7 @@ function pug_style(val) {
     }
     return out;
   } else {
-    val += '';
-    return val;
+    return val + '';
   }
 };
 
