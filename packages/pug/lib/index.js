@@ -255,6 +255,7 @@ exports.compile = function(str, options){
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
     plugins: options.plugins,
+    pluginOptions: options.pluginOptions
   });
 
   var res = options.inlineRuntimeFunctions
@@ -302,7 +303,8 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     filters: options.filters,
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
-    plugins: options.plugins
+    plugins: options.plugins,
+    pluginOptions: options.pluginOptions
   });
 
   var body = parsed.body;
