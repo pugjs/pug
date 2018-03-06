@@ -1,7 +1,8 @@
 {
-  "lerna": "2.0.0-beta.32",
-  "packages": [
-    "packages/*"
-  ],
-  "version": "independent"
+  "lerna": "2.9.0",
+  "packages": ["packages/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent",
+  "registry": "https://registry.npmjs.org/"
 }
