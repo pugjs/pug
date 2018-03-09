@@ -1,5 +1,6 @@
 'use strict';
 
+var pug = {};
 var pug_has_own_property = Object.prototype.hasOwnProperty;
 
 /**
@@ -14,7 +15,7 @@ var pug_has_own_property = Object.prototype.hasOwnProperty;
  * @api private
  */
 
-exports.merge = pug_merge;
+pug.merge = pug_merge;
 function pug_merge(a, b) {
   if (arguments.length === 1) {
     var attrs = a[0];
@@ -59,7 +60,7 @@ function pug_merge(a, b) {
  * @param {?Array.<string>} escaping
  * @return {String}
  */
-exports.classes = pug_classes;
+pug.classes = pug_classes;
 function pug_classes_array(val, escaping) {
   var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
   for (var i = 0; i < val.length; i++) {
@@ -98,7 +99,7 @@ function pug_classes(val, escaping) {
  * @return {String}
  */
 
-exports.style = pug_style;
+pug.style = pug_style;
 function pug_style(val) {
   if (!val) return '';
   if (typeof val === 'object') {
@@ -124,7 +125,7 @@ function pug_style(val) {
  * @param {Boolean} terse
  * @return {String}
  */
-exports.attr = pug_attr;
+pug.attr = pug_attr;
 function pug_attr(key, val, escaped, terse) {
   if (val === false || val == null || !val && (key === 'class' || key === 'style')) {
     return '';
@@ -152,7 +153,7 @@ function pug_attr(key, val, escaped, terse) {
  * @param {Object} terse whether to use HTML5 terse boolean attributes
  * @return {String}
  */
-exports.attrs = pug_attrs;
+pug.attrs = pug_attrs;
 function pug_attrs(obj, terse){
   var attrs = '';
 
@@ -184,7 +185,7 @@ function pug_attrs(obj, terse){
  */
 
 var pug_match_html = /["&<>]/;
-exports.escape = pug_escape;
+pug.escape = pug_escape;
 function pug_escape(_html){
   var html = '' + _html;
   var regexResult = pug_match_html.exec(html);
@@ -219,7 +220,7 @@ function pug_escape(_html){
  * @api private
  */
 
-exports.rethrow = pug_rethrow;
+pug.rethrow = pug_rethrow;
 function pug_rethrow(err, filename, lineno, str){
   if (!(err instanceof Error)) throw err;
   if ((typeof window != 'undefined' || !filename) && !str) {
@@ -251,3 +252,18 @@ function pug_rethrow(err, filename, lineno, str){
     + '\n' + context + '\n\n' + err.message;
   throw err;
 };
+
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = pug;
+}
+else {
+  if (typeof define === 'function' && define.amd) {
+    define([], function() {
+      return pug;
+    });
+  }
+  else {
+    window.pug = pug;
+  }
+}
