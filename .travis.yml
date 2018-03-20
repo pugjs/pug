@@ -7,7 +7,7 @@ node_js:
 # Use faster Docker architecture on Travis.
 sudo: false
 
-script:        npm test
+script: yarn test
 # TODO: coverage
 # after_success: npm run coveralls
 

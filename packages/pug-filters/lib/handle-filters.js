@@ -94,7 +94,7 @@ function getAttributes(node, options) {
   var attrs = {};
   node.attrs.forEach(function (attr) {
     try {
-      attrs[attr.name] = constantinople.toConstant(attr.val);
+      attrs[attr.name] = attr.val === true ? true : constantinople.toConstant(attr.val);
     } catch (ex) {
       if (/not constant/.test(ex.message)) {
         throw error('FILTER_OPTION_NOT_CONSTANT', ex.message + ' All filters are rendered compile-time so filter options must be constants.', node);
