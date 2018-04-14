@@ -21,7 +21,7 @@ Full documentation is at [pugjs.org](https://pugjs.org/)
 
 ## Rename from "Jade"
 
-This project was formerly known as "Jade." However, it has been revealed to us that "Jade" is a registered trademark, and as a result, a rename is needed. After some discussion among the maintainers, **"Pug"** has been chosen as the new name for this project. The next major version will carry "pug" as the package name.
+This project was formerly known as "Jade". However, it has been revealed to us that "Jade" is a registered trademark, and as a result, a rename is needed. After some discussion among the maintainers, **"Pug"** has been chosen as the new name for this project. The next major version will carry "pug" as the package name.
 
 If your package or app currently uses `jade`, don't worry: we have secured permissions to continue to occupy that package name, although all new versions will be released under `pug`.
 
