@@ -16,7 +16,9 @@ function filter(name, str, options, currentDirectory, funcName) {
       tr = require('jstransformer-' + name);
     }
     tr = jstransformer(tr);
-  } catch (ex) {}
+  } catch (ex) {
+    throw ex;
+  }
   if (tr) {
     // TODO: we may want to add a way for people to separately specify "locals"
     var result = tr[funcName](str, options, options).body;
