@@ -29,7 +29,7 @@ async function load(ast, options) {
         }
         file.str = str;
         if (node.type === 'Extends' || node.type === 'Include') {
-          file.ast = load.string(str, assign({}, options, {
+          file.ast = await load.string(str, assign({}, options, {
             filename: path
           }));
         }
@@ -54,7 +54,7 @@ load.file = async function loadFile(filename, options) {
     filename: filename
   });
   var str = await options.read(filename);
-  return  await load.string(str, options);
+  return await load.string(str, options);
 };
 
 load.resolve = function resolve(filename, source, options) {
