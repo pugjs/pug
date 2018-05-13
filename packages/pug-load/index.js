@@ -6,11 +6,12 @@ var walk = require('pug-walk');
 var assign = require('object-assign');
 
 module.exports = load;
-function load(ast, options) {
+
+async function load(ast, options) {
   options = getOptions(options);
   // clone the ast
   ast = JSON.parse(JSON.stringify(ast));
-  return walk(ast, function (node) {
+  return walk(ast, async function (node) {
     if (node.str === undefined) {
       if (node.type === 'Include' || node.type === 'RawInclude' || node.type === 'Extends') {
         var file = node.file;
@@ -21,7 +22,7 @@ function load(ast, options) {
         try {
           path = options.resolve(file.path, file.filename, options);
           file.fullPath = path;
-          str = options.read(path, options);
+          str = await options.read(path, options);
         } catch (ex) {
           ex.message += '\n    at ' + node.filename + ' line ' + node.line;
           throw ex;
@@ -37,21 +38,24 @@ function load(ast, options) {
   });
 }
 
-load.string = function loadString(src, options) {
+
+load.string = async function loadString(src, options) {
   options = assign(getOptions(options), {
     src: src
   });
   var tokens = options.lex(src, options);
   var ast = options.parse(tokens, options);
-  return load(ast, options);
+
+  return await load(ast, options);
 };
-load.file = function loadFile(filename, options) {
+
+load.file = async function loadFile(filename, options) {
   options = assign(getOptions(options), {
     filename: filename
   });
-  var str = options.read(filename);
-  return load.string(str, options);
-}
+  var str = await options.read(filename);
+  return  await load.string(str, options);
+};
 
 load.resolve = function resolve(filename, source, options) {
   filename = filename.trim();
@@ -65,8 +69,17 @@ load.resolve = function resolve(filename, source, options) {
 
   return filename;
 };
-load.read = function read(filename, options) {
-  return fs.readFileSync(filename, 'utf8');
+
+load.read = async function read(filename, options) {
+  return await new Promise((resolve, reject) => {
+    fs.readFile(filename, 'utf8', (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(data);
+    });
+  });
 };
 
 load.validateOptions = function validateOptions(options) {

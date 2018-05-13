@@ -78,12 +78,12 @@ exports.filters = {};
  * @api private
  */
 
-function compileBody(str, options){
+async function compileBody(str, options){
   var debug_sources = {};
   debug_sources[options.filename] = str;
   var dependencies = [];
   var plugins = options.plugins || [];
-  var ast = load.string(str, {
+  var ast = await load.string(str, {
     filename: options.filename,
     basedir: options.basedir,
     lex: function (str, options) {
@@ -134,7 +134,7 @@ function compileBody(str, options){
 
       return load.resolve(filename, source, loadOptions);
     },
-    read: function (filename, loadOptions) {
+    read: async function (filename, loadOptions) {
       dependencies.push(filename);
 
       var contents;
@@ -143,7 +143,7 @@ function compileBody(str, options){
       if (replacementFunc) {
         contents = replacementFunc(filename, options);
       } else {
-        contents = load.read(filename, loadOptions);
+        contents = await load.read(filename, loadOptions);
       }
 
       var str = applyPlugins(contents, {filename: filename}, plugins, 'preLex');
@@ -206,13 +206,13 @@ function compileBody(str, options){
  * @return {Function}
  * @api private
  */
-function handleTemplateCache (options, str) {
+async function handleTemplateCache (options, str) {
   var key = options.filename;
   if (options.cache && exports.cache[key]) {
     return exports.cache[key];
   } else {
     if (str === undefined) str = fs.readFileSync(options.filename, 'utf8');
-    var templ = exports.compile(str, options);
+    var templ = await exports.compile(str, options);
     if (options.cache) exports.cache[key] = templ;
     return templ;
   }
@@ -350,10 +350,10 @@ exports.compileClient = function (str, options) {
  * @return {Function}
  * @api public
  */
-exports.compileFile = function (path, options) {
+exports.compileFile = async function (path, options) {
   options = options || {};
   options.filename = path;
-  return handleTemplateCache(options);
+  return await handleTemplateCache(options);
 };
 
 /**
@@ -371,7 +371,7 @@ exports.compileFile = function (path, options) {
  * @api public
  */
 
-exports.render = function(str, options, fn){
+exports.render = async function(str, options, fn){
   // support callback API
   if ('function' == typeof options) {
     fn = options, options = undefined;
@@ -379,7 +379,7 @@ exports.render = function(str, options, fn){
   if (typeof fn === 'function') {
     var res;
     try {
-      res = exports.render(str, options);
+      res = await exports.render(str, options);
     } catch (ex) {
       return fn(ex);
     }
@@ -393,7 +393,7 @@ exports.render = function(str, options, fn){
     throw new Error('the "filename" option is required for caching');
   }
 
-  return handleTemplateCache(options, str)(options);
+  return await handleTemplateCache(options, str)(options);
 };
 
 /**
@@ -406,7 +406,7 @@ exports.render = function(str, options, fn){
  * @api public
  */
 
-exports.renderFile = function(path, options, fn){
+exports.renderFile = async function(path, options, fn){
   // support callback API
   if ('function' == typeof options) {
     fn = options, options = undefined;
@@ -414,7 +414,7 @@ exports.renderFile = function(path, options, fn){
   if (typeof fn === 'function') {
     var res;
     try {
-      res = exports.renderFile(path, options);
+      res = await exports.renderFile(path, options);
     } catch (ex) {
       return fn(ex);
     }
@@ -424,7 +424,7 @@ exports.renderFile = function(path, options, fn){
   options = options || {};
 
   options.filename = path;
-  return handleTemplateCache(options)(options);
+  return await handleTemplateCache(options)(options);
 };
 
 

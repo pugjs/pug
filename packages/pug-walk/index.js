@@ -21,6 +21,18 @@ function walkAST(ast, before, after, options) {
 
   if (before) {
     var result = before(ast, replace);
+
+    if (result instanceof Promise) {
+      return result.then(function (res) {
+        if (res === false) {
+          return ast;
+        } else if (Array.isArray(ast)) {
+          // return right here to skip after() call on array
+          return walkAndMergeNodes(ast);
+        }
+      });
+    }
+
     if (result === false) {
       return ast;
     } else if (Array.isArray(ast)) {
