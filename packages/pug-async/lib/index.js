@@ -234,12 +234,12 @@ async function handleTemplateCache (options, str) {
  * @api public
  */
 
-exports.compile = function(str, options){
-  var options = options || {}
+exports.compile = async function(str, options){
+  var options = options || {};
 
   str = String(str);
 
-  var parsed = compileBody(str, {
+  var parsed = await compileBody(str, {
     compileDebug: options.compileDebug !== false,
     filename: options.filename,
     basedir: options.basedir,
@@ -393,7 +393,7 @@ exports.render = async function(str, options, fn){
     throw new Error('the "filename" option is required for caching');
   }
 
-  return await handleTemplateCache(options, str)(options);
+  return (await handleTemplateCache(options, str))(options);
 };
 
 /**
