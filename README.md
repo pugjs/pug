@@ -39,20 +39,6 @@ via npm:
 $ npm install pug-async
 ```
 
-### Command Line
-
-After installing the latest version of [Node.js](http://nodejs.org/), install with:
-
-```bash
-$ npm install pug-cli -g
-```
-
-and run with
-
-```bash
-$ pug --help
-```
-
 ## Syntax
 
 Pug is a clean, whitespace sensitive syntax for writing html.  Here is a simple example:
@@ -118,7 +104,6 @@ For full API, see [pugjs.org/api/reference.html](https://pugjs.org/api/reference
   var html = await pug.renderFile('filename.pug', merge(options, locals));
 
 })().then(() => {}, err => { console.error(err); });
-
 ```
 
 ### Options
@@ -126,18 +111,6 @@ For full API, see [pugjs.org/api/reference.html](https://pugjs.org/api/reference
  - `filename`  Used in exceptions, and required when using includes
  - `compileDebug`  When `false` no debug instrumentation is compiled
  - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
-
-## Browser Support
-
- The latest version of pug can be download for the browser in standalone form from [here](https://pugjs.org/js/pug.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
-
- To compile a template for use on the client using the command line, do:
-
-```bash
-$ pug --client --no-debug filename.pug
-```
-
-which will produce `filename.js` containing the compiled template.
 
 ## Tutorials
 
