@@ -1,5 +1,5 @@
 <a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
-# Pug
+# Pug (async version)
 
 Full documentation is at [pugjs.org](https://pugjs.org/)
 
@@ -36,7 +36,7 @@ The website and documentation for Pug are still being updated, but if you are ne
 via npm:
 
 ```bash
-$ npm install pug
+$ npm install pug-async
 ```
 
 ### Command Line
@@ -103,17 +103,22 @@ becomes
 For full API, see [pugjs.org/api/reference.html](https://pugjs.org/api/reference.html)
 
 ```js
-var pug = require('pug');
+(async function () {
 
-// compile
-var fn = pug.compile('string of pug', options);
-var html = fn(locals);
+  var pug = require('pug-async');
+  
+  // compile
+  var fn = await pug.compile('string of pug', options);
+  var html = fn(locals);
+  
+  // render
+  var html = await pug.render('string of pug', merge(options, locals));
+  
+  // renderFile
+  var html = await pug.renderFile('filename.pug', merge(options, locals));
 
-// render
-var html = pug.render('string of pug', merge(options, locals));
+})().then(() => {}, err => { console.error(err); });
 
-// renderFile
-var html = pug.renderFile('filename.pug', merge(options, locals));
 ```
 
 ### Options
