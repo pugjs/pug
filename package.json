@@ -1,6 +1,6 @@
 {
-  "name": "pug-async",
-  "version": "2.0.3",
+  "name": "pug-monorepo",
+  "private": true,
   "devDependencies": {
     "coveralls": "^2.11.2",
     "jest": "^18.1.0",

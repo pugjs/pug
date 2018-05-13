@@ -1,5 +1,5 @@
 {
-  "name": "pug-load",
+  "name": "pug-load-async",
   "version": "2.0.11",
   "description": "The Pug loader is responsible for loading the depenendencies of a given Pug file.",
   "keywords": [
