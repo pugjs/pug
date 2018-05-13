@@ -1,9 +1,0 @@
-{"type":"extends","loc":{"start":{"line":1,"column":1},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":1,"column":8}}}
-{"type":"path","loc":{"start":{"line":1,"column":9},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":1,"column":59}},"val":"/auxiliary/inheritance.extend.recursive-parent.pug"}
-{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":3,"column":1}}}
-{"type":"block","loc":{"start":{"line":3,"column":1},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":3,"column":13}},"val":"parent","mode":"replace"}
-{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":4,"column":5}},"val":4}
-{"type":"tag","loc":{"start":{"line":4,"column":5},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":4,"column":7}},"val":"h4"}
-{"type":"text","loc":{"start":{"line":4,"column":8},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":4,"column":13}},"val":"child"}
-{"type":"outdent","loc":{"start":{"line":4,"column":13},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":4,"column":13}}}
-{"type":"eos","loc":{"start":{"line":4,"column":13},"filename":"/cases/inheritance.extend.recursive.pug","end":{"line":4,"column":13}}}

@@ -1,6 +1,6 @@
-# pug-walk
+# pug-walk-async
 
-Walk and transform a Pug AST
+Walk and transform a Pug AST asynchronously
 
 [![Build Status](https://img.shields.io/travis/pugjs/pug-walk/master.svg)](https://travis-ci.org/pugjs/pug-walk)
 [![Dependency Status](https://img.shields.io/david/pugjs/pug-walk.svg)](https://david-dm.org/pugjs/pug-walk)
@@ -9,12 +9,12 @@ Walk and transform a Pug AST
 
 ## Installation
 
-    npm install pug-walk
+    npm install pug-walk-async
 
 ## Usage
 
 ```js
-var walk = require('pug-walk');
+var walk = require('pug-walk-async');
 ```
 
 ### `walk(ast, before, after, options)`

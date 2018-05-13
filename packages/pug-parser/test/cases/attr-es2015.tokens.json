@@ -1,9 +1,0 @@
-{"type":"code","loc":{"start":{"line":1,"column":1},"filename":"/cases/attr-es2015.pug","end":{"line":1,"column":50}},"val":"var avatar = '219b77f9d21de75e81851b6b886057c7'","mustEscape":false,"buffer":false}
-{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/attr-es2015.pug","end":{"line":3,"column":1}}}
-{"type":"tag","loc":{"start":{"line":3,"column":1},"filename":"/cases/attr-es2015.pug","end":{"line":3,"column":4}},"val":"div"}
-{"type":"class","loc":{"start":{"line":3,"column":4},"filename":"/cases/attr-es2015.pug","end":{"line":3,"column":15}},"val":"avatar-div"}
-{"type":"start-attributes","loc":{"start":{"line":3,"column":15},"filename":"/cases/attr-es2015.pug","end":{"line":3,"column":16}}}
-{"type":"attribute","loc":{"start":{"line":3,"column":16},"filename":"/cases/attr-es2015.pug","end":{"line":3,"column":88}},"name":"style","mustEscape":true,"val":"`background-image: url(https://www.gravatar.com/avatar/${avatar})`"}
-{"type":"end-attributes","loc":{"start":{"line":3,"column":88},"filename":"/cases/attr-es2015.pug","end":{"line":3,"column":89}}}
-{"type":"newline","loc":{"start":{"line":4,"column":1},"filename":"/cases/attr-es2015.pug","end":{"line":4,"column":1}}}
-{"type":"eos","loc":{"start":{"line":4,"column":1},"filename":"/cases/attr-es2015.pug","end":{"line":4,"column":1}}}

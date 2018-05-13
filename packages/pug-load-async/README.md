@@ -1,4 +1,4 @@
-# pug-load
+# pug-load-async
 
 The pug loader is responsible for loading the depenendencies of a given pug file.  It adds `fullPath` and `str` properties to every `Include` and `Extends` node.  It also adds an `ast` property to any `Include` nodes that are loading pug and any `Extends` nodes.  It then recursively loads the dependencies of any of those included files.
 
@@ -9,12 +9,12 @@ The pug loader is responsible for loading the depenendencies of a given pug file
 
 ## Installation
 
-    npm install pug-load
+    npm install pug-load-async
 
 ## Usage
 
 ```js
-var load = require('pug-load');
+var load = require('pug-load-async');
 ```
 
 ### `load(ast, options)`

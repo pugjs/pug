@@ -1,9 +1,0 @@
-{"type":"comment","loc":{"start":{"line":1,"column":1},"filename":"/cases/pipeless-comments.pug","end":{"line":1,"column":3}},"val":"","buffer":true}
-{"type":"start-pipeless-text","loc":{"start":{"line":1,"column":3},"filename":"/cases/pipeless-comments.pug","end":{"line":1,"column":3}}}
-{"type":"text","loc":{"start":{"line":2,"column":3},"filename":"/cases/pipeless-comments.pug","end":{"line":2,"column":12}},"val":"     .foo"}
-{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/pipeless-comments.pug","end":{"line":3,"column":3}}}
-{"type":"text","loc":{"start":{"line":3,"column":3},"filename":"/cases/pipeless-comments.pug","end":{"line":3,"column":8}},"val":"\t.bar"}
-{"type":"newline","loc":{"start":{"line":4,"column":1},"filename":"/cases/pipeless-comments.pug","end":{"line":4,"column":3}}}
-{"type":"text","loc":{"start":{"line":4,"column":3},"filename":"/cases/pipeless-comments.pug","end":{"line":4,"column":7}},"val":".hey"}
-{"type":"end-pipeless-text","loc":{"start":{"line":4,"column":7},"filename":"/cases/pipeless-comments.pug","end":{"line":4,"column":7}}}
-{"type":"eos","loc":{"start":{"line":4,"column":7},"filename":"/cases/pipeless-comments.pug","end":{"line":4,"column":7}}}

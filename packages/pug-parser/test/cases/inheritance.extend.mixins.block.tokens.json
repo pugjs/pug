@@ -1,9 +1,0 @@
-{"type":"extends","loc":{"start":{"line":1,"column":1},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":1,"column":7}}}
-{"type":"path","loc":{"start":{"line":1,"column":8},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":1,"column":52}},"val":"auxiliary/inheritance.extend.mixin.block.pug"}
-{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":3,"column":1}}}
-{"type":"block","loc":{"start":{"line":3,"column":1},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":3,"column":14}},"val":"content","mode":"replace"}
-{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":4,"column":3}},"val":2}
-{"type":"tag","loc":{"start":{"line":4,"column":3},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":4,"column":4}},"val":"p"}
-{"type":"text","loc":{"start":{"line":4,"column":5},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":4,"column":17}},"val":"Hello World!"}
-{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":5,"column":1}}}
-{"type":"eos","loc":{"start":{"line":5,"column":1},"filename":"/cases/inheritance.extend.mixins.block.pug","end":{"line":5,"column":1}}}

@@ -1,8 +1,0 @@
-{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/namespaces.pug","end":{"line":1,"column":13}},"val":"fb:user:role"}
-{"type":"text","loc":{"start":{"line":1,"column":14},"filename":"/cases/namespaces.pug","end":{"line":1,"column":23}},"val":"Something"}
-{"type":"newline","loc":{"start":{"line":2,"column":1},"filename":"/cases/namespaces.pug","end":{"line":2,"column":1}}}
-{"type":"tag","loc":{"start":{"line":2,"column":1},"filename":"/cases/namespaces.pug","end":{"line":2,"column":4}},"val":"foo"}
-{"type":"start-attributes","loc":{"start":{"line":2,"column":4},"filename":"/cases/namespaces.pug","end":{"line":2,"column":5}}}
-{"type":"attribute","loc":{"start":{"line":2,"column":5},"filename":"/cases/namespaces.pug","end":{"line":2,"column":17}},"name":"fb:foo","mustEscape":true,"val":"'bar'"}
-{"type":"end-attributes","loc":{"start":{"line":2,"column":17},"filename":"/cases/namespaces.pug","end":{"line":2,"column":18}}}
-{"type":"eos","loc":{"start":{"line":2,"column":18},"filename":"/cases/namespaces.pug","end":{"line":2,"column":18}}}

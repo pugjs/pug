@@ -1,9 +1,0 @@
-{"type":"include","loc":{"start":{"line":1,"column":1},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":1,"column":8}}}
-{"type":"path","loc":{"start":{"line":1,"column":9},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":1,"column":45}},"val":"./auxiliary/mixin-at-end-of-file.pug"}
-{"type":"newline","loc":{"start":{"line":3,"column":1},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":3,"column":1}}}
-{"type":"call","loc":{"start":{"line":3,"column":1},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":3,"column":9}},"val":"slide","args":""}
-{"type":"indent","loc":{"start":{"line":4,"column":1},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":4,"column":3}},"val":2}
-{"type":"tag","loc":{"start":{"line":4,"column":3},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":4,"column":4}},"val":"p"}
-{"type":"text","loc":{"start":{"line":4,"column":5},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":4,"column":25}},"val":"some awesome content"}
-{"type":"outdent","loc":{"start":{"line":5,"column":1},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":5,"column":1}}}
-{"type":"eos","loc":{"start":{"line":5,"column":1},"filename":"/cases/mixin-at-end-of-file.pug","end":{"line":5,"column":1}}}

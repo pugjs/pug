@@ -1,6 +1,0 @@
-{"type":"tag","loc":{"start":{"line":1,"column":1},"filename":"/cases/escape-chars.pug","end":{"line":1,"column":7}},"val":"script"}
-{"type":"dot","loc":{"start":{"line":1,"column":7},"filename":"/cases/escape-chars.pug","end":{"line":1,"column":8}}}
-{"type":"start-pipeless-text","loc":{"start":{"line":1,"column":8},"filename":"/cases/escape-chars.pug","end":{"line":1,"column":8}}}
-{"type":"text","loc":{"start":{"line":2,"column":3},"filename":"/cases/escape-chars.pug","end":{"line":2,"column":18}},"val":"var re = /\\d+/;"}
-{"type":"end-pipeless-text","loc":{"start":{"line":2,"column":18},"filename":"/cases/escape-chars.pug","end":{"line":2,"column":18}}}
-{"type":"eos","loc":{"start":{"line":2,"column":18},"filename":"/cases/escape-chars.pug","end":{"line":2,"column":18}}}
