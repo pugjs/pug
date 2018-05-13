@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var path = require('path');
-var walk = require('pug-walk');
+var walk = require('pug-walk-async');
 var assign = require('object-assign');
 
 module.exports = load;

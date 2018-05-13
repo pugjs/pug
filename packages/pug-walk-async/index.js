@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = walkAST;
-function walkAST(ast, before, after, options) {
+async function walkAST(ast, before, after, options) {
   if (after && typeof after === 'object' && typeof options === 'undefined') {
     options = after;
     after = null;
@@ -20,24 +20,12 @@ function walkAST(ast, before, after, options) {
     parents[0].type === 'RawInclude' && ast.type === 'IncludeFilter');
 
   if (before) {
-    var result = before(ast, replace);
-
-    if (result instanceof Promise) {
-      return result.then(function (res) {
-        if (res === false) {
-          return ast;
-        } else if (Array.isArray(ast)) {
-          // return right here to skip after() call on array
-          return walkAndMergeNodes(ast);
-        }
-      });
-    }
-
+    var result = await before(ast, replace);
     if (result === false) {
       return ast;
     } else if (Array.isArray(ast)) {
       // return right here to skip after() call on array
-      return walkAndMergeNodes(ast);
+      return await walkAndMergeNodes(ast);
     }
   }
 
@@ -46,7 +34,7 @@ function walkAST(ast, before, after, options) {
   switch (ast.type) {
     case 'NamedBlock':
     case 'Block':
-      ast.nodes = walkAndMergeNodes(ast.nodes);
+      ast.nodes = await walkAndMergeNodes(ast.nodes);
       break;
     case 'Case':
     case 'Filter':
@@ -57,35 +45,35 @@ function walkAST(ast, before, after, options) {
     case 'Code':
     case 'While':
       if (ast.block) {
-        ast.block = walkAST(ast.block, before, after, options);
+        ast.block = await walkAST(ast.block, before, after, options);
       }
       break;
     case 'Each':
       if (ast.block) {
-        ast.block = walkAST(ast.block, before, after, options);
+        ast.block = await walkAST(ast.block, before, after, options);
       }
       if (ast.alternate) {
-        ast.alternate = walkAST(ast.alternate, before, after, options);
+        ast.alternate = await walkAST(ast.alternate, before, after, options);
       }
       break;
     case 'Conditional':
       if (ast.consequent) {
-        ast.consequent = walkAST(ast.consequent, before, after, options);
+        ast.consequent = await walkAST(ast.consequent, before, after, options);
       }
       if (ast.alternate) {
-        ast.alternate = walkAST(ast.alternate, before, after, options);
+        ast.alternate = await walkAST(ast.alternate, before, after, options);
       }
       break;
     case 'Include':
-      walkAST(ast.block, before, after, options);
-      walkAST(ast.file, before, after, options);
+      await walkAST(ast.block, before, after, options);
+      await walkAST(ast.file, before, after, options);
       break;
     case 'Extends':
-      walkAST(ast.file, before, after, options);
+      await walkAST(ast.file, before, after, options);
       break;
     case 'RawInclude':
-      ast.filters = walkAndMergeNodes(ast.filters);
-      walkAST(ast.file, before, after, options);
+      ast.filters = await walkAndMergeNodes(ast.filters);
+      await walkAST(ast.file, before, after, options);
       break;
     case 'Attrs':
     case 'BlockComment':
@@ -98,12 +86,11 @@ function walkAST(ast, before, after, options) {
       break;
     case 'FileReference':
       if (options.includeDependencies && ast.ast) {
-        walkAST(ast.ast, before, after, options);
+        await walkAST(ast.ast, before, after, options);
       }
       break;
     default:
       throw new Error('Unexpected node type ' + ast.type);
-      break;
   }
 
   parents.shift();
@@ -111,14 +98,16 @@ function walkAST(ast, before, after, options) {
   after && after(ast, replace);
   return ast;
 
-  function walkAndMergeNodes(nodes) {
-    return nodes.reduce(function (nodes, node) {
-      var result = walkAST(node, before, after, options);
+  async function walkAndMergeNodes(nodes) {
+    var ret = [];
+    for (var node of nodes) {
+      var result = await walkAST(node, before, after, options);
       if (Array.isArray(result)) {
-        return nodes.concat(result);
+        ret.push(...result);
       } else {
-        return nodes.concat([result]);
+        ret.push(result);
       }
-    }, []);
+    }
+    return ret;
   }
 }
