@@ -6,7 +6,13 @@
     "pug"
   ],
   "dependencies": {
-    "constantinople": "^4.0.1",
+    "babel-core": "^6.26.3",
+    "babel-generator": "^6.26.1",
+    "babel-plugin-transform-with": "^1.0.0",
+    "babel-template": "^6.26.0",
+    "babel-types": "^6.26.0",
+    "babylon": "^6.18.0",
+    "constantinople": "^3.0.1",
     "doctypes": "^1.1.0",
     "js-stringify": "^1.0.2",
     "pug-attrs": "^2.0.4",

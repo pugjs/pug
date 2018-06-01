@@ -8,7 +8,13 @@ var compileAttrs = require('pug-attrs');
 var selfClosing = require('void-elements');
 var constantinople = require('constantinople');
 var stringify = require('js-stringify');
-var addWith = require('with');
+
+var t = require('babel-types');
+var gen = require('babel-generator');
+var babylon = require('babylon');
+var babelTemplate = require('babel-template');
+var babel = require('babel-core');
+var babelPluginTransformWith = require('babel-plugin-transform-with');
 
 // This is used to prevent pretty printing inside certain tags
 var WHITE_SPACE_SENSITIVE_TAGS = {
@@ -70,19 +76,26 @@ function Compiler(node, options) {
   if (this.debug && this.inlineRuntimeFunctions) {
     this.runtimeFunctionsUsed.push('rethrow');
   }
-}
+  this.codeBuffer = '_=function*(){';
+  this.codeMarker = {};
+  this.codeIndex = -1;
+
+  this.useGenerators = false;
+  this.templateVars = ['locals']
+
+};
 
 /**
  * Compiler prototype.
  */
 
 Compiler.prototype = {
-  runtime: function(name) {
+  runtime: function (name, asAST) {
     if (this.inlineRuntimeFunctions) {
       this.runtimeFunctionsUsed.push(name);
-      return 'pug_' + name;
+      return asAST ? t.identifier('pug_' + name) : 'pug_' + name;
     } else {
-      return 'pug.' + name;
+      return asAST ? t.memberExpression(t.identifier('pug'), t.identifier(name)) : 'pug.' + name;
     }
   },
 
@@ -95,15 +108,64 @@ Compiler.prototype = {
     throw err;
   },
 
+  parseExpr: function(expr) {
+    //return babylon.parse('function*g(){return e='+expr+'}').program.body[0].body.body[0].argument.right;
+    return babylon.parseExpression(expr);
+  },
+  parseArgs: function(args) {
+    return babylon.parse("a("+args+")").program.body.pop().expression.arguments;
+  },
+  btpl_addWith: function() {
+    var globals = this.options.globals ? this.options.globals.concat(INTERNAL_VARIABLES) : INTERNAL_VARIABLES;
+    globals.concat(this.runtimeFunctionsUsed.map(function (name) { return 'pug_' + name; }));
+    var tpl = "// @with exclude: "+ globals.join(",") +"\n{\nlocals || {};\nSOURCE;\n}"
+    var tplc = babelTemplate(tpl, { preserveComments: true });
+    return tplc;
+  },
+  ast_variableDeclaration: function() {
+    return t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier('pug_html'), t.stringLiteral('')),
+          t.variableDeclarator(t.identifier('pug_mixins'), t.objectExpression([])),
+          t.variableDeclarator(t.identifier('pug_interp'), null)
+        ])
+  },
+  ast_return: function() {
+    return [t.emptyStatement(), t.returnStatement(t.identifier('pug_html'))];
+  },
+  ast_stringify: function(lit) {
+    lit.extra = { rawValue: lit.value, raw: stringify(lit.value) };
+    return lit;
+  },
+  wrapCallExpression: function(node) {
+    return node;
+  },
+  ast_initBufferedOp: function(node) {
+    return t.binaryExpression('+',
+              t.identifier('pug_html'),
+              node
+            );
+  },
+  ast_pushBufferedOp: function(node) {
+    return t.expressionStatement(
+              t.assignmentExpression('=',
+                t.identifier('pug_html'),
+                node)
+            );
+  },
+  ast_addBufferedOp: function(left, right) {
+    return t.binaryExpression('+', left, right);
+  },
   /**
    * Compile parse tree to JavaScript.
    *
    * @api public
    */
 
-  compile: function() {
-    this.buf = [];
-    if (this.pp) this.buf.push('var pug_indent = [];');
+  compile: function(){
+    this.ast = [];
+    if (this.pp) {
+      this.ast.push(t.variableDeclaration('var', [t.variableDeclarator(t.identifier('pug_indent'), t.arrayExpression())]));
+    }
     this.lastBufferedIdx = -1;
     this.visit(this.node);
     if (!this.dynamicMixins) {
@@ -113,63 +175,83 @@ Compiler.prototype = {
         var mixin = this.mixins[mixinNames[i]];
         if (!mixin.used) {
           for (var x = 0; x < mixin.instances.length; x++) {
-            for (
-              var y = mixin.instances[x].start;
-              y < mixin.instances[x].end;
-              y++
-            ) {
-              this.buf[y] = '';
-            }
+            mixin.instances[x].stmt.type = "EmptyStatement";
+            delete mixin.instances[x].stmt.expression;
           }
         }
       }
     }
-    var js = this.buf.join('\n');
-    var globals = this.options.globals
-      ? this.options.globals.concat(INTERNAL_VARIABLES)
-      : INTERNAL_VARIABLES;
+    
+    var ast;
     if (this.options.self) {
-      js = 'var self = locals || {};' + js;
+      ast = [
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier('self'), t.logicalExpression('||', t.identifier('locals'), t.objectExpression([])))
+        ])
+      ].concat(this.ast);
     } else {
-      js = addWith(
-        'locals || {}',
-        js,
-        globals.concat(
-          this.runtimeFunctionsUsed.map(function(name) {
-            return 'pug_' + name;
-          })
-        )
-      );
+
+      // prepare block for babel-plugin-transform-with 
+      var tplc = this.btpl_addWith();
+      ast = tplc({ SOURCE: this.ast })
+      // bypass bug of babel-template preserveComments option (?)
+      ast.leadingComments = tplc().leadingComments;
+
+      ast = [ast];
     }
+
+
     if (this.debug) {
       if (this.options.includeSources) {
-        js =
-          'var pug_debug_sources = ' +
-          stringify(this.options.includeSources) +
-          ';\n' +
-          js;
+        ast.unshift(t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier('pug_debug_sources'), this.parseExpr(stringify(this.options.includeSources)))
+        ]))
       }
-      js =
-        'var pug_debug_filename, pug_debug_line;' +
-        'try {' +
-        js +
-        '} catch (err) {' +
-        (this.inlineRuntimeFunctions ? 'pug_rethrow' : 'pug.rethrow') +
-        '(err, pug_debug_filename, pug_debug_line' +
-        (this.options.includeSources
-          ? ', pug_debug_sources[pug_debug_filename]'
-          : '') +
-        ');' +
-        '}';
+
+ 
+      var rethrowArgs = [
+                t.identifier('err'),
+                t.identifier('pug_debug_filename'),
+                t.identifier('pug_debug_line')
+              ]
+      if (this.options.includeSources) {
+          rethrowArgs.push(t.memberExpression(t.identifier('pug_debug_sources'), t.identifier('pug_debug_filename'), true))
+      } 
+      ast = [
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier('pug_debug_filename'), null),
+          t.variableDeclarator(t.identifier('pug_debug_line'), null)
+        ]),
+        t.tryStatement(
+          t.blockStatement(ast),
+          t.catchClause(
+            t.identifier('err'),
+            t.blockStatement([t.expressionStatement(t.callExpression(
+              (this.inlineRuntimeFunctions ? t.identifier('pug_rethrow') : t.memberExpression(t.identifier('pug'), t.identifier('rethrow'))),
+              rethrowArgs
+            ))])
+          )
+        )
+      ]
+
     }
-    return (
-      buildRuntime(this.runtimeFunctionsUsed) +
-      'function ' +
-      (this.options.templateName || 'template') +
-      '(locals) {var pug_html = "", pug_mixins = {}, pug_interp;' +
-      js +
-      ';return pug_html;}'
-    );
+
+    this.ast = t.functionDeclaration(
+      t.identifier(this.options.templateName || 'template'),
+      this.templateVars.map(function(v) { return t.identifier(v)}),
+      t.blockStatement([this.ast_variableDeclaration()].concat(ast, this.ast_return()))
+    )
+
+
+    var file = babylon.parse('');
+    file.program.body = [this.ast];
+    var w = babel.transformFromAst(file, null, {
+      code: false,
+      plugins: [ babelPluginTransformWith ]
+    });
+
+
+    return buildRuntime(this.runtimeFunctionsUsed) + gen.default(w.ast).code;
   },
 
   /**
@@ -197,33 +279,23 @@ Compiler.prototype = {
 
   buffer: function(str) {
     var self = this;
-
-    str = stringify(str);
-    str = str.substr(1, str.length - 2);
-
-    if (
-      this.lastBufferedIdx == this.buf.length &&
-      this.bufferedConcatenationCount < 100
-    ) {
+    if (this.lastBufferedIdx == this.ast.length && this.bufferedConcatenationCount < 100) {
       if (this.lastBufferedType === 'code') {
-        this.lastBuffered += ' + "';
-        this.bufferedConcatenationCount++;
+          this.lastBuffered = t.stringLiteral('');
+          this.lastBufferedOp = this.ast_addBufferedOp(this.lastBufferedOp, this.lastBuffered);
+          this.bufferedConcatenationCount++;
       }
-      this.lastBufferedType = 'text';
-      this.lastBuffered += str;
-      this.buf[this.lastBufferedIdx - 1] =
-        'pug_html = pug_html + ' +
-        this.bufferStartChar +
-        this.lastBuffered +
-        '";';
+      this.lastBuffered.value += str;
+      this.ast_stringify(this.lastBuffered);
+      this.ast[this.lastBufferedIdx - 1] = this.ast_pushBufferedOp(this.lastBufferedOp);
     } else {
       this.bufferedConcatenationCount = 0;
-      this.buf.push('pug_html = pug_html + "' + str + '";');
-      this.lastBufferedType = 'text';
-      this.bufferStartChar = '"';
-      this.lastBuffered = str;
-      this.lastBufferedIdx = this.buf.length;
+      this.lastBuffered = this.ast_stringify(t.stringLiteral(str));
+      this.lastBufferedOp = this.ast_initBufferedOp(this.lastBuffered);
+      this.ast.push(this.ast_pushBufferedOp(this.lastBufferedOp));
+      this.lastBufferedIdx = this.ast.length;
     }
+    this.lastBufferedType = 'text';
   },
 
   /**
@@ -237,27 +309,20 @@ Compiler.prototype = {
     if (isConstant(src)) {
       return this.buffer(toConstant(src) + '');
     }
-    if (
-      this.lastBufferedIdx == this.buf.length &&
-      this.bufferedConcatenationCount < 100
-    ) {
+    var body = this.parseExpr(src);
+
+    if (this.lastBufferedIdx == this.ast.length && this.bufferedConcatenationCount < 100) {
       this.bufferedConcatenationCount++;
-      if (this.lastBufferedType === 'text') this.lastBuffered += '"';
-      this.lastBufferedType = 'code';
-      this.lastBuffered += ' + (' + src + ')';
-      this.buf[this.lastBufferedIdx - 1] =
-        'pug_html = pug_html + (' +
-        this.bufferStartChar +
-        this.lastBuffered +
-        ');';
+      this.lastBufferedOp = this.ast_addBufferedOp(this.lastBufferedOp, body);
+      this.lastBuffered = t.stringLiteral('');
+      this.ast[this.lastBufferedIdx - 1] = this.ast_pushBufferedOp(this.lastBufferedOp);
     } else {
       this.bufferedConcatenationCount = 0;
-      this.buf.push('pug_html = pug_html + (' + src + ');');
-      this.lastBufferedType = 'code';
-      this.bufferStartChar = '';
-      this.lastBuffered = '(' + src + ')';
-      this.lastBufferedIdx = this.buf.length;
+      this.lastBufferedOp = this.ast_initBufferedOp(body);
+      this.ast.push(this.ast_pushBufferedOp(this.lastBufferedOp));
+      this.lastBufferedIdx = this.ast.length;
     }
+    this.lastBufferedType = 'code';
   },
 
   /**
@@ -273,8 +338,14 @@ Compiler.prototype = {
     offset = offset || 0;
     newline = newline ? '\n' : '';
     this.buffer(newline + Array(this.indents + offset).join(this.pp));
-    if (this.parentIndents)
-      this.buf.push('pug_html = pug_html + pug_indent.join("");');
+    if (this.parentIndents) {
+
+      this.ast.push(this.ast_pushBufferedOp(this.ast_initBufferedOp(t.callExpression(
+                                t.memberExpression(t.identifier('pug_indent'), t.identifier('join')),
+                                [t.stringLiteral('')]
+                              ))));
+
+    }
   },
 
   /**
@@ -286,7 +357,6 @@ Compiler.prototype = {
 
   visit: function(node, parent) {
     var debug = this.debug;
-
     if (!node) {
       var msg;
       if (parent) {
@@ -307,10 +377,10 @@ Compiler.prototype = {
 
     if (debug && node.debug !== false && node.type !== 'Block') {
       if (node.line) {
-        var js = ';pug_debug_line = ' + node.line;
-        if (node.filename)
-          js += ';pug_debug_filename = ' + stringify(node.filename);
-        this.buf.push(js + ';');
+        this.ast.push(t.expressionStatement(t.assignmentExpression('=', t.identifier('pug_debug_line'), t.numericLiteral(node.line))))
+        if (node.filename) {
+          this.ast.push(t.expressionStatement(t.assignmentExpression('=', t.identifier('pug_debug_filename'), t.stringLiteral(node.filename))))
+        }
       }
     }
 
@@ -345,7 +415,7 @@ Compiler.prototype = {
       throw new TypeError(msg);
     }
 
-    this.visitNode(node);
+    this.visitNode(node, parent);
   },
 
   /**
@@ -355,8 +425,8 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitNode: function(node) {
-    return this['visit' + node.type](node);
+  visitNode: function(node, parent){
+    return this['visit' + node.type](node, parent);
   },
 
   /**
@@ -366,10 +436,14 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitCase: function(node) {
-    this.buf.push('switch (' + node.expr + '){');
+  visitCase: function(node){
+    var expr = this.parseExpr(node.expr);
+    var cases = [];
+    var s = t.switchStatement(expr, cases);
+    var savedAST = this.replaceAstBlock(cases);
     this.visit(node.block, node);
-    this.buf.push('}');
+    this.replaceAstBlock(savedAST);
+    this.ast.push(s);
   },
 
   /**
@@ -379,16 +453,20 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitWhen: function(node) {
-    if ('default' == node.expr) {
-      this.buf.push('default:');
-    } else {
-      this.buf.push('case ' + node.expr + ':');
+  visitWhen: function(node){
+    var test = null;
+    if ('default' != node.expr) {
+      test = this.parseExpr(node.expr);
     }
+    var consequent = []
+    var c = t.switchCase(test, consequent);
     if (node.block) {
+      var savedAST = this.replaceAstBlock(consequent);
       this.visit(node.block, node);
-      this.buf.push('  break;');
+      this.ast.push(t.breakStatement());
+      this.replaceAstBlock(savedAST);
     }
+    this.ast.push(c);
   },
 
   /**
@@ -449,13 +527,25 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitMixinBlock: function(block) {
-    if (this.pp)
-      this.buf.push(
-        "pug_indent.push('" + Array(this.indents + 1).join(this.pp) + "');"
-      );
-    this.buf.push('block && block();');
-    if (this.pp) this.buf.push('pug_indent.pop();');
+  visitMixinBlock: function(block){
+    if (this.pp) {
+      this.ast.push(t.expressionStatement(t.callExpression(
+        t.memberExpression(t.identifier('pug_indent'), t.identifier('push')),
+        [t.stringLiteral(Array(this.indents + 1).join(this.pp))]
+      )))
+    }
+    this.ast.push(
+      t.logicalExpression('&&',
+        t.identifier('block'),
+        this.wrapCallExpression(t.callExpression(t.identifier('block'), []))
+      )
+    );
+    if (this.pp) {
+      this.ast.push(t.expressionStatement(t.callExpression(
+        t.memberExpression(t.identifier('pug_indent'), t.identifier('pop')),
+        []
+      )))
+    }
   },
 
   /**
@@ -484,7 +574,8 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitMixin: function(mixin) {
+  visitMixin: function(mixin){
+    var self = this;
     var name = 'pug_mixins[';
     var args = mixin.args || '';
     var block = mixin.block;
@@ -494,37 +585,60 @@ Compiler.prototype = {
     var dynamic = mixin.name[0] === '#';
     var key = mixin.name;
     if (dynamic) this.dynamicMixins = true;
-    name +=
-      (dynamic
-        ? mixin.name.substr(2, mixin.name.length - 3)
-        : '"' + mixin.name + '"') + ']';
-
+    name += (dynamic ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
+    var mixinName = dynamic ? this.parseExpr(mixin.name.substr(2,mixin.name.length-3)): t.stringLiteral(mixin.name);
     this.mixins[key] = this.mixins[key] || {used: false, instances: []};
+
     if (mixin.call) {
       this.mixins[key].used = true;
-      if (pp)
-        this.buf.push(
-          "pug_indent.push('" + Array(this.indents + 1).join(pp) + "');"
-        );
+      if (pp) {
+        this.ast.push(t.expressionStatement(t.callExpression(
+          t.memberExpression(t.identifier('pug_indent'), t.identifier('push')),
+          [t.stringLiteral(Array(this.indents + 1).join(pp))]
+        )))
+      }
       if (block || attrs.length || attrsBlocks.length) {
-        this.buf.push(name + '.call({');
+
+        var astArgs = []
+        this.ast.push(
+          t.expressionStatement(this.wrapCallExpression(t.callExpression(
+            t.memberExpression(
+              t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
+              t.identifier("call")
+            ),
+            astArgs
+          )))
+        );
+
+        var astObj, astKey;
+        if (block || attrsBlocks.length || attrs.length) {
+          astKey = [];
+          astObj = t.objectExpression(astKey);
+          astArgs.push(astObj);
+        }
 
         if (block) {
-          this.buf.push('block: function(){');
-
+          var astFunc = [];
+          astKey.push(t.objectProperty(
+            t.identifier('block'),
+            t.functionExpression(
+              null,
+              [],
+              t.blockStatement(astFunc),
+              this.useGenerators
+            )
+          ));
+        
           // Render block with no indents, dynamically added when rendered
           this.parentIndents++;
           var _indents = this.indents;
           this.indents = 0;
+          var savedAST = this.replaceAstBlock(astFunc);
           this.visit(mixin.block, mixin);
+          this.replaceAstBlock(savedAST);
           this.indents = _indents;
           this.parentIndents--;
 
-          if (attrs.length || attrsBlocks.length) {
-            this.buf.push('},');
-          } else {
-            this.buf.push('}');
-          }
         }
 
         if (attrsBlocks.length) {
@@ -533,32 +647,46 @@ Compiler.prototype = {
             attrsBlocks.unshift(val);
           }
           if (attrsBlocks.length > 1) {
-            this.buf.push(
-              'attributes: ' +
-                this.runtime('merge') +
-                '([' +
-                attrsBlocks.join(',') +
-                '])'
-            );
+            astKey.push(t.objectProperty(
+              t.identifier('attributes'),
+              t.callExpression(
+                this.runtime('merge', true),
+                attrsBlocks.map(function(b) { return self.parseExpr(b) })
+              )
+            ));
           } else {
-            this.buf.push('attributes: ' + attrsBlocks[0]);
+            astKey.push(t.objectProperty(
+              t.identifier('attributes'),
+              this.parseExpr(attrsBlocks[0])
+            ));
           }
         } else if (attrs.length) {
           var val = this.attrs(attrs);
-          this.buf.push('attributes: ' + val);
+          astKey.push(t.objectProperty(
+            t.identifier('attributes'),
+            this.parseExpr(val)
+          ));
         }
 
-        if (args) {
-          this.buf.push('}, ' + args + ');');
-        } else {
-          this.buf.push('});');
+        if (args) { 
+          args = args ? args.split(',') : [];
+          Array.prototype.push.apply(astArgs, this.parseArgs(args) )
         }
       } else {
-        this.buf.push(name + '(' + args + ');');
+        var astArgs = this.parseArgs(args);
+        this.ast.push(t.expressionStatement(this.wrapCallExpression(t.callExpression(
+          t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
+          astArgs
+        ))));
       }
-      if (pp) this.buf.push('pug_indent.pop();');
+      if (pp) {
+        this.ast.push(t.expressionStatement(t.callExpression(
+          t.memberExpression(t.identifier('pug_indent'), t.identifier('pop')),
+          []
+        )))
+ 
+      }
     } else {
-      var mixin_start = this.buf.length;
       args = args ? args.split(',') : [];
       var rest;
       if (args.length && /^\.\.\./.test(args[args.length - 1].trim())) {
@@ -567,29 +695,82 @@ Compiler.prototype = {
           .trim()
           .replace(/^\.\.\./, '');
       }
+      var astArgs = args.map(function(arg) { return t.identifier(arg.trim())})
       // we need use pug_interp here for v8: https://code.google.com/p/v8/issues/detail?id=4165
       // once fixed, use this: this.buf.push(name + ' = function(' + args.join(',') + '){');
-      this.buf.push(name + ' = pug_interp = function(' + args.join(',') + '){');
-      this.buf.push(
-        'var block = (this && this.block), attributes = (this && this.attributes) || {};'
-      );
-      if (rest) {
-        this.buf.push('var ' + rest + ' = [];');
-        this.buf.push(
-          'for (pug_interp = ' +
-            args.length +
-            '; pug_interp < arguments.length; pug_interp++) {'
+      var astMixin = [];
+      var mixinStmt = 
+        t.expressionStatement(
+          t.assignmentExpression(
+            '=',
+            t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
+            t.assignmentExpression(
+              '=',
+              t.identifier('pug_interp'),
+              t.functionExpression(
+                null,
+                astArgs,
+                t.blockStatement(astMixin),
+                this.useGenerators
+              )
+            )
+          )
         );
-        this.buf.push('  ' + rest + '.push(arguments[pug_interp]);');
-        this.buf.push('}');
+      this.ast.push(mixinStmt);
+      astMixin.push(
+        t.variableDeclaration('var', [
+          t.variableDeclarator(
+            t.identifier('block'),
+            t.logicalExpression('&&', t.thisExpression(), t.memberExpression(t.thisExpression(), t.identifier('block')))
+          ),
+          t.variableDeclarator(
+            t.identifier('attributes'),
+            t.logicalExpression('||',
+              t.logicalExpression('&&', t.thisExpression(), t.memberExpression(t.thisExpression(), t.identifier('attributes'))),
+              t.objectExpression([])
+            )
+          )
+        ])
+      )
+
+      if (rest) {
+        astMixin.push(
+          t.variableDeclaration('var', [
+            t.variableDeclarator(
+              t.identifier(rest),
+              t.arrayExpression([])
+            )
+          ])
+        )
+        astMixin.push(
+          t.forStatement(
+            t.assignmentExpression('=', t.identifier('pug_interp'), t.numericLiteral(args.length)),
+            t.binaryExpression('<', t.identifier('pug_interp'), t.memberExpression(t.identifier('arguments'), t.identifier('length'))),
+            t.updateExpression('++', t.identifier('pug_interp'), false),
+            t.expressionStatement(
+              t.callExpression(
+                t.memberExpression(t.identifier(rest), t.identifier('push')),
+                [t.memberExpression(t.identifier('arguments'), t.identifier('pug_interp'), true)]
+              )
+            )
+          )
+        )
       }
+
       this.parentIndents++;
+      var savedAST = this.replaceAstBlock(astMixin);
       this.visit(block, mixin);
+      this.replaceAstBlock(savedAST);
       this.parentIndents--;
-      this.buf.push('};');
-      var mixin_end = this.buf.length;
-      this.mixins[key].instances.push({start: mixin_start, end: mixin_end});
+
+      this.mixins[key].instances.push({stmt: mixinStmt});
     }
+  },
+  replaceAstBlock: function(newBlock) {
+    var tmp = this.ast;
+    this.ast = newBlock;
+    this.lastBufferedIdx = -1;
+    return tmp;
   },
 
   /**
@@ -601,7 +782,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitTag: function(tag, interpolated) {
+  visitTag: function(tag, parent, interpolated){
     this.indents++;
     var name = tag.name,
       pp = this.pp,
@@ -621,7 +802,6 @@ Compiler.prototype = {
       }
       this.hasCompiledTag = true;
     }
-
     // pretty print
     if (pp && !tag.isInline) this.prettyIndent(0, true);
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
@@ -687,14 +867,22 @@ Compiler.prototype = {
   },
 
   /**
+   *  Compile attribute blocks.
+   */
+  attributeBlocks: function(attributeBlocks) {
+    return attributeBlocks && attributeBlocks.slice().map(function(attrBlock){
+      return attrBlock.val;
+    });
+  },
+  /**
    * Visit InterpolatedTag.
    *
    * @param {InterpolatedTag} tag
    * @api public
    */
 
-  visitInterpolatedTag: function(tag) {
-    return this.visitTag(tag, true);
+  visitInterpolatedTag: function(tag, parent) {
+    return this.visitTag(tag, parent, true);
   },
 
   /**
@@ -757,12 +945,12 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitCode: function(code) {
+  visitCode: function(code, ctx){
     // Wrap code blocks with {}.
     // we only wrap unbuffered code blocks ATM
     // since they are usually flow control
-
     // Buffer code
+    //
     if (code.buffer) {
       var val = code.val.trim();
       val = 'null == (pug_interp = ' + val + ') ? "" : pug_interp';
@@ -770,14 +958,55 @@ Compiler.prototype = {
         val = this.runtime('escape') + '(' + val + ')';
       this.bufferExpression(val);
     } else {
-      this.buf.push(code.val);
-    }
 
-    // Block support
-    if (code.block) {
-      if (!code.buffer) this.buf.push('{');
-      this.visit(code.block, code);
-      if (!code.buffer) this.buf.push('}');
+      var val = code.val.trim();
+      this.codeBuffer += "\n" + val;
+
+      if (code.block) {
+        this.codeIndex++;
+        this.codeBuffer += "\n{" + "PUGMARKER"+this.codeIndex + "}\n";
+        this.codeMarker["PUGMARKER"+this.codeIndex] = [];
+        var savedAST = this.replaceAstBlock(this.codeMarker["PUGMARKER"+this.codeIndex]);
+
+        // snaphsot current unbuffered code level
+        // this is necessary to accept embedded code blocks
+        // - if (true) {
+        //   - var a = 1;
+        // - }
+        // but breaks the "should be reasonably fast" compile test
+        // note: we should add a test for this in pug
+        var savedCodeBuffer = this.codeBuffer;
+        var savedCodeMarker = this.codeMarker;
+        var savedCodeIndex = this.codeIndex;
+        this.codeBuffer = '_=function*(){';
+        this.codeMarker = {};
+        this.codeIndex = -1;
+
+        this.visit(code.block, code);
+        
+        this.codeBuffer = savedCodeBuffer;
+        this.codeMarker = savedCodeMarker;
+        this.codeIndex = savedCodeIndex;
+        
+        this.replaceAstBlock(savedAST);
+      }
+
+      var idx = ctx.nodes.indexOf(code) + 1;
+      if (idx == ctx.nodes.length || ctx.nodes[idx].type != 'Code' || ctx.nodes[idx].buffer) {
+        try {
+          var src = this.codeBuffer + '}';
+          var tpl = babelTemplate(src);
+          var ast = tpl(this.codeMarker);
+          Array.prototype.push.apply(this.ast, ast.expression.right.body.body);
+          this.codeBuffer = '_=function*(){';
+          this.codeIndex = -1;
+          this.codeMarker = {};
+        } catch(e) {
+          var codeError = this.codeBuffer.substr(14).trim()
+          this.error('Unbuffered code structure could not be parsed; ' + e.message + ' in ' + codeError, codeError, code)
+        }
+      }
+
     }
   },
 
@@ -790,19 +1019,30 @@ Compiler.prototype = {
 
   visitConditional: function(cond) {
     var test = cond.test;
-    this.buf.push('if (' + test + ') {');
+
+    var blockConsequent = [];
+    var c = t.ifStatement(
+      this.parseExpr(test),
+      t.blockStatement(blockConsequent)
+    );
+
+    var savedAST = this.replaceAstBlock(blockConsequent);
     this.visit(cond.consequent, cond);
-    this.buf.push('}');
+
     if (cond.alternate) {
       if (cond.alternate.type === 'Conditional') {
-        this.buf.push('else');
-        this.visitConditional(cond.alternate);
+        this.ast = [];
+        c.alternate = this.visitConditional(cond.alternate);
       } else {
-        this.buf.push('else {');
+        var blockAlternate = [];
+        c.alternate = t.blockStatement(blockAlternate);
+        this.replaceAstBlock(blockAlternate);
         this.visit(cond.alternate, cond);
-        this.buf.push('}');
       }
     }
+    this.replaceAstBlock(savedAST);
+    this.ast.push(c);
+    return c;
   },
 
   /**
@@ -814,9 +1054,15 @@ Compiler.prototype = {
 
   visitWhile: function(loop) {
     var test = loop.test;
-    this.buf.push('while (' + test + ') {');
+    var whileBlock = [];
+    this.ast.push(t.whileStatement(
+      this.parseExpr(test),
+      t.blockStatement(whileBlock)
+    ));
+
+    var savedAST = this.replaceAstBlock(whileBlock);
     this.visit(loop.block, loop);
-    this.buf.push('}');
+    this.replaceAstBlock(savedAST);
   },
 
   /**
@@ -830,72 +1076,103 @@ Compiler.prototype = {
     var indexVarName = each.key || 'pug_index' + this.eachCount;
     this.eachCount++;
 
-    this.buf.push(
-      '' +
-        '// iterate ' +
-        each.obj +
-        '\n' +
-        ';(function(){\n' +
-        '  var $$obj = ' +
-        each.obj +
-        ';\n' +
-        "  if ('number' == typeof $$obj.length) {"
-    );
 
-    if (each.alternate) {
-      this.buf.push('    if ($$obj.length) {');
-    }
+    var body =  [
+                  t.variableDeclaration('var', [
+                    t.variableDeclarator(t.identifier('$$obj'), this.parseExpr(each.obj))
+                  ])
+                ]
 
-    this.buf.push(
-      '' +
-        '      for (var ' +
-        indexVarName +
-        ' = 0, $$l = $$obj.length; ' +
-        indexVarName +
-        ' < $$l; ' +
-        indexVarName +
-        '++) {\n' +
-        '        var ' +
-        each.val +
-        ' = $$obj[' +
-        indexVarName +
-        '];'
-    );
+    var func =  t.expressionStatement(
+                  this.wrapCallExpression(t.callExpression(
+                    t.memberExpression(
+                      t.functionExpression(
+                        null,
+                        [],
+                        t.blockStatement(body),
+                        this.useGenerators
+                      ),
+                      t.identifier('call')
+                    )
+                    ,[t.thisExpression()]
+                  ))
+                )
+    this.ast.push(func)
 
+
+      var blockEach = [
+        t.variableDeclaration('var', [
+            t.variableDeclarator(t.identifier(each.val), t.memberExpression(t.identifier('$$obj'), t.identifier(indexVarName), true) )
+        ])
+      ];
+      var blockAlt = [];
+ 
+      var arrayLoop = 
+          t.blockStatement([t.forStatement(
+            t.variableDeclaration('var', [
+              t.variableDeclarator(t.identifier(indexVarName), t.numericLiteral(0)),
+              t.variableDeclarator(t.identifier('$$l'), t.memberExpression(t.identifier('$$obj'), t.identifier('length')))
+            ]),
+            t.binaryExpression('<', t.identifier(indexVarName), t.identifier('$$l')),
+            t.updateExpression('++', t.identifier(indexVarName), false),
+            t.blockStatement(blockEach)
+          )]);
+
+
+      var blockObj = [
+        t.expressionStatement(t.updateExpression('++', t.identifier('$$l'), false)),
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier(each.val), t.memberExpression(t.identifier('$$obj'), t.identifier(indexVarName), true) )
+        ])
+      ]
+      var blockObjAlt = [];
+
+      var objectLoop = t.blockStatement([
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier('$$l'), t.numericLiteral(0))
+        ]),
+        t.forInStatement(
+          t.variableDeclaration('var', [
+            t.variableDeclarator(t.identifier(indexVarName))
+          ]),
+          t.identifier('$$obj'),
+          t.blockStatement(blockObj)
+        )
+      ])
+
+    var savedAST = this.replaceAstBlock(blockEach);
+    this.visit(each.block, each);
+    
+    this.replaceAstBlock(blockObj);
     this.visit(each.block, each);
 
-    this.buf.push('      }');
 
     if (each.alternate) {
-      this.buf.push('    } else {');
+      this.replaceAstBlock(blockAlt);
       this.visit(each.alternate, each);
-      this.buf.push('    }');
-    }
+       arrayLoop = t.ifStatement(
+        t.memberExpression(t.identifier('$$obj'), t.identifier('length')),
+        arrayLoop,
+        t.blockStatement(blockAlt)
+      );
+   }
 
-    this.buf.push(
-      '' +
-        '  } else {\n' +
-        '    var $$l = 0;\n' +
-        '    for (var ' +
-        indexVarName +
-        ' in $$obj) {\n' +
-        '      $$l++;\n' +
-        '      var ' +
-        each.val +
-        ' = $$obj[' +
-        indexVarName +
-        '];'
-    );
-
-    this.visit(each.block, each);
-
-    this.buf.push('    }');
     if (each.alternate) {
-      this.buf.push('    if ($$l === 0) {');
+      objectLoop.body.push(t.ifStatement(
+            t.binaryExpression('===', t.identifier('$$l'), t.numericLiteral(0)),
+            t.blockStatement(blockObjAlt)
+      ))
+      this.replaceAstBlock(blockObjAlt);
       this.visit(each.alternate, each);
-      this.buf.push('    }');
     }
-    this.buf.push('  }\n}).call(this);\n');
+
+    var it = t.ifStatement(
+        t.binaryExpression('==', t.stringLiteral('number'), t.unaryExpression('typeof', t.memberExpression(t.identifier('$$obj'), t.identifier('length')))),
+        arrayLoop, objectLoop)
+    body.push(it);
+
+
+    this.replaceAstBlock(savedAST);
   },
 
   visitEachOf: function(each) {
@@ -969,20 +1246,7 @@ Compiler.prototype = {
       this.bufferExpression(res);
     }
     return res;
-  },
-
-  /**
-   * Compile attribute blocks.
-   */
-
-  attributeBlocks: function(attributeBlocks) {
-    return (
-      attributeBlocks &&
-      attributeBlocks.slice().map(function(attrBlock) {
-        return attrBlock.val;
-      })
-    );
-  },
+  }
 };
 
 function tagCanInline(tag) {
