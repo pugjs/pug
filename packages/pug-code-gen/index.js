@@ -130,7 +130,7 @@ Compiler.prototype = {
         ])
   },
   ast_return: function() {
-    return [t.emptyStatement(), t.returnStatement(t.identifier('pug_html'))];
+    return [t.returnStatement(t.identifier('pug_html'))];
   },
   ast_stringify: function(lit) {
     lit.extra = { rawValue: lit.value, raw: stringify(lit.value) };
