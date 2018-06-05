@@ -56,7 +56,6 @@ function toConstant(src) {
 function Compiler(node, options) {
   this.options = options = options || {};
   this.node = node;
-  this.bufferedConcatenationCount = 0;
   this.hasCompiledDoctype = false;
   this.hasCompiledTag = false;
   this.pp = options.pretty || false;
@@ -139,21 +138,12 @@ Compiler.prototype = {
   wrapCallExpression: function(node) {
     return node;
   },
-  ast_initBufferedOp: function(node) {
-    return t.binaryExpression('+',
-              t.identifier('pug_html'),
-              node
-            );
-  },
-  ast_pushBufferedOp: function(node) {
+  ast_buffer: function(ast) {
     return t.expressionStatement(
-              t.assignmentExpression('=',
-                t.identifier('pug_html'),
-                node)
-            );
-  },
-  ast_addBufferedOp: function(left, right) {
-    return t.binaryExpression('+', left, right);
+            t.assignmentExpression('=',
+              t.identifier('pug_html'),
+              t.binaryExpression('+', t.identifier('pug_html'), ast)
+            ));
   },
   /**
    * Compile parse tree to JavaScript.
@@ -166,7 +156,6 @@ Compiler.prototype = {
     if (this.pp) {
       this.ast.push(t.variableDeclaration('var', [t.variableDeclarator(t.identifier('pug_indent'), t.arrayExpression())]));
     }
-    this.lastBufferedIdx = -1;
     this.visit(this.node);
     if (!this.dynamicMixins) {
       // if there are no dynamic mixins we can remove any un-used mixins
@@ -277,25 +266,10 @@ Compiler.prototype = {
    * @api public
    */
 
-  buffer: function(str) {
-    var self = this;
-    if (this.lastBufferedIdx == this.ast.length && this.bufferedConcatenationCount < 100) {
-      if (this.lastBufferedType === 'code') {
-          this.lastBuffered = t.stringLiteral('');
-          this.lastBufferedOp = this.ast_addBufferedOp(this.lastBufferedOp, this.lastBuffered);
-          this.bufferedConcatenationCount++;
-      }
-      this.lastBuffered.value += str;
-      this.ast_stringify(this.lastBuffered);
-      this.ast[this.lastBufferedIdx - 1] = this.ast_pushBufferedOp(this.lastBufferedOp);
-    } else {
-      this.bufferedConcatenationCount = 0;
-      this.lastBuffered = this.ast_stringify(t.stringLiteral(str));
-      this.lastBufferedOp = this.ast_initBufferedOp(this.lastBuffered);
-      this.ast.push(this.ast_pushBufferedOp(this.lastBufferedOp));
-      this.lastBufferedIdx = this.ast.length;
-    }
-    this.lastBufferedType = 'text';
+  buffer: function (str) {
+    var lit = this.ast_stringify(t.stringLiteral(str));
+    var ast = this.ast_buffer(lit);
+    this.ast.push(ast);
   },
 
   /**
@@ -310,19 +284,8 @@ Compiler.prototype = {
       return this.buffer(toConstant(src) + '');
     }
     var body = this.parseExpr(src);
-
-    if (this.lastBufferedIdx == this.ast.length && this.bufferedConcatenationCount < 100) {
-      this.bufferedConcatenationCount++;
-      this.lastBufferedOp = this.ast_addBufferedOp(this.lastBufferedOp, body);
-      this.lastBuffered = t.stringLiteral('');
-      this.ast[this.lastBufferedIdx - 1] = this.ast_pushBufferedOp(this.lastBufferedOp);
-    } else {
-      this.bufferedConcatenationCount = 0;
-      this.lastBufferedOp = this.ast_initBufferedOp(body);
-      this.ast.push(this.ast_pushBufferedOp(this.lastBufferedOp));
-      this.lastBufferedIdx = this.ast.length;
-    }
-    this.lastBufferedType = 'code';
+    var ast = this.ast_buffer(body);
+    this.ast.push(ast);
   },
 
   /**
@@ -340,10 +303,10 @@ Compiler.prototype = {
     this.buffer(newline + Array(this.indents + offset).join(this.pp));
     if (this.parentIndents) {
 
-      this.ast.push(this.ast_pushBufferedOp(this.ast_initBufferedOp(t.callExpression(
+      this.ast.push(this.ast_buffer(t.callExpression(
                                 t.memberExpression(t.identifier('pug_indent'), t.identifier('join')),
                                 [t.stringLiteral('')]
-                              ))));
+                              )));
 
     }
   },
@@ -769,7 +732,6 @@ Compiler.prototype = {
   replaceAstBlock: function(newBlock) {
     var tmp = this.ast;
     this.ast = newBlock;
-    this.lastBufferedIdx = -1;
     return tmp;
   },
 
