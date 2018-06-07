@@ -1,3 +1,5 @@
+'use strict';
+
 var t = require('babel-types');
 var stringify = require('js-stringify');
 
