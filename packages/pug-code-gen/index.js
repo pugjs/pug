@@ -32,6 +32,8 @@ var INTERNAL_VARIABLES = [
   'pug_html',
 ];
 
+var push = Array.prototype.push;
+
 module.exports = generateCode;
 module.exports.CodeGenerator = Compiler;
 function generateCode(ast, options) {
@@ -139,11 +141,11 @@ Compiler.prototype = {
     return node;
   },
   ast_buffer: function(ast) {
-    return t.expressionStatement(
+    return [t.expressionStatement(
             t.assignmentExpression('=',
               t.identifier('pug_html'),
               t.binaryExpression('+', t.identifier('pug_html'), ast)
-            ));
+            ))];
   },
   /**
    * Compile parse tree to JavaScript.
@@ -156,7 +158,7 @@ Compiler.prototype = {
     if (this.pp) {
       ast.push(t.variableDeclaration('var', [t.variableDeclarator(t.identifier('pug_indent'), t.arrayExpression())]));
     }
-    ast = ast.concat(this.visit(this.node));
+    push.apply(ast, this.visit(this.node));
     if (!this.dynamicMixins) {
       // if there are no dynamic mixins we can remove any un-used mixins
       var mixinNames = Object.keys(this.mixins);
@@ -297,13 +299,13 @@ Compiler.prototype = {
    */
 
   prettyIndent: function(offset, newline){
-    var ast = [];
+    var ast;
     offset = offset || 0;
     newline = newline ? '\n' : '';
-    ast.push(this.buffer(newline + Array(this.indents + offset).join(this.pp)));
+    ast = this.buffer(newline + Array(this.indents + offset).join(this.pp));
     if (this.parentIndents) {
 
-      ast.push(this.ast_buffer(t.callExpression(
+      push.apply(ast, this.ast_buffer(t.callExpression(
                                 t.memberExpression(t.identifier('pug_indent'), t.identifier('join')),
                                 [t.stringLiteral('')]
                               )));
@@ -380,7 +382,7 @@ Compiler.prototype = {
       throw new TypeError(msg);
     }
 
-    ast = ast.concat(this.visitNode(node, parent));
+    push.apply(ast, this.visitNode(node, parent));
     return ast;
   },
 
@@ -403,13 +405,11 @@ Compiler.prototype = {
    */
 
   visitCase: function(node){
-    var ast = [];
-    var expr = this.parseExpr(node.expr);
-    var cases = [];
-    cases = cases.concat(this.visit(node.block, node));
-    var s = t.switchStatement(expr, cases);
-    ast.push(s);
-    return ast;
+    var stmt = t.switchStatement(
+      this.parseExpr(node.expr),
+      this.visit(node.block, node)
+    );
+    return [stmt];
   },
 
   /**
@@ -426,7 +426,7 @@ Compiler.prototype = {
     }
     var consequent = []
     if (node.block) {
-      consequent = consequent.concat(this.visit(node.block, node));
+      consequent = this.visit(node.block, node);
       consequent.push(t.breakStatement());
     }
     var c = t.switchCase(test, consequent);
@@ -441,7 +441,7 @@ Compiler.prototype = {
    */
 
   visitLiteral: function(node){
-    return [this.buffer(node.str)];
+    return this.buffer(node.str);
   },
 
   visitNamedBlock: function(block) {
@@ -461,16 +461,16 @@ Compiler.prototype = {
     // Pretty print multi-line text
     if (pp && block.nodes.length > 1 && !escapePrettyMode &&
         block.nodes[0].type === 'Text' && block.nodes[1].type === 'Text' ) {
-      ast = ast.concat(this.prettyIndent(1, true));
+      push.apply(ast, this.prettyIndent(1, true));
     }
     for (var i = 0; i < block.nodes.length; ++i) {
       // Pretty print text
       if (pp && i > 0 && !escapePrettyMode &&
           block.nodes[i].type === 'Text' && block.nodes[i-1].type === 'Text' &&
           /\n$/.test(block.nodes[i - 1].val)) {
-        ast = ast.concat(this.prettyIndent(1, false));
+        push.apply(ast,this.prettyIndent(1, false));
       }
-      ast = ast.concat(this.visit(block.nodes[i], block));
+      push.apply(ast, this.visit(block.nodes[i], block));
     }
     return ast;
   },
@@ -520,7 +520,7 @@ Compiler.prototype = {
       this.setDoctype(doctype.val || 'html');
     }
 
-    if (this.doctype) ast.push(this.buffer(this.doctype));
+    if (this.doctype) push.apply(ast, this.buffer(this.doctype));
     this.hasCompiledDoctype = true;
     return ast;
   },
@@ -549,6 +549,7 @@ Compiler.prototype = {
     var mixinName = dynamic ? this.parseExpr(mixin.name.substr(2,mixin.name.length-3)): t.stringLiteral(mixin.name);
     this.mixins[key] = this.mixins[key] || {used: false, instances: []};
 
+    // mixin invocation
     if (mixin.call) {
       this.mixins[key].used = true;
       if (pp) {
@@ -584,7 +585,7 @@ Compiler.prototype = {
           this.parentIndents++;
           var _indents = this.indents;
           this.indents = 0;
-          astFunc = astFunc.concat(this.visit(mixin.block, mixin));
+          push.apply(astFunc, this.visit(mixin.block, mixin));
           this.indents = _indents;
           this.parentIndents--;
 
@@ -645,7 +646,9 @@ Compiler.prototype = {
         )))
  
       }
-    } else {
+    }
+    // mixin definition
+    else {
       args = args ? args.split(',') : [];
       var rest;
       if (args.length && /^\.\.\./.test(args[args.length - 1].trim())) {
@@ -700,7 +703,7 @@ Compiler.prototype = {
       }
 
       this.parentIndents++;
-      astMixin = astMixin.concat(this.visit(block, mixin));
+      push.apply(astMixin, this.visit(block, mixin));
       this.parentIndents--;
 
 
@@ -756,21 +759,21 @@ Compiler.prototype = {
 
     if (!this.hasCompiledTag) {
       if (!this.hasCompiledDoctype && 'html' == name) {
-        ast = ast.concat(this.visitDoctype());
+        push.apply(ast, this.visitDoctype());
       }
       this.hasCompiledTag = true;
     }
     // pretty print
     if (pp && !tag.isInline)
-      ast = ast.concat(this.prettyIndent(0, true));
+      push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
-      ast.push(this.buffer('<'));
-      ast.push(bufferName());
-      ast = ast.concat(this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
+      push.apply(ast, this.buffer('<'));
+      push.apply(ast, bufferName());
+      push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
       if (this.terse && !tag.selfClosing) {
-        ast.push(this.buffer('>'));
+        push.apply(ast, this.buffer('>'));
       } else {
-        ast.push(this.buffer('/>'));
+        push.apply(ast, this.buffer('/>'));
       }
       // if it is non-empty throw an error
       if (
@@ -792,20 +795,20 @@ Compiler.prototype = {
       }
     } else {
       // Optimize attributes buffering
-      ast.push(this.buffer('<'));
-      ast.push(bufferName());
-      ast = ast.concat(this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
-      ast.push(this.buffer('>'));
-      if (tag.code) ast = ast.concat(this.visitCode(tag.code));
-      ast = ast.concat(this.visit(tag.block, tag));
+      push.apply(ast, this.buffer('<'));
+      push.apply(ast, bufferName());
+      push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
+      push.apply(ast, this.buffer('>'));
+      if (tag.code) push.apply(ast, this.visitCode(tag.code));
+      push.apply(ast, this.visit(tag.block, tag));
 
       // pretty print
       if (pp && !tag.isInline && WHITE_SPACE_SENSITIVE_TAGS[tag.name] !== true && !tagCanInline(tag))
-        ast = ast.concat(this.prettyIndent(0, true));
+        push.apply(ast, this.prettyIndent(0, true));
 
-      ast.push(this.buffer('</'));
-      ast.push(bufferName());
-      ast.push(this.buffer('>'));
+      push.apply(ast, this.buffer('</'));
+      push.apply(ast, bufferName());
+      push.apply(ast, this.buffer('>'));
     }
 
     if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true)
@@ -855,8 +858,8 @@ Compiler.prototype = {
   visitComment: function(comment){
     var ast = [];
     if (!comment.buffer) return;
-    if (this.pp) ast = ast.concat(this.prettyIndent(1, true));
-    ast.push(this.buffer('<!--' + comment.val + '-->'));
+    if (this.pp) push.apply(ast, this.prettyIndent(1, true));
+    push.apply(ast, this.buffer('<!--' + comment.val + '-->'));
     return ast;
   },
 
@@ -883,11 +886,11 @@ Compiler.prototype = {
   visitBlockComment: function(comment){
     var ast = [];
     if (!comment.buffer) return;
-    if (this.pp) ast = ast.concat(this.prettyIndent(1, true));
-    ast.push(this.buffer('<!--' + (comment.val || '')));
-    ast = ast.concat(this.visit(comment.block, comment));
-    if (this.pp) ast = ast.concat(this.prettyIndent(1, true));
-    ast.push(this.buffer('-->'));
+    if (this.pp) push.apply(ast, this.prettyIndent(1, true));
+    push.apply(ast, this.buffer('<!--' + (comment.val || '')));
+    push.apply(ast, this.visit(comment.block, comment));
+    if (this.pp) push.apply(ast, this.prettyIndent(1, true));
+    push.apply(ast, this.buffer('-->'));
     return ast;
   },
 
@@ -911,7 +914,7 @@ Compiler.prototype = {
       var val = code.val.trim();
       val = 'null == (pug_interp = '+val+') ? "" : pug_interp';
       if (code.mustEscape !== false) val = this.runtime('escape') + '(' + val + ')';
-      ast.push(this.bufferExpression(val));
+      push.apply(ast, this.bufferExpression(val));
     } else {
 
       var val = code.val.trim();
@@ -936,7 +939,7 @@ Compiler.prototype = {
         this.codeMarker = {};
         this.codeIndex = -1;
 
-        var body = [].concat(this.visit(code.block, code));
+        var body = this.visit(code.block, code);
 
         this.codeBuffer = savedCodeBuffer;
         this.codeMarker = savedCodeMarker;
@@ -950,7 +953,7 @@ Compiler.prototype = {
         try {
           var src = this.codeBuffer + '}';
           var tpl = babelTemplate(src);
-          ast = ast.concat(tpl(this.codeMarker).expression.right.body.body);
+          push.apply(ast, tpl(this.codeMarker).expression.right.body.body);
           this.codeBuffer = '_=function*(){';
           this.codeIndex = -1;
           this.codeMarker = {};
@@ -974,7 +977,7 @@ Compiler.prototype = {
   visitConditional: function(cond) {
     var test = cond.test;
 
-    var blockConsequent = [].concat(this.visit(cond.consequent, cond));
+    var blockConsequent = this.visit(cond.consequent, cond);
     var c = t.ifStatement(
       this.parseExpr(test),
       t.blockStatement(blockConsequent)
@@ -983,14 +986,13 @@ Compiler.prototype = {
 
     if (cond.alternate) {
       if (cond.alternate.type === 'Conditional') {
-        c.alternate = this.visitConditional(cond.alternate);
+        c.alternate = this.visitConditional(cond.alternate)[0];
       } else {
-        var blockAlternate = [];
-        blockAlternate = blockAlternate.concat(this.visit(cond.alternate, cond));
+        var blockAlternate = this.visit(cond.alternate, cond);
         c.alternate = t.blockStatement(blockAlternate);
       }
     }
-    return c;
+    return [c];
   },
 
   /**
@@ -1002,8 +1004,7 @@ Compiler.prototype = {
 
   visitWhile: function(loop) {
     var test = loop.test;
-    var whileBlock = [];
-    whileBlock = whileBlock.concat(this.visit(loop.block, loop));
+    var whileBlock = this.visit(loop.block, loop);
     var w = t.whileStatement(
       this.parseExpr(test),
       t.blockStatement(whileBlock)
@@ -1054,7 +1055,7 @@ Compiler.prototype = {
       ];
       var blockAlt = [];
  
-      blockEach = blockEach.concat(this.visit(each.block, each));
+      push.apply(blockEach, this.visit(each.block, each));
       var arrayLoop = 
           t.blockStatement([t.forStatement(
             t.variableDeclaration('var', [
@@ -1075,7 +1076,7 @@ Compiler.prototype = {
       ]
       var blockObjAlt = [];
 
-      blockObj = blockObj.concat(this.visit(each.block, each));
+      push.apply(blockObj, this.visit(each.block, each));
       var objectLoop = t.blockStatement([
         t.variableDeclaration('var', [
           t.variableDeclarator(t.identifier('$$l'), t.numericLiteral(0))
@@ -1092,7 +1093,7 @@ Compiler.prototype = {
 
 
     if (each.alternate) {
-      blockAlt = blockAlt.concat(this.visit(each.alternate, each));
+      push.apply(blockAlt, this.visit(each.alternate, each));
       arrayLoop = t.ifStatement(
         t.memberExpression(t.identifier('$$obj'), t.identifier('length')),
         arrayLoop,
@@ -1101,7 +1102,7 @@ Compiler.prototype = {
    }
 
     if (each.alternate) {
-      blockObjAlt = blockObjAlt.concat(this.visit(each.alternate, each));
+      push.apply(blockObjAlt, this.visit(each.alternate, each));
       objectLoop.body.push(t.ifStatement(
             t.binaryExpression('===', t.identifier('$$l'), t.numericLiteral(0)),
             t.blockStatement(blockObjAlt)
@@ -1150,12 +1151,12 @@ Compiler.prototype = {
         attributeBlocks.unshift(val);
       }
       if (attributeBlocks.length > 1) {
-        ast.push(this.bufferExpression(this.runtime('attrs') + '(' + this.runtime('merge') + '([' + attributeBlocks.join(',') + ']), ' + stringify(this.terse) + ')'));
+        push.apply(ast, this.bufferExpression(this.runtime('attrs') + '(' + this.runtime('merge') + '([' + attributeBlocks.join(',') + ']), ' + stringify(this.terse) + ')'));
       } else {
-        ast.push(this.bufferExpression(this.runtime('attrs') + '(' + attributeBlocks[0] + ', ' + stringify(this.terse) + ')'));
+        push.apply(ast, this.bufferExpression(this.runtime('attrs') + '(' + attributeBlocks[0] + ', ' + stringify(this.terse) + ')'));
       }
     } else if (attrs.length) {
-      ast.push(this.bufferExpression(this.attrs(attrs, true)));
+      push.apply(ast, this.bufferExpression(this.attrs(attrs, true)));
     }
     return ast;
   },
