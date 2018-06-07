@@ -292,6 +292,10 @@ Compiler.prototype = {
     return ast;
   },
 
+  bufferAST: function(ast) {
+    return this.ast_buffer(ast);
+  },
+
   /**
    * Buffer an indent based on the current `indent`
    * property and an additional `offset`.
@@ -753,7 +757,10 @@ Compiler.prototype = {
     var ast = [];
 
     function bufferName() {
-      if (interpolated) return self.bufferExpression(tag.expr);
+      if (interpolated) {
+        if (tag.ast) return self.bufferAST(tag.ast);
+        return self.bufferExpression(tag.expr);
+      }
       else return self.buffer(name);
     }
 
@@ -1009,7 +1016,7 @@ Compiler.prototype = {
     var test = loop.test;
     var whileBlock = this.visit(loop.block, loop);
     var w = t.whileStatement(
-      this.parseExpr(test),
+      loop.ast || this.parseExpr(test),
       t.blockStatement(whileBlock)
     );
     return [w];

@@ -608,6 +608,7 @@ Parser.prototype = {
     var node = {
       type: 'While',
       test: tok.val,
+      ast: tok.ast,
       line: tok.loc.start.line,
       column: tok.loc.start.column,
       filename: this.filename,
@@ -1091,6 +1092,7 @@ Parser.prototype = {
     var tag = {
       type: 'InterpolatedTag',
       expr: tok.val,
+      ast: tok.ast,
       selfClosing: false,
       block: this.emptyBlock(tok.loc.start.line),
       attrs: [],
@@ -1296,5 +1298,5 @@ Parser.prototype = {
     this.tokens.defer(tok);
     this.expect('end-attributes');
     return attrs;
-  },
+  }
 };

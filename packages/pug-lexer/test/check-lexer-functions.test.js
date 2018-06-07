@@ -32,7 +32,7 @@ var lexerFunctions = {
   include: true,
   indent: true,
   interpolation: true,
-  isExpression: true,
+  parseExpression: true,
   mixin: true,
   mixinBlock: true,
   path: true,
