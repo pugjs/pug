@@ -15,7 +15,7 @@ var babylon = require('babylon');
 var babelTemplate = require('babel-template');
 var babel = require('babel-core');
 var babelPluginTransformWith = require('babel-plugin-transform-with');
-
+var babelPluginPugConcat = require('./babel-plugin-pug-concat.js');
 // This is used to prevent pretty printing inside certain tags
 var WHITE_SPACE_SENSITIVE_TAGS = {
   pre: true,
@@ -237,7 +237,10 @@ Compiler.prototype = {
     file.program.body = [ast];
     var w = babel.transformFromAst(file, null, {
       code: false,
-      plugins: [ babelPluginTransformWith ]
+      plugins: [
+        babelPluginPugConcat,
+        babelPluginTransformWith
+      ]
     });
 
 
