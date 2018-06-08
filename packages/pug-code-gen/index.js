@@ -640,7 +640,7 @@ Compiler.prototype = {
 
         if (args) { 
           args = args ? args.split(',') : [];
-          Array.prototype.push.apply(astArgs, this.parseArgs(args) )
+          Array.prototype.push.apply(astArgs, mixin.astArgs || this.parseArgs(args) )
         }
       } else {
         var astArgs = mixin.astArgs || this.parseArgs(args);
