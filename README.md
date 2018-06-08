@@ -21,27 +21,30 @@ Full documentation is at [pugjs.org](https://pugjs.org/)
 
 ## Rename from "Jade"
 
-This project was formerly known as "Jade". However, it has been revealed to us that "Jade" is a registered trademark, and as a result, a rename is needed. After some discussion among the maintainers, **"Pug"** has been chosen as the new name for this project. The next major version will carry "pug" as the package name.
+This project was formerly known as "Jade". However, it was revealed to us that "Jade" is a registered trademark; as a result, a rename was needed. After some discussion among the maintainers, **"Pug"** was chosen as the new name for this project. As of version 2, "pug" is the official package name.
 
 If your package or app currently uses `jade`, don't worry: we have secured permissions to continue to occupy that package name, although all new versions will be released under `pug`.
 
-Before the renaming, we had already begun working on an incompatible Jade 2.0.0. We have then made it so that this new major version bump will coincide with the rename to Pug. Therefore, upgrading from Jade to Pug will be the same process as upgrading any other package with a major version bump. Currently, Pug 2.0.0 is still in beta stage, and there are several syntactic differences we have deprecated and removed. Such differences are documented at [#2305](https://github.com/pugjs/pug/issues/2305).
+Before the renaming, work had already begun on “Jade 2.0.0”. Therefore, the rename to Pug coincided with the major version bump. As a result, upgrading from Jade to Pug will be the same process as upgrading any other package with a major version bump. 
 
-The website and documentation for Pug are still being updated, but if you are new to Pug, you should get started with the new syntax and install the Pug package on npm.
+The syntax of Pug has several differences, deprecations, and removals compared to its predecessor. These differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
+
+The website and documentation for Pug are still being updated. But if you are new to Pug, you should get started with the new syntax and install the Pug package from npm.
 
 ## Installation
 
 ### Package
 
-via npm:
+To use Pug in your own JavaScript projects:
 
 ```bash
 $ npm install pug
 ```
 
+
 ### Command Line
 
-After installing the latest version of [Node.js](http://nodejs.org/), install with:
+After installing the latest version of [Node.js](http://nodejs.org), install with:
 
 ```bash
 $ npm install pug-cli -g
@@ -55,7 +58,7 @@ $ pug --help
 
 ## Syntax
 
-Pug is a clean, whitespace sensitive syntax for writing html.  Here is a simple example:
+Pug is a clean, whitespace sensitive syntax for writing HTML.  Here is a simple example:
 
 ```pug
 doctype html
@@ -76,7 +79,7 @@ html(lang="en")
         strong focus on performance and powerful features.
 ```
 
-becomes
+Pug transforms the above to:
 
 
 ```html
@@ -120,11 +123,11 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
 
  - `filename`  Used in exceptions, and required when using includes
  - `compileDebug`  When `false` no debug instrumentation is compiled
- - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
+ - `pretty`    Add pretty-indentation whitespace to output _(`false` by default)_
 
 ## Browser Support
 
- The latest version of pug can be download for the browser in standalone form from [here](https://pugjs.org/js/pug.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
+The latest version of pug can be [downloaded for the browser in standalone form](https://pugjs.org/js/pug.js).  It only supports the very latest browsers, though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
 
  To compile a template for use on the client using the command line, do:
 
@@ -144,7 +147,7 @@ which will produce `filename.js` containing the compiled template.
 
 ### Ports in other languages
 
-Ports with very close syntax, adapted to other languages:
+Ports to other languages, with very close syntax:
 
   - [PHP](https://github.com/pug-php/pug)
   - [Java](https://github.com/neuland/jade4j)
@@ -154,12 +157,11 @@ Ports with very close syntax, adapted to other languages:
 
 ### Equivalents in other languages
 
-
-Templates engines available in other languages with a different syntax but a similar philosophy:
+Templates engines for other languages with a different syntax, but a similar philosophy:
 
   - [Scaml for Scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [Slim for Ruby](https://github.com/slim-template/slim) (should not be confused with Slim PHP framework)
-  - [HAML for Ruby](http://haml.info/)
+  - [HAML for Ruby](http://haml.info)
   
 ### Framework implementations/adapters
 
@@ -188,7 +190,7 @@ Embedded view engines for frameworks:
   - [html2pug](https://github.com/donpark/html2jade) converter
   - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
   - [Pug Server](https://github.com/ctrlaltdev/pug-server) Ideal for building local prototypes apart from any application
-  - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io/)
+  - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io)
 
 
 ## Backers
