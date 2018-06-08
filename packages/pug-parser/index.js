@@ -333,7 +333,21 @@ Parser.prototype = {
               val: '\n',
               line: tok.loc.start.line,
               column: tok.loc.start.column,
-              filename: this.filename,
+              filename: this.filename
+            });
+            break;
+          case 'interpolated-code':
+            var tok = this.advance();
+            tags.push({
+              type: 'Code',
+              val: tok.val,
+              astVal: tok.ast,
+              buffer: tok.buffer,
+              mustEscape: tok.mustEscape !== false,
+              isInline: true,
+              line: tok.loc.start.line,
+              column: tok.loc.start.column,
+              filename: this.filename
             });
           }
           break;
@@ -430,6 +444,7 @@ Parser.prototype = {
     var node = {
       type: 'Case',
       expr: tok.val,
+      astExpr: tok.ast,
       line: tok.loc.start.line,
       column: tok.loc.start.column,
       filename: this.filename,
@@ -478,6 +493,7 @@ Parser.prototype = {
       return {
         type: 'When',
         expr: tok.val,
+        astExpr: tok.ast,
         block: this.parseBlockExpansion(),
         debug: false,
         line: tok.loc.start.line,
@@ -488,6 +504,7 @@ Parser.prototype = {
       return {
         type: 'When',
         expr: tok.val,
+        astExpr: tok.ast,
         debug: false,
         line: tok.loc.start.line,
         column: tok.loc.start.column,
@@ -526,6 +543,7 @@ Parser.prototype = {
     var node = {
       type: 'Code',
       val: tok.val,
+      astVal: tok.ast,
       buffer: tok.buffer,
       mustEscape: tok.mustEscape !== false,
       isInline: !!noBlock,
@@ -560,6 +578,7 @@ Parser.prototype = {
     var node = {
       type: 'Conditional',
       test: tok.val,
+      astTest: tok.ast,
       consequent: this.emptyBlock(tok.loc.start.line),
       alternate: null,
       line: tok.loc.start.line,
@@ -578,15 +597,18 @@ Parser.prototype = {
         this.expect('newline');
       } else if (this.peek().type === 'else-if') {
         tok = this.expect('else-if');
-        currentNode = currentNode.alternate = {
-          type: 'Conditional',
-          test: tok.val,
-          consequent: this.emptyBlock(tok.loc.start.line),
-          alternate: null,
-          line: tok.loc.start.line,
-          column: tok.loc.start.column,
-          filename: this.filename,
-        };
+        currentNode = (
+          currentNode.alternate = {
+            type: 'Conditional',
+            test: tok.val,
+            astTest: tok.ast,
+            consequent: this.emptyBlock(tok.loc.start.line),
+            alternate: null,
+            line: tok.loc.start.line,
+            column: tok.loc.start.column,
+            filename: this.filename
+          }
+        );
         if ('indent' == this.peek().type) {
           currentNode.consequent = this.block();
         }
@@ -608,7 +630,7 @@ Parser.prototype = {
     var node = {
       type: 'While',
       test: tok.val,
-      ast: tok.ast,
+      astTest: tok.ast,
       line: tok.loc.start.line,
       column: tok.loc.start.column,
       filename: this.filename,
@@ -783,6 +805,7 @@ Parser.prototype = {
     var node = {
       type: 'Each',
       obj: tok.code,
+      astObj: tok.ast,
       val: tok.val,
       key: tok.key,
       block: this.block(),
@@ -948,7 +971,9 @@ Parser.prototype = {
     var mixin = {
       type: 'Mixin',
       name: name,
+      astName: tok.ast,
       args: args,
+      astArgs: tok.ast_args,
       block: this.emptyBlock(tok.loc.start.line),
       call: true,
       attrs: [],
@@ -975,13 +1000,13 @@ Parser.prototype = {
     var tok = this.expect('mixin');
     var name = tok.val;
     var args = tok.args;
-
     if ('indent' == this.peek().type) {
       this.inMixin++;
       var mixin = {
         type: 'Mixin',
         name: name,
         args: args,
+        astArgs: tok.ast_args,
         block: this.block(),
         call: false,
         line: tok.loc.start.line,
@@ -1092,7 +1117,7 @@ Parser.prototype = {
     var tag = {
       type: 'InterpolatedTag',
       expr: tok.val,
-      ast: tok.ast,
+      astExpr: tok.ast,
       selfClosing: false,
       block: this.emptyBlock(tok.loc.start.line),
       attrs: [],

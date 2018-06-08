@@ -34,6 +34,9 @@ var INTERNAL_VARIABLES = [
 
 var push = Array.prototype.push;
 
+var tpl_interp = babelTemplate('null == (pug_interp = VALUE) ? "" : pug_interp');
+var tpl_interp_escape = babelTemplate('ESCAPE(null == (pug_interp = VALUE) ? "" : pug_interp)');
+
 module.exports = generateCode;
 module.exports.CodeGenerator = Compiler;
 function generateCode(ast, options) {
@@ -413,7 +416,7 @@ Compiler.prototype = {
 
   visitCase: function(node){
     var stmt = t.switchStatement(
-      this.parseExpr(node.expr),
+      node.astExpr || this.parseExpr(node.expr),
       this.visit(node.block, node)
     );
     return [stmt];
@@ -429,7 +432,7 @@ Compiler.prototype = {
   visitWhen: function(node){
     var test = null;
     if ('default' != node.expr) {
-      test = this.parseExpr(node.expr);
+      test = node.astExpr || this.parseExpr(node.expr);
     }
     var consequent = []
     if (node.block) {
@@ -553,7 +556,7 @@ Compiler.prototype = {
     var key = mixin.name;
     if (dynamic) this.dynamicMixins = true;
     name += (dynamic ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
-    var mixinName = dynamic ? this.parseExpr(mixin.name.substr(2,mixin.name.length-3)): t.stringLiteral(mixin.name);
+    var mixinName = dynamic ? (mixin.astName || this.parseExpr(mixin.name.substr(2,mixin.name.length-3))): t.stringLiteral(mixin.name);
     this.mixins[key] = this.mixins[key] || {used: false, instances: []};
 
     // mixin invocation
@@ -640,7 +643,7 @@ Compiler.prototype = {
           Array.prototype.push.apply(astArgs, this.parseArgs(args) )
         }
       } else {
-        var astArgs = this.parseArgs(args);
+        var astArgs = mixin.astArgs || this.parseArgs(args);
         ast.push(t.expressionStatement(this.wrapCallExpression(t.callExpression(
           t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
           astArgs
@@ -758,7 +761,7 @@ Compiler.prototype = {
 
     function bufferName() {
       if (interpolated) {
-        if (tag.ast) return self.bufferAST(tag.ast);
+        if (tag.astExpr) return self.bufferAST(tag.astExpr);
         return self.bufferExpression(tag.expr);
       }
       else return self.buffer(name);
@@ -922,9 +925,15 @@ Compiler.prototype = {
     var ast = [];
     if (code.buffer) {
       var val = code.val.trim();
-      val = 'null == (pug_interp = '+val+') ? "" : pug_interp';
-      if (code.mustEscape !== false) val = this.runtime('escape') + '(' + val + ')';
-      push.apply(ast, this.bufferExpression(val));
+      var tpl = tpl_interp;
+      var tplv = {
+        VALUE: code.astVal || this.parseExpr(code.val)
+      }
+      if (code.mustEscape !== false) {
+        tpl = tpl_interp_escape;
+        tplv.ESCAPE = this.runtime('escape', true);
+      }
+      push.apply(ast, this.bufferAST(tpl(tplv).expression));
     } else {
 
       var val = code.val.trim();
@@ -989,7 +998,7 @@ Compiler.prototype = {
 
     var blockConsequent = this.visit(cond.consequent, cond);
     var c = t.ifStatement(
-      this.parseExpr(test),
+      cond.astTest || this.parseExpr(test),
       t.blockStatement(blockConsequent)
     );
 
@@ -1016,7 +1025,7 @@ Compiler.prototype = {
     var test = loop.test;
     var whileBlock = this.visit(loop.block, loop);
     var w = t.whileStatement(
-      loop.ast || this.parseExpr(test),
+      loop.astTest || this.parseExpr(test),
       t.blockStatement(whileBlock)
     );
     return [w];
@@ -1037,7 +1046,7 @@ Compiler.prototype = {
 
     var body =  [
                   t.variableDeclaration('var', [
-                    t.variableDeclarator(t.identifier('$$obj'), this.parseExpr(each.obj))
+                    t.variableDeclarator(t.identifier('$$obj'), each.astObj || this.parseExpr(each.obj))
                   ])
                 ]
 
