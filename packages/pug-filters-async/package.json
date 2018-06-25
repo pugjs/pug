@@ -1,6 +1,6 @@
 {
   "name": "pug-filters-async",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Code for processing filters in pug templates",
   "keywords": [
     "pug"

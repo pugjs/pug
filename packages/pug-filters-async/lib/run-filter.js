@@ -6,7 +6,7 @@ var CleanCSS = require('clean-css');
 var resolve = require('resolve');
 
 module.exports = filter;
-function filter(name, str, options, currentDirectory, funcName) {
+async function filter(name, str, options, currentDirectory, funcName) {
   funcName = funcName || 'render';
   var trPath;
   try {

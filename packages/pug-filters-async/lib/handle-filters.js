@@ -9,38 +9,40 @@ var runFilter = require('./run-filter');
 module.exports = handleFilters;
 async function handleFilters(ast, filters, options, filterAliases) {
   options = options || {};
-  await walk(ast, function (node) {
+  await walk(ast, async function (node) {
     var dir = node.filename ? dirname(node.filename) : null;
     if (node.type === 'Filter') {
-      handleNestedFilters(node, filters, options, filterAliases);
+      await handleNestedFilters(node, filters, options, filterAliases);
       var text = getBodyAsText(node);
       var attrs = getAttributes(node, options);
       attrs.filename = node.filename;
       node.type = 'Text';
-      node.val = filterWithFallback(node, text, attrs);
+      node.val = await filterWithFallback(node, text, attrs);
     } else if (node.type === 'RawInclude' && node.filters.length) {
       var firstFilter = node.filters.pop();
       var attrs = getAttributes(firstFilter, options);
       var filename = attrs.filename = node.file.fullPath;
       var str = node.file.str;
       node.type = 'Text';
-      node.val = filterFileWithFallback(firstFilter, filename, str, attrs);
-      node.filters.slice().reverse().forEach(function (filter) {
-        var attrs = getAttributes(filter, options);
+      node.val = await filterFileWithFallback(firstFilter, filename, str, attrs);
+
+      for (const filter of node.filters.slice().reverse()) {
+        const attrs = getAttributes(filter, options);
         attrs.filename = filename;
-        node.val = filterWithFallback(filter, node.val, attrs);
-      });
+        node.val = await filterWithFallback(filter, node.val, attrs);
+      }
+
       node.filters = undefined;
       node.file = undefined;
     }
 
-    function filterWithFallback(filter, text, attrs, funcName) {
+    async function filterWithFallback(filter, text, attrs, funcName) {
       try {
         var filterName = getFilterName(filter);
         if (filters && filters[filterName]) {
           return filters[filterName](text, attrs);
         } else {
-          return runFilter(filterName, text, attrs, dir, funcName);
+          return await runFilter(filterName, text, attrs, dir, funcName);
         }
       } catch (ex) {
         if (ex.code === 'UNKNOWN_FILTER') {
@@ -50,15 +52,17 @@ async function handleFilters(ast, filters, options, filterAliases) {
       }
     }
 
-    function filterFileWithFallback(filter, filename, text, attrs) {
+    async function filterFileWithFallback(filter, filename, text, attrs) {
       var filterName = getFilterName(filter);
       if (filters && filters[filterName]) {
         return filters[filterName](text, attrs);
       } else {
-        return filterWithFallback(filter, filename, attrs, 'renderFile');
+        return await filterWithFallback(filter, filename, attrs, 'renderFile');
       }
     }
   }, {includeDependencies: true});
+
+
   function getFilterName(filter) {
     var filterName = filter.name;
     if (filterAliases && filterAliases[filterName]) {
@@ -76,7 +80,7 @@ async function handleFilters(ast, filters, options, filterAliases) {
     return filterName;
   }
   return ast;
-};
+}
 
 async function handleNestedFilters(node, filters, options, filterAliases) {
   if (node.block.nodes[0] && node.block.nodes[0].type === 'Filter') {
