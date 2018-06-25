@@ -1,7 +1,7 @@
 {
   "name": "pug-async",
   "description": "A clean, whitespace-sensitive template language for writing HTML",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
     "Forbes Lindesay <forbes@lindesay.co.uk>",
