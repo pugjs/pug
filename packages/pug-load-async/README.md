@@ -2,11 +2,6 @@
 
 The pug loader is responsible for loading the depenendencies of a given pug file.  It adds `fullPath` and `str` properties to every `Include` and `Extends` node.  It also adds an `ast` property to any `Include` nodes that are loading pug and any `Extends` nodes.  It then recursively loads the dependencies of any of those included files.
 
-[![Build Status](https://img.shields.io/travis/pugjs/pug-load/master.svg)](https://travis-ci.org/pugjs/pug-load)
-[![Dependency Status](https://img.shields.io/david/pugjs/pug-load.svg)](https://david-dm.org/pugjs/pug-load)
-[![NPM version](https://img.shields.io/npm/v/pug-load.svg)](https://www.npmjs.org/package/pug-load)
-[![Coverage Status](https://img.shields.io/codecov/c/github/pugjs/pug-load.svg)](https://codecov.io/gh/pugjs/pug-load)
-
 ## Installation
 
     npm install pug-load-async
@@ -17,9 +12,9 @@ The pug loader is responsible for loading the depenendencies of a given pug file
 var load = require('pug-load-async');
 ```
 
-### `load(ast, options)`
-### `load.string(str, filename, options)`
-### `load.file(filename, options)`
+### `await load(ast, options)`
+### `await load.string(str, filename, options)`
+### `await load.file(filename, options)`
 
 Loads all dependencies of the Pug AST. `load.string` and `load.file` are syntactic sugar that parses the string or file instead of you doing it yourself.
 
@@ -33,7 +28,7 @@ Loads all dependencies of the Pug AST. `load.string` and `load.file` are syntact
 
 The `options` object is passed to `load.resolve` and `load.read`, or equivalently `options.resolve` and `options.read`.
 
-### `load.resolve(filename, source, options)`
+### `await load.resolve(filename, source, options)`
 
 Callback used by `pug-load` to resolve the full path of an included or extended file given the path of the source file.
 
@@ -41,7 +36,7 @@ Callback used by `pug-load` to resolve the full path of an included or extended 
 
 This function is not meant to be called from outside of `pug-load`, but rather for you to override.
 
-### `load.read(filename, options)`
+### `await load.read(filename, options)`
 
 Callback used by `pug-load` to return the contents of a file.
 
@@ -61,42 +56,47 @@ This function is not meant to be called from outside of `pug-load`, but rather f
 var fs = require('fs');
 var lex = require('pug-lexer');
 var parse = require('pug-parser');
-var load = require('pug-load');
+var load = require('pug-load-async');
 
 // you can do everything very manually
 
-var str = fs.readFileSync('bar.pug', 'utf8');
-var ast = load(parse(lex(str, 'bar.pug'), 'bar.pug'), {
-  lex: lex,
-  parse: parse,
-  resolve: function (filename, source, options) {
-    console.log('"' + filename + '" file requested from "' + source + '".');
-    return load.resolve(filename, source, options);
-  }
-});
 
-// or you can do all that in just two steps
-
-var str = fs.readFileSync('bar.pug', 'utf8');
-var ast = load.string(str, 'bar.pug', {
-  lex: lex,
-  parse: parse,
-  resolve: function (filename, source, options) {
-    console.log('"' + filename + '" file requested from "' + source + '".');
-    return load.resolve(filename, source, options);
-  }
-});
-
-// or you can do all that in only one step
-
-var ast = load.file('bar.pug', {
-  lex: lex,
-  parse: parse,
-  resolve: function (filename, source, options) {
-    console.log('"' + filename + '" file requested from "' + source + '".');
-    return load.resolve(filename, source, options);
-  }
-});
+(async function () {
+  var str = fs.readFileSync('bar.pug', 'utf8');
+  
+  var ast = await load(parse(lex(str, 'bar.pug'), 'bar.pug'), {
+    lex: lex,
+    parse: parse,
+    resolve: function (filename, source, options) {
+      console.log('"' + filename + '" file requested from "' + source + '".');
+      return load.resolve(filename, source, options);
+    }
+  });
+  
+  // or you can do all that in just two steps
+  
+  var str = fs.readFileSync('bar.pug', 'utf8');
+  
+  var ast = await load.string(str, 'bar.pug', {
+    lex: lex,
+    parse: parse,
+    resolve: function (filename, source, options) {
+      console.log('"' + filename + '" file requested from "' + source + '".');
+      return load.resolve(filename, source, options);
+    }
+  });
+  
+  // or you can do all that in only one step
+  
+  var ast = await load.file('bar.pug', {
+    lex: lex,
+    parse: parse,
+    resolve: function (filename, source, options) {
+      console.log('"' + filename + '" file requested from "' + source + '".');
+      return load.resolve(filename, source, options);
+    }
+  });
+}).then(() => {}, err => {});
 ```
 
 ## License

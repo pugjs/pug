@@ -16,7 +16,7 @@ var lex = require('pug-lexer');
 var stripComments = require('pug-strip-comments');
 var parse = require('pug-parser');
 var load = require('pug-load-async');
-var filters = require('pug-filters');
+var filters = require('pug-filters-async');
 var link = require('pug-linker');
 var generateCode = require('pug-code-gen');
 var runtime = require('pug-runtime');
@@ -163,7 +163,7 @@ async function compileBody(str, options){
       filtersSet[key] = options.filters[key];
     });
   }
-  ast = filters.handleFilters(ast, filtersSet, options.filterOptions, options.filterAliases);
+  ast = await filters.handleFilters(ast, filtersSet, options.filterOptions, options.filterAliases);
 
   ast = applyPlugins(ast, options, plugins, 'postFilters');
   ast = applyPlugins(ast, options, plugins, 'preLink');

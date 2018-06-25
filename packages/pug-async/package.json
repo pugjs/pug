@@ -21,7 +21,7 @@
   "main": "lib",
   "dependencies": {
     "pug-code-gen": "^2.0.1",
-    "pug-filters": "^3.1.0",
+    "pug-filters-async": "^3.1.0",
     "pug-lexer": "^4.0.0",
     "pug-linker": "^3.0.5",
     "pug-load-async": "^2.0.11",
