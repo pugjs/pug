@@ -1084,7 +1084,7 @@ Lexer.prototype = {
       this.incrementColumn(1);
       i++;
     }else if(characterParser.isPunctuator(str[i]) && str[i] !== ':'){
-      console.warn(this.filename + ', line ' + tok.loc.start.line + 'Attribute name starts with invalid character "' + str[i] +
+      console.warn(this.filename + ', line ' + tok.loc.start.line + ', attribute name starts with invalid character "' + str[i] +
                 '", to use special characters in attribute names, wrap the attribute name in double quotes ""')
     }
 
