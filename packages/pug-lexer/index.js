@@ -1220,7 +1220,9 @@ Lexer.prototype = {
               // a part of the value
               if((!characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]) || str[x] === ':') && this.assertExpression(val, true)){
                 done = true;
-              }
+              }else{
+	      	this.error('INVALID_ATTRIBUTE_START', 'Attribute name starts with invalid character "' + str[0] + '", to use special characters in attribute names, wrap the attribute name in double quotes ""');	      
+	      }
               break;
             }
           }
