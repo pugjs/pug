@@ -1083,6 +1083,9 @@ Lexer.prototype = {
       quote = str[i];
       this.incrementColumn(1);
       i++;
+    }else if(characterParser.isPunctuator(str[i]) && str[i] !== ':'){
+      console.warn(this.filename + ', line ' + tok.loc.start.line + 'Attribute name starts with invalid character "' + str[i] +
+                '", to use special characters in attribute names, wrap the attribute name in double quotes ""')
     }
 
     // start looping through the key
@@ -1220,10 +1223,7 @@ Lexer.prototype = {
               // a part of the value
               if((!characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]) || str[x] === ':') && this.assertExpression(val, true)){
                 done = true;
-              }else{
-	      	      this.error('INVALID_ATTRIBUTE_START', 'Attribute name starts with invalid character "' + str[0] +
-                            '", to use special characters in attribute names, wrap the attribute name in double quotes ""');
-	            }
+              }
               break;
             }
           }
