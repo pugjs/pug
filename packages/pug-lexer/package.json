@@ -13,6 +13,9 @@
   "devDependencies": {
     "acorn": "^3.0.4"
   },
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-lexer.git"

@@ -10,6 +10,9 @@
     "js-stringify": "^1.0.1",
     "pug-runtime": "^2.0.4"
   },
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-attrs.git"
