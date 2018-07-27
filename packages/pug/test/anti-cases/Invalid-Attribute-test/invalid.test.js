@@ -8,5 +8,6 @@ test('invalid attribute name should log warning', () => {
     __dirname + '/invalid-character.pug'
   );
   console.warn = oldWarn;
+  warnings.map(warning => warning.replace(/\\/g, '/').split(process.cwd().replace(/\\/g, '/')).join('<cwd>'));
   expect(warnings).toMatchSnapshot();
 });
