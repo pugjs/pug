@@ -11,6 +11,9 @@
   "devDependencies": {
     "line-json": "^1.0.0"
   },
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-strip-comments.git"

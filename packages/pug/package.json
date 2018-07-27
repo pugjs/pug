@@ -41,6 +41,10 @@
     "rimraf": "^2.2.8",
     "uglify-js": "github:mishoo/UglifyJS2#1c15d0db456ce32f1b9b507aad97e5ee5c8285f7"
   },
+  "files": [
+    "lib/index.js",
+    "register.js"
+  ],
   "browser": {
     "fs": false
   },

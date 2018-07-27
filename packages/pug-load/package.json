@@ -13,6 +13,9 @@
     "pug-lexer": "^4.0.0",
     "pug-parser": "^5.0.0"
   },
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-load.git"

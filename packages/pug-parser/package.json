@@ -12,6 +12,10 @@
   "devDependencies": {
     "get-repo": "^1.0.0"
   },
+  "files": [
+    "lib/inline-tags.js",
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug-parser.git"
