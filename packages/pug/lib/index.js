@@ -96,7 +96,8 @@ function compileBody(str, options){
       }).map(function (plugin) {
         return plugin.lex;
       });
-      return applyPlugins(lex(str, lexOptions), options, plugins, 'postLex');
+      var contents = applyPlugins(str, {filename: options.filename}, plugins, 'preLex');
+      return applyPlugins(lex(contents, lexOptions), options, plugins, 'postLex');
     },
     parse: function (tokens, options) {
       tokens = tokens.map(function (token) {
@@ -146,9 +147,8 @@ function compileBody(str, options){
         contents = load.read(filename, loadOptions);
       }
 
-      var str = applyPlugins(contents, {filename: filename}, plugins, 'preLex');
-      debug_sources[filename] = str;
-      return str;
+      debug_sources[filename] = contents;
+      return contents;
     }
   });
   ast = applyPlugins(ast, options, plugins, 'postLoad');
