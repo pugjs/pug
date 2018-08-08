@@ -180,7 +180,8 @@ function compileBody(str, options){
     globals: options.globals,
     self: options.self,
     includeSources: options.includeSources ? debug_sources : false,
-    templateName: options.templateName
+    templateName: options.templateName,
+    bufferHooks: options.bufferHooks
   });
   js = applyPlugins(js, options, plugins, 'postCodeGen');
 
@@ -255,6 +256,7 @@ exports.compile = function(str, options){
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
     plugins: options.plugins,
+    bufferHooks: options.bufferHooks
   });
 
   var res = options.inlineRuntimeFunctions
@@ -302,7 +304,8 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     filters: options.filters,
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
-    plugins: options.plugins
+    plugins: options.plugins,
+    bufferHooks: options.bufferHooks
   });
 
   var body = parsed.body;
