@@ -154,6 +154,7 @@ Ports to other languages, with very close syntax:
   - [Python](https://github.com/kakulukia/pypugjs)
   - [Ruby](https://github.com/yivo/pug-ruby)
   - [C# (ASP.NET Core)](https://github.com/AspNetMonsters/pugzor)
+  - [RPG/ILE](https://github.com/WorksOfLiam/apug)
 
 ### Equivalents in other languages
 
