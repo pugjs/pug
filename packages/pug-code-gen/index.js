@@ -9,6 +9,8 @@ var selfClosing = require('void-elements');
 var constantinople = require('constantinople');
 var stringify = require('js-stringify');
 
+var findGlobals = require('with/lib/globals.js')
+
 var t = require('babel-types');
 var gen = require('babel-generator');
 var babylon = require('babylon');
@@ -144,6 +146,83 @@ Compiler.prototype = {
             ))];
   },
   /**
+   * This method is called once the AST is built in
+   * order to apply transformations
+   * nb: a custom AST walk/replace was written because
+   * the babel plugin architecture  
+   * Currently it this transformation :
+   *  - compacts sequential pug_html = pug_html + any (max of 100)
+   *  - further compacts sequential pug_html = pug_html + stringLiteral
+   */ 
+  ast_postprocess: function(ast) {
+    let needCompaction = function(c) {
+      return t.isExpressionStatement(c)
+                && t.isAssignmentExpression(c.expression)
+                && c.expression.left.name === 'pug_html'
+                && t.isBinaryExpression(c.expression.right)
+                && c.expression.right.left.name === 'pug_html'
+    }
+
+    let walk = function (node) {
+      Object.keys(node).forEach(function(k) {
+        var child = node[k];
+        if (child && typeof child === "object" && child.length) {
+          child.forEach(function (c) {
+            if (c && typeof c.type === 'string') {
+              walk(c);
+            }
+          });
+          let i,j;
+          for (i=0; i<child.length; i++) {
+            let start, end;
+            let fragment = [t.identifier('pug_html')]
+            if (needCompaction(child[i])) {
+              start = i;
+              end = i;
+              // locate sequential buffer operations
+              while (needCompaction(child[end]) && end < child.length && fragment.length < 101) {
+                fragment.push(child[end].expression.right.right)
+                end++;
+              }
+
+              // join adjacent stringLiterals
+              for (j=0; j<fragment.length;j++) {
+                let start, end;
+                if (t.isStringLiteral(fragment[j])) {
+                  start = j;
+                  end = j;
+                  while (t.isStringLiteral(fragment[end]) && end < fragment.length) {
+                   end++
+                  }
+                  let lit = t.stringLiteral(fragment.slice(start, end).map(function(v) { return v.value}).join(''));
+                  lit.extra = { rawValue: lit.value, raw: stringify(lit.value)}
+                  fragment.splice(start, end-start, lit)
+                }
+              }
+
+              // join fragments
+              let expr =
+                t.expressionStatement(
+                  t.assignmentExpression(
+                    '=',
+                    t.identifier('pug_html'),
+                    fragment.reduce(function(acc, val) {
+                      return t.binaryExpression('+', acc, val);
+                    })
+                  )
+                )
+              child.splice(start, end-start, expr)
+            }
+          }
+        } else if (child && typeof child.type === 'string') {
+          walk(child);
+        }
+      })      
+    };
+    walk(ast);
+    return ast;
+  },
+  /**
    * Compile parse tree to JavaScript.
    *
    * @api public
@@ -154,7 +233,9 @@ Compiler.prototype = {
     if (this.pp) {
       ast.push(t.variableDeclaration('var', [t.variableDeclarator(t.identifier('pug_indent'), t.arrayExpression())]));
     }
+    
     push.apply(ast, this.visit(this.node));
+    
     if (!this.dynamicMixins) {
       // if there are no dynamic mixins we can remove any un-used mixins
       var mixinNames = Object.keys(this.mixins);
@@ -176,7 +257,27 @@ Compiler.prototype = {
         ])
       ].concat(ast);
     } else {
-      ast = [t.withStatement(t.identifier('locals'), t.blockStatement(ast))]
+      // transform `ast` into `with(locals || {}) { ast }`
+      let exclude = this.options.globals ? this.options.globals.concat(INTERNAL_VARIABLES) : INTERNAL_VARIABLES;
+      exclude.concat(this.runtimeFunctionsUsed.map(function (name) { return 'pug_' + name; }));
+      exclude.push('undefined', 'this', 'locals')
+      let vars = findGlobals(t.program(ast)).map(function(v) { return v.name }).filter(function(v) { return exclude.indexOf(v) === -1 })
+      let bag = 'locals' 
+      ast = [t.expressionStatement(
+        t.callExpression(
+          t.memberExpression(t.functionExpression(null, vars.map(function(v) { return t.identifier(v)}), t.blockStatement(ast)), t.identifier('call')),
+          [ t.thisExpression() ].concat(vars.map(function(v) {
+            return t.conditionalExpression(
+              t.binaryExpression('in', t.stringLiteral(v), t.logicalExpression('||', t.identifier(bag), t.objectExpression([]))),
+              t.memberExpression(t.identifier(bag), t.identifier(v)),
+              t.conditionalExpression(
+                t.binaryExpression('!==', t.unaryExpression('typeof', t.identifier(v)), t.stringLiteral('undefined')),
+                t.identifier(v),
+                t.identifier('undefined')
+              )
+            )
+          }))
+        ))] 
     }
 
 
@@ -221,21 +322,9 @@ Compiler.prototype = {
       t.blockStatement([this.ast_variableDeclaration()].concat(ast, this.ast_return()))
     )
 
+    ast = this.ast_postprocess(ast);
 
-    var plugins = [ babelPluginPugConcat ];
-    if (!this.options.self) {
-      let globals = this.options.globals ? this.options.globals.concat(INTERNAL_VARIABLES) : INTERNAL_VARIABLES;
-      globals.concat(this.runtimeFunctionsUsed.map(function (name) { return 'pug_' + name; }));
-      plugins.push([babelPluginTransformWith, { exclude: globals }]);
-    }
-    var file = babylon.parse('');
-    file.program.body = [ast];
-    var w = babel.transformFromAst(file, null, {
-      code: false,
-      plugins: plugins
-    });
-
-    return buildRuntime(this.runtimeFunctionsUsed) + gen.default(w.ast).code;
+    return buildRuntime(this.runtimeFunctionsUsed) + gen.default(ast).code;
   },
 
   /**
@@ -747,6 +836,9 @@ Compiler.prototype = {
       , self = this;
     var ast = [];
 
+    var bufferName = interpolated ? (tag.astExpr ? this.bufferAST(tag.astExpr) : this.bufferExpression(tag.expr)) : this.buffer(name);
+
+/*
     function bufferName() {
       if (interpolated) {
         if (tag.astExpr) return self.bufferAST(tag.astExpr);
@@ -754,9 +846,8 @@ Compiler.prototype = {
       }
       else return self.buffer(name);
     }
-
-    if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true)
-      this.escapePrettyMode = true;
+*/
+    if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true) this.escapePrettyMode = true;
 
     if (!this.hasCompiledTag) {
       if (!this.hasCompiledDoctype && 'html' == name) {
@@ -769,7 +860,7 @@ Compiler.prototype = {
       push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
       push.apply(ast, this.buffer('<'));
-      push.apply(ast, bufferName());
+      push.apply(ast, bufferName);
       push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
       if (this.terse && !tag.selfClosing) {
         push.apply(ast, this.buffer('>'));
@@ -797,7 +888,7 @@ Compiler.prototype = {
     } else {
       // Optimize attributes buffering
       push.apply(ast, this.buffer('<'));
-      push.apply(ast, bufferName());
+      push.apply(ast, bufferName);
       push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
       push.apply(ast, this.buffer('>'));
       if (tag.code) push.apply(ast, this.visitCode(tag.code));
@@ -808,7 +899,7 @@ Compiler.prototype = {
         push.apply(ast, this.prettyIndent(0, true));
 
       push.apply(ast, this.buffer('</'));
-      push.apply(ast, bufferName());
+      push.apply(ast, bufferName);
       push.apply(ast, this.buffer('>'));
     }
 
