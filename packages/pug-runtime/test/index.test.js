@@ -13,13 +13,22 @@ function addTest(name, fn) {
   });
 }
 
-addTest('attr', function (attr) { // (key, val, escaped, terse)
-  var stringToJSON = String.prototype.toJSON;
+function withStringToJSONReplaced(fun) {
+  return function (x) {
+    var stringToJSON = String.prototype.toJSON;
 
-  String.prototype.toJSON = function() {
-    return JSON.stringify(this);
+    String.prototype.toJSON = function() {
+      return JSON.stringify(this);
+    };
+    try {
+      fun(x);
+    } finally {
+      String.prototype.toJSON = stringToJSON;
+    }
   };
+}
 
+addTest('attr', withStringToJSONReplaced(function (attr) { // (key, val, escaped, terse)
   // Boolean Attributes
   expect(attr('key', true, true, true)).toBe(' key');
   expect(attr('key', true, false, true)).toBe(' key');
@@ -70,8 +79,10 @@ addTest('attr', function (attr) { // (key, val, escaped, terse)
   expect(attr('key', 'foo>bar', true, false)).toBe(' key="foo&gt;bar"');
   expect(attr('key', 'foo>bar', false, false)).toBe(' key="foo>bar"');
 
-  String.prototype.toJSON = stringToJSON;
-});
+  // Quotes when unescaped
+  expect(attr('key', 'foo">', false, false)).toBe(' key="foo&#34;>"');
+  expect(attr('key', 'foo">', false, true)).toBe(' key="foo&#34;>"');
+}));
 
 addTest('attrs', function (attrs) { // (obj, terse)
   expect(attrs({foo: 'bar'}, true)).toBe(' foo="bar"');

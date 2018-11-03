@@ -142,7 +142,11 @@ function pug_attr(key, val, escaped, terse) {
       return ' ' + key + '=\'' + val.replace(/'/g, '&#39;') + '\'';
     }
   }
-  if (escaped) val = pug_escape(val);
+  if (escaped) {
+    val = pug_escape(val);
+  } else {
+    val = val.replace(/"/g, '&#34;');
+  }
   return ' ' + key + '="' + val + '"';
 };
 
