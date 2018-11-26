@@ -346,7 +346,7 @@ exports.compileClient = function (str, options) {
        the compiled template for better accuracy.
  *
  * @param {String} path
- * @param {Options} options
+ * @param {Options} [options]
  * @return {Function}
  * @api public
  */
