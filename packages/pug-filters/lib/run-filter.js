@@ -1,11 +1,17 @@
 'use strict';
 
 var jstransformer = require('jstransformer');
-var uglify = require('uglify-js');
-var CleanCSS = require('clean-css');
 var resolve = require('resolve');
 
 module.exports = filter;
+
+function getMinifyTransformerName(outputFormat) {
+  switch (outputFormat) {
+    case 'js': return 'uglify-js';
+    case 'css': return 'clean-css';
+  }
+}
+
 function filter(name, str, options, currentDirectory, funcName) {
   funcName = funcName || 'render';
   var trPath;
@@ -24,17 +30,13 @@ function filter(name, str, options, currentDirectory, funcName) {
   // TODO: we may want to add a way for people to separately specify "locals"
   var result = tr[funcName](str, options, options).body;
   if (options && options.minify) {
-    try {
-      switch (tr.outputFormat) {
-        case 'js':
-          result = uglify.minify(result, {fromString: true}).code;
-          break;
-        case 'css':
-          result = new CleanCSS().minify(result).styles;
-          break;
+    var minifyTranformer = getMinifyTransformerName(tr.outputFormat);
+    if (minifyTranformer) {
+      try {
+        result = filter(minifyTranformer, result, null, currentDirectory);
+      } catch (ex) {
+        // better to fail to minify than output nothing
       }
-    } catch (ex) {
-      // better to fail to minify than output nothing
     }
   }
   return result;
