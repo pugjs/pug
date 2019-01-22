@@ -8,7 +8,7 @@ Full documentation is at [pugjs.org](https://pugjs.org/)
  feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
- You can test drive Pug online [here](https://pugjs.org/).
+ You can test drive Pug online [here](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo).
  
  [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
