@@ -12,7 +12,7 @@ More importantly Pug.js plays well with Javascript.  Pug is written in Javascrip
 The Pug templates are compiled to Javascript, which can then be run on  
 [Node.js](http://nodejs.org) or in the browser 
 to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug
-an excellent choide for web development. 
+an excellent choice for web development. 
 
 [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
