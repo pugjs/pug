@@ -1,16 +1,26 @@
 <a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 # Pug
 
-Full documentation is at [pugjs.org](https://pugjs.org/)
+Pug.js is the leading templating engine for Node.js.  Like 
+[CoffeeScript](https://coffeescript.org/), 
+[Python](https://Python.org) and 
+[Haml](http://haml.info/), Pug.js uses indentation to define structure, eliminating 
+closing tags, and lots of brackets.  This saves typing, reduces errors and makes the 
+code much more readable. 
 
- Pug is a high-performance template engine heavily influenced by [Haml](http://haml.info/)
- and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. For bug reports,
- feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
- For discussion join the [chat room](https://gitter.im/pugjs/pug).
+More importantly Pug.js plays well with Javascript.  Pug is written in Javascript.  
+The Pug templates are compiled to Javascript, which can then be run on  
+[Node.js](http://nodejs.org) or in the browser 
+to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug
+an excellent choide for web development. 
 
- You can test drive Pug online [here](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo).
- 
- [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
+[Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
+
+To learn more, [Read the documentation](https://pugjs.org/). 
+To try it out, [Take it for a test drive](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo). 
+To discuss it,  join the [chat room](https://gitter.im/pugjs/pug). 
+To report a bug, request a feature, or ask a question, [open an issue](https://github.com/pugjs/pug/issues/new). 
+
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
  [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
