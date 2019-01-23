@@ -1,5 +1,6 @@
-<a href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
-# Pug
+<a  href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
+
+# Pug.js (was Jade)
 
 Pug.js is the leading templating engine for Node.js.  Like 
 [CoffeeScript](https://coffeescript.org/), 
@@ -7,19 +8,6 @@ Pug.js is the leading templating engine for Node.js.  Like
 [Haml](http://haml.info/), Pug.js uses indentation to define structure, eliminating 
 closing tags, and lots of brackets.  This saves typing, reduces errors and makes the 
 code much more readable. 
-
-More importantly Pug.js plays well with Javascript.  Pug is written in Javascript.  
-The Pug templates are compiled to Javascript, which can then be run on  
-[Node.js](http://nodejs.org) or in the browser 
-to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug
-an excellent choice for web development. 
-
-[Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
-
-To learn more, [Read the documentation](https://pugjs.org/). 
-To try it out, [Take it for a test drive](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo). 
-To discuss it,  join the [chat room](https://gitter.im/pugjs/pug). 
-To report a bug, request a feature, or ask a question, [open an issue](https://github.com/pugjs/pug/issues/new). 
 
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
@@ -31,42 +19,8 @@ To report a bug, request a feature, or ask a question, [open an issue](https://g
 [![OpenCollective](https://opencollective.com/pug/backers/badge.svg)](#backers) 
 [![OpenCollective](https://opencollective.com/pug/sponsors/badge.svg)](#sponsors)
 
-## Rename from "Jade"
-
-This project was formerly known as "Jade". However, it was revealed to us that "Jade" is a registered trademark; as a result, a rename was needed. After some discussion among the maintainers, **"Pug"** was chosen as the new name for this project. As of version 2, "pug" is the official package name.
-
-If your package or app currently uses `jade`, don't worry: we have secured permissions to continue to occupy that package name, although all new versions will be released under `pug`.
-
-Before the renaming, work had already begun on “Jade 2.0.0”. Therefore, the rename to Pug coincided with the major version bump. As a result, upgrading from Jade to Pug will be the same process as upgrading any other package with a major version bump. 
-
-The syntax of Pug has several differences, deprecations, and removals compared to its predecessor. These differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
-
-The website and documentation for Pug are still being updated. But if you are new to Pug, you should get started with the new syntax and install the Pug package from npm.
-
-## Installation
-
-### Package
-
-To use Pug in your own JavaScript projects:
-
-```bash
-$ npm install pug
-```
 
 
-### Command Line
-
-After installing the latest version of [Node.js](http://nodejs.org), install with:
-
-```bash
-$ npm install pug-cli -g
-```
-
-and run with
-
-```bash
-$ pug --help
-```
 
 ## Syntax
 
@@ -113,23 +67,81 @@ Pug transforms the above to:
 </html>
 ```
 
+To learn more, [Read the documentation](https://pugjs.org/). 
+To try it out, [Take it for a test drive](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo). 
+To discuss it,  join the [chat room](https://gitter.im/pugjs/pug). 
+To report a bug, request a feature, or ask a question, [open an issue](https://github.com/pugjs/pug/issues/new). 
+
+[Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
+
+
+Pug.js plays well with Javascript.  Pug is written in Javascript.  
+The Pug templates are compiled to Javascript, which can then be run on  
+[Node.js](http://nodejs.org) or in the browser 
+to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug
+an excellent choice for web development. 
+
+
+## Release 2.0.0 (Renamed Pug to Jade)
+
+For release 2.0.0 there is a big name change, and a small syntax change. 
+
+It turned out that Jade is a registered trademark, so now  "pug" is the official package name. 
+If your package or app currently uses `jade`, don't worry: we have secured permissions to continue to occupy that package name, although all new versions will be released under `pug`.
+
+The syntax differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
+
+
+## Installation
+
+### Package
+
+To use Pug in your own JavaScript projects:
+
+```bash
+$ npm install pug
+```
+
+
+### Command Line
+
+After installing the latest version of [Node.js](http://nodejs.org), install with:
+
+```bash
+$ npm install pug-cli -g
+```
+
+and run with
+
+```bash
+$ pug --help
+```
+
 ## API
 
-For full API, see [pugjs.org/api/reference.html](https://pugjs.org/api/reference.html)
+There are several ways to use the Pug API.  You can generate the javascript with or without the runtime, either from a 
+string, or from a file.  You can render that javascript on the client or on the Node.js server.  You can directly render the HTML.  You can also compile on the client machine. 
+To see all of the different options, prease  read [pugjs.org/api/reference.html](https://pugjs.org/api/reference.html)  
+
+Here are some examples of using the Jade Api.
 
 ```js
+
 var pug = require('pug');
 
-// compile
+// compile pug template into a javascript function
 var fn = pug.compile('string of pug', options);
+
+//run the javascript function to generate the html
 var html = fn(locals);
 
-// render
+// Or you can directly render the html from the Pug template. 
 var html = pug.render('string of pug', merge(options, locals));
 
-// renderFile
+// Or you can render a file. 
 var html = pug.renderFile('filename.pug', merge(options, locals));
 ```
+
 
 ### Options
 
@@ -137,7 +149,17 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
  - `compileDebug`  When `false` no debug instrumentation is compiled
  - `pretty`    Add pretty-indentation whitespace to output _(`false` by default)_
 
+
+
 ## Browser Support
+
+Pug templates generate javascript which generates HTML.  The HTML can be run in any browser. (Is that true?)
+The generated Javascript can be run in any browser (Is that true?).  Some people also want to compile the Pug templats
+in the browser.  For production applications that is ill advised. The Pug compiler is a large javascript file, and the process is slow.  For production applications, it makes more sense to precompile the templates on the server, and just serve the javascript or HTML. 
+
+On the other hand, if you want to use Pug. js, and you do not have a Node.js server, then it may make sense to use the browsers Javascrpt engine to compile the templates and save them to the server.  At least two grups are working on this. 
+
+
 
 The latest version of pug can be [downloaded for the browser in standalone form](https://pugjs.org/js/pug.js).  It only supports the very latest browsers, though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
 
