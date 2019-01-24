@@ -206,7 +206,7 @@ function compileBody(str, options){
  * @return {Function}
  * @api private
  */
-function handleTemplateCache (options, str) {
+exports.handleTemplateCache = function (options, str) {
   var key = options.filename;
   if (options.cache && exports.cache[key]) {
     return exports.cache[key];
@@ -216,7 +216,7 @@ function handleTemplateCache (options, str) {
     if (options.cache) exports.cache[key] = templ;
     return templ;
   }
-}
+};
 
 /**
  * Compile a `Function` representation of the given pug `str`.
@@ -353,7 +353,7 @@ exports.compileClient = function (str, options) {
 exports.compileFile = function (path, options) {
   options = options || {};
   options.filename = path;
-  return handleTemplateCache(options);
+  return exports.handleTemplateCache(options);
 };
 
 /**
@@ -393,7 +393,7 @@ exports.render = function(str, options, fn){
     throw new Error('the "filename" option is required for caching');
   }
 
-  return handleTemplateCache(options, str)(options);
+  return exports.handleTemplateCache(options, str)(options);
 };
 
 /**
@@ -424,7 +424,7 @@ exports.renderFile = function(path, options, fn){
   options = options || {};
 
   options.filename = path;
-  return handleTemplateCache(options)(options);
+  return exports.handleTemplateCache(options)(options);
 };
 
 
