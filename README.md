@@ -75,10 +75,14 @@ To report a bug, request a feature, or ask a question, [open an issue](https://g
 [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
 
-Pug.js plays well with Javascript.  Pug is written in Javascript.  
-The Pug templates are compiled to Javascript, which can then be run on  
+Pug templates generate javascript which generates HTML.  The HTML can be run in any browser.
+The generated Javascript can be run in any browser (Is that true?). 
+
+
+Pug.js plays well with Javascript.  Pug is written in Javascript. 
+The Pug templates are compiled to Javascript, which can then be run on 
 [Node.js](http://nodejs.org) or in the browser 
-to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug
+to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug  
 an excellent choice for web development. 
 
 
@@ -92,7 +96,7 @@ If your package or app currently uses `jade`, don't worry: we have secured permi
 The syntax differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
 
 
-## Installation
+## Installation on the Node.js Server
 
 ### Package
 
@@ -117,13 +121,36 @@ and run with
 $ pug --help
 ```
 
+## Installation on the Client (in the browser)
+
+There are several different ways that you can use Pug.js on the client. 
+
+If you are serving HRML rendered on the server by PUG, no need to do anything. 
+
+If you are serving a single Javascript function, created by PUG, which renders a page on the client, there is also 
+no need to do anything.  The Pug runtime is included in that javascript function. 
+
+If you are  serving multiple pug javascript funtions,  to render multiple pages on the client, you 
+might want to serve the runtime separately.  So you set an option to not include the runtime in the compiled javascript. 
+
+```
+options = {inlineRuntimeFunctions: false}
+```
+And then make sure to include [the runtime](https://github.com/pugjs/pug/blob/master/packages/pug-runtime/index.js) 
+in the javascript which you serve. 
+
+If you want to compile Pug templates in the browser you need to include Pug for the browser.
+Here is the latest version of [Pug for the browser in standalone form](https://pugjs.org/js/pug.js).  It only supports the very latest browsers, though, and is a large file, and compilation is comparitively slow, so it is recommended that only the developers do this, and then save and serve the generated javascript. 
+
+If you want to build a Pug Editor, that is a bit tricky.  You need to load both the runtime and the above mentioned version of Pug for the browser. But they both want to be called "var pug;"
+
 ## API
 
 There are several ways to use the Pug API.  You can generate the javascript with or without the runtime, either from a 
 string, or from a file.  You can render that javascript on the client or on the Node.js server.  You can directly render the HTML.  You can also compile on the client machine. 
 To see all of the different options, prease  read [pugjs.org/api/reference.html](https://pugjs.org/api/reference.html)  
 
-Here are some examples of using the Jade Api.
+Here are some examples of using the Pug Api 
 
 ```js
 
@@ -151,17 +178,10 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
 
 
 
-## Browser Support
-
-Pug templates generate javascript which generates HTML.  The HTML can be run in any browser. (Is that true?)
-The generated Javascript can be run in any browser (Is that true?).  Some people also want to compile the Pug templats
-in the browser.  For production applications that is ill advised. The Pug compiler is a large javascript file, and the process is slow.  For production applications, it makes more sense to precompile the templates on the server, and just serve the javascript or HTML. 
-
-On the other hand, if you want to use Pug. js, and you do not have a Node.js server, then it may make sense to use the browsers Javascrpt engine to compile the templates and save them to the server.  At least two grups are working on this. 
 
 
-
-The latest version of pug can be [downloaded for the browser in standalone form](https://pugjs.org/js/pug.js).  It only supports the very latest browsers, though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
+## Command Line
+You can also invoke Pug from the command line. There are a number of commands. 
 
  To compile a template for use on the client using the command line, do:
 
