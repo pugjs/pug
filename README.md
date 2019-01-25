@@ -1,30 +1,5 @@
 <a  href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 
-- [Pug.js](#pug.js-was-jade)
-    - [Syntax](##syntax)
-    - [Description](##description)
-    - [License](##license)
-    - [Release 2.0.0](##release-2.0.0-renamed-pug-to-jade)
-    - [Installation](##installation)
-        - [Node.js Projects](##Node.js-projects)
-        - [Command Line Projects](##command-line-projects)
-    - [Installation on the Client](##installation-on-the-client)
-    - [API](##api)
-    - [Options](##options)
-    - [Tutorials](##tutorials)
-    - [Additional Resources](##Additional-Resources)
-- [Related Softare](##related-software)
-    - [Implementations In Other Languages](##implementations-in-other-languages)
-    - [Ports To Other Languages](###ports-in-other-languages)
-    - [Equivalents in other languages](###Equivalents-in-other-lanuages)
-    - [Templates engines for other languages with a different syntax, but a similar philosophy:](###templates-engines-for-other-languages-with-a-different-syntax-but-a-similar-philosophy)
-    - [Framework implementations/adapters](###framework-implementations-adapters)
-    - [CMS Plugins](##cms-plugins)
--[Community](#community)    
-    - [Backers](##Backers)
-    - [Sponsors](##Sponsors)
-  
-
      
 # Pug.js (was Jade)
 
@@ -46,7 +21,31 @@ code much more readable.
 [![OpenCollective](https://opencollective.com/pug/sponsors/badge.svg)](#sponsors)
 
 
-
+- [Pug.js](#pugjs-was-jade)
+    - [Syntax](#syntax)
+    - [Description](#description)
+    - [Release 2.0.0](#release-200-renamed-pug-to-jade)
+    - [License](#license)    
+    - [Installation](#installation)
+        - [Node.js Projects](#nodejs-projects)
+        - [Command Line Projects](#command-line-projects)
+        - [Installation on the Client](#installation-on-the-client)
+    - [API](#api)
+        - [Options](#options)
+        - [Command Line Invocation](#command-line-invocation)
+    - [Tutorials](#tutorials)
+- [Related Software](#related-software)
+    - [Framework Implementations/adapters](#framework-implementationsadapters)
+    - [CMS Plugins](#cms-plugins) 
+    - [Editors](#editors)
+    - [Servers](#servers)  
+- [Implementations In Other Languages](#implementations-in-other-languages)
+    - [Ports To Other Languages](#ports-in-other-languages)
+    - [Equivalents in other languages](#equivalents-in-other-languages)   
+- [Community](#community)    
+    - [Backers](#backers)
+    - [Sponsors](#sponsors)
+  
 
 ## Syntax
 
@@ -93,7 +92,7 @@ Pug transforms the above to:
 </html>
 ```
 
-##Description
+## Description
 
 To learn more, [Read the documentation](https://pugjs.org/). 
 To try it out, [Take it for a test drive](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo). 
@@ -107,11 +106,7 @@ Pug is written in Javascript and it plays well with Javascript.
 Pug templates generate javascript, so it is easy to embed Javascript in Pug. 
 The generated Javascript 
 can be run on [Node.js](http://nodejs.org) or in the browser to generate the HTML.
-All of this makes Pug  
-an excellent choice for web development. 
-
-##License
-Pug.js is released under an MIT License. 
+All of this makes Pug an excellent choice for web development. 
 
 
 ## Release 2.0.0 (Renamed Pug to Jade)
@@ -123,10 +118,14 @@ If your package or app currently uses `jade`, don't worry: we have secured permi
 
 The syntax differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
 
+## License
 
-## Installation on the Server
+Pug.js is released under an MIT License. 
 
-###Node.js Projects
+
+## Installation
+
+### Node.js Projects
 
 To use Pug in your own Node.js projects:
 
@@ -150,7 +149,7 @@ and run with
 $ pug --help
 ```
 
-## Installation on the Client 
+### Installation on the Client 
 
 There are several different ways that you can use Pug.js on the client. 
 
@@ -209,10 +208,7 @@ The varios options are very nicely documented in the
 [Reference Documentation](https://pugjs.org/api/reference.html)  
 
 
-
-
-
-## Command Line
+### Command Line Invocation
 You can also invoke Pug from the command line. There are a number of commands. 
 
  To compile a template for use on the client using the command line, do:
@@ -229,7 +225,43 @@ which will produce `filename.js` containing the compiled template.
   - cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
   - [Pug について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
 
-## Implementations in other languages
+## Related Software
+
+### Framework implementations/adapters
+
+Embedded view engines for frameworks:
+
+  - [Laravel](https://github.com/BKWLD/laravel-pug)
+  - [Symfony](https://github.com/pug-php/pug-symfony)
+  - [Phalcon](https://github.com/pug-php/pug-phalcon)
+  - [CodeIgniter](https://github.com/pug-php/ci-pug-engine)
+  - [Yii 2](https://github.com/pug-php/pug-yii2)
+  - [Slim 3](https://github.com/pug-php/pug-slim)
+  - [Silex (implementation example)](https://gist.github.com/kylekatarnls/ba13e4361ab14f4ff5d2a5775eb0cc10)
+  - [Lumen](https://github.com/BKWLD/laravel-pug#use-in-lumen)
+  - [Rails](https://github.com/yivo/pug-rails)
+
+### CMS plugins
+
+  - [WordPress](https://github.com/welaika/wordless)
+
+## Editors
+
+  - [Emacs Mode](https://github.com/brianc/jade-mode)
+  - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
+  - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
+  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode
+  )
+## Servers  
+  - [html2pug](https://github.com/donpark/html2jade) converter
+  - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
+  - [Pug Server](https://github.com/ctrlaltdev/pug-server) Ideal for building local prototypes apart from any application
+  - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for 
+  [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/
+  [Express](https://github.com/expressjs/express)/
+  [Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io)
+
+## Implementations in Other Languages
 
 ### Ports in other languages
 
@@ -249,36 +281,7 @@ Templates engines for other languages with a different syntax, but a similar phi
   - [Scaml for Scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [Slim for Ruby](https://github.com/slim-template/slim) (should not be confused with Slim PHP framework)
   - [HAML for Ruby](http://haml.info)
-  
-### Framework implementations/adapters
-
-Embedded view engines for frameworks:
-
-  - [Laravel](https://github.com/BKWLD/laravel-pug)
-  - [Symfony](https://github.com/pug-php/pug-symfony)
-  - [Phalcon](https://github.com/pug-php/pug-phalcon)
-  - [CodeIgniter](https://github.com/pug-php/ci-pug-engine)
-  - [Yii 2](https://github.com/pug-php/pug-yii2)
-  - [Slim 3](https://github.com/pug-php/pug-slim)
-  - [Silex (implementation example)](https://gist.github.com/kylekatarnls/ba13e4361ab14f4ff5d2a5775eb0cc10)
-  - [Lumen](https://github.com/BKWLD/laravel-pug#use-in-lumen)
-  - [Rails](https://github.com/yivo/pug-rails)
-
-### CMS plugins
-
-  - [WordPress](https://github.com/welaika/wordless)
-
-## Additional Resources
-
-  - [Emacs Mode](https://github.com/brianc/jade-mode)
-  - [Vim Syntax](https://github.com/digitaltoad/vim-pug)
-  - [TextMate Bundle](http://github.com/miksago/jade-tmbundle)
-  - [Coda/SubEtha syntax Mode](https://github.com/aaronmccall/jade.mode)
-  - [html2pug](https://github.com/donpark/html2jade) converter
-  - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
-  - [Pug Server](https://github.com/ctrlaltdev/pug-server) Ideal for building local prototypes apart from any application
-  - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io)
-
+# Community
 
 ## Backers
 Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/pug#backer)]
