@@ -1062,9 +1062,9 @@ Lexer.prototype = {
     var key = '';
     var i;
     
-    // consume all whitespace before the key
+    // consume all whitespace and commas before the key
     for(i = 0; i < str.length; i++){
-      if(!this.whitespaceRe.test(str[i])) break;
+      if(!(this.whitespaceRe.test(str[i]) || str[i] === ',')) break;
       if(str[i] === '\n'){
         this.incrementLine(1);
       } else {
