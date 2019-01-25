@@ -1,11 +1,37 @@
 <a  href="https://pugjs.org"><img src="https://cdn.rawgit.com/pugjs/pug-logo/eec436cee8fd9d1726d7839cbe99d1f694692c0c/SVG/pug-final-logo-_-colour-128.svg" height="200" align="right"></a>
 
+- [Pug.js](#pug.js-was-jade)
+    - [Syntax](##syntax)
+    - [Description](##description)
+    - [License](##license)
+    - [Release 2.0.0](##release-2.0.0-renamed-pug-to-jade)
+    - [Installation](##installation)
+        - [Node.js Projects](##Node.js-projects)
+        - [Command Line Projects](##command-line-projects)
+    - [Installation on the Client](##installation-on-the-client)
+    - [API](##api)
+    - [Options](##options)
+    - [Tutorials](##tutorials)
+    - [Additional Resources](##Additional-Resources)
+- [Related Softare](##related-software)
+    - [Implementations In Other Languages](##implementations-in-other-languages)
+    - [Ports To Other Languages](###ports-in-other-languages)
+    - [Equivalents in other languages](###Equivalents-in-other-lanuages)
+    - [Templates engines for other languages with a different syntax, but a similar philosophy:](###templates-engines-for-other-languages-with-a-different-syntax-but-a-similar-philosophy)
+    - [Framework implementations/adapters](###framework-implementations-adapters)
+    - [CMS Plugins](##cms-plugins)
+-[Community](#community)    
+    - [Backers](##Backers)
+    - [Sponsors](##Sponsors)
+  
+
+     
 # Pug.js (was Jade)
 
 Pug.js is the leading templating engine for Node.js.  Like 
 [CoffeeScript](https://coffeescript.org/), 
 [Python](https://Python.org) and 
-[Haml](http://haml.info/), Pug.js uses indentation to define structure, eliminating 
+[Haml](http://haml.info/), Pug.js uses indentation (whitespace) to define structure, eliminating 
 closing tags, and lots of brackets.  This saves typing, reduces errors and makes the 
 code much more readable. 
 
@@ -67,6 +93,8 @@ Pug transforms the above to:
 </html>
 ```
 
+##Description
+
 To learn more, [Read the documentation](https://pugjs.org/). 
 To try it out, [Take it for a test drive](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo). 
 To discuss it,  join the [chat room](https://gitter.im/pugjs/pug). 
@@ -75,15 +103,15 @@ To report a bug, request a feature, or ask a question, [open an issue](https://g
 [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
 
-Pug templates generate javascript which generates HTML.  The HTML can be run in any browser.
-The generated Javascript can be run in any browser (Is that true?). 
-
-
-Pug.js plays well with Javascript.  Pug is written in Javascript. 
-The Pug templates are compiled to Javascript, which can then be run on 
-[Node.js](http://nodejs.org) or in the browser 
-to generate the HTML.  It is easy to embed Javascript in Pug.  All of this makes Pug  
+Pug is written in Javascript and it plays well with Javascript. 
+Pug templates generate javascript, so it is easy to embed Javascript in Pug. 
+The generated Javascript 
+can be run on [Node.js](http://nodejs.org) or in the browser to generate the HTML.
+All of this makes Pug  
 an excellent choice for web development. 
+
+##License
+Pug.js is released under an MIT License. 
 
 
 ## Release 2.0.0 (Renamed Pug to Jade)
@@ -96,20 +124,21 @@ If your package or app currently uses `jade`, don't worry: we have secured permi
 The syntax differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
 
 
-## Installation on the Node.js Server
+## Installation on the Server
 
-### Package
+###Node.js Projects
 
-To use Pug in your own JavaScript projects:
+To use Pug in your own Node.js projects:
 
 ```bash
 $ npm install pug
 ```
 
+### Command Line Projects
 
-### Command Line
-
-After installing the latest version of [Node.js](http://nodejs.org), install with:
+If you are not using Node.js, but still want to use Pug from the command line, first install 
+the latest version of [Node.js](http://nodejs.org).
+The install Pug  with:
 
 ```bash
 $ npm install pug-cli -g
@@ -121,34 +150,34 @@ and run with
 $ pug --help
 ```
 
-## Installation on the Client (in the browser)
+## Installation on the Client 
 
 There are several different ways that you can use Pug.js on the client. 
 
-If you are serving HRML rendered on the server by PUG, no need to do anything. 
+If you are serving Pug rendered HTML, no need to do anything. 
 
-If you are serving a single Javascript function, created by PUG, which renders a page on the client, there is also 
-no need to do anything.  The Pug runtime is included in that javascript function. 
+If you are serving a single Pug Javascript function, which renders a page on the client, there is also 
+no need to do anything.  [The Pug runtime]](https://github.com/pugjs/pug/blob/master/packages/pug-runtime/index.js)
+is included in that javascript function. 
 
-If you are  serving multiple pug javascript funtions,  to render multiple pages on the client, you 
-might want to serve the runtime separately.  So you set an option to not include the runtime in the compiled javascript. 
+If you are rendering multiple PUG pages on the client, you will have multiple Pug functions.  Rather 
+than including a copy of the runtime 
+in each function, you can generate the functions without the runtime.
 
 ```
 options = {inlineRuntimeFunctions: false}
 ```
-And then make sure to include [the runtime](https://github.com/pugjs/pug/blob/master/packages/pug-runtime/index.js) 
-in the javascript which you serve. 
+And then just serve a sigle copy of the runtime.  
+You can [learn more about the runtime here](https://github.com/pugjs/pug/tree/master/packages/pug-runtime).   
 
 If you want to compile Pug templates in the browser you need to include Pug for the browser.
 Here is the latest version of [Pug for the browser in standalone form](https://pugjs.org/js/pug.js).  It only supports the very latest browsers, though, and is a large file, and compilation is comparitively slow, so it is recommended that only the developers do this, and then save and serve the generated javascript. 
 
-If you want to build a Pug Editor, that is a bit tricky.  You need to load both the runtime and the above mentioned version of Pug for the browser. But they both want to be called "var pug;"
-
 ## API
 
 There are several ways to use the Pug API.  You can generate the javascript with or without the runtime, either from a 
-string, or from a file.  You can render that javascript on the client or on the Node.js server.  You can directly render the HTML.  You can also compile on the client machine. 
-To see all of the different options, prease  read [pugjs.org/api/reference.html](https://pugjs.org/api/reference.html)  
+string, or from a file.  You can render that javascript on the client or on the server.  You can directly render 
+the HTML.  You can also compile on the client machine. 
 
 Here are some examples of using the Pug Api 
 
@@ -169,12 +198,15 @@ var html = pug.render('string of pug', merge(options, locals));
 var html = pug.renderFile('filename.pug', merge(options, locals));
 ```
 
-
 ### Options
+Here are the basic ootions:
 
  - `filename`  Used in exceptions, and required when using includes
  - `compileDebug`  When `false` no debug instrumentation is compiled
  - `pretty`    Add pretty-indentation whitespace to output _(`false` by default)_
+
+The varios options are very nicely documented in the 
+[Reference Documentation](https://pugjs.org/api/reference.html)  
 
 
 
@@ -316,6 +348,3 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 <a href="https://opencollective.com/pug/sponsor/28/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/28/avatar.svg"></a>
 <a href="https://opencollective.com/pug/sponsor/29/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/29/avatar.svg"></a>
 
-## License
-
-MIT
