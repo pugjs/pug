@@ -207,7 +207,7 @@ function compileBody(str, options){
  * @api private
  */
 function handleTemplateCache (options, str) {
-  var key = options.filename;
+  var key = options.cacheKey || options.filename;
   if (options.cache && exports.cache[key]) {
     return exports.cache[key];
   } else {
