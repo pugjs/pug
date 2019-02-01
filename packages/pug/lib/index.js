@@ -50,6 +50,15 @@ function applyPlugins(value, options, plugins, name) {
   }, value);
 }
 
+function getPlugin(plugins, name, defaultFunction) {
+  for (var plugin of plugins) {
+    if (plugin[name]) {
+      return plugin[name];
+    }
+  }
+  return defaultFunction;
+}
+
 function findReplacementFunc(plugins, name) {
   var eligiblePlugins = plugins.filter(function (plugin) {
     return plugin[name];
@@ -172,7 +181,7 @@ function compileBody(str, options){
 
   // Compile
   ast = applyPlugins(ast, options, plugins, 'preCodeGen');
-  var js = generateCode(ast, {
+  var js = getPlugin(plugins, 'codeGen', generateCode)(ast, {
     pretty: options.pretty,
     compileDebug: options.compileDebug,
     doctype: options.doctype,

@@ -940,6 +940,17 @@ describe('pug', function(){
       assert.equal('<p>foo</p>', fn());
     });
 
+    it('should support codegen plugin', function(){
+      var fn = pug.compile('p foo', {
+        plugins: [{
+          codeGen () {
+            return 'function template() {\nreturn \'hello world\'\n}';
+          }
+        }]
+      });
+      assert.equal('hello world', fn());
+    });
+
     it('should support .compile() locals', function(){
       var fn = pug.compile('p= foo');
       assert.equal('<p>bar</p>', fn({ foo: 'bar' }));
