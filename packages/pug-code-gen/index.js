@@ -16,8 +16,7 @@ var gen = require('babel-generator');
 var babylon = require('babylon');
 var babelTemplate = require('babel-template');
 var babel = require('babel-core');
-var babelPluginTransformWith = require('babel-plugin-transform-with');
-var babelPluginPugConcat = require('./babel-plugin-pug-concat.js');
+
 // This is used to prevent pretty printing inside certain tags
 var WHITE_SPACE_SENSITIVE_TAGS = {
   pre: true,
@@ -836,9 +835,6 @@ Compiler.prototype = {
       , self = this;
     var ast = [];
 
-    var bufferName = interpolated ? (tag.astExpr ? this.bufferAST(tag.astExpr) : this.bufferExpression(tag.expr)) : this.buffer(name);
-
-/*
     function bufferName() {
       if (interpolated) {
         if (tag.astExpr) return self.bufferAST(tag.astExpr);
@@ -846,7 +842,7 @@ Compiler.prototype = {
       }
       else return self.buffer(name);
     }
-*/
+
     if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true) this.escapePrettyMode = true;
 
     if (!this.hasCompiledTag) {
@@ -860,7 +856,7 @@ Compiler.prototype = {
       push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
       push.apply(ast, this.buffer('<'));
-      push.apply(ast, bufferName);
+      push.apply(ast, bufferName());
       push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
       if (this.terse && !tag.selfClosing) {
         push.apply(ast, this.buffer('>'));
@@ -888,7 +884,7 @@ Compiler.prototype = {
     } else {
       // Optimize attributes buffering
       push.apply(ast, this.buffer('<'));
-      push.apply(ast, bufferName);
+      push.apply(ast, bufferName());
       push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
       push.apply(ast, this.buffer('>'));
       if (tag.code) push.apply(ast, this.visitCode(tag.code));
@@ -899,7 +895,7 @@ Compiler.prototype = {
         push.apply(ast, this.prettyIndent(0, true));
 
       push.apply(ast, this.buffer('</'));
-      push.apply(ast, bufferName);
+      push.apply(ast, bufferName());
       push.apply(ast, this.buffer('>'));
     }
 
