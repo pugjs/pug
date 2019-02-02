@@ -1,4 +1,6 @@
-exports[`test comment-in-comment.input.json 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`comment-in-comment.input.json 1`] = `
 Object {
   "code": "PUG:UNEXPECTED_TOKEN",
   "line": 2,
@@ -6,7 +8,7 @@ Object {
 }
 `;
 
-exports[`test comments.input.json 1`] = `
+exports[`comments.input.json 1`] = `
 Array [
   Object {
     "line": 2,
@@ -237,7 +239,7 @@ Array [
   Object {
     "line": 24,
     "type": "text",
-    "val": "script(src=\'/lame.js\')",
+    "val": "script(src='/lame.js')",
   },
   Object {
     "line": 25,
@@ -327,7 +329,7 @@ Array [
 ]
 `;
 
-exports[`test comments.input.json 2`] = `
+exports[`comments.input.json 2`] = `
 Array [
   Object {
     "line": 2,
@@ -503,7 +505,7 @@ Array [
 ]
 `;
 
-exports[`test comments.input.json 3`] = `
+exports[`comments.input.json 3`] = `
 Array [
   Object {
     "line": 2,
@@ -640,7 +642,7 @@ Array [
 ]
 `;
 
-exports[`test comments.source.input.json 1`] = `
+exports[`comments.source.input.json 1`] = `
 Array [
   Object {
     "line": 4,
@@ -657,7 +659,7 @@ Array [
 ]
 `;
 
-exports[`test comments.source.input.json 2`] = `
+exports[`comments.source.input.json 2`] = `
 Array [
   Object {
     "buffer": false,
@@ -750,7 +752,7 @@ Array [
 ]
 `;
 
-exports[`test comments.source.input.json 3`] = `
+exports[`comments.source.input.json 3`] = `
 Array [
   Object {
     "line": 4,
@@ -767,7 +769,7 @@ Array [
 ]
 `;
 
-exports[`test comments-in-case.input.json 1`] = `
+exports[`comments-in-case.input.json 1`] = `
 Array [
   Object {
     "line": 1,
@@ -805,7 +807,7 @@ Array [
     "escape": false,
     "line": 4,
     "type": "code",
-    "val": "var s = \'this\'",
+    "val": "var s = 'this'",
   },
   Object {
     "line": 5,
@@ -828,7 +830,7 @@ Array [
   Object {
     "line": 7,
     "type": "when",
-    "val": "\'this\'",
+    "val": "'this'",
   },
   Object {
     "line": 8,
@@ -844,7 +846,7 @@ Array [
   Object {
     "line": 8,
     "type": "text",
-    "val": "It\'s this!",
+    "val": "It's this!",
   },
   Object {
     "line": 9,
@@ -853,7 +855,7 @@ Array [
   Object {
     "line": 9,
     "type": "when",
-    "val": "\'that\'",
+    "val": "'that'",
   },
   Object {
     "line": 10,
@@ -869,7 +871,7 @@ Array [
   Object {
     "line": 10,
     "type": "text",
-    "val": "It\'s that!",
+    "val": "It's that!",
   },
   Object {
     "line": 10,
@@ -894,7 +896,7 @@ Array [
 ]
 `;
 
-exports[`test comments-in-case.input.json 2`] = `
+exports[`comments-in-case.input.json 2`] = `
 Array [
   Object {
     "line": 1,
@@ -932,7 +934,7 @@ Array [
     "escape": false,
     "line": 4,
     "type": "code",
-    "val": "var s = \'this\'",
+    "val": "var s = 'this'",
   },
   Object {
     "line": 5,
@@ -961,7 +963,7 @@ Array [
   Object {
     "line": 7,
     "type": "when",
-    "val": "\'this\'",
+    "val": "'this'",
   },
   Object {
     "line": 8,
@@ -977,7 +979,7 @@ Array [
   Object {
     "line": 8,
     "type": "text",
-    "val": "It\'s this!",
+    "val": "It's this!",
   },
   Object {
     "line": 9,
@@ -986,7 +988,7 @@ Array [
   Object {
     "line": 9,
     "type": "when",
-    "val": "\'that\'",
+    "val": "'that'",
   },
   Object {
     "line": 10,
@@ -1002,7 +1004,7 @@ Array [
   Object {
     "line": 10,
     "type": "text",
-    "val": "It\'s that!",
+    "val": "It's that!",
   },
   Object {
     "line": 10,
@@ -1027,7 +1029,7 @@ Array [
 ]
 `;
 
-exports[`test comments-in-case.input.json 3`] = `
+exports[`comments-in-case.input.json 3`] = `
 Array [
   Object {
     "line": 1,
@@ -1065,7 +1067,7 @@ Array [
     "escape": false,
     "line": 4,
     "type": "code",
-    "val": "var s = \'this\'",
+    "val": "var s = 'this'",
   },
   Object {
     "line": 5,
@@ -1088,7 +1090,7 @@ Array [
   Object {
     "line": 7,
     "type": "when",
-    "val": "\'this\'",
+    "val": "'this'",
   },
   Object {
     "line": 8,
@@ -1104,7 +1106,7 @@ Array [
   Object {
     "line": 8,
     "type": "text",
-    "val": "It\'s this!",
+    "val": "It's this!",
   },
   Object {
     "line": 9,
@@ -1113,7 +1115,7 @@ Array [
   Object {
     "line": 9,
     "type": "when",
-    "val": "\'that\'",
+    "val": "'that'",
   },
   Object {
     "line": 10,
@@ -1129,7 +1131,7 @@ Array [
   Object {
     "line": 10,
     "type": "text",
-    "val": "It\'s that!",
+    "val": "It's that!",
   },
   Object {
     "line": 10,
@@ -1154,7 +1156,7 @@ Array [
 ]
 `;
 
-exports[`test end.input.json 1`] = `
+exports[`end.input.json 1`] = `
 Object {
   "code": "PUG:UNEXPECTED_TOKEN",
   "line": 4,
@@ -1162,7 +1164,7 @@ Object {
 }
 `;
 
-exports[`test startstart.input.json 1`] = `
+exports[`startstart.input.json 1`] = `
 Object {
   "code": "PUG:UNEXPECTED_TOKEN",
   "line": 3,
