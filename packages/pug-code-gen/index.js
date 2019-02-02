@@ -144,6 +144,31 @@ Compiler.prototype = {
               t.binaryExpression('+', t.identifier('pug_html'), ast)
             ))];
   },
+  ast_with: function(ast) {
+      let exclude = this.options.globals ? this.options.globals.concat(INTERNAL_VARIABLES) : INTERNAL_VARIABLES;
+      exclude = exclude.concat(this.runtimeFunctionsUsed.map(function (name) { return 'pug_' + name; }));
+      exclude.push('undefined', 'this', 'locals')
+      let vars = findGlobals(t.program(ast)).map(function(v) { return v.name }).filter(function(v) { return exclude.indexOf(v) === -1 })
+      if (vars.length > 0) {
+        let bag = 'locals' 
+        ast = [t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(t.functionExpression(null, vars.map(function(v) { return t.identifier(v)}), t.blockStatement(ast)), t.identifier('call')),
+            [ t.thisExpression() ].concat(vars.map(function(v) {
+              return t.conditionalExpression(
+                t.binaryExpression('in', t.stringLiteral(v), t.logicalExpression('||', t.identifier(bag), t.objectExpression([]))),
+                t.memberExpression(t.logicalExpression('||', t.identifier(bag), t.objectExpression([])), t.identifier(v)),
+                t.conditionalExpression(
+                  t.binaryExpression('!==', t.unaryExpression('typeof', t.identifier(v)), t.stringLiteral('undefined')),
+                  t.identifier(v),
+                  t.identifier('undefined')
+                )
+              )
+            }))
+          ))]
+        }
+        return ast;
+  },
   /**
    * This method is called once the AST is built in
    * order to apply transformations
@@ -257,26 +282,7 @@ Compiler.prototype = {
       ].concat(ast);
     } else {
       // transform `ast` into `with(locals || {}) { ast }`
-      let exclude = this.options.globals ? this.options.globals.concat(INTERNAL_VARIABLES) : INTERNAL_VARIABLES;
-      exclude.concat(this.runtimeFunctionsUsed.map(function (name) { return 'pug_' + name; }));
-      exclude.push('undefined', 'this', 'locals')
-      let vars = findGlobals(t.program(ast)).map(function(v) { return v.name }).filter(function(v) { return exclude.indexOf(v) === -1 })
-      let bag = 'locals' 
-      ast = [t.expressionStatement(
-        t.callExpression(
-          t.memberExpression(t.functionExpression(null, vars.map(function(v) { return t.identifier(v)}), t.blockStatement(ast)), t.identifier('call')),
-          [ t.thisExpression() ].concat(vars.map(function(v) {
-            return t.conditionalExpression(
-              t.binaryExpression('in', t.stringLiteral(v), t.logicalExpression('||', t.identifier(bag), t.objectExpression([]))),
-              t.memberExpression(t.identifier(bag), t.identifier(v)),
-              t.conditionalExpression(
-                t.binaryExpression('!==', t.unaryExpression('typeof', t.identifier(v)), t.stringLiteral('undefined')),
-                t.identifier(v),
-                t.identifier('undefined')
-              )
-            )
-          }))
-        ))] 
+      ast = this.ast_with(ast);
     }
 
 
