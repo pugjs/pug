@@ -4,13 +4,14 @@ var assert = require('assert');
 var TokenStream = require('token-stream');
 var error = require('pug-error');
 var inlineTags = require('./lib/inline-tags');
+var clone = require('rfdc')();
 
 module.exports = parse;
 module.exports.Parser = Parser;
 function parse(tokens, options) {
   var parser = new Parser(tokens, options);
   var ast = parser.parse();
-  return JSON.parse(JSON.stringify(ast));
+  return clone(ast);
 };
 
 /**

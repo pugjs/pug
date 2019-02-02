@@ -4,12 +4,13 @@ var fs = require('fs');
 var path = require('path');
 var walk = require('pug-walk');
 var assign = require('object-assign');
+var clone = require('rfdc')();
 
 module.exports = load;
 function load(ast, options) {
   options = getOptions(options);
   // clone the ast
-  ast = JSON.parse(JSON.stringify(ast));
+  ast = clone(ast);
   return walk(ast, function (node) {
     if (node.str === undefined) {
       if (node.type === 'Include' || node.type === 'RawInclude' || node.type === 'Extends') {

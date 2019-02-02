@@ -4,12 +4,13 @@ var assert = require('assert');
 var isExpression = require('is-expression');
 var characterParser = require('character-parser');
 var error = require('pug-error');
+var clone = require('rfdc')();
 
 module.exports = lex;
 module.exports.Lexer = Lexer;
 function lex(str, options) {
   var lexer = new Lexer(str, options);
-  return JSON.parse(JSON.stringify(lexer.getTokens()));
+  return clone(lexer.getTokens());
 }
 
 /**

@@ -1,21 +1,25 @@
 exports[`test no uncessessary blocks should be added 1`] = `
 Object {
+  "filename": undefined,
   "line": 0,
   "nodes": Array [
     Object {
       "attributeBlocks": Array [],
       "attrs": Array [],
       "block": Object {
+        "filename": undefined,
         "line": 2,
         "nodes": Array [
           Object {
             "column": 5,
+            "filename": undefined,
             "line": 3,
             "type": "Text",
             "val": "Hello",
           },
           Object {
             "column": 1,
+            "filename": undefined,
             "line": 4,
             "type": "Text",
             "val": "
@@ -23,6 +27,7 @@ Object {
           },
           Object {
             "column": 5,
+            "filename": undefined,
             "line": 4,
             "type": "Text",
             "val": "World",
@@ -31,6 +36,7 @@ Object {
         "type": "Block",
       },
       "column": 1,
+      "filename": undefined,
       "isInline": false,
       "line": 2,
       "name": "div",
