@@ -26,34 +26,44 @@ module.exports = template;
 exports[`pug .compileClient() should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it true 1`] = `
 "function pug_escape(e) {
   var a = \"\" + e,
-    t = pug_match_html.exec(a);
-  if (!t) return e;
-  var r,
-    c,
-    n,
-    s = \"\";
-  for (r = t.index, c = 0; r < a.length; r++) {
-    switch (a.charCodeAt(r)) {
+    r = -1,
+    n = a.indexOf('"'),
+    t = a.indexOf("&"),
+    i = a.indexOf("<"),
+    s = a.indexOf(">");
+  if (
+    (n > -1 && (r = n),
+    t > -1 && (t < r || -1 === r) && (r = t),
+    i > -1 && (i < r || -1 === r) && (r = i),
+    s > -1 && (s < r || -1 === r) && (r = s),
+    -1 === r)
+  )
+    return e;
+  var c,
+    u,
+    f,
+    b = "";
+  for (c = r, u = 0; c < a.length; c++) {
+    switch (a.charCodeAt(c)) {
       case 34:
-        n = \"&quot;\";
+        f = "&quot;";
         break;
       case 38:
-        n = \"&amp;\";
+        f = "&amp;";
         break;
       case 60:
-        n = \"&lt;\";
+        f = "&lt;";
         break;
       case 62:
-        n = \"&gt;\";
+        f = "&gt;";
         break;
       default:
         continue;
     }
-    c !== r && (s += a.substring(c, r)), (c = r + 1), (s += n);
+    u !== c && (b += a.substring(u, c)), (u = c + 1), (b += f);
   }
-  return c !== r ? s + a.substring(c, r) : s;
+  return u !== c ? b + a.substring(u, c) : b;
 }
-var pug_match_html = /[\"&<>]/;
 function pug_rethrow(n, e, r, t) {
   if (!(n instanceof Error)) throw n;
   if (!((\"undefined\" == typeof window && e) || t))

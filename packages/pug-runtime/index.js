@@ -184,16 +184,32 @@ function pug_attrs(obj, terse){
  * @api private
  */
 
-var pug_match_html = /["&<>]/;
 exports.escape = pug_escape;
 function pug_escape(_html){
   var html = '' + _html;
-  var regexResult = pug_match_html.exec(html);
-  if (!regexResult) return _html;
+  var escapeIndex = -1
+  var index1 = html.indexOf('"');
+  var index2 = html.indexOf('&');
+  var index3 = html.indexOf('<');
+  var index4 = html.indexOf('>');
+
+  if (index1 > -1) {
+    escapeIndex = index1
+  }
+  if (index2 > -1 && (index2 < escapeIndex || escapeIndex === -1)) {
+    escapeIndex = index2
+  }
+  if (index3 > -1 && (index3 < escapeIndex || escapeIndex === -1)) {
+    escapeIndex = index3
+  }
+  if (index4 > -1 && (index4 < escapeIndex || escapeIndex === -1)) {
+    escapeIndex = index4
+  }
+  if (escapeIndex === -1 ) return _html;
 
   var result = '';
   var i, lastIndex, escape;
-  for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+  for (i = escapeIndex, lastIndex = 0; i < html.length; i++) {
     switch (html.charCodeAt(i)) {
       case 34: escape = '&quot;'; break;
       case 38: escape = '&amp;'; break;
