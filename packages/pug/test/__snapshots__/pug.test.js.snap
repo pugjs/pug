@@ -24,27 +24,37 @@ module.exports = template;
 `;
 
 exports[`pug .compileClient() should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it true 1`] = `
-"function pug_escape(e) {
-  var a = \"\" + e,
-    r = -1,
-    n = a.indexOf('"'),
-    t = a.indexOf("&"),
-    i = a.indexOf("<"),
-    s = a.indexOf(">");
+"function pug_encode_char(e) {
+  return pug_encode_html_rules[e] || e;
+}
+var pug_encode_html_rules = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;"
+};
+function pug_escape(e) {
+  var r = "" + e,
+    a = -1,
+    t = r.indexOf('"'),
+    n = r.indexOf("&"),
+    c = r.indexOf("<"),
+    u = r.indexOf(">");
   if (
-    (n > -1 && (r = n),
-    t > -1 && (t < r || -1 === r) && (r = t),
-    i > -1 && (i < r || -1 === r) && (r = i),
-    s > -1 && (s < r || -1 === r) && (r = s),
-    -1 === r)
+    (t > -1 && (a = t),
+    n > -1 && (n < a || -1 === a) && (a = n),
+    c > -1 && (c < a || -1 === a) && (a = c),
+    u > -1 && (u < a || -1 === a) && (a = u),
+    -1 === a)
   )
     return e;
-  var c,
-    u,
+  if (a < r.length / 2) return r.replace(pug_match_html, pug_encode_char);
+  var i,
+    s,
     f,
-    b = "";
-  for (c = r, u = 0; c < a.length; c++) {
-    switch (a.charCodeAt(c)) {
+    g = "";
+  for (i = a, s = 0; i < r.length; i++) {
+    switch (r.charCodeAt(i)) {
       case 34:
         f = "&quot;";
         break;
@@ -60,10 +70,11 @@ exports[`pug .compileClient() should support module syntax in pug.compileClient(
       default:
         continue;
     }
-    u !== c && (b += a.substring(u, c)), (u = c + 1), (b += f);
+    s !== i && (g += r.substring(s, i)), (s = i + 1), (g += f);
   }
-  return u !== c ? b + a.substring(u, c) : b;
+  return s !== i ? g + r.substring(s, i) : g;
 }
+var pug_match_html = /[&<>"]/g;
 function pug_rethrow(n, e, r, t) {
   if (!(n instanceof Error)) throw n;
   if (!((\"undefined\" == typeof window && e) || t))

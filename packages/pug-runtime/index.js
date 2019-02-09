@@ -176,6 +176,18 @@ function pug_attrs(obj, terse){
   return attrs;
 };
 
+var pug_encode_html_rules = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;'
+};
+var pug_match_html = /[&<>"]/g;
+
+function pug_encode_char(c) {
+  return pug_encode_html_rules[c] || c;
+}
+
 /**
  * Escape the given string of `html`.
  *
@@ -183,7 +195,6 @@ function pug_attrs(obj, terse){
  * @return {String}
  * @api private
  */
-
 exports.escape = pug_escape;
 function pug_escape(_html){
   var html = '' + _html;
@@ -206,6 +217,10 @@ function pug_escape(_html){
     escapeIndex = index4
   }
   if (escapeIndex === -1 ) return _html;
+
+  if (escapeIndex < html.length / 2) {
+    return html.replace(pug_match_html, pug_encode_char);
+  }
 
   var result = '';
   var i, lastIndex, escape;
