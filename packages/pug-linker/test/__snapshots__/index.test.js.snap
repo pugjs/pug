@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`cases from pug include.script.input.json 1`] = `
 Object {
   "declaredBlocks": Object {},
@@ -10,12 +12,12 @@ Object {
         Object {
           "mustEscape": false,
           "name": "id",
-          "val": "\'pet-template\'",
+          "val": "'pet-template'",
         },
         Object {
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/x-template\'",
+          "val": "'text/x-template'",
         },
       ],
       "block": Object {
@@ -33,7 +35,7 @@ Object {
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'pet\'",
+                    "val": "'pet'",
                   },
                 ],
                 "block": Object {
@@ -201,7 +203,7 @@ Object {
                         Object {
                           "mustEscape": false,
                           "name": "id",
-                          "val": "\'content\'",
+                          "val": "'content'",
                         },
                       ],
                       "block": Object {
@@ -214,7 +216,7 @@ Object {
                               Object {
                                 "mustEscape": false,
                                 "name": "id",
-                                "val": "\'content-wrapper\'",
+                                "val": "'content-wrapper'",
                               },
                             ],
                             "block": Object {
@@ -307,7 +309,7 @@ Object {
                         Object {
                           "mustEscape": false,
                           "name": "id",
-                          "val": "\'footer\'",
+                          "val": "'footer'",
                         },
                       ],
                       "block": Object {
@@ -1078,7 +1080,7 @@ Object {
         Object {
           "mustEscape": true,
           "name": "type",
-          "val": "\"text/css\"",
+          "val": "\\"text/css\\"",
         },
       ],
       "block": Object {
@@ -1087,7 +1089,7 @@ Object {
         "nodes": Array [
           Object {
             "type": "Text",
-            "val": "@import \"some-included\"
+            "val": "@import \\"some-included\\"
 ",
           },
         ],
@@ -1141,7 +1143,7 @@ Object {
                             "filename": "include-only-text-body.pug",
                             "line": 1,
                             "type": "Text",
-                            "val": "The message is \"",
+                            "val": "The message is \\"",
                           },
                           Object {
                             "filename": "include-only-text-body.pug",
@@ -1184,7 +1186,7 @@ Object {
                             "filename": "include-only-text-body.pug",
                             "line": 3,
                             "type": "Text",
-                            "val": "\"",
+                            "val": "\\"",
                           },
                         ],
                         "type": "Block",
@@ -1234,7 +1236,7 @@ Object {
       "filename": "include-only-text-body.pug",
       "line": 1,
       "type": "Text",
-      "val": "The message is \"",
+      "val": "The message is \\"",
     },
     Object {
       "filename": "include-only-text-body.pug",
@@ -1245,7 +1247,7 @@ Object {
       "filename": "include-only-text-body.pug",
       "line": 3,
       "type": "Text",
-      "val": "\"",
+      "val": "\\"",
     },
   ],
   "type": "Block",
@@ -1283,7 +1285,7 @@ Object {
                         Object {
                           "mustEscape": true,
                           "name": "type",
-                          "val": "\'text/javascript\'",
+                          "val": "'text/javascript'",
                         },
                       ],
                       "block": Object {
@@ -1293,7 +1295,7 @@ Object {
                           Object {
                             "line": 3,
                             "type": "Text",
-                            "val": "alert(\'hello world\');",
+                            "val": "alert('hello world');",
                           },
                         ],
                         "type": "Block",
@@ -1316,7 +1318,7 @@ Object {
                             Object {
                               "mustEscape": true,
                               "name": "src",
-                              "val": "\'/caustic.js\'",
+                              "val": "'/caustic.js'",
                             },
                           ],
                           "block": Object {
@@ -1338,7 +1340,7 @@ Object {
                             Object {
                               "mustEscape": true,
                               "name": "src",
-                              "val": "\'/app.js\'",
+                              "val": "'/app.js'",
                             },
                           ],
                           "block": Object {
@@ -1404,7 +1406,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "type",
-                "val": "\'text/javascript\'",
+                "val": "'text/javascript'",
               },
             ],
             "block": Object {
@@ -1414,7 +1416,7 @@ Object {
                 Object {
                   "line": 3,
                   "type": "Text",
-                  "val": "alert(\'hello world\');",
+                  "val": "alert('hello world');",
                 },
               ],
               "type": "Block",
@@ -1520,7 +1522,7 @@ Object {
           Object {
             "type": "Text",
             "val": "<script>
-  console.log(\"foo\\nbar\")
+  console.log(\\"foo\\\\nbar\\")
 </script>
 ",
           },
@@ -1530,7 +1532,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "type",
-                "val": "\"text/javascript\"",
+                "val": "\\"text/javascript\\"",
               },
             ],
             "block": Object {
@@ -1540,11 +1542,11 @@ Object {
                 Object {
                   "type": "Text",
                   "val": "var STRING_SUBSTITUTIONS = {    // table of character substitutions
-  \'\\t\': \'\\\\t\',
-  \'\\r\': \'\\\\r\',
-  \'\\n\': \'\\\\n\',
-  \'\"\' : \'\\\\\"\',
-  \'\\\\\': \'\\\\\\\\\'
+  '\\\\t': '\\\\\\\\t',
+  '\\\\r': '\\\\\\\\r',
+  '\\\\n': '\\\\\\\\n',
+  '\\"' : '\\\\\\\\\\"',
+  '\\\\\\\\': '\\\\\\\\\\\\\\\\'
 };",
                 },
               ],
@@ -1594,7 +1596,7 @@ Object {
               "nodes": Array [
                 Object {
                   "type": "Text",
-                  "val": "var x = \"\\n here is some \\n new lined text\";
+                  "val": "var x = \\"\\\\n here is some \\\\n new lined text\\";
 ",
                 },
               ],
@@ -1648,7 +1650,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/jquery.js\'",
+                "val": "'vendor/jquery.js'",
               },
             ],
             "block": Object {
@@ -1670,7 +1672,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/caustic.js\'",
+                "val": "'vendor/caustic.js'",
               },
             ],
             "block": Object {
@@ -1692,7 +1694,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'app.js\'",
+                "val": "'app.js'",
               },
             ],
             "block": Object {
@@ -1714,7 +1716,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'foo.js\'",
+                "val": "'foo.js'",
               },
             ],
             "block": Object {
@@ -1736,7 +1738,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'bar.js\'",
+                "val": "'bar.js'",
               },
             ],
             "block": Object {
@@ -1780,7 +1782,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/jquery.js\'",
+                    "val": "'vendor/jquery.js'",
                   },
                 ],
                 "block": Object {
@@ -1802,7 +1804,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/caustic.js\'",
+                    "val": "'vendor/caustic.js'",
                   },
                 ],
                 "block": Object {
@@ -1824,7 +1826,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'app.js\'",
+                    "val": "'app.js'",
                   },
                 ],
                 "block": Object {
@@ -1846,7 +1848,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'foo.js\'",
+                    "val": "'foo.js'",
                   },
                 ],
                 "block": Object {
@@ -1868,7 +1870,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'bar.js\'",
+                    "val": "'bar.js'",
                   },
                 ],
                 "block": Object {
@@ -1953,7 +1955,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/jquery.js\'",
+                "val": "'vendor/jquery.js'",
               },
             ],
             "block": Object {
@@ -1975,7 +1977,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/caustic.js\'",
+                "val": "'vendor/caustic.js'",
               },
             ],
             "block": Object {
@@ -1997,7 +1999,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'app.js\'",
+                "val": "'app.js'",
               },
             ],
             "block": Object {
@@ -2019,7 +2021,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'foo.js\'",
+                "val": "'foo.js'",
               },
             ],
             "block": Object {
@@ -2041,7 +2043,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'bar.js\'",
+                "val": "'bar.js'",
               },
             ],
             "block": Object {
@@ -2085,7 +2087,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/jquery.js\'",
+                    "val": "'vendor/jquery.js'",
                   },
                 ],
                 "block": Object {
@@ -2107,7 +2109,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/caustic.js\'",
+                    "val": "'vendor/caustic.js'",
                   },
                 ],
                 "block": Object {
@@ -2129,7 +2131,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'app.js\'",
+                    "val": "'app.js'",
                   },
                 ],
                 "block": Object {
@@ -2151,7 +2153,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'foo.js\'",
+                    "val": "'foo.js'",
                   },
                 ],
                 "block": Object {
@@ -2173,7 +2175,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'bar.js\'",
+                    "val": "'bar.js'",
                   },
                 ],
                 "block": Object {
@@ -2248,12 +2250,12 @@ Object {
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'last\'",
+                "val": "'last'",
               },
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'prepend\'",
+                "val": "'prepend'",
               },
             ],
             "block": Object {
@@ -2282,12 +2284,12 @@ Object {
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'first\'",
+                "val": "'first'",
               },
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'prepend\'",
+                "val": "'prepend'",
               },
             ],
             "block": Object {
@@ -2316,7 +2318,7 @@ Object {
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'content\'",
+                "val": "'content'",
               },
             ],
             "block": Object {
@@ -2345,12 +2347,12 @@ Object {
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'first\'",
+                "val": "'first'",
               },
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'append\'",
+                "val": "'append'",
               },
             ],
             "block": Object {
@@ -2379,12 +2381,12 @@ Object {
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'last\'",
+                "val": "'last'",
               },
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'append\'",
+                "val": "'append'",
               },
             ],
             "block": Object {
@@ -2421,12 +2423,12 @@ Object {
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'last\'",
+                    "val": "'last'",
                   },
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'prepend\'",
+                    "val": "'prepend'",
                   },
                 ],
                 "block": Object {
@@ -2455,12 +2457,12 @@ Object {
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'first\'",
+                    "val": "'first'",
                   },
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'prepend\'",
+                    "val": "'prepend'",
                   },
                 ],
                 "block": Object {
@@ -2489,7 +2491,7 @@ Object {
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'content\'",
+                    "val": "'content'",
                   },
                 ],
                 "block": Object {
@@ -2518,12 +2520,12 @@ Object {
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'first\'",
+                    "val": "'first'",
                   },
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'append\'",
+                    "val": "'append'",
                   },
                 ],
                 "block": Object {
@@ -2552,12 +2554,12 @@ Object {
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'last\'",
+                    "val": "'last'",
                   },
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'append\'",
+                    "val": "'append'",
                   },
                 ],
                 "block": Object {
@@ -2600,7 +2602,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'foo.js\'",
+                "val": "'foo.js'",
               },
             ],
             "block": Object {
@@ -2622,7 +2624,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'/app.js\'",
+                "val": "'/app.js'",
               },
             ],
             "block": Object {
@@ -2644,7 +2646,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'jquery.js\'",
+                "val": "'jquery.js'",
               },
             ],
             "block": Object {
@@ -2681,12 +2683,12 @@ Object {
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'last\'",
+              "val": "'last'",
             },
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'prepend\'",
+              "val": "'prepend'",
             },
           ],
           "block": Object {
@@ -2715,12 +2717,12 @@ Object {
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'first\'",
+              "val": "'first'",
             },
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'prepend\'",
+              "val": "'prepend'",
             },
           ],
           "block": Object {
@@ -2749,7 +2751,7 @@ Object {
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'content\'",
+              "val": "'content'",
             },
           ],
           "block": Object {
@@ -2778,12 +2780,12 @@ Object {
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'first\'",
+              "val": "'first'",
             },
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'append\'",
+              "val": "'append'",
             },
           ],
           "block": Object {
@@ -2812,12 +2814,12 @@ Object {
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'last\'",
+              "val": "'last'",
             },
             Object {
               "mustEscape": false,
               "name": "class",
-              "val": "\'append\'",
+              "val": "'append'",
             },
           ],
           "block": Object {
@@ -2855,7 +2857,7 @@ Object {
             Object {
               "mustEscape": true,
               "name": "src",
-              "val": "\'foo.js\'",
+              "val": "'foo.js'",
             },
           ],
           "block": Object {
@@ -2877,7 +2879,7 @@ Object {
             Object {
               "mustEscape": true,
               "name": "src",
-              "val": "\'/app.js\'",
+              "val": "'/app.js'",
             },
           ],
           "block": Object {
@@ -2899,7 +2901,7 @@ Object {
             Object {
               "mustEscape": true,
               "name": "src",
-              "val": "\'jquery.js\'",
+              "val": "'jquery.js'",
             },
           ],
           "block": Object {
@@ -2949,7 +2951,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'foo.js\'",
+                "val": "'foo.js'",
               },
             ],
             "block": Object {
@@ -2971,7 +2973,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'bar.js\'",
+                "val": "'bar.js'",
               },
             ],
             "block": Object {
@@ -2993,7 +2995,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'app.js\'",
+                "val": "'app.js'",
               },
             ],
             "block": Object {
@@ -3015,7 +3017,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/jquery.js\'",
+                "val": "'vendor/jquery.js'",
               },
             ],
             "block": Object {
@@ -3037,7 +3039,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/caustic.js\'",
+                "val": "'vendor/caustic.js'",
               },
             ],
             "block": Object {
@@ -3081,7 +3083,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'foo.js\'",
+                    "val": "'foo.js'",
                   },
                 ],
                 "block": Object {
@@ -3103,7 +3105,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'bar.js\'",
+                    "val": "'bar.js'",
                   },
                 ],
                 "block": Object {
@@ -3125,7 +3127,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'app.js\'",
+                    "val": "'app.js'",
                   },
                 ],
                 "block": Object {
@@ -3147,7 +3149,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/jquery.js\'",
+                    "val": "'vendor/jquery.js'",
                   },
                 ],
                 "block": Object {
@@ -3169,7 +3171,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/caustic.js\'",
+                    "val": "'vendor/caustic.js'",
                   },
                 ],
                 "block": Object {
@@ -3254,7 +3256,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'foo.js\'",
+                "val": "'foo.js'",
               },
             ],
             "block": Object {
@@ -3276,7 +3278,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'bar.js\'",
+                "val": "'bar.js'",
               },
             ],
             "block": Object {
@@ -3298,7 +3300,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'app.js\'",
+                "val": "'app.js'",
               },
             ],
             "block": Object {
@@ -3320,7 +3322,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/jquery.js\'",
+                "val": "'vendor/jquery.js'",
               },
             ],
             "block": Object {
@@ -3342,7 +3344,7 @@ Object {
               Object {
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'vendor/caustic.js\'",
+                "val": "'vendor/caustic.js'",
               },
             ],
             "block": Object {
@@ -3386,7 +3388,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'foo.js\'",
+                    "val": "'foo.js'",
                   },
                 ],
                 "block": Object {
@@ -3408,7 +3410,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'bar.js\'",
+                    "val": "'bar.js'",
                   },
                 ],
                 "block": Object {
@@ -3430,7 +3432,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'app.js\'",
+                    "val": "'app.js'",
                   },
                 ],
                 "block": Object {
@@ -3452,7 +3454,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/jquery.js\'",
+                    "val": "'vendor/jquery.js'",
                   },
                 ],
                 "block": Object {
@@ -3474,7 +3476,7 @@ Object {
                   Object {
                     "mustEscape": true,
                     "name": "src",
-                    "val": "\'vendor/caustic.js\'",
+                    "val": "'vendor/caustic.js'",
                   },
                 ],
                 "block": Object {
@@ -3545,7 +3547,7 @@ exports[`error handling extends-not-first.input.json 1`] = `
 Object {
   "code": "PUG:EXTENDS_NOT_FIRST",
   "line": 4,
-  "msg": "Declaration of template inheritance (\"extends\") should be the first thing in the file. There can only be one extends statement per file.",
+  "msg": "Declaration of template inheritance (\\"extends\\") should be the first thing in the file. There can only be one extends statement per file.",
 }
 `;
 
@@ -3579,18 +3581,18 @@ Object {
         "name": "body",
         "nodes": Array [
           Object {
-            "args": "\'myimg.png\'",
+            "args": "'myimg.png'",
             "attributeBlocks": Array [],
             "attrs": Array [
               Object {
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'with-border\'",
+                "val": "'with-border'",
               },
               Object {
                 "mustEscape": true,
                 "name": "alt",
-                "val": "\"My image\"",
+                "val": "\\"My image\\"",
               },
             ],
             "block": null,
@@ -3609,18 +3611,18 @@ Object {
             "name": "body",
             "nodes": Array [
               Object {
-                "args": "\'myimg.png\'",
+                "args": "'myimg.png'",
                 "attributeBlocks": Array [],
                 "attrs": Array [
                   Object {
                     "mustEscape": false,
                     "name": "class",
-                    "val": "\'with-border\'",
+                    "val": "'with-border'",
                   },
                   Object {
                     "mustEscape": true,
                     "name": "alt",
-                    "val": "\"My image\"",
+                    "val": "\\"My image\\"",
                   },
                 ],
                 "block": null,
@@ -3759,18 +3761,18 @@ Object {
                   "name": "body",
                   "nodes": Array [
                     Object {
-                      "args": "\'myimg.png\'",
+                      "args": "'myimg.png'",
                       "attributeBlocks": Array [],
                       "attrs": Array [
                         Object {
                           "mustEscape": false,
                           "name": "class",
-                          "val": "\'with-border\'",
+                          "val": "'with-border'",
                         },
                         Object {
                           "mustEscape": true,
                           "name": "alt",
-                          "val": "\"My image\"",
+                          "val": "\\"My image\\"",
                         },
                       ],
                       "block": null,
