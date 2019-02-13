@@ -1,0 +1,15 @@
+{
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error", {
+      "singleQuote": true
+    }],
+    "no-unused-vars": ["error", { "vars": "local", "args": "none" }],
+    "no-useless-escape": "error",
+    "no-unreachable": "error",
+    "no-const-assign": "error"
+  },
+  "env": {
+    "es6": true
+  }
+}

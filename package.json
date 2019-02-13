@@ -3,20 +3,24 @@
   "private": true,
   "devDependencies": {
     "coveralls": "3.0.2",
+    "eslint": "^5.13.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "jest": "24.0.0",
     "lerna": "3.10.8",
-    "prettier": "^1.3.1"
+    "prettier": "^1.16.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/pugjs/pug.git"
   },
   "scripts": {
+    "lint": "node .eslint.js",
+    "lint-fix": "node .eslint.js --fix",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "release": "lerna publish",
     "pretest": "lerna run pretest",
-    "test": "jest",
+    "test": "npm run lint && jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "watch": "jest --watch"
