@@ -50,7 +50,7 @@ function applyPlugins(value, options, plugins, name) {
   }, value);
 }
 
-function findReplacementFunc(plugins, name, defaultFunction) {
+function findReplacementFunc(plugins, name) {
   var eligiblePlugins = plugins.filter(function (plugin) {
     return plugin[name];
   });
@@ -60,7 +60,7 @@ function findReplacementFunc(plugins, name, defaultFunction) {
   } else if (eligiblePlugins.length) {
     return eligiblePlugins[0][name].bind(eligiblePlugins[0]);
   }
-  return defaultFunction || null;
+  return null;
 }
 
 /**
@@ -172,7 +172,7 @@ function compileBody(str, options){
 
   // Compile
   ast = applyPlugins(ast, options, plugins, 'preCodeGen');
-  var js = findReplacementFunc(plugins, 'codeGen', generateCode)(ast, {
+  var js = (findReplacementFunc(plugins, 'codeGen') || generateCode)(ast, {
     pretty: options.pretty,
     compileDebug: options.compileDebug,
     doctype: options.doctype,
