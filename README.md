@@ -3,7 +3,7 @@
      
 # Pug.js (was Jade)
 
-Pug.js is the leading templating engine for Node.js.  Like 
+Pug.js is the leading templating engine for Node.js. But it is also works great for general HTML developers and for Python developers. Like 
 [CoffeeScript](https://coffeescript.org/), 
 [Python](https://Python.org) and 
 [Haml](http://haml.info/), Pug.js uses indentation (whitespace) to define structure, eliminating 
@@ -94,8 +94,14 @@ Pug transforms the above to:
 
 ## Description
 
+If you are an HTML developer, the Pug compiler generates HTML which can be served directly.  [See how to generate basic hTML from PUG](https://pythonlinks.info/json-wiki/html-demo/acedemo).
+
+If you are a Javascript developer, the Pug compiler generates javascript which can be run to render the HTML.  Javascript can be directly included in the Pug Template.   [See how to embed javascript in a Pug template](https://pythonlinks.info/json-wiki/pug-demo/acedemo).
+
+If you are a Python developer, the Pug compiler generates Chameleon Page Templates (CPT).  Both Tal: and ${ } statements are respected.  The CPT can then  be rendered at run time to populate it with data.   [See how Pug generates Python's Chameleon Page Templates](https://pythonlinks.info/json-wiki/python-demo/acedemo). There is also a Python version of Pug.js which converts Pug Templates  into Django, Jinja2, Mako or Tornado templates.  
+
 To learn more, [Read the documentation](https://pugjs.org/). 
-To try it out, [Take it for a test drive](https://pythonlinks.info/javascript-wiki/pug-demo/acedemo). 
+To try it out, [Take it for a test drive](https://pythonlinks.info/json-wiki/pug-demo/acedemo). 
 To discuss it,  join the [chat room](https://gitter.im/pugjs/pug). 
 To report a bug, request a feature, or ask a question, [open an issue](https://github.com/pugjs/pug/issues/new). 
 
@@ -151,17 +157,17 @@ $ pug --help
 
 ### Installation on the Client 
 
-There are several different ways that you can use Pug.js on the client. 
+There are several different ways that you can use Pug.js on the client.  Here is [one working example](https://pythonlinks.info/python/about/enhancements/json-wiki/pug-demo/acedemo). 
 
-If you are serving Pug rendered HTML, no need to do anything. 
+If you are serving Pug generated HTML, no need to do anything special on the client. 
 
 If you are serving a single Pug Javascript function, which renders a page on the client, there is also 
-no need to do anything.  [The Pug runtime]](https://github.com/pugjs/pug/blob/master/packages/pug-runtime/index.js)
+no need to do anything.  [The Pug runtime](https://github.com/pugjs/pug/blob/master/packages/pug-runtime/index.js)
 is included in that javascript function. 
 
 If you are rendering multiple PUG pages on the client, you will have multiple Pug functions.  Rather 
-than including a copy of the runtime 
-in each function, you can generate the functions without the runtime.
+than including a copy of the runtime in each function, you can generate the functions without the runtime.
+
 
 ```
 options = {inlineRuntimeFunctions: false}
