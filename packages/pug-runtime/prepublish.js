@@ -13,38 +13,58 @@ var source = fs.readFileSync(__dirname + '/index.js', 'utf8');
 var ast = uglify.parse(source);
 
 var dependencies = {};
-var internals = {'dependencies': true, 'internals': true};
+var internals = { dependencies: true, internals: true };
 var sources = {};
-ast.body.forEach(function (node) {
+ast.body.forEach(function(node) {
   var name;
   switch (node.TYPE) {
-    case 'Defun': name = node.name.name;                break;
-    case 'Var':   name = node.definitions[0].name.name; break;
+    case 'Defun':
+      name = node.name.name;
+      break;
+    case 'Var':
+      name = node.definitions[0].name.name;
+      break;
   }
-  if (!name || !/^pug\_/.test(name)) return;
-  name = name.replace(/^pug\_/, '');
+  if (!name || !/^pug_/.test(name)) return;
+  name = name.replace(/^pug_/, '');
 
-  var src = uglify.minify(source.substring(node.start.pos, node.end.endpos), {fromString: true}).code;
+  var src = uglify.minify(source.substring(node.start.pos, node.end.endpos), {
+    fromString: true
+  }).code;
   sources[name] = src;
 
   dependencies[name] = [];
   if (node.TYPE === 'Defun') {
     var ast = uglify.parse(src);
     ast.figure_out_scope();
-    var globals = ast.globals.map(function (val, key) {
+    var globals = ast.globals.map(function(val, key) {
       return key;
     });
-    dependencies[name] = globals.filter(function (key) { return /^pug\_/.test(key); })
-                                .map(function (key) { return key.replace(/^pug\_/, ''); });
+    dependencies[name] = globals
+      .filter(function(key) {
+        return /^pug_/.test(key);
+      })
+      .map(function(key) {
+        return key.replace(/^pug_/, '');
+      });
   }
 
   if (!runtime[name]) internals[name] = true;
 });
 
-Object.keys(dependencies).forEach(function (fn) {
+Object.keys(dependencies).forEach(function(fn) {
   dependencies[fn] = dependencies[fn].sort();
 });
 
-fs.writeFileSync(__dirname + '/lib/dependencies.js', 'module.exports = ' + JSON.stringify(dependencies, null, 2) + '\n');
-fs.writeFileSync(__dirname + '/lib/internals.js', 'module.exports = ' + JSON.stringify(internals, null, 2) + '\n');
-fs.writeFileSync(__dirname + '/lib/sources.js', 'module.exports = ' + JSON.stringify(sources, null, 2) + '\n');
+fs.writeFileSync(
+  __dirname + '/lib/dependencies.js',
+  'module.exports = ' + JSON.stringify(dependencies, null, 2) + '\n'
+);
+fs.writeFileSync(
+  __dirname + '/lib/internals.js',
+  'module.exports = ' + JSON.stringify(internals, null, 2) + '\n'
+);
+fs.writeFileSync(
+  __dirname + '/lib/sources.js',
+  'module.exports = ' + JSON.stringify(sources, null, 2) + '\n'
+);

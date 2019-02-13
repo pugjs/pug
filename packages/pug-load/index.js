@@ -10,9 +10,13 @@ function load(ast, options) {
   options = getOptions(options);
   // clone the ast
   ast = JSON.parse(JSON.stringify(ast));
-  return walk(ast, function (node) {
+  return walk(ast, function(node) {
     if (node.str === undefined) {
-      if (node.type === 'Include' || node.type === 'RawInclude' || node.type === 'Extends') {
+      if (
+        node.type === 'Include' ||
+        node.type === 'RawInclude' ||
+        node.type === 'Extends'
+      ) {
         var file = node.file;
         if (file.type !== 'FileReference') {
           throw new Error('Expected file.type to be "FileReference"');
@@ -28,9 +32,12 @@ function load(ast, options) {
         }
         file.str = str;
         if (node.type === 'Extends' || node.type === 'Include') {
-          file.ast = load.string(str, assign({}, options, {
-            filename: path
-          }));
+          file.ast = load.string(
+            str,
+            assign({}, options, {
+              filename: path
+            })
+          );
         }
       }
     }
@@ -56,12 +63,19 @@ load.file = function loadFile(filename, options) {
 load.resolve = function resolve(filename, source, options) {
   filename = filename.trim();
   if (filename[0] !== '/' && !source)
-    throw new Error('the "filename" option is required to use includes and extends with "relative" paths');
+    throw new Error(
+      'the "filename" option is required to use includes and extends with "relative" paths'
+    );
 
   if (filename[0] === '/' && !options.basedir)
-    throw new Error('the "basedir" option is required to use includes and extends with "absolute" paths');
+    throw new Error(
+      'the "basedir" option is required to use includes and extends with "absolute" paths'
+    );
 
-  filename = path.join(filename[0] === '/' ? options.basedir : path.dirname(source.trim()), filename);
+  filename = path.join(
+    filename[0] === '/' ? options.basedir : path.dirname(source.trim()),
+    filename
+  );
 
   return filename;
 };
@@ -94,8 +108,11 @@ load.validateOptions = function validateOptions(options) {
 
 function getOptions(options) {
   load.validateOptions(options);
-  return assign({
-    resolve: load.resolve,
-    read: load.read
-  }, options);
+  return assign(
+    {
+      resolve: load.resolve,
+      read: load.read
+    },
+    options
+  );
 }

@@ -6,18 +6,21 @@ function walkAST(ast, before, after, options) {
     options = after;
     after = null;
   }
-  options = options || {includeDependencies: false};
-  var parents = options.parents = options.parents || [];
+  options = options || { includeDependencies: false };
+  var parents = (options.parents = options.parents || []);
 
   var replace = function replace(replacement) {
     if (Array.isArray(replacement) && !replace.arrayAllowed) {
-      throw new Error('replace() can only be called with an array if the last parent is a Block or NamedBlock');
+      throw new Error(
+        'replace() can only be called with an array if the last parent is a Block or NamedBlock'
+      );
     }
     ast = replacement;
   };
-  replace.arrayAllowed = parents[0] && (
-    /^(Named)?Block$/.test(parents[0].type) ||
-    parents[0].type === 'RawInclude' && ast.type === 'IncludeFilter');
+  replace.arrayAllowed =
+    parents[0] &&
+    (/^(Named)?Block$/.test(parents[0].type) ||
+      (parents[0].type === 'RawInclude' && ast.type === 'IncludeFilter'));
 
   if (before) {
     var result = before(ast, replace);
@@ -91,7 +94,6 @@ function walkAST(ast, before, after, options) {
       break;
     default:
       throw new Error('Unexpected node type ' + ast.type);
-      break;
   }
 
   parents.shift();
@@ -100,7 +102,7 @@ function walkAST(ast, before, after, options) {
   return ast;
 
   function walkAndMergeNodes(nodes) {
-    return nodes.reduce(function (nodes, node) {
+    return nodes.reduce(function(nodes, node) {
       var result = walkAST(node, before, after, options);
       if (Array.isArray(result)) {
         return nodes.concat(result);

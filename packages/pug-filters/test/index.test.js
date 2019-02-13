@@ -9,31 +9,35 @@ process.chdir(__dirname + '/../');
 
 var testCases;
 
-testCases = fs.readdirSync(__dirname + '/cases').filter(function (name) {
+testCases = fs.readdirSync(__dirname + '/cases').filter(function(name) {
   return /\.input\.json$/.test(name);
 });
 //
-testCases.forEach(function (filename) {
-  function read (path) {
+testCases.forEach(function(filename) {
+  function read(path) {
     return fs.readFileSync(__dirname + '/cases/' + path, 'utf8');
   }
 
-  test('cases/' + filename, function () {
-    var actualAst = JSON.stringify(handleFilters(JSON.parse(read(filename)), customFilters), null, '  ');
+  test('cases/' + filename, function() {
+    var actualAst = JSON.stringify(
+      handleFilters(JSON.parse(read(filename)), customFilters),
+      null,
+      '  '
+    );
     expect(actualAst).toMatchSnapshot();
-  })
+  });
 });
 
-testCases = fs.readdirSync(__dirname + '/errors').filter(function (name) {
+testCases = fs.readdirSync(__dirname + '/errors').filter(function(name) {
   return /\.input\.json$/.test(name);
 });
 
-testCases.forEach(function (filename) {
-  function read (path) {
+testCases.forEach(function(filename) {
+  function read(path) {
     return fs.readFileSync(__dirname + '/errors/' + path, 'utf8');
   }
 
-  test('errors/' + filename, function () {
+  test('errors/' + filename, function() {
     var actual;
     try {
       handleFilters(JSON.parse(read(filename)), customFilters);
@@ -47,5 +51,5 @@ testCases.forEach(function (filename) {
       };
     }
     expect(actual).toMatchSnapshot();
-  })
+  });
 });

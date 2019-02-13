@@ -12,13 +12,13 @@ script
     }
   `;
 
-  const ast = parse(
-    lex(source, {filename: __filename}),
-    {filename: __filename, src: source}
-  );
+  const ast = parse(lex(source, { filename: __filename }), {
+    filename: __filename,
+    src: source
+  });
 
   const options = {
-    'uglify-js': {output: {beautify: true}},
+    'uglify-js': { output: { beautify: true } }
   };
 
   const output = handleFilters(ast, customFilters, options);

@@ -13,19 +13,21 @@ function makeError(code, message, options) {
     var start = Math.max(line - 3, 0);
     var end = Math.min(lines.length, line + 3);
     // Error context
-    var context = lines.slice(start, end).map(function(text, i){
-      var curr = i + start + 1;
-      var preamble = (curr == line ? '  > ' : '    ')
-        + curr
-        + '| ';
-      var out = preamble + text;
-      if (curr === line && column > 0) {
-        out += '\n';
-        out += Array(preamble.length + column).join('-') + '^';
-      }
-      return out;
-    }).join('\n');
-    fullMessage = (filename || 'Pug') + ':' + location + '\n' + context + '\n\n' + message;
+    var context = lines
+      .slice(start, end)
+      .map(function(text, i) {
+        var curr = i + start + 1;
+        var preamble = (curr == line ? '  > ' : '    ') + curr + '| ';
+        var out = preamble + text;
+        if (curr === line && column > 0) {
+          out += '\n';
+          out += Array(preamble.length + column).join('-') + '^';
+        }
+        return out;
+      })
+      .join('\n');
+    fullMessage =
+      (filename || 'Pug') + ':' + location + '\n' + context + '\n\n' + message;
   } else {
     fullMessage = (filename || 'Pug') + ':' + location + '\n\n' + message;
   }
@@ -36,7 +38,7 @@ function makeError(code, message, options) {
   err.column = column;
   err.filename = filename;
   err.src = src;
-  err.toJSON = function () {
+  err.toJSON = function() {
     return {
       code: this.code,
       msg: this.msg,

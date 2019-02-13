@@ -11,7 +11,9 @@ function filter(name, str, options, currentDirectory, funcName) {
   var trPath;
   try {
     try {
-      trPath = resolve.sync('jstransformer-' + name, {basedir: currentDirectory || process.cwd()});
+      trPath = resolve.sync('jstransformer-' + name, {
+        basedir: currentDirectory || process.cwd()
+      });
     } catch (ex) {
       trPath = require.resolve('jstransformer-' + name);
     }
@@ -27,7 +29,7 @@ function filter(name, str, options, currentDirectory, funcName) {
     try {
       switch (tr.outputFormat) {
         case 'js':
-          result = uglify.minify(result, {fromString: true}).code;
+          result = uglify.minify(result, { fromString: true }).code;
           break;
         case 'css':
           result = new CleanCSS().minify(result).styles;
