@@ -3,7 +3,7 @@ node_js:
   - "6"
   - "8"
   - "10"
-  - "11"
+  - "11.10.1"
 
 # Use faster Docker architecture on Travis.
 sudo: false
