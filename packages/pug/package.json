@@ -1,6 +1,12 @@
 {
   "name": "pug",
   "description": "A clean, whitespace-sensitive template language for writing HTML",
+  "keywords": [
+    "html",
+    "jade",
+    "pug",
+    "template"
+  ],
   "version": "2.0.3",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
