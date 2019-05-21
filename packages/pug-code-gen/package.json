@@ -6,7 +6,7 @@
     "pug"
   ],
   "dependencies": {
-    "constantinople": "^3.0.1",
+    "constantinople": "^3.1.2",
     "doctypes": "^1.1.0",
     "js-stringify": "^1.0.1",
     "pug-attrs": "^2.0.3",
