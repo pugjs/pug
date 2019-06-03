@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug-attrs.git"
+    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-attrs"
   },
   "author": "Forbes Lindesay",
   "license": "MIT"
