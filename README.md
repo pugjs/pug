@@ -14,12 +14,28 @@ Full documentation is at [pugjs.org](https://pugjs.org/)
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
  [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
- [![Dependency Status](https://img.shields.io/david/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug)
- [![devDependencies Status](https://img.shields.io/david/dev/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug?type=dev)
  [![NPM version](https://img.shields.io/npm/v/pug.svg?style=flat)](https://www.npmjs.com/package/pug)
  [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/pugjs/pug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![OpenCollective](https://opencollective.com/pug/backers/badge.svg)](#backers) 
 [![OpenCollective](https://opencollective.com/pug/sponsors/badge.svg)](#sponsors)
+
+### Dependency Status
+
+| Package        | Dependencies           | Dev Dependencies  |
+| ------------- |:-------------| :-----|
+| mono-repo top      |  [![Dependency Status](https://img.shields.io/david/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug) |  [![devDependencies Status](https://img.shields.io/david/dev/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug?type=dev) |
+| pug | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug)](https://david-dm.org/pugjs/pug?path=packages/pug)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug)](https://david-dm.org/pugjs/pug?path=packages/pug&type=dev) |
+| pug-attrs      | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-attrs)](https://david-dm.org/pugjs/pug?path=packages/pug-attrs)      |   [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-attrs)](https://david-dm.org/pugjs/pug?path=packages/pug-attrs&type=dev) |
+| pug-code-gen | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-code-gen)](https://david-dm.org/pugjs/pug?path=packages/pug-code-gen)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-code-gen)](https://david-dm.org/pugjs/pug?path=packages/pug-code-gen&type=dev) |
+| pug-error | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-error)](https://david-dm.org/pugjs/pug?path=packages/pug-error)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-error)](https://david-dm.org/pugjs/pug?path=packages/pug-error&type=dev) |
+| pug-filters | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-filters)](https://david-dm.org/pugjs/pug?path=packages/pug-filters)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-filters)](https://david-dm.org/pugjs/pug?path=packages/pug-filters&type=dev) |
+| pug-lexer | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-lexer)](https://david-dm.org/pugjs/pug?path=packages/pug-lexer)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-lexer)](https://david-dm.org/pugjs/pug?path=packages/pug-lexer&type=dev) |
+| pug-linker | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-linker)](https://david-dm.org/pugjs/pug?path=packages/pug-linker)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-linker)](https://david-dm.org/pugjs/pug?path=packages/pug-linker&type=dev) |
+| pug-load | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-load)](https://david-dm.org/pugjs/pug?path=packages/pug-load)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-load)](https://david-dm.org/pugjs/pug?path=packages/pug-load&type=dev) |
+| pug-parser | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-parser)](https://david-dm.org/pugjs/pug?path=packages/pug-parser)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-parser)](https://david-dm.org/pugjs/pug?path=packages/pug-parser&type=dev) |
+| pug-runtime | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-runtime)](https://david-dm.org/pugjs/pug?path=packages/pug-runtime)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-runtime)](https://david-dm.org/pugjs/pug?path=packages/pug-runtime&type=dev) |
+| pug-strip-comments | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-strip-comments)](https://david-dm.org/pugjs/pug?path=packages/pug-strip-comments)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-strip-comments)](https://david-dm.org/pugjs/pug?path=packages/pug-strip-comments&type=dev) |
+| pug-error | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-walk)](https://david-dm.org/pugjs/pug?path=packages/pug-walk)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-walk)](https://david-dm.org/pugjs/pug?path=packages/pug-walk&type=dev) |
 
 ## Rename from "Jade"
 
