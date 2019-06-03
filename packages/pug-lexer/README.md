@@ -3,7 +3,8 @@
 The pug lexer.  This module is responsible for taking a string and converting it into an array of tokens.
 
 [![Build Status](https://img.shields.io/travis/pugjs/pug-lexer/master.svg)](https://travis-ci.org/pugjs/pug-lexer)
-[![Dependency Status](https://img.shields.io/david/pugjs/pug-lexer.svg)](https://david-dm.org/pugjs/pug-lexer)
+[![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-lexer)](https://david-dm.org/pugjs/pug?path=packages/pug-lexer)
+[![DevDependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-lexer)](https://david-dm.org/pugjs/pug?path=packages/pug-lexer&type=dev)
 [![NPM version](https://img.shields.io/npm/v/pug-lexer.svg)](https://www.npmjs.org/package/pug-lexer)
 [![Coverage Status](https://img.shields.io/codecov/c/github/pugjs/pug-lexer.svg)](https://codecov.io/gh/pugjs/pug-lexer)
 

@@ -3,7 +3,8 @@
 The pug loader is responsible for loading the depenendencies of a given pug file.  It adds `fullPath` and `str` properties to every `Include` and `Extends` node.  It also adds an `ast` property to any `Include` nodes that are loading pug and any `Extends` nodes.  It then recursively loads the dependencies of any of those included files.
 
 [![Build Status](https://img.shields.io/travis/pugjs/pug-load/master.svg)](https://travis-ci.org/pugjs/pug-load)
-[![Dependency Status](https://img.shields.io/david/pugjs/pug-load.svg)](https://david-dm.org/pugjs/pug-load)
+[![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-load)](https://david-dm.org/pugjs/pug?path=packages/pug-load)
+[![DevDependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-load)](https://david-dm.org/pugjs/pug?path=packages/pug-load&type=dev)
 [![NPM version](https://img.shields.io/npm/v/pug-load.svg)](https://www.npmjs.org/package/pug-load)
 [![Coverage Status](https://img.shields.io/codecov/c/github/pugjs/pug-load.svg)](https://codecov.io/gh/pugjs/pug-load)
 
