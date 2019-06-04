@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug-linker.git"
+    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-linker"
   },
   "author": "Forbes Lindesay",
   "license": "MIT"
