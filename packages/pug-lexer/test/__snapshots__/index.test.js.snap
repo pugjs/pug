@@ -1303,12 +1303,376 @@ Array [
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 18,
+        "line": 19,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
       "start": Object {
         "column": 1,
-        "line": 18,
+        "line": 19,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 19,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 19,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 14,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 19,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 15,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 14,
+        "line": 19,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 20,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 20,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 20,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 14,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 20,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 28,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 15,
+        "line": 20,
+      },
+    },
+    "mustEscape": true,
+    "name": "after",
+    "type": "attribute",
+    "val": "\\"after\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 29,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 28,
+        "line": 20,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 21,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 21,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 21,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 20,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 21,
+      },
+    },
+    "mustEscape": true,
+    "name": "before",
+    "type": "attribute",
+    "val": "\\"before\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 30,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 21,
+        "line": 21,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 31,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 30,
+        "line": 21,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 22,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 22,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 22,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 20,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 22,
+      },
+    },
+    "mustEscape": true,
+    "name": "before",
+    "type": "attribute",
+    "val": "\\"before\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 30,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 21,
+        "line": 22,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 44,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 31,
+        "line": 22,
+      },
+    },
+    "mustEscape": true,
+    "name": "after",
+    "type": "attribute",
+    "val": "\\"after\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 45,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 44,
+        "line": 22,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 23,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 23,
       },
     },
     "type": "newline",
@@ -1317,12 +1681,12 @@ Array [
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 18,
+        "line": 23,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
       "start": Object {
         "column": 1,
-        "line": 18,
+        "line": 23,
       },
     },
     "type": "eos",
