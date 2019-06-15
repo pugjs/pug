@@ -1218,7 +1218,11 @@ Lexer.prototype = {
             if (!this.whitespaceRe.test(str[x])) {
               // if it is a JavaScript punctuator, then assume that it is
               // a part of the value
-              if((!characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]) || str[x] === ':') && this.assertExpression(val, true)){
+              const isNotPunctuator = !characterParser.isPunctuator(str[x])
+              const isQuote = quoteRe.test(str[x])
+              const isColon = str[x] === ':'
+              const isSpreadOperator = str[x] + str[x + 1] + str[x + 2] === '...'
+              if ((isNotPunctuator || isQuote || isColon || isSpreadOperator) && this.assertExpression(val, true)) {
                 done = true;
               }
               break;
