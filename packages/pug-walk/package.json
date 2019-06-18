@@ -1,13 +1,13 @@
 {
   "name": "pug-walk",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Walk and transform a pug AST",
   "keywords": [
     "pug"
   ],
   "devDependencies": {
-    "pug-lexer": "^4.0.0",
-    "pug-parser": "^5.0.0"
+    "pug-lexer": "^4.1.0",
+    "pug-parser": "^5.0.1"
   },
   "files": [
     "index.js"

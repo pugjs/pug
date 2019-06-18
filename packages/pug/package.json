@@ -7,7 +7,7 @@
     "pug",
     "template"
   ],
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": "TJ Holowaychuk <tj@vision-media.ca>",
   "maintainers": [
     "Forbes Lindesay <forbes@lindesay.co.uk>",
@@ -26,14 +26,14 @@
   },
   "main": "lib",
   "dependencies": {
-    "pug-code-gen": "^2.0.1",
-    "pug-filters": "^3.1.0",
-    "pug-lexer": "^4.0.0",
-    "pug-linker": "^3.0.5",
-    "pug-load": "^2.0.11",
-    "pug-parser": "^5.0.0",
-    "pug-runtime": "^2.0.4",
-    "pug-strip-comments": "^1.0.3"
+    "pug-code-gen": "^2.0.2",
+    "pug-filters": "^3.1.1",
+    "pug-lexer": "^4.1.0",
+    "pug-linker": "^3.0.6",
+    "pug-load": "^2.0.12",
+    "pug-parser": "^5.0.1",
+    "pug-runtime": "^2.0.5",
+    "pug-strip-comments": "^1.0.4"
   },
   "devDependencies": {
     "jstransformer-cdata": "^1.0.0",
