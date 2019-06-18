@@ -6,16 +6,21 @@
     "pug"
   ],
   "devDependencies": {
-    "pug-lexer": "^4.0.0",
+    "pug-lexer": "4.0.0",
     "pug-parser": "^5.0.0"
   },
   "files": [
     "index.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug-walk.git"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug-walk",
   "author": "ForbesLindesay",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "dependencies": {},
+  "scripts": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -14,13 +14,10 @@
     "Andreas Lubbe <git@lubbe.org>"
   ],
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/pugjs/pug"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug",
   "main": "lib",
   "dependencies": {
-    "pug-code-gen": "^2.0.1",
+    "pug-code-gen": "2.0.1",
     "pug-filters": "^3.1.0",
     "pug-lexer": "^4.0.0",
     "pug-linker": "^3.0.5",
@@ -48,5 +45,11 @@
   "browser": {
     "fs": false
   },
-  "homepage": "https://pugjs.org"
+  "homepage": "https://pugjs.org",
+  "types": "./lib/index.d.ts",
+  "scripts": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }

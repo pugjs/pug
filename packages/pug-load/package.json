@@ -6,7 +6,7 @@
     "pug"
   ],
   "dependencies": {
-    "object-assign": "^4.1.0",
+    "object-assign": "^4.1.1",
     "pug-walk": "^1.1.7"
   },
   "devDependencies": {
@@ -16,10 +16,14 @@
   "files": [
     "index.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug-load.git"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug-load",
   "author": "ForbesLindesay",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }

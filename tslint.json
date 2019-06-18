@@ -1,0 +1,127 @@
+{
+  "linterOptions": {
+    "exclude": [
+      "node_modules",
+      "dist",
+      "coverage",
+      "dev"
+    ]
+  },
+  "rules": {
+    "adjacent-overload-signatures": true,
+    "ban-types": [
+      true,
+      [
+        [
+          "Object",
+          "Avoid using the `Object` type. Did you mean `object`?"
+        ],
+        [
+          "Function",
+          "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+        ],
+        [
+          "Boolean",
+          "Avoid using the `Boolean` type. Did you mean `boolean`?"
+        ],
+        [
+          "Number",
+          "Avoid using the `Number` type. Did you mean `number`?"
+        ],
+        [
+          "String",
+          "Avoid using the `String` type. Did you mean `string`?"
+        ],
+        [
+          "Symbol",
+          "Avoid using the `Symbol` type. Did you mean `symbol`?"
+        ]
+      ]
+    ],
+    "no-internal-module": true,
+    "no-parameter-reassignment": true,
+    "no-reference": true,
+    "no-unnecessary-type-assertion": true,
+    "only-arrow-functions": [
+      true,
+      "allow-declarations",
+      "allow-named-functions"
+    ],
+    "prefer-for-of": true,
+    "promise-function-async": true,
+    "unified-signatures": true,
+    "await-promise": true,
+    "ban-comma-operator": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-console": [
+      true,
+      "log",
+      "dir"
+    ],
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
+    "no-duplicate-variable": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-floating-promises": true,
+    "no-for-in-array": true,
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      "optional"
+    ],
+    "no-inferred-empty-object-type": true,
+    "no-invalid-template-strings": true,
+    "no-invalid-this": true,
+    "no-misused-new": true,
+    "no-object-literal-type-assertion": true,
+    "no-sparse-arrays": true,
+    "no-string-literal": true,
+    "no-switch-case-fall-through": true,
+    "no-this-assignment": true,
+    "no-unbound-method": true,
+    "no-unnecessary-class": true,
+    "no-unsafe-finally": true,
+    "no-unused-expression": [
+      true,
+      "allow-fast-null-checks"
+    ],
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
+    "no-void-expression": [
+      true,
+      "ignore-arrow-function-shorthand"
+    ],
+    "radix": true,
+    "restrict-plus-operands": true,
+    "strict-type-predicates": false,
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "use-isnan": true,
+    "deprecation": true,
+    "no-duplicate-imports": true,
+    "no-mergeable-namespace": true,
+    "prefer-const": true,
+    "prefer-readonly": true,
+    "callable-types": true,
+    "class-name": true,
+    "encoding": true,
+    "jsdoc-format": true,
+    "no-angle-bracket-type-assertion": true,
+    "no-reference-import": true,
+    "no-unnecessary-initializer": true,
+    "one-variable-per-declaration": true,
+    "prefer-while": true,
+    "return-undefined": true,
+    "switch-final-break": [true, "always"],
+    "variable-name": [
+      true,
+      "ban-keywords"
+    ]
+  }
+}

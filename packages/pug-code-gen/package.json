@@ -6,7 +6,7 @@
     "pug"
   ],
   "dependencies": {
-    "constantinople": "^3.0.1",
+    "constantinople": "^3.1.2",
     "doctypes": "^1.1.0",
     "js-stringify": "^1.0.1",
     "pug-attrs": "^2.0.3",
@@ -18,10 +18,14 @@
   "files": [
     "index.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug-code-gen.git"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug-code-gen",
   "author": "Forbes Lindesay",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }

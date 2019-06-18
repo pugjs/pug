@@ -8,10 +8,15 @@
   "files": [
     "index.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug-error.git"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug-error",
   "author": "Forbes Lindesay",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "dependencies": {},
+  "scripts": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }

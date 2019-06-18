@@ -6,17 +6,21 @@
     "pug"
   ],
   "dependencies": {
-    "constantinople": "^3.0.1",
+    "constantinople": "^3.1.2",
     "js-stringify": "^1.0.1",
     "pug-runtime": "^2.0.4"
   },
   "files": [
     "index.js"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug-attrs.git"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug-attrs",
   "author": "Forbes Lindesay",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }

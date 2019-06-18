@@ -6,7 +6,7 @@
     "pug"
   ],
   "devDependencies": {
-    "uglify-js": "^2.6.1"
+    "uglify-js": "^3.4.9"
   },
   "files": [
     "build.js",
@@ -20,13 +20,17 @@
     "prepublish": "node prepublish",
     "pretest": "npm run prepublish"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug-runtime.git"
-  },
+  "repository": "https://github.com/pugjs/pug/tree/master/packages/pug-runtime",
   "browser": {
     "fs": false
   },
   "author": "ForbesLindesay",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "dependencies": {},
+  "bugs": "https://github.com/pugjs/pug/issues",
+  "publishConfig": {
+    "access": "public"
+  }
 }
