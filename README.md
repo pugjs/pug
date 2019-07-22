@@ -9,39 +9,60 @@ Full documentation is at [pugjs.org](https://pugjs.org/)
  For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
  You can test drive Pug online [here](https://pugjs.org/).
+ 
+ [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
  [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
  [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
- [![Dependency Status](https://img.shields.io/david/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug)
- [![devDependencies Status](https://img.shields.io/david/dev/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug?type=dev)
  [![NPM version](https://img.shields.io/npm/v/pug.svg?style=flat)](https://www.npmjs.com/package/pug)
  [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/pugjs/pug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![OpenCollective](https://opencollective.com/pug/backers/badge.svg)](#backers) 
 [![OpenCollective](https://opencollective.com/pug/sponsors/badge.svg)](#sponsors)
 
+### Dependency Status
+
+| Package        | Dependencies           | Dev Dependencies  |
+| ------------- |:-------------| :-----|
+| mono-repo top      |  [![Dependency Status](https://img.shields.io/david/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug) |  [![devDependencies Status](https://img.shields.io/david/dev/pugjs/pug.svg?style=flat)](https://david-dm.org/pugjs/pug?type=dev) |
+| pug | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug)](https://david-dm.org/pugjs/pug?path=packages/pug)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug)](https://david-dm.org/pugjs/pug?path=packages/pug&type=dev) |
+| pug-attrs      | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-attrs)](https://david-dm.org/pugjs/pug?path=packages/pug-attrs)      |   [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-attrs)](https://david-dm.org/pugjs/pug?path=packages/pug-attrs&type=dev) |
+| pug-code-gen | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-code-gen)](https://david-dm.org/pugjs/pug?path=packages/pug-code-gen)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-code-gen)](https://david-dm.org/pugjs/pug?path=packages/pug-code-gen&type=dev) |
+| pug-error | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-error)](https://david-dm.org/pugjs/pug?path=packages/pug-error)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-error)](https://david-dm.org/pugjs/pug?path=packages/pug-error&type=dev) |
+| pug-filters | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-filters)](https://david-dm.org/pugjs/pug?path=packages/pug-filters)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-filters)](https://david-dm.org/pugjs/pug?path=packages/pug-filters&type=dev) |
+| pug-lexer | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-lexer)](https://david-dm.org/pugjs/pug?path=packages/pug-lexer)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-lexer)](https://david-dm.org/pugjs/pug?path=packages/pug-lexer&type=dev) |
+| pug-linker | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-linker)](https://david-dm.org/pugjs/pug?path=packages/pug-linker)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-linker)](https://david-dm.org/pugjs/pug?path=packages/pug-linker&type=dev) |
+| pug-load | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-load)](https://david-dm.org/pugjs/pug?path=packages/pug-load)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-load)](https://david-dm.org/pugjs/pug?path=packages/pug-load&type=dev) |
+| pug-parser | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-parser)](https://david-dm.org/pugjs/pug?path=packages/pug-parser)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-parser)](https://david-dm.org/pugjs/pug?path=packages/pug-parser&type=dev) |
+| pug-runtime | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-runtime)](https://david-dm.org/pugjs/pug?path=packages/pug-runtime)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-runtime)](https://david-dm.org/pugjs/pug?path=packages/pug-runtime&type=dev) |
+| pug-strip-comments | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-strip-comments)](https://david-dm.org/pugjs/pug?path=packages/pug-strip-comments)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-strip-comments)](https://david-dm.org/pugjs/pug?path=packages/pug-strip-comments&type=dev) |
+| pug-error | [![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-walk)](https://david-dm.org/pugjs/pug?path=packages/pug-walk)      |    [![Dependencies Status](https://david-dm.org/pugjs/pug/dev-status.svg?path=packages/pug-walk)](https://david-dm.org/pugjs/pug?path=packages/pug-walk&type=dev) |
+
 ## Rename from "Jade"
 
-This project was formerly known as "Jade." However, it has been revealed to us that "Jade" is a registered trademark, and as a result, a rename is needed. After some discussion among the maintainers, **"Pug"** has been chosen as the new name for this project. The next major version will carry "pug" as the package name.
+This project was formerly known as "Jade". However, it was revealed to us that "Jade" is a registered trademark; as a result, a rename was needed. After some discussion among the maintainers, **"Pug"** was chosen as the new name for this project. As of version 2, "pug" is the official package name.
 
 If your package or app currently uses `jade`, don't worry: we have secured permissions to continue to occupy that package name, although all new versions will be released under `pug`.
 
-Before the renaming, we had already begun working on an incompatible Jade 2.0.0. We have then made it so that this new major version bump will coincide with the rename to Pug. Therefore, upgrading from Jade to Pug will be the same process as upgrading any other package with a major version bump. Currently, Pug 2.0.0 is still in beta stage, and there are several syntactic differences we have deprecated and removed. Such differences are documented at [#2305](https://github.com/pugjs/pug/issues/2305).
+Before the renaming, work had already begun on “Jade 2.0.0”. Therefore, the rename to Pug coincided with the major version bump. As a result, upgrading from Jade to Pug will be the same process as upgrading any other package with a major version bump. 
 
-The website and documentation for Pug are still being updated, but if you are new to Pug, you should get started with the new syntax and install the Pug package on npm.
+The syntax of Pug has several differences, deprecations, and removals compared to its predecessor. These differences are documented in [#2305](https://github.com/pugjs/pug/issues/2305).
+
+The website and documentation for Pug are still being updated. But if you are new to Pug, you should get started with the new syntax and install the Pug package from npm.
 
 ## Installation
 
 ### Package
 
-via npm:
+To use Pug in your own JavaScript projects:
 
 ```bash
 $ npm install pug
 ```
 
+
 ### Command Line
 
-After installing the latest version of [Node.js](http://nodejs.org/), install with:
+After installing the latest version of [Node.js](http://nodejs.org), install with:
 
 ```bash
 $ npm install pug-cli -g
@@ -55,7 +76,7 @@ $ pug --help
 
 ## Syntax
 
-Pug is a clean, whitespace sensitive syntax for writing html.  Here is a simple example:
+Pug is a clean, whitespace sensitive syntax for writing HTML.  Here is a simple example:
 
 ```pug
 doctype html
@@ -76,7 +97,7 @@ html(lang="en")
         strong focus on performance and powerful features.
 ```
 
-becomes
+Pug transforms the above to:
 
 
 ```html
@@ -120,11 +141,11 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
 
  - `filename`  Used in exceptions, and required when using includes
  - `compileDebug`  When `false` no debug instrumentation is compiled
- - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
+ - `pretty`    Add pretty-indentation whitespace to output _(`false` by default)_
 
 ## Browser Support
 
- The latest version of pug can be download for the browser in standalone form from [here](https://pugjs.org/js/pug.js).  It only supports the very latest browsers though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
+The latest version of pug can be [downloaded for the browser in standalone form](https://pugjs.org/js/pug.js).  It only supports the very latest browsers, though, and is a large file.  It is recommended that you pre-compile your pug templates to JavaScript.
 
  To compile a template for use on the client using the command line, do:
 
@@ -144,22 +165,22 @@ which will produce `filename.js` containing the compiled template.
 
 ### Ports in other languages
 
-Ports with very close syntax, adapted to other languages:
+Ports to other languages, with very close syntax:
 
   - [PHP](https://github.com/pug-php/pug)
   - [Java](https://github.com/neuland/jade4j)
   - [Python](https://github.com/kakulukia/pypugjs)
   - [Ruby](https://github.com/yivo/pug-ruby)
   - [C# (ASP.NET Core)](https://github.com/AspNetMonsters/pugzor)
+  - [RPG/ILE](https://github.com/WorksOfLiam/apug)
 
 ### Equivalents in other languages
 
-
-Templates engines available in other languages with a different syntax but a similar philosophy:
+Templates engines for other languages with a different syntax, but a similar philosophy:
 
   - [Scaml for Scala](https://scalate.github.io/scalate/documentation/scaml-reference.html)
   - [Slim for Ruby](https://github.com/slim-template/slim) (should not be confused with Slim PHP framework)
-  - [HAML for Ruby](http://haml.info/)
+  - [HAML for Ruby](http://haml.info)
   
 ### Framework implementations/adapters
 
@@ -188,7 +209,7 @@ Embedded view engines for frameworks:
   - [html2pug](https://github.com/donpark/html2jade) converter
   - [pug2php](https://github.com/SE7ENSKY/jade2php) converter
   - [Pug Server](https://github.com/ctrlaltdev/pug-server) Ideal for building local prototypes apart from any application
-  - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io/)
+  - [cache-pug-templates](https://github.com/ladjs/cache-pug-templates) Cache Pug templates for [Lad](https://github.com/ladjs/lad)/[Koa](https://github.com/koajs/koa)/[Express](https://github.com/expressjs/express)/[Connect](https://github.com/senchalabs/connect) with [Redis](https://redis.io)
 
 
 ## Backers

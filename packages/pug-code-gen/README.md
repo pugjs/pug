@@ -3,7 +3,7 @@
 Default code-generator for pug.  It generates HTML via a JavaScript template function.
 
 <!-- [![Build Status](https://img.shields.io/travis/pugjs/pug-code-gen/master.svg)](https://travis-ci.org/pugjs/pug-code-gen) -->
-[![Dependency Status](https://img.shields.io/david/pugjs/pug-code-gen.svg)](https://david-dm.org/pugjs/pug-code-gen)
+[![Dependencies Status](https://david-dm.org/pugjs/pug/status.svg?path=packages/pug-code-gen)](https://david-dm.org/pugjs/pug?path=packages/pug-code-gen)
 [![npm version](https://img.shields.io/npm/v/pug-code-gen.svg)](https://www.npmjs.org/package/pug-code-gen)
 
 ## Installation

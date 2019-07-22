@@ -1,4 +1,6 @@
-exports[`test pug-load 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pug-load 1`] = `
 Object {
   "filename": "<dirname>/foo.pug",
   "line": 0,
@@ -64,7 +66,7 @@ Object {
                       "line": 1,
                       "mustEscape": false,
                       "name": "class",
-                      "val": "\'bing\'",
+                      "val": "'bing'",
                     },
                   ],
                   "block": Object {
@@ -120,7 +122,7 @@ Object {
                   "fullPath": "<dirname>/script.js",
                   "line": 6,
                   "path": "script.js",
-                  "str": "document.write(\'hello world!\');
+                  "str": "document.write('hello world!');
 ",
                   "type": "FileReference",
                 },

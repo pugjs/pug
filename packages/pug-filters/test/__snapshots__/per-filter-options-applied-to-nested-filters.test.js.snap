@@ -1,4 +1,6 @@
-exports[`test per filter options are applied, even to nested filters 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`per filter options are applied, even to nested filters 1`] = `
 Object {
   "filename": "<basedir>/packages/pug-filters/test/per-filter-options-applied-to-nested-filters.test.js",
   "line": 0,
@@ -68,8 +70,9 @@ Object {
                   "name": "uglify-js",
                   "type": "Text",
                   "val": "function myFunc(n) {
-    return n;
-}",
+  return n;
+}
+",
                 },
               ],
               "type": "Block",

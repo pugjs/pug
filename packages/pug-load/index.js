@@ -51,7 +51,7 @@ load.file = function loadFile(filename, options) {
   });
   var str = options.read(filename);
   return load.string(str, options);
-}
+};
 
 load.resolve = function resolve(filename, source, options) {
   filename = filename.trim();
