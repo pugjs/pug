@@ -234,6 +234,8 @@ Parser.prototype = {
         return this.parseDot();
       case 'each':
         return this.parseEach();
+      case 'eachOf':
+        return this.parseEachOf();
       case 'code':
         return this.parseCode();
       case 'blockcode':
@@ -761,6 +763,24 @@ loop:
     return node;
   },
 
+  parseEachOf: function(){
+    var tok = this.expect('eachOf');
+    var node = {
+      type: 'EachOf',
+      obj: tok.code,
+      val: tok.val,
+      key: tok.key,
+      block: this.block(),
+      line: tok.loc.start.line,
+      column: tok.loc.start.column,
+      filename: this.filename
+    };
+    if (this.peek().type == 'else') {
+      this.advance();
+      node.alternate = this.block();
+    }
+    return node;
+  },
   /**
    * 'extends' name
    */

@@ -23,6 +23,7 @@ var lexerFunctions = {
   doctype: true,
   dot: true,
   each: true,
+  eachOf: true,
   eos: true,
   endInterpolation: true,
   extends: true,

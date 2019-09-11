@@ -972,6 +972,31 @@ Lexer.prototype = {
   },
 
   /**
+   * EachOf.
+   */
+
+  eachOf: function() {
+    var captures;
+    if (captures = /^(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? * of *([^\n]+)/.exec(this.input)) {
+      this.consume(captures[0].length);
+      var tok = this.tok('eachOf', captures[1]);
+      tok.key = captures[2] || null;
+      this.incrementColumn(captures[0].length - captures[3].length);
+      this.assertExpression(captures[3])
+      tok.code = captures[3];
+      this.incrementColumn(captures[3].length);
+      this.tokens.push(this.tokEnd(tok));
+      return true;
+    }
+    if (captures = /^- *(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? +of +([^\n]+)/.exec(this.input)) {
+      this.error(
+        'MALFORMED_EACH',
+        'Pug each and for should no longer be prefixed with a dash ("-"). They are pug keywords and not part of JavaScript.'
+      );
+    }
+  },
+
+  /**
    * Code.
    */
 
@@ -1485,6 +1510,7 @@ Lexer.prototype = {
       || this.callLexerFunction('mixin')
       || this.callLexerFunction('call')
       || this.callLexerFunction('conditional')
+      || this.callLexerFunction('eachOf')
       || this.callLexerFunction('each')
       || this.callLexerFunction('while')
       || this.callLexerFunction('tag')
