@@ -65,6 +65,7 @@ function Compiler(node, options) {
   this.mixins = {};
   this.dynamicMixins = false;
   this.eachCount = 0;
+  this.eachOfCount = 0;
   if (options.doctype) this.setDoctype(options.doctype);
   this.runtimeFunctionsUsed = [];
   this.inlineRuntimeFunctions = options.inlineRuntimeFunctions || false;
@@ -768,48 +769,33 @@ Compiler.prototype = {
   },
 
   visitEachOf: function(each){
-    var indexVarName = each.key || 'pug_index' + this.eachCount;
-    this.eachCount++;
+    var valVarName = 'pug_val' + this.eachOfCount;
+    if (each.key) {
+      var keyVarName = 'pug_key' + this.eachOfCount
+    }
+    this.eachOfCount++;
 
     this.buf.push(''
       + '// iterate ' + each.obj + '\n'
       + ';(function(){\n'
       + '  var $$obj = ' + each.obj + ';\n'
-      + '  if (\'number\' == typeof $$obj.length) {');
-
-    if (each.alternate) {
-      this.buf.push('    if ($$obj.length) {');
+      + '  var $$l = 0;\n')
+    if (each.key) {
+      this.buf.push('  for (const [' + keyVarName + ', ' + valVarName + '] of $$obj) {\n');
+    } else {
+      this.buf.push('  for (const ' + valVarName + ' of $$obj) {\n');
     }
-
-    this.buf.push(''
-      + '      for (var ' + indexVarName + ' = 0, $$l = $$obj.length; ' + indexVarName + ' < $$l; ' + indexVarName + '++) {\n'
-      + '        var ' + each.val + ' = $$obj[' + indexVarName + '];');
+    this.buf.push('    $$l++;\n');
+    if (each.key) {
+      this.buf.push(''
+        + '    var ' + each.key + ' = ' + valVarName + ';'
+        + '    var ' + each.val + ' = ' + keyVarName + ';');
+    } else {
+      this.buf.push('    var ' + each.val + ' = ' + valVarName + ';')
+    }
 
     this.visit(each.block, each);
 
-    this.buf.push('      }');
-
-    if (each.alternate) {
-      this.buf.push('    } else {');
-      this.visit(each.alternate, each);
-      this.buf.push('    }');
-    }
-
-    this.buf.push(''
-      + '  } else {\n'
-      + '    var $$l = 0;\n'
-      + '    for (var ' + indexVarName + ' of $$obj) {\n'
-      + '      $$l++;\n'
-      + '      var ' + each.val + ' = ' + indexVarName + ';');
-
-    this.visit(each.block, each);
-
-    this.buf.push('    }');
-    if (each.alternate) {
-      this.buf.push('    if ($$l === 0) {');
-      this.visit(each.alternate, each);
-      this.buf.push('    }');
-    }
     this.buf.push('  }\n}).call(this);\n');
   },
 
