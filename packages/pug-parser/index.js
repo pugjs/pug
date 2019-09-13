@@ -775,10 +775,6 @@ loop:
       column: tok.loc.start.column,
       filename: this.filename
     };
-    if (this.peek().type == 'else') {
-      this.advance();
-      node.alternate = this.block();
-    }
     return node;
   },
   /**

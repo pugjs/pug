@@ -60,9 +60,6 @@ function walkAST(ast, before, after, options) {
       if (ast.block) {
         ast.block = walkAST(ast.block, before, after, options);
       }
-      if (ast.alternate) {
-        ast.alternate = walkAST(ast.alternate, before, after, options);
-      }
       break;
     case 'Conditional':
       if (ast.consequent) {
