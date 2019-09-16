@@ -977,14 +977,14 @@ Lexer.prototype = {
 
   eachOf: function() {
     var captures;
-    if (captures = /^(?:each|for) +\[?([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))?\]? * of *([^\n]+)/.exec(this.input)) {
+    if (captures = /^(?:each|for) (.*) * of *([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('eachOf', captures[1]);
-      tok.key = captures[2] || null;
-      this.incrementColumn(captures[0].length - captures[3].length);
-      this.assertExpression(captures[3])
-      tok.code = captures[3];
-      this.incrementColumn(captures[3].length);
+      tok.value = captures[1] || null;
+      this.incrementColumn(captures[0].length - captures[2].length);
+      this.assertExpression(captures[2])
+      tok.code = captures[2];
+      this.incrementColumn(captures[2].length);
       this.tokens.push(this.tokEnd(tok));
       return true;
     }

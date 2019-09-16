@@ -769,34 +769,13 @@ Compiler.prototype = {
   },
 
   visitEachOf: function(each){
-    var valVarName = 'pug_val' + this.eachOfCount;
-    if (each.key) {
-      var keyVarName = 'pug_key' + this.eachOfCount
-    }
-    this.eachOfCount++;
-
     this.buf.push(''
       + '// iterate ' + each.obj + '\n'
-      + ';(function(){\n'
-      + '  var $$obj = ' + each.obj + ';\n'
-      + '  var $$l = 0;\n')
-    if (each.key) {
-      this.buf.push('  for (const [' + keyVarName + ', ' + valVarName + '] of $$obj) {\n');
-    } else {
-      this.buf.push('  for (const ' + valVarName + ' of $$obj) {\n');
-    }
-    this.buf.push('    $$l++;\n');
-    if (each.key) {
-      this.buf.push(''
-        + '    var ' + each.key + ' = ' + valVarName + ';'
-        + '    var ' + each.val + ' = ' + keyVarName + ';');
-    } else {
-      this.buf.push('    var ' + each.val + ' = ' + valVarName + ';')
-    }
+      + 'for (const ' + each.val + ' of ' + each.obj + ') {\n')
 
     this.visit(each.block, each);
 
-    this.buf.push('  }\n}).call(this);\n');
+    this.buf.push('}\n');
   },
 
   /**
