@@ -769,7 +769,6 @@ loop:
       type: 'EachOf',
       obj: tok.code,
       val: tok.val,
-      key: tok.key,
       block: this.block(),
       line: tok.loc.start.line,
       column: tok.loc.start.column,

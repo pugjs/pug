@@ -65,7 +65,6 @@ function Compiler(node, options) {
   this.mixins = {};
   this.dynamicMixins = false;
   this.eachCount = 0;
-  this.eachOfCount = 0;
   if (options.doctype) this.setDoctype(options.doctype);
   this.runtimeFunctionsUsed = [];
   this.inlineRuntimeFunctions = options.inlineRuntimeFunctions || false;

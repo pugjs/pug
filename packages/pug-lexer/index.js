@@ -977,15 +977,23 @@ Lexer.prototype = {
 
   eachOf: function() {
     var captures;
-    if (captures = /^(?:each|for) (.*) * of *([^\n]+)/.exec(this.input)) {
+    if (captures = /^(?:each|for) (.*) of *([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('eachOf', captures[1]);
-      tok.value = captures[1] || null;
+      tok.value = captures[1];
       this.incrementColumn(captures[0].length - captures[2].length);
       this.assertExpression(captures[2])
       tok.code = captures[2];
       this.incrementColumn(captures[2].length);
       this.tokens.push(this.tokEnd(tok));
+
+      if (!(/^[a-zA-Z_$][\w$]*$/.test(tok.value.trim()) || /^\[ *[a-zA-Z_$][\w$]* *\, *[a-zA-Z_$][\w$]* *\]$/.test(tok.value.trim()))) {
+        this.error(
+          'MALFORMED_EACH_OF_LVAL',
+          'The value variable for each must either be a valid identifier (e.g. `item`) or a pair of identifiers in square brackets (e.g. `[key, value]`).'
+        );
+      }
+      
       return true;
     }
     if (captures = /^- *(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? +of +([^\n]+)/.exec(this.input)) {
