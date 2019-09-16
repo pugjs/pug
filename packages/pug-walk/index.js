@@ -56,6 +56,11 @@ function walkAST(ast, before, after, options) {
         ast.alternate = walkAST(ast.alternate, before, after, options);
       }
       break;
+    case 'EachOf':
+      if (ast.block) {
+        ast.block = walkAST(ast.block, before, after, options);
+      }
+      break;
     case 'Conditional':
       if (ast.consequent) {
         ast.consequent = walkAST(ast.consequent, before, after, options);

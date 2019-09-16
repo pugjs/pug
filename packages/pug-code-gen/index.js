@@ -767,6 +767,16 @@ Compiler.prototype = {
     this.buf.push('  }\n}).call(this);\n');
   },
 
+  visitEachOf: function(each){
+    this.buf.push(''
+      + '// iterate ' + each.obj + '\n'
+      + 'for (const ' + each.val + ' of ' + each.obj + ') {\n')
+
+    this.visit(each.block, each);
+
+    this.buf.push('}\n');
+  },
+
   /**
    * Visit `attrs`.
    *
