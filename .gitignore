@@ -6,9 +6,15 @@ node_modules
 lib-cov
 coverage
 cov-pt*
-npm-debug.log
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.patch
+*.pid
+*.gz
 **/test/output*
 **/test/temp
 .release.json
-lerna-debug.log
 package-lock.json
