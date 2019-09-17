@@ -1237,9 +1237,10 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-clean-css@^4.1.11:
+clean-css@^4.2.1:
   version "4.2.1"
-  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.1.tgz#2d411ef76b8569b6d0c84068dabe85b0aa5e5c17"
+  resolved "https://registry.npmjs.org/clean-css/-/clean-css-4.2.1.tgz#2d411ef76b8569b6d0c84068dabe85b0aa5e5c17"
+  integrity sha512-4ZxI6dy4lrY6FHzfiy1aEOXgu4LIsW2MhwG0VBKdcoGoH/XLFgaHSdLTGr4O8Be6A8r3MOphEiI8Gc1n0ecf3g==
   dependencies:
     source-map "~0.6.0"
 
@@ -3167,9 +3168,10 @@ jest@24.0.0:
     import-local "^2.0.0"
     jest-cli "^24.0.0"
 
-js-stringify@^1.0.1:
+js-stringify@^1.0.2:
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/js-stringify/-/js-stringify-1.0.2.tgz#1736fddfd9724f28a3682adc6230ae7e4e9679db"
+  resolved "https://registry.npmjs.org/js-stringify/-/js-stringify-1.0.2.tgz#1736fddfd9724f28a3682adc6230ae7e4e9679db"
+  integrity sha1-Fzb939lyTyijaCrcYjCufk6Weds=
 
 js-tokens@^3.0.0:
   version "3.0.2"
@@ -3284,14 +3286,14 @@ jstransformer-cdata@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/jstransformer-cdata/-/jstransformer-cdata-1.0.0.tgz#3c15f0696478d39a4564a33010094b90b7ee9fb6"
 
-jstransformer-coffee-script@^1.0.0:
+jstransformer-coffee-script@^1.0.0, jstransformer-coffee-script@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/jstransformer-coffee-script/-/jstransformer-coffee-script-1.1.1.tgz#6455eb2f8b26fdff2abeb1b3c9875e6b1f4f8fa6"
   dependencies:
     coffee-script "~1.12.7"
     merge "^1.2.0"
 
-jstransformer-less@^2.1.0:
+jstransformer-less@^2.1.0, jstransformer-less@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/jstransformer-less/-/jstransformer-less-2.3.0.tgz#ac3a2f8ad688d73179495bbab85c7216ad5608eb"
   dependencies:
@@ -3305,14 +3307,14 @@ jstransformer-markdown-it@^1.0.0:
   dependencies:
     markdown-it "^7.0.0"
 
-jstransformer-stylus@^1.0.0:
+jstransformer-stylus@^1.0.0, jstransformer-stylus@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/jstransformer-stylus/-/jstransformer-stylus-1.5.0.tgz#9e65a9225eda4bd586c5da69d3d3d8661018ebf7"
   dependencies:
     clone "^2.0.0"
     stylus "~0.54.5"
 
-jstransformer-uglify-js@^1.1.1:
+jstransformer-uglify-js@^1.1.1, jstransformer-uglify-js@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/jstransformer-uglify-js/-/jstransformer-uglify-js-1.2.0.tgz#f26b5fb2a99bb0f5354f884cb50b5914bc5224a8"
   dependencies:
@@ -4137,7 +4139,7 @@ oauth-sign@~0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
 
-object-assign@^4.0.1, object-assign@^4.1.0:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -4389,10 +4391,6 @@ path-is-inside@^1.0.1, path-is-inside@^1.0.2:
 path-key@^2.0.0, path-key@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
-
-path-parse@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
 
 path-parse@^1.0.6:
   version "1.0.6"
@@ -4846,11 +4844,12 @@ resolve@1.1.7, resolve@~1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.6.0.tgz#0fbd21278b27b4004481c395349e7aba60a9ff5c"
+resolve@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.npmjs.org/resolve/-/resolve-1.12.0.tgz#3fc644a35c84a48554609ff26ec52b66fa577df6"
+  integrity sha512-B/dOmuoAik5bKcD6s6nXDCjzUKnaDvdkRyAk6rsmsKLipWj4797iothd7jmmUhWTfinVMU+wc56rYKsit2Qy4w==
   dependencies:
-    path-parse "^1.0.5"
+    path-parse "^1.0.6"
 
 resolve@^1.3.2:
   version "1.10.0"
