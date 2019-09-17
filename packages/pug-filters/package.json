@@ -19,7 +19,7 @@
     "jstransformer-cdata": "^1.0.0",
     "jstransformer-coffee-script": "^1.1.1",
     "jstransformer-less": "^2.3.0",
-    "jstransformer-markdown-it": "^1.0.0",
+    "jstransformer-markdown-it": "^2.1.0",
     "jstransformer-stylus": "^1.5.0",
     "jstransformer-uglify-js": "^1.2.0",
     "pug-lexer": "^4.1.0",
