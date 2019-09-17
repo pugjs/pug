@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Proper Usage Brackets 1`] = `"<li>a</li><li>b</li><li>foo</li><li>bar</li>"`;
+
+exports[`Proper Usage No Brackets 1`] = `"<li>a</li><li>b</li><li>foo</li><li>bar</li>"`;
