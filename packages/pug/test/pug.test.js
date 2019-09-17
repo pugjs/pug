@@ -31,7 +31,7 @@ describe('pug', function(){
     });
 
     it('should support Buffers', function(){
-      assert.equal('<p>foo</p>', pug.render(new Buffer('p foo')));
+      assert.equal('<p>foo</p>', pug.render(Buffer.from('p foo')));
     });
 
     it('should support line endings', function(){
