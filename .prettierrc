@@ -1,0 +1,14 @@
+{
+  "bracketSpacing": false,
+  "parser": "babel",
+  "singleQuote": false,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "trailingComma": "es5"
+      }
+    }
+  ]
+}
