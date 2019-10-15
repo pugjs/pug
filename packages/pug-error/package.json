@@ -10,7 +10,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-error"
+    "url": "https://github.com/pugjs/pug.git",
+    "directory": "packages/pug-error"
   },
   "author": "Forbes Lindesay",
   "license": "MIT"

@@ -14,7 +14,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-walk"
+    "url": "https://github.com/pugjs/pug.git",
+    "directory": "packages/pug-walk"
   },
   "author": "ForbesLindesay",
   "license": "MIT"

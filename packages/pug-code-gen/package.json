@@ -20,7 +20,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-code-gen"
+    "url": "https://github.com/pugjs/pug.git",
+    "directory": "packages/pug-code-gen"
   },
   "author": "Forbes Lindesay",
   "license": "MIT"

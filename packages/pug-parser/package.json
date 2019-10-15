@@ -18,7 +18,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-parser"
+    "url": "https://github.com/pugjs/pug.git",
+    "directory": "packages/pug-parser"
   },
   "author": "ForbesLindesay",
   "license": "MIT"

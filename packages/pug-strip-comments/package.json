@@ -16,7 +16,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-strip-comments"
+    "url": "https://github.com/pugjs/pug.git",
+    "directory": "packages/pug-strip-comments"
   },
   "author": "Timothy Gu <timothygu99@gmail.com>",
   "license": "MIT"
