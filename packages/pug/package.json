@@ -44,7 +44,7 @@
     "jstransformer-uglify-js": "^1.1.1",
     "jstransformer-verbatim": "^1.0.0",
     "mkdirp": "^0.5.1",
-    "rimraf": "^2.2.8",
+    "rimraf": "^3.0.0",
     "uglify-js": "github:mishoo/UglifyJS2#1c15d0db456ce32f1b9b507aad97e5ee5c8285f7"
   },
   "files": [
