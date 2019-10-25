@@ -2,9 +2,9 @@
   "name": "pug-monorepo",
   "private": true,
   "devDependencies": {
-    "coveralls": "3.0.6",
+    "coveralls": "3.0.7",
     "jest": "24.9.0",
-    "lerna": "3.16.4",
+    "lerna": "3.18.3",
     "prettier": "^1.18.2"
   },
   "repository": {
