@@ -3943,12 +3943,6 @@ jstransformer-less@^2.1.0, jstransformer-less@^2.3.0:
     less-plugin-inline-urls "^1.1.0"
     less-plugin-npm-import "^2.0.0"
 
-jstransformer-markdown-it@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/jstransformer-markdown-it/-/jstransformer-markdown-it-1.0.0.tgz#4138c5fd04149e10e529408d35526b3a6f7724ef"
-  dependencies:
-    markdown-it "^7.0.0"
-
 jstransformer-markdown-it@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/jstransformer-markdown-it/-/jstransformer-markdown-it-2.1.0.tgz#69ec30ce4518bed5997b38f027648e8c285e92f7"
@@ -4289,16 +4283,6 @@ map-visit@^1.0.0:
   resolved "https://registry.yarnpkg.com/map-visit/-/map-visit-1.0.0.tgz#ecdca8f13144e660f1b5bd41f12f3479d98dfb8f"
   dependencies:
     object-visit "^1.0.0"
-
-markdown-it@^7.0.0:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-7.0.1.tgz#f12d8b88a93e64254348dfd183bd70bf60567a42"
-  dependencies:
-    argparse "^1.0.7"
-    entities "~1.1.1"
-    linkify-it "^2.0.0"
-    mdurl "^1.0.1"
-    uc.micro "^1.0.1"
 
 markdown-it@^8.0.0:
   version "8.4.2"
@@ -5543,10 +5527,17 @@ rimraf@^2.5.4, rimraf@^2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rimraf@^2.6.3, rimraf@^2.7.1:
+rimraf@^2.6.3:
   version "2.7.1"
   resolved "https://registry.npmjs.org/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"
   integrity sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
+  dependencies:
+    glob "^7.1.3"
+
+rimraf@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/rimraf/-/rimraf-3.0.0.tgz#614176d4b3010b75e5c390eb0ee96f6dc0cebb9b"
+  integrity sha512-NDGVxTsjqfunkds7CqsOiEnxln4Bo7Nddl3XhS4pXg5OzwkLqJ971ZVAAnB+DDLnF76N+VnDEiBHaVV8I06SUg==
   dependencies:
     glob "^7.1.3"
 
