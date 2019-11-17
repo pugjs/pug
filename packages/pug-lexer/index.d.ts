@@ -39,6 +39,7 @@ declare module 'pug-lexer' {
 			| 'newline'
 			| 'outdent'
 			| 'path'
+			| 'slash'
 			| 'start-attributes'
 			| 'start-pipeless-text'
 			| 'start-pug-interpolation'
@@ -46,7 +47,8 @@ declare module 'pug-lexer' {
 			| 'text-html'
 			| 'text'
 			| 'when'
-			| 'while';
+			| 'while'
+			| 'yield';
 
 		export interface LexToken<Type extends LexTokenType> {
 			type: Type;
@@ -197,6 +199,10 @@ declare module 'pug-lexer' {
 
 		export type BlockcodeToken = LexToken<'blockcode'>;
 
+		export type YieldToken = LexToken<'yield'>;
+
+		export type SlashToken = LexToken<'slash'>;
+
 		export type Token =
 			| AndAttributesToken
 			| AttributeToken
@@ -231,6 +237,7 @@ declare module 'pug-lexer' {
 			| NewlineToken
 			| OutdentToken
 			| PathToken
+			| SlashToken
 			| StartAttributesToken
 			| StartPipelessTextToken
 			| StartPugInterpolationToken
@@ -238,7 +245,8 @@ declare module 'pug-lexer' {
 			| TextHtmlToken
 			| TextToken
 			| WhenToken
-			| WhileToken;
+			| WhileToken
+			| YieldToken;
 
 		export type LexerFunction = (type: string, exp?: any) => boolean;
 		export interface LexerOptions {
@@ -327,3 +335,4 @@ declare module 'pug-lexer' {
 	function lex(str: string, options?: lex.LexerOptions): lex.Token[];
 	export = lex;
 }
+  
