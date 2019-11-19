@@ -4,8 +4,8 @@
   "devDependencies": {
     "coveralls": "3.0.7",
     "jest": "24.9.0",
-    "lerna": "3.18.3",
-    "prettier": "^1.18.2"
+    "lerna": "3.18.4",
+    "prettier": "1.19.1"
   },
   "repository": {
     "type": "git",
