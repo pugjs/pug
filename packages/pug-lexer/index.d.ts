@@ -173,7 +173,7 @@ declare module 'pug-lexer' {
 
 		export interface EachToken extends LexToken<'each'> {
 			val: string;
-			key: null;
+			key: string | null;
 			code: string;
 		}
 
