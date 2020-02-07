@@ -80,7 +80,12 @@ load.resolve = function resolve(filename, source, options) {
   return filename;
 };
 load.read = function read(filename, options) {
-  return fs.readFileSync(filename, 'utf8');
+  if (options && options.skipEncoding && options.skipEncoding(filename, options)) {
+    return fs.readFileSync(filename);
+  }
+  else {
+    return fs.readFileSync(filename, 'utf8');
+  }
 };
 
 load.validateOptions = function validateOptions(options) {
