@@ -34,6 +34,7 @@
   ],
   "resolutions": {
     "jstransformer-markdown-it": "2.0.0",
+    "mkdirp": "0.5.1",
     "shallow-clone": "2.0.0",
     "stylus": "0.54.5"
   }
