@@ -12,6 +12,7 @@
     "url": "https://github.com/pugjs/pug.git"
   },
   "scripts": {
+    "format": "prettier --ignore-path .gitignore --write './**/*.js'",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "release": "lerna publish",
