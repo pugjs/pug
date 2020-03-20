@@ -43,9 +43,9 @@
     "jstransformer-stylus": "^1.0.0",
     "jstransformer-uglify-js": "^1.1.1",
     "jstransformer-verbatim": "^1.0.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.3",
     "rimraf": "^3.0.0",
-    "uglify-js": "github:mishoo/UglifyJS2#1c15d0db456ce32f1b9b507aad97e5ee5c8285f7"
+    "uglify-js": "^2.8.29"
   },
   "files": [
     "lib/index.js",
