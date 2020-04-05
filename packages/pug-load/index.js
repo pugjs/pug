@@ -5,7 +5,7 @@ var path = require('path');
 var walk = require('pug-walk');
 var assign = require('object-assign');
 
-function tryReadFile(options, file, node) {
+function tryReadFile(options, file, node, isChangeType) {
   var pathSrt, str;
   try {
     pathSrt = options.resolve(file.path, file.filename, options);
@@ -37,12 +37,16 @@ function load(ast, options) {
         try {
           readResult = tryReadFile(options, file, node);
         } catch (ex) {
-          if (path.basename(file.path, '.pug')[0] !== '.') {
+          if (!(/\.pug$/.test(file.path))) {
             throw ex;
           }
           node.type = 'RawInclude';
           node.file.path = node.file.path.slice(0, -4);
-          readResult = tryReadFile(options, file, node);
+          try {
+            readResult = tryReadFile(options, file, node, true);
+          } catch (_ex) {
+            throw ex;
+          }
         }
         pathSrt = readResult.pathSrt;
         str = readResult.str;
