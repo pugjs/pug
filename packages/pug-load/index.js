@@ -37,7 +37,7 @@ function load(ast, options) {
         try {
           readResult = tryReadFile(options, file, node);
         } catch (ex) {
-          if (!(/\.pug$/.test(file.path))) {
+          if (node.type !== 'Include') {
             throw ex;
           }
           node.type = 'RawInclude';
