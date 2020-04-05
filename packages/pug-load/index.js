@@ -5,7 +5,7 @@ var path = require('path');
 var walk = require('pug-walk');
 var assign = require('object-assign');
 
-function tryReadFile(options, file, node, isChangeType) {
+function tryReadFile(options, file, node) {
   var pathSrt, str;
   try {
     pathSrt = options.resolve(file.path, file.filename, options);
