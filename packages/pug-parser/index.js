@@ -874,11 +874,11 @@ loop:
       }
     } else {
       node.type = 'RawInclude';
-      node.filters = filters;
       if (this.peek().type === 'indent') {
         this.error('RAW_INCLUDE_BLOCK', 'Raw inclusion cannot contain a block', this.peek());
       }
     }
+    node.filters = filters;
     return node;
   },
 

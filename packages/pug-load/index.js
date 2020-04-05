@@ -5,6 +5,22 @@ var path = require('path');
 var walk = require('pug-walk');
 var assign = require('object-assign');
 
+function tryReadFile(options, file, node) {
+  var pathSrt, str;
+  try {
+    pathSrt = options.resolve(file.path, file.filename, options);
+    file.fullPath = pathSrt;
+    str = options.read(pathSrt, options);
+  } catch (ex) {
+    ex.message += '\n    at ' + node.filename + ' line ' + node.line;
+    throw ex;
+  }
+  return {
+    pathSrt,
+    str
+  }
+}
+
 module.exports = load;
 function load(ast, options) {
   options = getOptions(options);
@@ -17,19 +33,24 @@ function load(ast, options) {
         if (file.type !== 'FileReference') {
           throw new Error('Expected file.type to be "FileReference"');
         }
-        var path, str;
+        var pathSrt, str, readResult;
         try {
-          path = options.resolve(file.path, file.filename, options);
-          file.fullPath = path;
-          str = options.read(path, options);
+          readResult = tryReadFile(options, file, node);
         } catch (ex) {
-          ex.message += '\n    at ' + node.filename + ' line ' + node.line;
-          throw ex;
+          if (path.basename(file.path, '.pug')[0] !== '.') {
+            throw ex;
+          }
+          node.type = 'RawInclude';
+          node.file.path = node.file.path.slice(0, -4);
+          readResult = tryReadFile(options, file, node);
         }
+        pathSrt = readResult.pathSrt;
+        str = readResult.str;
+
         file.str = str;
         if (node.type === 'Extends' || node.type === 'Include') {
           file.ast = load.string(str, assign({}, options, {
-            filename: path
+            filename: pathSrt
           }));
         }
       }
