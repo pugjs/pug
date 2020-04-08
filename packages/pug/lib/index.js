@@ -171,7 +171,7 @@ function compileBody(str, options){
   ast = applyPlugins(ast, options, plugins, 'postLink');
 
   // Compile
-  var generateCodeReplacement = findReplacementFunc(plugins, 'generateCode')
+  var generateCodeReplacement = findReplacementFunc(plugins, 'generateCode');
   if (generateCodeReplacement) {
     generateCode = generateCodeReplacement;
   }
