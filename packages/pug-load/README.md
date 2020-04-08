@@ -52,7 +52,7 @@ This function is not meant to be called from outside of `pug-load`, but rather f
 
 ### `load.validateOptions(options)`
 
-Callback used `pug-load` to ensure the options object is valid. If your overriden `load.resolve` or `load.read` uses a different `options` scheme, you will need to override this function as well.
+Callback used `pug-load` to ensure the options object is valid. If your overridden `load.resolve` or `load.read` uses a different `options` scheme, you will need to override this function as well.
 
 This function is not meant to be called from outside of `pug-load`, but rather for you to override.
 
