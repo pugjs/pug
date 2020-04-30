@@ -7,7 +7,7 @@ node_js:
 
 # Use faster Docker architecture on Travis.
 sudo: false
-
+before_script: yarn config set ignore-engines true 
 script: yarn test
 # TODO: coverage
 # after_success: npm run coveralls
