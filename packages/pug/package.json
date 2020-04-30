@@ -36,6 +36,8 @@
     "pug-strip-comments": "^1.0.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "jstransformer-cdata": "^1.0.0",
     "jstransformer-coffee-script": "^1.0.0",
     "jstransformer-less": "^2.1.0",

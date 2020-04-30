@@ -3,6 +3,14 @@ var assert = require('assert');
 var pug = require('../');
 var uglify = require('uglify-js');
 var mkdirp = require('mkdirp').sync;
+var babel = require('@babel/core');
+
+
+var babelOptions = {
+  "presets": [
+    ["@babel/env", { "modules": false }]
+  ]
+};
 
 var filters = {
   custom: function (str, options) {
@@ -52,30 +60,30 @@ function testSingle(it, suffix, test){
     writeFileSync(__dirname + '/output' + suffix + '/' + test + '.html', actual);
 
     var html = fs.readFileSync(__dirname + '/cases' + suffix + '/' + test + '.html', 'utf8').trim().replace(/\r/g, '');
-    var clientCode = uglify.minify(pug.compileClient(str, {
+    var clientCode = uglify.minify(babel.transformSync(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: false,
       basedir: __dirname + '/cases' + suffix,
       filters: filters,
       filterAliases: {'markdown': 'markdown-it'},
-    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
-    var clientCodeDebug = uglify.minify(pug.compileClient(str, {
+    }), babelOptions).code, {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
+    var clientCodeDebug = uglify.minify(babel.transformSync(pug.compileClient(str, {
       filename: path,
       pretty: true,
       compileDebug: true,
       basedir: __dirname + '/cases' + suffix,
       filters: filters,
       filterAliases: {'markdown': 'markdown-it'},
-    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
-    writeFileSync(__dirname + '/output' + suffix + '/' + test + '.js', uglify.minify(pug.compileClient(str, {
+    }), babelOptions).code, {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code;
+    writeFileSync(__dirname + '/output' + suffix + '/' + test + '.js', uglify.minify(babel.transformSync(pug.compileClient(str, {
       filename: path,
       pretty: false,
       compileDebug: false,
       basedir: __dirname + '/cases' + suffix,
       filters: filters,
       filterAliases: {'markdown': 'markdown-it'},
-    }), {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code);
+    }), babelOptions).code, {output: {beautify: true}, mangle: false, compress: false, fromString: true}).code);
     if (/filter/.test(test)) {
       actual = actual.replace(/\n| /g, '');
       html = html.replace(/\n| /g, '');
