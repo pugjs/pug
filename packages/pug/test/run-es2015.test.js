@@ -6,7 +6,6 @@ const mkdirp = require('mkdirp').sync;
 const runUtils = require('./run-utils');
 const pug = require('../');
 
-var cases = runUtils.findCases(__dirname + '/cases');
 var es2015 = runUtils.findCases(__dirname + '/cases-es2015');
 
 mkdirp(__dirname + '/output-es2015');
