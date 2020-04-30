@@ -45,7 +45,7 @@
     "jstransformer-stylus": "^1.0.0",
     "jstransformer-uglify-js": "^1.1.1",
     "jstransformer-verbatim": "^1.0.0",
-    "mkdirp": "^1.0.4",
+    "mkdirp": "^0.5.1",
     "rimraf": "^3.0.0",
     "uglify-js": "^2.8.29"
   },
