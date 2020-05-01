@@ -1,10 +1,12 @@
 {
   "name": "pug-monorepo",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "coveralls": "3.0.9",
     "jest": "24.9.0",
-    "lerna": "3.20.2",
     "prettier": "1.19.1"
   },
   "repository": {
@@ -13,10 +15,6 @@
   },
   "scripts": {
     "format": "prettier --ignore-path .gitignore --write './**/*.js'",
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna clean",
-    "release": "lerna publish",
-    "pretest": "lerna run pretest",
     "test": "jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
@@ -29,14 +27,5 @@
       "./scripts/prettier-javascript-serializer.js"
     ]
   },
-  "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
-  "resolutions": {
-    "jstransformer-markdown-it": "2.0.0",
-    "mkdirp": "0.5.1",
-    "shallow-clone": "2.0.0",
-    "stylus": "0.54.5"
-  }
+  "license": "MIT"
 }
