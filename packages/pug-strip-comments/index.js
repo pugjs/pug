@@ -4,18 +4,18 @@ var error = require('pug-error');
 
 module.exports = stripComments;
 
-function unexpectedToken (type, occasion, filename, line) {
+function unexpectedToken(type, occasion, filename, line) {
   var msg = '`' + type + '` encountered when ' + occasion;
-  throw error('UNEXPECTED_TOKEN', msg, { filename: filename, line: line });
+  throw error('UNEXPECTED_TOKEN', msg, {filename: filename, line: line});
 }
 
-function stripComments (input, options) {
+function stripComments(input, options) {
   options = options || {};
 
   // Default: strip unbuffered comments and leave buffered ones alone
   var stripUnbuffered = options.stripUnbuffered !== false;
-  var stripBuffered   = options.stripBuffered   === true;
-  var filename        = options.filename;
+  var stripBuffered = options.stripBuffered === true;
+  var filename = options.filename;
 
   var out = [];
   // If we have encountered a comment token and are not sure if we have gotten
@@ -25,12 +25,15 @@ function stripComments (input, options) {
   // `end-pipeless-text` should be ignored
   var inPipelessText = false;
 
-  return input.filter(function (tok) {
+  return input.filter(function(tok) {
     switch (tok.type) {
       case 'comment':
         if (inComment) {
           unexpectedToken(
-            'comment', 'already in a comment', filename, tok.line
+            'comment',
+            'already in a comment',
+            filename,
+            tok.line
           );
         } else {
           inComment = tok.buffer ? stripBuffered : stripUnbuffered;
@@ -40,8 +43,10 @@ function stripComments (input, options) {
         if (!inComment) return true;
         if (inPipelessText) {
           unexpectedToken(
-            'start-pipeless-text', 'already in pipeless text mode',
-            filename, tok.line
+            'start-pipeless-text',
+            'already in pipeless text mode',
+            filename,
+            tok.line
           );
         }
         inPipelessText = true;
@@ -50,8 +55,10 @@ function stripComments (input, options) {
         if (!inComment) return true;
         if (!inPipelessText) {
           unexpectedToken(
-            'end-pipeless-text', 'not in pipeless text mode',
-            filename, tok.line
+            'end-pipeless-text',
+            'not in pipeless text mode',
+            filename,
+            tok.line
           );
         }
         inPipelessText = false;

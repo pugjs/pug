@@ -6,12 +6,12 @@ var lineJSON = require('line-json');
 var strip = require('../');
 
 var dir = __dirname + '/cases/';
-fs.readdirSync(dir).forEach(function (testCase) {
+fs.readdirSync(dir).forEach(function(testCase) {
   if (/\.input\.json$/.test(testCase)) {
-    test(testCase, function () {
+    test(testCase, function() {
       var stem = testCase.replace(/\.input\.json$/, '.');
 
-      function test (name, options) {
+      function test(name, options) {
         var input = fs.readFileSync(dir + testCase, 'utf8');
         input = lineJSON.parse(input);
 
@@ -20,16 +20,16 @@ fs.readdirSync(dir).forEach(function (testCase) {
       }
 
       test('unbuffered');
-      test('buffered',   { stripBuffered: true, stripUnbuffered: false });
-      test('both',       { stripBuffered: true });
+      test('buffered', {stripBuffered: true, stripUnbuffered: false});
+      test('both', {stripBuffered: true});
     });
   }
 });
 
 var edir = __dirname + '/errors/';
-fs.readdirSync(edir).forEach(function (testCase) {
+fs.readdirSync(edir).forEach(function(testCase) {
   if (/\.input\.json$/.test(testCase)) {
-    test(testCase, function () {
+    test(testCase, function() {
       var stem = testCase.replace(/\.input\.json$/, '.');
 
       var input = fs.readFileSync(edir + testCase, 'utf8');
@@ -43,7 +43,7 @@ fs.readdirSync(edir).forEach(function (testCase) {
         expect({
           msg: ex.msg,
           code: ex.code,
-          line: ex.line
+          line: ex.line,
         }).toMatchSnapshot();
       }
     });

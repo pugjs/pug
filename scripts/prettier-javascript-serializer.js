@@ -27,5 +27,5 @@ module.exports = {
   },
   print: function(val, serialize, indent) {
     return serialize(prettier.format(val, prettierOptions));
-  }
+  },
 };

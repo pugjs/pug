@@ -16,6 +16,7 @@
   "scripts": {
     "prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.js'",
     "format": "prettier --ignore-path .gitignore --write './**/*.js'",
+    "pretest": "wsrun --stages --exclude-missing --fast-exit --collect-logs build",
     "test": "jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
@@ -28,5 +29,8 @@
       "./scripts/prettier-javascript-serializer.js"
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "wsrun": "^5.2.0"
+  }
 }
