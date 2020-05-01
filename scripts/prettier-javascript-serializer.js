@@ -1,6 +1,6 @@
 const prettier = require('prettier');
 
-const prettierOptions = {} // optional
+const prettierOptions = { parser: 'babel' };
 
 // filename serializer that removes the basedir
 module.exports = {
