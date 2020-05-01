@@ -171,12 +171,8 @@ function compileBody(str, options){
   ast = applyPlugins(ast, options, plugins, 'postLink');
 
   // Compile
-  var generateCodeReplacement = findReplacementFunc(plugins, 'generateCode');
-  if (generateCodeReplacement) {
-    generateCode = generateCodeReplacement;
-  }
   ast = applyPlugins(ast, options, plugins, 'preCodeGen');
-  var js = generateCode(ast, {
+  var js = (findReplacementFunc(plugins, 'generateCode') || generateCode)(ast, {
     pretty: options.pretty,
     compileDebug: options.compileDebug,
     doctype: options.doctype,
