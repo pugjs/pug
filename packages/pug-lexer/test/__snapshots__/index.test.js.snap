@@ -34634,6 +34634,277 @@ Array [
 ]
 `;
 
+exports[`mixin-block-interpolation.pug 1`] = `
+Array [
+  Object {
+    "args": null,
+    "loc": Object {
+      "end": Object {
+        "column": 10,
+        "line": 1,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 1,
+        "line": 1,
+      },
+    },
+    "type": "mixin",
+    "val": "a",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 1,
+        "line": 2,
+      },
+    },
+    "type": "indent",
+    "val": 4,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 9,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 5,
+        "line": 2,
+      },
+    },
+    "type": "tag",
+    "val": "span",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 22,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 10,
+        "line": 2,
+      },
+    },
+    "type": "text",
+    "val": "This should ",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 24,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 22,
+        "line": 2,
+      },
+    },
+    "type": "start-pug-interpolation",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 29,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 24,
+        "line": 2,
+      },
+    },
+    "type": "tag",
+    "val": "block",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 30,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 29,
+        "line": 2,
+      },
+    },
+    "type": "end-pug-interpolation",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 30,
+        "line": 2,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 30,
+        "line": 2,
+      },
+    },
+    "type": "text",
+    "val": "",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 3,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 1,
+        "line": 3,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 6,
+        "line": 3,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 5,
+        "line": 3,
+      },
+    },
+    "type": "tag",
+    "val": "p",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 16,
+        "line": 3,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 7,
+        "line": 3,
+      },
+    },
+    "type": "text",
+    "val": "Next line",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 5,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 1,
+        "line": 5,
+      },
+    },
+    "type": "outdent",
+  },
+  Object {
+    "args": "",
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 5,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 1,
+        "line": 5,
+      },
+    },
+    "type": "call",
+    "val": "a",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 6,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 1,
+        "line": 6,
+      },
+    },
+    "type": "indent",
+    "val": 4,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 6,
+        "line": 6,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 5,
+        "line": 6,
+      },
+    },
+    "type": "tag",
+    "val": "b",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 11,
+        "line": 6,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 7,
+        "line": 6,
+      },
+    },
+    "type": "text",
+    "val": "work",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 11,
+        "line": 6,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 11,
+        "line": 6,
+      },
+    },
+    "type": "outdent",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 11,
+        "line": 6,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/mixin-block-interpolation.pug",
+      "start": Object {
+        "column": 11,
+        "line": 6,
+      },
+    },
+    "type": "eos",
+  },
+]
+`;
+
 exports[`mixin-block-with-space.pug 1`] = `
 Array [
   Object {
