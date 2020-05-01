@@ -12,14 +12,14 @@ script
     }
   `;
 
-  const ast = parse(
-    lex(source, {filename: __filename}),
-    {filename: __filename, src: source}
-  );
+  const ast = parse(lex(source, {filename: __filename}), {
+    filename: __filename,
+    src: source,
+  });
 
   const options = {};
   const aliases = {
-    'minify': 'uglify-js',
+    minify: 'uglify-js',
   };
 
   const output = handleFilters(ast, customFilters, options, aliases);
@@ -35,15 +35,15 @@ script
     }
   `;
 
-  const ast = parse(
-    lex(source, {filename: __filename}),
-    {filename: __filename, src: source}
-  );
+  const ast = parse(lex(source, {filename: __filename}), {
+    filename: __filename,
+    src: source,
+  });
 
   const options = {};
   const aliases = {
     'minify-js': 'minify',
-    'minify': 'uglify-js',
+    minify: 'uglify-js',
   };
 
   try {
@@ -71,17 +71,16 @@ script
     }
   `;
 
-  const ast = parse(
-    lex(source, {filename: __filename}),
-    {filename: __filename, src: source}
-  );
-
+  const ast = parse(lex(source, {filename: __filename}), {
+    filename: __filename,
+    src: source,
+  });
 
   const options = {
-    'minify': {output: {beautify: true}},
+    minify: {output: {beautify: true}},
   };
   const aliases = {
-    'minify': 'uglify-js',
+    minify: 'uglify-js',
   };
 
   const output = handleFilters(ast, customFilters, options, aliases);

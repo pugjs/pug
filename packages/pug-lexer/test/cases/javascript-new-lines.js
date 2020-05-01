@@ -1,1 +1,1 @@
-var x = "\n here is some \n new lined text";
+var x = '\n here is some \n new lined text';

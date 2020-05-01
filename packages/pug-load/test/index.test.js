@@ -12,13 +12,19 @@ test('pug-load', () => {
   var filename = __dirname + '/foo.pug';
   var ast = load.file(filename, {
     lex: lex,
-    parse: parse
+    parse: parse,
   });
 
-  ast = walk(ast, function (node) {
-    if (node.filename) node.filename = '<dirname>/' + path.basename(node.filename);
-    if (node.fullPath) node.fullPath = '<dirname>/' + path.basename(node.fullPath);
-  }, {includeDependencies: true});
+  ast = walk(
+    ast,
+    function(node) {
+      if (node.filename)
+        node.filename = '<dirname>/' + path.basename(node.filename);
+      if (node.fullPath)
+        node.fullPath = '<dirname>/' + path.basename(node.fullPath);
+    },
+    {includeDependencies: true}
+  );
 
   expect(ast).toMatchSnapshot();
 });
