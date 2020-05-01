@@ -1,6 +1,6 @@
 {
   "name": "pug-runtime",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "The runtime components for the pug templating language",
   "keywords": [
     "pug"
@@ -18,11 +18,12 @@
   ],
   "scripts": {
     "prepublish": "node prepublish",
-    "pretest": "npm run prepublish"
+    "pretest": "npm run prepublish",
+    "build": "node prepublish"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug-runtime.git"
+    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-runtime"
   },
   "browser": {
     "fs": false

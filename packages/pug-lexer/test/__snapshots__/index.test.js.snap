@@ -1,4 +1,6 @@
-exports[`test attr-es2015.pug 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`attr-es2015.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -15,7 +17,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var avatar = \'219b77f9d21de75e81851b6b886057c7\'",
+    "val": "var avatar = '219b77f9d21de75e81851b6b886057c7'",
   },
   Object {
     "loc": Object {
@@ -137,7 +139,7 @@ Array [
 ]
 `;
 
-exports[`test attribute-invalid-expression.pug 1`] = `
+exports[`attribute-invalid-expression.pug 1`] = `
 Object {
   "code": "PUG:SYNTAX_ERROR",
   "column": 5,
@@ -146,7 +148,7 @@ Object {
 }
 `;
 
-exports[`test attrs.js.pug 1`] = `
+exports[`attrs.js.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -194,7 +196,10 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "function answer() { return 42; }",
+    "val": "function answer() {
+  return 42;
+}
+",
   },
   Object {
     "loc": Object {
@@ -254,7 +259,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/user/\' + id",
+    "val": "'/user/' + id",
   },
   Object {
     "loc": Object {
@@ -271,7 +276,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'button\'",
+    "val": "'button'",
   },
   Object {
     "loc": Object {
@@ -345,7 +350,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/user/\' + id",
+    "val": "'/user/' + id",
   },
   Object {
     "loc": Object {
@@ -362,7 +367,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'button\'",
+    "val": "'button'",
   },
   Object {
     "loc": Object {
@@ -436,7 +441,7 @@ Array [
     "mustEscape": true,
     "name": "key",
     "type": "attribute",
-    "val": "\'answer\'",
+    "val": "'answer'",
   },
   Object {
     "loc": Object {
@@ -527,7 +532,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "[\'class1\', \'class2\']",
+    "val": "['class1', 'class2']",
   },
   Object {
     "loc": Object {
@@ -616,7 +621,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "[\'class1\', \'class2\']",
+    "val": "['class1', 'class2']",
   },
   Object {
     "loc": Object {
@@ -690,7 +695,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/user/\' + id",
+    "val": "'/user/' + id",
   },
   Object {
     "loc": Object {
@@ -707,7 +712,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'button\'",
+    "val": "'button'",
   },
   Object {
     "loc": Object {
@@ -781,7 +786,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/user/\' + id",
+    "val": "'/user/' + id",
   },
   Object {
     "loc": Object {
@@ -798,7 +803,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'button\'",
+    "val": "'button'",
   },
   Object {
     "loc": Object {
@@ -872,7 +877,7 @@ Array [
     "mustEscape": true,
     "name": "key",
     "type": "attribute",
-    "val": "\'answer\'",
+    "val": "'answer'",
   },
   Object {
     "loc": Object {
@@ -963,7 +968,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "[\'class1\', \'class2\']",
+    "val": "['class1', 'class2']",
   },
   Object {
     "loc": Object {
@@ -1052,7 +1057,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "[\'class1\', \'class2\']",
+    "val": "['class1', 'class2']",
   },
   Object {
     "loc": Object {
@@ -1155,7 +1160,7 @@ Array [
       },
     },
     "type": "&attributes",
-    "val": "{foo: \'bar\'}",
+    "val": "{foo: 'bar'}",
   },
   Object {
     "loc": Object {
@@ -1292,18 +1297,382 @@ Array [
       },
     },
     "type": "&attributes",
-    "val": "{baz: \'baz\'}",
+    "val": "{baz: 'baz'}",
   },
   Object {
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 18,
+        "line": 19,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
       "start": Object {
         "column": 1,
-        "line": 18,
+        "line": 19,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 19,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 19,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 14,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 19,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 15,
+        "line": 19,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 14,
+        "line": 19,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 20,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 20,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 20,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 14,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 20,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 28,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 15,
+        "line": 20,
+      },
+    },
+    "mustEscape": true,
+    "name": "after",
+    "type": "attribute",
+    "val": "\\"after\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 29,
+        "line": 20,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 28,
+        "line": 20,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 21,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 21,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 21,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 20,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 21,
+      },
+    },
+    "mustEscape": true,
+    "name": "before",
+    "type": "attribute",
+    "val": "\\"before\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 30,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 21,
+        "line": 21,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 31,
+        "line": 21,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 30,
+        "line": 21,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 22,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 4,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 22,
+      },
+    },
+    "type": "tag",
+    "val": "div",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 4,
+        "line": 22,
+      },
+    },
+    "type": "start-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 20,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 5,
+        "line": 22,
+      },
+    },
+    "mustEscape": true,
+    "name": "before",
+    "type": "attribute",
+    "val": "\\"before\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 30,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 21,
+        "line": 22,
+      },
+    },
+    "mustEscape": true,
+    "name": "...object",
+    "type": "attribute",
+    "val": true,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 44,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 31,
+        "line": 22,
+      },
+    },
+    "mustEscape": true,
+    "name": "after",
+    "type": "attribute",
+    "val": "\\"after\\"",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 45,
+        "line": 22,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 44,
+        "line": 22,
+      },
+    },
+    "type": "end-attributes",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 23,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
+      "start": Object {
+        "column": 1,
+        "line": 23,
       },
     },
     "type": "newline",
@@ -1312,12 +1681,12 @@ Array [
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 18,
+        "line": 23,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/attrs.js.pug",
       "start": Object {
         "column": 1,
-        "line": 18,
+        "line": 23,
       },
     },
     "type": "eos",
@@ -1325,7 +1694,7 @@ Array [
 ]
 `;
 
-exports[`test attrs.pug 1`] = `
+exports[`attrs.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -1371,7 +1740,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/contact\'",
+    "val": "'/contact'",
   },
   Object {
     "loc": Object {
@@ -1460,7 +1829,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/save\'",
+    "val": "'/save'",
   },
   Object {
     "loc": Object {
@@ -1672,7 +2041,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'foo, bar, baz\'",
+    "val": "'foo, bar, baz'",
   },
   Object {
     "loc": Object {
@@ -1763,7 +2132,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'((foo))\'",
+    "val": "'((foo))'",
   },
   Object {
     "loc": Object {
@@ -1884,7 +2253,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -2007,7 +2376,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -2096,7 +2465,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\"class:\"",
+    "val": "\\"class:\\"",
   },
   Object {
     "loc": Object {
@@ -2170,7 +2539,7 @@ Array [
     "mustEscape": true,
     "name": "pattern",
     "type": "attribute",
-    "val": "\'\\\\S+\'",
+    "val": "'\\\\\\\\S+'",
   },
   Object {
     "loc": Object {
@@ -2244,7 +2613,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/contact\'",
+    "val": "'/contact'",
   },
   Object {
     "loc": Object {
@@ -2333,7 +2702,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/save\'",
+    "val": "'/save'",
   },
   Object {
     "loc": Object {
@@ -2545,7 +2914,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'foo, bar, baz\'",
+    "val": "'foo, bar, baz'",
   },
   Object {
     "loc": Object {
@@ -2636,7 +3005,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'((foo))\'",
+    "val": "'((foo))'",
   },
   Object {
     "loc": Object {
@@ -2757,7 +3126,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -2880,7 +3249,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -2969,7 +3338,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\"class:\"",
+    "val": "\\"class:\\"",
   },
   Object {
     "loc": Object {
@@ -3043,7 +3412,7 @@ Array [
     "mustEscape": true,
     "name": "pattern",
     "type": "attribute",
-    "val": "\'\\\\S+\'",
+    "val": "'\\\\\\\\S+'",
   },
   Object {
     "loc": Object {
@@ -3117,7 +3486,7 @@ Array [
     "mustEscape": true,
     "name": "terse",
     "type": "attribute",
-    "val": "\"true\"",
+    "val": "\\"true\\"",
   },
   Object {
     "loc": Object {
@@ -3782,7 +4151,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var attrs = {foo: \'bar\', bar: \'<baz>\'}",
+    "val": "var attrs = {foo: 'bar', bar: '<baz>'}",
   },
   Object {
     "loc": Object {
@@ -3886,7 +4255,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -3903,7 +4272,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\"bar\"",
+    "val": "\\"bar\\"",
   },
   Object {
     "loc": Object {
@@ -3977,7 +4346,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -3994,7 +4363,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -4041,7 +4410,7 @@ Array [
 ]
 `;
 
-exports[`test attrs.unescaped.pug 1`] = `
+exports[`attrs.unescaped.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -4087,7 +4456,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/x-template\'",
+    "val": "'text/x-template'",
   },
   Object {
     "loc": Object {
@@ -4162,7 +4531,7 @@ Array [
     "mustEscape": false,
     "name": "id",
     "type": "attribute",
-    "val": "\'user-<%= user.id %>\'",
+    "val": "'user-<%= user.id %>'",
   },
   Object {
     "loc": Object {
@@ -4268,7 +4637,7 @@ Array [
 ]
 `;
 
-exports[`test attrs-data.pug 1`] = `
+exports[`attrs-data.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -4285,7 +4654,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var user = { name: \'tobi\' }",
+    "val": "var user = { name: 'tobi' }",
   },
   Object {
     "loc": Object {
@@ -4493,7 +4862,7 @@ Array [
     "mustEscape": true,
     "name": "data-username",
     "type": "attribute",
-    "val": "\'tobi\'",
+    "val": "'tobi'",
   },
   Object {
     "loc": Object {
@@ -4567,7 +4936,7 @@ Array [
     "mustEscape": true,
     "name": "data-escaped",
     "type": "attribute",
-    "val": "{message: \"Let\'s rock!\"}",
+    "val": "{message: \\"Let's rock!\\"}",
   },
   Object {
     "loc": Object {
@@ -4641,7 +5010,7 @@ Array [
     "mustEscape": true,
     "name": "data-ampersand",
     "type": "attribute",
-    "val": "{message: \"a quote: &quot; this & that\"}",
+    "val": "{message: \\"a quote: &quot; this & that\\"}",
   },
   Object {
     "loc": Object {
@@ -4762,7 +5131,7 @@ Array [
 ]
 `;
 
-exports[`test basic.pug 1`] = `
+exports[`basic.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -4899,7 +5268,7 @@ Array [
 ]
 `;
 
-exports[`test blanks.pug 1`] = `
+exports[`blanks.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -5094,7 +5463,7 @@ Array [
 ]
 `;
 
-exports[`test block-code.pug 1`] = `
+exports[`block-code.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -5137,7 +5506,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "list = [\"uno\", \"dos\", \"tres\",",
+    "val": "list = [\\"uno\\", \\"dos\\", \\"tres\\",",
   },
   Object {
     "loc": Object {
@@ -5166,7 +5535,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "        \"cuatro\", \"cinco\", \"seis\"];",
+    "val": "        \\"cuatro\\", \\"cinco\\", \\"seis\\"];",
   },
   Object {
     "loc": Object {
@@ -5507,7 +5876,7 @@ Array [
 ]
 `;
 
-exports[`test block-expansion.pug 1`] = `
+exports[`block-expansion.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -5612,7 +5981,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'#\'",
+    "val": "'#'",
   },
   Object {
     "loc": Object {
@@ -5730,7 +6099,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'#\'",
+    "val": "'#'",
   },
   Object {
     "loc": Object {
@@ -5822,7 +6191,7 @@ Array [
 ]
 `;
 
-exports[`test block-expansion.shorthands.pug 1`] = `
+exports[`block-expansion.shorthands.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -5988,7 +6357,7 @@ Array [
 ]
 `;
 
-exports[`test blockquote.pug 1`] = `
+exports[`blockquote.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -6140,7 +6509,7 @@ Array [
 ]
 `;
 
-exports[`test blocks-in-blocks.pug 1`] = `
+exports[`blocks-in-blocks.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -6277,7 +6646,7 @@ Array [
 ]
 `;
 
-exports[`test blocks-in-if.pug 1`] = `
+exports[`blocks-in-if.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -6686,7 +7055,7 @@ Array [
     "mustEscape": true,
     "name": "charset",
     "type": "attribute",
-    "val": "\'utf8\'",
+    "val": "'utf8'",
   },
   Object {
     "loc": Object {
@@ -6938,7 +7307,7 @@ Array [
 ]
 `;
 
-exports[`test case.pug 1`] = `
+exports[`case.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -7609,7 +7978,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var friend = \'Tim:G\'",
+    "val": "var friend = 'Tim:G'",
   },
   Object {
     "loc": Object {
@@ -7668,7 +8037,7 @@ Array [
       },
     },
     "type": "when",
-    "val": "\'Tim:G\'",
+    "val": "'Tim:G'",
   },
   Object {
     "loc": Object {
@@ -7741,7 +8110,7 @@ Array [
       },
     },
     "type": "when",
-    "val": "{tim: \'g\'}",
+    "val": "{tim: 'g'}",
   },
   Object {
     "loc": Object {
@@ -7846,7 +8215,7 @@ Array [
 ]
 `;
 
-exports[`test case-blocks.pug 1`] = `
+exports[`case-blocks.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -8281,7 +8650,7 @@ Array [
 ]
 `;
 
-exports[`test case-with-invalid-expression.pug 1`] = `
+exports[`case-with-invalid-expression.pug 1`] = `
 Object {
   "code": "PUG:SYNTAX_ERROR",
   "column": 22,
@@ -8290,7 +8659,7 @@ Object {
 }
 `;
 
-exports[`test case-with-no-expression.pug 1`] = `
+exports[`case-with-no-expression.pug 1`] = `
 Object {
   "code": "PUG:NO_CASE_EXPRESSION",
   "column": 5,
@@ -8299,7 +8668,7 @@ Object {
 }
 `;
 
-exports[`test classes.pug 1`] = `
+exports[`classes.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -8345,7 +8714,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "[\'foo\', \'bar\', \'baz\']",
+    "val": "['foo', 'bar', 'baz']",
   },
   Object {
     "loc": Object {
@@ -8434,7 +8803,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -8702,7 +9071,7 @@ Array [
 ]
 `;
 
-exports[`test classes-empty.pug 1`] = `
+exports[`classes-empty.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -8748,7 +9117,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'\'",
+    "val": "''",
   },
   Object {
     "loc": Object {
@@ -8929,7 +9298,7 @@ Array [
 ]
 `;
 
-exports[`test code.conditionals.pug 1`] = `
+exports[`code.conditionals.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -9677,7 +10046,7 @@ Array [
       },
     },
     "type": "if",
-    "val": "\'nested\'",
+    "val": "'nested'",
   },
   Object {
     "loc": Object {
@@ -9707,7 +10076,7 @@ Array [
       },
     },
     "type": "if",
-    "val": "\'works\'",
+    "val": "'works'",
   },
   Object {
     "loc": Object {
@@ -10211,7 +10580,7 @@ Array [
 ]
 `;
 
-exports[`test code.escape.pug 1`] = `
+exports[`code.escape.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -10243,7 +10612,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "\'<script>\'",
+    "val": "'<script>'",
   },
   Object {
     "loc": Object {
@@ -10289,7 +10658,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "\'<script>\'",
+    "val": "'<script>'",
   },
   Object {
     "loc": Object {
@@ -10308,7 +10677,7 @@ Array [
 ]
 `;
 
-exports[`test code.iteration.pug 1`] = `
+exports[`code.iteration.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -10631,7 +11000,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'item-\' + i",
+    "val": "'item-' + i",
   },
   Object {
     "loc": Object {
@@ -10982,7 +11351,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var letters = [\'a\', \'b\', \'c\']",
+    "val": "var letters = ['a', 'b', 'c']",
   },
   Object {
     "loc": Object {
@@ -11399,7 +11768,7 @@ Array [
 ]
 `;
 
-exports[`test code.pug 1`] = `
+exports[`code.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -11523,7 +11892,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "\'\'",
+    "val": "''",
   },
   Object {
     "loc": Object {
@@ -11823,7 +12192,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'\'",
+    "val": "''",
   },
   Object {
     "loc": Object {
@@ -12004,7 +12373,7 @@ Array [
 ]
 `;
 
-exports[`test comments.pug 1`] = `
+exports[`comments.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -12722,7 +13091,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "script(src=\'/lame.js\')",
+    "val": "script(src='/lame.js')",
   },
   Object {
     "loc": Object {
@@ -12901,7 +13270,7 @@ Array [
 ]
 `;
 
-exports[`test comments.source.pug 1`] = `
+exports[`comments.source.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -13169,7 +13538,7 @@ Array [
 ]
 `;
 
-exports[`test comments-in-case.pug 1`] = `
+exports[`comments-in-case.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -13275,7 +13644,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var s = \'this\'",
+    "val": "var s = 'this'",
   },
   Object {
     "loc": Object {
@@ -13364,7 +13733,7 @@ Array [
       },
     },
     "type": "when",
-    "val": "\'this\'",
+    "val": "'this'",
   },
   Object {
     "loc": Object {
@@ -13409,7 +13778,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "It\'s this!",
+    "val": "It's this!",
   },
   Object {
     "loc": Object {
@@ -13438,7 +13807,7 @@ Array [
       },
     },
     "type": "when",
-    "val": "\'that\'",
+    "val": "'that'",
   },
   Object {
     "loc": Object {
@@ -13483,7 +13852,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "It\'s that!",
+    "val": "It's that!",
   },
   Object {
     "loc": Object {
@@ -13558,7 +13927,7 @@ Array [
 ]
 `;
 
-exports[`test default-with-expression.pug 1`] = `
+exports[`default-with-expression.pug 1`] = `
 Object {
   "code": "PUG:DEFAULT_WITH_EXPRESSION",
   "column": 8,
@@ -13567,7 +13936,7 @@ Object {
 }
 `;
 
-exports[`test doctype.custom.pug 1`] = `
+exports[`doctype.custom.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -13601,7 +13970,7 @@ Array [
 ]
 `;
 
-exports[`test doctype.default.pug 1`] = `
+exports[`doctype.default.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -13767,7 +14136,7 @@ Array [
 ]
 `;
 
-exports[`test doctype.keyword.pug 1`] = `
+exports[`doctype.keyword.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -13801,7 +14170,7 @@ Array [
 ]
 `;
 
-exports[`test each.else.pug 1`] = `
+exports[`each.else.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -14059,7 +14428,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var users = [{ name: \'tobi\', friends: [\'loki\'] }, { name: \'loki\' }]",
+    "val": "var users = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]",
   },
   Object {
     "loc": Object {
@@ -14330,7 +14699,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var user = { name: \'tobi\', age: 10 }",
+    "val": "var user = { name: 'tobi', age: 10 }",
   },
   Object {
     "loc": Object {
@@ -14879,7 +15248,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "user.name = \'tobi\'",
+    "val": "user.name = 'tobi'",
   },
   Object {
     "loc": Object {
@@ -15140,7 +15509,7 @@ Array [
 ]
 `;
 
-exports[`test else-with-condition.pug 1`] = `
+exports[`else-with-condition.pug 1`] = `
 Object {
   "code": "PUG:ELSE_CONDITION",
   "column": 6,
@@ -15149,7 +15518,7 @@ Object {
 }
 `;
 
-exports[`test escape-chars.pug 1`] = `
+exports[`escape-chars.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -15207,7 +15576,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "var re = /\\d+/;",
+    "val": "var re = /\\\\d+/;",
   },
   Object {
     "loc": Object {
@@ -15240,7 +15609,7 @@ Array [
 ]
 `;
 
-exports[`test escape-test.pug 1`] = `
+exports[`escape-test.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -15450,7 +15819,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var txt = \'<param name=\"flashvars\" value=\"a=&quot;value_a&quot;&b=&quot;value_b&quot;&c=3\"/>\'",
+    "val": "var txt = '<param name=\\"flashvars\\" value=\\"a=&quot;value_a&quot;&b=&quot;value_b&quot;&c=3\\"/>'",
   },
   Object {
     "loc": Object {
@@ -15542,7 +15911,7 @@ Array [
 ]
 `;
 
-exports[`test escaping-class-attribute.pug 1`] = `
+exports[`escaping-class-attribute.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -15588,7 +15957,7 @@ Array [
     "mustEscape": true,
     "name": "attr",
     "type": "attribute",
-    "val": "\"<%= bar %>\"",
+    "val": "\\"<%= bar %>\\"",
   },
   Object {
     "loc": Object {
@@ -15662,7 +16031,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\"<%= bar %>\"",
+    "val": "\\"<%= bar %>\\"",
   },
   Object {
     "loc": Object {
@@ -15736,7 +16105,7 @@ Array [
     "mustEscape": false,
     "name": "attr",
     "type": "attribute",
-    "val": "\"<%= bar %>\"",
+    "val": "\\"<%= bar %>\\"",
   },
   Object {
     "loc": Object {
@@ -15810,7 +16179,7 @@ Array [
     "mustEscape": false,
     "name": "class",
     "type": "attribute",
-    "val": "\"<%= bar %>\"",
+    "val": "\\"<%= bar %>\\"",
   },
   Object {
     "loc": Object {
@@ -15884,7 +16253,7 @@ Array [
     "mustEscape": false,
     "name": "class",
     "type": "attribute",
-    "val": "\"<%= bar %> lol rofl\"",
+    "val": "\\"<%= bar %> lol rofl\\"",
   },
   Object {
     "loc": Object {
@@ -15958,7 +16327,7 @@ Array [
     "mustEscape": false,
     "name": "class",
     "type": "attribute",
-    "val": "\"<%= bar %> lol rofl <%= lmao %>\"",
+    "val": "\\"<%= bar %> lol rofl <%= lmao %>\\"",
   },
   Object {
     "loc": Object {
@@ -16005,7 +16374,7 @@ Array [
 ]
 `;
 
-exports[`test extends-no-path.pug 1`] = `
+exports[`extends-no-path.pug 1`] = `
 Object {
   "code": "PUG:NO_EXTENDS_PATH",
   "column": 8,
@@ -16014,7 +16383,7 @@ Object {
 }
 `;
 
-exports[`test filter-in-include.pug 1`] = `
+exports[`filter-in-include.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -16076,7 +16445,7 @@ Array [
 ]
 `;
 
-exports[`test filters.coffeescript.pug 1`] = `
+exports[`filters.coffeescript.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -16122,7 +16491,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/javascript\'",
+    "val": "'text/javascript'",
   },
   Object {
     "loc": Object {
@@ -16195,7 +16564,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "regexp = /\\n/",
+    "val": "regexp = /\\\\n/",
   },
   Object {
     "loc": Object {
@@ -16388,7 +16757,7 @@ Array [
 ]
 `;
 
-exports[`test filters.custom.pug 1`] = `
+exports[`filters.custom.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -16494,7 +16863,7 @@ Array [
     "mustEscape": true,
     "name": "opt",
     "type": "attribute",
-    "val": "\'val\'",
+    "val": "'val'",
   },
   Object {
     "loc": Object {
@@ -16702,7 +17071,7 @@ Array [
 ]
 `;
 
-exports[`test filters.include.custom.pug 1`] = `
+exports[`filters.include.custom.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -16852,7 +17221,7 @@ Array [
     "mustEscape": true,
     "name": "opt",
     "type": "attribute",
-    "val": "\'val\'",
+    "val": "'val'",
   },
   Object {
     "loc": Object {
@@ -16959,7 +17328,7 @@ Array [
 ]
 `;
 
-exports[`test filters.include.pug 1`] = `
+exports[`filters.include.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -17405,7 +17774,7 @@ Array [
 ]
 `;
 
-exports[`test filters.inline.pug 1`] = `
+exports[`filters.inline.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -17527,7 +17896,7 @@ Array [
 ]
 `;
 
-exports[`test filters.less.pug 1`] = `
+exports[`filters.less.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -17633,7 +18002,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\"text/css\"",
+    "val": "\\"text/css\\"",
   },
   Object {
     "loc": Object {
@@ -17868,7 +18237,7 @@ Array [
 ]
 `;
 
-exports[`test filters.markdown.pug 1`] = `
+exports[`filters.markdown.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -18062,7 +18431,7 @@ Array [
 ]
 `;
 
-exports[`test filters.nested.pug 1`] = `
+exports[`filters.nested.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -18180,7 +18549,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "  console.log(\'test\')",
+    "val": "  console.log('test')",
   },
   Object {
     "loc": Object {
@@ -18370,7 +18739,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "  console.log \'test\'",
+    "val": "  console.log 'test'",
   },
   Object {
     "loc": Object {
@@ -18446,7 +18815,7 @@ Array [
 ]
 `;
 
-exports[`test filters.stylus.pug 1`] = `
+exports[`filters.stylus.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -18552,7 +18921,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\"text/css\"",
+    "val": "\\"text/css\\"",
   },
   Object {
     "loc": Object {
@@ -18744,7 +19113,7 @@ Array [
 ]
 `;
 
-exports[`test filters.verbatim.pug 1`] = `
+exports[`filters.verbatim.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -18938,7 +19307,7 @@ Array [
 ]
 `;
 
-exports[`test filters-empty.pug 1`] = `
+exports[`filters-empty.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -18955,7 +19324,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var users = [{ name: \'tobi\', age: 2 }]",
+    "val": "var users = [{ name: 'tobi', age: 2 }]",
   },
   Object {
     "loc": Object {
@@ -19182,7 +19551,7 @@ Array [
 ]
 `;
 
-exports[`test html.pug 1`] = `
+exports[`html.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -19570,7 +19939,7 @@ Array [
 ]
 `;
 
-exports[`test html5.pug 1`] = `
+exports[`html5.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -19645,7 +20014,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'checkbox\'",
+    "val": "'checkbox'",
   },
   Object {
     "loc": Object {
@@ -19736,7 +20105,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'checkbox\'",
+    "val": "'checkbox'",
   },
   Object {
     "loc": Object {
@@ -19827,7 +20196,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'checkbox\'",
+    "val": "'checkbox'",
   },
   Object {
     "loc": Object {
@@ -19877,7 +20246,7 @@ Array [
 ]
 `;
 
-exports[`test include.script.pug 1`] = `
+exports[`include.script.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -19938,7 +20307,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/x-template\'",
+    "val": "'text/x-template'",
   },
   Object {
     "loc": Object {
@@ -20029,7 +20398,7 @@ Array [
 ]
 `;
 
-exports[`test include.yield.nested.pug 1`] = `
+exports[`include.yield.nested.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20194,7 +20563,7 @@ Array [
 ]
 `;
 
-exports[`test include-extends-from-root.pug 1`] = `
+exports[`include-extends-from-root.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20256,7 +20625,7 @@ Array [
 ]
 `;
 
-exports[`test include-extends-of-common-template.pug 1`] = `
+exports[`include-extends-of-common-template.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20361,7 +20730,7 @@ Array [
 ]
 `;
 
-exports[`test include-extends-relative.pug 1`] = `
+exports[`include-extends-relative.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20423,7 +20792,7 @@ Array [
 ]
 `;
 
-exports[`test include-filter-no-path.pug 1`] = `
+exports[`include-filter-no-path.pug 1`] = `
 Object {
   "code": "PUG:NO_INCLUDE_PATH",
   "column": 12,
@@ -20432,7 +20801,7 @@ Object {
 }
 `;
 
-exports[`test include-filter-no-path-2.pug 1`] = `
+exports[`include-filter-no-path-2.pug 1`] = `
 Object {
   "code": "PUG:NO_INCLUDE_PATH",
   "column": 12,
@@ -20441,16 +20810,16 @@ Object {
 }
 `;
 
-exports[`test include-filter-no-space.pug 1`] = `
+exports[`include-filter-no-space.pug 1`] = `
 Object {
   "code": "PUG:UNEXPECTED_TEXT",
   "column": 14,
   "line": 1,
-  "msg": "unexpected text \"foo.£\"",
+  "msg": "unexpected text \\"foo.£\\"",
 }
 `;
 
-exports[`test include-no-path.pug 1`] = `
+exports[`include-no-path.pug 1`] = `
 Object {
   "code": "PUG:NO_INCLUDE_PATH",
   "column": 8,
@@ -20459,7 +20828,7 @@ Object {
 }
 `;
 
-exports[`test include-only-text.pug 1`] = `
+exports[`include-only-text.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20698,7 +21067,7 @@ Array [
 ]
 `;
 
-exports[`test include-only-text-body.pug 1`] = `
+exports[`include-only-text-body.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20713,7 +21082,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "The message is \"",
+    "val": "The message is \\"",
   },
   Object {
     "loc": Object {
@@ -20770,7 +21139,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "\"",
+    "val": "\\"",
   },
   Object {
     "loc": Object {
@@ -20803,7 +21172,7 @@ Array [
 ]
 `;
 
-exports[`test include-with-text.pug 1`] = `
+exports[`include-with-text.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -20923,7 +21292,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/caustic.js\'",
+    "val": "'/caustic.js'",
   },
   Object {
     "loc": Object {
@@ -20997,7 +21366,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/app.js\'",
+    "val": "'/app.js'",
   },
   Object {
     "loc": Object {
@@ -21058,7 +21427,7 @@ Array [
 ]
 `;
 
-exports[`test include-with-text-head.pug 1`] = `
+exports[`include-with-text-head.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -21134,7 +21503,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/javascript\'",
+    "val": "'text/javascript'",
   },
   Object {
     "loc": Object {
@@ -21191,7 +21560,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "alert(\'hello world\');",
+    "val": "alert('hello world');",
   },
   Object {
     "loc": Object {
@@ -21238,7 +21607,7 @@ Array [
 ]
 `;
 
-exports[`test includes.pug 1`] = `
+exports[`includes.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -21487,7 +21856,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\"text/javascript\"",
+    "val": "\\"text/javascript\\"",
   },
   Object {
     "loc": Object {
@@ -21607,7 +21976,7 @@ Array [
 ]
 `;
 
-exports[`test includes-with-ext-js.pug 1`] = `
+exports[`includes-with-ext-js.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -21743,7 +22112,7 @@ Array [
 ]
 `;
 
-exports[`test inconsistent-indentation.pug 1`] = `
+exports[`inconsistent-indentation.pug 1`] = `
 Object {
   "code": "PUG:INCONSISTENT_INDENTATION",
   "column": 1,
@@ -21752,7 +22121,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.alert-dialog.pug 1`] = `
+exports[`inheritance.alert-dialog.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -21914,7 +22283,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "I\'m an alert!",
+    "val": "I'm an alert!",
   },
   Object {
     "loc": Object {
@@ -21947,7 +22316,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.defaults.pug 1`] = `
+exports[`inheritance.defaults.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -22084,7 +22453,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'jquery.js\'",
+    "val": "'jquery.js'",
   },
   Object {
     "loc": Object {
@@ -22158,7 +22527,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'keymaster.js\'",
+    "val": "'keymaster.js'",
   },
   Object {
     "loc": Object {
@@ -22232,7 +22601,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'caustic.js\'",
+    "val": "'caustic.js'",
   },
   Object {
     "loc": Object {
@@ -22307,7 +22676,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.extend.include.pug 1`] = `
+exports[`inheritance.extend.include.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -22441,7 +22810,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'jquery.js\'",
+    "val": "'jquery.js'",
   },
   Object {
     "loc": Object {
@@ -22726,7 +23095,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.extend.mixins.block.pug 1`] = `
+exports[`inheritance.extend.mixins.block.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -22863,7 +23232,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.extend.mixins.pug 1`] = `
+exports[`inheritance.extend.mixins.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -23089,7 +23458,7 @@ Array [
     "val": 2,
   },
   Object {
-    "args": "\"The meaning of life\"",
+    "args": "\\"The meaning of life\\"",
     "loc": Object {
       "end": Object {
         "column": 34,
@@ -23194,7 +23563,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.extend.pug 1`] = `
+exports[`inheritance.extend.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -23328,7 +23697,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'jquery.js\'",
+    "val": "'jquery.js'",
   },
   Object {
     "loc": Object {
@@ -23494,7 +23863,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.extend.recursive.pug 1`] = `
+exports[`inheritance.extend.recursive.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -23631,7 +24000,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.extend.whitespace.pug 1`] = `
+exports[`inheritance.extend.whitespace.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -23765,7 +24134,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'jquery.js\'",
+    "val": "'jquery.js'",
   },
   Object {
     "loc": Object {
@@ -23931,7 +24300,7 @@ Array [
 ]
 `;
 
-exports[`test inheritance.pug 1`] = `
+exports[`inheritance.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -24065,7 +24434,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'jquery.js\'",
+    "val": "'jquery.js'",
   },
   Object {
     "loc": Object {
@@ -24231,7 +24600,7 @@ Array [
 ]
 `;
 
-exports[`test inline-block-comment.pug 1`] = `
+exports[`inline-block-comment.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -24388,7 +24757,7 @@ Array [
 ]
 `;
 
-exports[`test inline-tag.pug 1`] = `
+exports[`inline-tag.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -24740,7 +25109,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "\'[foo]\'",
+    "val": "'[foo]'",
   },
   Object {
     "loc": Object {
@@ -24829,7 +25198,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var foo = \'foo]\'",
+    "val": "var foo = 'foo]'",
   },
   Object {
     "loc": Object {
@@ -25166,7 +25535,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "\'[foo]\'",
+    "val": "'[foo]'",
   },
   Object {
     "loc": Object {
@@ -25255,7 +25624,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var foo = \'foo]\'",
+    "val": "var foo = 'foo]'",
   },
   Object {
     "loc": Object {
@@ -25520,7 +25889,7 @@ Array [
 ]
 `;
 
-exports[`test intepolated-elements.pug 1`] = `
+exports[`intepolated-elements.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -25625,7 +25994,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'#\'",
+    "val": "'#'",
   },
   Object {
     "loc": Object {
@@ -25642,7 +26011,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'rho--modifier\'",
+    "val": "'rho--modifier'",
   },
   Object {
     "loc": Object {
@@ -25819,7 +26188,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'#\'",
+    "val": "'#'",
   },
   Object {
     "loc": Object {
@@ -25836,7 +26205,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'rho--modifier\'",
+    "val": "'rho--modifier'",
   },
   Object {
     "loc": Object {
@@ -25998,7 +26367,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'#\'",
+    "val": "'#'",
   },
   Object {
     "loc": Object {
@@ -26015,7 +26384,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'rho--modifier\'",
+    "val": "'rho--modifier'",
   },
   Object {
     "loc": Object {
@@ -26092,7 +26461,7 @@ Array [
 ]
 `;
 
-exports[`test interpolated-call.pug 1`] = `
+exports[`interpolated-call.pug 1`] = `
 Object {
   "code": "PUG:BRACKET_MISMATCH",
   "column": 11,
@@ -26101,7 +26470,7 @@ Object {
 }
 `;
 
-exports[`test interpolated-mixin.pug 1`] = `
+exports[`interpolated-mixin.pug 1`] = `
 Array [
   Object {
     "args": "url",
@@ -26270,7 +26639,7 @@ Array [
     "type": "start-pug-interpolation",
   },
   Object {
-    "args": "\'http://www.bing.com\'",
+    "args": "'http://www.bing.com'",
     "loc": Object {
       "end": Object {
         "column": 51,
@@ -26331,7 +26700,7 @@ Array [
 ]
 `;
 
-exports[`test interpolation.escape.pug 1`] = `
+exports[`interpolation.escape.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -26525,7 +26894,7 @@ Array [
     },
     "mustEscape": true,
     "type": "interpolated-code",
-    "val": "\"is {\" + id + \"}\"",
+    "val": "\\"is {\\" + id + \\"}\\"",
   },
   Object {
     "loc": Object {
@@ -26558,7 +26927,7 @@ Array [
 ]
 `;
 
-exports[`test invalid-class-name-1.pug 1`] = `
+exports[`invalid-class-name-1.pug 1`] = `
 Object {
   "code": "PUG:INVALID_CLASS_NAME",
   "column": 1,
@@ -26567,7 +26936,7 @@ Object {
 }
 `;
 
-exports[`test invalid-class-name-2.pug 1`] = `
+exports[`invalid-class-name-2.pug 1`] = `
 Object {
   "code": "PUG:INVALID_CLASS_NAME",
   "column": 1,
@@ -26576,25 +26945,25 @@ Object {
 }
 `;
 
-exports[`test invalid-class-name-3.pug 1`] = `
+exports[`invalid-class-name-3.pug 1`] = `
 Object {
   "code": "PUG:INVALID_CLASS_NAME",
   "column": 1,
   "line": 1,
-  "msg": "\"ä\" is not a valid class name.  Class names can only contain \"_\", \"-\", a-z and 0-9, and must contain at least one of \"_\", or a-z",
+  "msg": "\\"ä\\" is not a valid class name.  Class names can only contain \\"_\\", \\"-\\", a-z and 0-9, and must contain at least one of \\"_\\", or a-z",
 }
 `;
 
-exports[`test invalid-id.pug 1`] = `
+exports[`invalid-id.pug 1`] = `
 Object {
   "code": "PUG:INVALID_ID",
   "column": 1,
   "line": 1,
-  "msg": "\"ä\" is not a valid ID.",
+  "msg": "\\"ä\\" is not a valid ID.",
 }
 `;
 
-exports[`test layout.append.pug 1`] = `
+exports[`layout.append.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -26728,7 +27097,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'foo.js\'",
+    "val": "'foo.js'",
   },
   Object {
     "loc": Object {
@@ -26802,7 +27171,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'bar.js\'",
+    "val": "'bar.js'",
   },
   Object {
     "loc": Object {
@@ -26849,7 +27218,7 @@ Array [
 ]
 `;
 
-exports[`test layout.append.without-block.pug 1`] = `
+exports[`layout.append.without-block.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -26983,7 +27352,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'foo.js\'",
+    "val": "'foo.js'",
   },
   Object {
     "loc": Object {
@@ -27057,7 +27426,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'bar.js\'",
+    "val": "'bar.js'",
   },
   Object {
     "loc": Object {
@@ -27104,7 +27473,7 @@ Array [
 ]
 `;
 
-exports[`test layout.multi.append.prepend.block.pug 1`] = `
+exports[`layout.multi.append.prepend.block.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -27644,7 +28013,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'jquery.js\'",
+    "val": "'jquery.js'",
   },
   Object {
     "loc": Object {
@@ -27749,7 +28118,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'foo.js\'",
+    "val": "'foo.js'",
   },
   Object {
     "loc": Object {
@@ -27796,7 +28165,7 @@ Array [
 ]
 `;
 
-exports[`test layout.prepend.pug 1`] = `
+exports[`layout.prepend.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -27930,7 +28299,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'foo.js\'",
+    "val": "'foo.js'",
   },
   Object {
     "loc": Object {
@@ -28004,7 +28373,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'bar.js\'",
+    "val": "'bar.js'",
   },
   Object {
     "loc": Object {
@@ -28051,7 +28420,7 @@ Array [
 ]
 `;
 
-exports[`test layout.prepend.without-block.pug 1`] = `
+exports[`layout.prepend.without-block.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -28185,7 +28554,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'foo.js\'",
+    "val": "'foo.js'",
   },
   Object {
     "loc": Object {
@@ -28259,7 +28628,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'bar.js\'",
+    "val": "'bar.js'",
   },
   Object {
     "loc": Object {
@@ -28306,16 +28675,16 @@ Array [
 ]
 `;
 
-exports[`test malformed-each.pug 1`] = `
+exports[`malformed-each.pug 1`] = `
 Object {
   "code": "PUG:MALFORMED_EACH",
   "column": 5,
   "line": 1,
-  "msg": "malformed each",
+  "msg": "This \`each\` has a syntax error. \`each\` statements should be of the form: \`each VARIABLE_NAME of JS_EXPRESSION\`",
 }
 `;
 
-exports[`test malformed-extend.pug 1`] = `
+exports[`malformed-extend.pug 1`] = `
 Object {
   "code": "PUG:MALFORMED_EXTENDS",
   "column": 7,
@@ -28324,7 +28693,7 @@ Object {
 }
 `;
 
-exports[`test malformed-include.pug 1`] = `
+exports[`malformed-include.pug 1`] = `
 Object {
   "code": "PUG:MALFORMED_INCLUDE",
   "column": 8,
@@ -28333,7 +28702,7 @@ Object {
 }
 `;
 
-exports[`test mismatched-inline-tag.pug 1`] = `
+exports[`mismatched-inline-tag.pug 1`] = `
 Object {
   "code": "PUG:NO_END_BRACKET",
   "column": 14,
@@ -28342,7 +28711,7 @@ Object {
 }
 `;
 
-exports[`test mismatched-tag-interpolation.pug 1`] = `
+exports[`mismatched-tag-interpolation.pug 1`] = `
 Object {
   "code": "PUG:NO_END_BRACKET",
   "column": 1,
@@ -28351,7 +28720,7 @@ Object {
 }
 `;
 
-exports[`test mixin.attrs.pug 1`] = `
+exports[`mixin.attrs.pug 1`] = `
 Array [
   Object {
     "args": "title",
@@ -29235,7 +29604,7 @@ Array [
     "type": "newline",
   },
   Object {
-    "args": "\'Section 1\'",
+    "args": "'Section 1'",
     "loc": Object {
       "end": Object {
         "column": 25,
@@ -29325,7 +29694,7 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'Section 2\'",
+    "args": "'Section 2'",
     "loc": Object {
       "end": Object {
         "column": 25,
@@ -29399,7 +29768,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'menu.html\'",
+    "val": "'menu.html'",
   },
   Object {
     "loc": Object {
@@ -29416,7 +29785,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -29492,7 +29861,7 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'Section 3\'",
+    "args": "'Section 3'",
     "loc": Object {
       "end": Object {
         "column": 21,
@@ -29536,7 +29905,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'#\'",
+    "val": "'#'",
   },
   Object {
     "loc": Object {
@@ -29671,7 +30040,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -29688,7 +30057,7 @@ Array [
     "mustEscape": true,
     "name": "name",
     "type": "attribute",
-    "val": "\'end\'",
+    "val": "'end'",
   },
   Object {
     "loc": Object {
@@ -29705,7 +30074,7 @@ Array [
     "mustEscape": true,
     "name": "id",
     "type": "attribute",
-    "val": "\'Last\'",
+    "val": "'Last'",
   },
   Object {
     "loc": Object {
@@ -29722,7 +30091,7 @@ Array [
     "mustEscape": true,
     "name": "data-attr",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -29842,7 +30211,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "[\'class1\', \'class2\']",
+    "val": "['class1', 'class2']",
   },
   Object {
     "loc": Object {
@@ -29962,7 +30331,7 @@ Array [
     "mustEscape": true,
     "name": "attr1",
     "type": "attribute",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -29979,7 +30348,7 @@ Array [
     "mustEscape": true,
     "name": "attr2",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -30039,7 +30408,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var val = \'<biz>\'",
+    "val": "var val = '<biz>'",
   },
   Object {
     "loc": Object {
@@ -30070,7 +30439,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var classes = [\'foo\', \'bar\']",
+    "val": "var classes = ['foo', 'bar']",
   },
   Object {
     "loc": Object {
@@ -30131,7 +30500,7 @@ Array [
     "mustEscape": true,
     "name": "attr3",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -30350,7 +30719,7 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'work\'",
+    "args": "'work'",
     "loc": Object {
       "end": Object {
         "column": 29,
@@ -30394,7 +30763,7 @@ Array [
     "mustEscape": true,
     "name": "data-profile",
     "type": "attribute",
-    "val": "\'profile\'",
+    "val": "'profile'",
   },
   Object {
     "loc": Object {
@@ -30411,7 +30780,7 @@ Array [
     "mustEscape": true,
     "name": "data-creator-name",
     "type": "attribute",
-    "val": "\'name\'",
+    "val": "'name'",
   },
   Object {
     "loc": Object {
@@ -30701,7 +31070,7 @@ Array [
     "mustEscape": true,
     "name": "attr3",
     "type": "attribute",
-    "val": "\"qux\"",
+    "val": "\\"qux\\"",
   },
   Object {
     "loc": Object {
@@ -30718,7 +31087,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\"baz\"",
+    "val": "\\"baz\\"",
   },
   Object {
     "loc": Object {
@@ -30750,10 +31119,10 @@ Array [
   },
   Object {
     "args": "
-\'1\',
-      \'2\',
-  \'3\',
-      \'4\'
+'1',
+      '2',
+  '3',
+      '4'
 ",
     "loc": Object {
       "end": Object {
@@ -30800,7 +31169,7 @@ Array [
 ]
 `;
 
-exports[`test mixin.block-tag-behaviour.pug 1`] = `
+exports[`mixin.block-tag-behaviour.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -31041,7 +31410,7 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'Foo\'",
+    "args": "'Foo'",
     "loc": Object {
       "end": Object {
         "column": 20,
@@ -31098,7 +31467,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "I\'m article foo",
+    "val": "I'm article foo",
   },
   Object {
     "loc": Object {
@@ -31397,7 +31766,7 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'Something\'",
+    "args": "'Something'",
     "loc": Object {
       "end": Object {
         "column": 26,
@@ -31453,7 +31822,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "I\'m a much longer",
+    "val": "I'm a much longer",
   },
   Object {
     "loc": Object {
@@ -31630,7 +31999,7 @@ Array [
 ]
 `;
 
-exports[`test mixin.blocks.pug 1`] = `
+exports[`mixin.blocks.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -31784,7 +32153,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var csrf_token_from_somewhere = \'hey\'",
+    "val": "var csrf_token_from_somewhere = 'hey'",
   },
   Object {
     "loc": Object {
@@ -31844,7 +32213,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'hidden\'",
+    "val": "'hidden'",
   },
   Object {
     "loc": Object {
@@ -31861,7 +32230,7 @@ Array [
     "mustEscape": true,
     "name": "name",
     "type": "attribute",
-    "val": "\'_csrf\'",
+    "val": "'_csrf'",
   },
   Object {
     "loc": Object {
@@ -32011,7 +32380,7 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'GET\', \'/search\'",
+    "args": "'GET', '/search'",
     "loc": Object {
       "end": Object {
         "column": 28,
@@ -32085,7 +32454,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text\'",
+    "val": "'text'",
   },
   Object {
     "loc": Object {
@@ -32102,7 +32471,7 @@ Array [
     "mustEscape": true,
     "name": "name",
     "type": "attribute",
-    "val": "\'query\'",
+    "val": "'query'",
   },
   Object {
     "loc": Object {
@@ -32119,7 +32488,7 @@ Array [
     "mustEscape": true,
     "name": "placeholder",
     "type": "attribute",
-    "val": "\'Search\'",
+    "val": "'Search'",
   },
   Object {
     "loc": Object {
@@ -32193,7 +32562,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'submit\'",
+    "val": "'submit'",
   },
   Object {
     "loc": Object {
@@ -32210,7 +32579,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'Search\'",
+    "val": "'Search'",
   },
   Object {
     "loc": Object {
@@ -32329,7 +32698,7 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'POST\', \'/search\'",
+    "args": "'POST', '/search'",
     "loc": Object {
       "end": Object {
         "column": 29,
@@ -32403,7 +32772,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text\'",
+    "val": "'text'",
   },
   Object {
     "loc": Object {
@@ -32420,7 +32789,7 @@ Array [
     "mustEscape": true,
     "name": "name",
     "type": "attribute",
-    "val": "\'query\'",
+    "val": "'query'",
   },
   Object {
     "loc": Object {
@@ -32437,7 +32806,7 @@ Array [
     "mustEscape": true,
     "name": "placeholder",
     "type": "attribute",
-    "val": "\'Search\'",
+    "val": "'Search'",
   },
   Object {
     "loc": Object {
@@ -32511,7 +32880,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'submit\'",
+    "val": "'submit'",
   },
   Object {
     "loc": Object {
@@ -32528,7 +32897,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'Search\'",
+    "val": "'Search'",
   },
   Object {
     "loc": Object {
@@ -32647,7 +33016,7 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'POST\', \'/search\'",
+    "args": "'POST', '/search'",
     "loc": Object {
       "end": Object {
         "column": 29,
@@ -33238,7 +33607,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "\'123\'",
+    "val": "'123'",
   },
   Object {
     "loc": Object {
@@ -33257,7 +33626,7 @@ Array [
 ]
 `;
 
-exports[`test mixin.merge.pug 1`] = `
+exports[`mixin.merge.pug 1`] = `
 Array [
   Object {
     "args": null,
@@ -33586,7 +33955,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\"baz\"",
+    "val": "\\"baz\\"",
   },
   Object {
     "loc": Object {
@@ -33916,7 +34285,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\"hello\"",
+    "val": "\\"hello\\"",
   },
   Object {
     "loc": Object {
@@ -34006,7 +34375,7 @@ Array [
     "mustEscape": true,
     "name": "class",
     "type": "attribute",
-    "val": "\"world\"",
+    "val": "\\"world\\"",
   },
   Object {
     "loc": Object {
@@ -34095,7 +34464,7 @@ Array [
       },
     },
     "type": "&attributes",
-    "val": "{class: \"hello\"}",
+    "val": "{class: \\"hello\\"}",
   },
   Object {
     "loc": Object {
@@ -34128,7 +34497,7 @@ Array [
 ]
 `;
 
-exports[`test mixin-at-end-of-file.pug 1`] = `
+exports[`mixin-at-end-of-file.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -34265,7 +34634,7 @@ Array [
 ]
 `;
 
-exports[`test mixin-block-with-space.pug 1`] = `
+exports[`mixin-block-with-space.pug 1`] = `
 Array [
   Object {
     "args": "id",
@@ -34447,7 +34816,7 @@ Array [
 ]
 `;
 
-exports[`test mixin-hoist.pug 1`] = `
+exports[`mixin-hoist.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -34661,7 +35030,7 @@ Array [
 ]
 `;
 
-exports[`test mixin-via-include.pug 1`] = `
+exports[`mixin-via-include.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -34769,7 +35138,7 @@ Array [
 ]
 `;
 
-exports[`test mixins.pug 1`] = `
+exports[`mixins.pug 1`] = `
 Array [
   Object {
     "args": "title, str",
@@ -35240,8 +35609,8 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'This\',
-            ((\'is regular, javascript\'))",
+    "args": "'This',
+            (('is regular, javascript'))",
     "loc": Object {
       "end": Object {
         "column": 42,
@@ -35657,7 +36026,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "str + \'interpolated\'",
+    "val": "str + 'interpolated'",
   },
   Object {
     "loc": Object {
@@ -35688,7 +36057,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var suffix = \"bar\"",
+    "val": "var suffix = \\"bar\\"",
   },
   Object {
     "loc": Object {
@@ -35705,7 +36074,7 @@ Array [
     "type": "newline",
   },
   Object {
-    "args": "\'This is \'",
+    "args": "'This is '",
     "loc": Object {
       "end": Object {
         "column": 31,
@@ -35718,7 +36087,7 @@ Array [
       },
     },
     "type": "call",
-    "val": "#{\'foo\' + suffix}",
+    "val": "#{'foo' + suffix}",
   },
   Object {
     "loc": Object {
@@ -35751,7 +36120,7 @@ Array [
 ]
 `;
 
-exports[`test mixins.rest-args.pug 1`] = `
+exports[`mixins.rest-args.pug 1`] = `
 Array [
   Object {
     "args": "tag, ...items",
@@ -35921,7 +36290,7 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'ul\', 1, 2, 3, 4",
+    "args": "'ul', 1, 2, 3, 4",
     "loc": Object {
       "end": Object {
         "column": 24,
@@ -35967,7 +36336,7 @@ Array [
 ]
 `;
 
-exports[`test mixins-unused.pug 1`] = `
+exports[`mixins-unused.pug 1`] = `
 Array [
   Object {
     "args": null,
@@ -36028,7 +36397,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "This isn\'t something we ever want to output",
+    "val": "This isn't something we ever want to output",
   },
   Object {
     "loc": Object {
@@ -36076,7 +36445,7 @@ Array [
 ]
 `;
 
-exports[`test multi-line-interpolation.pug 1`] = `
+exports[`multi-line-interpolation.pug 1`] = `
 Object {
   "code": "PUG:NO_END_BRACKET",
   "column": 65,
@@ -36085,7 +36454,7 @@ Object {
 }
 `;
 
-exports[`test namespaces.pug 1`] = `
+exports[`namespaces.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -36175,7 +36544,7 @@ Array [
     "mustEscape": true,
     "name": "fb:foo",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -36208,7 +36577,7 @@ Array [
 ]
 `;
 
-exports[`test nesting.pug 1`] = `
+exports[`nesting.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -36551,16 +36920,16 @@ Array [
 ]
 `;
 
-exports[`test old-prefixed-each.pug 1`] = `
+exports[`old-prefixed-each.pug 1`] = `
 Object {
   "code": "PUG:MALFORMED_EACH",
   "column": 3,
   "line": 2,
-  "msg": "Pug each and for should no longer be prefixed with a dash (\"-\"). They are pug keywords and not part of JavaScript.",
+  "msg": "Pug each and for should no longer be prefixed with a dash (\\"-\\"). They are pug keywords and not part of JavaScript.",
 }
 `;
 
-exports[`test open-interpolation.pug 1`] = `
+exports[`open-interpolation.pug 1`] = `
 Object {
   "code": "PUG:NO_END_BRACKET",
   "column": 54,
@@ -36569,7 +36938,7 @@ Object {
 }
 `;
 
-exports[`test pipeless-comments.pug 1`] = `
+exports[`pipeless-comments.pug 1`] = `
 Array [
   Object {
     "buffer": true,
@@ -36705,7 +37074,7 @@ Array [
 ]
 `;
 
-exports[`test pipeless-filters.pug 1`] = `
+exports[`pipeless-filters.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -36840,7 +37209,7 @@ Array [
 ]
 `;
 
-exports[`test pipeless-tag.pug 1`] = `
+exports[`pipeless-tag.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -36944,7 +37313,7 @@ Array [
     },
     "mustEscape": true,
     "type": "interpolated-code",
-    "val": "\'going\'",
+    "val": "'going'",
   },
   Object {
     "loc": Object {
@@ -36990,7 +37359,7 @@ Array [
     },
     "mustEscape": true,
     "type": "interpolated-code",
-    "val": "\'on\'",
+    "val": "'on'",
   },
   Object {
     "loc": Object {
@@ -37052,7 +37421,7 @@ Array [
 ]
 `;
 
-exports[`test pre.pug 1`] = `
+exports[`pre.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -37418,7 +37787,7 @@ Array [
 ]
 `;
 
-exports[`test quotes.pug 1`] = `
+exports[`quotes.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -37448,7 +37817,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "\"foo\"",
+    "val": "\\"foo\\"",
   },
   Object {
     "loc": Object {
@@ -37492,7 +37861,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -37511,7 +37880,7 @@ Array [
 ]
 `;
 
-exports[`test regression.784.pug 1`] = `
+exports[`regression.784.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -37528,7 +37897,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var url = \'http://www.google.com\'",
+    "val": "var url = 'http://www.google.com'",
   },
   Object {
     "loc": Object {
@@ -37574,7 +37943,7 @@ Array [
     },
     "mustEscape": true,
     "type": "interpolated-code",
-    "val": "url.replace(\'http://\', \'\').replace(/^www\\./, \'\')",
+    "val": "url.replace('http://', '').replace(/^www\\\\./, '')",
   },
   Object {
     "loc": Object {
@@ -37593,7 +37962,7 @@ Array [
 ]
 `;
 
-exports[`test regression.1794.pug 1`] = `
+exports[`regression.1794.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -37729,7 +38098,7 @@ Array [
 ]
 `;
 
-exports[`test script.whitespace.pug 1`] = `
+exports[`script.whitespace.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -37936,7 +38305,7 @@ Array [
 ]
 `;
 
-exports[`test scripts.non-js.pug 1`] = `
+exports[`scripts.non-js.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -37997,7 +38366,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/template\'",
+    "val": "'text/template'",
   },
   Object {
     "loc": Object {
@@ -38219,7 +38588,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/template\'",
+    "val": "'text/template'",
   },
   Object {
     "loc": Object {
@@ -38367,7 +38736,7 @@ Array [
 ]
 `;
 
-exports[`test scripts.pug 1`] = `
+exports[`scripts.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -38543,7 +38912,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "\'foo()\'",
+    "val": "'foo()'",
   },
   Object {
     "loc": Object {
@@ -38664,7 +39033,7 @@ Array [
 ]
 `;
 
-exports[`test self-closing-html.pug 1`] = `
+exports[`self-closing-html.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -38829,7 +39198,7 @@ Array [
 ]
 `;
 
-exports[`test single-period.pug 1`] = `
+exports[`single-period.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -38878,7 +39247,7 @@ Array [
 ]
 `;
 
-exports[`test source.pug 1`] = `
+exports[`source.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -38954,7 +39323,7 @@ Array [
     "mustEscape": true,
     "name": "preload",
     "type": "attribute",
-    "val": "\'auto\'",
+    "val": "'auto'",
   },
   Object {
     "loc": Object {
@@ -39063,7 +39432,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -39137,7 +39506,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -39198,7 +39567,7 @@ Array [
 ]
 `;
 
-exports[`test styles.pug 1`] = `
+exports[`styles.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -39478,7 +39847,7 @@ Array [
     "mustEscape": true,
     "name": "style",
     "type": "attribute",
-    "val": "\'color:red;background:green\'",
+    "val": "'color:red;background:green'",
   },
   Object {
     "loc": Object {
@@ -39552,7 +39921,7 @@ Array [
     "mustEscape": true,
     "name": "style",
     "type": "attribute",
-    "val": "{color: \'red\', background: \'green\'}",
+    "val": "{color: 'red', background: 'green'}",
   },
   Object {
     "loc": Object {
@@ -39610,7 +39979,7 @@ Array [
       },
     },
     "type": "&attributes",
-    "val": "{style: \'color:red;background:green\'}",
+    "val": "{style: 'color:red;background:green'}",
   },
   Object {
     "loc": Object {
@@ -39654,7 +40023,7 @@ Array [
       },
     },
     "type": "&attributes",
-    "val": "{style: {color: \'red\', background: \'green\'}}",
+    "val": "{style: {color: 'red', background: 'green'}}",
   },
   Object {
     "loc": Object {
@@ -39790,7 +40159,7 @@ Array [
     "mustEscape": true,
     "name": "style",
     "type": "attribute",
-    "val": "\'color:red;background:green\'",
+    "val": "'color:red;background:green'",
   },
   Object {
     "loc": Object {
@@ -39865,7 +40234,7 @@ Array [
     "mustEscape": true,
     "name": "style",
     "type": "attribute",
-    "val": "{color: \'red\', background: \'green\'}",
+    "val": "{color: 'red', background: 'green'}",
   },
   Object {
     "loc": Object {
@@ -39910,7 +40279,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var bg = \'green\';",
+    "val": "var bg = 'green';",
   },
   Object {
     "loc": Object {
@@ -39970,7 +40339,7 @@ Array [
     "mustEscape": true,
     "name": "style",
     "type": "attribute",
-    "val": "{color: \'red\', background: bg}",
+    "val": "{color: 'red', background: bg}",
   },
   Object {
     "loc": Object {
@@ -40028,7 +40397,7 @@ Array [
       },
     },
     "type": "&attributes",
-    "val": "{style: {color: \'red\', background: bg}}",
+    "val": "{style: {color: 'red', background: bg}}",
   },
   Object {
     "loc": Object {
@@ -40089,7 +40458,7 @@ Array [
     "mustEscape": true,
     "name": "style",
     "type": "attribute",
-    "val": "{color: \'red\', background: bg}",
+    "val": "{color: 'red', background: bg}",
   },
   Object {
     "loc": Object {
@@ -40150,7 +40519,7 @@ Array [
 ]
 `;
 
-exports[`test tag.interpolation.pug 1`] = `
+exports[`tag.interpolation.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -40181,7 +40550,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var tag = \'p\'",
+    "val": "var tag = 'p'",
   },
   Object {
     "loc": Object {
@@ -40212,7 +40581,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var foo = \'bar\'",
+    "val": "var foo = 'bar'",
   },
   Object {
     "loc": Object {
@@ -40316,7 +40685,7 @@ Array [
     "mustEscape": true,
     "name": "foo",
     "type": "attribute",
-    "val": "\'bar\'",
+    "val": "'bar'",
   },
   Object {
     "loc": Object {
@@ -40374,7 +40743,7 @@ Array [
       },
     },
     "type": "interpolation",
-    "val": "foo ? \'a\' : \'li\'",
+    "val": "foo ? 'a' : 'li'",
   },
   Object {
     "loc": Object {
@@ -40982,7 +41351,7 @@ Array [
     "val": 2,
   },
   Object {
-    "args": "\'contact\'",
+    "args": "'contact'",
     "loc": Object {
       "end": Object {
         "column": 19,
@@ -41071,7 +41440,7 @@ Array [
     "mustEscape": true,
     "name": "href",
     "type": "attribute",
-    "val": "\'/contact\'",
+    "val": "'/contact'",
   },
   Object {
     "loc": Object {
@@ -41133,7 +41502,7 @@ Array [
 ]
 `;
 
-exports[`test tag-blocks.pug 1`] = `
+exports[`tag-blocks.pug 1`] = `
 Array [
   Object {
     "buffer": true,
@@ -41314,7 +41683,7 @@ Array [
     },
     "mustEscape": true,
     "type": "code",
-    "val": "\'  \'",
+    "val": "'  '",
   },
   Object {
     "loc": Object {
@@ -41376,7 +41745,7 @@ Array [
 ]
 `;
 
-exports[`test tags.self-closing.pug 1`] = `
+exports[`tags.self-closing.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -41495,7 +41864,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -41612,7 +41981,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -41744,7 +42113,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -41802,7 +42171,7 @@ Array [
       },
     },
     "type": "interpolation",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -41845,7 +42214,7 @@ Array [
       },
     },
     "type": "interpolation",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -41876,7 +42245,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -41933,7 +42302,7 @@ Array [
       },
     },
     "type": "interpolation",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -41977,7 +42346,7 @@ Array [
       },
     },
     "type": "interpolation",
-    "val": "\'foo\'",
+    "val": "'foo'",
   },
   Object {
     "loc": Object {
@@ -42008,7 +42377,7 @@ Array [
     "mustEscape": true,
     "name": "bar",
     "type": "attribute",
-    "val": "\'baz\'",
+    "val": "'baz'",
   },
   Object {
     "loc": Object {
@@ -42215,7 +42584,7 @@ Array [
     },
     "type": "interpolation",
     "val": "
-    \'foo\'
+    'foo'
   ",
   },
   Object {
@@ -42263,7 +42632,7 @@ Array [
 ]
 `;
 
-exports[`test template.pug 1`] = `
+exports[`template.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -42309,7 +42678,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/x-template\'",
+    "val": "'text/x-template'",
   },
   Object {
     "loc": Object {
@@ -42516,7 +42885,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text/x-template\'",
+    "val": "'text/x-template'",
   },
   Object {
     "loc": Object {
@@ -42664,7 +43033,7 @@ Array [
 ]
 `;
 
-exports[`test text.pug 1`] = `
+exports[`text.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -42710,7 +43079,7 @@ Array [
     "mustEscape": true,
     "name": "value",
     "type": "attribute",
-    "val": "\'\'",
+    "val": "''",
   },
   Object {
     "loc": Object {
@@ -43986,7 +44355,7 @@ Array [
 ]
 `;
 
-exports[`test text-block.pug 1`] = `
+exports[`text-block.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -44091,7 +44460,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text\'",
+    "val": "'text'",
   },
   Object {
     "loc": Object {
@@ -44108,7 +44477,7 @@ Array [
     "mustEscape": true,
     "name": "name",
     "type": "attribute",
-    "val": "\'user[name]\'",
+    "val": "'user[name]'",
   },
   Object {
     "loc": Object {
@@ -44227,7 +44596,7 @@ Array [
     "mustEscape": true,
     "name": "type",
     "type": "attribute",
-    "val": "\'text\'",
+    "val": "'text'",
   },
   Object {
     "loc": Object {
@@ -44244,7 +44613,7 @@ Array [
     "mustEscape": true,
     "name": "name",
     "type": "attribute",
-    "val": "\'user[pass]\'",
+    "val": "'user[pass]'",
   },
   Object {
     "loc": Object {
@@ -44291,7 +44660,7 @@ Array [
 ]
 `;
 
-exports[`test utf8bom.pug 1`] = `
+exports[`utf8bom.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -44321,7 +44690,7 @@ Array [
       },
     },
     "type": "text",
-    "val": "\"foo\"",
+    "val": "\\"foo\\"",
   },
   Object {
     "loc": Object {
@@ -44354,7 +44723,7 @@ Array [
 ]
 `;
 
-exports[`test vars.pug 1`] = `
+exports[`vars.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -44371,7 +44740,7 @@ Array [
     },
     "mustEscape": false,
     "type": "code",
-    "val": "var foo = \'bar\'",
+    "val": "var foo = 'bar'",
   },
   Object {
     "loc": Object {
@@ -44512,7 +44881,7 @@ Array [
 ]
 `;
 
-exports[`test when-with-no-expression.pug 1`] = `
+exports[`when-with-no-expression.pug 1`] = `
 Object {
   "code": "PUG:NO_WHEN_EXPRESSION",
   "column": 5,
@@ -44521,7 +44890,7 @@ Object {
 }
 `;
 
-exports[`test while.pug 1`] = `
+exports[`while.pug 1`] = `
 Array [
   Object {
     "buffer": false,
@@ -44722,7 +45091,7 @@ Array [
 ]
 `;
 
-exports[`test while-with-no-expression.pug 1`] = `
+exports[`while-with-no-expression.pug 1`] = `
 Object {
   "code": "PUG:NO_WHILE_EXPRESSION",
   "column": 6,
@@ -44731,7 +45100,7 @@ Object {
 }
 `;
 
-exports[`test xml.pug 1`] = `
+exports[`xml.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -44806,7 +45175,7 @@ Array [
     "mustEscape": true,
     "name": "term",
     "type": "attribute",
-    "val": "\'some term\'",
+    "val": "'some term'",
   },
   Object {
     "loc": Object {
@@ -44897,7 +45266,7 @@ Array [
 ]
 `;
 
-exports[`test yield.pug 1`] = `
+exports[`yield.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -45047,7 +45416,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/caustic.js\'",
+    "val": "'/caustic.js'",
   },
   Object {
     "loc": Object {
@@ -45121,7 +45490,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/app.js\'",
+    "val": "'/app.js'",
   },
   Object {
     "loc": Object {
@@ -45196,7 +45565,7 @@ Array [
 ]
 `;
 
-exports[`test yield-before-conditional.pug 1`] = `
+exports[`yield-before-conditional.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -45346,7 +45715,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/caustic.js\'",
+    "val": "'/caustic.js'",
   },
   Object {
     "loc": Object {
@@ -45420,7 +45789,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/app.js\'",
+    "val": "'/app.js'",
   },
   Object {
     "loc": Object {
@@ -45495,7 +45864,7 @@ Array [
 ]
 `;
 
-exports[`test yield-before-conditional-head.pug 1`] = `
+exports[`yield-before-conditional-head.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -45571,7 +45940,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/jquery.js\'",
+    "val": "'/jquery.js'",
   },
   Object {
     "loc": Object {
@@ -45703,7 +46072,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/jquery.ui.js\'",
+    "val": "'/jquery.ui.js'",
   },
   Object {
     "loc": Object {
@@ -45764,7 +46133,7 @@ Array [
 ]
 `;
 
-exports[`test yield-head.pug 1`] = `
+exports[`yield-head.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -45840,7 +46209,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/jquery.js\'",
+    "val": "'/jquery.js'",
   },
   Object {
     "loc": Object {
@@ -45942,7 +46311,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/jquery.ui.js\'",
+    "val": "'/jquery.ui.js'",
   },
   Object {
     "loc": Object {
@@ -45989,7 +46358,7 @@ Array [
 ]
 `;
 
-exports[`test yield-title.pug 1`] = `
+exports[`yield-title.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -46169,7 +46538,7 @@ Array [
 ]
 `;
 
-exports[`test yield-title-head.pug 1`] = `
+exports[`yield-title-head.pug 1`] = `
 Array [
   Object {
     "loc": Object {
@@ -46303,7 +46672,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/jquery.js\'",
+    "val": "'/jquery.js'",
   },
   Object {
     "loc": Object {
@@ -46377,7 +46746,7 @@ Array [
     "mustEscape": true,
     "name": "src",
     "type": "attribute",
-    "val": "\'/jquery.ui.js\'",
+    "val": "'/jquery.ui.js'",
   },
   Object {
     "loc": Object {

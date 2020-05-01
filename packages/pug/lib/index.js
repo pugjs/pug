@@ -41,17 +41,13 @@ exports.runtime = runtime;
 exports.cache = {};
 
 function applyPlugins(value, options, plugins, name) {
-  return plugins.reduce(function (value, plugin) {
-    return (
-      plugin[name]
-      ? plugin[name](value, options)
-      : value
-    );
+  return plugins.reduce(function(value, plugin) {
+    return plugin[name] ? plugin[name](value, options) : value;
   }, value);
 }
 
 function findReplacementFunc(plugins, name) {
-  var eligiblePlugins = plugins.filter(function (plugin) {
+  var eligiblePlugins = plugins.filter(function(plugin) {
     return plugin[name];
   });
 
@@ -78,7 +74,7 @@ exports.filters = {};
  * @api private
  */
 
-function compileBody(str, options){
+function compileBody(str, options) {
   var debug_sources = {};
   debug_sources[options.filename] = str;
   var dependencies = [];
@@ -86,26 +82,38 @@ function compileBody(str, options){
   var ast = load.string(str, {
     filename: options.filename,
     basedir: options.basedir,
-    lex: function (str, options) {
+    lex: function(str, options) {
       var lexOptions = {};
-      Object.keys(options).forEach(function (key) {
+      Object.keys(options).forEach(function(key) {
         lexOptions[key] = options[key];
       });
-      lexOptions.plugins = plugins.filter(function (plugin) {
-        return !!plugin.lex;
-      }).map(function (plugin) {
-        return plugin.lex;
-      });
-      var contents = applyPlugins(str, {filename: options.filename}, plugins, 'preLex');
-      return applyPlugins(lex(contents, lexOptions), options, plugins, 'postLex');
+      lexOptions.plugins = plugins
+        .filter(function(plugin) {
+          return !!plugin.lex;
+        })
+        .map(function(plugin) {
+          return plugin.lex;
+        });
+      var contents = applyPlugins(
+        str,
+        {filename: options.filename},
+        plugins,
+        'preLex'
+      );
+      return applyPlugins(
+        lex(contents, lexOptions),
+        options,
+        plugins,
+        'postLex'
+      );
     },
-    parse: function (tokens, options) {
-      tokens = tokens.map(function (token) {
+    parse: function(tokens, options) {
+      tokens = tokens.map(function(token) {
         if (token.type === 'path' && path.extname(token.val) === '') {
           return {
             type: 'path',
             loc: token.loc,
-            val: token.val + '.pug'
+            val: token.val + '.pug',
           };
         }
         return token;
@@ -113,21 +121,30 @@ function compileBody(str, options){
       tokens = stripComments(tokens, options);
       tokens = applyPlugins(tokens, options, plugins, 'preParse');
       var parseOptions = {};
-      Object.keys(options).forEach(function (key) {
+      Object.keys(options).forEach(function(key) {
         parseOptions[key] = options[key];
       });
-      parseOptions.plugins = plugins.filter(function (plugin) {
-        return !!plugin.parse;
-      }).map(function (plugin) {
-        return plugin.parse;
-      });
+      parseOptions.plugins = plugins
+        .filter(function(plugin) {
+          return !!plugin.parse;
+        })
+        .map(function(plugin) {
+          return plugin.parse;
+        });
 
       return applyPlugins(
-        applyPlugins(parse(tokens, parseOptions), options, plugins, 'postParse'),
-        options, plugins, 'preLoad'
+        applyPlugins(
+          parse(tokens, parseOptions),
+          options,
+          plugins,
+          'postParse'
+        ),
+        options,
+        plugins,
+        'preLoad'
       );
     },
-    resolve: function (filename, source, loadOptions) {
+    resolve: function(filename, source, loadOptions) {
       var replacementFunc = findReplacementFunc(plugins, 'resolve');
       if (replacementFunc) {
         return replacementFunc(filename, source, options);
@@ -135,7 +152,7 @@ function compileBody(str, options){
 
       return load.resolve(filename, source, loadOptions);
     },
-    read: function (filename, loadOptions) {
+    read: function(filename, loadOptions) {
       dependencies.push(filename);
 
       var contents;
@@ -149,21 +166,26 @@ function compileBody(str, options){
 
       debug_sources[filename] = contents;
       return contents;
-    }
+    },
   });
   ast = applyPlugins(ast, options, plugins, 'postLoad');
   ast = applyPlugins(ast, options, plugins, 'preFilters');
 
   var filtersSet = {};
-  Object.keys(exports.filters).forEach(function (key) {
+  Object.keys(exports.filters).forEach(function(key) {
     filtersSet[key] = exports.filters[key];
   });
   if (options.filters) {
-    Object.keys(options.filters).forEach(function (key) {
+    Object.keys(options.filters).forEach(function(key) {
       filtersSet[key] = options.filters[key];
     });
   }
-  ast = filters.handleFilters(ast, filtersSet, options.filterOptions, options.filterAliases);
+  ast = filters.handleFilters(
+    ast,
+    filtersSet,
+    options.filterOptions,
+    options.filterAliases
+  );
 
   ast = applyPlugins(ast, options, plugins, 'postFilters');
   ast = applyPlugins(ast, options, plugins, 'preLink');
@@ -172,7 +194,7 @@ function compileBody(str, options){
 
   // Compile
   ast = applyPlugins(ast, options, plugins, 'preCodeGen');
-  var js = generateCode(ast, {
+  var js = (findReplacementFunc(plugins, 'generateCode') || generateCode)(ast, {
     pretty: options.pretty,
     compileDebug: options.compileDebug,
     doctype: options.doctype,
@@ -180,13 +202,16 @@ function compileBody(str, options){
     globals: options.globals,
     self: options.self,
     includeSources: options.includeSources ? debug_sources : false,
-    templateName: options.templateName
+    templateName: options.templateName,
   });
   js = applyPlugins(js, options, plugins, 'postCodeGen');
 
   // Debug compiler
   if (options.debug) {
-    console.error('\nCompiled Function:\n\n\u001b[90m%s\u001b[0m', js.replace(/^/gm, '  '));
+    console.error(
+      '\nCompiled Function:\n\n\u001b[90m%s\u001b[0m',
+      js.replace(/^/gm, '  ')
+    );
   }
 
   return {body: js, dependencies: dependencies};
@@ -206,7 +231,7 @@ function compileBody(str, options){
  * @return {Function}
  * @api private
  */
-function handleTemplateCache (options, str) {
+function handleTemplateCache(options, str) {
   var key = options.filename;
   if (options.cache && exports.cache[key]) {
     return exports.cache[key];
@@ -234,8 +259,8 @@ function handleTemplateCache (options, str) {
  * @api public
  */
 
-exports.compile = function(str, options){
-  var options = options || {}
+exports.compile = function(str, options) {
+  var options = options || {};
 
   str = String(str);
 
@@ -283,7 +308,7 @@ exports.compile = function(str, options){
  * @api public
  */
 
-exports.compileClientWithDependenciesTracked = function(str, options){
+exports.compileClientWithDependenciesTracked = function(str, options) {
   var options = options || {};
 
   str = String(str);
@@ -302,13 +327,13 @@ exports.compileClientWithDependenciesTracked = function(str, options){
     filters: options.filters,
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
-    plugins: options.plugins
+    plugins: options.plugins,
   });
 
   var body = parsed.body;
 
-  if(options.module) {
-    if(options.inlineRuntimeFunctions === false) {
+  if (options.module) {
+    if (options.inlineRuntimeFunctions === false) {
       body = 'var pug = require("pug-runtime");' + body;
     }
     body += ' module.exports = ' + (options.name || 'template') + ';';
@@ -332,7 +357,7 @@ exports.compileClientWithDependenciesTracked = function(str, options){
  * @return {String}
  * @api public
  */
-exports.compileClient = function (str, options) {
+exports.compileClient = function(str, options) {
   return exports.compileClientWithDependenciesTracked(str, options).body;
 };
 
@@ -350,7 +375,7 @@ exports.compileClient = function (str, options) {
  * @return {Function}
  * @api public
  */
-exports.compileFile = function (path, options) {
+exports.compileFile = function(path, options) {
   options = options || {};
   options.filename = path;
   return handleTemplateCache(options);
@@ -371,10 +396,10 @@ exports.compileFile = function (path, options) {
  * @api public
  */
 
-exports.render = function(str, options, fn){
+exports.render = function(str, options, fn) {
   // support callback API
   if ('function' == typeof options) {
-    fn = options, options = undefined;
+    (fn = options), (options = undefined);
   }
   if (typeof fn === 'function') {
     var res;
@@ -406,10 +431,10 @@ exports.render = function(str, options, fn){
  * @api public
  */
 
-exports.renderFile = function(path, options, fn){
+exports.renderFile = function(path, options, fn) {
   // support callback API
   if ('function' == typeof options) {
-    fn = options, options = undefined;
+    (fn = options), (options = undefined);
   }
   if (typeof fn === 'function') {
     var res;
@@ -427,7 +452,6 @@ exports.renderFile = function(path, options, fn){
   return handleTemplateCache(options)(options);
 };
 
-
 /**
  * Compile a Pug file at the given `path` for use on the client.
  *
@@ -437,7 +461,7 @@ exports.renderFile = function(path, options, fn){
  * @api public
  */
 
-exports.compileFileClient = function(path, options){
+exports.compileFileClient = function(path, options) {
   var key = path + ':client';
   options = options || {};
 
@@ -458,8 +482,11 @@ exports.compileFileClient = function(path, options){
  */
 
 exports.__express = function(path, options, fn) {
-  if(options.compileDebug == undefined && process.env.NODE_ENV === 'production') {
+  if (
+    options.compileDebug == undefined &&
+    process.env.NODE_ENV === 'production'
+  ) {
     options.compileDebug = false;
   }
   exports.renderFile(path, options, fn);
-}
+};

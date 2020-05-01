@@ -1,16 +1,15 @@
-
 /**
  * Module dependencies.
  */
 
-var pug = require('../')
-  , path = __dirname + '/each.pug'
-  , str = require('fs').readFileSync(path, 'utf8')
-  , fn = pug.compile(str, { filename: path, pretty: true });
+var pug = require('../'),
+  path = __dirname + '/each.pug',
+  str = require('fs').readFileSync(path, 'utf8'),
+  fn = pug.compile(str, {filename: path, pretty: true});
 
 var users = {
-  tj: { age: 23, email: 'tj@vision-media.ca', isA: 'human' },
-  tobi: { age: 1, email: 'tobi@is-amazing.com', isA: 'ferret' }
+  tj: {age: 23, email: 'tj@vision-media.ca', isA: 'human'},
+  tobi: {age: 1, email: 'tobi@is-amazing.com', isA: 'ferret'},
 };
 
-console.log(fn({ users: users }));
+console.log(fn({users: users}));

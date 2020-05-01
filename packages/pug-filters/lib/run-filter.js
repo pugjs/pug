@@ -17,7 +17,9 @@ function filter(name, str, options, currentDirectory, funcName) {
   var trPath;
   try {
     try {
-      trPath = resolve.sync('jstransformer-' + name, {basedir: currentDirectory || process.cwd()});
+      trPath = resolve.sync('jstransformer-' + name, {
+        basedir: currentDirectory || process.cwd(),
+      });
     } catch (ex) {
       trPath = require.resolve('jstransformer-' + name);
     }

@@ -1,24 +1,24 @@
 {
   "name": "pug-load",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "The Pug loader is responsible for loading the depenendencies of a given Pug file.",
   "keywords": [
     "pug"
   ],
   "dependencies": {
-    "object-assign": "^4.1.0",
-    "pug-walk": "^1.1.7"
+    "object-assign": "^4.1.1",
+    "pug-walk": "^1.1.8"
   },
   "devDependencies": {
-    "pug-lexer": "^4.0.0",
-    "pug-parser": "^5.0.0"
+    "pug-lexer": "^4.1.0",
+    "pug-parser": "^5.0.1"
   },
   "files": [
     "index.js"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug-load.git"
+    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-load"
   },
   "author": "ForbesLindesay",
   "license": "MIT"

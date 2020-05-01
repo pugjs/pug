@@ -1,21 +1,21 @@
 {
   "name": "pug-attrs",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Generate code for Pug attributes",
   "keywords": [
     "pug"
   ],
   "dependencies": {
-    "constantinople": "^3.0.1",
-    "js-stringify": "^1.0.1",
-    "pug-runtime": "^2.0.4"
+    "constantinople": "^4.0.1",
+    "js-stringify": "^1.0.2",
+    "pug-runtime": "^2.0.5"
   },
   "files": [
     "index.js"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug-attrs.git"
+    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-attrs"
   },
   "author": "Forbes Lindesay",
   "license": "MIT"

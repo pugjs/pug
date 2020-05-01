@@ -1,4 +1,6 @@
-exports[`test attr-es2015.tokens.json 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`attr-es2015.tokens.json 1`] = `
 Object {
   "filename": "attr-es2015.tokens.json",
   "line": 0,
@@ -11,7 +13,7 @@ Object {
       "line": 1,
       "mustEscape": false,
       "type": "Code",
-      "val": "var avatar = \'219b77f9d21de75e81851b6b886057c7\'",
+      "val": "var avatar = '219b77f9d21de75e81851b6b886057c7'",
     },
     Object {
       "attributeBlocks": Array [],
@@ -22,7 +24,7 @@ Object {
           "line": 3,
           "mustEscape": false,
           "name": "class",
-          "val": "\'avatar-div\'",
+          "val": "'avatar-div'",
         },
         Object {
           "column": 16,
@@ -52,7 +54,7 @@ Object {
 }
 `;
 
-exports[`test attrs.js.tokens.json 1`] = `
+exports[`attrs.js.tokens.json 1`] = `
 Object {
   "filename": "attrs.js.tokens.json",
   "line": 0,
@@ -75,7 +77,10 @@ Object {
       "line": 2,
       "mustEscape": false,
       "type": "Code",
-      "val": "function answer() { return 42; }",
+      "val": "function answer() {
+  return 42;
+}
+",
     },
     Object {
       "attributeBlocks": Array [],
@@ -86,7 +91,7 @@ Object {
           "line": 3,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/user/\' + id",
+          "val": "'/user/' + id",
         },
         Object {
           "column": 23,
@@ -94,7 +99,7 @@ Object {
           "line": 3,
           "mustEscape": true,
           "name": "class",
-          "val": "\'button\'",
+          "val": "'button'",
         },
       ],
       "block": Object {
@@ -120,7 +125,7 @@ Object {
           "line": 4,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/user/\' + id",
+          "val": "'/user/' + id",
         },
         Object {
           "column": 27,
@@ -128,7 +133,7 @@ Object {
           "line": 4,
           "mustEscape": true,
           "name": "class",
-          "val": "\'button\'",
+          "val": "'button'",
         },
       ],
       "block": Object {
@@ -154,7 +159,7 @@ Object {
           "line": 5,
           "mustEscape": true,
           "name": "key",
-          "val": "\'answer\'",
+          "val": "'answer'",
         },
         Object {
           "column": 20,
@@ -188,7 +193,7 @@ Object {
           "line": 6,
           "mustEscape": true,
           "name": "class",
-          "val": "[\'class1\', \'class2\']",
+          "val": "['class1', 'class2']",
         },
       ],
       "block": Object {
@@ -214,7 +219,7 @@ Object {
           "line": 7,
           "mustEscape": false,
           "name": "class",
-          "val": "\'tag-class\'",
+          "val": "'tag-class'",
         },
         Object {
           "column": 13,
@@ -222,7 +227,7 @@ Object {
           "line": 7,
           "mustEscape": true,
           "name": "class",
-          "val": "[\'class1\', \'class2\']",
+          "val": "['class1', 'class2']",
         },
       ],
       "block": Object {
@@ -248,7 +253,7 @@ Object {
           "line": 9,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/user/\' + id",
+          "val": "'/user/' + id",
         },
         Object {
           "column": 22,
@@ -256,7 +261,7 @@ Object {
           "line": 9,
           "mustEscape": true,
           "name": "class",
-          "val": "\'button\'",
+          "val": "'button'",
         },
       ],
       "block": Object {
@@ -282,7 +287,7 @@ Object {
           "line": 10,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/user/\' + id",
+          "val": "'/user/' + id",
         },
         Object {
           "column": 26,
@@ -290,7 +295,7 @@ Object {
           "line": 10,
           "mustEscape": true,
           "name": "class",
-          "val": "\'button\'",
+          "val": "'button'",
         },
       ],
       "block": Object {
@@ -316,7 +321,7 @@ Object {
           "line": 11,
           "mustEscape": true,
           "name": "key",
-          "val": "\'answer\'",
+          "val": "'answer'",
         },
         Object {
           "column": 19,
@@ -350,7 +355,7 @@ Object {
           "line": 12,
           "mustEscape": true,
           "name": "class",
-          "val": "[\'class1\', \'class2\']",
+          "val": "['class1', 'class2']",
         },
       ],
       "block": Object {
@@ -376,7 +381,7 @@ Object {
           "line": 13,
           "mustEscape": false,
           "name": "class",
-          "val": "\'tag-class\'",
+          "val": "'tag-class'",
         },
         Object {
           "column": 13,
@@ -384,7 +389,7 @@ Object {
           "line": 13,
           "mustEscape": true,
           "name": "class",
-          "val": "[\'class1\', \'class2\']",
+          "val": "['class1', 'class2']",
         },
       ],
       "block": Object {
@@ -408,7 +413,7 @@ Object {
           "filename": "attrs.js.tokens.json",
           "line": 15,
           "type": "AttributeBlock",
-          "val": "{foo: \'bar\'}",
+          "val": "{foo: 'bar'}",
         },
       ],
       "attrs": Array [
@@ -452,7 +457,7 @@ Object {
           "filename": "attrs.js.tokens.json",
           "line": 17,
           "type": "AttributeBlock",
-          "val": "{baz: \'baz\'}",
+          "val": "{baz: 'baz'}",
         },
       ],
       "attrs": Array [
@@ -492,7 +497,7 @@ Object {
 }
 `;
 
-exports[`test attrs.tokens.json 1`] = `
+exports[`attrs.tokens.json 1`] = `
 Object {
   "filename": "attrs.tokens.json",
   "line": 0,
@@ -506,7 +511,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/contact\'",
+          "val": "'/contact'",
         },
       ],
       "block": Object {
@@ -540,7 +545,7 @@ Object {
           "line": 2,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/save\'",
+          "val": "'/save'",
         },
         Object {
           "column": 16,
@@ -548,7 +553,7 @@ Object {
           "line": 2,
           "mustEscape": false,
           "name": "class",
-          "val": "\'button\'",
+          "val": "'button'",
         },
       ],
       "block": Object {
@@ -624,7 +629,7 @@ Object {
           "line": 4,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'foo, bar, baz\'",
+          "val": "'foo, bar, baz'",
         },
         Object {
           "column": 24,
@@ -658,7 +663,7 @@ Object {
           "line": 5,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'((foo))\'",
+          "val": "'((foo))'",
         },
         Object {
           "column": 18,
@@ -699,7 +704,7 @@ Object {
                 "line": 7,
                 "mustEscape": true,
                 "name": "value",
-                "val": "\'foo\'",
+                "val": "'foo'",
               },
               Object {
                 "column": 23,
@@ -749,7 +754,7 @@ Object {
                 "line": 8,
                 "mustEscape": true,
                 "name": "value",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -794,7 +799,7 @@ Object {
           "line": 9,
           "mustEscape": true,
           "name": "foo",
-          "val": "\"class:\"",
+          "val": "\\"class:\\"",
         },
       ],
       "block": Object {
@@ -820,7 +825,7 @@ Object {
           "line": 10,
           "mustEscape": true,
           "name": "pattern",
-          "val": "\'\\\\S+\'",
+          "val": "'\\\\\\\\S+'",
         },
       ],
       "block": Object {
@@ -846,7 +851,7 @@ Object {
           "line": 12,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/contact\'",
+          "val": "'/contact'",
         },
       ],
       "block": Object {
@@ -880,7 +885,7 @@ Object {
           "line": 13,
           "mustEscape": true,
           "name": "href",
-          "val": "\'/save\'",
+          "val": "'/save'",
         },
         Object {
           "column": 16,
@@ -888,7 +893,7 @@ Object {
           "line": 13,
           "mustEscape": false,
           "name": "class",
-          "val": "\'button\'",
+          "val": "'button'",
         },
       ],
       "block": Object {
@@ -964,7 +969,7 @@ Object {
           "line": 15,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'foo, bar, baz\'",
+          "val": "'foo, bar, baz'",
         },
         Object {
           "column": 23,
@@ -998,7 +1003,7 @@ Object {
           "line": 16,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'((foo))\'",
+          "val": "'((foo))'",
         },
         Object {
           "column": 17,
@@ -1039,7 +1044,7 @@ Object {
                 "line": 18,
                 "mustEscape": true,
                 "name": "value",
-                "val": "\'foo\'",
+                "val": "'foo'",
               },
               Object {
                 "column": 22,
@@ -1089,7 +1094,7 @@ Object {
                 "line": 19,
                 "mustEscape": true,
                 "name": "value",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -1134,7 +1139,7 @@ Object {
           "line": 20,
           "mustEscape": true,
           "name": "foo",
-          "val": "\"class:\"",
+          "val": "\\"class:\\"",
         },
       ],
       "block": Object {
@@ -1160,7 +1165,7 @@ Object {
           "line": 21,
           "mustEscape": true,
           "name": "pattern",
-          "val": "\'\\\\S+\'",
+          "val": "'\\\\\\\\S+'",
         },
       ],
       "block": Object {
@@ -1186,7 +1191,7 @@ Object {
           "line": 22,
           "mustEscape": true,
           "name": "terse",
-          "val": "\"true\"",
+          "val": "\\"true\\"",
         },
       ],
       "block": Object {
@@ -1441,7 +1446,7 @@ Object {
       "line": 38,
       "mustEscape": false,
       "type": "Code",
-      "val": "var attrs = {foo: \'bar\', bar: \'<baz>\'}",
+      "val": "var attrs = {foo: 'bar', bar: '<baz>'}",
     },
     Object {
       "attributeBlocks": Array [
@@ -1477,7 +1482,7 @@ Object {
           "line": 42,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'foo\'",
+          "val": "'foo'",
         },
         Object {
           "column": 13,
@@ -1485,7 +1490,7 @@ Object {
           "line": 42,
           "mustEscape": true,
           "name": "bar",
-          "val": "\"bar\"",
+          "val": "\\"bar\\"",
         },
       ],
       "block": Object {
@@ -1511,7 +1516,7 @@ Object {
           "line": 43,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'foo\'",
+          "val": "'foo'",
         },
         Object {
           "column": 13,
@@ -1519,7 +1524,7 @@ Object {
           "line": 43,
           "mustEscape": true,
           "name": "bar",
-          "val": "\'bar\'",
+          "val": "'bar'",
         },
       ],
       "block": Object {
@@ -1541,7 +1546,7 @@ Object {
 }
 `;
 
-exports[`test attrs.unescaped.tokens.json 1`] = `
+exports[`attrs.unescaped.tokens.json 1`] = `
 Object {
   "filename": "attrs.unescaped.tokens.json",
   "line": 0,
@@ -1555,7 +1560,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/x-template\'",
+          "val": "'text/x-template'",
         },
       ],
       "block": Object {
@@ -1571,7 +1576,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'user-<%= user.id %>\'",
+                "val": "'user-<%= user.id %>'",
               },
             ],
             "block": Object {
@@ -1630,7 +1635,7 @@ Object {
 }
 `;
 
-exports[`test attrs-data.tokens.json 1`] = `
+exports[`attrs-data.tokens.json 1`] = `
 Object {
   "filename": "attrs-data.tokens.json",
   "line": 0,
@@ -1643,7 +1648,7 @@ Object {
       "line": 1,
       "mustEscape": false,
       "type": "Code",
-      "val": "var user = { name: \'tobi\' }",
+      "val": "var user = { name: 'tobi' }",
     },
     Object {
       "attributeBlocks": Array [],
@@ -1706,7 +1711,7 @@ Object {
           "line": 4,
           "mustEscape": true,
           "name": "data-username",
-          "val": "\'tobi\'",
+          "val": "'tobi'",
         },
       ],
       "block": Object {
@@ -1732,7 +1737,7 @@ Object {
           "line": 5,
           "mustEscape": true,
           "name": "data-escaped",
-          "val": "{message: \"Let\'s rock!\"}",
+          "val": "{message: \\"Let's rock!\\"}",
         },
       ],
       "block": Object {
@@ -1758,7 +1763,7 @@ Object {
           "line": 6,
           "mustEscape": true,
           "name": "data-ampersand",
-          "val": "{message: \"a quote: &quot; this & that\"}",
+          "val": "{message: \\"a quote: &quot; this & that\\"}",
         },
       ],
       "block": Object {
@@ -1806,7 +1811,7 @@ Object {
 }
 `;
 
-exports[`test basic.tokens.json 1`] = `
+exports[`basic.tokens.json 1`] = `
 Object {
   "filename": "basic.tokens.json",
   "line": 0,
@@ -1877,7 +1882,7 @@ Object {
 }
 `;
 
-exports[`test blanks.tokens.json 1`] = `
+exports[`blanks.tokens.json 1`] = `
 Object {
   "filename": "blanks.tokens.json",
   "line": 0,
@@ -1980,7 +1985,7 @@ Object {
 }
 `;
 
-exports[`test block-code.tokens.json 1`] = `
+exports[`block-code.tokens.json 1`] = `
 Object {
   "filename": "block-code.tokens.json",
   "line": 0,
@@ -1993,8 +1998,8 @@ Object {
       "line": 1,
       "mustEscape": false,
       "type": "Code",
-      "val": "list = [\"uno\", \"dos\", \"tres\",
-        \"cuatro\", \"cinco\", \"seis\"];",
+      "val": "list = [\\"uno\\", \\"dos\\", \\"tres\\",
+        \\"cuatro\\", \\"cinco\\", \\"seis\\"];",
     },
     Object {
       "buffer": false,
@@ -2076,7 +2081,7 @@ item.slice(1);",
 }
 `;
 
-exports[`test block-expansion.shorthands.tokens.json 1`] = `
+exports[`block-expansion.shorthands.tokens.json 1`] = `
 Object {
   "filename": "block-expansion.shorthands.tokens.json",
   "line": 0,
@@ -2097,7 +2102,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'list-item\'",
+                "val": "'list-item'",
               },
             ],
             "block": Object {
@@ -2113,7 +2118,7 @@ Object {
                       "line": 2,
                       "mustEscape": false,
                       "name": "class",
-                      "val": "\'foo\'",
+                      "val": "'foo'",
                     },
                   ],
                   "block": Object {
@@ -2129,7 +2134,7 @@ Object {
                             "line": 2,
                             "mustEscape": false,
                             "name": "id",
-                            "val": "\'bar\'",
+                            "val": "'bar'",
                           },
                         ],
                         "block": Object {
@@ -2192,7 +2197,7 @@ Object {
 }
 `;
 
-exports[`test block-expansion.tokens.json 1`] = `
+exports[`block-expansion.tokens.json 1`] = `
 Object {
   "filename": "block-expansion.tokens.json",
   "line": 0,
@@ -2220,7 +2225,7 @@ Object {
                       "line": 2,
                       "mustEscape": true,
                       "name": "href",
-                      "val": "\'#\'",
+                      "val": "'#'",
                     },
                   ],
                   "block": Object {
@@ -2272,7 +2277,7 @@ Object {
                       "line": 3,
                       "mustEscape": true,
                       "name": "href",
-                      "val": "\'#\'",
+                      "val": "'#'",
                     },
                   ],
                   "block": Object {
@@ -2349,7 +2354,7 @@ Object {
 }
 `;
 
-exports[`test blockquote.tokens.json 1`] = `
+exports[`blockquote.tokens.json 1`] = `
 Object {
   "filename": "blockquote.tokens.json",
   "line": 0,
@@ -2427,7 +2432,7 @@ Object {
 }
 `;
 
-exports[`test blocks-in-blocks.tokens.json 1`] = `
+exports[`blocks-in-blocks.tokens.json 1`] = `
 Object {
   "filename": "blocks-in-blocks.tokens.json",
   "line": 0,
@@ -2485,7 +2490,7 @@ Object {
 }
 `;
 
-exports[`test blocks-in-if.tokens.json 1`] = `
+exports[`blocks-in-if.tokens.json 1`] = `
 Object {
   "filename": "blocks-in-if.tokens.json",
   "line": 0,
@@ -2611,7 +2616,7 @@ Object {
                             "line": 15,
                             "mustEscape": true,
                             "name": "charset",
-                            "val": "\'utf8\'",
+                            "val": "'utf8'",
                           },
                         ],
                         "block": Object {
@@ -2746,7 +2751,7 @@ Object {
 }
 `;
 
-exports[`test case.tokens.json 1`] = `
+exports[`case.tokens.json 1`] = `
 Object {
   "filename": "case.tokens.json",
   "line": 0,
@@ -3063,7 +3068,7 @@ Object {
                   "line": 16,
                   "mustEscape": false,
                   "type": "Code",
-                  "val": "var friend = \'Tim:G\'",
+                  "val": "var friend = 'Tim:G'",
                 },
                 Object {
                   "block": Object {
@@ -3105,7 +3110,7 @@ Object {
                         },
                         "column": 7,
                         "debug": false,
-                        "expr": "\'Tim:G\'",
+                        "expr": "'Tim:G'",
                         "filename": "case.tokens.json",
                         "line": 18,
                         "type": "When",
@@ -3145,7 +3150,7 @@ Object {
                         },
                         "column": 7,
                         "debug": false,
-                        "expr": "{tim: \'g\'}",
+                        "expr": "{tim: 'g'}",
                         "filename": "case.tokens.json",
                         "line": 19,
                         "type": "When",
@@ -3186,7 +3191,7 @@ Object {
 }
 `;
 
-exports[`test case-blocks.tokens.json 1`] = `
+exports[`case-blocks.tokens.json 1`] = `
 Object {
   "filename": "case-blocks.tokens.json",
   "line": 0,
@@ -3393,7 +3398,7 @@ Object {
 }
 `;
 
-exports[`test classes.tokens.json 1`] = `
+exports[`classes.tokens.json 1`] = `
 Object {
   "filename": "classes.tokens.json",
   "line": 0,
@@ -3407,7 +3412,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "class",
-          "val": "[\'foo\', \'bar\', \'baz\']",
+          "val": "['foo', 'bar', 'baz']",
         },
       ],
       "block": Object {
@@ -3433,7 +3438,7 @@ Object {
           "line": 5,
           "mustEscape": false,
           "name": "class",
-          "val": "\'foo\'",
+          "val": "'foo'",
         },
         Object {
           "column": 7,
@@ -3441,7 +3446,7 @@ Object {
           "line": 5,
           "mustEscape": true,
           "name": "class",
-          "val": "\'bar\'",
+          "val": "'bar'",
         },
         Object {
           "column": 19,
@@ -3449,7 +3454,7 @@ Object {
           "line": 5,
           "mustEscape": false,
           "name": "class",
-          "val": "\'baz\'",
+          "val": "'baz'",
         },
       ],
       "block": Object {
@@ -3475,7 +3480,7 @@ Object {
           "line": 9,
           "mustEscape": false,
           "name": "class",
-          "val": "\'foo-bar_baz\'",
+          "val": "'foo-bar_baz'",
         },
       ],
       "block": Object {
@@ -3527,7 +3532,7 @@ Object {
           "line": 13,
           "mustEscape": false,
           "name": "class",
-          "val": "\'-foo\'",
+          "val": "'-foo'",
         },
       ],
       "block": Object {
@@ -3553,7 +3558,7 @@ Object {
           "line": 14,
           "mustEscape": false,
           "name": "class",
-          "val": "\'3foo\'",
+          "val": "'3foo'",
         },
       ],
       "block": Object {
@@ -3575,7 +3580,7 @@ Object {
 }
 `;
 
-exports[`test classes-empty.tokens.json 1`] = `
+exports[`classes-empty.tokens.json 1`] = `
 Object {
   "filename": "classes-empty.tokens.json",
   "line": 0,
@@ -3589,7 +3594,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "class",
-          "val": "\'\'",
+          "val": "''",
         },
       ],
       "block": Object {
@@ -3663,7 +3668,7 @@ Object {
 }
 `;
 
-exports[`test code.conditionals.tokens.json 1`] = `
+exports[`code.conditionals.tokens.json 1`] = `
 Object {
   "filename": "code.conditionals.tokens.json",
   "line": 0,
@@ -4083,7 +4088,7 @@ Object {
             },
             "filename": "code.conditionals.tokens.json",
             "line": 26,
-            "test": "\'works\'",
+            "test": "'works'",
             "type": "Conditional",
           },
         ],
@@ -4091,7 +4096,7 @@ Object {
       },
       "filename": "code.conditionals.tokens.json",
       "line": 25,
-      "test": "\'nested\'",
+      "test": "'nested'",
       "type": "Conditional",
     },
     Object {
@@ -4116,7 +4121,7 @@ Object {
                 "line": 32,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -4164,7 +4169,7 @@ Object {
                 "line": 34,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -4198,7 +4203,7 @@ Object {
           "line": 36,
           "mustEscape": false,
           "name": "class",
-          "val": "\'bing\'",
+          "val": "'bing'",
         },
       ],
       "block": Object {
@@ -4230,7 +4235,7 @@ Object {
                   "line": 43,
                   "mustEscape": false,
                   "name": "class",
-                  "val": "\'foo\'",
+                  "val": "'foo'",
                 },
               ],
               "block": Object {
@@ -4264,7 +4269,7 @@ Object {
                   "line": 41,
                   "mustEscape": false,
                   "name": "class",
-                  "val": "\'bar\'",
+                  "val": "'bar'",
                 },
               ],
               "block": Object {
@@ -4303,7 +4308,7 @@ Object {
                 "line": 39,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'bing\'",
+                "val": "'bing'",
               },
             ],
             "block": Object {
@@ -4333,7 +4338,7 @@ Object {
 }
 `;
 
-exports[`test code.escape.tokens.json 1`] = `
+exports[`code.escape.tokens.json 1`] = `
 Object {
   "filename": "code.escape.tokens.json",
   "line": 0,
@@ -4353,7 +4358,7 @@ Object {
             "line": 1,
             "mustEscape": true,
             "type": "Code",
-            "val": "\'<script>\'",
+            "val": "'<script>'",
           },
         ],
         "type": "Block",
@@ -4381,7 +4386,7 @@ Object {
             "line": 2,
             "mustEscape": false,
             "type": "Code",
-            "val": "\'<script>\'",
+            "val": "'<script>'",
           },
         ],
         "type": "Block",
@@ -4399,7 +4404,7 @@ Object {
 }
 `;
 
-exports[`test code.iteration.tokens.json 1`] = `
+exports[`code.iteration.tokens.json 1`] = `
 Object {
   "filename": "code.iteration.tokens.json",
   "line": 0,
@@ -4518,7 +4523,7 @@ Object {
                       "line": 13,
                       "mustEscape": true,
                       "name": "class",
-                      "val": "\'item-\' + i",
+                      "val": "'item-' + i",
                     },
                   ],
                   "block": Object {
@@ -4710,7 +4715,7 @@ Object {
       "line": 24,
       "mustEscape": false,
       "type": "Code",
-      "val": "var letters = [\'a\', \'b\', \'c\']",
+      "val": "var letters = ['a', 'b', 'c']",
     },
     Object {
       "attributeBlocks": Array [],
@@ -4894,7 +4899,7 @@ Object {
 }
 `;
 
-exports[`test code.tokens.json 1`] = `
+exports[`code.tokens.json 1`] = `
 Object {
   "filename": "code.tokens.json",
   "line": 0,
@@ -4970,7 +4975,7 @@ Object {
             "line": 3,
             "mustEscape": true,
             "type": "Code",
-            "val": "\'\'",
+            "val": "''",
           },
         ],
         "type": "Block",
@@ -5100,7 +5105,7 @@ Object {
           "line": 8,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'\'",
+          "val": "''",
         },
       ],
       "block": Object {
@@ -5174,7 +5179,7 @@ Object {
 }
 `;
 
-exports[`test comments.source.tokens.json 1`] = `
+exports[`comments.source.tokens.json 1`] = `
 Object {
   "filename": "comments.source.tokens.json",
   "line": 0,
@@ -5281,7 +5286,7 @@ Object {
 }
 `;
 
-exports[`test comments.tokens.json 1`] = `
+exports[`comments.tokens.json 1`] = `
 Object {
   "filename": "comments.tokens.json",
   "line": 0,
@@ -5574,7 +5579,7 @@ Object {
             "filename": "comments.tokens.json",
             "line": 24,
             "type": "Text",
-            "val": "script(src=\'/lame.js\')",
+            "val": "script(src='/lame.js')",
           },
           Object {
             "column": 1,
@@ -5650,7 +5655,7 @@ Object {
           "line": 29,
           "mustEscape": false,
           "name": "class",
-          "val": "\'foo\'",
+          "val": "'foo'",
         },
       ],
       "block": Object {
@@ -5680,7 +5685,7 @@ Object {
 }
 `;
 
-exports[`test comments-in-case.tokens.json 1`] = `
+exports[`comments-in-case.tokens.json 1`] = `
 Object {
   "filename": "comments-in-case.tokens.json",
   "line": 0,
@@ -5714,7 +5719,7 @@ Object {
                   "line": 4,
                   "mustEscape": false,
                   "type": "Code",
-                  "val": "var s = \'this\'",
+                  "val": "var s = 'this'",
                 },
                 Object {
                   "block": Object {
@@ -5738,7 +5743,7 @@ Object {
                                     "filename": "comments-in-case.tokens.json",
                                     "line": 8,
                                     "type": "Text",
-                                    "val": "It\'s this!",
+                                    "val": "It's this!",
                                   },
                                 ],
                                 "type": "Block",
@@ -5756,7 +5761,7 @@ Object {
                         },
                         "column": 6,
                         "debug": false,
-                        "expr": "\'this\'",
+                        "expr": "'this'",
                         "filename": "comments-in-case.tokens.json",
                         "line": 7,
                         "type": "When",
@@ -5778,7 +5783,7 @@ Object {
                                     "filename": "comments-in-case.tokens.json",
                                     "line": 10,
                                     "type": "Text",
-                                    "val": "It\'s that!",
+                                    "val": "It's that!",
                                   },
                                 ],
                                 "type": "Block",
@@ -5796,7 +5801,7 @@ Object {
                         },
                         "column": 6,
                         "debug": false,
-                        "expr": "\'that\'",
+                        "expr": "'that'",
                         "filename": "comments-in-case.tokens.json",
                         "line": 9,
                         "type": "When",
@@ -5837,7 +5842,7 @@ Object {
 }
 `;
 
-exports[`test doctype.custom.tokens.json 1`] = `
+exports[`doctype.custom.tokens.json 1`] = `
 Object {
   "filename": "doctype.custom.tokens.json",
   "line": 0,
@@ -5854,7 +5859,7 @@ Object {
 }
 `;
 
-exports[`test doctype.default.tokens.json 1`] = `
+exports[`doctype.default.tokens.json 1`] = `
 Object {
   "filename": "doctype.default.tokens.json",
   "line": 0,
@@ -5932,7 +5937,7 @@ Object {
 }
 `;
 
-exports[`test doctype.keyword.tokens.json 1`] = `
+exports[`doctype.keyword.tokens.json 1`] = `
 Object {
   "filename": "doctype.keyword.tokens.json",
   "line": 0,
@@ -5949,7 +5954,7 @@ Object {
 }
 `;
 
-exports[`test each.else.tokens.json 1`] = `
+exports[`each.else.tokens.json 1`] = `
 Object {
   "filename": "each.else.tokens.json",
   "line": 0,
@@ -6066,7 +6071,7 @@ Object {
       "line": 11,
       "mustEscape": false,
       "type": "Code",
-      "val": "var users = [{ name: \'tobi\', friends: [\'loki\'] }, { name: \'loki\' }]",
+      "val": "var users = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]",
     },
     Object {
       "alternate": null,
@@ -6185,7 +6190,7 @@ Object {
       "line": 20,
       "mustEscape": false,
       "type": "Code",
-      "val": "var user = { name: \'tobi\', age: 10 }",
+      "val": "var user = { name: 'tobi', age: 10 }",
     },
     Object {
       "attributeBlocks": Array [],
@@ -6437,7 +6442,7 @@ Object {
       "line": 37,
       "mustEscape": false,
       "type": "Code",
-      "val": "user.name = \'tobi\'",
+      "val": "user.name = 'tobi'",
     },
     Object {
       "attributeBlocks": Array [],
@@ -6555,7 +6560,7 @@ Object {
 }
 `;
 
-exports[`test escape-chars.tokens.json 1`] = `
+exports[`escape-chars.tokens.json 1`] = `
 Object {
   "filename": "escape-chars.tokens.json",
   "line": 0,
@@ -6572,7 +6577,7 @@ Object {
             "filename": "escape-chars.tokens.json",
             "line": 2,
             "type": "Text",
-            "val": "var re = /\\d+/;",
+            "val": "var re = /\\\\d+/;",
           },
         ],
         "type": "Block",
@@ -6591,7 +6596,7 @@ Object {
 }
 `;
 
-exports[`test escape-test.tokens.json 1`] = `
+exports[`escape-test.tokens.json 1`] = `
 Object {
   "filename": "escape-test.tokens.json",
   "line": 0,
@@ -6675,7 +6680,7 @@ Object {
                         "line": 7,
                         "mustEscape": false,
                         "type": "Code",
-                        "val": "var txt = \'<param name=\"flashvars\" value=\"a=&quot;value_a&quot;&b=&quot;value_b&quot;&c=3\"/>\'",
+                        "val": "var txt = '<param name=\\"flashvars\\" value=\\"a=&quot;value_a&quot;&b=&quot;value_b&quot;&c=3\\"/>'",
                       },
                       Object {
                         "buffer": true,
@@ -6725,7 +6730,7 @@ Object {
 }
 `;
 
-exports[`test escaping-class-attribute.tokens.json 1`] = `
+exports[`escaping-class-attribute.tokens.json 1`] = `
 Object {
   "filename": "escaping-class-attribute.tokens.json",
   "line": 0,
@@ -6739,7 +6744,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "attr",
-          "val": "\"<%= bar %>\"",
+          "val": "\\"<%= bar %>\\"",
         },
       ],
       "block": Object {
@@ -6765,7 +6770,7 @@ Object {
           "line": 2,
           "mustEscape": true,
           "name": "class",
-          "val": "\"<%= bar %>\"",
+          "val": "\\"<%= bar %>\\"",
         },
       ],
       "block": Object {
@@ -6791,7 +6796,7 @@ Object {
           "line": 3,
           "mustEscape": false,
           "name": "attr",
-          "val": "\"<%= bar %>\"",
+          "val": "\\"<%= bar %>\\"",
         },
       ],
       "block": Object {
@@ -6817,7 +6822,7 @@ Object {
           "line": 4,
           "mustEscape": false,
           "name": "class",
-          "val": "\"<%= bar %>\"",
+          "val": "\\"<%= bar %>\\"",
         },
       ],
       "block": Object {
@@ -6843,7 +6848,7 @@ Object {
           "line": 5,
           "mustEscape": false,
           "name": "class",
-          "val": "\"<%= bar %> lol rofl\"",
+          "val": "\\"<%= bar %> lol rofl\\"",
         },
       ],
       "block": Object {
@@ -6869,7 +6874,7 @@ Object {
           "line": 6,
           "mustEscape": false,
           "name": "class",
-          "val": "\"<%= bar %> lol rofl <%= lmao %>\"",
+          "val": "\\"<%= bar %> lol rofl <%= lmao %>\\"",
         },
       ],
       "block": Object {
@@ -6891,7 +6896,7 @@ Object {
 }
 `;
 
-exports[`test filter-in-include.tokens.json 1`] = `
+exports[`filter-in-include.tokens.json 1`] = `
 Object {
   "filename": "filter-in-include.tokens.json",
   "line": 0,
@@ -6920,7 +6925,7 @@ Object {
 }
 `;
 
-exports[`test filters.coffeescript.tokens.json 1`] = `
+exports[`filters.coffeescript.tokens.json 1`] = `
 Object {
   "filename": "filters.coffeescript.tokens.json",
   "line": 0,
@@ -6934,7 +6939,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/javascript\'",
+          "val": "'text/javascript'",
         },
       ],
       "block": Object {
@@ -6952,7 +6957,7 @@ Object {
                   "filename": "filters.coffeescript.tokens.json",
                   "line": 3,
                   "type": "Text",
-                  "val": "regexp = /\\n/",
+                  "val": "regexp = /\\\\n/",
                 },
               ],
               "type": "Block",
@@ -7025,7 +7030,7 @@ Object {
 }
 `;
 
-exports[`test filters.custom.tokens.json 1`] = `
+exports[`filters.custom.tokens.json 1`] = `
 Object {
   "filename": "filters.custom.tokens.json",
   "line": 0,
@@ -7052,7 +7057,7 @@ Object {
                       "line": 3,
                       "mustEscape": true,
                       "name": "opt",
-                      "val": "\'val\'",
+                      "val": "'val'",
                     },
                     Object {
                       "column": 23,
@@ -7155,7 +7160,7 @@ Object {
 }
 `;
 
-exports[`test filters.include.custom.tokens.json 1`] = `
+exports[`filters.include.custom.tokens.json 1`] = `
 Object {
   "filename": "filters.include.custom.tokens.json",
   "line": 0,
@@ -7200,7 +7205,7 @@ Object {
                                 "line": 4,
                                 "mustEscape": true,
                                 "name": "opt",
-                                "val": "\'val\'",
+                                "val": "'val'",
                               },
                               Object {
                                 "column": 32,
@@ -7259,7 +7264,7 @@ Object {
 }
 `;
 
-exports[`test filters.include.tokens.json 1`] = `
+exports[`filters.include.tokens.json 1`] = `
 Object {
   "filename": "filters.include.tokens.json",
   "line": 0,
@@ -7436,7 +7441,7 @@ Object {
 }
 `;
 
-exports[`test filters.inline.tokens.json 1`] = `
+exports[`filters.inline.tokens.json 1`] = `
 Object {
   "filename": "filters.inline.tokens.json",
   "line": 0,
@@ -7500,7 +7505,7 @@ Object {
 }
 `;
 
-exports[`test filters.less.tokens.json 1`] = `
+exports[`filters.less.tokens.json 1`] = `
 Object {
   "filename": "filters.less.tokens.json",
   "line": 0,
@@ -7528,7 +7533,7 @@ Object {
                       "line": 3,
                       "mustEscape": true,
                       "name": "type",
-                      "val": "\"text/css\"",
+                      "val": "\\"text/css\\"",
                     },
                   ],
                   "block": Object {
@@ -7640,7 +7645,7 @@ Object {
 }
 `;
 
-exports[`test filters.markdown.tokens.json 1`] = `
+exports[`filters.markdown.tokens.json 1`] = `
 Object {
   "filename": "filters.markdown.tokens.json",
   "line": 0,
@@ -7723,7 +7728,7 @@ Object {
 }
 `;
 
-exports[`test filters.nested.tokens.json 1`] = `
+exports[`filters.nested.tokens.json 1`] = `
 Object {
   "filename": "filters.nested.tokens.json",
   "line": 0,
@@ -7767,7 +7772,7 @@ Object {
                         "filename": "filters.nested.tokens.json",
                         "line": 4,
                         "type": "Text",
-                        "val": "  console.log(\'test\')",
+                        "val": "  console.log('test')",
                       },
                       Object {
                         "column": 1,
@@ -7858,7 +7863,7 @@ Object {
                               "filename": "filters.nested.tokens.json",
                               "line": 9,
                               "type": "Text",
-                              "val": "  console.log \'test\'",
+                              "val": "  console.log 'test'",
                             },
                             Object {
                               "column": 1,
@@ -7918,7 +7923,7 @@ Object {
 }
 `;
 
-exports[`test filters.stylus.tokens.json 1`] = `
+exports[`filters.stylus.tokens.json 1`] = `
 Object {
   "filename": "filters.stylus.tokens.json",
   "line": 0,
@@ -7946,7 +7951,7 @@ Object {
                       "line": 3,
                       "mustEscape": true,
                       "name": "type",
-                      "val": "\"text/css\"",
+                      "val": "\\"text/css\\"",
                     },
                   ],
                   "block": Object {
@@ -8045,7 +8050,7 @@ Object {
 }
 `;
 
-exports[`test filters.verbatim.tokens.json 1`] = `
+exports[`filters.verbatim.tokens.json 1`] = `
 Object {
   "filename": "filters.verbatim.tokens.json",
   "line": 0,
@@ -8128,7 +8133,7 @@ Object {
 }
 `;
 
-exports[`test filters-empty.tokens.json 1`] = `
+exports[`filters-empty.tokens.json 1`] = `
 Object {
   "filename": "filters-empty.tokens.json",
   "line": 0,
@@ -8141,7 +8146,7 @@ Object {
       "line": 1,
       "mustEscape": false,
       "type": "Code",
-      "val": "var users = [{ name: \'tobi\', age: 2 }]",
+      "val": "var users = [{ name: 'tobi', age: 2 }]",
     },
     Object {
       "attributeBlocks": Array [],
@@ -8223,7 +8228,7 @@ Object {
 }
 `;
 
-exports[`test html.tokens.json 1`] = `
+exports[`html.tokens.json 1`] = `
 Object {
   "filename": "html.tokens.json",
   "line": 0,
@@ -8326,7 +8331,7 @@ Object {
 }
 `;
 
-exports[`test html5.tokens.json 1`] = `
+exports[`html5.tokens.json 1`] = `
 Object {
   "filename": "html5.tokens.json",
   "line": 0,
@@ -8347,7 +8352,7 @@ Object {
           "line": 2,
           "mustEscape": true,
           "name": "type",
-          "val": "\'checkbox\'",
+          "val": "'checkbox'",
         },
         Object {
           "column": 24,
@@ -8381,7 +8386,7 @@ Object {
           "line": 3,
           "mustEscape": true,
           "name": "type",
-          "val": "\'checkbox\'",
+          "val": "'checkbox'",
         },
         Object {
           "column": 24,
@@ -8415,7 +8420,7 @@ Object {
           "line": 4,
           "mustEscape": true,
           "name": "type",
-          "val": "\'checkbox\'",
+          "val": "'checkbox'",
         },
         Object {
           "column": 24,
@@ -8445,7 +8450,7 @@ Object {
 }
 `;
 
-exports[`test include.script.tokens.json 1`] = `
+exports[`include.script.tokens.json 1`] = `
 Object {
   "filename": "include.script.tokens.json",
   "line": 0,
@@ -8459,7 +8464,7 @@ Object {
           "line": 1,
           "mustEscape": false,
           "name": "id",
-          "val": "\'pet-template\'",
+          "val": "'pet-template'",
         },
         Object {
           "column": 21,
@@ -8467,7 +8472,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/x-template\'",
+          "val": "'text/x-template'",
         },
       ],
       "block": Object {
@@ -8509,7 +8514,7 @@ Object {
 }
 `;
 
-exports[`test include.yield.nested.tokens.json 1`] = `
+exports[`include.yield.nested.tokens.json 1`] = `
 Object {
   "filename": "include.yield.nested.tokens.json",
   "line": 0,
@@ -8589,7 +8594,7 @@ Object {
 }
 `;
 
-exports[`test include-extends-from-root.tokens.json 1`] = `
+exports[`include-extends-from-root.tokens.json 1`] = `
 Object {
   "filename": "include-extends-from-root.tokens.json",
   "line": 0,
@@ -8618,7 +8623,7 @@ Object {
 }
 `;
 
-exports[`test include-extends-of-common-template.tokens.json 1`] = `
+exports[`include-extends-of-common-template.tokens.json 1`] = `
 Object {
   "filename": "include-extends-of-common-template.tokens.json",
   "line": 0,
@@ -8666,7 +8671,7 @@ Object {
 }
 `;
 
-exports[`test include-extends-relative.tokens.json 1`] = `
+exports[`include-extends-relative.tokens.json 1`] = `
 Object {
   "filename": "include-extends-relative.tokens.json",
   "line": 0,
@@ -8695,7 +8700,7 @@ Object {
 }
 `;
 
-exports[`test include-only-text.tokens.json 1`] = `
+exports[`include-only-text.tokens.json 1`] = `
 Object {
   "filename": "include-only-text.tokens.json",
   "line": 0,
@@ -8804,7 +8809,7 @@ Object {
 }
 `;
 
-exports[`test include-only-text-body.tokens.json 1`] = `
+exports[`include-only-text-body.tokens.json 1`] = `
 Object {
   "filename": "include-only-text-body.tokens.json",
   "line": 0,
@@ -8814,7 +8819,7 @@ Object {
       "filename": "include-only-text-body.tokens.json",
       "line": 1,
       "type": "Text",
-      "val": "The message is \"",
+      "val": "The message is \\"",
     },
     Object {
       "column": 1,
@@ -8827,14 +8832,14 @@ Object {
       "filename": "include-only-text-body.tokens.json",
       "line": 3,
       "type": "Text",
-      "val": "\"",
+      "val": "\\"",
     },
   ],
   "type": "Block",
 }
 `;
 
-exports[`test include-with-text.tokens.json 1`] = `
+exports[`include-with-text.tokens.json 1`] = `
 Object {
   "filename": "include-with-text.tokens.json",
   "line": 0,
@@ -8860,7 +8865,7 @@ Object {
                       "line": 3,
                       "mustEscape": true,
                       "name": "src",
-                      "val": "\'/caustic.js\'",
+                      "val": "'/caustic.js'",
                     },
                   ],
                   "block": Object {
@@ -8886,7 +8891,7 @@ Object {
                       "line": 4,
                       "mustEscape": true,
                       "name": "src",
-                      "val": "\'/app.js\'",
+                      "val": "'/app.js'",
                     },
                   ],
                   "block": Object {
@@ -8934,7 +8939,7 @@ Object {
 }
 `;
 
-exports[`test include-with-text-head.tokens.json 1`] = `
+exports[`include-with-text-head.tokens.json 1`] = `
 Object {
   "filename": "include-with-text-head.tokens.json",
   "line": 0,
@@ -8955,7 +8960,7 @@ Object {
                 "line": 2,
                 "mustEscape": true,
                 "name": "type",
-                "val": "\'text/javascript\'",
+                "val": "'text/javascript'",
               },
             ],
             "block": Object {
@@ -8967,7 +8972,7 @@ Object {
                   "filename": "include-with-text-head.tokens.json",
                   "line": 3,
                   "type": "Text",
-                  "val": "alert(\'hello world\');",
+                  "val": "alert('hello world');",
                 },
               ],
               "type": "Block",
@@ -8997,7 +9002,7 @@ Object {
 }
 `;
 
-exports[`test includes.tokens.json 1`] = `
+exports[`includes.tokens.json 1`] = `
 Object {
   "filename": "includes.tokens.json",
   "line": 0,
@@ -9077,7 +9082,7 @@ Object {
                 "line": 9,
                 "mustEscape": true,
                 "name": "type",
-                "val": "\"text/javascript\"",
+                "val": "\\"text/javascript\\"",
               },
             ],
             "block": Object {
@@ -9134,7 +9139,7 @@ Object {
 }
 `;
 
-exports[`test includes-with-ext-js.tokens.json 1`] = `
+exports[`includes-with-ext-js.tokens.json 1`] = `
 Object {
   "filename": "includes-with-ext-js.tokens.json",
   "line": 0,
@@ -9194,7 +9199,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.alert-dialog.tokens.json 1`] = `
+exports[`inheritance.alert-dialog.tokens.json 1`] = `
 Object {
   "filename": "inheritance.alert-dialog.tokens.json",
   "line": 0,
@@ -9256,7 +9261,7 @@ Object {
                 "filename": "inheritance.alert-dialog.tokens.json",
                 "line": 6,
                 "type": "Text",
-                "val": "I\'m an alert!",
+                "val": "I'm an alert!",
               },
             ],
             "type": "Block",
@@ -9277,7 +9282,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.defaults.tokens.json 1`] = `
+exports[`inheritance.defaults.tokens.json 1`] = `
 Object {
   "filename": "inheritance.defaults.tokens.json",
   "line": 0,
@@ -9312,7 +9317,7 @@ Object {
                           "line": 4,
                           "mustEscape": true,
                           "name": "src",
-                          "val": "\'jquery.js\'",
+                          "val": "'jquery.js'",
                         },
                       ],
                       "block": Object {
@@ -9338,7 +9343,7 @@ Object {
                           "line": 5,
                           "mustEscape": true,
                           "name": "src",
-                          "val": "\'keymaster.js\'",
+                          "val": "'keymaster.js'",
                         },
                       ],
                       "block": Object {
@@ -9364,7 +9369,7 @@ Object {
                           "line": 6,
                           "mustEscape": true,
                           "name": "src",
-                          "val": "\'caustic.js\'",
+                          "val": "'caustic.js'",
                         },
                       ],
                       "block": Object {
@@ -9411,7 +9416,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.extend.include.tokens.json 1`] = `
+exports[`inheritance.extend.include.tokens.json 1`] = `
 Object {
   "filename": "inheritance.extend.include.tokens.json",
   "line": 0,
@@ -9445,7 +9450,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'jquery.js\'",
+              "val": "'jquery.js'",
             },
           ],
           "block": Object {
@@ -9590,7 +9595,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.extend.mixins.block.tokens.json 1`] = `
+exports[`inheritance.extend.mixins.block.tokens.json 1`] = `
 Object {
   "filename": "inheritance.extend.mixins.block.tokens.json",
   "line": 0,
@@ -9648,7 +9653,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.extend.mixins.tokens.json 1`] = `
+exports[`inheritance.extend.mixins.tokens.json 1`] = `
 Object {
   "filename": "inheritance.extend.mixins.tokens.json",
   "line": 0,
@@ -9739,7 +9744,7 @@ Object {
       "name": "content",
       "nodes": Array [
         Object {
-          "args": "\"The meaning of life\"",
+          "args": "\\"The meaning of life\\"",
           "attributeBlocks": Array [],
           "attrs": Array [],
           "block": Object {
@@ -9789,7 +9794,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.extend.recursive.tokens.json 1`] = `
+exports[`inheritance.extend.recursive.tokens.json 1`] = `
 Object {
   "filename": "inheritance.extend.recursive.tokens.json",
   "line": 0,
@@ -9847,7 +9852,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.extend.tokens.json 1`] = `
+exports[`inheritance.extend.tokens.json 1`] = `
 Object {
   "filename": "inheritance.extend.tokens.json",
   "line": 0,
@@ -9881,7 +9886,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'jquery.js\'",
+              "val": "'jquery.js'",
             },
           ],
           "block": Object {
@@ -9966,7 +9971,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.extend.whitespace.tokens.json 1`] = `
+exports[`inheritance.extend.whitespace.tokens.json 1`] = `
 Object {
   "filename": "inheritance.extend.whitespace.tokens.json",
   "line": 0,
@@ -10000,7 +10005,7 @@ Object {
               "line": 6,
               "mustEscape": true,
               "name": "src",
-              "val": "\'jquery.js\'",
+              "val": "'jquery.js'",
             },
           ],
           "block": Object {
@@ -10085,7 +10090,7 @@ Object {
 }
 `;
 
-exports[`test inheritance.tokens.json 1`] = `
+exports[`inheritance.tokens.json 1`] = `
 Object {
   "filename": "inheritance.tokens.json",
   "line": 0,
@@ -10119,7 +10124,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'jquery.js\'",
+              "val": "'jquery.js'",
             },
           ],
           "block": Object {
@@ -10204,7 +10209,7 @@ Object {
 }
 `;
 
-exports[`test inline-block-comment.tokens.json 1`] = `
+exports[`inline-block-comment.tokens.json 1`] = `
 Object {
   "filename": "inline-block-comment.tokens.json",
   "line": 0,
@@ -10265,7 +10270,7 @@ Object {
 }
 `;
 
-exports[`test inline-tag.tokens.json 1`] = `
+exports[`inline-tag.tokens.json 1`] = `
 Object {
   "filename": "inline-tag.tokens.json",
   "line": 0,
@@ -10418,7 +10423,7 @@ Object {
                   "line": 6,
                   "mustEscape": true,
                   "type": "Code",
-                  "val": "\'[foo]\'",
+                  "val": "'[foo]'",
                 },
               ],
               "type": "Block",
@@ -10461,7 +10466,7 @@ Object {
             "line": 7,
             "mustEscape": false,
             "type": "Code",
-            "val": "var foo = \'foo]\'",
+            "val": "var foo = 'foo]'",
           },
           Object {
             "column": 24,
@@ -10603,7 +10608,7 @@ Object {
                   "line": 13,
                   "mustEscape": true,
                   "type": "Code",
-                  "val": "\'[foo]\'",
+                  "val": "'[foo]'",
                 },
               ],
               "type": "Block",
@@ -10646,7 +10651,7 @@ Object {
             "line": 14,
             "mustEscape": false,
             "type": "Code",
-            "val": "var foo = \'foo]\'",
+            "val": "var foo = 'foo]'",
           },
           Object {
             "column": 26,
@@ -10759,7 +10764,7 @@ Object {
 }
 `;
 
-exports[`test intepolated-elements.tokens.json 1`] = `
+exports[`intepolated-elements.tokens.json 1`] = `
 Object {
   "filename": "intepolated-elements.tokens.json",
   "line": 0,
@@ -10787,7 +10792,7 @@ Object {
                 "line": 1,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'rho\'",
+                "val": "'rho'",
               },
               Object {
                 "column": 11,
@@ -10795,7 +10800,7 @@ Object {
                 "line": 1,
                 "mustEscape": true,
                 "name": "href",
-                "val": "\'#\'",
+                "val": "'#'",
               },
               Object {
                 "column": 21,
@@ -10803,7 +10808,7 @@ Object {
                 "line": 1,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\'rho--modifier\'",
+                "val": "'rho--modifier'",
               },
             ],
             "block": Object {
@@ -10869,7 +10874,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'rho\'",
+                "val": "'rho'",
               },
               Object {
                 "column": 21,
@@ -10877,7 +10882,7 @@ Object {
                 "line": 2,
                 "mustEscape": true,
                 "name": "href",
-                "val": "\'#\'",
+                "val": "'#'",
               },
               Object {
                 "column": 31,
@@ -10885,7 +10890,7 @@ Object {
                 "line": 2,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\'rho--modifier\'",
+                "val": "'rho--modifier'",
               },
             ],
             "block": Object {
@@ -10943,7 +10948,7 @@ Object {
                 "line": 3,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'rho\'",
+                "val": "'rho'",
               },
               Object {
                 "column": 21,
@@ -10951,7 +10956,7 @@ Object {
                 "line": 3,
                 "mustEscape": true,
                 "name": "href",
-                "val": "\'#\'",
+                "val": "'#'",
               },
               Object {
                 "column": 31,
@@ -10959,7 +10964,7 @@ Object {
                 "line": 3,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\'rho--modifier\'",
+                "val": "'rho--modifier'",
               },
             ],
             "block": Object {
@@ -11007,7 +11012,7 @@ Object {
 }
 `;
 
-exports[`test interpolated-mixin.tokens.json 1`] = `
+exports[`interpolated-mixin.tokens.json 1`] = `
 Object {
   "filename": "interpolated-mixin.tokens.json",
   "line": 0,
@@ -11080,7 +11085,7 @@ Object {
             "val": "This also works ",
           },
           Object {
-            "args": "\'http://www.bing.com\'",
+            "args": "'http://www.bing.com'",
             "attributeBlocks": Array [],
             "attrs": Array [],
             "block": null,
@@ -11114,7 +11119,7 @@ Object {
 }
 `;
 
-exports[`test interpolation.escape.tokens.json 1`] = `
+exports[`interpolation.escape.tokens.json 1`] = `
 Object {
   "filename": "interpolation.escape.tokens.json",
   "line": 0,
@@ -11196,7 +11201,7 @@ Object {
             "line": 7,
             "mustEscape": true,
             "type": "Code",
-            "val": "\"is {\" + id + \"}\"",
+            "val": "\\"is {\\" + id + \\"}\\"",
           },
         ],
         "type": "Block",
@@ -11214,7 +11219,7 @@ Object {
 }
 `;
 
-exports[`test layout.append.tokens.json 1`] = `
+exports[`layout.append.tokens.json 1`] = `
 Object {
   "filename": "layout.append.tokens.json",
   "line": 0,
@@ -11248,7 +11253,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'foo.js\'",
+              "val": "'foo.js'",
             },
           ],
           "block": Object {
@@ -11274,7 +11279,7 @@ Object {
               "line": 6,
               "mustEscape": true,
               "name": "src",
-              "val": "\'bar.js\'",
+              "val": "'bar.js'",
             },
           ],
           "block": Object {
@@ -11299,7 +11304,7 @@ Object {
 }
 `;
 
-exports[`test layout.append.without-block.tokens.json 1`] = `
+exports[`layout.append.without-block.tokens.json 1`] = `
 Object {
   "filename": "layout.append.without-block.tokens.json",
   "line": 0,
@@ -11333,7 +11338,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'foo.js\'",
+              "val": "'foo.js'",
             },
           ],
           "block": Object {
@@ -11359,7 +11364,7 @@ Object {
               "line": 6,
               "mustEscape": true,
               "name": "src",
-              "val": "\'bar.js\'",
+              "val": "'bar.js'",
             },
           ],
           "block": Object {
@@ -11384,7 +11389,7 @@ Object {
 }
 `;
 
-exports[`test layout.multi.append.prepend.block.tokens.json 1`] = `
+exports[`layout.multi.append.prepend.block.tokens.json 1`] = `
 Object {
   "filename": "layout.multi.append.prepend.block.tokens.json",
   "line": 0,
@@ -11418,7 +11423,7 @@ Object {
               "line": 4,
               "mustEscape": false,
               "name": "class",
-              "val": "\'first\'",
+              "val": "'first'",
             },
             Object {
               "column": 9,
@@ -11426,7 +11431,7 @@ Object {
               "line": 4,
               "mustEscape": false,
               "name": "class",
-              "val": "\'append\'",
+              "val": "'append'",
             },
           ],
           "block": Object {
@@ -11470,7 +11475,7 @@ Object {
               "line": 7,
               "mustEscape": false,
               "name": "class",
-              "val": "\'first\'",
+              "val": "'first'",
             },
             Object {
               "column": 9,
@@ -11478,7 +11483,7 @@ Object {
               "line": 7,
               "mustEscape": false,
               "name": "class",
-              "val": "\'prepend\'",
+              "val": "'prepend'",
             },
           ],
           "block": Object {
@@ -11522,7 +11527,7 @@ Object {
               "line": 10,
               "mustEscape": false,
               "name": "class",
-              "val": "\'last\'",
+              "val": "'last'",
             },
             Object {
               "column": 8,
@@ -11530,7 +11535,7 @@ Object {
               "line": 10,
               "mustEscape": false,
               "name": "class",
-              "val": "\'append\'",
+              "val": "'append'",
             },
           ],
           "block": Object {
@@ -11574,7 +11579,7 @@ Object {
               "line": 13,
               "mustEscape": false,
               "name": "class",
-              "val": "\'last\'",
+              "val": "'last'",
             },
             Object {
               "column": 8,
@@ -11582,7 +11587,7 @@ Object {
               "line": 13,
               "mustEscape": false,
               "name": "class",
-              "val": "\'prepend\'",
+              "val": "'prepend'",
             },
           ],
           "block": Object {
@@ -11626,7 +11631,7 @@ Object {
               "line": 16,
               "mustEscape": true,
               "name": "src",
-              "val": "\'jquery.js\'",
+              "val": "'jquery.js'",
             },
           ],
           "block": Object {
@@ -11662,7 +11667,7 @@ Object {
               "line": 19,
               "mustEscape": true,
               "name": "src",
-              "val": "\'foo.js\'",
+              "val": "'foo.js'",
             },
           ],
           "block": Object {
@@ -11687,7 +11692,7 @@ Object {
 }
 `;
 
-exports[`test layout.prepend.tokens.json 1`] = `
+exports[`layout.prepend.tokens.json 1`] = `
 Object {
   "filename": "layout.prepend.tokens.json",
   "line": 0,
@@ -11721,7 +11726,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'foo.js\'",
+              "val": "'foo.js'",
             },
           ],
           "block": Object {
@@ -11747,7 +11752,7 @@ Object {
               "line": 6,
               "mustEscape": true,
               "name": "src",
-              "val": "\'bar.js\'",
+              "val": "'bar.js'",
             },
           ],
           "block": Object {
@@ -11772,7 +11777,7 @@ Object {
 }
 `;
 
-exports[`test layout.prepend.without-block.tokens.json 1`] = `
+exports[`layout.prepend.without-block.tokens.json 1`] = `
 Object {
   "filename": "layout.prepend.without-block.tokens.json",
   "line": 0,
@@ -11806,7 +11811,7 @@ Object {
               "line": 5,
               "mustEscape": true,
               "name": "src",
-              "val": "\'foo.js\'",
+              "val": "'foo.js'",
             },
           ],
           "block": Object {
@@ -11832,7 +11837,7 @@ Object {
               "line": 6,
               "mustEscape": true,
               "name": "src",
-              "val": "\'bar.js\'",
+              "val": "'bar.js'",
             },
           ],
           "block": Object {
@@ -11857,7 +11862,7 @@ Object {
 }
 `;
 
-exports[`test mixin.attrs.tokens.json 1`] = `
+exports[`mixin.attrs.tokens.json 1`] = `
 Object {
   "filename": "mixin.attrs.tokens.json",
   "line": 0,
@@ -11877,7 +11882,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'centered\'",
+                "val": "'centered'",
               },
               Object {
                 "column": 16,
@@ -11966,7 +11971,7 @@ Object {
                             "line": 7,
                             "mustEscape": false,
                             "name": "class",
-                            "val": "\'footer\'",
+                            "val": "'footer'",
                           },
                         ],
                         "block": Object {
@@ -12066,7 +12071,7 @@ Object {
                 "line": 11,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'stretch\'",
+                "val": "'stretch'",
               },
             ],
             "block": Object {
@@ -12091,7 +12096,7 @@ Object {
                       "line": 12,
                       "mustEscape": false,
                       "name": "class",
-                      "val": "\'highlight\'",
+                      "val": "'highlight'",
                     },
                   ],
                   "block": Object {
@@ -12158,7 +12163,7 @@ Object {
                 "line": 16,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'bottom\'",
+                "val": "'bottom'",
               },
             ],
             "block": Object {
@@ -12209,7 +12214,7 @@ Object {
                 "line": 20,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'First\'",
+                "val": "'First'",
               },
             ],
             "block": Object {
@@ -12234,7 +12239,7 @@ Object {
             "type": "Mixin",
           },
           Object {
-            "args": "\'Section 1\'",
+            "args": "'Section 1'",
             "attributeBlocks": Array [],
             "attrs": Array [
               Object {
@@ -12243,7 +12248,7 @@ Object {
                 "line": 21,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'Second\'",
+                "val": "'Second'",
               },
             ],
             "block": Object {
@@ -12286,7 +12291,7 @@ Object {
             "type": "Mixin",
           },
           Object {
-            "args": "\'Section 2\'",
+            "args": "'Section 2'",
             "attributeBlocks": Array [],
             "attrs": Array [
               Object {
@@ -12295,7 +12300,7 @@ Object {
                 "line": 23,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'Third\'",
+                "val": "'Third'",
               },
               Object {
                 "column": 31,
@@ -12303,7 +12308,7 @@ Object {
                 "line": 23,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'foo\'",
+                "val": "'foo'",
               },
               Object {
                 "column": 36,
@@ -12311,7 +12316,7 @@ Object {
                 "line": 23,
                 "mustEscape": true,
                 "name": "href",
-                "val": "\'menu.html\'",
+                "val": "'menu.html'",
               },
               Object {
                 "column": 54,
@@ -12319,7 +12324,7 @@ Object {
                 "line": 23,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -12362,7 +12367,7 @@ Object {
             "type": "Mixin",
           },
           Object {
-            "args": "\'Section 3\'",
+            "args": "'Section 3'",
             "attributeBlocks": Array [],
             "attrs": Array [
               Object {
@@ -12371,7 +12376,7 @@ Object {
                 "line": 25,
                 "mustEscape": true,
                 "name": "href",
-                "val": "\'#\'",
+                "val": "'#'",
               },
             ],
             "block": Object {
@@ -12423,7 +12428,7 @@ Object {
                 "line": 27,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'foo\'",
+                "val": "'foo'",
               },
               Object {
                 "column": 15,
@@ -12431,7 +12436,7 @@ Object {
                 "line": 27,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
               Object {
                 "column": 28,
@@ -12439,7 +12444,7 @@ Object {
                 "line": 27,
                 "mustEscape": true,
                 "name": "name",
-                "val": "\'end\'",
+                "val": "'end'",
               },
               Object {
                 "column": 40,
@@ -12447,7 +12452,7 @@ Object {
                 "line": 27,
                 "mustEscape": true,
                 "name": "id",
-                "val": "\'Last\'",
+                "val": "'Last'",
               },
               Object {
                 "column": 51,
@@ -12455,7 +12460,7 @@ Object {
                 "line": 27,
                 "mustEscape": true,
                 "name": "data-attr",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -12507,7 +12512,7 @@ Object {
                 "line": 29,
                 "mustEscape": true,
                 "name": "class",
-                "val": "[\'class1\', \'class2\']",
+                "val": "['class1', 'class2']",
               },
             ],
             "block": null,
@@ -12552,7 +12557,7 @@ Object {
                 "line": 32,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'thing\'",
+                "val": "'thing'",
               },
               Object {
                 "column": 13,
@@ -12560,7 +12565,7 @@ Object {
                 "line": 32,
                 "mustEscape": true,
                 "name": "attr1",
-                "val": "\'foo\'",
+                "val": "'foo'",
               },
               Object {
                 "column": 26,
@@ -12568,7 +12573,7 @@ Object {
                 "line": 32,
                 "mustEscape": true,
                 "name": "attr2",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -12603,7 +12608,7 @@ Object {
       "line": 34,
       "mustEscape": false,
       "type": "Code",
-      "val": "var val = \'<biz>\'",
+      "val": "var val = '<biz>'",
     },
     Object {
       "buffer": false,
@@ -12613,7 +12618,7 @@ Object {
       "line": 35,
       "mustEscape": false,
       "type": "Code",
-      "val": "var classes = [\'foo\', \'bar\']",
+      "val": "var classes = ['foo', 'bar']",
     },
     Object {
       "args": null,
@@ -12625,7 +12630,7 @@ Object {
           "line": 36,
           "mustEscape": true,
           "name": "attr3",
-          "val": "\'baz\'",
+          "val": "'baz'",
         },
         Object {
           "column": 18,
@@ -12657,7 +12662,7 @@ Object {
           "line": 36,
           "mustEscape": false,
           "name": "class",
-          "val": "\'thunk\'",
+          "val": "'thunk'",
         },
       ],
       "block": null,
@@ -12729,7 +12734,7 @@ Object {
       "type": "Mixin",
     },
     Object {
-      "args": "\'work\'",
+      "args": "'work'",
       "attributeBlocks": Array [],
       "attrs": Array [
         Object {
@@ -12738,7 +12743,7 @@ Object {
           "line": 41,
           "mustEscape": true,
           "name": "data-profile",
-          "val": "\'profile\'",
+          "val": "'profile'",
         },
         Object {
           "column": 56,
@@ -12746,7 +12751,7 @@ Object {
           "line": 41,
           "mustEscape": true,
           "name": "data-creator-name",
-          "val": "\'name\'",
+          "val": "'name'",
         },
       ],
       "block": null,
@@ -12895,7 +12900,7 @@ Object {
           "line": 50,
           "mustEscape": true,
           "name": "attr3",
-          "val": "\"qux\"",
+          "val": "\\"qux\\"",
         },
         Object {
           "column": 3,
@@ -12903,7 +12908,7 @@ Object {
           "line": 51,
           "mustEscape": true,
           "name": "class",
-          "val": "\"baz\"",
+          "val": "\\"baz\\"",
         },
       ],
       "block": null,
@@ -12916,10 +12921,10 @@ Object {
     },
     Object {
       "args": "
-\'1\',
-      \'2\',
-  \'3\',
-      \'4\'
+'1',
+      '2',
+  '3',
+      '4'
 ",
       "attributeBlocks": Array [],
       "attrs": Array [],
@@ -12936,7 +12941,7 @@ Object {
 }
 `;
 
-exports[`test mixin.block-tag-behaviour.tokens.json 1`] = `
+exports[`mixin.block-tag-behaviour.tokens.json 1`] = `
 Object {
   "filename": "mixin.block-tag-behaviour.tokens.json",
   "line": 0,
@@ -12956,7 +12961,7 @@ Object {
                 "line": 3,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'article\'",
+                "val": "'article'",
               },
             ],
             "block": Object {
@@ -13033,7 +13038,7 @@ Object {
               "line": 8,
               "nodes": Array [
                 Object {
-                  "args": "\'Foo\'",
+                  "args": "'Foo'",
                   "attributeBlocks": Array [],
                   "attrs": Array [],
                   "block": Object {
@@ -13052,7 +13057,7 @@ Object {
                               "filename": "mixin.block-tag-behaviour.tokens.json",
                               "line": 9,
                               "type": "Text",
-                              "val": "I\'m article foo",
+                              "val": "I'm article foo",
                             },
                           ],
                           "type": "Block",
@@ -13112,7 +13117,7 @@ Object {
                 "line": 12,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'article\'",
+                "val": "'article'",
               },
             ],
             "block": Object {
@@ -13207,7 +13212,7 @@ Object {
               "line": 18,
               "nodes": Array [
                 Object {
-                  "args": "\'Something\'",
+                  "args": "'Something'",
                   "attributeBlocks": Array [],
                   "attrs": Array [],
                   "block": Object {
@@ -13219,7 +13224,7 @@ Object {
                         "filename": "mixin.block-tag-behaviour.tokens.json",
                         "line": 20,
                         "type": "Text",
-                        "val": "I\'m a much longer",
+                        "val": "I'm a much longer",
                       },
                       Object {
                         "column": 1,
@@ -13319,7 +13324,7 @@ Object {
 }
 `;
 
-exports[`test mixin.blocks.tokens.json 1`] = `
+exports[`mixin.blocks.tokens.json 1`] = `
 Object {
   "filename": "mixin.blocks.tokens.json",
   "line": 0,
@@ -13362,7 +13367,7 @@ Object {
                   "line": 5,
                   "mustEscape": false,
                   "type": "Code",
-                  "val": "var csrf_token_from_somewhere = \'hey\'",
+                  "val": "var csrf_token_from_somewhere = 'hey'",
                 },
                 Object {
                   "attributeBlocks": Array [],
@@ -13373,7 +13378,7 @@ Object {
                       "line": 6,
                       "mustEscape": true,
                       "name": "type",
-                      "val": "\'hidden\'",
+                      "val": "'hidden'",
                     },
                     Object {
                       "column": 26,
@@ -13381,7 +13386,7 @@ Object {
                       "line": 6,
                       "mustEscape": true,
                       "name": "name",
-                      "val": "\'_csrf\'",
+                      "val": "'_csrf'",
                     },
                     Object {
                       "column": 40,
@@ -13448,7 +13453,7 @@ Object {
               "line": 10,
               "nodes": Array [
                 Object {
-                  "args": "\'GET\', \'/search\'",
+                  "args": "'GET', '/search'",
                   "attributeBlocks": Array [],
                   "attrs": Array [],
                   "block": Object {
@@ -13464,7 +13469,7 @@ Object {
                             "line": 12,
                             "mustEscape": true,
                             "name": "type",
-                            "val": "\'text\'",
+                            "val": "'text'",
                           },
                           Object {
                             "column": 26,
@@ -13472,7 +13477,7 @@ Object {
                             "line": 12,
                             "mustEscape": true,
                             "name": "name",
-                            "val": "\'query\'",
+                            "val": "'query'",
                           },
                           Object {
                             "column": 40,
@@ -13480,7 +13485,7 @@ Object {
                             "line": 12,
                             "mustEscape": true,
                             "name": "placeholder",
-                            "val": "\'Search\'",
+                            "val": "'Search'",
                           },
                         ],
                         "block": Object {
@@ -13506,7 +13511,7 @@ Object {
                             "line": 13,
                             "mustEscape": true,
                             "name": "type",
-                            "val": "\'submit\'",
+                            "val": "'submit'",
                           },
                           Object {
                             "column": 28,
@@ -13514,7 +13519,7 @@ Object {
                             "line": 13,
                             "mustEscape": true,
                             "name": "value",
-                            "val": "\'Search\'",
+                            "val": "'Search'",
                           },
                         ],
                         "block": Object {
@@ -13578,7 +13583,7 @@ Object {
               "line": 16,
               "nodes": Array [
                 Object {
-                  "args": "\'POST\', \'/search\'",
+                  "args": "'POST', '/search'",
                   "attributeBlocks": Array [],
                   "attrs": Array [],
                   "block": Object {
@@ -13594,7 +13599,7 @@ Object {
                             "line": 18,
                             "mustEscape": true,
                             "name": "type",
-                            "val": "\'text\'",
+                            "val": "'text'",
                           },
                           Object {
                             "column": 26,
@@ -13602,7 +13607,7 @@ Object {
                             "line": 18,
                             "mustEscape": true,
                             "name": "name",
-                            "val": "\'query\'",
+                            "val": "'query'",
                           },
                           Object {
                             "column": 40,
@@ -13610,7 +13615,7 @@ Object {
                             "line": 18,
                             "mustEscape": true,
                             "name": "placeholder",
-                            "val": "\'Search\'",
+                            "val": "'Search'",
                           },
                         ],
                         "block": Object {
@@ -13636,7 +13641,7 @@ Object {
                             "line": 19,
                             "mustEscape": true,
                             "name": "type",
-                            "val": "\'submit\'",
+                            "val": "'submit'",
                           },
                           Object {
                             "column": 28,
@@ -13644,7 +13649,7 @@ Object {
                             "line": 19,
                             "mustEscape": true,
                             "name": "value",
-                            "val": "\'Search\'",
+                            "val": "'Search'",
                           },
                         ],
                         "block": Object {
@@ -13708,7 +13713,7 @@ Object {
               "line": 22,
               "nodes": Array [
                 Object {
-                  "args": "\'POST\', \'/search\'",
+                  "args": "'POST', '/search'",
                   "attributeBlocks": Array [],
                   "attrs": Array [],
                   "block": null,
@@ -13756,7 +13761,7 @@ Object {
                 "line": 26,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -13805,7 +13810,7 @@ Object {
                 "line": 30,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'foo\'",
+                "val": "'foo'",
               },
             ],
             "block": Object {
@@ -13965,7 +13970,7 @@ Object {
                 "line": 41,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -14015,7 +14020,7 @@ Object {
             "line": 44,
             "mustEscape": true,
             "type": "Code",
-            "val": "\'123\'",
+            "val": "'123'",
           },
         ],
         "type": "Block",
@@ -14032,7 +14037,7 @@ Object {
 }
 `;
 
-exports[`test mixin.merge.tokens.json 1`] = `
+exports[`mixin.merge.tokens.json 1`] = `
 Object {
   "filename": "mixin.merge.tokens.json",
   "line": 0,
@@ -14060,7 +14065,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
             ],
             "block": Object {
@@ -14102,7 +14107,7 @@ Object {
                 "line": 3,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
               Object {
                 "column": 8,
@@ -14110,7 +14115,7 @@ Object {
                 "line": 3,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'quux\'",
+                "val": "'quux'",
               },
             ],
             "block": Object {
@@ -14185,7 +14190,7 @@ Object {
                 "line": 5,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'bar\'",
+                "val": "'bar'",
               },
               Object {
                 "column": 32,
@@ -14193,7 +14198,7 @@ Object {
                 "line": 5,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\"baz\"",
+                "val": "\\"baz\\"",
               },
             ],
             "block": Object {
@@ -14245,7 +14250,7 @@ Object {
                 "line": 8,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'hello\'",
+                "val": "'hello'",
               },
             ],
             "block": null,
@@ -14266,7 +14271,7 @@ Object {
                 "line": 9,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'world\'",
+                "val": "'world'",
               },
             ],
             "block": null,
@@ -14287,7 +14292,7 @@ Object {
                 "line": 10,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'hello\'",
+                "val": "'hello'",
               },
               Object {
                 "column": 13,
@@ -14295,7 +14300,7 @@ Object {
                 "line": 10,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'world\'",
+                "val": "'world'",
               },
             ],
             "block": null,
@@ -14316,7 +14321,7 @@ Object {
                 "line": 11,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'hello\'",
+                "val": "'hello'",
               },
               Object {
                 "column": 13,
@@ -14324,7 +14329,7 @@ Object {
                 "line": 11,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'world\'",
+                "val": "'world'",
               },
             ],
             "block": null,
@@ -14345,7 +14350,7 @@ Object {
                 "line": 12,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\"hello\"",
+                "val": "\\"hello\\"",
               },
             ],
             "block": null,
@@ -14366,7 +14371,7 @@ Object {
                 "line": 13,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'hello\'",
+                "val": "'hello'",
               },
               Object {
                 "column": 14,
@@ -14374,7 +14379,7 @@ Object {
                 "line": 13,
                 "mustEscape": true,
                 "name": "class",
-                "val": "\"world\"",
+                "val": "\\"world\\"",
               },
             ],
             "block": null,
@@ -14405,7 +14410,7 @@ Object {
                 "filename": "mixin.merge.tokens.json",
                 "line": 15,
                 "type": "AttributeBlock",
-                "val": "{class: \"hello\"}",
+                "val": "{class: \\"hello\\"}",
               },
             ],
             "attrs": Array [],
@@ -14433,7 +14438,7 @@ Object {
 }
 `;
 
-exports[`test mixin-at-end-of-file.tokens.json 1`] = `
+exports[`mixin-at-end-of-file.tokens.json 1`] = `
 Object {
   "filename": "mixin-at-end-of-file.tokens.json",
   "line": 0,
@@ -14505,7 +14510,7 @@ Object {
 }
 `;
 
-exports[`test mixin-block-with-space.tokens.json 1`] = `
+exports[`mixin-block-with-space.tokens.json 1`] = `
 Object {
   "filename": "mixin-block-with-space.tokens.json",
   "line": 0,
@@ -14580,7 +14585,7 @@ Object {
 }
 `;
 
-exports[`test mixin-hoist.tokens.json 1`] = `
+exports[`mixin-hoist.tokens.json 1`] = `
 Object {
   "filename": "mixin-hoist.tokens.json",
   "line": 0,
@@ -14682,7 +14687,7 @@ Object {
 }
 `;
 
-exports[`test mixin-via-include.tokens.json 1`] = `
+exports[`mixin-via-include.tokens.json 1`] = `
 Object {
   "filename": "mixin-via-include.tokens.json",
   "line": 0,
@@ -14731,7 +14736,7 @@ Object {
 }
 `;
 
-exports[`test mixins.rest-args.tokens.json 1`] = `
+exports[`mixins.rest-args.tokens.json 1`] = `
 Object {
   "filename": "mixins.rest-args.tokens.json",
   "line": 0,
@@ -14815,7 +14820,7 @@ Object {
       "type": "Mixin",
     },
     Object {
-      "args": "\'ul\', 1, 2, 3, 4",
+      "args": "'ul', 1, 2, 3, 4",
       "attributeBlocks": Array [],
       "attrs": Array [],
       "block": null,
@@ -14831,7 +14836,7 @@ Object {
 }
 `;
 
-exports[`test mixins.tokens.json 1`] = `
+exports[`mixins.tokens.json 1`] = `
 Object {
   "filename": "mixins.tokens.json",
   "line": 0,
@@ -14851,7 +14856,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'comment\'",
+                "val": "'comment'",
               },
             ],
             "block": Object {
@@ -14895,7 +14900,7 @@ Object {
                       "line": 4,
                       "mustEscape": false,
                       "name": "class",
-                      "val": "\'body\'",
+                      "val": "'body'",
                     },
                   ],
                   "block": Object {
@@ -14959,7 +14964,7 @@ Object {
                 "line": 8,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'comment\'",
+                "val": "'comment'",
               },
             ],
             "block": Object {
@@ -15003,7 +15008,7 @@ Object {
                       "line": 10,
                       "mustEscape": false,
                       "name": "class",
-                      "val": "\'body\'",
+                      "val": "'body'",
                     },
                   ],
                   "block": Object {
@@ -15061,7 +15066,7 @@ Object {
           "line": 12,
           "mustEscape": false,
           "name": "id",
-          "val": "\'user\'",
+          "val": "'user'",
         },
       ],
       "block": Object {
@@ -15102,7 +15107,7 @@ Object {
                 "line": 14,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'comments\'",
+                "val": "'comments'",
               },
             ],
             "block": Object {
@@ -15110,8 +15115,8 @@ Object {
               "line": 14,
               "nodes": Array [
                 Object {
-                  "args": "\'This\',
-            ((\'is regular, javascript\'))",
+                  "args": "'This',
+            (('is regular, javascript'))",
                   "attributeBlocks": Array [],
                   "attrs": Array [],
                   "block": null,
@@ -15310,7 +15315,7 @@ Object {
                 "line": 29,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'interpolation\'",
+                "val": "'interpolation'",
               },
             ],
             "block": Object {
@@ -15325,7 +15330,7 @@ Object {
                   "line": 29,
                   "mustEscape": true,
                   "type": "Code",
-                  "val": "str + \'interpolated\'",
+                  "val": "str + 'interpolated'",
                 },
               ],
               "type": "Block",
@@ -15356,10 +15361,10 @@ Object {
       "line": 31,
       "mustEscape": false,
       "type": "Code",
-      "val": "var suffix = \"bar\"",
+      "val": "var suffix = \\"bar\\"",
     },
     Object {
-      "args": "\'This is \'",
+      "args": "'This is '",
       "attributeBlocks": Array [],
       "attrs": Array [],
       "block": null,
@@ -15367,7 +15372,7 @@ Object {
       "column": 1,
       "filename": "mixins.tokens.json",
       "line": 32,
-      "name": "#{\'foo\' + suffix}",
+      "name": "#{'foo' + suffix}",
       "type": "Mixin",
     },
   ],
@@ -15375,7 +15380,7 @@ Object {
 }
 `;
 
-exports[`test mixins-unused.tokens.json 1`] = `
+exports[`mixins-unused.tokens.json 1`] = `
 Object {
   "filename": "mixins-unused.tokens.json",
   "line": 0,
@@ -15395,7 +15400,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "class",
-                "val": "\'wtf\'",
+                "val": "'wtf'",
               },
             ],
             "block": Object {
@@ -15407,7 +15412,7 @@ Object {
                   "filename": "mixins-unused.tokens.json",
                   "line": 2,
                   "type": "Text",
-                  "val": "This isn\'t something we ever want to output",
+                  "val": "This isn't something we ever want to output",
                 },
               ],
               "type": "Block",
@@ -15452,7 +15457,7 @@ Object {
 }
 `;
 
-exports[`test namespaces.tokens.json 1`] = `
+exports[`namespaces.tokens.json 1`] = `
 Object {
   "filename": "namespaces.tokens.json",
   "line": 0,
@@ -15491,7 +15496,7 @@ Object {
           "line": 2,
           "mustEscape": true,
           "name": "fb:foo",
-          "val": "\'bar\'",
+          "val": "'bar'",
         },
       ],
       "block": Object {
@@ -15513,7 +15518,7 @@ Object {
 }
 `;
 
-exports[`test nesting.tokens.json 1`] = `
+exports[`nesting.tokens.json 1`] = `
 Object {
   "filename": "nesting.tokens.json",
   "line": 0,
@@ -15702,7 +15707,7 @@ Object {
 }
 `;
 
-exports[`test pipeless-comments.tokens.json 1`] = `
+exports[`pipeless-comments.tokens.json 1`] = `
 Object {
   "filename": "pipeless-comments.tokens.json",
   "line": 0,
@@ -15764,7 +15769,7 @@ Object {
 }
 `;
 
-exports[`test pipeless-filters.tokens.json 1`] = `
+exports[`pipeless-filters.tokens.json 1`] = `
 Object {
   "filename": "pipeless-filters.tokens.json",
   "line": 0,
@@ -15826,7 +15831,7 @@ Object {
 }
 `;
 
-exports[`test pipeless-tag.tokens.json 1`] = `
+exports[`pipeless-tag.tokens.json 1`] = `
 Object {
   "filename": "pipeless-tag.tokens.json",
   "line": 0,
@@ -15868,7 +15873,7 @@ Object {
             "line": 3,
             "mustEscape": true,
             "type": "Code",
-            "val": "\'going\'",
+            "val": "'going'",
           },
           Object {
             "column": 16,
@@ -15885,7 +15890,7 @@ Object {
             "line": 3,
             "mustEscape": true,
             "type": "Code",
-            "val": "\'on\'",
+            "val": "'on'",
           },
           Object {
             "column": 29,
@@ -15911,7 +15916,7 @@ Object {
 }
 `;
 
-exports[`test pre.tokens.json 1`] = `
+exports[`pre.tokens.json 1`] = `
 Object {
   "filename": "pre.tokens.json",
   "line": 0,
@@ -16066,7 +16071,7 @@ Object {
 }
 `;
 
-exports[`test quotes.tokens.json 1`] = `
+exports[`quotes.tokens.json 1`] = `
 Object {
   "filename": "quotes.tokens.json",
   "line": 0,
@@ -16083,7 +16088,7 @@ Object {
             "filename": "quotes.tokens.json",
             "line": 1,
             "type": "Text",
-            "val": "\"foo\"",
+            "val": "\\"foo\\"",
           },
         ],
         "type": "Block",
@@ -16108,7 +16113,7 @@ Object {
             "filename": "quotes.tokens.json",
             "line": 2,
             "type": "Text",
-            "val": "\'foo\'",
+            "val": "'foo'",
           },
         ],
         "type": "Block",
@@ -16126,7 +16131,7 @@ Object {
 }
 `;
 
-exports[`test regression.784.tokens.json 1`] = `
+exports[`regression.784.tokens.json 1`] = `
 Object {
   "filename": "regression.784.tokens.json",
   "line": 0,
@@ -16139,7 +16144,7 @@ Object {
       "line": 1,
       "mustEscape": false,
       "type": "Code",
-      "val": "var url = \'http://www.google.com\'",
+      "val": "var url = 'http://www.google.com'",
     },
     Object {
       "attributeBlocks": Array [],
@@ -16150,7 +16155,7 @@ Object {
           "line": 2,
           "mustEscape": false,
           "name": "class",
-          "val": "\'url\'",
+          "val": "'url'",
         },
       ],
       "block": Object {
@@ -16165,7 +16170,7 @@ Object {
             "line": 2,
             "mustEscape": true,
             "type": "Code",
-            "val": "url.replace(\'http://\', \'\').replace(/^www\\./, \'\')",
+            "val": "url.replace('http://', '').replace(/^www\\\\./, '')",
           },
         ],
         "type": "Block",
@@ -16183,7 +16188,7 @@ Object {
 }
 `;
 
-exports[`test regression.1794.tokens.json 1`] = `
+exports[`regression.1794.tokens.json 1`] = `
 Object {
   "filename": "regression.1794.tokens.json",
   "line": 0,
@@ -16235,7 +16240,7 @@ Object {
 }
 `;
 
-exports[`test script.whitespace.tokens.json 1`] = `
+exports[`script.whitespace.tokens.json 1`] = `
 Object {
   "filename": "script.whitespace.tokens.json",
   "line": 0,
@@ -16331,7 +16336,7 @@ Object {
 }
 `;
 
-exports[`test scripts.non-js.tokens.json 1`] = `
+exports[`scripts.non-js.tokens.json 1`] = `
 Object {
   "filename": "scripts.non-js.tokens.json",
   "line": 0,
@@ -16345,7 +16350,7 @@ Object {
           "line": 1,
           "mustEscape": false,
           "name": "id",
-          "val": "\'user-template\'",
+          "val": "'user-template'",
         },
         Object {
           "column": 22,
@@ -16353,7 +16358,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/template\'",
+          "val": "'text/template'",
         },
       ],
       "block": Object {
@@ -16369,7 +16374,7 @@ Object {
                 "line": 2,
                 "mustEscape": false,
                 "name": "id",
-                "val": "\'user\'",
+                "val": "'user'",
               },
             ],
             "block": Object {
@@ -16457,7 +16462,7 @@ Object {
           "line": 6,
           "mustEscape": false,
           "name": "id",
-          "val": "\'user-template\'",
+          "val": "'user-template'",
         },
         Object {
           "column": 22,
@@ -16465,7 +16470,7 @@ Object {
           "line": 6,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/template\'",
+          "val": "'text/template'",
         },
       ],
       "block": Object {
@@ -16526,7 +16531,7 @@ Object {
 }
 `;
 
-exports[`test scripts.tokens.json 1`] = `
+exports[`scripts.tokens.json 1`] = `
 Object {
   "filename": "scripts.tokens.json",
   "line": 0,
@@ -16602,7 +16607,7 @@ Object {
             "line": 5,
             "mustEscape": false,
             "type": "Code",
-            "val": "\'foo()\'",
+            "val": "'foo()'",
           },
         ],
         "type": "Block",
@@ -16679,7 +16684,7 @@ Object {
 }
 `;
 
-exports[`test self-closing-html.tokens.json 1`] = `
+exports[`self-closing-html.tokens.json 1`] = `
 Object {
   "filename": "self-closing-html.tokens.json",
   "line": 0,
@@ -16749,7 +16754,7 @@ Object {
 }
 `;
 
-exports[`test single-period.tokens.json 1`] = `
+exports[`single-period.tokens.json 1`] = `
 Object {
   "filename": "single-period.tokens.json",
   "line": 0,
@@ -16784,7 +16789,7 @@ Object {
 }
 `;
 
-exports[`test source.tokens.json 1`] = `
+exports[`source.tokens.json 1`] = `
 Object {
   "filename": "source.tokens.json",
   "line": 0,
@@ -16805,7 +16810,7 @@ Object {
                 "line": 2,
                 "mustEscape": true,
                 "name": "preload",
-                "val": "\'auto\'",
+                "val": "'auto'",
               },
               Object {
                 "column": 25,
@@ -16837,7 +16842,7 @@ Object {
                       "line": 3,
                       "mustEscape": true,
                       "name": "src",
-                      "val": "\'foo\'",
+                      "val": "'foo'",
                     },
                   ],
                   "block": Object {
@@ -16863,7 +16868,7 @@ Object {
                       "line": 4,
                       "mustEscape": true,
                       "name": "src",
-                      "val": "\'bar\'",
+                      "val": "'bar'",
                     },
                   ],
                   "block": Object {
@@ -16907,7 +16912,7 @@ Object {
 }
 `;
 
-exports[`test styles.tokens.json 1`] = `
+exports[`styles.tokens.json 1`] = `
 Object {
   "filename": "styles.tokens.json",
   "line": 0,
@@ -17009,7 +17014,7 @@ Object {
                       "line": 8,
                       "mustEscape": true,
                       "name": "style",
-                      "val": "\'color:red;background:green\'",
+                      "val": "'color:red;background:green'",
                     },
                   ],
                   "block": Object {
@@ -17035,7 +17040,7 @@ Object {
                       "line": 9,
                       "mustEscape": true,
                       "name": "style",
-                      "val": "{color: \'red\', background: \'green\'}",
+                      "val": "{color: 'red', background: 'green'}",
                     },
                   ],
                   "block": Object {
@@ -17059,7 +17064,7 @@ Object {
                       "filename": "styles.tokens.json",
                       "line": 10,
                       "type": "AttributeBlock",
-                      "val": "{style: \'color:red;background:green\'}",
+                      "val": "{style: 'color:red;background:green'}",
                     },
                   ],
                   "attrs": Array [],
@@ -17084,7 +17089,7 @@ Object {
                       "filename": "styles.tokens.json",
                       "line": 11,
                       "type": "AttributeBlock",
-                      "val": "{style: {color: \'red\', background: \'green\'}}",
+                      "val": "{style: {color: 'red', background: 'green'}}",
                     },
                   ],
                   "attrs": Array [],
@@ -17153,7 +17158,7 @@ Object {
                       "line": 14,
                       "mustEscape": true,
                       "name": "style",
-                      "val": "\'color:red;background:green\'",
+                      "val": "'color:red;background:green'",
                     },
                   ],
                   "block": null,
@@ -17174,7 +17179,7 @@ Object {
                       "line": 15,
                       "mustEscape": true,
                       "name": "style",
-                      "val": "{color: \'red\', background: \'green\'}",
+                      "val": "{color: 'red', background: 'green'}",
                     },
                   ],
                   "block": null,
@@ -17193,7 +17198,7 @@ Object {
                   "line": 16,
                   "mustEscape": false,
                   "type": "Code",
-                  "val": "var bg = \'green\';",
+                  "val": "var bg = 'green';",
                 },
                 Object {
                   "attributeBlocks": Array [],
@@ -17204,7 +17209,7 @@ Object {
                       "line": 17,
                       "mustEscape": true,
                       "name": "style",
-                      "val": "{color: \'red\', background: bg}",
+                      "val": "{color: 'red', background: bg}",
                     },
                   ],
                   "block": Object {
@@ -17228,7 +17233,7 @@ Object {
                       "filename": "styles.tokens.json",
                       "line": 18,
                       "type": "AttributeBlock",
-                      "val": "{style: {color: \'red\', background: bg}}",
+                      "val": "{style: {color: 'red', background: bg}}",
                     },
                   ],
                   "attrs": Array [],
@@ -17256,7 +17261,7 @@ Object {
                       "line": 19,
                       "mustEscape": true,
                       "name": "style",
-                      "val": "{color: \'red\', background: bg}",
+                      "val": "{color: 'red', background: bg}",
                     },
                   ],
                   "block": null,
@@ -17294,7 +17299,7 @@ Object {
 }
 `;
 
-exports[`test tag.interpolation.tokens.json 1`] = `
+exports[`tag.interpolation.tokens.json 1`] = `
 Object {
   "filename": "tag.interpolation.tokens.json",
   "line": 0,
@@ -17307,7 +17312,7 @@ Object {
       "line": 2,
       "mustEscape": false,
       "type": "Code",
-      "val": "var tag = \'p\'",
+      "val": "var tag = 'p'",
     },
     Object {
       "buffer": false,
@@ -17317,7 +17322,7 @@ Object {
       "line": 3,
       "mustEscape": false,
       "type": "Code",
-      "val": "var foo = \'bar\'",
+      "val": "var foo = 'bar'",
     },
     Object {
       "attributeBlocks": Array [],
@@ -17353,7 +17358,7 @@ Object {
           "line": 6,
           "mustEscape": true,
           "name": "foo",
-          "val": "\'bar\'",
+          "val": "'bar'",
         },
       ],
       "block": Object {
@@ -17405,7 +17410,7 @@ Object {
         "type": "Block",
       },
       "column": 1,
-      "expr": "foo ? \'a\' : \'li\'",
+      "expr": "foo ? 'a' : 'li'",
       "filename": "tag.interpolation.tokens.json",
       "isInline": false,
       "line": 7,
@@ -17454,7 +17459,7 @@ Object {
                                   "line": 17,
                                   "mustEscape": false,
                                   "name": "class",
-                                  "val": "\'icon\'",
+                                  "val": "'icon'",
                                 },
                                 Object {
                                   "column": 18,
@@ -17528,7 +17533,7 @@ Object {
                                   "line": 13,
                                   "mustEscape": false,
                                   "name": "class",
-                                  "val": "\'icon\'",
+                                  "val": "'icon'",
                                 },
                                 Object {
                                   "column": 18,
@@ -17607,7 +17612,7 @@ Object {
         "line": 20,
         "nodes": Array [
           Object {
-            "args": "\'contact\'",
+            "args": "'contact'",
             "attributeBlocks": Array [],
             "attrs": Array [],
             "block": Object {
@@ -17641,7 +17646,7 @@ Object {
                 "line": 22,
                 "mustEscape": true,
                 "name": "href",
-                "val": "\'/contact\'",
+                "val": "'/contact'",
               },
             ],
             "block": Object {
@@ -17681,7 +17686,7 @@ Object {
 }
 `;
 
-exports[`test tag-blocks.tokens.json 1`] = `
+exports[`tag-blocks.tokens.json 1`] = `
 Object {
   "filename": "tag-blocks.tokens.json",
   "line": 0,
@@ -17751,7 +17756,7 @@ Object {
             "line": 4,
             "mustEscape": true,
             "type": "Code",
-            "val": "\'  \'",
+            "val": "'  '",
           },
           Object {
             "column": 5,
@@ -17776,7 +17781,7 @@ Object {
 }
 `;
 
-exports[`test tags.self-closing.tokens.json 1`] = `
+exports[`tags.self-closing.tokens.json 1`] = `
 Object {
   "filename": "tags.self-closing.tokens.json",
   "line": 0,
@@ -17814,7 +17819,7 @@ Object {
                 "line": 4,
                 "mustEscape": true,
                 "name": "bar",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -17857,7 +17862,7 @@ Object {
                 "line": 6,
                 "mustEscape": true,
                 "name": "bar",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -17908,7 +17913,7 @@ Object {
                 "line": 8,
                 "mustEscape": true,
                 "name": "bar",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -17943,7 +17948,7 @@ Object {
               "type": "Block",
             },
             "column": 3,
-            "expr": "\'foo\'",
+            "expr": "'foo'",
             "filename": "tags.self-closing.tokens.json",
             "isInline": false,
             "line": 9,
@@ -17959,7 +17964,7 @@ Object {
                 "line": 10,
                 "mustEscape": true,
                 "name": "bar",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -17969,7 +17974,7 @@ Object {
               "type": "Block",
             },
             "column": 3,
-            "expr": "\'foo\'",
+            "expr": "'foo'",
             "filename": "tags.self-closing.tokens.json",
             "isInline": false,
             "line": 10,
@@ -17994,7 +17999,7 @@ Object {
               "type": "Block",
             },
             "column": 3,
-            "expr": "\'foo\'",
+            "expr": "'foo'",
             "filename": "tags.self-closing.tokens.json",
             "isInline": false,
             "line": 11,
@@ -18010,7 +18015,7 @@ Object {
                 "line": 12,
                 "mustEscape": true,
                 "name": "bar",
-                "val": "\'baz\'",
+                "val": "'baz'",
               },
             ],
             "block": Object {
@@ -18028,7 +18033,7 @@ Object {
               "type": "Block",
             },
             "column": 3,
-            "expr": "\'foo\'",
+            "expr": "'foo'",
             "filename": "tags.self-closing.tokens.json",
             "isInline": false,
             "line": 12,
@@ -18112,7 +18117,7 @@ Object {
             },
             "column": 3,
             "expr": "
-    \'foo\'
+    'foo'
   ",
             "filename": "tags.self-closing.tokens.json",
             "isInline": false,
@@ -18136,7 +18141,7 @@ Object {
 }
 `;
 
-exports[`test template.tokens.json 1`] = `
+exports[`template.tokens.json 1`] = `
 Object {
   "filename": "template.tokens.json",
   "line": 0,
@@ -18150,7 +18155,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/x-template\'",
+          "val": "'text/x-template'",
         },
       ],
       "block": Object {
@@ -18245,7 +18250,7 @@ Object {
           "line": 6,
           "mustEscape": true,
           "name": "type",
-          "val": "\'text/x-template\'",
+          "val": "'text/x-template'",
         },
       ],
       "block": Object {
@@ -18306,7 +18311,7 @@ Object {
 }
 `;
 
-exports[`test text.tokens.json 1`] = `
+exports[`text.tokens.json 1`] = `
 Object {
   "filename": "text.tokens.json",
   "line": 0,
@@ -18320,7 +18325,7 @@ Object {
           "line": 1,
           "mustEscape": true,
           "name": "value",
-          "val": "\'\'",
+          "val": "''",
         },
       ],
       "block": Object {
@@ -18861,7 +18866,7 @@ Object {
 }
 `;
 
-exports[`test text-block.tokens.json 1`] = `
+exports[`text-block.tokens.json 1`] = `
 Object {
   "filename": "text-block.tokens.json",
   "line": 0,
@@ -18889,7 +18894,7 @@ Object {
                 "line": 3,
                 "mustEscape": true,
                 "name": "type",
-                "val": "\'text\'",
+                "val": "'text'",
               },
               Object {
                 "column": 22,
@@ -18897,7 +18902,7 @@ Object {
                 "line": 3,
                 "mustEscape": true,
                 "name": "name",
-                "val": "\'user[name]\'",
+                "val": "'user[name]'",
               },
             ],
             "block": Object {
@@ -18948,7 +18953,7 @@ Object {
                 "line": 6,
                 "mustEscape": true,
                 "name": "type",
-                "val": "\'text\'",
+                "val": "'text'",
               },
               Object {
                 "column": 22,
@@ -18956,7 +18961,7 @@ Object {
                 "line": 6,
                 "mustEscape": true,
                 "name": "name",
-                "val": "\'user[pass]\'",
+                "val": "'user[pass]'",
               },
             ],
             "block": Object {
@@ -18989,7 +18994,7 @@ Object {
 }
 `;
 
-exports[`test utf8bom.tokens.json 1`] = `
+exports[`utf8bom.tokens.json 1`] = `
 Object {
   "filename": "utf8bom.tokens.json",
   "line": 0,
@@ -19006,7 +19011,7 @@ Object {
             "filename": "utf8bom.tokens.json",
             "line": 1,
             "type": "Text",
-            "val": "\"foo\"",
+            "val": "\\"foo\\"",
           },
         ],
         "type": "Block",
@@ -19024,7 +19029,7 @@ Object {
 }
 `;
 
-exports[`test vars.tokens.json 1`] = `
+exports[`vars.tokens.json 1`] = `
 Object {
   "filename": "vars.tokens.json",
   "line": 0,
@@ -19037,7 +19042,7 @@ Object {
       "line": 1,
       "mustEscape": false,
       "type": "Code",
-      "val": "var foo = \'bar\'",
+      "val": "var foo = 'bar'",
     },
     Object {
       "buffer": false,
@@ -19088,7 +19093,7 @@ Object {
 }
 `;
 
-exports[`test while.tokens.json 1`] = `
+exports[`while.tokens.json 1`] = `
 Object {
   "filename": "while.tokens.json",
   "line": 0,
@@ -19178,7 +19183,7 @@ Object {
 }
 `;
 
-exports[`test xml.tokens.json 1`] = `
+exports[`xml.tokens.json 1`] = `
 Object {
   "filename": "xml.tokens.json",
   "line": 0,
@@ -19199,7 +19204,7 @@ Object {
           "line": 2,
           "mustEscape": true,
           "name": "term",
-          "val": "\'some term\'",
+          "val": "'some term'",
         },
       ],
       "block": Object {
@@ -19246,7 +19251,7 @@ Object {
 }
 `;
 
-exports[`test yield.tokens.json 1`] = `
+exports[`yield.tokens.json 1`] = `
 Object {
   "filename": "yield.tokens.json",
   "line": 0,
@@ -19279,7 +19284,7 @@ Object {
                             "line": 4,
                             "mustEscape": true,
                             "name": "src",
-                            "val": "\'/caustic.js\'",
+                            "val": "'/caustic.js'",
                           },
                         ],
                         "block": Object {
@@ -19305,7 +19310,7 @@ Object {
                             "line": 5,
                             "mustEscape": true,
                             "name": "src",
-                            "val": "\'/app.js\'",
+                            "val": "'/app.js'",
                           },
                         ],
                         "block": Object {
@@ -19364,7 +19369,7 @@ Object {
 }
 `;
 
-exports[`test yield-before-conditional.tokens.json 1`] = `
+exports[`yield-before-conditional.tokens.json 1`] = `
 Object {
   "filename": "yield-before-conditional.tokens.json",
   "line": 0,
@@ -19397,7 +19402,7 @@ Object {
                             "line": 4,
                             "mustEscape": true,
                             "name": "src",
-                            "val": "\'/caustic.js\'",
+                            "val": "'/caustic.js'",
                           },
                         ],
                         "block": Object {
@@ -19423,7 +19428,7 @@ Object {
                             "line": 5,
                             "mustEscape": true,
                             "name": "src",
-                            "val": "\'/app.js\'",
+                            "val": "'/app.js'",
                           },
                         ],
                         "block": Object {
@@ -19482,7 +19487,7 @@ Object {
 }
 `;
 
-exports[`test yield-before-conditional-head.tokens.json 1`] = `
+exports[`yield-before-conditional-head.tokens.json 1`] = `
 Object {
   "filename": "yield-before-conditional-head.tokens.json",
   "line": 0,
@@ -19503,7 +19508,7 @@ Object {
                 "line": 2,
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'/jquery.js\'",
+                "val": "'/jquery.js'",
               },
             ],
             "block": Object {
@@ -19542,7 +19547,7 @@ Object {
                       "line": 5,
                       "mustEscape": true,
                       "name": "src",
-                      "val": "\'/jquery.ui.js\'",
+                      "val": "'/jquery.ui.js'",
                     },
                   ],
                   "block": Object {
@@ -19583,7 +19588,7 @@ Object {
 }
 `;
 
-exports[`test yield-head.tokens.json 1`] = `
+exports[`yield-head.tokens.json 1`] = `
 Object {
   "filename": "yield-head.tokens.json",
   "line": 0,
@@ -19604,7 +19609,7 @@ Object {
                 "line": 2,
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'/jquery.js\'",
+                "val": "'/jquery.js'",
               },
             ],
             "block": Object {
@@ -19636,7 +19641,7 @@ Object {
                 "line": 4,
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'/jquery.ui.js\'",
+                "val": "'/jquery.ui.js'",
               },
             ],
             "block": Object {
@@ -19669,7 +19674,7 @@ Object {
 }
 `;
 
-exports[`test yield-title.tokens.json 1`] = `
+exports[`yield-title.tokens.json 1`] = `
 Object {
   "filename": "yield-title.tokens.json",
   "line": 0,
@@ -19742,7 +19747,7 @@ Object {
 }
 `;
 
-exports[`test yield-title-head.tokens.json 1`] = `
+exports[`yield-title-head.tokens.json 1`] = `
 Object {
   "filename": "yield-title-head.tokens.json",
   "line": 0,
@@ -19787,7 +19792,7 @@ Object {
                 "line": 4,
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'/jquery.js\'",
+                "val": "'/jquery.js'",
               },
             ],
             "block": Object {
@@ -19813,7 +19818,7 @@ Object {
                 "line": 5,
                 "mustEscape": true,
                 "name": "src",
-                "val": "\'/jquery.ui.js\'",
+                "val": "'/jquery.ui.js'",
               },
             ],
             "block": Object {

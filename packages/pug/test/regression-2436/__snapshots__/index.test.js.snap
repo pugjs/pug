@@ -1,4 +1,6 @@
-exports[`test #2436 - block with a same name extends from different layout in nesting 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#2436 - block with a same name extends from different layout in nesting 1`] = `
 "
 <h1>layout </h1>
 <p>Main A</p>
@@ -6,7 +8,7 @@ exports[`test #2436 - block with a same name extends from different layout in ne
 <p>Other A</p>"
 `;
 
-exports[`test #2436 - block with a same name extends from the same layout in nesting 1`] = `
+exports[`#2436 - block with a same name extends from the same layout in nesting 1`] = `
 "
 <h1>layout </h1>
 <p>Main A</p>

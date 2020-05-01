@@ -1,6 +1,6 @@
 {
   "name": "pug-error",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Standard error objects for pug",
   "keywords": [
     "pug"
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/pugjs/pug-error.git"
+    "url": "https://github.com/pugjs/pug/tree/master/packages/pug-error"
   },
   "author": "Forbes Lindesay",
   "license": "MIT"

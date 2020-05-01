@@ -1,34 +1,33 @@
-
 /**
  * Module dependencies.
  */
 
-var uubench = require('uubench')
-  , pug = require('../');
-
+var uubench = require('uubench'),
+  pug = require('../');
 
 var suite = new uubench.Suite({
   min: 200,
-  result: function(name, stats){
-    var persec = 1000 / stats.elapsed
-      , ops = stats.iterations * persec;
+  result: function(name, stats) {
+    var persec = 1000 / stats.elapsed,
+      ops = stats.iterations * persec;
     console.log('%s: %d', name, ops | 0);
-  }
+  },
 });
 
 function setup(self) {
-  var suffix = self ? ' (self)' : ''
-    , options = { self: self };
+  var suffix = self ? ' (self)' : '',
+    options = {self: self};
 
-  var str = 'html\n  body\n    h1 Title'
-    , fn = pug.compile(str, options);
+  var str = 'html\n  body\n    h1 Title',
+    fn = pug.compile(str, options);
 
-  suite.bench('tiny' + suffix, function(next){
+  suite.bench('tiny' + suffix, function(next) {
     fn();
     next();
   });
 
-str = '\
+  str =
+    '\
 html\n\
   body\n\
     h1 Title\n\
@@ -42,12 +41,13 @@ html\n\
 
   var fn2 = pug.compile(str, options);
 
-  suite.bench('small' + suffix, function(next){
+  suite.bench('small' + suffix, function(next) {
     fn2();
     next();
   });
 
-str = '\
+  str =
+    '\
 html\n\
   body\n\
     h1 #{title}\n\
@@ -57,7 +57,8 @@ html\n\
 ';
 
   if (self) {
-str = '\
+    str =
+      '\
 html\n\
   body\n\
     h1 #{self.title}\n\
@@ -69,12 +70,16 @@ html\n\
 
   var fn3 = pug.compile(str, options);
 
-  suite.bench('small locals' + suffix, function(next){
-    fn3({ title: 'Title', links: ['Home', 'About Us', 'Store', 'FAQ', 'Contact'] });
+  suite.bench('small locals' + suffix, function(next) {
+    fn3({
+      title: 'Title',
+      links: ['Home', 'About Us', 'Store', 'FAQ', 'Contact'],
+    });
     next();
   });
 
-str = '\
+  str =
+    '\
 html\n\
   body\n\
     h1 Title\n\
@@ -89,12 +94,13 @@ html\n\
   str = Array(30).join(str);
   var fn4 = pug.compile(str, options);
 
-  suite.bench('medium' + suffix, function(next){
+  suite.bench('medium' + suffix, function(next) {
     fn4();
     next();
   });
 
-str = '\
+  str =
+    '\
 html\n\
   body\n\
     h1 Title\n\
@@ -109,7 +115,7 @@ html\n\
   str = Array(100).join(str);
   var fn5 = pug.compile(str, options);
 
-  suite.bench('large' + suffix, function(next){
+  suite.bench('large' + suffix, function(next) {
     fn5();
     next();
   });
