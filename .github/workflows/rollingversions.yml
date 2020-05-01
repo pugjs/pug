@@ -19,6 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn install --forzen-lockfile
       - run: yarn test
+      - run: yarn prettier:check
 
   publish:
     runs-on: ubuntu-latest
