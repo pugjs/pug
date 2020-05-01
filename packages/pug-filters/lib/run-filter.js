@@ -7,8 +7,10 @@ module.exports = filter;
 
 function getMinifyTransformerName(outputFormat) {
   switch (outputFormat) {
-    case 'js': return 'uglify-js';
-    case 'css': return 'clean-css';
+    case 'js':
+      return 'uglify-js';
+    case 'css':
+      return 'clean-css';
   }
 }
 
