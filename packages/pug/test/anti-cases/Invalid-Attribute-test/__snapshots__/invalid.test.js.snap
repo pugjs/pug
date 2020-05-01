@@ -1,0 +1,5 @@
+exports[`test invalid attribute name should log warning 1`] = `
+Array [
+"/home/travis/build/pugjs/pug/packages/pug/test/anti-cases/Invalid-Attribute-test/invalid-character.pug, line 1, attribute name starts with invalid character "{", to use special characters in attribute names, wrap the attribute name in double quotes """,
+]
+`;

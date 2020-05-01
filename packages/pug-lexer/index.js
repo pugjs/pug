@@ -108,10 +108,10 @@ Lexer.prototype = {
 
   tok: function(type, val){
     var res = {
-      type: type, 
+      type: type,
       loc: {
         start: {
-          line: this.lineno, 
+          line: this.lineno,
           column: this.colno
         },
         filename: this.filename
@@ -122,15 +122,15 @@ Lexer.prototype = {
 
     return res;
   },
-  
+
   /**
    * Set the token's `loc.end` value.
-   * 
+   *
    * @param {Object} tok
    * @returns {Object}
    * @api private
    */
-  
+
   tokEnd: function(tok){
     tok.loc.end = {
       line: this.lineno,
@@ -1085,7 +1085,7 @@ Lexer.prototype = {
       return true;
     }
   },
-  
+
   /**
    * Attribute Name.
    */
@@ -1094,7 +1094,7 @@ Lexer.prototype = {
     var quoteRe = /['"]/;
     var key = '';
     var i;
-    
+
     // consume all whitespace before the key
     for(i = 0; i < str.length; i++){
       if(!this.whitespaceRe.test(str[i])) break;
@@ -1104,23 +1104,26 @@ Lexer.prototype = {
         this.incrementColumn(1);
       }
     }
-    
+
     if(i === str.length){
       return '';
     }
-    
+
     var tok = this.tok('attribute');
-    
+
     // quote?
     if(quoteRe.test(str[i])){
       quote = str[i];
       this.incrementColumn(1);
       i++;
+    }else if(characterParser.isPunctuator(str[i]) && str[i] !== ':'){
+      console.warn(this.filename + ', line ' + tok.loc.start.line + ', attribute name starts with invalid character "' + str[i] +
+                '", to use special characters in attribute names, wrap the attribute name in double quotes ""')
     }
-    
+
     // start looping through the key
     for (; i < str.length; i++) {
-      
+
       if(quote){
         if (str[i] === quote) {
           this.incrementColumn(1);
@@ -1132,20 +1135,20 @@ Lexer.prototype = {
           break;
         }
       }
-      
+
       key += str[i];
-        
+
       if (str[i] === '\n') {
         this.incrementLine(1);
       } else {
         this.incrementColumn(1);
       }
     }
-    
+
     tok.name = key;
-    
+
     var valueResponse = this.attributeValue(str.substr(i));
-    
+
     if (valueResponse.val) {
       tok.val = valueResponse.val;
       tok.mustEscape = valueResponse.mustEscape;
@@ -1154,11 +1157,11 @@ Lexer.prototype = {
       tok.val = true;
       tok.mustEscape = true;
     }
-    
+
     str = valueResponse.remainingSource;
-    
+
     this.tokens.push(this.tokEnd(tok));
-    
+
     for(i = 0; i < str.length; i++){
       if(!this.whitespaceRe.test(str[i])) {
         break;
@@ -1169,15 +1172,15 @@ Lexer.prototype = {
         this.incrementColumn(1);
       }
     }
-    
+
     if(str[i] === ','){
       this.incrementColumn(1);
       i++;
     }
-    
+
     return str.substr(i);
   },
-  
+
   /**
    * Attribute Value.
    */
@@ -1189,7 +1192,7 @@ Lexer.prototype = {
     var state = characterParser.defaultState();
     var col = this.colno;
     var line = this.lineno;
-    
+
     // consume all whitespace before the equals sign
     for(i = 0; i < str.length; i++){
       if(!this.whitespaceRe.test(str[i])) break;
@@ -1200,18 +1203,18 @@ Lexer.prototype = {
         col++;
       }
     }
-    
+
     if(i === str.length){
       return { remainingSource: str };
     }
-    
+
     if(str[i] === '!'){
       escapeAttr = false;
       col++;
       i++;
       if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
     }
-    
+
     if(str[i] !== '='){
       // check for anti-pattern `div("foo"bar)`
       if (i === 0 && str && !this.whitespaceRe.test(str[0]) && str[0] !== ','){
@@ -1220,11 +1223,11 @@ Lexer.prototype = {
         return { remainingSource: str };
       }
     }
-    
+
     this.lineno = line;
     this.colno = col + 1;
     i++;
-    
+
     // consume all whitespace before the value
     for(; i < str.length; i++){
       if(!this.whitespaceRe.test(str[i])) break;
@@ -1234,18 +1237,18 @@ Lexer.prototype = {
         this.incrementColumn(1);
       }
     }
-    
+
     line = this.lineno;
     col = this.colno;
-    
+
     // start looping through the value
     for (; i < str.length; i++) {
       // if the character is in a string or in parentheses/brackets/braces
       if (!(state.isNesting() || state.isString())){
-        
+
         if (this.whitespaceRe.test(str[i])) {
           done = false;
-          
+
           // find the first non-whitespace character
           for (x = i; x < str.length; x++) {
             if (!this.whitespaceRe.test(str[x])) {
@@ -1261,24 +1264,24 @@ Lexer.prototype = {
               break;
             }
           }
-          
+
           // if everything else is whitespace, return now so last attribute
           // does not include trailing whitespace
           if(done || x === str.length){
             break;
           }
         }
-        
+
         // if there's no whitespace and the character is not ',', the
         // attribute did not end.
         if(str[i] === ',' && this.assertExpression(val, true)){
           break;
         }
       }
-      
+
       state = characterParser.parseChar(str[i], state);
       val += str[i];
-      
+
       if (str[i] === '\n') {
         line++;
         col = 1;
@@ -1286,22 +1289,22 @@ Lexer.prototype = {
         col++;
       }
     }
-    
+
     this.assertExpression(val);
-    
+
     this.lineno = line;
     this.colno = col;
-    
+
     return { val: val, mustEscape: escapeAttr, remainingSource: str.substr(i) };
   },
 
   /**
    * Attributes.
    */
-  
+
   attrs: function() {
     var tok;
-    
+
     if ('(' == this.input.charAt(0)) {
       tok = this.tok('start-attributes');
       var index = this.bracketExpression().end;
