@@ -1051,8 +1051,18 @@ Lexer.prototype = {
       this.tokens.push(this.tokEnd(tok));
       return true;
     }
+    const name = /^each\b/.exec(this.input) ? 'each' : 'for';
     if (this.scan(/^(?:each|for)\b/)) {
-      this.error('MALFORMED_EACH', 'malformed each');
+      this.error(
+        'MALFORMED_EACH',
+        'This `' +
+          name +
+          '` has a syntax error. `' +
+          name +
+          '` statements should be of the form: `' +
+          name +
+          ' VARIABLE_NAME of JS_EXPRESSION`'
+      );
     }
     if (
       (captures = /^- *(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? +in +([^\n]+)/.exec(
