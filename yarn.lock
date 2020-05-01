@@ -3522,7 +3522,7 @@ is-extendable@^0.1.0, is-extendable@^0.1.1:
   resolved "https://registry.npmjs.org/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
   integrity sha1-YrEQ4omkcUGOPsNqYX1HLjAd/Ik=
 
-is-extendable@^1.0.0, is-extendable@^1.0.1:
+is-extendable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/is-extendable/-/is-extendable-1.0.1.tgz#a7470f9e426733d81bd81e1155264e3a3507cab4"
   integrity sha512-arnXMxT1hhoKo9k1LZdmlNyJdDDfy2v0fXjFlmok4+i8ul/6WlbVge9bhM74OpNPQPMGUToDtz+KXa1PneJxOA==
@@ -4233,7 +4233,7 @@ jstransformer-less@^2.1.0, jstransformer-less@^2.3.0:
     less-plugin-inline-urls "^1.1.0"
     less-plugin-npm-import "^2.0.0"
 
-jstransformer-markdown-it@2.0.0, jstransformer-markdown-it@^2.0.0:
+jstransformer-markdown-it@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/jstransformer-markdown-it/-/jstransformer-markdown-it-2.0.0.tgz#8b44aedbc9465dc935d280be90339b671c16ceb8"
   integrity sha1-i0Su28lGXck10oC+kDObZxwWzrg=
@@ -4781,14 +4781,6 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mixin-object@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/mixin-object/-/mixin-object-3.0.0.tgz#55091196c9cf744f4c7956fb7021da38c736c440"
-  integrity sha512-RsUqTd3DyF9+UPqhLzJIWwGm4ZGIPYOu6WcQhQuBqqVBGhc6LOC8LrFk9KD7PvVwmqri45IJT88WLrNNrMWjxg==
-  dependencies:
-    for-in "^1.0.2"
-    is-extendable "^1.0.0"
-
 mkdirp-promise@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/mkdirp-promise/-/mkdirp-promise-5.0.1.tgz#e9b8f68e552c68a9c1713b84883f7a1dd039b8a1"
@@ -4796,7 +4788,7 @@ mkdirp-promise@^5.0.1:
   dependencies:
     mkdirp "*"
 
-mkdirp@*, mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1:
+mkdirp@*, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1:
   version "0.5.1"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
@@ -6021,14 +6013,12 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
 
-shallow-clone@2.0.0, shallow-clone@^3.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/shallow-clone/-/shallow-clone-2.0.0.tgz#5d0f491e313686b2f53660b8859ca33684f18d20"
-  integrity sha512-M0ikAzIEgiQqFG8gkkuM+sOiVVNSza7VjcvP+WfB8HvYccIFDKt0YIwlx0bbLsD4eiya8ARd0rznCbES9fXMqA==
+shallow-clone@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/shallow-clone/-/shallow-clone-3.0.1.tgz#8f2981ad92531f55035b01fb230769a40e02efa3"
+  integrity sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==
   dependencies:
-    is-extendable "^1.0.1"
-    kind-of "^6.0.0"
-    mixin-object "^3.0.0"
+    kind-of "^6.0.2"
 
 shebang-command@^1.2.0:
   version "1.2.0"
@@ -6406,7 +6396,7 @@ strong-log-transformer@^2.0.0:
     minimist "^1.2.0"
     through "^2.3.4"
 
-stylus@0.54.5, stylus@~0.54.5:
+stylus@~0.54.5:
   version "0.54.5"
   resolved "https://registry.npmjs.org/stylus/-/stylus-0.54.5.tgz#42b9560931ca7090ce8515a798ba9e6aa3d6dc79"
   integrity sha1-QrlWCTHKcJDOhRWnmLqeaqPW3Hk=
