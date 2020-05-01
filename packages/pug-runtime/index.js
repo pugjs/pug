@@ -248,7 +248,9 @@ function pug_rethrow(err, filename, lineno, str){
 
   // Alter exception message
   err.path = filename;
-  err.message = (filename || 'Pug') + ':' + lineno
-    + '\n' + context + '\n\n' + err.message;
+  try {
+    err.message = (filename || 'Pug') + ':' + lineno
+      + '\n' + context + '\n\n' + err.message;
+  } catch (e) {}
   throw err;
 };
