@@ -28,6 +28,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: npm install
+      - run: yarn install --forzen-lockfile
       - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - run: npx rollingversions publish
