@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`pug .compileClient() should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it false 1`] = `
-"var pug = require('pug-runtime');
+"var pug = require(\\"pug-runtime\\");
 function template(locals) {
-  var pug_html = '',
+  var pug_html = \\"\\",
     pug_mixins = {},
     pug_interp;
   var pug_debug_filename, pug_debug_line;
@@ -14,8 +14,8 @@ function template(locals) {
     pug_debug_line = 1;
     pug_html =
       pug_html +
-      pug.escape(null == (pug_interp = self.foo) ? '' : pug_interp) +
-      '\\\\u003C\\\\u002Fdiv\\\\u003E';
+      pug.escape(null == (pug_interp = self.foo) ? \\"\\" : pug_interp) +
+      \\"\\\\u003C\\\\u002Fdiv\\\\u003E\\";
   } catch (err) {
     pug.rethrow(err, pug_debug_filename, pug_debug_line);
   }
@@ -27,26 +27,26 @@ module.exports = template;
 
 exports[`pug .compileClient() should support module syntax in pug.compileClient(str, options) when inlineRuntimeFunctions it true 1`] = `
 "function pug_escape(e) {
-  var a = '' + e,
+  var a = \\"\\" + e,
     t = pug_match_html.exec(a);
   if (!t) return e;
   var r,
     c,
     n,
-    s = '';
+    s = \\"\\";
   for (r = t.index, c = 0; r < a.length; r++) {
     switch (a.charCodeAt(r)) {
       case 34:
-        n = '&quot;';
+        n = \\"&quot;\\";
         break;
       case 38:
-        n = '&amp;';
+        n = \\"&amp;\\";
         break;
       case 60:
-        n = '&lt;';
+        n = \\"&lt;\\";
         break;
       case 62:
-        n = '&gt;';
+        n = \\"&gt;\\";
         break;
       default:
         continue;
@@ -58,32 +58,32 @@ exports[`pug .compileClient() should support module syntax in pug.compileClient(
 var pug_match_html = /[\\"&<>]/;
 function pug_rethrow(n, e, t, r) {
   if (!(n instanceof Error)) throw n;
-  if (!(('undefined' == typeof window && e) || r))
-    throw ((n.message += ' on line ' + t), n);
+  if (!((\\"undefined\\" == typeof window && e) || r))
+    throw ((n.message += \\" on line \\" + t), n);
   try {
-    r = r || require('fs').readFileSync(e, 'utf8');
+    r = r || require(\\"fs\\").readFileSync(e, \\"utf8\\");
   } catch (e) {
     pug_rethrow(n, null, t);
   }
   var a = 3,
-    i = r.split('\\\\n'),
+    i = r.split(\\"\\\\n\\"),
     o = Math.max(t - a, 0),
     h = Math.min(i.length, t + a),
     a = i
       .slice(o, h)
       .map(function(n, e) {
         var r = e + o + 1;
-        return (r == t ? '  > ' : '    ') + r + '| ' + n;
+        return (r == t ? \\"  > \\" : \\"    \\") + r + \\"| \\" + n;
       })
-      .join('\\\\n');
+      .join(\\"\\\\n\\");
   n.path = e;
   try {
-    n.message = (e || 'Pug') + ':' + t + '\\\\n' + a + '\\\\n\\\\n' + n.message;
+    n.message = (e || \\"Pug\\") + \\":\\" + t + \\"\\\\n\\" + a + \\"\\\\n\\\\n\\" + n.message;
   } catch (n) {}
   throw n;
 }
 function template(locals) {
-  var pug_html = '',
+  var pug_html = \\"\\",
     pug_mixins = {},
     pug_interp;
   var pug_debug_filename, pug_debug_line;
@@ -94,8 +94,8 @@ function template(locals) {
     pug_debug_line = 1;
     pug_html =
       pug_html +
-      pug_escape(null == (pug_interp = self.foo) ? '' : pug_interp) +
-      '\\\\u003C\\\\u002Fdiv\\\\u003E';
+      pug_escape(null == (pug_interp = self.foo) ? \\"\\" : pug_interp) +
+      \\"\\\\u003C\\\\u002Fdiv\\\\u003E\\";
   } catch (err) {
     pug_rethrow(err, pug_debug_filename, pug_debug_line);
   }
