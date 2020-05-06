@@ -26,7 +26,8 @@
     "testEnvironment": "node",
     "snapshotSerializers": [
       "./scripts/filename-serializer.js",
-      "./scripts/prettier-javascript-serializer.js"
+      "./scripts/prettier-javascript-serializer.js",
+      "./scripts/buffer-serializer.js"
     ]
   },
   "license": "MIT",
