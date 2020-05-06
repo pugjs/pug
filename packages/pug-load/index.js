@@ -56,7 +56,7 @@ load.file = function loadFile(filename, options) {
   options = assign(getOptions(options), {
     filename: filename,
   });
-  var str = options.read(filename);
+  var str = options.read(filename).toString('utf8');
   return load.string(str, options);
 };
 
@@ -80,12 +80,7 @@ load.resolve = function resolve(filename, source, options) {
   return filename;
 };
 load.read = function read(filename, options) {
-  if (options && options.skipEncoding && options.skipEncoding(filename, options)) {
-    return fs.readFileSync(filename);
-  }
-  else {
-    return fs.readFileSync(filename, 'utf8');
-  }
+  return fs.readFileSync(filename);
 };
 
 load.validateOptions = function validateOptions(options) {
