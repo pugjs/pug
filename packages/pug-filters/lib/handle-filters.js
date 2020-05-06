@@ -25,7 +25,12 @@ function handleFilters(ast, filters, options, filterAliases) {
         var attrs = getAttributes(firstFilter, options);
         var filename = (attrs.filename = node.file.fullPath);
         node.type = 'Text';
-        node.val = filterFileWithFallback(firstFilter, filename, node.file, attrs);
+        node.val = filterFileWithFallback(
+          firstFilter,
+          filename,
+          node.file,
+          attrs
+        );
         node.filters
           .slice()
           .reverse()
@@ -59,8 +64,7 @@ function handleFilters(ast, filters, options, filterAliases) {
         if (filters && filters[filterName]) {
           if (filters[filterName].renderBuffer) {
             return filters[filterName].renderBuffer(file.raw, attrs);
-          }
-          else {
+          } else {
             return filters[filterName](file.str, attrs);
           }
         } else {
