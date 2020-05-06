@@ -58,7 +58,7 @@ function handleFilters(ast, filters, options, filterAliases) {
         var filterName = getFilterName(filter);
         if (filters && filters[filterName]) {
           if (filters[filterName].renderBuffer) {
-            return filters[filterName].renderBuffer(file.content, attrs);
+            return filters[filterName].renderBuffer(file.raw, attrs);
           }
           else {
             return filters[filterName](file.str, attrs);
