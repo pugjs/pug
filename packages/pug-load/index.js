@@ -21,16 +21,18 @@ function load(ast, options) {
         if (file.type !== 'FileReference') {
           throw new Error('Expected file.type to be "FileReference"');
         }
-        var path, str;
+        var path, str, raw;
         try {
           path = options.resolve(file.path, file.filename, options);
           file.fullPath = path;
-          str = options.read(path, options);
+          raw = options.read(path, options);
+          str = raw.toString('utf8');
         } catch (ex) {
           ex.message += '\n    at ' + node.filename + ' line ' + node.line;
           throw ex;
         }
         file.str = str;
+        file.raw = raw;
         if (node.type === 'Extends' || node.type === 'Include') {
           file.ast = load.string(
             str,
@@ -56,7 +58,7 @@ load.file = function loadFile(filename, options) {
   options = assign(getOptions(options), {
     filename: filename,
   });
-  var str = options.read(filename);
+  var str = options.read(filename).toString('utf8');
   return load.string(str, options);
 };
 
@@ -80,7 +82,7 @@ load.resolve = function resolve(filename, source, options) {
   return filename;
 };
 load.read = function read(filename, options) {
-  return fs.readFileSync(filename, 'utf8');
+  return fs.readFileSync(filename);
 };
 
 load.validateOptions = function validateOptions(options) {

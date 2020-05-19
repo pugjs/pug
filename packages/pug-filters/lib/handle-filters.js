@@ -24,9 +24,13 @@ function handleFilters(ast, filters, options, filterAliases) {
         var firstFilter = node.filters.pop();
         var attrs = getAttributes(firstFilter, options);
         var filename = (attrs.filename = node.file.fullPath);
-        var str = node.file.str;
         node.type = 'Text';
-        node.val = filterFileWithFallback(firstFilter, filename, str, attrs);
+        node.val = filterFileWithFallback(
+          firstFilter,
+          filename,
+          node.file,
+          attrs
+        );
         node.filters
           .slice()
           .reverse()
@@ -55,10 +59,14 @@ function handleFilters(ast, filters, options, filterAliases) {
         }
       }
 
-      function filterFileWithFallback(filter, filename, text, attrs) {
+      function filterFileWithFallback(filter, filename, file, attrs) {
         var filterName = getFilterName(filter);
         if (filters && filters[filterName]) {
-          return filters[filterName](text, attrs);
+          if (filters[filterName].renderBuffer) {
+            return filters[filterName].renderBuffer(file.raw, attrs);
+          } else {
+            return filters[filterName](file.str, attrs);
+          }
         } else {
           return filterWithFallback(filter, filename, attrs, 'renderFile');
         }
