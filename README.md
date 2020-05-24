@@ -3,21 +3,19 @@
 
 Full documentation is at [pugjs.org](https://pugjs.org/)
 
- Pug is a high-performance template engine heavily influenced by [Haml](http://haml.info/)
- and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. For bug reports,
- feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
- For discussion join the [chat room](https://gitter.im/pugjs/pug).
+Pug is a high-performance template engine heavily influenced by [Haml](http://haml.info/)
+and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. For bug reports,
+feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
+For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
- You can test drive Pug online [here](https://pugjs.org/).
+You can test drive Pug online [here](https://pugjs.org/).
  
- [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
+[Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
- [![Build Status](https://img.shields.io/travis/pugjs/pug/master.svg?style=flat)](https://travis-ci.org/pugjs/pug)
- [![Coverage Status](https://img.shields.io/coveralls/pugjs/pug/master.svg?style=flat)](https://coveralls.io/r/pugjs/pug?branch=master)
- [![NPM version](https://img.shields.io/npm/v/pug.svg?style=flat)](https://www.npmjs.com/package/pug)
- [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://gitter.im/pugjs/pug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![OpenCollective](https://opencollective.com/pug/backers/badge.svg)](#backers) 
-[![OpenCollective](https://opencollective.com/pug/sponsors/badge.svg)](#sponsors)
+[![Build Status](https://img.shields.io/github/workflow/status/pugjs/pug/Test/master?style=for-the-badge)](https://github.com/pugjs/pug/actions?query=workflow%3ATest+branch%3Amaster)
+[![Rolling Versions](https://img.shields.io/badge/Rolling%20Versions-Enabled-brightgreen?style=for-the-badge)](https://rollingversions.com/YOUR_GITHUB_LOGIN/YOUR_REPOSITORY_NAME)
+[![NPM version](https://img.shields.io/npm/v/pug?style=for-the-badge)](https://www.npmjs.com/package/pug)
+[![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=for-the-badge)](https://gitter.im/pugjs/pug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### Dependency Status
 
