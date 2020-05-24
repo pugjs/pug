@@ -1,7 +1,6 @@
 'use strict';
 
 var fs = require('fs');
-var getRepo = require('get-repo');
 var parse = require('../');
 
 var testCases = fs.readdirSync(__dirname + '/cases').filter(function(name) {
