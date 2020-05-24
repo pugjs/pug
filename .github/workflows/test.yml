@@ -22,6 +22,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install --forzen-lockfile
+      - run: yarn install --frozen-lockfile
       - run: yarn prettier:check
       - run: yarn test

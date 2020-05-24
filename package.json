@@ -16,7 +16,8 @@
   "scripts": {
     "prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.js'",
     "format": "prettier --ignore-path .gitignore --write './**/*.js'",
-    "pretest": "wsrun --stages --exclude-missing --fast-exit --collect-logs build",
+    "build": "wsrun --stages --exclude-missing --fast-exit --collect-logs build",
+    "pretest": "yarn build",
     "test": "jest",
     "coverage": "jest --coverage",
     "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
