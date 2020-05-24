@@ -13,7 +13,6 @@
     "resolve": "^1.15.1"
   },
   "devDependencies": {
-    "get-repo": "^1.0.0",
     "jstransformer-cdata": "^1.0.0",
     "jstransformer-coffee-script": "^1.1.1",
     "jstransformer-less": "^2.3.0",
