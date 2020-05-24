@@ -17,9 +17,6 @@ You can test drive Pug online [here](https://pugjs.org/).
 [![NPM version](https://img.shields.io/npm/v/pug?style=for-the-badge)](https://www.npmjs.com/package/pug)
 [![Join Gitter Chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg?style=for-the-badge)](https://gitter.im/pugjs/pug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![OpenCollective](https://opencollective.com/pug/backers/badge.svg)](#backers) 
-[![OpenCollective](https://opencollective.com/pug/sponsors/badge.svg)](#sponsors)
-
 ### Dependency Status
 
 | Package        | Dependencies           | Dev Dependencies  |
