@@ -31,6 +31,7 @@ jobs:
           node-version: 12.x
           registry-url: 'https://registry.npmjs.org'
       - run: yarn install --frozen-lockfile
+      - run: yarn build
       - run: npx rollingversions publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
