@@ -79,7 +79,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 66,
+      "errors": Array [],
       "expressions": Array [
         Object {
           "end": 63,
@@ -322,7 +324,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "left": Object {
         "end": 8,
         "extra": Object {
@@ -392,7 +396,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'button'",
         "rawValue": "button",
@@ -486,7 +492,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "left": Object {
         "end": 8,
         "extra": Object {
@@ -556,7 +564,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'button'",
         "rawValue": "button",
@@ -650,7 +660,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'answer'",
         "rawValue": "answer",
@@ -705,7 +717,9 @@ Array [
         "start": 0,
         "type": "Identifier",
       },
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 8,
@@ -794,6 +808,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 9,
@@ -837,6 +852,7 @@ Array [
         },
       ],
       "end": 20,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 20,
@@ -940,6 +956,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 9,
@@ -983,6 +1000,7 @@ Array [
         },
       ],
       "end": 20,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 20,
@@ -1071,7 +1089,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "left": Object {
         "end": 8,
         "extra": Object {
@@ -1141,7 +1161,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'button'",
         "rawValue": "button",
@@ -1235,7 +1257,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "left": Object {
         "end": 8,
         "extra": Object {
@@ -1305,7 +1329,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'button'",
         "rawValue": "button",
@@ -1399,7 +1425,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'answer'",
         "rawValue": "answer",
@@ -1454,7 +1482,9 @@ Array [
         "start": 0,
         "type": "Identifier",
       },
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 8,
@@ -1543,6 +1573,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 9,
@@ -1586,6 +1617,7 @@ Array [
         },
       ],
       "end": 20,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 20,
@@ -1689,6 +1721,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 9,
@@ -1732,6 +1765,7 @@ Array [
         },
       ],
       "end": 20,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 20,
@@ -1820,7 +1854,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 2,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 2,
@@ -1957,7 +1993,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -1989,7 +2027,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -2186,7 +2226,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"after\\"",
         "rawValue": "after",
@@ -2280,7 +2322,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"before\\"",
         "rawValue": "before",
@@ -2391,7 +2435,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"before\\"",
         "rawValue": "before",
@@ -2445,7 +2491,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"after\\"",
         "rawValue": "after",
@@ -2558,7 +2606,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/contact'",
         "rawValue": "/contact",
@@ -2667,7 +2717,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/save'",
         "rawValue": "/save",
@@ -2899,7 +2951,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo, bar, baz'",
         "rawValue": "foo, bar, baz",
@@ -2936,7 +2990,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "1",
         "rawValue": 1,
@@ -3030,7 +3086,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "extra": Object {
         "raw": "'((foo))'",
         "rawValue": "((foo))",
@@ -3087,6 +3145,7 @@ Array [
         "type": "NumericLiteral",
         "value": 0,
       },
+      "comments": Array [],
       "consequent": Object {
         "end": 7,
         "extra": Object {
@@ -3108,6 +3167,7 @@ Array [
         "value": 1,
       },
       "end": 11,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 11,
@@ -3248,7 +3308,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -3391,7 +3453,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -3500,7 +3564,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"class:\\"",
         "rawValue": "class:",
@@ -3594,7 +3660,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'\\\\\\\\S+'",
         "rawValue": "\\\\S+",
@@ -3688,7 +3756,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/contact'",
         "rawValue": "/contact",
@@ -3797,7 +3867,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/save'",
         "rawValue": "/save",
@@ -4029,7 +4101,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo, bar, baz'",
         "rawValue": "foo, bar, baz",
@@ -4066,7 +4140,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "1",
         "rawValue": 1,
@@ -4160,7 +4236,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "extra": Object {
         "raw": "'((foo))'",
         "rawValue": "((foo))",
@@ -4217,6 +4295,7 @@ Array [
         "type": "NumericLiteral",
         "value": 0,
       },
+      "comments": Array [],
       "consequent": Object {
         "end": 7,
         "extra": Object {
@@ -4238,6 +4317,7 @@ Array [
         "value": 1,
       },
       "end": 11,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 11,
@@ -4378,7 +4458,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -4521,7 +4603,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -4630,7 +4714,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"class:\\"",
         "rawValue": "class:",
@@ -4724,7 +4810,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'\\\\\\\\S+'",
         "rawValue": "\\\\S+",
@@ -4818,7 +4906,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"true\\"",
         "rawValue": "true",
@@ -4951,7 +5041,9 @@ Array [
         "start": 4,
         "type": "Identifier",
       },
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 11,
@@ -5661,7 +5753,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -5698,7 +5792,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"bar\\"",
         "rawValue": "bar",
@@ -5792,7 +5888,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -5829,7 +5927,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -5942,7 +6042,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/x-template'",
         "rawValue": "text/x-template",
@@ -6037,7 +6139,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 21,
+      "errors": Array [],
       "extra": Object {
         "raw": "'user-<%= user.id %>'",
         "rawValue": "user-<%= user.id %>",
@@ -6240,7 +6344,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -6331,6 +6437,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 2,
@@ -6394,6 +6501,7 @@ Array [
         },
       ],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -6482,7 +6590,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'tobi'",
         "rawValue": "tobi",
@@ -6576,7 +6686,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 24,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 24,
@@ -6722,7 +6834,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 40,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 40,
@@ -6907,7 +7021,9 @@ Array [
         "start": 4,
         "type": "Identifier",
       },
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 11,
@@ -7476,7 +7592,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -7698,7 +7816,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 6,
@@ -7853,7 +7973,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "extra": Object {
         "raw": "'#'",
         "rawValue": "#",
@@ -7991,7 +8113,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "extra": Object {
         "raw": "'#'",
         "rawValue": "#",
@@ -8967,7 +9091,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'utf8'",
         "rawValue": "utf8",
@@ -9347,7 +9473,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -9394,7 +9522,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "0",
         "rawValue": 0,
@@ -9487,7 +9617,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "1",
         "rawValue": 1,
@@ -9638,7 +9770,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -9732,7 +9866,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -9779,7 +9915,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "0",
         "rawValue": 0,
@@ -9828,7 +9966,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "1",
         "rawValue": 1,
@@ -9981,7 +10121,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -10089,7 +10231,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 6,
@@ -10136,7 +10280,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'Tim:G'",
         "rawValue": "Tim:G",
@@ -10229,7 +10375,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 10,
@@ -10512,7 +10660,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -10559,7 +10709,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "0",
         "rawValue": 0,
@@ -10653,7 +10805,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "1",
         "rawValue": 1,
@@ -10806,7 +10960,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -10977,6 +11133,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 6,
@@ -11040,6 +11197,7 @@ Array [
         },
       ],
       "end": 21,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 21,
@@ -11143,7 +11301,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -11296,7 +11456,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 34,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 34,
@@ -11647,7 +11809,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 2,
+      "errors": Array [],
       "extra": Object {
         "raw": "''",
         "rawValue": "",
@@ -11741,7 +11905,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -11830,7 +11996,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 9,
@@ -12246,7 +12414,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -12518,10 +12688,9 @@ Array [
         "type": "BooleanLiteral",
         "value": true,
       },
+      "comments": Array [],
       "end": 7,
-      "extra": Object {
-        "parenthesizedArgument": false,
-      },
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -12686,7 +12855,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'nested'",
         "rawValue": "nested",
@@ -12736,7 +12907,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'works'",
         "rawValue": "works",
@@ -12874,7 +13047,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -12978,7 +13153,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -13111,7 +13288,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -13186,7 +13365,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -13354,7 +13535,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'<script>'",
         "rawValue": "<script>",
@@ -13420,7 +13603,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'<script>'",
         "rawValue": "<script>",
@@ -13598,7 +13783,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -13738,7 +13925,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -13816,7 +14005,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "left": Object {
         "end": 7,
         "extra": Object {
@@ -13900,7 +14091,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -13992,7 +14185,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -14056,7 +14251,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -14148,7 +14345,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -14212,7 +14411,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -14366,7 +14567,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -14415,7 +14618,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -14479,7 +14684,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 1,
@@ -14528,7 +14735,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 1,
@@ -14714,7 +14923,9 @@ Array [
         "start": 0,
         "type": "Identifier",
       },
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 9,
@@ -14776,7 +14987,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 1,
@@ -14872,7 +15085,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -14933,7 +15148,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 9,
@@ -14996,7 +15213,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 2,
+      "errors": Array [],
       "extra": Object {
         "raw": "''",
         "rawValue": "",
@@ -15062,7 +15281,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "0",
         "rawValue": 0,
@@ -15128,7 +15349,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -15204,7 +15427,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -15293,7 +15518,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 9,
@@ -15384,7 +15611,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 2,
+      "errors": Array [],
       "extra": Object {
         "raw": "''",
         "rawValue": "",
@@ -15478,7 +15707,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "0",
         "rawValue": 0,
@@ -15572,7 +15803,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -16923,7 +17156,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 1,
@@ -17000,7 +17235,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'this'",
         "rawValue": "this",
@@ -17094,7 +17331,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'that'",
         "rawValue": "that",
@@ -17567,7 +17806,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -17631,8 +17872,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 9,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 9,
@@ -17831,7 +18074,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -17908,7 +18153,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -17972,8 +18219,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 9,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 9,
@@ -18216,7 +18465,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -18280,7 +18531,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -18329,7 +18582,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -18526,7 +18781,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -18590,7 +18847,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -18639,7 +18898,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -18867,7 +19128,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -18931,7 +19194,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -18980,7 +19245,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -19459,7 +19726,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -19583,7 +19852,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
@@ -19677,7 +19948,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
@@ -19771,7 +20044,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
@@ -19865,7 +20140,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
@@ -19959,7 +20236,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 21,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"<%= bar %> lol rofl\\"",
         "rawValue": "<%= bar %> lol rofl",
@@ -20053,7 +20332,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 33,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"<%= bar %> lol rofl <%= lmao %>\\"",
         "rawValue": "<%= bar %> lol rofl <%= lmao %>",
@@ -20237,7 +20518,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/javascript'",
         "rawValue": "text/javascript",
@@ -20404,7 +20687,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -20645,7 +20930,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'val'",
         "rawValue": "val",
@@ -20682,7 +20969,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "2",
         "rawValue": 2,
@@ -21043,7 +21332,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'val'",
         "rawValue": "val",
@@ -21080,7 +21371,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "extra": Object {
         "raw": "2",
         "rawValue": 2,
@@ -21398,7 +21691,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -21562,7 +21857,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -21896,7 +22193,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"text/css\\"",
         "rawValue": "text/css",
@@ -22835,7 +23134,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"text/css\\"",
         "rawValue": "text/css",
@@ -23319,7 +23620,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -23397,8 +23700,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 8,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 8,
@@ -23761,7 +24066,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -24032,7 +24339,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'checkbox'",
         "rawValue": "checkbox",
@@ -24143,7 +24452,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'checkbox'",
         "rawValue": "checkbox",
@@ -24180,7 +24491,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -24270,7 +24583,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'checkbox'",
         "rawValue": "checkbox",
@@ -24307,7 +24622,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -24417,7 +24734,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/x-template'",
         "rawValue": "text/x-template",
@@ -25422,7 +25741,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/caustic.js'",
         "rawValue": "/caustic.js",
@@ -25516,7 +25837,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/app.js'",
         "rawValue": "/app.js",
@@ -25673,7 +25996,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/javascript'",
         "rawValue": "text/javascript",
@@ -26046,7 +26371,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"text/javascript\\"",
         "rawValue": "text/javascript",
@@ -26663,7 +26990,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'jquery.js'",
         "rawValue": "jquery.js",
@@ -26757,7 +27086,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 14,
+      "errors": Array [],
       "extra": Object {
         "raw": "'keymaster.js'",
         "rawValue": "keymaster.js",
@@ -26851,7 +27182,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "'caustic.js'",
         "rawValue": "caustic.js",
@@ -27080,7 +27413,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'jquery.js'",
         "rawValue": "jquery.js",
@@ -27627,7 +27962,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -27689,7 +28026,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -28043,7 +28382,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'jquery.js'",
         "rawValue": "jquery.js",
@@ -28500,7 +28841,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'jquery.js'",
         "rawValue": "jquery.js",
@@ -28820,7 +29163,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'jquery.js'",
         "rawValue": "jquery.js",
@@ -29515,7 +29860,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'[foo]'",
         "rawValue": "[foo]",
@@ -29961,7 +30308,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'[foo]'",
         "rawValue": "[foo]",
@@ -30440,7 +30789,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "extra": Object {
         "raw": "'#'",
         "rawValue": "#",
@@ -30477,7 +30828,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'rho--modifier'",
         "rawValue": "rho--modifier",
@@ -30674,7 +31027,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "extra": Object {
         "raw": "'#'",
         "rawValue": "#",
@@ -30711,7 +31066,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'rho--modifier'",
         "rawValue": "rho--modifier",
@@ -30893,7 +31250,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "extra": Object {
         "raw": "'#'",
         "rawValue": "#",
@@ -30930,7 +31289,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'rho--modifier'",
         "rawValue": "rho--modifier",
@@ -31113,7 +31474,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -31161,7 +31524,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -31516,7 +31881,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "left": Object {
         "end": 11,
         "left": Object {
@@ -31808,7 +32175,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo.js'",
         "rawValue": "foo.js",
@@ -31902,7 +32271,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar.js'",
         "rawValue": "bar.js",
@@ -32103,7 +32474,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo.js'",
         "rawValue": "foo.js",
@@ -32197,7 +32570,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar.js'",
         "rawValue": "bar.js",
@@ -32804,7 +33179,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'jquery.js'",
         "rawValue": "jquery.js",
@@ -32929,7 +33306,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo.js'",
         "rawValue": "foo.js",
@@ -33130,7 +33509,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo.js'",
         "rawValue": "foo.js",
@@ -33224,7 +33605,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar.js'",
         "rawValue": "bar.js",
@@ -33425,7 +33808,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo.js'",
         "rawValue": "foo.js",
@@ -33519,7 +33904,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar.js'",
         "rawValue": "bar.js",
@@ -33723,8 +34110,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 13,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 13,
@@ -33880,8 +34269,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 16,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 16,
@@ -33961,7 +34352,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -34128,8 +34521,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 15,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 15,
@@ -34909,7 +35304,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'menu.html'",
         "rawValue": "menu.html",
@@ -34946,7 +35343,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -35108,7 +35507,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "extra": Object {
         "raw": "'#'",
         "rawValue": "#",
@@ -35263,7 +35664,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -35300,7 +35703,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'end'",
         "rawValue": "end",
@@ -35337,7 +35742,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'Last'",
         "rawValue": "Last",
@@ -35374,7 +35781,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -35514,6 +35923,7 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "elements": Array [
         Object {
           "end": 9,
@@ -35557,6 +35967,7 @@ Array [
         },
       ],
       "end": 20,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 20,
@@ -35691,7 +36102,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -35728,7 +36141,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -35900,7 +36315,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -35937,7 +36354,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -35971,7 +36390,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -36005,7 +36426,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 7,
@@ -36173,7 +36596,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -36273,7 +36698,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "extra": Object {
         "raw": "'profile'",
         "rawValue": "profile",
@@ -36310,7 +36737,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'name'",
         "rawValue": "name",
@@ -36421,7 +36850,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -36484,7 +36915,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -36547,7 +36980,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -36610,7 +37045,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -36688,7 +37125,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"qux\\"",
         "rawValue": "qux",
@@ -36725,7 +37164,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"baz\\"",
         "rawValue": "baz",
@@ -37031,7 +37472,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -37382,7 +37825,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -37908,7 +38353,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 6,
@@ -37942,7 +38389,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 6,
@@ -38065,7 +38514,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'hidden'",
         "rawValue": "hidden",
@@ -38102,7 +38553,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'_csrf'",
         "rawValue": "_csrf",
@@ -38139,7 +38592,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 25,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 25,
@@ -38405,7 +38860,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text'",
         "rawValue": "text",
@@ -38442,7 +38899,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'query'",
         "rawValue": "query",
@@ -38479,7 +38938,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'Search'",
         "rawValue": "Search",
@@ -38573,7 +39034,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'submit'",
         "rawValue": "submit",
@@ -38610,7 +39073,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'Search'",
         "rawValue": "Search",
@@ -38865,7 +39330,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text'",
         "rawValue": "text",
@@ -38902,7 +39369,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'query'",
         "rawValue": "query",
@@ -38939,7 +39408,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'Search'",
         "rawValue": "Search",
@@ -39033,7 +39504,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'submit'",
         "rawValue": "submit",
@@ -39070,7 +39543,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 8,
+      "errors": Array [],
       "extra": Object {
         "raw": "'Search'",
         "rawValue": "Search",
@@ -39843,7 +40318,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'123'",
         "rawValue": "123",
@@ -40211,7 +40688,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"baz\\"",
         "rawValue": "baz",
@@ -40561,7 +41040,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"hello\\"",
         "rawValue": "hello",
@@ -40671,7 +41152,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "\\"world\\"",
         "rawValue": "world",
@@ -41211,7 +41694,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -41566,7 +42051,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -41644,7 +42131,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -41782,7 +42271,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -41860,7 +42351,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -42475,7 +42968,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 20,
+      "errors": Array [],
       "left": Object {
         "end": 3,
         "loc": Object {
@@ -42591,7 +43086,9 @@ Array [
   Object {
     "args": "'This is '",
     "ast": Object {
+      "comments": Array [],
       "end": 14,
+      "errors": Array [],
       "left": Object {
         "end": 5,
         "extra": Object {
@@ -42745,7 +43242,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -42792,7 +43291,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -42856,7 +43357,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -43274,7 +43777,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -44063,7 +44568,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'going'",
         "rawValue": "going",
@@ -44129,7 +44636,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "extra": Object {
         "raw": "'on'",
         "rawValue": "on",
@@ -44915,7 +45424,9 @@ Array [
         "start": 0,
         "type": "MemberExpression",
       },
+      "comments": Array [],
       "end": 48,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 48,
@@ -45353,7 +45864,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/template'",
         "rawValue": "text/template",
@@ -45595,7 +46108,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/template'",
         "rawValue": "text/template",
@@ -45939,7 +46454,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 7,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo()'",
         "rawValue": "foo()",
@@ -46370,7 +46887,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'auto'",
         "rawValue": "auto",
@@ -46499,7 +47018,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -46593,7 +47114,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -46954,7 +47477,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 28,
+      "errors": Array [],
       "extra": Object {
         "raw": "'color:red;background:green'",
         "rawValue": "color:red;background:green",
@@ -47048,7 +47573,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 35,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 35,
@@ -47413,7 +47940,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 28,
+      "errors": Array [],
       "extra": Object {
         "raw": "'color:red;background:green'",
         "rawValue": "color:red;background:green",
@@ -47508,7 +48037,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 35,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 35,
@@ -47740,7 +48271,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 30,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 30,
@@ -47983,7 +48516,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 30,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 30,
@@ -48261,7 +48796,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -48322,7 +48859,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -48368,7 +48907,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'bar'",
         "rawValue": "bar",
@@ -48468,6 +49009,7 @@ Array [
         "type": "StringLiteral",
         "value": "li",
       },
+      "comments": Array [],
       "consequent": Object {
         "end": 9,
         "extra": Object {
@@ -48489,6 +49031,7 @@ Array [
         "value": "a",
       },
       "end": 16,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 16,
@@ -48670,8 +49213,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 15,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 15,
@@ -48839,7 +49384,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -49062,7 +49609,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -49321,7 +49870,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/contact'",
         "rawValue": "/contact",
@@ -49524,8 +50075,10 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "computed": false,
       "end": 16,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 16,
@@ -49665,7 +50218,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "extra": Object {
         "raw": "'  '",
         "rawValue": "  ",
@@ -49866,7 +50421,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -50003,7 +50560,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -50155,7 +50714,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -50235,7 +50796,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -50298,7 +50861,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -50347,7 +50912,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -50426,7 +50993,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -50490,7 +51059,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -50539,7 +51110,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "extra": Object {
         "raw": "'baz'",
         "rawValue": "baz",
@@ -50767,7 +51340,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 10,
+      "errors": Array [],
       "extra": Object {
         "raw": "'foo'",
         "rawValue": "foo",
@@ -50880,7 +51455,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/x-template'",
         "rawValue": "text/x-template",
@@ -51107,7 +51684,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 17,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text/x-template'",
         "rawValue": "text/x-template",
@@ -51321,7 +51900,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 2,
+      "errors": Array [],
       "extra": Object {
         "raw": "''",
         "rawValue": "",
@@ -52722,7 +53303,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text'",
         "rawValue": "text",
@@ -52759,7 +53342,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "'user[name]'",
         "rawValue": "user[name]",
@@ -52898,7 +53483,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "extra": Object {
         "raw": "'text'",
         "rawValue": "text",
@@ -52935,7 +53522,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "'user[pass]'",
         "rawValue": "user[pass]",
@@ -53173,7 +53762,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 4,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 4,
@@ -53207,7 +53798,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 3,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 3,
@@ -53344,7 +53937,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 6,
+      "errors": Array [],
       "left": Object {
         "end": 1,
         "loc": Object {
@@ -53473,7 +54068,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 1,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 1,
@@ -53621,7 +54218,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 11,
+      "errors": Array [],
       "extra": Object {
         "raw": "'some term'",
         "rawValue": "some term",
@@ -53882,7 +54481,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/caustic.js'",
         "rawValue": "/caustic.js",
@@ -53976,7 +54577,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/app.js'",
         "rawValue": "/app.js",
@@ -54221,7 +54824,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 13,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/caustic.js'",
         "rawValue": "/caustic.js",
@@ -54315,7 +54920,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 9,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/app.js'",
         "rawValue": "/app.js",
@@ -54486,7 +55093,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/jquery.js'",
         "rawValue": "/jquery.js",
@@ -54579,7 +55188,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 5,
+      "errors": Array [],
       "loc": Object {
         "end": Object {
           "column": 5,
@@ -54654,7 +55265,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/jquery.ui.js'",
         "rawValue": "/jquery.ui.js",
@@ -54811,7 +55424,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/jquery.js'",
         "rawValue": "/jquery.js",
@@ -54933,7 +55548,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/jquery.ui.js'",
         "rawValue": "/jquery.ui.js",
@@ -55314,7 +55931,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 12,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/jquery.js'",
         "rawValue": "/jquery.js",
@@ -55408,7 +56027,9 @@ Array [
   },
   Object {
     "ast": Object {
+      "comments": Array [],
       "end": 15,
+      "errors": Array [],
       "extra": Object {
         "raw": "'/jquery.ui.js'",
         "rawValue": "/jquery.ui.js",

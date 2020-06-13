@@ -11,11 +11,11 @@ var stringify = require('js-stringify');
 
 var findGlobals = require('with/lib/globals.js');
 
-var t = require('babel-types');
-var gen = require('babel-generator');
-var babylon = require('babylon');
-var babelTemplate = require('babel-template');
-var babel = require('babel-core');
+var t = require('@babel/types');
+var gen = require('@babel/generator');
+var babylon = require('@babel/parser');
+var babelTemplate = require('@babel/template').default;
+var babel = require('@babel/core');
 
 // This is used to prevent pretty printing inside certain tags
 var WHITE_SPACE_SENSITIVE_TAGS = {
@@ -85,7 +85,7 @@ function Compiler(node, options) {
   if (this.debug && this.inlineRuntimeFunctions) {
     this.runtimeFunctionsUsed.push('rethrow');
   }
-  this.codeBuffer = '_=function*(){';
+  this.codeBuffer = 'plug=function*(){';
   this.codeMarker = {};
   this.codeIndex = -1;
 
@@ -1267,7 +1267,7 @@ Compiler.prototype = {
         var savedCodeMarker = this.codeMarker;
         var savedCodeIndex = this.codeIndex;
 
-        this.codeBuffer = '_=function*(){';
+        this.codeBuffer = 'plug=function*(){';
         this.codeMarker = {};
         this.codeIndex = -1;
 
@@ -1290,7 +1290,7 @@ Compiler.prototype = {
           var src = this.codeBuffer + '}';
           var tpl = babelTemplate(src);
           push.apply(ast, tpl(this.codeMarker).expression.right.body.body);
-          this.codeBuffer = '_=function*(){';
+          this.codeBuffer = 'plug=function*(){';
           this.codeIndex = -1;
           this.codeMarker = {};
         } catch (e) {

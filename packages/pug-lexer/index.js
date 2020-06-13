@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var babylon = require('babylon');
+var babylon = require('@babel/parser');
 var characterParser = require('character-parser');
 var error = require('pug-error');
 
