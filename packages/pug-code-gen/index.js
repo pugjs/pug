@@ -9,7 +9,7 @@ var selfClosing = require('void-elements');
 var constantinople = require('constantinople');
 var stringify = require('js-stringify');
 
-var findGlobals = require('with/lib/globals.js')
+var findGlobals = require('with/lib/globals.js');
 
 var t = require('babel-types');
 var gen = require('babel-generator');
@@ -35,8 +35,12 @@ var INTERNAL_VARIABLES = [
 
 var push = Array.prototype.push;
 
-var tpl_interp = babelTemplate('null == (pug_interp = VALUE) ? "" : pug_interp');
-var tpl_interp_escape = babelTemplate('ESCAPE(null == (pug_interp = VALUE) ? "" : pug_interp)');
+var tpl_interp = babelTemplate(
+  'null == (pug_interp = VALUE) ? "" : pug_interp'
+);
+var tpl_interp_escape = babelTemplate(
+  'ESCAPE(null == (pug_interp = VALUE) ? "" : pug_interp)'
+);
 
 module.exports = generateCode;
 module.exports.CodeGenerator = Compiler;
@@ -86,21 +90,22 @@ function Compiler(node, options) {
   this.codeIndex = -1;
 
   this.useGenerators = false;
-  this.templateVars = ['locals']
-
-};
+  this.templateVars = ['locals'];
+}
 
 /**
  * Compiler prototype.
  */
 
 Compiler.prototype = {
-  runtime: function (name, asAST) {
+  runtime: function(name, asAST) {
     if (this.inlineRuntimeFunctions) {
       this.runtimeFunctionsUsed.push(name);
       return asAST ? t.identifier('pug_' + name) : 'pug_' + name;
     } else {
-      return asAST ? t.memberExpression(t.identifier('pug'), t.identifier(name)) : 'pug.' + name;
+      return asAST
+        ? t.memberExpression(t.identifier('pug'), t.identifier(name))
+        : 'pug.' + name;
     }
   },
 
@@ -118,130 +123,196 @@ Compiler.prototype = {
     return babylon.parseExpression(expr);
   },
   parseArgs: function(args) {
-    return babylon.parse("a("+args+")").program.body.pop().expression.arguments;
+    return babylon.parse('a(' + args + ')').program.body.pop().expression
+      .arguments;
   },
   ast_variableDeclaration: function() {
     return t.variableDeclaration('var', [
-          t.variableDeclarator(t.identifier('pug_html'), t.stringLiteral('')),
-          t.variableDeclarator(t.identifier('pug_mixins'), t.objectExpression([])),
-          t.variableDeclarator(t.identifier('pug_interp'), null)
-        ])
+      t.variableDeclarator(t.identifier('pug_html'), t.stringLiteral('')),
+      t.variableDeclarator(t.identifier('pug_mixins'), t.objectExpression([])),
+      t.variableDeclarator(t.identifier('pug_interp'), null),
+    ]);
   },
   ast_return: function() {
     return [t.returnStatement(t.identifier('pug_html'))];
   },
   ast_stringify: function(lit) {
-    lit.extra = { rawValue: lit.value, raw: stringify(lit.value) };
+    lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
     return lit;
   },
   wrapCallExpression: function(node) {
     return node;
   },
   ast_buffer: function(ast) {
-    return [t.expressionStatement(
-            t.assignmentExpression('=',
-              t.identifier('pug_html'),
-              t.binaryExpression('+', t.identifier('pug_html'), ast)
-            ))];
+    return [
+      t.expressionStatement(
+        t.assignmentExpression(
+          '=',
+          t.identifier('pug_html'),
+          t.binaryExpression('+', t.identifier('pug_html'), ast)
+        )
+      ),
+    ];
   },
   ast_with: function(ast) {
-      let exclude = this.options.globals ? this.options.globals.concat(INTERNAL_VARIABLES) : INTERNAL_VARIABLES;
-      exclude = exclude.concat(this.runtimeFunctionsUsed.map(function (name) { return 'pug_' + name; }));
-      exclude.push('undefined', 'this', 'locals')
-      let vars = findGlobals(t.program(ast)).map(function(v) { return v.name }).filter(function(v) { return exclude.indexOf(v) === -1 })
-      if (vars.length > 0) {
-        let bag = 'locals' 
-        ast = [t.expressionStatement(
+    let exclude = this.options.globals
+      ? this.options.globals.concat(INTERNAL_VARIABLES)
+      : INTERNAL_VARIABLES;
+    exclude = exclude.concat(
+      this.runtimeFunctionsUsed.map(function(name) {
+        return 'pug_' + name;
+      })
+    );
+    exclude.push('undefined', 'this', 'locals');
+    let vars = findGlobals(t.program(ast))
+      .map(function(v) {
+        return v.name;
+      })
+      .filter(function(v) {
+        return exclude.indexOf(v) === -1;
+      });
+    if (vars.length > 0) {
+      let bag = 'locals';
+      ast = [
+        t.expressionStatement(
           t.callExpression(
-            t.memberExpression(t.functionExpression(null, vars.map(function(v) { return t.identifier(v)}), t.blockStatement(ast)), t.identifier('call')),
-            [ t.thisExpression() ].concat(vars.map(function(v) {
-              return t.conditionalExpression(
-                t.binaryExpression('in', t.stringLiteral(v), t.logicalExpression('||', t.identifier(bag), t.objectExpression([]))),
-                t.memberExpression(t.logicalExpression('||', t.identifier(bag), t.objectExpression([])), t.identifier(v)),
-                t.conditionalExpression(
-                  t.binaryExpression('!==', t.unaryExpression('typeof', t.identifier(v)), t.stringLiteral('undefined')),
-                  t.identifier(v),
-                  t.identifier('undefined')
-                )
-              )
-            }))
-          ))]
-        }
-        return ast;
+            t.memberExpression(
+              t.functionExpression(
+                null,
+                vars.map(function(v) {
+                  return t.identifier(v);
+                }),
+                t.blockStatement(ast)
+              ),
+              t.identifier('call')
+            ),
+            [t.thisExpression()].concat(
+              vars.map(function(v) {
+                return t.conditionalExpression(
+                  t.binaryExpression(
+                    'in',
+                    t.stringLiteral(v),
+                    t.logicalExpression(
+                      '||',
+                      t.identifier(bag),
+                      t.objectExpression([])
+                    )
+                  ),
+                  t.memberExpression(
+                    t.logicalExpression(
+                      '||',
+                      t.identifier(bag),
+                      t.objectExpression([])
+                    ),
+                    t.identifier(v)
+                  ),
+                  t.conditionalExpression(
+                    t.binaryExpression(
+                      '!==',
+                      t.unaryExpression('typeof', t.identifier(v)),
+                      t.stringLiteral('undefined')
+                    ),
+                    t.identifier(v),
+                    t.identifier('undefined')
+                  )
+                );
+              })
+            )
+          )
+        ),
+      ];
+    }
+    return ast;
   },
   /**
    * This method is called once the AST is built in
    * order to apply transformations
    * nb: a custom AST walk/replace was written because
-   * the babel plugin architecture  
+   * the babel plugin architecture
    * Currently it this transformation :
    *  - compacts sequential pug_html = pug_html + any (max of 100)
    *  - further compacts sequential pug_html = pug_html + stringLiteral
-   */ 
+   */
+
   ast_postprocess: function(ast) {
     let needCompaction = function(c) {
-      return t.isExpressionStatement(c)
-                && t.isAssignmentExpression(c.expression)
-                && c.expression.left.name === 'pug_html'
-                && t.isBinaryExpression(c.expression.right)
-                && c.expression.right.left.name === 'pug_html'
-    }
+      return (
+        t.isExpressionStatement(c) &&
+        t.isAssignmentExpression(c.expression) &&
+        c.expression.left.name === 'pug_html' &&
+        t.isBinaryExpression(c.expression.right) &&
+        c.expression.right.left.name === 'pug_html'
+      );
+    };
 
-    let walk = function (node) {
+    let walk = function(node) {
       Object.keys(node).forEach(function(k) {
         var child = node[k];
-        if (child && typeof child === "object" && child.length) {
-          child.forEach(function (c) {
+        if (child && typeof child === 'object' && child.length) {
+          child.forEach(function(c) {
             if (c && typeof c.type === 'string') {
               walk(c);
             }
           });
-          let i,j;
-          for (i=0; i<child.length; i++) {
+          let i, j;
+          for (i = 0; i < child.length; i++) {
             let start, end;
-            let fragment = [t.identifier('pug_html')]
+            let fragment = [t.identifier('pug_html')];
             if (needCompaction(child[i])) {
               start = i;
               end = i;
               // locate sequential buffer operations
-              while (needCompaction(child[end]) && end < child.length && fragment.length < 101) {
-                fragment.push(child[end].expression.right.right)
+              while (
+                needCompaction(child[end]) &&
+                end < child.length &&
+                fragment.length < 101
+              ) {
+                fragment.push(child[end].expression.right.right);
                 end++;
               }
 
               // join adjacent stringLiterals
-              for (j=0; j<fragment.length;j++) {
+              for (j = 0; j < fragment.length; j++) {
                 let start, end;
                 if (t.isStringLiteral(fragment[j])) {
                   start = j;
                   end = j;
-                  while (t.isStringLiteral(fragment[end]) && end < fragment.length) {
-                   end++
+                  while (
+                    t.isStringLiteral(fragment[end]) &&
+                    end < fragment.length
+                  ) {
+                    end++;
                   }
-                  let lit = t.stringLiteral(fragment.slice(start, end).map(function(v) { return v.value}).join(''));
-                  lit.extra = { rawValue: lit.value, raw: stringify(lit.value)}
-                  fragment.splice(start, end-start, lit)
+                  let lit = t.stringLiteral(
+                    fragment
+                      .slice(start, end)
+                      .map(function(v) {
+                        return v.value;
+                      })
+                      .join('')
+                  );
+                  lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
+                  fragment.splice(start, end - start, lit);
                 }
               }
 
               // join fragments
-              let expr =
-                t.expressionStatement(
-                  t.assignmentExpression(
-                    '=',
-                    t.identifier('pug_html'),
-                    fragment.reduce(function(acc, val) {
-                      return t.binaryExpression('+', acc, val);
-                    })
-                  )
+              let expr = t.expressionStatement(
+                t.assignmentExpression(
+                  '=',
+                  t.identifier('pug_html'),
+                  fragment.reduce(function(acc, val) {
+                    return t.binaryExpression('+', acc, val);
+                  })
                 )
-              child.splice(start, end-start, expr)
+              );
+              child.splice(start, end - start, expr);
             }
           }
         } else if (child && typeof child.type === 'string') {
           walk(child);
         }
-      })      
+      });
     };
     walk(ast);
     return ast;
@@ -252,14 +323,18 @@ Compiler.prototype = {
    * @api public
    */
 
-  compile: function(){
+  compile: function() {
     var ast = [];
     if (this.pp) {
-      ast.push(t.variableDeclaration('var', [t.variableDeclarator(t.identifier('pug_indent'), t.arrayExpression())]));
+      ast.push(
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier('pug_indent'), t.arrayExpression()),
+        ])
+      );
     }
-    
+
     push.apply(ast, this.visit(this.node));
-    
+
     if (!this.dynamicMixins) {
       // if there are no dynamic mixins we can remove any un-used mixins
       var mixinNames = Object.keys(this.mixins);
@@ -267,65 +342,93 @@ Compiler.prototype = {
         var mixin = this.mixins[mixinNames[i]];
         if (!mixin.used) {
           for (var x = 0; x < mixin.instances.length; x++) {
-            mixin.instances[x].stmt.type = "EmptyStatement";
+            mixin.instances[x].stmt.type = 'EmptyStatement';
             delete mixin.instances[x].stmt.expression;
           }
         }
       }
     }
-    
+
     if (this.options.self) {
       ast = [
         t.variableDeclaration('var', [
-          t.variableDeclarator(t.identifier('self'), t.logicalExpression('||', t.identifier('locals'), t.objectExpression([])))
-        ])
+          t.variableDeclarator(
+            t.identifier('self'),
+            t.logicalExpression(
+              '||',
+              t.identifier('locals'),
+              t.objectExpression([])
+            )
+          ),
+        ]),
       ].concat(ast);
     } else {
       // transform `ast` into `with(locals || {}) { ast }`
       ast = this.ast_with(ast);
     }
 
-
     if (this.debug) {
       if (this.options.includeSources) {
-        ast.unshift(t.variableDeclaration('var', [
-          t.variableDeclarator(t.identifier('pug_debug_sources'), this.parseExpr(stringify(this.options.includeSources)))
-        ]))
+        ast.unshift(
+          t.variableDeclaration('var', [
+            t.variableDeclarator(
+              t.identifier('pug_debug_sources'),
+              this.parseExpr(stringify(this.options.includeSources))
+            ),
+          ])
+        );
       }
 
- 
       var rethrowArgs = [
-                t.identifier('err'),
-                t.identifier('pug_debug_filename'),
-                t.identifier('pug_debug_line')
-              ]
+        t.identifier('err'),
+        t.identifier('pug_debug_filename'),
+        t.identifier('pug_debug_line'),
+      ];
       if (this.options.includeSources) {
-          rethrowArgs.push(t.memberExpression(t.identifier('pug_debug_sources'), t.identifier('pug_debug_filename'), true))
-      } 
+        rethrowArgs.push(
+          t.memberExpression(
+            t.identifier('pug_debug_sources'),
+            t.identifier('pug_debug_filename'),
+            true
+          )
+        );
+      }
       ast = [
         t.variableDeclaration('var', [
           t.variableDeclarator(t.identifier('pug_debug_filename'), null),
-          t.variableDeclarator(t.identifier('pug_debug_line'), null)
+          t.variableDeclarator(t.identifier('pug_debug_line'), null),
         ]),
         t.tryStatement(
           t.blockStatement(ast),
           t.catchClause(
             t.identifier('err'),
-            t.blockStatement([t.expressionStatement(t.callExpression(
-              (this.inlineRuntimeFunctions ? t.identifier('pug_rethrow') : t.memberExpression(t.identifier('pug'), t.identifier('rethrow'))),
-              rethrowArgs
-            ))])
+            t.blockStatement([
+              t.expressionStatement(
+                t.callExpression(
+                  this.inlineRuntimeFunctions
+                    ? t.identifier('pug_rethrow')
+                    : t.memberExpression(
+                        t.identifier('pug'),
+                        t.identifier('rethrow')
+                      ),
+                  rethrowArgs
+                )
+              ),
+            ])
           )
-        )
-      ]
-
+        ),
+      ];
     }
 
     ast = t.functionDeclaration(
       t.identifier(this.options.templateName || 'template'),
-      this.templateVars.map(function(v) { return t.identifier(v)}),
-      t.blockStatement([this.ast_variableDeclaration()].concat(ast, this.ast_return()))
-    )
+      this.templateVars.map(function(v) {
+        return t.identifier(v);
+      }),
+      t.blockStatement(
+        [this.ast_variableDeclaration()].concat(ast, this.ast_return())
+      )
+    );
 
     ast = this.ast_postprocess(ast);
 
@@ -355,7 +458,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  buffer: function (str) {
+  buffer: function(str) {
     var lit = this.ast_stringify(t.stringLiteral(str));
     var ast = this.ast_buffer(lit);
     return ast;
@@ -390,18 +493,24 @@ Compiler.prototype = {
    * @api public
    */
 
-  prettyIndent: function(offset, newline){
+  prettyIndent: function(offset, newline) {
     var ast;
     offset = offset || 0;
     newline = newline ? '\n' : '';
     ast = this.buffer(newline + Array(this.indents + offset).join(this.pp));
     if (this.parentIndents) {
-
-      push.apply(ast, this.ast_buffer(t.callExpression(
-                                t.memberExpression(t.identifier('pug_indent'), t.identifier('join')),
-                                [t.stringLiteral('')]
-                              )));
-
+      push.apply(
+        ast,
+        this.ast_buffer(
+          t.callExpression(
+            t.memberExpression(
+              t.identifier('pug_indent'),
+              t.identifier('join')
+            ),
+            [t.stringLiteral('')]
+          )
+        )
+      );
     }
     return ast;
   },
@@ -413,7 +522,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visit: function(node, parent){
+  visit: function(node, parent) {
     var ast = [];
     var debug = this.debug;
     if (!node) {
@@ -436,9 +545,25 @@ Compiler.prototype = {
 
     if (debug && node.debug !== false && node.type !== 'Block') {
       if (node.line) {
-        ast.push(t.expressionStatement(t.assignmentExpression('=', t.identifier('pug_debug_line'), t.numericLiteral(node.line))))
+        ast.push(
+          t.expressionStatement(
+            t.assignmentExpression(
+              '=',
+              t.identifier('pug_debug_line'),
+              t.numericLiteral(node.line)
+            )
+          )
+        );
         if (node.filename) {
-          ast.push(t.expressionStatement(t.assignmentExpression('=', t.identifier('pug_debug_filename'), t.stringLiteral(node.filename))))
+          ast.push(
+            t.expressionStatement(
+              t.assignmentExpression(
+                '=',
+                t.identifier('pug_debug_filename'),
+                t.stringLiteral(node.filename)
+              )
+            )
+          );
         }
       }
     }
@@ -485,7 +610,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitNode: function(node, parent){
+  visitNode: function(node, parent) {
     return this['visit' + node.type](node, parent);
   },
 
@@ -496,7 +621,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitCase: function(node){
+  visitCase: function(node) {
     var stmt = t.switchStatement(
       node.astExpr || this.parseExpr(node.expr),
       this.visit(node.block, node)
@@ -511,12 +636,12 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitWhen: function(node){
+  visitWhen: function(node) {
     var test = null;
     if ('default' != node.expr) {
       test = node.astExpr || this.parseExpr(node.expr);
     }
-    var consequent = []
+    var consequent = [];
     if (node.block) {
       consequent = this.visit(node.block, node);
       consequent.push(t.breakStatement());
@@ -532,7 +657,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitLiteral: function(node){
+  visitLiteral: function(node) {
     return this.buffer(node.str);
   },
 
@@ -551,16 +676,26 @@ Compiler.prototype = {
     var pp = this.pp;
     var ast = [];
     // Pretty print multi-line text
-    if (pp && block.nodes.length > 1 && !escapePrettyMode &&
-        block.nodes[0].type === 'Text' && block.nodes[1].type === 'Text' ) {
+    if (
+      pp &&
+      block.nodes.length > 1 &&
+      !escapePrettyMode &&
+      block.nodes[0].type === 'Text' &&
+      block.nodes[1].type === 'Text'
+    ) {
       push.apply(ast, this.prettyIndent(1, true));
     }
     for (var i = 0; i < block.nodes.length; ++i) {
       // Pretty print text
-      if (pp && i > 0 && !escapePrettyMode &&
-          block.nodes[i].type === 'Text' && block.nodes[i-1].type === 'Text' &&
-          /\n$/.test(block.nodes[i - 1].val)) {
-        push.apply(ast,this.prettyIndent(1, false));
+      if (
+        pp &&
+        i > 0 &&
+        !escapePrettyMode &&
+        block.nodes[i].type === 'Text' &&
+        block.nodes[i - 1].type === 'Text' &&
+        /\n$/.test(block.nodes[i - 1].val)
+      ) {
+        push.apply(ast, this.prettyIndent(1, false));
       }
       push.apply(ast, this.visit(block.nodes[i], block));
     }
@@ -574,25 +709,39 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitMixinBlock: function(block){
+  visitMixinBlock: function(block) {
     var ast = [];
     if (this.pp) {
-      ast.push(t.expressionStatement(t.callExpression(
-        t.memberExpression(t.identifier('pug_indent'), t.identifier('push')),
-        [t.stringLiteral(Array(this.indents + 1).join(this.pp))]
-      )))
+      ast.push(
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(
+              t.identifier('pug_indent'),
+              t.identifier('push')
+            ),
+            [t.stringLiteral(Array(this.indents + 1).join(this.pp))]
+          )
+        )
+      );
     }
     ast.push(
-      t.expressionStatement(t.logicalExpression('&&',
-        t.identifier('block'),
-        this.wrapCallExpression(t.callExpression(t.identifier('block'), []))
-      ))
+      t.expressionStatement(
+        t.logicalExpression(
+          '&&',
+          t.identifier('block'),
+          this.wrapCallExpression(t.callExpression(t.identifier('block'), []))
+        )
+      )
     );
     if (this.pp) {
-      ast.push(t.expressionStatement(t.callExpression(
-        t.memberExpression(t.identifier('pug_indent'), t.identifier('pop')),
-        []
-      )))
+      ast.push(
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(t.identifier('pug_indent'), t.identifier('pop')),
+            []
+          )
+        )
+      );
     }
     return ast;
   },
@@ -606,7 +755,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitDoctype: function(doctype){
+  visitDoctype: function(doctype) {
     var ast = [];
     if (doctype && (doctype.val || !this.doctype)) {
       this.setDoctype(doctype.val || 'html');
@@ -625,7 +774,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitMixin: function(mixin){
+  visitMixin: function(mixin) {
     var ast = [];
     var self = this;
     var name = 'pug_mixins[';
@@ -637,30 +786,50 @@ Compiler.prototype = {
     var dynamic = mixin.name[0] === '#';
     var key = mixin.name;
     if (dynamic) this.dynamicMixins = true;
-    name += (dynamic ? mixin.name.substr(2,mixin.name.length-3):'"'+mixin.name+'"')+']';
-    var mixinName = dynamic ? (mixin.astName || this.parseExpr(mixin.name.substr(2,mixin.name.length-3))): t.stringLiteral(mixin.name);
+    name +=
+      (dynamic
+        ? mixin.name.substr(2, mixin.name.length - 3)
+        : '"' + mixin.name + '"') + ']';
+    var mixinName = dynamic
+      ? mixin.astName ||
+        this.parseExpr(mixin.name.substr(2, mixin.name.length - 3))
+      : t.stringLiteral(mixin.name);
     this.mixins[key] = this.mixins[key] || {used: false, instances: []};
 
     // mixin invocation
     if (mixin.call) {
       this.mixins[key].used = true;
       if (pp) {
-        ast.push(t.expressionStatement(t.callExpression(
-          t.memberExpression(t.identifier('pug_indent'), t.identifier('push')),
-          [t.stringLiteral(Array(this.indents + 1).join(pp))]
-        )))
+        ast.push(
+          t.expressionStatement(
+            t.callExpression(
+              t.memberExpression(
+                t.identifier('pug_indent'),
+                t.identifier('push')
+              ),
+              [t.stringLiteral(Array(this.indents + 1).join(pp))]
+            )
+          )
+        );
       }
       if (block || attrs.length || attrsBlocks.length) {
-
-        var astArgs = []
+        var astArgs = [];
         ast.push(
-          t.expressionStatement(this.wrapCallExpression(t.callExpression(
-            t.memberExpression(
-              t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
-              t.identifier("call")
-            ),
-            astArgs
-          )))
+          t.expressionStatement(
+            this.wrapCallExpression(
+              t.callExpression(
+                t.memberExpression(
+                  t.memberExpression(
+                    t.identifier('pug_mixins'),
+                    mixinName,
+                    true
+                  ),
+                  t.identifier('call')
+                ),
+                astArgs
+              )
+            )
+          )
         );
 
         var astObj, astKey;
@@ -672,7 +841,7 @@ Compiler.prototype = {
 
         if (block) {
           var astFunc = [];
-        
+
           // Render block with no indents, dynamically added when rendered
           this.parentIndents++;
           var _indents = this.indents;
@@ -681,16 +850,17 @@ Compiler.prototype = {
           this.indents = _indents;
           this.parentIndents--;
 
-          astKey.push(t.objectProperty(
-            t.identifier('block'),
-            t.functionExpression(
-              null,
-              [],
-              t.blockStatement(astFunc),
-              this.useGenerators
+          astKey.push(
+            t.objectProperty(
+              t.identifier('block'),
+              t.functionExpression(
+                null,
+                [],
+                t.blockStatement(astFunc),
+                this.useGenerators
+              )
             )
-          ));
- 
+          );
         }
 
         if (attrsBlocks.length) {
@@ -699,44 +869,64 @@ Compiler.prototype = {
             attrsBlocks.unshift(val);
           }
           if (attrsBlocks.length > 1) {
-            astKey.push(t.objectProperty(
-              t.identifier('attributes'),
-              t.callExpression(
-                this.runtime('merge', true),
-                attrsBlocks.map(function(b) { return self.parseExpr(b) })
+            astKey.push(
+              t.objectProperty(
+                t.identifier('attributes'),
+                t.callExpression(
+                  this.runtime('merge', true),
+                  attrsBlocks.map(function(b) {
+                    return self.parseExpr(b);
+                  })
+                )
               )
-            ));
+            );
           } else {
-            astKey.push(t.objectProperty(
-              t.identifier('attributes'),
-              this.parseExpr(attrsBlocks[0])
-            ));
+            astKey.push(
+              t.objectProperty(
+                t.identifier('attributes'),
+                this.parseExpr(attrsBlocks[0])
+              )
+            );
           }
         } else if (attrs.length) {
           var val = this.attrs(attrs);
-          astKey.push(t.objectProperty(
-            t.identifier('attributes'),
-            this.parseExpr(val)
-          ));
+          astKey.push(
+            t.objectProperty(t.identifier('attributes'), this.parseExpr(val))
+          );
         }
 
-        if (args) { 
+        if (args) {
           args = args ? args.split(',') : [];
-          Array.prototype.push.apply(astArgs, mixin.astArgs || this.parseArgs(args) )
+          Array.prototype.push.apply(
+            astArgs,
+            mixin.astArgs || this.parseArgs(args)
+          );
         }
       } else {
         var astArgs = mixin.astArgs || this.parseArgs(args);
-        ast.push(t.expressionStatement(this.wrapCallExpression(t.callExpression(
-          t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
-          astArgs
-        ))));
+        ast.push(
+          t.expressionStatement(
+            this.wrapCallExpression(
+              t.callExpression(
+                t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
+                astArgs
+              )
+            )
+          )
+        );
       }
       if (pp) {
-        ast.push(t.expressionStatement(t.callExpression(
-          t.memberExpression(t.identifier('pug_indent'), t.identifier('pop')),
-          []
-        )))
- 
+        ast.push(
+          t.expressionStatement(
+            t.callExpression(
+              t.memberExpression(
+                t.identifier('pug_indent'),
+                t.identifier('pop')
+              ),
+              []
+            )
+          )
+        );
       }
     }
     // mixin definition
@@ -749,7 +939,9 @@ Compiler.prototype = {
           .trim()
           .replace(/^\.\.\./, '');
       }
-      var astArgs = args.map(function(arg) { return t.identifier(arg.trim())})
+      var astArgs = args.map(function(arg) {
+        return t.identifier(arg.trim());
+      });
       // we need use pug_interp here for v8: https://code.google.com/p/v8/issues/detail?id=4165
       // once fixed, use this: this.buf.push(name + ' = function(' + args.join(',') + '){');
       var astMixin = [];
@@ -758,67 +950,89 @@ Compiler.prototype = {
         t.variableDeclaration('var', [
           t.variableDeclarator(
             t.identifier('block'),
-            t.logicalExpression('&&', t.thisExpression(), t.memberExpression(t.thisExpression(), t.identifier('block')))
+            t.logicalExpression(
+              '&&',
+              t.thisExpression(),
+              t.memberExpression(t.thisExpression(), t.identifier('block'))
+            )
           ),
           t.variableDeclarator(
             t.identifier('attributes'),
-            t.logicalExpression('||',
-              t.logicalExpression('&&', t.thisExpression(), t.memberExpression(t.thisExpression(), t.identifier('attributes'))),
+            t.logicalExpression(
+              '||',
+              t.logicalExpression(
+                '&&',
+                t.thisExpression(),
+                t.memberExpression(
+                  t.thisExpression(),
+                  t.identifier('attributes')
+                )
+              ),
               t.objectExpression([])
             )
-          )
+          ),
         ])
-      )
+      );
 
       if (rest) {
         astMixin.push(
           t.variableDeclaration('var', [
-            t.variableDeclarator(
-              t.identifier(rest),
-              t.arrayExpression([])
-            )
+            t.variableDeclarator(t.identifier(rest), t.arrayExpression([])),
           ])
-        )
+        );
         astMixin.push(
           t.forStatement(
-            t.assignmentExpression('=', t.identifier('pug_interp'), t.numericLiteral(args.length)),
-            t.binaryExpression('<', t.identifier('pug_interp'), t.memberExpression(t.identifier('arguments'), t.identifier('length'))),
+            t.assignmentExpression(
+              '=',
+              t.identifier('pug_interp'),
+              t.numericLiteral(args.length)
+            ),
+            t.binaryExpression(
+              '<',
+              t.identifier('pug_interp'),
+              t.memberExpression(
+                t.identifier('arguments'),
+                t.identifier('length')
+              )
+            ),
             t.updateExpression('++', t.identifier('pug_interp'), false),
             t.expressionStatement(
               t.callExpression(
                 t.memberExpression(t.identifier(rest), t.identifier('push')),
-                [t.memberExpression(t.identifier('arguments'), t.identifier('pug_interp'), true)]
+                [
+                  t.memberExpression(
+                    t.identifier('arguments'),
+                    t.identifier('pug_interp'),
+                    true
+                  ),
+                ]
               )
             )
           )
-        )
+        );
       }
 
       this.parentIndents++;
       push.apply(astMixin, this.visit(block, mixin));
       this.parentIndents--;
 
-
-      var mixinStmt = 
-        t.expressionStatement(
+      var mixinStmt = t.expressionStatement(
+        t.assignmentExpression(
+          '=',
+          t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
           t.assignmentExpression(
             '=',
-            t.memberExpression(t.identifier('pug_mixins'), mixinName, true),
-            t.assignmentExpression(
-              '=',
-              t.identifier('pug_interp'),
-              t.functionExpression(
-                null,
-                astArgs,
-                t.blockStatement(astMixin),
-                this.useGenerators
-              )
+            t.identifier('pug_interp'),
+            t.functionExpression(
+              null,
+              astArgs,
+              t.blockStatement(astMixin),
+              this.useGenerators
             )
           )
-        );
+        )
+      );
       ast.push(mixinStmt);
- 
-
 
       this.mixins[key].instances.push({stmt: mixinStmt});
     }
@@ -834,22 +1048,22 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitTag: function(tag, parent, interpolated){
+  visitTag: function(tag, parent, interpolated) {
     this.indents++;
-    var name = tag.name
-      , pp = this.pp
-      , self = this;
+    var name = tag.name,
+      pp = this.pp,
+      self = this;
     var ast = [];
 
     function bufferName() {
       if (interpolated) {
         if (tag.astExpr) return self.bufferAST(tag.astExpr);
         return self.bufferExpression(tag.expr);
-      }
-      else return self.buffer(name);
+      } else return self.buffer(name);
     }
 
-    if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true) this.escapePrettyMode = true;
+    if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true)
+      this.escapePrettyMode = true;
 
     if (!this.hasCompiledTag) {
       if (!this.hasCompiledDoctype && 'html' == name) {
@@ -858,12 +1072,17 @@ Compiler.prototype = {
       this.hasCompiledTag = true;
     }
     // pretty print
-    if (pp && !tag.isInline)
-      push.apply(ast, this.prettyIndent(0, true));
+    if (pp && !tag.isInline) push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
       push.apply(ast, this.buffer('<'));
       push.apply(ast, bufferName());
-      push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
+      push.apply(
+        ast,
+        this.visitAttributes(
+          tag.attrs,
+          this.attributeBlocks(tag.attributeBlocks)
+        )
+      );
       if (this.terse && !tag.selfClosing) {
         push.apply(ast, this.buffer('>'));
       } else {
@@ -891,13 +1110,24 @@ Compiler.prototype = {
       // Optimize attributes buffering
       push.apply(ast, this.buffer('<'));
       push.apply(ast, bufferName());
-      push.apply(ast, this.visitAttributes(tag.attrs, this.attributeBlocks(tag.attributeBlocks)));
+      push.apply(
+        ast,
+        this.visitAttributes(
+          tag.attrs,
+          this.attributeBlocks(tag.attributeBlocks)
+        )
+      );
       push.apply(ast, this.buffer('>'));
       if (tag.code) push.apply(ast, this.visitCode(tag.code));
       push.apply(ast, this.visit(tag.block, tag));
 
       // pretty print
-      if (pp && !tag.isInline && WHITE_SPACE_SENSITIVE_TAGS[tag.name] !== true && !tagCanInline(tag))
+      if (
+        pp &&
+        !tag.isInline &&
+        WHITE_SPACE_SENSITIVE_TAGS[tag.name] !== true &&
+        !tagCanInline(tag)
+      )
         push.apply(ast, this.prettyIndent(0, true));
 
       push.apply(ast, this.buffer('</'));
@@ -916,9 +1146,12 @@ Compiler.prototype = {
    *  Compile attribute blocks.
    */
   attributeBlocks: function(attributeBlocks) {
-    return attributeBlocks && attributeBlocks.slice().map(function(attrBlock){
-      return attrBlock.val;
-    });
+    return (
+      attributeBlocks &&
+      attributeBlocks.slice().map(function(attrBlock) {
+        return attrBlock.val;
+      })
+    );
   },
   /**
    * Visit InterpolatedTag.
@@ -938,7 +1171,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitText: function(text){
+  visitText: function(text) {
     return this.buffer(text.val);
   },
 
@@ -949,7 +1182,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitComment: function(comment){
+  visitComment: function(comment) {
     var ast = [];
     if (!comment.buffer) return;
     if (this.pp) push.apply(ast, this.prettyIndent(1, true));
@@ -977,7 +1210,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitBlockComment: function(comment){
+  visitBlockComment: function(comment) {
     var ast = [];
     if (!comment.buffer) return;
     if (this.pp) push.apply(ast, this.prettyIndent(1, true));
@@ -997,7 +1230,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitCode: function(code, ctx){
+  visitCode: function(code, ctx) {
     // Wrap code blocks with {}.
     // we only wrap unbuffered code blocks ATM
     // since they are usually flow control
@@ -1008,22 +1241,21 @@ Compiler.prototype = {
       var val = code.val.trim();
       var tpl = tpl_interp;
       var tplv = {
-        VALUE: code.astVal || this.parseExpr(code.val)
-      }
+        VALUE: code.astVal || this.parseExpr(code.val),
+      };
       if (code.mustEscape !== false) {
         tpl = tpl_interp_escape;
         tplv.ESCAPE = this.runtime('escape', true);
       }
       push.apply(ast, this.bufferAST(tpl(tplv).expression));
     } else {
-
       var val = code.val.trim();
-      this.codeBuffer += "\n" + val;
+      this.codeBuffer += '\n' + val;
 
       if (code.block) {
         this.codeIndex++;
-        var marker = "PUGMARKER"+this.codeIndex;
-        this.codeBuffer += "\n{" + marker + "}\n";
+        var marker = 'PUGMARKER' + this.codeIndex;
+        this.codeBuffer += '\n{' + marker + '}\n';
         // snaphsot current unbuffered code level
         // this is necessary to accept embedded code blocks
         // - if (true) {
@@ -1044,12 +1276,16 @@ Compiler.prototype = {
         this.codeBuffer = savedCodeBuffer;
         this.codeMarker = savedCodeMarker;
         this.codeIndex = savedCodeIndex;
-       
-        this.codeMarker[marker] = body; 
+
+        this.codeMarker[marker] = body;
       }
 
       var idx = ctx.nodes.indexOf(code) + 1;
-      if (idx == ctx.nodes.length || ctx.nodes[idx].type != 'Code' || ctx.nodes[idx].buffer) {
+      if (
+        idx == ctx.nodes.length ||
+        ctx.nodes[idx].type != 'Code' ||
+        ctx.nodes[idx].buffer
+      ) {
         try {
           var src = this.codeBuffer + '}';
           var tpl = babelTemplate(src);
@@ -1057,12 +1293,18 @@ Compiler.prototype = {
           this.codeBuffer = '_=function*(){';
           this.codeIndex = -1;
           this.codeMarker = {};
-        } catch(e) {
-          var codeError = this.codeBuffer.substr(14).trim()
-          this.error('Unbuffered code structure could not be parsed; ' + e.message + ' in ' + codeError, codeError, code)
+        } catch (e) {
+          var codeError = this.codeBuffer.substr(14).trim();
+          this.error(
+            'Unbuffered code structure could not be parsed; ' +
+              e.message +
+              ' in ' +
+              codeError,
+            codeError,
+            code
+          );
         }
       }
-
     }
     return ast;
   },
@@ -1082,7 +1324,6 @@ Compiler.prototype = {
       cond.astTest || this.parseExpr(test),
       t.blockStatement(blockConsequent)
     );
-
 
     if (cond.alternate) {
       if (cond.alternate.type === 'Conditional') {
@@ -1119,78 +1360,102 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitEach: function(each){
+  visitEach: function(each) {
     var ast = [];
     var indexVarName = each.key || 'pug_index' + this.eachCount;
     this.eachCount++;
 
-
-    var body =  [
-                  t.variableDeclaration('var', [
-                    t.variableDeclarator(t.identifier('$$obj'), each.astObj || this.parseExpr(each.obj))
-                  ])
-                ]
-
-    var func =  t.expressionStatement(
-                  this.wrapCallExpression(t.callExpression(
-                    t.memberExpression(
-                      t.functionExpression(
-                        null,
-                        [],
-                        t.blockStatement(body),
-                        this.useGenerators
-                      ),
-                      t.identifier('call')
-                    )
-                    ,[t.thisExpression()]
-                  ))
-                )
-    ast.push(func)
-
-
-      var blockEach = [
-        t.variableDeclaration('var', [
-            t.variableDeclarator(t.identifier(each.val), t.memberExpression(t.identifier('$$obj'), t.identifier(indexVarName), true) )
-        ])
-      ];
-      var blockAlt = [];
- 
-      push.apply(blockEach, this.visit(each.block, each));
-      var arrayLoop = 
-          t.blockStatement([t.forStatement(
-            t.variableDeclaration('var', [
-              t.variableDeclarator(t.identifier(indexVarName), t.numericLiteral(0)),
-              t.variableDeclarator(t.identifier('$$l'), t.memberExpression(t.identifier('$$obj'), t.identifier('length')))
-            ]),
-            t.binaryExpression('<', t.identifier(indexVarName), t.identifier('$$l')),
-            t.updateExpression('++', t.identifier(indexVarName), false),
-            t.blockStatement(blockEach)
-          )]);
-
-
-      var blockObj = [
-        t.expressionStatement(t.updateExpression('++', t.identifier('$$l'), false)),
-        t.variableDeclaration('var', [
-          t.variableDeclarator(t.identifier(each.val), t.memberExpression(t.identifier('$$obj'), t.identifier(indexVarName), true) )
-        ])
-      ]
-      var blockObjAlt = [];
-
-      push.apply(blockObj, this.visit(each.block, each));
-      var objectLoop = t.blockStatement([
-        t.variableDeclaration('var', [
-          t.variableDeclarator(t.identifier('$$l'), t.numericLiteral(0))
-        ]),
-        t.forInStatement(
-          t.variableDeclaration('var', [
-            t.variableDeclarator(t.identifier(indexVarName))
-          ]),
+    var body = [
+      t.variableDeclaration('var', [
+        t.variableDeclarator(
           t.identifier('$$obj'),
-          t.blockStatement(blockObj)
+          each.astObj || this.parseExpr(each.obj)
+        ),
+      ]),
+    ];
+
+    var func = t.expressionStatement(
+      this.wrapCallExpression(
+        t.callExpression(
+          t.memberExpression(
+            t.functionExpression(
+              null,
+              [],
+              t.blockStatement(body),
+              this.useGenerators
+            ),
+            t.identifier('call')
+          ),
+          [t.thisExpression()]
         )
-      ])
+      )
+    );
+    ast.push(func);
 
+    var blockEach = [
+      t.variableDeclaration('var', [
+        t.variableDeclarator(
+          t.identifier(each.val),
+          t.memberExpression(
+            t.identifier('$$obj'),
+            t.identifier(indexVarName),
+            true
+          )
+        ),
+      ]),
+    ];
+    var blockAlt = [];
 
+    push.apply(blockEach, this.visit(each.block, each));
+    var arrayLoop = t.blockStatement([
+      t.forStatement(
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier(indexVarName), t.numericLiteral(0)),
+          t.variableDeclarator(
+            t.identifier('$$l'),
+            t.memberExpression(t.identifier('$$obj'), t.identifier('length'))
+          ),
+        ]),
+        t.binaryExpression(
+          '<',
+          t.identifier(indexVarName),
+          t.identifier('$$l')
+        ),
+        t.updateExpression('++', t.identifier(indexVarName), false),
+        t.blockStatement(blockEach)
+      ),
+    ]);
+
+    var blockObj = [
+      t.expressionStatement(
+        t.updateExpression('++', t.identifier('$$l'), false)
+      ),
+      t.variableDeclaration('var', [
+        t.variableDeclarator(
+          t.identifier(each.val),
+          t.memberExpression(
+            t.identifier('$$obj'),
+            t.identifier(indexVarName),
+            true
+          )
+        ),
+      ]),
+    ];
+    var blockObjAlt = [];
+
+    push.apply(blockObj, this.visit(each.block, each));
+    var objectLoop = t.blockStatement([
+      t.variableDeclaration('var', [
+        t.variableDeclarator(t.identifier('$$l'), t.numericLiteral(0)),
+      ]),
+      t.forInStatement(
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier(indexVarName)),
+        ]),
+        t.identifier('$$obj'),
+        t.blockStatement(blockObj)
+      ),
+    ]);
 
     if (each.alternate) {
       push.apply(blockAlt, this.visit(each.alternate, each));
@@ -1199,34 +1464,45 @@ Compiler.prototype = {
         arrayLoop,
         t.blockStatement(blockAlt)
       );
-   }
+    }
 
     if (each.alternate) {
       push.apply(blockObjAlt, this.visit(each.alternate, each));
-      objectLoop.body.push(t.ifStatement(
-            t.binaryExpression('===', t.identifier('$$l'), t.numericLiteral(0)),
-            t.blockStatement(blockObjAlt)
-      ))
+      objectLoop.body.push(
+        t.ifStatement(
+          t.binaryExpression('===', t.identifier('$$l'), t.numericLiteral(0)),
+          t.blockStatement(blockObjAlt)
+        )
+      );
     }
 
     var it = t.ifStatement(
-        t.binaryExpression('==', t.stringLiteral('number'), t.unaryExpression('typeof', t.memberExpression(t.identifier('$$obj'), t.identifier('length')))),
-        arrayLoop, objectLoop)
+      t.binaryExpression(
+        '==',
+        t.stringLiteral('number'),
+        t.unaryExpression(
+          'typeof',
+          t.memberExpression(t.identifier('$$obj'), t.identifier('length'))
+        )
+      ),
+      arrayLoop,
+      objectLoop
+    );
     body.push(it);
 
     return ast;
-
   },
 
   visitEachOf: function(each) {
-
     const forOfBlock = this.visit(each.block, each);
     const forOf = t.forOfStatement(
-        t.variableDeclaration('var', [
-          t.variableDeclarator(t.identifier(each.val))
-        ]), t.identifier(each.obj), t.blockStatement(forOfBlock));
-    return [ forOf ]
-
+      t.variableDeclaration('var', [
+        t.variableDeclarator(t.identifier(each.val)),
+      ]),
+      t.identifier(each.obj),
+      t.blockStatement(forOfBlock)
+    );
+    return [forOf];
   },
 
   /**
@@ -1236,7 +1512,7 @@ Compiler.prototype = {
    * @api public
    */
 
-  visitAttributes: function(attrs, attributeBlocks){
+  visitAttributes: function(attrs, attributeBlocks) {
     var ast = [];
     if (attributeBlocks.length) {
       if (attrs.length) {
@@ -1244,9 +1520,31 @@ Compiler.prototype = {
         attributeBlocks.unshift(val);
       }
       if (attributeBlocks.length > 1) {
-        push.apply(ast, this.bufferExpression(this.runtime('attrs') + '(' + this.runtime('merge') + '([' + attributeBlocks.join(',') + ']), ' + stringify(this.terse) + ')'));
+        push.apply(
+          ast,
+          this.bufferExpression(
+            this.runtime('attrs') +
+              '(' +
+              this.runtime('merge') +
+              '([' +
+              attributeBlocks.join(',') +
+              ']), ' +
+              stringify(this.terse) +
+              ')'
+          )
+        );
       } else {
-        push.apply(ast, this.bufferExpression(this.runtime('attrs') + '(' + attributeBlocks[0] + ', ' + stringify(this.terse) + ')'));
+        push.apply(
+          ast,
+          this.bufferExpression(
+            this.runtime('attrs') +
+              '(' +
+              attributeBlocks[0] +
+              ', ' +
+              stringify(this.terse) +
+              ')'
+          )
+        );
       }
     } else if (attrs.length) {
       push.apply(ast, this.bufferExpression(this.attrs(attrs, true)));
@@ -1265,7 +1563,7 @@ Compiler.prototype = {
       runtime: this.runtime.bind(this),
     });
     return res;
-  }
+  },
 };
 
 function tagCanInline(tag) {

@@ -334,7 +334,7 @@ Parser.prototype = {
               val: '\n',
               line: tok.loc.start.line,
               column: tok.loc.start.column,
-              filename: this.filename
+              filename: this.filename,
             });
           }
           break;
@@ -584,18 +584,16 @@ Parser.prototype = {
         this.expect('newline');
       } else if (this.peek().type === 'else-if') {
         tok = this.expect('else-if');
-        currentNode = (
-          currentNode.alternate = {
-            type: 'Conditional',
-            test: tok.val,
-            astTest: tok.ast,
-            consequent: this.emptyBlock(tok.loc.start.line),
-            alternate: null,
-            line: tok.loc.start.line,
-            column: tok.loc.start.column,
-            filename: this.filename
-          }
-        );
+        currentNode = currentNode.alternate = {
+          type: 'Conditional',
+          test: tok.val,
+          astTest: tok.ast,
+          consequent: this.emptyBlock(tok.loc.start.line),
+          alternate: null,
+          line: tok.loc.start.line,
+          column: tok.loc.start.column,
+          filename: this.filename,
+        };
         if ('indent' == this.peek().type) {
           currentNode.consequent = this.block();
         }
@@ -1310,5 +1308,5 @@ Parser.prototype = {
     this.tokens.defer(tok);
     this.expect('end-attributes');
     return attrs;
-  }
+  },
 };
