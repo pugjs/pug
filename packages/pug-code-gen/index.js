@@ -1219,21 +1219,14 @@ Compiler.prototype = {
   },
 
   visitEachOf: function(each) {
-    this.buf.push(
-      '' +
-        '// iterate ' +
-        each.obj +
-        '\n' +
-        'for (const ' +
-        each.val +
-        ' of ' +
-        each.obj +
-        ') {\n'
-    );
 
-    this.visit(each.block, each);
+    const forOfBlock = this.visit(each.block, each);
+    const forOf = t.forOfStatement(
+        t.variableDeclaration('var', [
+          t.variableDeclarator(t.identifier(each.val))
+        ]), t.identifier(each.obj), t.blockStatement(forOfBlock));
+    return [ forOf ]
 
-    this.buf.push('}\n');
   },
 
   /**

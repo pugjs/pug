@@ -326,7 +326,7 @@ Array [
       "left": Object {
         "end": 8,
         "extra": Object {
-          "raw": "\'/user/\'",
+          "raw": "'/user/'",
           "rawValue": "/user/",
         },
         "loc": Object {
@@ -394,7 +394,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'button\'",
+        "raw": "'button'",
         "rawValue": "button",
       },
       "loc": Object {
@@ -490,7 +490,7 @@ Array [
       "left": Object {
         "end": 8,
         "extra": Object {
-          "raw": "\'/user/\'",
+          "raw": "'/user/'",
           "rawValue": "/user/",
         },
         "loc": Object {
@@ -558,7 +558,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'button\'",
+        "raw": "'button'",
         "rawValue": "button",
       },
       "loc": Object {
@@ -652,7 +652,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'answer\'",
+        "raw": "'answer'",
         "rawValue": "answer",
       },
       "loc": Object {
@@ -798,7 +798,7 @@ Array [
         Object {
           "end": 9,
           "extra": Object {
-            "raw": "\'class1\'",
+            "raw": "'class1'",
             "rawValue": "class1",
           },
           "loc": Object {
@@ -818,7 +818,7 @@ Array [
         Object {
           "end": 19,
           "extra": Object {
-            "raw": "\'class2\'",
+            "raw": "'class2'",
             "rawValue": "class2",
           },
           "loc": Object {
@@ -944,7 +944,7 @@ Array [
         Object {
           "end": 9,
           "extra": Object {
-            "raw": "\'class1\'",
+            "raw": "'class1'",
             "rawValue": "class1",
           },
           "loc": Object {
@@ -964,7 +964,7 @@ Array [
         Object {
           "end": 19,
           "extra": Object {
-            "raw": "\'class2\'",
+            "raw": "'class2'",
             "rawValue": "class2",
           },
           "loc": Object {
@@ -1075,7 +1075,7 @@ Array [
       "left": Object {
         "end": 8,
         "extra": Object {
-          "raw": "\'/user/\'",
+          "raw": "'/user/'",
           "rawValue": "/user/",
         },
         "loc": Object {
@@ -1143,7 +1143,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'button\'",
+        "raw": "'button'",
         "rawValue": "button",
       },
       "loc": Object {
@@ -1239,7 +1239,7 @@ Array [
       "left": Object {
         "end": 8,
         "extra": Object {
-          "raw": "\'/user/\'",
+          "raw": "'/user/'",
           "rawValue": "/user/",
         },
         "loc": Object {
@@ -1307,7 +1307,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'button\'",
+        "raw": "'button'",
         "rawValue": "button",
       },
       "loc": Object {
@@ -1401,7 +1401,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'answer\'",
+        "raw": "'answer'",
         "rawValue": "answer",
       },
       "loc": Object {
@@ -1547,7 +1547,7 @@ Array [
         Object {
           "end": 9,
           "extra": Object {
-            "raw": "\'class1\'",
+            "raw": "'class1'",
             "rawValue": "class1",
           },
           "loc": Object {
@@ -1567,7 +1567,7 @@ Array [
         Object {
           "end": 19,
           "extra": Object {
-            "raw": "\'class2\'",
+            "raw": "'class2'",
             "rawValue": "class2",
           },
           "loc": Object {
@@ -1693,7 +1693,7 @@ Array [
         Object {
           "end": 9,
           "extra": Object {
-            "raw": "\'class1\'",
+            "raw": "'class1'",
             "rawValue": "class1",
           },
           "loc": Object {
@@ -1713,7 +1713,7 @@ Array [
         Object {
           "end": 19,
           "extra": Object {
-            "raw": "\'class2\'",
+            "raw": "'class2'",
             "rawValue": "class2",
           },
           "loc": Object {
@@ -2185,6 +2185,26 @@ Array [
     "val": true,
   },
   Object {
+    "ast": Object {
+      "end": 7,
+      "extra": Object {
+        "raw": "\\"after\\"",
+        "rawValue": "after",
+      },
+      "loc": Object {
+        "end": Object {
+          "column": 7,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "StringLiteral",
+      "value": "after",
+    },
     "loc": Object {
       "end": Object {
         "column": 28,
@@ -2259,6 +2279,26 @@ Array [
     "type": "start-attributes",
   },
   Object {
+    "ast": Object {
+      "end": 8,
+      "extra": Object {
+        "raw": "\\"before\\"",
+        "rawValue": "before",
+      },
+      "loc": Object {
+        "end": Object {
+          "column": 8,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "StringLiteral",
+      "value": "before",
+    },
     "loc": Object {
       "end": Object {
         "column": 20,
@@ -2350,6 +2390,26 @@ Array [
     "type": "start-attributes",
   },
   Object {
+    "ast": Object {
+      "end": 8,
+      "extra": Object {
+        "raw": "\\"before\\"",
+        "rawValue": "before",
+      },
+      "loc": Object {
+        "end": Object {
+          "column": 8,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "StringLiteral",
+      "value": "before",
+    },
     "loc": Object {
       "end": Object {
         "column": 20,
@@ -2384,6 +2444,26 @@ Array [
     "val": true,
   },
   Object {
+    "ast": Object {
+      "end": 7,
+      "extra": Object {
+        "raw": "\\"after\\"",
+        "rawValue": "after",
+      },
+      "loc": Object {
+        "end": Object {
+          "column": 7,
+          "line": 1,
+        },
+        "start": Object {
+          "column": 0,
+          "line": 1,
+        },
+      },
+      "start": 0,
+      "type": "StringLiteral",
+      "value": "after",
+    },
     "loc": Object {
       "end": Object {
         "column": 44,
@@ -2480,7 +2560,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'/contact\'",
+        "raw": "'/contact'",
         "rawValue": "/contact",
       },
       "loc": Object {
@@ -2589,7 +2669,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'/save\'",
+        "raw": "'/save'",
         "rawValue": "/save",
       },
       "loc": Object {
@@ -2821,7 +2901,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'foo, bar, baz\'",
+        "raw": "'foo, bar, baz'",
         "rawValue": "foo, bar, baz",
       },
       "loc": Object {
@@ -2952,7 +3032,7 @@ Array [
     "ast": Object {
       "end": 9,
       "extra": Object {
-        "raw": "\'((foo))\'",
+        "raw": "'((foo))'",
         "rawValue": "((foo))",
       },
       "loc": Object {
@@ -3170,7 +3250,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -3313,7 +3393,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -3422,7 +3502,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\"class:\"",
+        "raw": "\\"class:\\"",
         "rawValue": "class:",
       },
       "loc": Object {
@@ -3516,8 +3596,8 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'\\\\S+\'",
-        "rawValue": "\\S+",
+        "raw": "'\\\\\\\\S+'",
+        "rawValue": "\\\\S+",
       },
       "loc": Object {
         "end": Object {
@@ -3531,7 +3611,7 @@ Array [
       },
       "start": 0,
       "type": "StringLiteral",
-      "value": "\\S+",
+      "value": "\\\\S+",
     },
     "loc": Object {
       "end": Object {
@@ -3610,7 +3690,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'/contact\'",
+        "raw": "'/contact'",
         "rawValue": "/contact",
       },
       "loc": Object {
@@ -3719,7 +3799,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'/save\'",
+        "raw": "'/save'",
         "rawValue": "/save",
       },
       "loc": Object {
@@ -3951,7 +4031,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'foo, bar, baz\'",
+        "raw": "'foo, bar, baz'",
         "rawValue": "foo, bar, baz",
       },
       "loc": Object {
@@ -4082,7 +4162,7 @@ Array [
     "ast": Object {
       "end": 9,
       "extra": Object {
-        "raw": "\'((foo))\'",
+        "raw": "'((foo))'",
         "rawValue": "((foo))",
       },
       "loc": Object {
@@ -4300,7 +4380,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -4443,7 +4523,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -4552,7 +4632,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\"class:\"",
+        "raw": "\\"class:\\"",
         "rawValue": "class:",
       },
       "loc": Object {
@@ -4646,8 +4726,8 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'\\\\S+\'",
-        "rawValue": "\\S+",
+        "raw": "'\\\\\\\\S+'",
+        "rawValue": "\\\\S+",
       },
       "loc": Object {
         "end": Object {
@@ -4661,7 +4741,7 @@ Array [
       },
       "start": 0,
       "type": "StringLiteral",
-      "value": "\\S+",
+      "value": "\\\\S+",
     },
     "loc": Object {
       "end": Object {
@@ -4740,7 +4820,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\"true\"",
+        "raw": "\\"true\\"",
         "rawValue": "true",
       },
       "loc": Object {
@@ -5583,7 +5663,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -5620,7 +5700,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\"bar\"",
+        "raw": "\\"bar\\"",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -5714,7 +5794,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -5751,7 +5831,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -5864,7 +5944,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\'text/x-template\'",
+        "raw": "'text/x-template'",
         "rawValue": "text/x-template",
       },
       "loc": Object {
@@ -5959,7 +6039,7 @@ Array [
     "ast": Object {
       "end": 21,
       "extra": Object {
-        "raw": "\'user-<%= user.id %>\'",
+        "raw": "'user-<%= user.id %>'",
         "rawValue": "user-<%= user.id %>",
       },
       "loc": Object {
@@ -6404,7 +6484,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'tobi\'",
+        "raw": "'tobi'",
         "rawValue": "tobi",
       },
       "loc": Object {
@@ -6545,8 +6625,8 @@ Array [
           "value": Object {
             "end": 23,
             "extra": Object {
-              "raw": "\"Let\'s rock!\"",
-              "rawValue": "Let\'s rock!",
+              "raw": "\\"Let's rock!\\"",
+              "rawValue": "Let's rock!",
             },
             "loc": Object {
               "end": Object {
@@ -6560,7 +6640,7 @@ Array [
             },
             "start": 10,
             "type": "StringLiteral",
-            "value": "Let\'s rock!",
+            "value": "Let's rock!",
           },
         },
       ],
@@ -6691,7 +6771,7 @@ Array [
           "value": Object {
             "end": 39,
             "extra": Object {
-              "raw": "\"a quote: &quot; this & that\"",
+              "raw": "\\"a quote: &quot; this & that\\"",
               "rawValue": "a quote: &quot; this & that",
             },
             "loc": Object {
@@ -7775,7 +7855,7 @@ Array [
     "ast": Object {
       "end": 3,
       "extra": Object {
-        "raw": "\'#\'",
+        "raw": "'#'",
         "rawValue": "#",
       },
       "loc": Object {
@@ -7913,7 +7993,7 @@ Array [
     "ast": Object {
       "end": 3,
       "extra": Object {
-        "raw": "\'#\'",
+        "raw": "'#'",
         "rawValue": "#",
       },
       "loc": Object {
@@ -8889,7 +8969,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'utf8\'",
+        "raw": "'utf8'",
         "rawValue": "utf8",
       },
       "loc": Object {
@@ -10058,7 +10138,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'Tim:G\'",
+        "raw": "'Tim:G'",
         "rawValue": "Tim:G",
       },
       "loc": Object {
@@ -10198,7 +10278,7 @@ Array [
           "value": Object {
             "end": 9,
             "extra": Object {
-              "raw": "\'g\'",
+              "raw": "'g'",
               "rawValue": "g",
             },
             "loc": Object {
@@ -10901,7 +10981,7 @@ Array [
         Object {
           "end": 6,
           "extra": Object {
-            "raw": "\'foo\'",
+            "raw": "'foo'",
             "rawValue": "foo",
           },
           "loc": Object {
@@ -10921,7 +11001,7 @@ Array [
         Object {
           "end": 13,
           "extra": Object {
-            "raw": "\'bar\'",
+            "raw": "'bar'",
             "rawValue": "bar",
           },
           "loc": Object {
@@ -10941,7 +11021,7 @@ Array [
         Object {
           "end": 20,
           "extra": Object {
-            "raw": "\'baz\'",
+            "raw": "'baz'",
             "rawValue": "baz",
           },
           "loc": Object {
@@ -11065,7 +11145,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -11569,7 +11649,7 @@ Array [
     "ast": Object {
       "end": 2,
       "extra": Object {
-        "raw": "\'\'",
+        "raw": "''",
         "rawValue": "",
       },
       "loc": Object {
@@ -12608,7 +12688,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'nested\'",
+        "raw": "'nested'",
         "rawValue": "nested",
       },
       "loc": Object {
@@ -12658,7 +12738,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'works\'",
+        "raw": "'works'",
         "rawValue": "works",
       },
       "loc": Object {
@@ -13276,7 +13356,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'<script>\'",
+        "raw": "'<script>'",
         "rawValue": "<script>",
       },
       "loc": Object {
@@ -13342,7 +13422,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'<script>\'",
+        "raw": "'<script>'",
         "rawValue": "<script>",
       },
       "loc": Object {
@@ -13740,7 +13820,7 @@ Array [
       "left": Object {
         "end": 7,
         "extra": Object {
-          "raw": "\'item-\'",
+          "raw": "'item-'",
           "rawValue": "item-",
         },
         "loc": Object {
@@ -14918,7 +14998,7 @@ Array [
     "ast": Object {
       "end": 2,
       "extra": Object {
-        "raw": "\'\'",
+        "raw": "''",
         "rawValue": "",
       },
       "loc": Object {
@@ -15306,7 +15386,7 @@ Array [
     "ast": Object {
       "end": 2,
       "extra": Object {
-        "raw": "\'\'",
+        "raw": "''",
         "rawValue": "",
       },
       "loc": Object {
@@ -16922,7 +17002,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'this\'",
+        "raw": "'this'",
         "rawValue": "this",
       },
       "loc": Object {
@@ -17016,7 +17096,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'that\'",
+        "raw": "'that'",
         "rawValue": "that",
       },
       "loc": Object {
@@ -19505,7 +19585,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\"<%= bar %>\"",
+        "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
       },
       "loc": Object {
@@ -19599,7 +19679,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\"<%= bar %>\"",
+        "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
       },
       "loc": Object {
@@ -19693,7 +19773,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\"<%= bar %>\"",
+        "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
       },
       "loc": Object {
@@ -19787,7 +19867,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\"<%= bar %>\"",
+        "raw": "\\"<%= bar %>\\"",
         "rawValue": "<%= bar %>",
       },
       "loc": Object {
@@ -19881,7 +19961,7 @@ Array [
     "ast": Object {
       "end": 21,
       "extra": Object {
-        "raw": "\"<%= bar %> lol rofl\"",
+        "raw": "\\"<%= bar %> lol rofl\\"",
         "rawValue": "<%= bar %> lol rofl",
       },
       "loc": Object {
@@ -19975,7 +20055,7 @@ Array [
     "ast": Object {
       "end": 33,
       "extra": Object {
-        "raw": "\"<%= bar %> lol rofl <%= lmao %>\"",
+        "raw": "\\"<%= bar %> lol rofl <%= lmao %>\\"",
         "rawValue": "<%= bar %> lol rofl <%= lmao %>",
       },
       "loc": Object {
@@ -20159,7 +20239,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\'text/javascript\'",
+        "raw": "'text/javascript'",
         "rawValue": "text/javascript",
       },
       "loc": Object {
@@ -20567,7 +20647,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'val\'",
+        "raw": "'val'",
         "rawValue": "val",
       },
       "loc": Object {
@@ -20965,7 +21045,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'val\'",
+        "raw": "'val'",
         "rawValue": "val",
       },
       "loc": Object {
@@ -21818,7 +21898,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\"text/css\"",
+        "raw": "\\"text/css\\"",
         "rawValue": "text/css",
       },
       "loc": Object {
@@ -22757,7 +22837,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\"text/css\"",
+        "raw": "\\"text/css\\"",
         "rawValue": "text/css",
       },
       "loc": Object {
@@ -23954,7 +24034,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'checkbox\'",
+        "raw": "'checkbox'",
         "rawValue": "checkbox",
       },
       "loc": Object {
@@ -24065,7 +24145,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'checkbox\'",
+        "raw": "'checkbox'",
         "rawValue": "checkbox",
       },
       "loc": Object {
@@ -24192,7 +24272,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'checkbox\'",
+        "raw": "'checkbox'",
         "rawValue": "checkbox",
       },
       "loc": Object {
@@ -24339,7 +24419,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\'text/x-template\'",
+        "raw": "'text/x-template'",
         "rawValue": "text/x-template",
       },
       "loc": Object {
@@ -25344,7 +25424,7 @@ Array [
     "ast": Object {
       "end": 13,
       "extra": Object {
-        "raw": "\'/caustic.js\'",
+        "raw": "'/caustic.js'",
         "rawValue": "/caustic.js",
       },
       "loc": Object {
@@ -25438,7 +25518,7 @@ Array [
     "ast": Object {
       "end": 9,
       "extra": Object {
-        "raw": "\'/app.js\'",
+        "raw": "'/app.js'",
         "rawValue": "/app.js",
       },
       "loc": Object {
@@ -25595,7 +25675,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\'text/javascript\'",
+        "raw": "'text/javascript'",
         "rawValue": "text/javascript",
       },
       "loc": Object {
@@ -25968,7 +26048,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\"text/javascript\"",
+        "raw": "\\"text/javascript\\"",
         "rawValue": "text/javascript",
       },
       "loc": Object {
@@ -26585,7 +26665,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'jquery.js\'",
+        "raw": "'jquery.js'",
         "rawValue": "jquery.js",
       },
       "loc": Object {
@@ -26679,7 +26759,7 @@ Array [
     "ast": Object {
       "end": 14,
       "extra": Object {
-        "raw": "\'keymaster.js\'",
+        "raw": "'keymaster.js'",
         "rawValue": "keymaster.js",
       },
       "loc": Object {
@@ -26773,7 +26853,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\'caustic.js\'",
+        "raw": "'caustic.js'",
         "rawValue": "caustic.js",
       },
       "loc": Object {
@@ -27002,7 +27082,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'jquery.js\'",
+        "raw": "'jquery.js'",
         "rawValue": "jquery.js",
       },
       "loc": Object {
@@ -27715,12 +27795,12 @@ Array [
     "val": 2,
   },
   Object {
-    "args": "\"The meaning of life\"",
+    "args": "\\"The meaning of life\\"",
     "ast_args": Array [
       Object {
         "end": 22,
         "extra": Object {
-          "raw": "\"The meaning of life\"",
+          "raw": "\\"The meaning of life\\"",
           "rawValue": "The meaning of life",
         },
         "loc": Object {
@@ -27965,7 +28045,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'jquery.js\'",
+        "raw": "'jquery.js'",
         "rawValue": "jquery.js",
       },
       "loc": Object {
@@ -28422,7 +28502,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'jquery.js\'",
+        "raw": "'jquery.js'",
         "rawValue": "jquery.js",
       },
       "loc": Object {
@@ -28742,7 +28822,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'jquery.js\'",
+        "raw": "'jquery.js'",
         "rawValue": "jquery.js",
       },
       "loc": Object {
@@ -29437,7 +29517,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'[foo]\'",
+        "raw": "'[foo]'",
         "rawValue": "[foo]",
       },
       "loc": Object {
@@ -29883,7 +29963,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'[foo]\'",
+        "raw": "'[foo]'",
         "rawValue": "[foo]",
       },
       "loc": Object {
@@ -30362,7 +30442,7 @@ Array [
     "ast": Object {
       "end": 3,
       "extra": Object {
-        "raw": "\'#\'",
+        "raw": "'#'",
         "rawValue": "#",
       },
       "loc": Object {
@@ -30399,7 +30479,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'rho--modifier\'",
+        "raw": "'rho--modifier'",
         "rawValue": "rho--modifier",
       },
       "loc": Object {
@@ -30596,7 +30676,7 @@ Array [
     "ast": Object {
       "end": 3,
       "extra": Object {
-        "raw": "\'#\'",
+        "raw": "'#'",
         "rawValue": "#",
       },
       "loc": Object {
@@ -30633,7 +30713,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'rho--modifier\'",
+        "raw": "'rho--modifier'",
         "rawValue": "rho--modifier",
       },
       "loc": Object {
@@ -30815,7 +30895,7 @@ Array [
     "ast": Object {
       "end": 3,
       "extra": Object {
-        "raw": "\'#\'",
+        "raw": "'#'",
         "rawValue": "#",
       },
       "loc": Object {
@@ -30852,7 +30932,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'rho--modifier\'",
+        "raw": "'rho--modifier'",
         "rawValue": "rho--modifier",
       },
       "loc": Object {
@@ -31172,12 +31252,12 @@ Array [
     "type": "start-pug-interpolation",
   },
   Object {
-    "args": "\'http://www.bing.com\'",
+    "args": "'http://www.bing.com'",
     "ast_args": Array [
       Object {
         "end": 22,
         "extra": Object {
-          "raw": "\'http://www.bing.com\'",
+          "raw": "'http://www.bing.com'",
           "rawValue": "http://www.bing.com",
         },
         "loc": Object {
@@ -31442,7 +31522,7 @@ Array [
         "left": Object {
           "end": 6,
           "extra": Object {
-            "raw": "\"is {\"",
+            "raw": "\\"is {\\"",
             "rawValue": "is {",
           },
           "loc": Object {
@@ -31504,7 +31584,7 @@ Array [
       "right": Object {
         "end": 17,
         "extra": Object {
-          "raw": "\"}\"",
+          "raw": "\\"}\\"",
           "rawValue": "}",
         },
         "loc": Object {
@@ -31730,7 +31810,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'foo.js\'",
+        "raw": "'foo.js'",
         "rawValue": "foo.js",
       },
       "loc": Object {
@@ -31824,7 +31904,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'bar.js\'",
+        "raw": "'bar.js'",
         "rawValue": "bar.js",
       },
       "loc": Object {
@@ -32025,7 +32105,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'foo.js\'",
+        "raw": "'foo.js'",
         "rawValue": "foo.js",
       },
       "loc": Object {
@@ -32119,7 +32199,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'bar.js\'",
+        "raw": "'bar.js'",
         "rawValue": "bar.js",
       },
       "loc": Object {
@@ -32726,7 +32806,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'jquery.js\'",
+        "raw": "'jquery.js'",
         "rawValue": "jquery.js",
       },
       "loc": Object {
@@ -32851,7 +32931,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'foo.js\'",
+        "raw": "'foo.js'",
         "rawValue": "foo.js",
       },
       "loc": Object {
@@ -33052,7 +33132,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'foo.js\'",
+        "raw": "'foo.js'",
         "rawValue": "foo.js",
       },
       "loc": Object {
@@ -33146,7 +33226,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'bar.js\'",
+        "raw": "'bar.js'",
         "rawValue": "bar.js",
       },
       "loc": Object {
@@ -33347,7 +33427,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'foo.js\'",
+        "raw": "'foo.js'",
         "rawValue": "foo.js",
       },
       "loc": Object {
@@ -33441,7 +33521,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'bar.js\'",
+        "raw": "'bar.js'",
         "rawValue": "bar.js",
       },
       "loc": Object {
@@ -34634,12 +34714,12 @@ Array [
     "type": "newline",
   },
   Object {
-    "args": "\'Section 1\'",
+    "args": "'Section 1'",
     "ast_args": Array [
       Object {
         "end": 12,
         "extra": Object {
-          "raw": "\'Section 1\'",
+          "raw": "'Section 1'",
           "rawValue": "Section 1",
         },
         "loc": Object {
@@ -34746,12 +34826,12 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'Section 2\'",
+    "args": "'Section 2'",
     "ast_args": Array [
       Object {
         "end": 12,
         "extra": Object {
-          "raw": "\'Section 2\'",
+          "raw": "'Section 2'",
           "rawValue": "Section 2",
         },
         "loc": Object {
@@ -34831,7 +34911,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'menu.html\'",
+        "raw": "'menu.html'",
         "rawValue": "menu.html",
       },
       "loc": Object {
@@ -34868,7 +34948,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -34975,12 +35055,12 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'Section 3\'",
+    "args": "'Section 3'",
     "ast_args": Array [
       Object {
         "end": 12,
         "extra": Object {
-          "raw": "\'Section 3\'",
+          "raw": "'Section 3'",
           "rawValue": "Section 3",
         },
         "loc": Object {
@@ -35030,7 +35110,7 @@ Array [
     "ast": Object {
       "end": 3,
       "extra": Object {
-        "raw": "\'#\'",
+        "raw": "'#'",
         "rawValue": "#",
       },
       "loc": Object {
@@ -35185,7 +35265,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -35222,7 +35302,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'end\'",
+        "raw": "'end'",
         "rawValue": "end",
       },
       "loc": Object {
@@ -35259,7 +35339,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'Last\'",
+        "raw": "'Last'",
         "rawValue": "Last",
       },
       "loc": Object {
@@ -35296,7 +35376,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -35438,7 +35518,7 @@ Array [
         Object {
           "end": 9,
           "extra": Object {
-            "raw": "\'class1\'",
+            "raw": "'class1'",
             "rawValue": "class1",
           },
           "loc": Object {
@@ -35458,7 +35538,7 @@ Array [
         Object {
           "end": 19,
           "extra": Object {
-            "raw": "\'class2\'",
+            "raw": "'class2'",
             "rawValue": "class2",
           },
           "loc": Object {
@@ -35613,7 +35693,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -35650,7 +35730,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -35822,7 +35902,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -36140,12 +36220,12 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'work\'",
+    "args": "'work'",
     "ast_args": Array [
       Object {
         "end": 7,
         "extra": Object {
-          "raw": "\'work\'",
+          "raw": "'work'",
           "rawValue": "work",
         },
         "loc": Object {
@@ -36195,7 +36275,7 @@ Array [
     "ast": Object {
       "end": 9,
       "extra": Object {
-        "raw": "\'profile\'",
+        "raw": "'profile'",
         "rawValue": "profile",
       },
       "loc": Object {
@@ -36232,7 +36312,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'name\'",
+        "raw": "'name'",
         "rawValue": "name",
       },
       "loc": Object {
@@ -36610,7 +36690,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\"qux\"",
+        "raw": "\\"qux\\"",
         "rawValue": "qux",
       },
       "loc": Object {
@@ -36647,7 +36727,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\"baz\"",
+        "raw": "\\"baz\\"",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -36719,7 +36799,7 @@ Array [
       Object {
         "end": 5,
         "extra": Object {
-          "raw": "\'1\'",
+          "raw": "'1'",
           "rawValue": "1",
         },
         "loc": Object {
@@ -36739,7 +36819,7 @@ Array [
       Object {
         "end": 16,
         "extra": Object {
-          "raw": "\'2\'",
+          "raw": "'2'",
           "rawValue": "2",
         },
         "loc": Object {
@@ -36759,7 +36839,7 @@ Array [
       Object {
         "end": 23,
         "extra": Object {
-          "raw": "\'3\'",
+          "raw": "'3'",
           "rawValue": "3",
         },
         "loc": Object {
@@ -36779,7 +36859,7 @@ Array [
       Object {
         "end": 34,
         "extra": Object {
-          "raw": "\'4\'",
+          "raw": "'4'",
           "rawValue": "4",
         },
         "loc": Object {
@@ -37100,12 +37180,12 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'Foo\'",
+    "args": "'Foo'",
     "ast_args": Array [
       Object {
         "end": 6,
         "extra": Object {
-          "raw": "\'Foo\'",
+          "raw": "'Foo'",
           "rawValue": "Foo",
         },
         "loc": Object {
@@ -37495,12 +37575,12 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'Something\'",
+    "args": "'Something'",
     "ast_args": Array [
       Object {
         "end": 12,
         "extra": Object {
-          "raw": "\'Something\'",
+          "raw": "'Something'",
           "rawValue": "Something",
         },
         "loc": Object {
@@ -37987,7 +38067,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'hidden\'",
+        "raw": "'hidden'",
         "rawValue": "hidden",
       },
       "loc": Object {
@@ -38024,7 +38104,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'_csrf\'",
+        "raw": "'_csrf'",
         "rawValue": "_csrf",
       },
       "loc": Object {
@@ -38222,12 +38302,12 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'GET\', \'/search\'",
+    "args": "'GET', '/search'",
     "ast_args": Array [
       Object {
         "end": 6,
         "extra": Object {
-          "raw": "\'GET\'",
+          "raw": "'GET'",
           "rawValue": "GET",
         },
         "loc": Object {
@@ -38247,7 +38327,7 @@ Array [
       Object {
         "end": 17,
         "extra": Object {
-          "raw": "\'/search\'",
+          "raw": "'/search'",
           "rawValue": "/search",
         },
         "loc": Object {
@@ -38327,7 +38407,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'text\'",
+        "raw": "'text'",
         "rawValue": "text",
       },
       "loc": Object {
@@ -38364,7 +38444,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'query\'",
+        "raw": "'query'",
         "rawValue": "query",
       },
       "loc": Object {
@@ -38401,7 +38481,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'Search\'",
+        "raw": "'Search'",
         "rawValue": "Search",
       },
       "loc": Object {
@@ -38495,7 +38575,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'submit\'",
+        "raw": "'submit'",
         "rawValue": "submit",
       },
       "loc": Object {
@@ -38532,7 +38612,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'Search\'",
+        "raw": "'Search'",
         "rawValue": "Search",
       },
       "loc": Object {
@@ -38682,12 +38762,12 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'POST\', \'/search\'",
+    "args": "'POST', '/search'",
     "ast_args": Array [
       Object {
         "end": 7,
         "extra": Object {
-          "raw": "\'POST\'",
+          "raw": "'POST'",
           "rawValue": "POST",
         },
         "loc": Object {
@@ -38707,7 +38787,7 @@ Array [
       Object {
         "end": 18,
         "extra": Object {
-          "raw": "\'/search\'",
+          "raw": "'/search'",
           "rawValue": "/search",
         },
         "loc": Object {
@@ -38787,7 +38867,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'text\'",
+        "raw": "'text'",
         "rawValue": "text",
       },
       "loc": Object {
@@ -38824,7 +38904,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'query\'",
+        "raw": "'query'",
         "rawValue": "query",
       },
       "loc": Object {
@@ -38861,7 +38941,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'Search\'",
+        "raw": "'Search'",
         "rawValue": "Search",
       },
       "loc": Object {
@@ -38955,7 +39035,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'submit\'",
+        "raw": "'submit'",
         "rawValue": "submit",
       },
       "loc": Object {
@@ -38992,7 +39072,7 @@ Array [
     "ast": Object {
       "end": 8,
       "extra": Object {
-        "raw": "\'Search\'",
+        "raw": "'Search'",
         "rawValue": "Search",
       },
       "loc": Object {
@@ -39142,12 +39222,12 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'POST\', \'/search\'",
+    "args": "'POST', '/search'",
     "ast_args": Array [
       Object {
         "end": 7,
         "extra": Object {
-          "raw": "\'POST\'",
+          "raw": "'POST'",
           "rawValue": "POST",
         },
         "loc": Object {
@@ -39167,7 +39247,7 @@ Array [
       Object {
         "end": 18,
         "extra": Object {
-          "raw": "\'/search\'",
+          "raw": "'/search'",
           "rawValue": "/search",
         },
         "loc": Object {
@@ -39765,7 +39845,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'123\'",
+        "raw": "'123'",
         "rawValue": "123",
       },
       "loc": Object {
@@ -40133,7 +40213,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\"baz\"",
+        "raw": "\\"baz\\"",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -40483,7 +40563,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\"hello\"",
+        "raw": "\\"hello\\"",
         "rawValue": "hello",
       },
       "loc": Object {
@@ -40593,7 +40673,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\"world\"",
+        "raw": "\\"world\\"",
         "rawValue": "world",
       },
       "loc": Object {
@@ -41945,13 +42025,13 @@ Array [
     "val": 4,
   },
   Object {
-    "args": "\'This\',
-            ((\'is regular, javascript\'))",
+    "args": "'This',
+            (('is regular, javascript'))",
     "ast_args": Array [
       Object {
         "end": 7,
         "extra": Object {
-          "raw": "\'This\'",
+          "raw": "'This'",
           "rawValue": "This",
         },
         "loc": Object {
@@ -41973,7 +42053,7 @@ Array [
         "extra": Object {
           "parenStart": 21,
           "parenthesized": true,
-          "raw": "\'is regular, javascript\'",
+          "raw": "'is regular, javascript'",
           "rawValue": "is regular, javascript",
         },
         "loc": Object {
@@ -42427,7 +42507,7 @@ Array [
       "right": Object {
         "end": 20,
         "extra": Object {
-          "raw": "\'interpolated\'",
+          "raw": "'interpolated'",
           "rawValue": "interpolated",
         },
         "loc": Object {
@@ -42509,13 +42589,13 @@ Array [
     "type": "newline",
   },
   Object {
-    "args": "\'This is \'",
+    "args": "'This is '",
     "ast": Object {
       "end": 14,
       "left": Object {
         "end": 5,
         "extra": Object {
-          "raw": "\'foo\'",
+          "raw": "'foo'",
           "rawValue": "foo",
         },
         "loc": Object {
@@ -42567,7 +42647,7 @@ Array [
       Object {
         "end": 11,
         "extra": Object {
-          "raw": "\'This is \'",
+          "raw": "'This is '",
           "rawValue": "This is ",
         },
         "loc": Object {
@@ -42851,12 +42931,12 @@ Array [
     "type": "outdent",
   },
   Object {
-    "args": "\'ul\', 1, 2, 3, 4",
+    "args": "'ul', 1, 2, 3, 4",
     "ast_args": Array [
       Object {
         "end": 5,
         "extra": Object {
-          "raw": "\'ul\'",
+          "raw": "'ul'",
           "rawValue": "ul",
         },
         "loc": Object {
@@ -43196,7 +43276,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -43985,7 +44065,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'going\'",
+        "raw": "'going'",
         "rawValue": "going",
       },
       "loc": Object {
@@ -44051,7 +44131,7 @@ Array [
     "ast": Object {
       "end": 4,
       "extra": Object {
-        "raw": "\'on\'",
+        "raw": "'on'",
         "rawValue": "on",
       },
       "loc": Object {
@@ -44657,7 +44737,7 @@ Array [
         Object {
           "end": 43,
           "extra": Object {
-            "raw": "/^www\\./",
+            "raw": "/^www\\\\./",
           },
           "flags": "",
           "loc": Object {
@@ -44670,14 +44750,14 @@ Array [
               "line": 1,
             },
           },
-          "pattern": "^www\\.",
+          "pattern": "^www\\\\.",
           "start": 35,
           "type": "RegExpLiteral",
         },
         Object {
           "end": 47,
           "extra": Object {
-            "raw": "\'\'",
+            "raw": "''",
             "rawValue": "",
           },
           "loc": Object {
@@ -44713,7 +44793,7 @@ Array [
             Object {
               "end": 21,
               "extra": Object {
-                "raw": "\'http://\'",
+                "raw": "'http://'",
                 "rawValue": "http://",
               },
               "loc": Object {
@@ -44733,7 +44813,7 @@ Array [
             Object {
               "end": 25,
               "extra": Object {
-                "raw": "\'\'",
+                "raw": "''",
                 "rawValue": "",
               },
               "loc": Object {
@@ -45275,7 +45355,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'text/template\'",
+        "raw": "'text/template'",
         "rawValue": "text/template",
       },
       "loc": Object {
@@ -45517,7 +45597,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'text/template\'",
+        "raw": "'text/template'",
         "rawValue": "text/template",
       },
       "loc": Object {
@@ -45861,7 +45941,7 @@ Array [
     "ast": Object {
       "end": 7,
       "extra": Object {
-        "raw": "\'foo()\'",
+        "raw": "'foo()'",
         "rawValue": "foo()",
       },
       "loc": Object {
@@ -46292,7 +46372,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'auto\'",
+        "raw": "'auto'",
         "rawValue": "auto",
       },
       "loc": Object {
@@ -46421,7 +46501,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -46515,7 +46595,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -46876,7 +46956,7 @@ Array [
     "ast": Object {
       "end": 28,
       "extra": Object {
-        "raw": "\'color:red;background:green\'",
+        "raw": "'color:red;background:green'",
         "rawValue": "color:red;background:green",
       },
       "loc": Object {
@@ -47017,7 +47097,7 @@ Array [
           "value": Object {
             "end": 13,
             "extra": Object {
-              "raw": "\'red\'",
+              "raw": "'red'",
               "rawValue": "red",
             },
             "loc": Object {
@@ -47072,7 +47152,7 @@ Array [
           "value": Object {
             "end": 34,
             "extra": Object {
-              "raw": "\'green\'",
+              "raw": "'green'",
               "rawValue": "green",
             },
             "loc": Object {
@@ -47335,7 +47415,7 @@ Array [
     "ast": Object {
       "end": 28,
       "extra": Object {
-        "raw": "\'color:red;background:green\'",
+        "raw": "'color:red;background:green'",
         "rawValue": "color:red;background:green",
       },
       "loc": Object {
@@ -47477,7 +47557,7 @@ Array [
           "value": Object {
             "end": 13,
             "extra": Object {
-              "raw": "\'red\'",
+              "raw": "'red'",
               "rawValue": "red",
             },
             "loc": Object {
@@ -47532,7 +47612,7 @@ Array [
           "value": Object {
             "end": 34,
             "extra": Object {
-              "raw": "\'green\'",
+              "raw": "'green'",
               "rawValue": "green",
             },
             "loc": Object {
@@ -47709,7 +47789,7 @@ Array [
           "value": Object {
             "end": 13,
             "extra": Object {
-              "raw": "\'red\'",
+              "raw": "'red'",
               "rawValue": "red",
             },
             "loc": Object {
@@ -47952,7 +48032,7 @@ Array [
           "value": Object {
             "end": 13,
             "extra": Object {
-              "raw": "\'red\'",
+              "raw": "'red'",
               "rawValue": "red",
             },
             "loc": Object {
@@ -48290,7 +48370,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'bar\'",
+        "raw": "'bar'",
         "rawValue": "bar",
       },
       "loc": Object {
@@ -48371,7 +48451,7 @@ Array [
       "alternate": Object {
         "end": 16,
         "extra": Object {
-          "raw": "\'li\'",
+          "raw": "'li'",
           "rawValue": "li",
         },
         "loc": Object {
@@ -48391,7 +48471,7 @@ Array [
       "consequent": Object {
         "end": 9,
         "extra": Object {
-          "raw": "\'a\'",
+          "raw": "'a'",
           "rawValue": "a",
         },
         "loc": Object {
@@ -49143,12 +49223,12 @@ Array [
     "val": 2,
   },
   Object {
-    "args": "\'contact\'",
+    "args": "'contact'",
     "ast_args": Array [
       Object {
         "end": 10,
         "extra": Object {
-          "raw": "\'contact\'",
+          "raw": "'contact'",
           "rawValue": "contact",
         },
         "loc": Object {
@@ -49243,7 +49323,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'/contact\'",
+        "raw": "'/contact'",
         "rawValue": "/contact",
       },
       "loc": Object {
@@ -49587,7 +49667,7 @@ Array [
     "ast": Object {
       "end": 4,
       "extra": Object {
-        "raw": "\'  \'",
+        "raw": "'  '",
         "rawValue": "  ",
       },
       "loc": Object {
@@ -49788,7 +49868,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -49925,7 +50005,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -50077,7 +50157,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -50157,7 +50237,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -50220,7 +50300,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -50269,7 +50349,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -50348,7 +50428,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -50412,7 +50492,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -50461,7 +50541,7 @@ Array [
     "ast": Object {
       "end": 5,
       "extra": Object {
-        "raw": "\'baz\'",
+        "raw": "'baz'",
         "rawValue": "baz",
       },
       "loc": Object {
@@ -50689,7 +50769,7 @@ Array [
     "ast": Object {
       "end": 10,
       "extra": Object {
-        "raw": "\'foo\'",
+        "raw": "'foo'",
         "rawValue": "foo",
       },
       "loc": Object {
@@ -50802,7 +50882,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\'text/x-template\'",
+        "raw": "'text/x-template'",
         "rawValue": "text/x-template",
       },
       "loc": Object {
@@ -51029,7 +51109,7 @@ Array [
     "ast": Object {
       "end": 17,
       "extra": Object {
-        "raw": "\'text/x-template\'",
+        "raw": "'text/x-template'",
         "rawValue": "text/x-template",
       },
       "loc": Object {
@@ -51243,7 +51323,7 @@ Array [
     "ast": Object {
       "end": 2,
       "extra": Object {
-        "raw": "\'\'",
+        "raw": "''",
         "rawValue": "",
       },
       "loc": Object {
@@ -52644,7 +52724,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'text\'",
+        "raw": "'text'",
         "rawValue": "text",
       },
       "loc": Object {
@@ -52681,7 +52761,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\'user[name]\'",
+        "raw": "'user[name]'",
         "rawValue": "user[name]",
       },
       "loc": Object {
@@ -52820,7 +52900,7 @@ Array [
     "ast": Object {
       "end": 6,
       "extra": Object {
-        "raw": "\'text\'",
+        "raw": "'text'",
         "rawValue": "text",
       },
       "loc": Object {
@@ -52857,7 +52937,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\'user[pass]\'",
+        "raw": "'user[pass]'",
         "rawValue": "user[pass]",
       },
       "loc": Object {
@@ -53543,7 +53623,7 @@ Array [
     "ast": Object {
       "end": 11,
       "extra": Object {
-        "raw": "\'some term\'",
+        "raw": "'some term'",
         "rawValue": "some term",
       },
       "loc": Object {
@@ -53804,7 +53884,7 @@ Array [
     "ast": Object {
       "end": 13,
       "extra": Object {
-        "raw": "\'/caustic.js\'",
+        "raw": "'/caustic.js'",
         "rawValue": "/caustic.js",
       },
       "loc": Object {
@@ -53898,7 +53978,7 @@ Array [
     "ast": Object {
       "end": 9,
       "extra": Object {
-        "raw": "\'/app.js\'",
+        "raw": "'/app.js'",
         "rawValue": "/app.js",
       },
       "loc": Object {
@@ -54143,7 +54223,7 @@ Array [
     "ast": Object {
       "end": 13,
       "extra": Object {
-        "raw": "\'/caustic.js\'",
+        "raw": "'/caustic.js'",
         "rawValue": "/caustic.js",
       },
       "loc": Object {
@@ -54237,7 +54317,7 @@ Array [
     "ast": Object {
       "end": 9,
       "extra": Object {
-        "raw": "\'/app.js\'",
+        "raw": "'/app.js'",
         "rawValue": "/app.js",
       },
       "loc": Object {
@@ -54408,7 +54488,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\'/jquery.js\'",
+        "raw": "'/jquery.js'",
         "rawValue": "/jquery.js",
       },
       "loc": Object {
@@ -54576,7 +54656,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'/jquery.ui.js\'",
+        "raw": "'/jquery.ui.js'",
         "rawValue": "/jquery.ui.js",
       },
       "loc": Object {
@@ -54733,7 +54813,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\'/jquery.js\'",
+        "raw": "'/jquery.js'",
         "rawValue": "/jquery.js",
       },
       "loc": Object {
@@ -54855,7 +54935,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'/jquery.ui.js\'",
+        "raw": "'/jquery.ui.js'",
         "rawValue": "/jquery.ui.js",
       },
       "loc": Object {
@@ -55236,7 +55316,7 @@ Array [
     "ast": Object {
       "end": 12,
       "extra": Object {
-        "raw": "\'/jquery.js\'",
+        "raw": "'/jquery.js'",
         "rawValue": "/jquery.js",
       },
       "loc": Object {
@@ -55330,7 +55410,7 @@ Array [
     "ast": Object {
       "end": 15,
       "extra": Object {
-        "raw": "\'/jquery.ui.js\'",
+        "raw": "'/jquery.ui.js'",
         "rawValue": "/jquery.ui.js",
       },
       "loc": Object {

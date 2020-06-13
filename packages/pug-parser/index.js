@@ -315,6 +315,7 @@ Parser.prototype = {
           tags.push({
             type: 'Code',
             val: tok.val,
+            astVal: tok.ast,
             buffer: tok.buffer,
             mustEscape: tok.mustEscape !== false,
             isInline: true,
@@ -331,20 +332,6 @@ Parser.prototype = {
             tags.push({
               type: 'Text',
               val: '\n',
-              line: tok.loc.start.line,
-              column: tok.loc.start.column,
-              filename: this.filename
-            });
-            break;
-          case 'interpolated-code':
-            var tok = this.advance();
-            tags.push({
-              type: 'Code',
-              val: tok.val,
-              astVal: tok.ast,
-              buffer: tok.buffer,
-              mustEscape: tok.mustEscape !== false,
-              isInline: true,
               line: tok.loc.start.line,
               column: tok.loc.start.column,
               filename: this.filename
