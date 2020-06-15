@@ -44,7 +44,9 @@ var tpl_interp_escape = babelTemplate(
   'ESCAPE(null == (pug_interp = VALUE) ? "" : pug_interp)'
 );
 
-var tpl_json_buffer = JSON.stringify(babelTemplate.ast(`pug_html = pug_html + placeholder`))
+var tpl_json_buffer = JSON.stringify(
+  babelTemplate.ast(`pug_html = pug_html + placeholder`)
+);
 
 module.exports = generateCode;
 module.exports.CodeGenerator = Compiler;
@@ -148,9 +150,9 @@ Compiler.prototype = {
     return node;
   },
   ast_buffer: function(ast) {
-    const o = JSON.parse(tpl_json_buffer)
-    o.expression.right.right = ast
-    return [o]
+    const o = JSON.parse(tpl_json_buffer);
+    o.expression.right.right = ast;
+    return [o];
   },
   ast_with: function(ast) {
     let exclude = this.options.globals
@@ -457,8 +459,8 @@ Compiler.prototype = {
    */
 
   buffer: function(str) {
-    const lit = t.stringLiteral(str)
-    lit.extra = {rawValue: lit.value, raw: stringify(lit.value)}; 
+    const lit = t.stringLiteral(str);
+    lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
     //var lit = this.ast_stringify(t.stringLiteral(str));
     return this.ast_buffer(lit);
   },
@@ -522,7 +524,9 @@ Compiler.prototype = {
    */
 
   visitCacheLine: JSON.stringify(babelTemplate.ast(`pug_debug_line = 1;`)),
-  visitCacheFilename: JSON.stringify(babelTemplate.ast(`pug_debug_filename = "";`)),
+  visitCacheFilename: JSON.stringify(
+    babelTemplate.ast(`pug_debug_filename = "";`)
+  ),
   visit: function(node, parent) {
     var ast = [];
     var debug = this.debug;
@@ -546,17 +550,16 @@ Compiler.prototype = {
 
     if (debug && node.debug !== false && node.type !== 'Block') {
       if (node.line) {
-
-        const astLine = JSON.parse(this.visitCacheLine)
-        astLine.expression.right.value = node.line
-        astLine.expression.right.extra = null
-        ast.push(astLine)
+        const astLine = JSON.parse(this.visitCacheLine);
+        astLine.expression.right.value = node.line;
+        astLine.expression.right.extra = null;
+        ast.push(astLine);
 
         if (node.filename) {
-          const astFile = JSON.parse(this.visitCacheFilename)
-          astFile.expression.right.value = node.filename
-          astFile.expression.right.extra = null
-          ast.push(astFile)
+          const astFile = JSON.parse(this.visitCacheFilename);
+          astFile.expression.right.value = node.filename;
+          astFile.expression.right.extra = null;
+          ast.push(astFile);
         }
       }
     }
@@ -592,7 +595,7 @@ Compiler.prototype = {
       throw new TypeError(msg);
     }
 
-    const res = this.visitNode(node, parent)
+    const res = this.visitNode(node, parent);
     unshift.apply(res, ast);
     return res;
   },
@@ -681,10 +684,10 @@ Compiler.prototype = {
       push.apply(ast, this.prettyIndent(1, true));
     }
     //console.log('start block')
-    const blocks = Array(2*block.nodes.length)
+    const blocks = Array(2 * block.nodes.length);
     for (var i = 0; i < block.nodes.length; ++i) {
       // Pretty print text
-      blocks[2*i] = []
+      blocks[2 * i] = [];
       if (
         pp &&
         i > 0 &&
@@ -693,10 +696,10 @@ Compiler.prototype = {
         block.nodes[i - 1].type === 'Text' &&
         /\n$/.test(block.nodes[i - 1].val)
       ) {
-        blocks[2*i] = this.prettyIndent(1, false)
+        blocks[2 * i] = this.prettyIndent(1, false);
       }
-      const b = this.visit(block.nodes[i], block)
-      blocks[2*i+1] = b;
+      const b = this.visit(block.nodes[i], block);
+      blocks[2 * i + 1] = b;
     }
     ast = ast.concat.apply(ast, blocks);
     return ast;
@@ -1074,7 +1077,7 @@ Compiler.prototype = {
     // pretty print
     if (pp && !tag.isInline) push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
-/*
+      /*
       push.apply(ast, this.buffer('<'));
       push.apply(ast, bufferName());
       push.apply(
@@ -1097,8 +1100,8 @@ Compiler.prototype = {
           tag.attrs,
           this.attributeBlocks(tag.attributeBlocks)
         ),
-        this.buffer((this.terse && !tag.selfClosing) ? '>' : '/>')
-      ])
+        this.buffer(this.terse && !tag.selfClosing ? '>' : '/>'),
+      ]);
       // if it is non-empty throw an error
       if (
         tag.code ||
@@ -1532,24 +1535,24 @@ Compiler.prototype = {
       }
       if (attributeBlocks.length > 1) {
         ast = this.bufferExpression(
-            this.runtime('attrs') +
-              '(' +
-              this.runtime('merge') +
-              '([' +
-              attributeBlocks.join(',') +
-              ']), ' +
-              stringify(this.terse) +
-              ')'
-          )
+          this.runtime('attrs') +
+            '(' +
+            this.runtime('merge') +
+            '([' +
+            attributeBlocks.join(',') +
+            ']), ' +
+            stringify(this.terse) +
+            ')'
+        );
       } else {
         ast = this.bufferExpression(
-            this.runtime('attrs') +
-              '(' +
-              attributeBlocks[0] +
-              ', ' +
-              stringify(this.terse) +
-              ')'
-          )
+          this.runtime('attrs') +
+            '(' +
+            attributeBlocks[0] +
+            ', ' +
+            stringify(this.terse) +
+            ')'
+        );
       }
     } else if (attrs.length) {
       ast = this.bufferExpression(this.attrs(attrs, true));
