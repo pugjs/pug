@@ -9,7 +9,7 @@ var selfClosing = require('void-elements');
 var constantinople = require('constantinople');
 var stringify = require('js-stringify');
 
-var findGlobals = require('with/lib/globals.js');
+var findGlobals = require('with/lib/globals.js').default;
 
 var t = require('@babel/types');
 var gen = require('@babel/generator');
@@ -34,6 +34,8 @@ var INTERNAL_VARIABLES = [
 ];
 
 var push = Array.prototype.push;
+var unshift = Array.prototype.unshift;
+var concat = Array.prototype.concat;
 
 var tpl_interp = babelTemplate(
   'null == (pug_interp = VALUE) ? "" : pug_interp'
@@ -41,6 +43,8 @@ var tpl_interp = babelTemplate(
 var tpl_interp_escape = babelTemplate(
   'ESCAPE(null == (pug_interp = VALUE) ? "" : pug_interp)'
 );
+
+var tpl_json_buffer = JSON.stringify(babelTemplate.ast(`pug_html = pug_html + placeholder`))
 
 module.exports = generateCode;
 module.exports.CodeGenerator = Compiler;
@@ -144,15 +148,9 @@ Compiler.prototype = {
     return node;
   },
   ast_buffer: function(ast) {
-    return [
-      t.expressionStatement(
-        t.assignmentExpression(
-          '=',
-          t.identifier('pug_html'),
-          t.binaryExpression('+', t.identifier('pug_html'), ast)
-        )
-      ),
-    ];
+    const o = JSON.parse(tpl_json_buffer)
+    o.expression.right.right = ast
+    return [o]
   },
   ast_with: function(ast) {
     let exclude = this.options.globals
@@ -459,9 +457,10 @@ Compiler.prototype = {
    */
 
   buffer: function(str) {
-    var lit = this.ast_stringify(t.stringLiteral(str));
-    var ast = this.ast_buffer(lit);
-    return ast;
+    const lit = t.stringLiteral(str)
+    lit.extra = {rawValue: lit.value, raw: stringify(lit.value)}; 
+    //var lit = this.ast_stringify(t.stringLiteral(str));
+    return this.ast_buffer(lit);
   },
 
   /**
@@ -522,6 +521,8 @@ Compiler.prototype = {
    * @api public
    */
 
+  visitCacheLine: JSON.stringify(babelTemplate.ast(`pug_debug_line = 1;`)),
+  visitCacheFilename: JSON.stringify(babelTemplate.ast(`pug_debug_filename = "";`)),
   visit: function(node, parent) {
     var ast = [];
     var debug = this.debug;
@@ -545,25 +546,17 @@ Compiler.prototype = {
 
     if (debug && node.debug !== false && node.type !== 'Block') {
       if (node.line) {
-        ast.push(
-          t.expressionStatement(
-            t.assignmentExpression(
-              '=',
-              t.identifier('pug_debug_line'),
-              t.numericLiteral(node.line)
-            )
-          )
-        );
+
+        const astLine = JSON.parse(this.visitCacheLine)
+        astLine.expression.right.value = node.line
+        astLine.expression.right.extra = null
+        ast.push(astLine)
+
         if (node.filename) {
-          ast.push(
-            t.expressionStatement(
-              t.assignmentExpression(
-                '=',
-                t.identifier('pug_debug_filename'),
-                t.stringLiteral(node.filename)
-              )
-            )
-          );
+          const astFile = JSON.parse(this.visitCacheFilename)
+          astFile.expression.right.value = node.filename
+          astFile.expression.right.extra = null
+          ast.push(astFile)
         }
       }
     }
@@ -599,8 +592,9 @@ Compiler.prototype = {
       throw new TypeError(msg);
     }
 
-    push.apply(ast, this.visitNode(node, parent));
-    return ast;
+    const res = this.visitNode(node, parent)
+    unshift.apply(res, ast);
+    return res;
   },
 
   /**
@@ -611,6 +605,7 @@ Compiler.prototype = {
    */
 
   visitNode: function(node, parent) {
+    //console.log('visit', node.type)
     return this['visit' + node.type](node, parent);
   },
 
@@ -685,8 +680,11 @@ Compiler.prototype = {
     ) {
       push.apply(ast, this.prettyIndent(1, true));
     }
+    //console.log('start block')
+    const blocks = Array(2*block.nodes.length)
     for (var i = 0; i < block.nodes.length; ++i) {
       // Pretty print text
+      blocks[2*i] = []
       if (
         pp &&
         i > 0 &&
@@ -695,10 +693,12 @@ Compiler.prototype = {
         block.nodes[i - 1].type === 'Text' &&
         /\n$/.test(block.nodes[i - 1].val)
       ) {
-        push.apply(ast, this.prettyIndent(1, false));
+        blocks[2*i] = this.prettyIndent(1, false)
       }
-      push.apply(ast, this.visit(block.nodes[i], block));
+      const b = this.visit(block.nodes[i], block)
+      blocks[2*i+1] = b;
     }
+    ast = ast.concat.apply(ast, blocks);
     return ast;
   },
 
@@ -1074,6 +1074,7 @@ Compiler.prototype = {
     // pretty print
     if (pp && !tag.isInline) push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
+/*
       push.apply(ast, this.buffer('<'));
       push.apply(ast, bufferName());
       push.apply(
@@ -1088,6 +1089,16 @@ Compiler.prototype = {
       } else {
         push.apply(ast, this.buffer('/>'));
       }
+*/
+      ast = concat.apply(ast, [
+        this.buffer('<'),
+        bufferName(),
+        this.visitAttributes(
+          tag.attrs,
+          this.attributeBlocks(tag.attributeBlocks)
+        ),
+        this.buffer((this.terse && !tag.selfClosing) ? '>' : '/>')
+      ])
       // if it is non-empty throw an error
       if (
         tag.code ||
@@ -1513,16 +1524,14 @@ Compiler.prototype = {
    */
 
   visitAttributes: function(attrs, attributeBlocks) {
-    var ast = [];
+    let ast = [];
     if (attributeBlocks.length) {
       if (attrs.length) {
         var val = this.attrs(attrs);
         attributeBlocks.unshift(val);
       }
       if (attributeBlocks.length > 1) {
-        push.apply(
-          ast,
-          this.bufferExpression(
+        ast = this.bufferExpression(
             this.runtime('attrs') +
               '(' +
               this.runtime('merge') +
@@ -1532,11 +1541,8 @@ Compiler.prototype = {
               stringify(this.terse) +
               ')'
           )
-        );
       } else {
-        push.apply(
-          ast,
-          this.bufferExpression(
+        ast = this.bufferExpression(
             this.runtime('attrs') +
               '(' +
               attributeBlocks[0] +
@@ -1544,10 +1550,9 @@ Compiler.prototype = {
               stringify(this.terse) +
               ')'
           )
-        );
       }
     } else if (attrs.length) {
-      push.apply(ast, this.bufferExpression(this.attrs(attrs, true)));
+      ast = this.bufferExpression(this.attrs(attrs, true));
     }
     return ast;
   },
