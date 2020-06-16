@@ -143,10 +143,6 @@ Compiler.prototype = {
   ast_return: function() {
     return [t.returnStatement(t.identifier('pug_html'))];
   },
-  ast_stringify: function(lit) {
-    lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
-    return lit;
-  },
   wrapCallExpression: function(node) {
     return node;
   },
@@ -292,7 +288,7 @@ Compiler.prototype = {
                       })
                       .join('')
                   );
-                  lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
+                  //lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
                   fragment.splice(start, end - start, lit);
                 }
               }
@@ -435,7 +431,8 @@ Compiler.prototype = {
 
     return (
       buildRuntime(this.runtimeFunctionsUsed) +
-      gen.default(ast, {compact: true}).code
+      gen.default(ast, {compact: true, jsescOption: {isScriptContext: true}})
+        .code
     );
   },
 
@@ -464,8 +461,7 @@ Compiler.prototype = {
 
   buffer: function(str) {
     const lit = t.stringLiteral(str);
-    lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
-    //var lit = this.ast_stringify(t.stringLiteral(str));
+    //lit.extra = {rawValue: lit.value, raw: stringify(lit.value)};
     return this.ast_buffer(lit);
   },
 

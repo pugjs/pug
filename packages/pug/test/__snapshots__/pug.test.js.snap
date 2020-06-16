@@ -10,12 +10,12 @@ function template(locals) {
   try {
     var self = locals || {};
     pug_debug_line = 1;
-    pug_html = pug_html + '\\\\u003Cdiv class=\\"bar\\"\\\\u003E';
+    pug_html = pug_html + '<div class=\\"bar\\">';
     pug_debug_line = 1;
     pug_html =
       pug_html +
       pug.escape(null == (pug_interp = self.foo) ? \\"\\" : pug_interp) +
-      \\"\\\\u003C\\\\u002Fdiv\\\\u003E\\";
+      \\"</div>\\";
   } catch (err) {
     pug.rethrow(err, pug_debug_filename, pug_debug_line);
   }
@@ -90,12 +90,12 @@ function template(locals) {
   try {
     var self = locals || {};
     pug_debug_line = 1;
-    pug_html = pug_html + '\\\\u003Cdiv class=\\"bar\\"\\\\u003E';
+    pug_html = pug_html + '<div class=\\"bar\\">';
     pug_debug_line = 1;
     pug_html =
       pug_html +
       pug_escape(null == (pug_interp = self.foo) ? \\"\\" : pug_interp) +
-      \\"\\\\u003C\\\\u002Fdiv\\\\u003E\\";
+      \\"</div>\\";
   } catch (err) {
     pug_rethrow(err, pug_debug_filename, pug_debug_line);
   }
