@@ -37,11 +37,12 @@ var push = Array.prototype.push;
 var unshift = Array.prototype.unshift;
 var concat = Array.prototype.concat;
 
-var tpl_interp = babelTemplate(
-  'null == (pug_interp = VALUE) ? "" : pug_interp'
+var tpl_json_interp = JSON.stringify(
+  babelTemplate.ast(`null == (pug_interp = VALUE) ? "" : pug_interp`)
 );
-var tpl_interp_escape = babelTemplate(
-  'ESCAPE(null == (pug_interp = VALUE) ? "" : pug_interp)'
+
+var tpl_json_interp_escape = JSON.stringify(
+  babelTemplate.ast(`escape(null == (pug_interp = VALUE) ? "" : pug_interp)`)
 );
 
 var tpl_json_buffer = JSON.stringify(
@@ -152,7 +153,7 @@ Compiler.prototype = {
   ast_buffer: function(ast) {
     const o = JSON.parse(tpl_json_buffer);
     o.expression.right.right = ast;
-    return [o];
+    return o;
   },
   ast_with: function(ast) {
     let exclude = this.options.globals
@@ -432,7 +433,10 @@ Compiler.prototype = {
 
     ast = this.ast_postprocess(ast);
 
-    return buildRuntime(this.runtimeFunctionsUsed) + gen.default(ast).code;
+    return (
+      buildRuntime(this.runtimeFunctionsUsed) +
+      gen.default(ast, {compact: true}).code
+    );
   },
 
   /**
@@ -498,21 +502,23 @@ Compiler.prototype = {
     var ast;
     offset = offset || 0;
     newline = newline ? '\n' : '';
-    ast = this.buffer(newline + Array(this.indents + offset).join(this.pp));
-    if (this.parentIndents) {
-      push.apply(
-        ast,
-        this.ast_buffer(
-          t.callExpression(
-            t.memberExpression(
-              t.identifier('pug_indent'),
-              t.identifier('join')
-            ),
-            [t.stringLiteral('')]
-          )
-        )
-      );
-    }
+    ast = concat.apply(
+      [],
+      [
+        this.buffer(newline + Array(this.indents + offset).join(this.pp)),
+        this.parentIndents
+          ? this.ast_buffer(
+              t.callExpression(
+                t.memberExpression(
+                  t.identifier('pug_indent'),
+                  t.identifier('join')
+                ),
+                [t.stringLiteral('')]
+              )
+            )
+          : [],
+      ]
+    );
     return ast;
   },
 
@@ -764,7 +770,7 @@ Compiler.prototype = {
       this.setDoctype(doctype.val || 'html');
     }
 
-    if (this.doctype) push.apply(ast, this.buffer(this.doctype));
+    if (this.doctype) ast = [this.buffer(this.doctype)];
     this.hasCompiledDoctype = true;
     return ast;
   },
@@ -1077,22 +1083,6 @@ Compiler.prototype = {
     // pretty print
     if (pp && !tag.isInline) push.apply(ast, this.prettyIndent(0, true));
     if (tag.selfClosing || (!this.xml && selfClosing[tag.name])) {
-      /*
-      push.apply(ast, this.buffer('<'));
-      push.apply(ast, bufferName());
-      push.apply(
-        ast,
-        this.visitAttributes(
-          tag.attrs,
-          this.attributeBlocks(tag.attributeBlocks)
-        )
-      );
-      if (this.terse && !tag.selfClosing) {
-        push.apply(ast, this.buffer('>'));
-      } else {
-        push.apply(ast, this.buffer('/>'));
-      }
-*/
       ast = concat.apply(ast, [
         this.buffer('<'),
         bufferName(),
@@ -1102,6 +1092,7 @@ Compiler.prototype = {
         ),
         this.buffer(this.terse && !tag.selfClosing ? '>' : '/>'),
       ]);
+
       // if it is non-empty throw an error
       if (
         tag.code ||
@@ -1122,31 +1113,26 @@ Compiler.prototype = {
       }
     } else {
       // Optimize attributes buffering
-      push.apply(ast, this.buffer('<'));
-      push.apply(ast, bufferName());
-      push.apply(
-        ast,
+      ast = concat.apply(ast, [
+        this.buffer('<'),
+        bufferName(),
         this.visitAttributes(
           tag.attrs,
           this.attributeBlocks(tag.attributeBlocks)
-        )
-      );
-      push.apply(ast, this.buffer('>'));
-      if (tag.code) push.apply(ast, this.visitCode(tag.code));
-      push.apply(ast, this.visit(tag.block, tag));
-
-      // pretty print
-      if (
+        ),
+        this.buffer('>'),
+        tag.code ? this.visitCode(tag.code) : [],
+        this.visit(tag.block, tag),
         pp &&
         !tag.isInline &&
         WHITE_SPACE_SENSITIVE_TAGS[tag.name] !== true &&
         !tagCanInline(tag)
-      )
-        push.apply(ast, this.prettyIndent(0, true));
-
-      push.apply(ast, this.buffer('</'));
-      push.apply(ast, bufferName());
-      push.apply(ast, this.buffer('>'));
+          ? this.prettyIndent(0, true)
+          : [],
+        this.buffer('</'),
+        bufferName(),
+        this.buffer('>'),
+      ]);
     }
 
     if (WHITE_SPACE_SENSITIVE_TAGS[tag.name] === true)
@@ -1197,11 +1183,14 @@ Compiler.prototype = {
    */
 
   visitComment: function(comment) {
-    var ast = [];
     if (!comment.buffer) return;
-    if (this.pp) push.apply(ast, this.prettyIndent(1, true));
-    push.apply(ast, this.buffer('<!--' + comment.val + '-->'));
-    return ast;
+    return concat.apply(
+      [],
+      [
+        this.pp ? this.prettyIndent(1, true) : [],
+        this.buffer('<!--' + comment.val + '-->'),
+      ]
+    );
   },
 
   /**
@@ -1227,11 +1216,13 @@ Compiler.prototype = {
   visitBlockComment: function(comment) {
     var ast = [];
     if (!comment.buffer) return;
-    if (this.pp) push.apply(ast, this.prettyIndent(1, true));
-    push.apply(ast, this.buffer('<!--' + (comment.val || '')));
-    push.apply(ast, this.visit(comment.block, comment));
-    if (this.pp) push.apply(ast, this.prettyIndent(1, true));
-    push.apply(ast, this.buffer('-->'));
+    ast = ast.concat.apply(ast, [
+      this.pp ? this.prettyIndent(1, true) : [],
+      this.buffer('<!--' + (comment.val || '')),
+      this.visit(comment.block, comment),
+      this.pp ? this.prettyIndent(1, true) : [],
+      this.buffer('-->'),
+    ]);
     return ast;
   },
 
@@ -1253,15 +1244,16 @@ Compiler.prototype = {
     var ast = [];
     if (code.buffer) {
       var val = code.val.trim();
-      var tpl = tpl_interp;
-      var tplv = {
-        VALUE: code.astVal || this.parseExpr(code.val),
-      };
       if (code.mustEscape !== false) {
-        tpl = tpl_interp_escape;
-        tplv.ESCAPE = this.runtime('escape', true);
+        ast = JSON.parse(tpl_json_interp_escape).expression;
+        ast.callee = this.runtime('escape', true);
+        ast.arguments[0].test.right.right =
+          code.astVal || this.parseExpr(code.val);
+      } else {
+        ast = JSON.parse(tpl_json_interp).expression;
+        ast.test.right.right = code.astVal || this.parseExpr(code.val);
       }
-      push.apply(ast, this.bufferAST(tpl(tplv).expression));
+      ast = [this.bufferAST(ast)];
     } else {
       var val = code.val.trim();
       this.codeBuffer += '\n' + val;
@@ -1516,7 +1508,7 @@ Compiler.prototype = {
       t.identifier(each.obj),
       t.blockStatement(forOfBlock)
     );
-    return [forOf];
+    return forOf;
   },
 
   /**

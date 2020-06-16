@@ -7,7 +7,6 @@ function template(locals) {
     pug_mixins = {},
     pug_interp;
   var pug_debug_filename, pug_debug_line;
-
   try {
     var self = locals || {};
     pug_debug_line = 1;
@@ -20,7 +19,6 @@ function template(locals) {
   } catch (err) {
     pug.rethrow(err, pug_debug_filename, pug_debug_line);
   }
-
   return pug_html;
 }
 module.exports = template;
@@ -89,7 +87,6 @@ function template(locals) {
     pug_mixins = {},
     pug_interp;
   var pug_debug_filename, pug_debug_line;
-
   try {
     var self = locals || {};
     pug_debug_line = 1;
@@ -102,7 +99,6 @@ function template(locals) {
   } catch (err) {
     pug_rethrow(err, pug_debug_filename, pug_debug_line);
   }
-
   return pug_html;
 }
 module.exports = template;
