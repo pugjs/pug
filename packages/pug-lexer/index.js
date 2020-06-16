@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var isExpression = require('is-expression');
+var babylon = require('@babel/parser');
 var characterParser = require('character-parser');
 var error = require('pug-error');
 
@@ -72,21 +72,17 @@ Lexer.prototype = {
     if (!value) this.error('ASSERT_FAILED', message);
   },
 
-  isExpression: function(exp) {
-    return isExpression(exp, {
-      throw: true,
-    });
+  parseExpression: function(exp) {
+    return babylon.parseExpression(exp);
   },
 
   assertExpression: function(exp, noThrow) {
     //this verifies that a JavaScript expression is valid
     try {
-      this.callLexerFunction('isExpression', exp);
-      return true;
+      return this.callLexerFunction('parseExpression', exp);
     } catch (ex) {
       if (noThrow) return false;
 
-      // not coming from acorn
       if (!ex.loc) throw ex;
 
       this.incrementLine(ex.loc.line - 1);
@@ -118,7 +114,7 @@ Lexer.prototype = {
    * @api private
    */
 
-  tok: function(type, val) {
+  tok: function(type, val, ast) {
     var res = {
       type: type,
       loc: {
@@ -131,6 +127,7 @@ Lexer.prototype = {
     };
 
     if (val !== undefined) res.val = val;
+    if (ast !== undefined) res.ast = ast;
 
     return res;
   },
@@ -367,13 +364,14 @@ Lexer.prototype = {
    */
 
   interpolation: function() {
+    var ast;
     if (/^#\{/.test(this.input)) {
       var match = this.bracketExpression(1);
       this.consume(match.end + 1);
-      var tok = this.tok('interpolation', match.src);
+      ast = this.assertExpression(match.src);
+      var tok = this.tok('interpolation', match.src, ast);
       this.tokens.push(tok);
       this.incrementColumn(2); // '#{'
-      this.assertExpression(match.src);
 
       var splitted = match.src.split('\n');
       var lines = splitted.length - 1;
@@ -619,7 +617,7 @@ Lexer.prototype = {
       tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
       tok.val = range.src;
-      this.assertExpression(range.src);
+      tok.ast = this.assertExpression(range.src);
 
       if (range.end + 1 < rest.length) {
         rest = rest.substr(range.end + 1);
@@ -851,7 +849,7 @@ Lexer.prototype = {
     var tok = this.scanEndOfLine(/^case +([^\n]+)/, 'case');
     if (tok) {
       this.incrementColumn(-tok.val.length);
-      this.assertExpression(tok.val);
+      tok.ast = this.assertExpression(tok.val);
       this.incrementColumn(tok.val.length);
       this.tokens.push(this.tokEnd(tok));
       return true;
@@ -880,7 +878,7 @@ Lexer.prototype = {
       }
 
       this.incrementColumn(-tok.val.length);
-      this.assertExpression(tok.val);
+      tok.ast = this.assertExpression(tok.val);
       this.incrementColumn(tok.val.length);
       this.tokens.push(this.tokEnd(tok));
       return true;
@@ -913,7 +911,7 @@ Lexer.prototype = {
    */
 
   call: function() {
-    var tok, captures, increment;
+    var tok, ast, captures, increment;
     if ((captures = /^\+(\s*)(([-\w]+)|(#\{))/.exec(this.input))) {
       // try to consume simple or interpolated call
       if (captures[3]) {
@@ -926,8 +924,8 @@ Lexer.prototype = {
         var match = this.bracketExpression(2 + captures[1].length);
         increment = match.end + 1;
         this.consume(increment);
-        this.assertExpression(match.src);
-        tok = this.tok('call', '#{' + match.src + '}');
+        ast = this.assertExpression(match.src);
+        tok = this.tok('call', '#{' + match.src + '}', ast);
       }
 
       this.incrementColumn(increment);
@@ -941,7 +939,7 @@ Lexer.prototype = {
           this.incrementColumn(1);
           this.consume(range.end + 1);
           tok.args = range.src;
-          this.assertExpression('[' + tok.args + ']');
+          tok.ast_args = this.assertExpression('[' + tok.args + ']').elements;
           for (var i = 0; i <= tok.args.length; i++) {
             if (tok.args[i] === '\n') {
               this.incrementLine(1);
@@ -989,11 +987,11 @@ Lexer.prototype = {
       switch (type) {
         case 'if':
         case 'else-if':
-          this.assertExpression(js);
+          tok.ast = this.assertExpression(js);
           break;
         case 'unless':
-          this.assertExpression(js);
           tok.val = '!(' + js + ')';
+          tok.ast = this.assertExpression(tok.val);
           tok.type = 'if';
           break;
         case 'else':
@@ -1016,11 +1014,11 @@ Lexer.prototype = {
    */
 
   while: function() {
-    var captures, tok;
+    var captures, ast, tok;
     if ((captures = /^while +([^\n]+)/.exec(this.input))) {
       this.consume(captures[0].length);
-      this.assertExpression(captures[1]);
-      tok = this.tok('while', captures[1]);
+      ast = this.assertExpression(captures[1]);
+      tok = this.tok('while', captures[1], ast);
       this.incrementColumn(captures[0].length);
       this.tokens.push(this.tokEnd(tok));
       return true;
@@ -1045,7 +1043,7 @@ Lexer.prototype = {
       var tok = this.tok('each', captures[1]);
       tok.key = captures[2] || null;
       this.incrementColumn(captures[0].length - captures[3].length);
-      this.assertExpression(captures[3]);
+      tok.ast = this.assertExpression(captures[3]);
       tok.code = captures[3];
       this.incrementColumn(captures[3].length);
       this.tokens.push(this.tokEnd(tok));
@@ -1172,7 +1170,7 @@ Lexer.prototype = {
       // ----               captures[0] - captures[2]
       //     ^              after colno
       this.incrementColumn(captures[0].length - captures[2].length);
-      if (tok.buffer) this.assertExpression(code);
+      if (tok.buffer) tok.ast = this.assertExpression(code);
       this.tokens.push(tok);
 
       // p #[!=    abc] hey
@@ -1271,6 +1269,7 @@ Lexer.prototype = {
 
     if (valueResponse.val) {
       tok.val = valueResponse.val;
+      tok.ast = valueResponse.ast;
       tok.mustEscape = valueResponse.mustEscape;
     } else {
       // was a boolean attribute (ex: `input(disabled)`)
@@ -1312,6 +1311,7 @@ Lexer.prototype = {
     var state = characterParser.defaultState();
     var col = this.colno;
     var line = this.lineno;
+    var ast;
 
     // consume all whitespace before the equals sign
     for (i = 0; i < str.length; i++) {
@@ -1420,12 +1420,17 @@ Lexer.prototype = {
       }
     }
 
-    this.assertExpression(val);
+    ast = this.assertExpression(val);
 
     this.lineno = line;
     this.colno = col;
 
-    return {val: val, mustEscape: escapeAttr, remainingSource: str.substr(i)};
+    return {
+      val: val,
+      ast: ast,
+      mustEscape: escapeAttr,
+      remainingSource: str.substr(i),
+    };
   },
 
   /**
