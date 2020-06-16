@@ -246,11 +246,6 @@ Compiler.prototype = {
       Object.keys(node).forEach(function(k) {
         var child = node[k];
         if (child && typeof child === 'object' && child.length) {
-          child.forEach(function(c) {
-            if (c && typeof c.type === 'string') {
-              walk(c);
-            }
-          });
           let i, j;
           for (i = 0; i < child.length; i++) {
             let start, end;
@@ -304,6 +299,8 @@ Compiler.prototype = {
                 )
               );
               child.splice(start, end - start, expr);
+            } else if (child[i] && typeof child[i].type === 'string') {
+              walk(child[i]);
             }
           }
         } else if (child && typeof child.type === 'string') {
