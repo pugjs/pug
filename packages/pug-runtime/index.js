@@ -247,18 +247,24 @@ function pug_rethrow(err, filename, lineno, str) {
     err.message += ' on line ' + lineno;
     throw err;
   }
+  var context, lines, start, end;
   try {
-    str = str || require('fs').readFileSync(filename, 'utf8');
+    var encoding = 'utf8';
+    str = str || require('fs').readFileSync(filename, {encoding: encoding});
+    if (str.type === 'Buffer') {
+      str = Buffer.from(str.data).toString(encoding);
+    }
+    context = 3;
+    lines = str.split('\n');
+    start = Math.max(lineno - context, 0);
+    end = Math.min(lines.length, lineno + context);
   } catch (ex) {
     pug_rethrow(err, null, lineno);
+    return;
   }
-  var context = 3,
-    lines = str.split('\n'),
-    start = Math.max(lineno - context, 0),
-    end = Math.min(lines.length, lineno + context);
 
   // Error context
-  var context = lines
+  context = lines
     .slice(start, end)
     .map(function(line, i) {
       var curr = i + start + 1;
