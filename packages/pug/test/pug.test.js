@@ -1243,7 +1243,6 @@ describe('pug', function() {
         __dirname + '/temp/input-compileModuleFileClient.js',
         fn
       );
-      var expected = '<div class="bar">baz</div>';
       var fn = require(__dirname + '/temp/input-compileModuleFileClient.js');
       expect(fn({foo: 'baz'})).toBe('<div class="bar">baz</div>');
     });
