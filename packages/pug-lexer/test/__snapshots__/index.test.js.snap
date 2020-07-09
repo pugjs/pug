@@ -15468,12 +15468,12 @@ Array [
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 44,
+        "line": 45,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
       "start": Object {
         "column": 1,
-        "line": 44,
+        "line": 45,
       },
     },
     "type": "outdent",
@@ -15482,12 +15482,151 @@ Array [
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 44,
+        "line": 45,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
       "start": Object {
         "column": 1,
-        "line": 44,
+        "line": 45,
+      },
+    },
+    "type": "outdent",
+  },
+  Object {
+    "buffer": false,
+    "loc": Object {
+      "end": Object {
+        "column": 74,
+        "line": 45,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 45,
+      },
+    },
+    "mustEscape": false,
+    "type": "code",
+    "val": "var ofKeyword = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 46,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 46,
+      },
+    },
+    "type": "newline",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 3,
+        "line": 46,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 46,
+      },
+    },
+    "type": "tag",
+    "val": "ul",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 3,
+        "line": 47,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 47,
+      },
+    },
+    "type": "indent",
+    "val": 2,
+  },
+  Object {
+    "code": "ofKeyword",
+    "loc": Object {
+      "end": Object {
+        "column": 24,
+        "line": 47,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 3,
+        "line": 47,
+      },
+    },
+    "type": "eachOf",
+    "val": "val",
+    "value": "val",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 48,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 48,
+      },
+    },
+    "type": "indent",
+    "val": 4,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 7,
+        "line": 48,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 5,
+        "line": 48,
+      },
+    },
+    "type": "tag",
+    "val": "li",
+  },
+  Object {
+    "buffer": true,
+    "loc": Object {
+      "end": Object {
+        "column": 18,
+        "line": 48,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 7,
+        "line": 48,
+      },
+    },
+    "mustEscape": true,
+    "type": "code",
+    "val": "user.name",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 1,
+        "line": 50,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 50,
       },
     },
     "type": "outdent",
@@ -15496,12 +15635,148 @@ Array [
     "loc": Object {
       "end": Object {
         "column": 1,
-        "line": 44,
+        "line": 50,
       },
       "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
       "start": Object {
         "column": 1,
-        "line": 44,
+        "line": 50,
+      },
+    },
+    "type": "outdent",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 3,
+        "line": 50,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 50,
+      },
+    },
+    "type": "tag",
+    "val": "ul",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 3,
+        "line": 51,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 51,
+      },
+    },
+    "type": "indent",
+    "val": 2,
+  },
+  Object {
+    "code": "[\\"variable with of keyword\\"]",
+    "loc": Object {
+      "end": Object {
+        "column": 43,
+        "line": 51,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 3,
+        "line": 51,
+      },
+    },
+    "type": "eachOf",
+    "val": "val",
+    "value": "val",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 5,
+        "line": 52,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 1,
+        "line": 52,
+      },
+    },
+    "type": "indent",
+    "val": 4,
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 7,
+        "line": 52,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 5,
+        "line": 52,
+      },
+    },
+    "type": "tag",
+    "val": "li",
+  },
+  Object {
+    "buffer": true,
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 52,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 7,
+        "line": 52,
+      },
+    },
+    "mustEscape": true,
+    "type": "code",
+    "val": "val",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 52,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 12,
+        "line": 52,
+      },
+    },
+    "type": "outdent",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 52,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 12,
+        "line": 52,
+      },
+    },
+    "type": "outdent",
+  },
+  Object {
+    "loc": Object {
+      "end": Object {
+        "column": 12,
+        "line": 52,
+      },
+      "filename": "<basedir>/packages/pug-lexer/test/cases/each.else.pug",
+      "start": Object {
+        "column": 12,
+        "line": 52,
       },
     },
     "type": "eos",

@@ -41,3 +41,12 @@ ul
     li #{key}: #{val}
   else
     li user has no details!
+
+- var ofKeyword = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]
+ul
+  each val of ofKeyword
+    li= user.name
+
+ul
+  each val of ["variable with of keyword"]
+    li= val
