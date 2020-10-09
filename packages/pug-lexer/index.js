@@ -545,6 +545,7 @@ Lexer.prototype = {
         interpolated: true,
         startingLine: this.lineno,
         startingColumn: this.colno,
+        plugins: this.plugins,
       });
       var interpolated;
       try {
