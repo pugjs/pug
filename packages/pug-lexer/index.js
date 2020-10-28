@@ -579,7 +579,7 @@ Lexer.prototype = {
     }
     if (indexOfStringInterp !== Infinity) {
       if (matchOfStringInterp[1]) {
-        prefix = prefix + value.substring(0, indexOfStringInterp) + '#{';
+        prefix = prefix + value.substring(0, indexOfStringInterp) + matchOfStringInterp[2] + '{';
         return this.addText(
           type,
           value.substring(indexOfStringInterp + 3),
