@@ -164,7 +164,9 @@ function compileBody(str, options) {
         contents = load.read(filename, loadOptions);
       }
 
-      debug_sources[filename] = contents;
+      debug_sources[filename] = Buffer.isBuffer(contents)
+        ? contents.toString('utf8')
+        : contents;
       return contents;
     },
   });

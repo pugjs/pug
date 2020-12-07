@@ -249,16 +249,14 @@ function pug_rethrow(err, filename, lineno, str) {
   }
   var context, lines, start, end;
   try {
-    var encoding = 'utf8';
-    str = str || require('fs').readFileSync(filename, {encoding: encoding});
-    if (str.type === 'Buffer') {
-      str = Buffer.from(str.data).toString(encoding);
-    }
+    str = str || require('fs').readFileSync(filename, {encoding: 'utf8'});
     context = 3;
     lines = str.split('\n');
     start = Math.max(lineno - context, 0);
     end = Math.min(lines.length, lineno + context);
   } catch (ex) {
+    err.message +=
+      ' - could not read from ' + filename + ' (' + ex.message + ')';
     pug_rethrow(err, null, lineno);
     return;
   }

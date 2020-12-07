@@ -56,33 +56,35 @@ exports[`pug .compileClient() should support module syntax in pug.compileClient(
   return c !== r ? s + a.substring(c, r) : s;
 }
 var pug_match_html = /[\\"&<>]/;
-function pug_rethrow(n, t, e, r) {
-  if (!(n instanceof Error)) throw n;
-  if (!((\\"undefined\\" == typeof window && t) || r))
-    throw ((n.message += \\" on line \\" + e), n);
-  var i, o, a, f;
+function pug_rethrow(e, n, r, t) {
+  if (!(e instanceof Error)) throw e;
+  if (!((\\"undefined\\" == typeof window && n) || t))
+    throw ((e.message += \\" on line \\" + r), e);
+  var o, a, i, s;
   try {
-    (r = r || require(\\"fs\\").readFileSync(t, { encoding: \\"utf8\\" })),
-      \\"Buffer\\" === r.type && (r = Buffer.from(r.data).toString(\\"utf8\\")),
-      (i = 3),
-      (o = r.split(\\"\\\\n\\")),
-      (a = Math.max(e - i, 0)),
-      (f = Math.min(o.length, e + i));
+    (t = t || require(\\"fs\\").readFileSync(n, { encoding: \\"utf8\\" })),
+      (o = 3),
+      (a = t.split(\\"\\\\n\\")),
+      (i = Math.max(r - o, 0)),
+      (s = Math.min(a.length, r + o));
   } catch (t) {
-    return void pug_rethrow(n, null, e);
+    return (
+      (e.message += \\" - could not read from \\" + n + \\" (\\" + t.message + \\")\\"),
+      void pug_rethrow(e, null, r)
+    );
   }
-  (i = o
-    .slice(a, f)
-    .map(function(n, t) {
-      var r = t + a + 1;
-      return (r == e ? \\"  > \\" : \\"    \\") + r + \\"| \\" + n;
+  (o = a
+    .slice(i, s)
+    .map(function(e, n) {
+      var t = n + i + 1;
+      return (t == r ? \\"  > \\" : \\"    \\") + t + \\"| \\" + e;
     })
     .join(\\"\\\\n\\")),
-    (n.path = t);
+    (e.path = n);
   try {
-    n.message = (t || \\"Pug\\") + \\":\\" + e + \\"\\\\n\\" + i + \\"\\\\n\\\\n\\" + n.message;
-  } catch (n) {}
-  throw n;
+    e.message = (n || \\"Pug\\") + \\":\\" + r + \\"\\\\n\\" + o + \\"\\\\n\\\\n\\" + e.message;
+  } catch (e) {}
+  throw e;
 }
 function template(locals) {
   var pug_html = \\"\\",
