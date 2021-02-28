@@ -56,31 +56,35 @@ exports[`pug .compileClient() should support module syntax in pug.compileClient(
   return c !== r ? s + a.substring(c, r) : s;
 }
 var pug_match_html = /[\\"&<>]/;
-function pug_rethrow(n, e, t, r) {
-  if (!(n instanceof Error)) throw n;
-  if (!((\\"undefined\\" == typeof window && e) || r))
-    throw ((n.message += \\" on line \\" + t), n);
+function pug_rethrow(e, n, r, t) {
+  if (!(e instanceof Error)) throw e;
+  if (!((\\"undefined\\" == typeof window && n) || t))
+    throw ((e.message += \\" on line \\" + r), e);
+  var o, a, i, s;
   try {
-    r = r || require(\\"fs\\").readFileSync(e, \\"utf8\\");
-  } catch (e) {
-    pug_rethrow(n, null, t);
+    (t = t || require(\\"fs\\").readFileSync(n, { encoding: \\"utf8\\" })),
+      (o = 3),
+      (a = t.split(\\"\\\\n\\")),
+      (i = Math.max(r - o, 0)),
+      (s = Math.min(a.length, r + o));
+  } catch (t) {
+    return (
+      (e.message += \\" - could not read from \\" + n + \\" (\\" + t.message + \\")\\"),
+      void pug_rethrow(e, null, r)
+    );
   }
-  var a = 3,
-    i = r.split(\\"\\\\n\\"),
-    o = Math.max(t - a, 0),
-    h = Math.min(i.length, t + a),
-    a = i
-      .slice(o, h)
-      .map(function(n, e) {
-        var r = e + o + 1;
-        return (r == t ? \\"  > \\" : \\"    \\") + r + \\"| \\" + n;
-      })
-      .join(\\"\\\\n\\");
-  n.path = e;
+  (o = a
+    .slice(i, s)
+    .map(function(e, n) {
+      var t = n + i + 1;
+      return (t == r ? \\"  > \\" : \\"    \\") + t + \\"| \\" + e;
+    })
+    .join(\\"\\\\n\\")),
+    (e.path = n);
   try {
-    n.message = (e || \\"Pug\\") + \\":\\" + t + \\"\\\\n\\" + a + \\"\\\\n\\\\n\\" + n.message;
-  } catch (n) {}
-  throw n;
+    e.message = (n || \\"Pug\\") + \\":\\" + r + \\"\\\\n\\" + o + \\"\\\\n\\\\n\\" + e.message;
+  } catch (e) {}
+  throw e;
 }
 function template(locals) {
   var pug_html = \\"\\",

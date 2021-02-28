@@ -247,18 +247,22 @@ function pug_rethrow(err, filename, lineno, str) {
     err.message += ' on line ' + lineno;
     throw err;
   }
+  var context, lines, start, end;
   try {
-    str = str || require('fs').readFileSync(filename, 'utf8');
-  } catch (ex) {
-    pug_rethrow(err, null, lineno);
-  }
-  var context = 3,
-    lines = str.split('\n'),
-    start = Math.max(lineno - context, 0),
+    str = str || require('fs').readFileSync(filename, {encoding: 'utf8'});
+    context = 3;
+    lines = str.split('\n');
+    start = Math.max(lineno - context, 0);
     end = Math.min(lines.length, lineno + context);
+  } catch (ex) {
+    err.message +=
+      ' - could not read from ' + filename + ' (' + ex.message + ')';
+    pug_rethrow(err, null, lineno);
+    return;
+  }
 
   // Error context
-  var context = lines
+  context = lines
     .slice(start, end)
     .map(function(line, i) {
       var curr = i + start + 1;

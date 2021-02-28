@@ -80,7 +80,19 @@ describe('error reporting', function() {
         expect(err.message).toMatch(/[\\\/]include.locals.error.pug:2/);
         expect(err.message).toMatch(/foo\(/);
       });
+
+      it('handles compileDebug option properly', function() {
+        var err = getFileError(
+          __dirname + '/fixtures/compile.with.include.locals.error.pug',
+          {
+            compileDebug: true,
+          }
+        );
+        expect(err.message).toMatch(/[\\\/]include.locals.error.pug:2/);
+        expect(err.message).toMatch(/foo is not a function/);
+      });
     });
+
     describe('with a layout (without block) with an include (syntax)', function() {
       it('includes detail of where the error was thrown including the filename', function() {
         var err = getFileError(

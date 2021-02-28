@@ -221,3 +221,50 @@ addTest('style', function(style) {
   expect(style({foo: 'bar'})).toBe('foo:bar;');
   expect(style({foo: 'bar', baz: 'bash'})).toBe('foo:bar;baz:bash;');
 });
+
+describe('rethrow', () => {
+  it('should rethrow error', () => {
+    const err = new Error();
+    try {
+      runtime.rethrow(err, 'foo.pug', 3);
+    } catch (e) {
+      expect(e).toBe(err);
+      return;
+    }
+
+    throw new Error('expected rethrow to throw');
+  });
+
+  it('should rethrow error with str', () => {
+    const err = new Error();
+    try {
+      runtime.rethrow(err, 'foo.pug', 3, 'hello world');
+    } catch (e) {
+      expect(e).toBe(err);
+      expect(e.message.trim()).toBe(
+        `
+foo.pug:3
+    1| hello world`.trim()
+      );
+      return;
+    }
+
+    throw new Error('expected rethrow to throw');
+  });
+
+  it('should handle bad arguments gracefully', () => {
+    const err = new Error('hello world');
+    const str = {not: 'a string'};
+    try {
+      runtime.rethrow(err, 'foo.pug', 3, str);
+    } catch (e) {
+      expect(e).toBe(err);
+      expect(e.message).toBe(
+        'hello world - could not read from foo.pug (str.split is not a function) on line 3'
+      );
+      return;
+    }
+
+    throw new Error('expected rethrow to throw');
+  });
+});
