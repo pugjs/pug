@@ -1,6 +1,6 @@
 {
   "name": "pug-code-gen",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Default code-generator for pug.  It generates HTML via a JavaScript template function.",
   "keywords": [
     "pug"
