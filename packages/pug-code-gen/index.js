@@ -58,6 +58,11 @@ function Compiler(node, options) {
   if (this.pp && typeof this.pp !== 'string') {
     this.pp = '  ';
   }
+  if (this.pp && !/^\s+$/.test(this.pp)) {
+    throw new Error(
+      'The pretty parameter should either be a boolean or whitespace only string'
+    );
+  }
   this.debug = false !== options.compileDebug;
   this.indents = 0;
   this.parentIndents = 0;
