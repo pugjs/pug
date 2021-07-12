@@ -8,7 +8,7 @@ and implemented with JavaScript for [Node.js](http://nodejs.org) and browsers. F
 feature requests and questions, [open an issue](https://github.com/pugjs/pug/issues/new).
 For discussion join the [chat room](https://gitter.im/pugjs/pug).
 
-You can test drive Pug online [here](https://pugjs.org/).
+You can [test drive Pug online](https://runkit.com/embed/tkgc08y4ywgx).
  
 [Professionally supported pug is now available](https://tidelift.com/subscription/pkg/npm-pug?utm_source=npm-pug&utm_medium=referral&utm_campaign=readme)
 
