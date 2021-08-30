@@ -166,7 +166,7 @@ which will produce `filename.js` containing the compiled template.
 Ports to other languages, with very close syntax:
 
   - [PHP](https://github.com/pug-php/pug)
-  - [Java](https://github.com/neuland/jade4j)
+  - [Java](https://github.com/neuland/pug4j)
   - [Python](https://github.com/kakulukia/pypugjs)
   - [Ruby](https://github.com/yivo/pug-ruby)
   - [C# (ASP.NET Core)](https://github.com/AspNetMonsters/pugzor)
