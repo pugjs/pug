@@ -1,6 +1,5 @@
 'use strict';
 
-var assert = require('assert');
 var error = require('../');
 
 describe('with a source', function() {

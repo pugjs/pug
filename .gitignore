@@ -18,3 +18,6 @@ cov-pt*
 **/test/temp
 .release.json
 package-lock.json
+
+scripts/tsconfig.json
+packages/pug-error/lib
