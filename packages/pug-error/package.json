@@ -8,7 +8,7 @@
     "pug"
   ],
   "files": [
-    "index.js"
+    "lib/"
   ],
   "repository": {
     "type": "git",
