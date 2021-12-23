@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.json",
+  "references": [
+    {"path": "../packages/pug-error"},
+  ],
+}

@@ -18,3 +18,5 @@ cov-pt*
 **/test/temp
 .release.json
 package-lock.json
+
+packages/pug-error/lib

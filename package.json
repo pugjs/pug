@@ -8,7 +8,9 @@
   "devDependencies": {
     "coveralls": "3.0.9",
     "jest": "^26.0.1",
-    "prettier": "1.19.1"
+    "prettier": "1.19.1",
+    "typescript": "^4.1.2",
+    "wsrun": "^5.2.0"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "scripts": {
     "prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.js'",
     "format": "prettier --ignore-path .gitignore --write './**/*.js'",
-    "build": "wsrun --stages --exclude-missing --fast-exit --collect-logs build",
+    "build": "node scripts/prebuild && wsrun --stages --exclude-missing --fast-exit --collect-logs build && tsc --build scripts",
     "pretest": "yarn build",
     "test": "jest",
     "coverage": "jest --coverage",
@@ -32,8 +34,5 @@
       "./scripts/buffer-serializer.js"
     ]
   },
-  "license": "MIT",
-  "dependencies": {
-    "wsrun": "^5.2.0"
-  }
+  "license": "MIT"
 }
