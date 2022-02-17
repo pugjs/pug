@@ -649,8 +649,15 @@ Lexer.prototype = {
       this.scan(/^(?:\| ?| )([^\n]+)/, 'text') ||
       this.scan(/^( )/, 'text') ||
       this.scan(/^\|( ?)/, 'text');
+
+    var fictionlivetok = this.scan(/^(?:{ ?| )([^\n]+)/, 'text')
+
     if (tok) {
       this.addText('text', tok.val);
+      return true;
+    }
+    else if (fictionlivetok) {
+      this.addText('text', '{' + fictionlivetok.val);
       return true;
     }
   },
