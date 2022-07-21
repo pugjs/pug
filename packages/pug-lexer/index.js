@@ -1465,10 +1465,10 @@ Lexer.prototype = {
    * &attributes block
    */
   attributesBlock: function() {
-    if (/^&attributes\b/.test(this.input)) {
+    if (/^&\b/.test(this.input)) {
       var consumed = 11;
       this.consume(consumed);
-      var tok = this.tok('&attributes');
+      var tok = this.tok('&');
       this.incrementColumn(consumed);
       var args = this.bracketExpression();
       consumed = args.end + 1;
