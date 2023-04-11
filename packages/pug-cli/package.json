@@ -15,6 +15,11 @@
     "pug": "^2.0.0-alpha7"
   },
   "devDependencies": {
+    "@types/istanbul": "^0.4.30",
+    "@types/mkdirp": "^2.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/pug": "^2.0.6",
+    "@types/rimraf": "^4.0.5",
     "istanbul": "*",
     "mocha": "*",
     "rimraf": "^2.3.4",

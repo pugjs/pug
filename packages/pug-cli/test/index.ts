@@ -66,16 +66,24 @@ function getRunner() {
   // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
   if (!isIstanbul) return [process.argv[0], [pugExe]];
   else {
-    return [ 'istanbul',
-             [ 'cover',
-               '--print',  'none',
-               '--report', 'none',
-               // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-               '--root',   process.cwd(),
-               // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
-               '--dir',    process.cwd() + '/cov-pt' + (covCount++),
-               pugExe,
-               '--' ] ];
+    return [
+      'istanbul',
+      [
+        'cover',
+        '--print',
+        'none',
+        '--report',
+        'none',
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
+        '--root',
+        process.cwd(),
+        // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
+        '--dir',
+        process.cwd() + '/cov-pt' + covCount++,
+        pugExe,
+        '--',
+      ],
+    ];
   }
 }
 
@@ -89,12 +97,17 @@ function getRunner() {
 function run(args: any, stdin: any, callback: any) {
   if (arguments.length === 2) {
     callback = stdin;
-    stdin    = null;
+    stdin = null;
   }
   var runner = getRunner();
-  var proc = cp.execFile(runner[0], runner[1].concat(args), {
-    cwd: t([])
-  }, callback);
+  var proc = cp.execFile(
+    runner[0],
+    runner[1].concat(args),
+    {
+      cwd: t([]),
+    },
+    callback,
+  );
   if (stdin) stdin.pipe(proc.stdin);
 }
 
@@ -129,41 +142,52 @@ mkdirp.sync(t(['outputs', 'level-1-2']));
 describe('miscellanea', function(this: any) {
   timing(this);
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--version', function (done: any) {
+  it('--version', function(done: any) {
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['-V'], function (err: any, stdout: any) {
+    run(['-V'], function(err: any, stdout: any) {
       if (err) done(err);
-      // @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-      assert.equal(stdout.trim(), 'pug version: ' + require('pug/package.json').version + '\npug-cli version: ' + require('../package.json').version);
+      assert.equal(
+        stdout.trim(),
+        'pug version: ' +
+          require('pug/package.json').version +
+          '\npug-cli version: ' +
+          require('../package.json').version,
+      );
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--version'], function (err: any, stdout: any) {
+      run(['--version'], function(err: any, stdout: any) {
         if (err) done(err);
         // @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
-        assert.equal(stdout.trim(), 'pug version: ' + require('pug/package.json').version + '\npug-cli version: ' + require('../package.json').version);
-        done()
+        assert.equal(
+          stdout.trim(),
+          'pug version: ' +
+            require('pug/package.json').version +
+            '\npug-cli version: ' +
+            require('../package.json').version,
+        );
+        done();
       });
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--help', function (done: any) {
+  it('--help', function(done: any) {
     // only check that it doesn't crash
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['-h'], function (err: any, stdout: any) {
+    run(['-h'], function(err: any, stdout: any) {
       if (err) done(err);
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--help'], function (err: any, stdout: any) {
+      run(['--help'], function(err: any, stdout: any) {
         if (err) done(err);
-        done()
+        done();
       });
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('Omits files starting with an underscore', function (done: any) {
+  it('Omits files starting with an underscore', function(done: any) {
     w('_omitted.pug', '.foo bar');
     w('_omitted.html', '<p>output not written</p>');
 
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['_omitted.pug'], function (err: any) {
+    run(['_omitted.pug'], function(err: any) {
       if (err) return done(err);
       var html = r('_omitted.html');
       assert(html === '<p>output not written</p>');
@@ -171,12 +195,15 @@ describe('miscellanea', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('Omits directories starting with an underscore', function (done: any) {
+  it('Omits directories starting with an underscore', function(done: any) {
     w('_omittedDir/file.pug', '.foo bar');
     w('_omittedDir/file.html', '<p>output not written</p>');
 
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '_omittedDir/file.pug'], function (err: any, stdout: any) {
+    run(['--no-debug', '_omittedDir/file.pug'], function(
+      err: any,
+      stdout: any,
+    ) {
       if (err) return done(err);
       var html = r('_omittedDir/file.html');
       assert.equal(html, '<p>output not written</p>');
@@ -189,12 +216,12 @@ describe('miscellanea', function(this: any) {
 describe('HTML output', function(this: any) {
   timing(this);
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('works', function (done: any) {
+  it('works', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.html', '<p>output not written</p>');
 
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', 'input.pug'], function (err: any) {
+    run(['--no-debug', 'input.pug'], function(err: any) {
       if (err) return done(err);
       var html = r('input.html');
       assert(html === '<div class="foo">bar</div>');
@@ -202,12 +229,12 @@ describe('HTML output', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--extension', function (done: any) {
+  it('--extension', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.special-html', '<p>output not written</p>');
 
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '-E', 'special-html', 'input.pug'], function (err: any) {
+    run(['--no-debug', '-E', 'special-html', 'input.pug'], function(err: any) {
       if (err) return done(err);
       var html = r('input.special-html');
       assert(html === '<div class="foo">bar</div>');
@@ -215,25 +242,30 @@ describe('HTML output', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--basedir', function (done: any) {
+  it('--basedir', function(done: any) {
     w('input.pug', 'extends /dependency1.pug');
     w('input.html', '<p>output not written</p>');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '-b', j([__dirname, 'dependencies']), 'input.pug'], function (err: any, stdout: any) {
-      if (err) return done(err);
-      var html = r('input.html');
-      assert.equal(html, '<html><body></body></html>');
-      done();
-    });
+    run(
+      ['--no-debug', '-b', j([__dirname, 'dependencies']), 'input.pug'],
+      function(err: any, stdout: any) {
+        if (err) return done(err);
+        var html = r('input.html');
+        assert.equal(html, '<html><body></body></html>');
+        done();
+      },
+    );
   });
   // @ts-expect-error TS(2304): Cannot find name 'context'.
-  context('--obj', function () {
+  context('--obj', function() {
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('JavaScript syntax works', function (done: any) {
+    it('JavaScript syntax works', function(done: any) {
       w('input.pug', '.foo= loc');
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--obj', "{'loc':'str'}", 'input.pug'], function (err: any) {
+      run(['--no-debug', '--obj', "{'loc':'str'}", 'input.pug'], function(
+        err: any,
+      ) {
         if (err) return done(err);
         var html = r('input.html');
         assert(html === '<div class="foo">str</div>');
@@ -241,21 +273,25 @@ describe('HTML output', function(this: any) {
       });
     });
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('JavaScript syntax does not accept UTF newlines', function (done: any) {
+    it('JavaScript syntax does not accept UTF newlines', function(done: any) {
       w('input.pug', '.foo= loc');
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--obj', "{'loc':'st\u2028r'}", 'input.pug'], function (err: any) {
+      run(['--no-debug', '--obj', "{'loc':'st\u2028r'}", 'input.pug'], function(
+        err: any,
+      ) {
         if (!err) return done(new Error('expecting error'));
         done();
       });
     });
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('JSON syntax accept UTF newlines', function (done: any) {
+    it('JSON syntax accept UTF newlines', function(done: any) {
       w('input.pug', '.foo= loc');
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--obj', '{"loc":"st\u2028r"}', 'input.pug'], function (err: any) {
+      run(['--no-debug', '--obj', '{"loc":"st\u2028r"}', 'input.pug'], function(
+        err: any,
+      ) {
         if (err) return done(err);
         var html = r('input.html');
         assert.equal(html, '<div class="foo">st\u2028r</div>');
@@ -263,12 +299,12 @@ describe('HTML output', function(this: any) {
       });
     });
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('JSON file', function (done: any) {
+    it('JSON file', function(done: any) {
       w('obj.json', '{"loc":"str"}');
       w('input.pug', '.foo= loc');
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--obj', 'obj.json', 'input.pug'], function (err: any) {
+      run(['--no-debug', '--obj', 'obj.json', 'input.pug'], function(err: any) {
         if (err) return done(err);
         var html = r('input.html');
         assert(html === '<div class="foo">str</div>');
@@ -276,12 +312,12 @@ describe('HTML output', function(this: any) {
       });
     });
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('JavaScript module', function (done: any) {
+    it('JavaScript module', function(done: any) {
       w('obj.js', 'module.exports = {loc: "str"};');
       w('input.pug', '.foo= loc');
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--obj', 'obj.js', 'input.pug'], function (err: any) {
+      run(['--no-debug', '--obj', 'obj.js', 'input.pug'], function(err: any) {
         if (err) return done(err);
         var html = r('input.html');
         assert(html === '<div class="foo">str</div>');
@@ -290,22 +326,26 @@ describe('HTML output', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('stdio', function (done: any) {
+  it('stdio', function(done: any) {
     w('input.pug', '.foo bar');
-    run(['--no-debug'], rs('input.pug'), function (err: any, stdout: any, stderr: any) {
+    run(['--no-debug'], rs('input.pug'), function(
+      err: any,
+      stdout: any,
+      stderr: any,
+    ) {
       if (err) return done(err);
       assert(stdout === '<div class="foo">bar</div>');
       done();
     });
   });
   // @ts-expect-error TS(2304): Cannot find name 'context'.
-  context('--out', function () {
+  context('--out', function() {
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('works', function (done: any) {
+    it('works', function(done: any) {
       w('input.pug', '.foo bar');
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--out', 'outputs', 'input.pug'], function (err: any) {
+      run(['--no-debug', '--out', 'outputs', 'input.pug'], function(err: any) {
         if (err) return done(err);
         var html = r(['outputs', 'input.html']);
         assert(html === '<div class="foo">bar</div>');
@@ -313,7 +353,7 @@ describe('HTML output', function(this: any) {
       });
     });
     // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-    it('works when input is a directory', function (done: any) {
+    it('works when input is a directory', function(done: any) {
       w(['inputs', 'input.pug'], '.foo bar 1');
       w(['inputs', 'level-1-1', 'input.pug'], '.foo bar 1-1');
       w(['inputs', 'level-1-2', 'input.pug'], '.foo bar 1-2');
@@ -322,7 +362,9 @@ describe('HTML output', function(this: any) {
       w(['outputs', 'level-1-2', 'input.html'], 'BIG FAT HEN 1-2');
 
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--hierarchy', '--out', 'outputs', 'inputs'], function (err: any) {
+      run(['--no-debug', '--hierarchy', '--out', 'outputs', 'inputs'], function(
+        err: any,
+      ) {
         if (err) return done(err);
         var html = r(['outputs', 'input.html']);
         assert(html === '<div class="foo">bar 1</div>');
@@ -335,11 +377,11 @@ describe('HTML output', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--silent', function (done: any) {
+  it('--silent', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.html', '<p>output not written</p>');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '-s', 'input.pug'], function (err: any, stdout: any) {
+    run(['--no-debug', '-s', 'input.pug'], function(err: any, stdout: any) {
       if (err) return done(err);
       var html = r('input.html');
       assert.equal(html, '<div class="foo">bar</div>');
@@ -347,7 +389,10 @@ describe('HTML output', function(this: any) {
 
       w('input.html', '<p>output not written</p>');
       // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-      run(['--no-debug', '--silent', 'input.pug'], function (err: any, stdout: any) {
+      run(['--no-debug', '--silent', 'input.pug'], function(
+        err: any,
+        stdout: any,
+      ) {
         if (err) return done(err);
         var html = r('input.html');
         assert.equal(html, '<div class="foo">bar</div>');
@@ -362,11 +407,11 @@ describe('HTML output', function(this: any) {
 describe('client JavaScript output', function(this: any) {
   timing(this);
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('works', function (done: any) {
+  it('works', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.js', 'throw new Error("output not written");');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '--client', 'input.pug'], function (err: any) {
+    run(['--no-debug', '--client', 'input.pug'], function(err: any) {
       if (err) return done(err);
       var template = Function('', r('input.js') + ';return template;')();
       assert(template() === '<div class="foo">bar</div>');
@@ -374,34 +419,45 @@ describe('client JavaScript output', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--name', function (done: any) {
+  it('--name', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.js', 'throw new Error("output not written");');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '--client', '--name', 'myTemplate', 'input.pug'], function (err: any) {
-      if (err) return done(err);
-      var template = Function('', r('input.js') + ';return myTemplate;')();
-      assert(template() === '<div class="foo">bar</div>');
-      done();
-    });
+    run(
+      ['--no-debug', '--client', '--name', 'myTemplate', 'input.pug'],
+      function(err: any) {
+        if (err) return done(err);
+        var template = Function('', r('input.js') + ';return myTemplate;')();
+        assert(template() === '<div class="foo">bar</div>');
+        done();
+      },
+    );
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--name --extension', function (done: any) {
+  it('--name --extension', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.special-js', 'throw new Error("output not written");');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '--client', '-E', 'special-js', 'input.pug'], function (err: any) {
+    run(['--no-debug', '--client', '-E', 'special-js', 'input.pug'], function(
+      err: any,
+    ) {
       if (err) return done(err);
-      var template = Function('', r('input.special-js') + ';return template;')();
+      var template = Function(
+        '',
+        r('input.special-js') + ';return template;',
+      )();
       assert(template() === '<div class="foo">bar</div>');
       done();
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('stdio', function (done: any) {
+  it('stdio', function(done: any) {
     w('input.pug', '.foo bar');
     w('input.js', 'throw new Error("output not written");');
-    run(['--no-debug', '--client'], rs('input.pug'), function (err: any, stdout: any) {
+    run(['--no-debug', '--client'], rs('input.pug'), function(
+      err: any,
+      stdout: any,
+    ) {
       if (err) return done(err);
       var template = Function('', stdout + ';return template;')();
       assert(template() === '<div class="foo">bar</div>');
@@ -409,33 +465,50 @@ describe('client JavaScript output', function(this: any) {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--name-after-file', function (done: any) {
+  it('--name-after-file', function(done: any) {
     w('input-file.pug', '.foo bar');
     w('input-file.js', 'throw new Error("output not written");');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '--client', '--name-after-file', 'input-file.pug'], function (err: any, stdout: any, stderr: any) {
-      if (err) return done(err);
-      var template = Function('', r('input-file.js') + ';return inputFileTemplate;')();
-      assert(template() === '<div class="foo">bar</div>');
-      return done();
-    });
+    run(
+      ['--no-debug', '--client', '--name-after-file', 'input-file.pug'],
+      function(err: any, stdout: any, stderr: any) {
+        if (err) return done(err);
+        var template = Function(
+          '',
+          r('input-file.js') + ';return inputFileTemplate;',
+        )();
+        assert(template() === '<div class="foo">bar</div>');
+        return done();
+      },
+    );
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('--name-after-file ·InPuTwIthWEiRdNaMME.pug', function (done: any) {
+  it('--name-after-file ·InPuTwIthWEiRdNaMME.pug', function(done: any) {
     w('·InPuTwIthWEiRdNaMME.pug', '.foo bar');
     w('·InPuTwIthWEiRdNaMME.js', 'throw new Error("output not written");');
     // @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
-    run(['--no-debug', '--client', '--name-after-file', '·InPuTwIthWEiRdNaMME.pug'], function (err: any, stdout: any, stderr: any) {
-      if (err) return done(err);
-      var template = Function('', r('·InPuTwIthWEiRdNaMME.js') + ';return InputwithweirdnammeTemplate;')();
-      assert(template() === '<div class="foo">bar</div>');
-      return done();
-    });
+    run(
+      [
+        '--no-debug',
+        '--client',
+        '--name-after-file',
+        '·InPuTwIthWEiRdNaMME.pug',
+      ],
+      function(err: any, stdout: any, stderr: any) {
+        if (err) return done(err);
+        var template = Function(
+          '',
+          r('·InPuTwIthWEiRdNaMME.js') + ';return InputwithweirdnammeTemplate;',
+        )();
+        assert(template() === '<div class="foo">bar</div>');
+        return done();
+      },
+    );
   });
 });
 
 // @ts-expect-error TS(2582): Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
-describe('--watch', function () {
+describe('--watch', function() {
   var watchProc: any;
   var stdout = '';
 
@@ -450,7 +523,7 @@ describe('--watch', function () {
   }
 
   // @ts-expect-error TS(2304): Cannot find name 'after'.
-  after(function () {
+  after(function() {
     cleanup();
     watchProc.kill('SIGINT');
     watchProc = null;
@@ -460,7 +533,7 @@ describe('--watch', function () {
   beforeEach(cleanup);
 
   // @ts-expect-error TS(2304): Cannot find name 'afterEach'.
-  afterEach(function (done: any) {
+  afterEach(function(done: any) {
     // pug --watch can only detect changes that are at least 1 second apart
     setTimeout(done, 1000);
   });
@@ -472,9 +545,15 @@ describe('--watch', function () {
     w('input-file.pug', '.foo bar');
     w('input-file.js', 'throw new Error("output not written (pass 1)");');
     var cmd = getRunner();
-    cmd[1].push('--no-debug', '--client', '--name-after-file', '--watch', 'input-file.pug');
-    watchProc = cp.spawn(cmd[0], cmd[1],  {
-      cwd: t([])
+    cmd[1].push(
+      '--no-debug',
+      '--client',
+      '--name-after-file',
+      '--watch',
+      'input-file.pug',
+    );
+    watchProc = cp.spawn(cmd[0], cmd[1], {
+      cwd: t([]),
     });
 
     watchProc.stdout.setEncoding('utf8');
@@ -485,7 +564,10 @@ describe('--watch', function () {
       if (/rendered/.test(stdout)) {
         cleanup();
 
-        var template = Function('', r('input-file.js') + ';return inputFileTemplate;')();
+        var template = Function(
+          '',
+          r('input-file.js') + ';return inputFileTemplate;',
+        )();
         assert(template() === '<div class="foo">bar</div>');
 
         return done();
@@ -493,7 +575,7 @@ describe('--watch', function () {
     });
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('pass 2: change the file', function (done: any) {
+  it('pass 2: change the file', function(done: any) {
     w('input-file.js', 'throw new Error("output not written (pass 2)");');
 
     watchProc.on('error', done);
@@ -502,7 +584,10 @@ describe('--watch', function () {
       if (/rendered/.test(stdout)) {
         cleanup();
 
-        var template = Function('', r('input-file.js') + ';return inputFileTemplate;')();
+        var template = Function(
+          '',
+          r('input-file.js') + ';return inputFileTemplate;',
+        )();
         assert(template() === '<div class="foo">baz</div>');
 
         return done();
@@ -512,16 +597,19 @@ describe('--watch', function () {
     w('input-file.pug', '.foo baz');
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('pass 3: remove the file then add it back', function (done: any) {
+  it('pass 3: remove the file then add it back', function(done: any) {
     w('input-file.js', 'throw new Error("output not written (pass 3)");');
 
-    watchProc.on('error', done)
+    watchProc.on('error', done);
     watchProc.stdout.on('data', function(buf: any) {
       stdout += buf;
       if (/rendered/.test(stdout)) {
         cleanup();
 
-        var template = Function('', r('input-file.js') + ';return inputFileTemplate;')();
+        var template = Function(
+          '',
+          r('input-file.js') + ';return inputFileTemplate;',
+        )();
         assert(template() === '<div class="foo">bat</div>');
 
         return done();
@@ -529,12 +617,12 @@ describe('--watch', function () {
     });
 
     u('input-file.pug');
-    setTimeout(function () {
+    setTimeout(function() {
       w('input-file.pug', '.foo bat');
     }, 250);
   });
   // @ts-expect-error TS(2582): Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
-  it('pass 4: intentional errors in the pug file', function (done: any) {
+  it('pass 4: intentional errors in the pug file', function(done: any) {
     var stderr = '';
     var errored = false;
 
@@ -554,7 +642,10 @@ describe('--watch', function () {
       stderr += buf;
       if (!/Invalid indentation/.test(stderr)) return;
       stderr = '';
-      var template = Function('', r('input-file.js') + ';return inputFileTemplate;')();
+      var template = Function(
+        '',
+        r('input-file.js') + ';return inputFileTemplate;',
+      )();
       assert(template() === '<div class="foo">bat</div>');
 
       watchProc.stderr.removeAllListeners('data');
@@ -568,25 +659,23 @@ describe('--watch', function () {
       }, 100);
     });
 
-    w('input-file.pug', [
-      'div',
-      '  div',
-      '\tarticle'
-    ].join('\n'));
+    w('input-file.pug', ['div', '  div', '\tarticle'].join('\n'));
   });
 });
 
 // @ts-expect-error TS(2582): Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
-describe('--watch with dependencies', function () {
+describe('--watch with dependencies', function() {
   var watchProc: any;
   var stdout = '';
 
   // @ts-expect-error TS(2304): Cannot find name 'before'.
-  before(function () {
+  before(function() {
     function copy(file: any) {
-      w(['depwatch', file],
+      w(
+        ['depwatch', file],
         // @ts-expect-error TS(2304): Cannot find name '__dirname'.
-        fs.readFileSync(j([__dirname, 'dependencies', file])));
+        fs.readFileSync(j([__dirname, 'dependencies', file])),
+      );
     }
     copy('include2.pug');
     copy('dependency2.pug');
@@ -605,7 +694,7 @@ describe('--watch with dependencies', function () {
   }
 
   // @ts-expect-error TS(2304): Cannot find name 'after'.
-  after(function () {
+  after(function() {
     cleanup();
     watchProc.kill('SIGINT');
     watchProc = null;
@@ -615,7 +704,7 @@ describe('--watch with dependencies', function () {
   beforeEach(cleanup);
 
   // @ts-expect-error TS(2304): Cannot find name 'afterEach'.
-  afterEach(function (done: any) {
+  afterEach(function(done: any) {
     // pug --watch can only detect changes that are at least 1 second apart
     setTimeout(done, 1000);
   });
@@ -624,12 +713,12 @@ describe('--watch with dependencies', function () {
   it('pass 1: initial compilation', function(this: any, done: any) {
     timing(this);
 
-    w(['depwatch', 'include2.html'],    'output not written (pass 1)');
+    w(['depwatch', 'include2.html'], 'output not written (pass 1)');
     w(['depwatch', 'dependency2.html'], 'output not written (pass 1)');
     var cmd = getRunner();
     cmd[1].push('--watch', 'include2.pug', 'dependency2.pug');
-    watchProc = cp.spawn(cmd[0], cmd[1],  {
-      cwd: t('depwatch')
+    watchProc = cp.spawn(cmd[0], cmd[1], {
+      cwd: t('depwatch'),
     });
 
     watchProc.stdout.setEncoding('utf8');
@@ -653,7 +742,7 @@ describe('--watch with dependencies', function () {
   it('pass 2: change a dependency', function(this: any, done: any) {
     timing(this);
 
-    w(['depwatch', 'include2.html'],    'output not written (pass 2)');
+    w(['depwatch', 'include2.html'], 'output not written (pass 2)');
     w(['depwatch', 'dependency2.html'], 'output not written (pass 2)');
 
     watchProc.on('error', done);
@@ -677,19 +766,25 @@ describe('--watch with dependencies', function () {
   it('pass 3: change a deeper dependency', function(this: any, done: any) {
     timing(this);
 
-    w(['depwatch', 'include2.html'],    'output not written (pass 3)');
+    w(['depwatch', 'include2.html'], 'output not written (pass 3)');
     w(['depwatch', 'dependency2.html'], 'output not written (pass 3)');
 
-    watchProc.on('error', done)
+    watchProc.on('error', done);
     watchProc.stdout.on('data', function(buf: any) {
       stdout += buf;
       if ((stdout.match(/rendered/g) || []).length === 2) {
         cleanup();
 
         var output = r(['depwatch', 'include2.html']);
-        assert.equal(output.trim(), '<strong>dependency3</strong><p>Foo</p><p>Hey</p>');
+        assert.equal(
+          output.trim(),
+          '<strong>dependency3</strong><p>Foo</p><p>Hey</p>',
+        );
         output = r(['depwatch', 'dependency2.html']);
-        assert.equal(output.trim(), '<strong>dependency3</strong><p>Foo</p><p>Hey</p>');
+        assert.equal(
+          output.trim(),
+          '<strong>dependency3</strong><p>Foo</p><p>Hey</p>',
+        );
 
         return done();
       }
@@ -701,7 +796,7 @@ describe('--watch with dependencies', function () {
   it('pass 4: change main file', function(this: any, done: any) {
     timing(this);
 
-    w(['depwatch', 'include2.html'],    'output not written (pass 4)');
+    w(['depwatch', 'include2.html'], 'output not written (pass 4)');
     w(['depwatch', 'dependency2.html'], 'output not written (pass 4)');
 
     watchProc.on('error', done);
@@ -711,7 +806,10 @@ describe('--watch with dependencies', function () {
         cleanup();
 
         var output = r(['depwatch', 'include2.html']);
-        assert.equal(output.trim(), '<strong>dependency3</strong><p>Foo</p><p>Hey</p><p>Baz</p>');
+        assert.equal(
+          output.trim(),
+          '<strong>dependency3</strong><p>Foo</p><p>Hey</p><p>Baz</p>',
+        );
         output = r(['depwatch', 'dependency2.html']);
         assert.equal(output.trim(), 'output not written (pass 4)');
 

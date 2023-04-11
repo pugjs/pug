@@ -1,38 +1,60 @@
 {
-  "name": "pug-monorepo",
-  "private": true,
-  "@rollingversions/ignore": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "coveralls": "3.0.9",
-    "jest": "^26.0.1",
-    "prettier": "1.19.1",
-    "typescript": "^4.1.2",
-    "wsrun": "^5.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pugjs/pug.git"
-  },
-  "scripts": {
-    "prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.js'",
-    "format": "prettier --ignore-path .gitignore --write './**/*.js'",
-    "build": "node scripts/prebuild && wsrun --stages --exclude-missing --fast-exit --collect-logs build && tsc --build scripts",
-    "pretest": "yarn build",
-    "test": "jest",
-    "coverage": "jest --coverage",
-    "coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "watch": "jest --watch"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "snapshotSerializers": [
-      "./scripts/filename-serializer.js",
-      "./scripts/prettier-javascript-serializer.js",
-      "./scripts/buffer-serializer.js"
-    ]
-  },
-  "license": "MIT"
+	"name": "pug-monorepo",
+	"private": true,
+	"@rollingversions/ignore": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"devDependencies": {
+		"@babel/eslint-parser": "^7.x",
+		"@tokilabs/eslint-config": "1.0.1",
+		"@tokilabs/jest-presets": "^1.0.1",
+		"@tokilabs/prettier-config": "^1.0.1",
+		"@tokilabs/tsconfig": "^1.0.1",
+		"@types/jest": "^29.5.0",
+		"@types/prettier": "^2.7.2",
+		"coveralls": "3.0.9",
+		"eslint": "^8.34.0",
+		"eslint-config-prettier": "^8.x",
+		"eslint-config-standard": "^16.x",
+		"eslint-import-resolver-node": "^0.x",
+		"eslint-plugin-import": "^2.x",
+		"eslint-plugin-node": "^11.x",
+		"eslint-plugin-prettier": "^4.x",
+		"eslint-plugin-react": "^7.x",
+		"eslint-plugin-react-hooks": "^4.x",
+		"eslint-prettier": "^0.0.0-empty",
+		"eslint-typescript": "^1.1.0",
+		"jest": "^26.0.1",
+		"prettier": "^2.x",
+		"ts-migrate": "^0.1.35",
+		"ts-migrate-plugins": "^0.1.35",
+		"ts-migrate-server": "^0.1.33",
+		"typecript": "^0.0.1-security",
+		"typescript": "^4.1.2",
+		"wsrun": "^5.2.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pugjs/pug.git"
+	},
+	"scripts": {
+		"prettier:check": "prettier --ignore-path .gitignore --list-different './**/*.js'",
+		"format": "prettier --ignore-path .gitignore --write './**/*.js'",
+		"build": "node scripts/prebuild && wsrun --stages --exclude-missing --fast-exit --collect-logs build && tsc --build scripts",
+		"pretest": "yarn build",
+		"test": "jest",
+		"coverage": "jest --coverage",
+		"coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls",
+		"watch": "jest --watch"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"snapshotSerializers": [
+			"./scripts/filename-serializer.js",
+			"./scripts/prettier-javascript-serializer.js",
+			"./scripts/buffer-serializer.js"
+		]
+	},
+	"license": "MIT"
 }

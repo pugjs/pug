@@ -1,15 +1,3 @@
 {
-  "compilerOptions": {
-    "target": "ES5",
-    "module": "commonjs",
-    "declaration": true,
-    "sourceMap": true,
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "lib": ["es2016", "dom"],
-    "pretty": true
-  }
+  "extends": "@tokilabs/tsconfig/base.json"
 }

@@ -19,5 +19,7 @@ cov-pt*
 .release.json
 package-lock.json
 
+.yarn/
+
 scripts/tsconfig.json
 packages/pug-error/lib
