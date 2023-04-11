@@ -2,11 +2,17 @@
 
 'use strict';
 
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 var fs = require('fs');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 var path = require('path');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 var program = require('commander');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 var mkdirp = require('mkdirp');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 var chalk = require('chalk');
+// @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
 var pug = require('pug');
 
 var basename = path.basename;
@@ -24,7 +30,9 @@ var options = {};
 
 program
   .version(
+    // @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
     'pug version: '     + require('pug/package.json').version + '\n' +
+    // @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
     'pug-cli version: ' + require(  './package.json').version
   )
   .usage('[options] [dir|file ...]')
@@ -73,6 +81,7 @@ program.on('--help', function(){
   console.log('');
 });
 
+// @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
 program.parse(process.argv);
 
 // options given, parse them
@@ -85,8 +94,9 @@ if (program.obj) {
  * Parse object either in `input` or in the file called `input`. The latter is
  * searched first.
  */
-function parseObj (input) {
+function parseObj (input: any) {
   try {
+    // @ts-expect-error TS(2580): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
     return require(path.resolve(input));
   } catch (e) {
     var str;
@@ -111,12 +121,14 @@ function parseObj (input) {
   ['basedir', 'basedir'],    // --basedir
   ['doctype', 'doctype'],    // --doctype
 ].forEach(function (o) {
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   options[o[1]] = program[o[0]] !== undefined ? program[o[0]] : options[o[1]];
 });
 
 // --name
 
 if (typeof program.name === 'string') {
+  // @ts-expect-error TS(2339): Property 'name' does not exist on type '{}'.
   options.name = program.name;
 }
 
@@ -141,11 +153,14 @@ var render = program.watch ? tryRender : renderFile;
 if (files.length) {
   consoleLog();
   if (program.watch) {
+    // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
     process.on('SIGINT', function() {
+      // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
       process.exit(1);
     });
   }
-  files.forEach(function (file) {
+  files.forEach(function (file: any) {
+    // @ts-expect-error TS(2554): Expected 2 arguments, but got 1.
     render(file);
   });
 // stdio
@@ -158,7 +173,7 @@ if (files.length) {
  *
  * Renders `base` if specified, otherwise renders `path`.
  */
-function watchFile(path, base, rootPath) {
+function watchFile(path: any, base: any, rootPath: any) {
   path = normalize(path);
 
   var log = '  ' + chalk.gray('watching') + ' ' + chalk.cyan(path);
@@ -170,22 +185,27 @@ function watchFile(path, base, rootPath) {
     log += chalk.cyan(base);
   }
 
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   if (watchList[path]) {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     if (watchList[path].indexOf(base) !== -1) return;
     consoleLog(log);
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
     watchList[path].push(base);
     return;
   }
 
   consoleLog(log);
+  // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
   watchList[path] = [base];
   fs.watchFile(path, {persistent: true, interval: 200},
-               function (curr, prev) {
+               function (curr: any, prev: any) {
     // File doesn't exist anymore. Keep watching.
     if (curr.mtime.getTime() === 0) return;
     // istanbul ignore if
     if (curr.mtime.getTime() === prev.mtime.getTime()) return;
-    watchList[path].forEach(function(file) {
+    // @ts-expect-error TS(7053): Element implicitly has an 'any' type because expre... Remove this comment to see the full error message
+    watchList[path].forEach(function(file: any) {
       tryRender(file, rootPath);
     });
   });
@@ -194,7 +214,7 @@ function watchFile(path, base, rootPath) {
 /**
  * Convert error to string
  */
-function errorToString(e) {
+function errorToString(e: any) {
   return e.stack || /* istanbul ignore next */ (e.message || e);
 }
 
@@ -204,7 +224,7 @@ function errorToString(e) {
  *
  * This is used in watch mode.
  */
-function tryRender(path, rootPath) {
+function tryRender(path: any, rootPath: any) {
   try {
     renderFile(path, rootPath);
   } catch (e) {
@@ -219,16 +239,21 @@ function tryRender(path, rootPath) {
 
 function stdin() {
   var buf = '';
+  // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
   process.stdin.setEncoding('utf8');
-  process.stdin.on('data', function(chunk){ buf += chunk; });
+  // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
+  process.stdin.on('data', function(chunk: any){ buf += chunk; });
+  // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
   process.stdin.on('end', function(){
     var output;
+    // @ts-expect-error TS(2339): Property 'client' does not exist on type '{}'.
     if (options.client) {
       output = pug.compileClient(buf, options);
     } else {
       var fn = pug.compile(buf, options);
       var output = fn(options);
     }
+    // @ts-expect-error TS(2580): Cannot find name 'process'. Do you need to install... Remove this comment to see the full error message
     process.stdout.write(output);
   }).resume();
 }
@@ -241,7 +266,7 @@ function stdin() {
  * @param rootPath  path relative to the directory specified in the command
  */
 
-function renderFile(path, rootPath) {
+function renderFile(path: any, rootPath: any) {
   var isPug = /\.(?:pug|jade)$/;
   var isIgnored = /([\/\\]_)|(^_)/;
 
@@ -251,14 +276,16 @@ function renderFile(path, rootPath) {
     // Try to watch the file if needed. watchFile takes care of duplicates.
     if (program.watch) watchFile(path, null, rootPath);
     if (program.nameAfterFile) {
+      // @ts-expect-error TS(2339): Property 'name' does not exist on type '{}'.
       options.name = getNameFromFileName(path);
     }
+    // @ts-expect-error TS(2339): Property 'client' does not exist on type '{}'.
     var fn = options.client
            ? pug.compileFileClient(path, options)
            : pug.compileFile(path, options);
     if (program.watch && fn.dependencies) {
       // watch dependencies, and recompile the base
-      fn.dependencies.forEach(function (dep) {
+      fn.dependencies.forEach(function (dep: any) {
         watchFile(dep, path, rootPath);
       });
     }
@@ -266,6 +293,7 @@ function renderFile(path, rootPath) {
     // --extension
     var extname;
     if (program.extension)   extname = '.' + program.extension;
+    // @ts-expect-error TS(2339): Property 'client' does not exist on type '{}'.
     else if (options.client) extname = '.js';
     else if (program.extension === '') extname = '';
     else                     extname = '.html';
@@ -285,15 +313,16 @@ function renderFile(path, rootPath) {
     }
     var dir = resolve(dirname(path));
     mkdirp.sync(dir);
+    // @ts-expect-error TS(2339): Property 'client' does not exist on type '{}'.
     var output = options.client ? fn : fn(options);
     fs.writeFileSync(path, output);
     consoleLog('  ' + chalk.gray('rendered') + ' ' + chalk.cyan('%s'), normalize(path));
   // Found directory
   } else if (stat.isDirectory()) {
     var files = fs.readdirSync(path);
-    files.map(function(filename) {
+    files.map(function(filename: any) {
       return path + '/' + filename;
-    }).forEach(function (file) {
+    }).forEach(function (file: any) {
       render(file, rootPath || path);
     });
   }
@@ -305,9 +334,9 @@ function renderFile(path, rootPath) {
  * @param {String} filename
  * @returns {String}
  */
-function getNameFromFileName(filename) {
+function getNameFromFileName(filename: any) {
   var file = basename(filename).replace(/\.(?:pug|jade)$/, '');
-  return file.toLowerCase().replace(/[^a-z0-9]+([a-z])/g, function (_, character) {
+  return file.toLowerCase().replace(/[^a-z0-9]+([a-z])/g, function (_: any, character: any) {
     return character.toUpperCase();
   }) + 'Template';
 }
