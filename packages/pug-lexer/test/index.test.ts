@@ -1,41 +1,53 @@
-'use strict';
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'fs'.
+const fs = require("fs");
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'assert'.
+const assert = require("assert");
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'lex'.
+const lex = require("../");
 
-var fs = require('fs');
-var assert = require('assert');
-var lex = require('../');
-
-var dir = __dirname + '/cases/';
-fs.readdirSync(dir).forEach(function(testCase) {
-  if (/\.pug$/.test(testCase)) {
-    test(testCase, () => {
-      var result = lex(fs.readFileSync(dir + testCase, 'utf8'), {
-        filename: dir + testCase,
-      });
-      expect(result).toMatchSnapshot();
-    });
-  }
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'dir'.
+const dir = `${__dirname}/cases/`;
+fs.readdirSync(dir).forEach((testCase: any) => {
+	if (testCase.endsWith(".pug")) {
+		// @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
+		test(testCase, () => {
+			const result = lex(fs.readFileSync(dir + testCase, "utf8"), {
+				filename: dir + testCase,
+			});
+			// @ts-expect-error TS(2304): Cannot find name 'expect'.
+			expect(result).toMatchSnapshot();
+		});
+	}
 });
 
-var edir = __dirname + '/errors/';
-fs.readdirSync(edir).forEach(function(testCase) {
-  if (/\.pug$/.test(testCase)) {
-    test(testCase, () => {
-      var actual;
-      try {
-        lex(fs.readFileSync(edir + testCase, 'utf8'), {
-          filename: edir + testCase,
-        });
-        throw new Error('Expected ' + testCase + ' to throw an exception.');
-      } catch (ex) {
-        if (!ex || !ex.code || ex.code.indexOf('PUG:') !== 0) throw ex;
-        actual = {
-          msg: ex.msg,
-          code: ex.code,
-          line: ex.line,
-          column: ex.column,
-        };
-      }
-      expect(actual).toMatchSnapshot();
-    });
-  }
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'edir'.
+const edir = `${__dirname}/errors/`;
+fs.readdirSync(edir).forEach((testCase: any) => {
+	if (testCase.endsWith(".pug")) {
+		// @ts-expect-error TS(2554): Expected 3 arguments, but got 2.
+		test(testCase, () => {
+			let actual;
+			try {
+				lex(fs.readFileSync(edir + testCase, "utf8"), {
+					filename: edir + testCase,
+				});
+				throw new Error(`Expected ${testCase} to throw an exception.`);
+			} catch (ex) {
+				// @ts-expect-error TS(2571): Object is of type 'unknown'.
+				if (!ex || !ex.code || ex.code.indexOf("PUG:") !== 0) throw ex;
+				actual = {
+					// @ts-expect-error TS(2571): Object is of type 'unknown'.
+					msg: ex.msg,
+					// @ts-expect-error TS(2571): Object is of type 'unknown'.
+					code: ex.code,
+					// @ts-expect-error TS(2571): Object is of type 'unknown'.
+					line: ex.line,
+					// @ts-expect-error TS(2571): Object is of type 'unknown'.
+					column: ex.column,
+				};
+			}
+			// @ts-expect-error TS(2304): Cannot find name 'expect'.
+			expect(actual).toMatchSnapshot();
+		});
+	}
 });

@@ -2,27 +2,31 @@
  * Module dependencies.
  */
 
-var pug = require('../'),
-  path = __dirname + '/rss.pug',
-  str = require('fs').readFileSync(path, 'utf8'),
-  fn = pug.compile(str, {filename: path, pretty: true});
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'pug'.
+const pug = require("../"),
+	// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'path'.
+	path = `${__dirname}/rss.pug`,
+	// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'str'.
+	str = require("fs").readFileSync(path, "utf8"),
+	// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'fn'.
+	fn = pug.compile(str, { filename: path, pretty: true });
 
-var items = [];
+const items = [];
 
 items.push({
-  title: 'Example',
-  description: 'Something',
-  link: 'http://google.com',
+	title: "Example",
+	description: "Something",
+	link: "http://google.com",
 });
 items.push({
-  title: 'LearnBoost',
-  description: 'Cool',
-  link: 'http://learnboost.com',
+	title: "LearnBoost",
+	description: "Cool",
+	link: "http://learnboost.com",
 });
 items.push({
-  title: 'Express',
-  description: 'Cool',
-  link: 'http://expressjs.com',
+	title: "Express",
+	description: "Cool",
+	link: "http://expressjs.com",
 });
 
-console.log(fn({items: items}));
+console.log(fn({ items }));

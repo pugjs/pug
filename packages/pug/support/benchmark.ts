@@ -2,32 +2,34 @@
  * Module dependencies.
  */
 
-var uubench = require('uubench'),
-  pug = require('../');
+// @ts-expect-error TS(2591): Cannot find name 'require'. Do you need to install... Remove this comment to see the full error message
+const uubench = require("uubench"),
+	// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'pug'.
+	pug = require("../");
 
-var suite = new uubench.Suite({
-  min: 200,
-  result: function(name, stats) {
-    var persec = 1000 / stats.elapsed,
-      ops = stats.iterations * persec;
-    console.log('%s: %d', name, ops | 0);
-  },
+const suite = new uubench.Suite({
+	min: 200,
+	result(name: any, stats: any) {
+		const persec = 1000 / stats.elapsed,
+			ops = stats.iterations * persec;
+		console.log("%s: %d", name, ops | 0);
+	},
 });
 
-function setup(self) {
-  var suffix = self ? ' (self)' : '',
-    options = {self: self};
+function setup(self: any) {
+	const suffix = self ? " (self)" : "",
+		options = { self };
 
-  var str = 'html\n  body\n    h1 Title',
-    fn = pug.compile(str, options);
+	let str = "html\n  body\n    h1 Title",
+		fn = pug.compile(str, options);
 
-  suite.bench('tiny' + suffix, function(next) {
-    fn();
-    next();
-  });
+	suite.bench(`tiny${suffix}`, (next: any) => {
+		fn();
+		next();
+	});
 
-  str =
-    '\
+	str =
+		'\
 html\n\
   body\n\
     h1 Title\n\
@@ -39,15 +41,15 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-  var fn2 = pug.compile(str, options);
+	const fn2 = pug.compile(str, options);
 
-  suite.bench('small' + suffix, function(next) {
-    fn2();
-    next();
-  });
+	suite.bench(`small${suffix}`, (next: any) => {
+		fn2();
+		next();
+	});
 
-  str =
-    '\
+	str =
+		'\
 html\n\
   body\n\
     h1 #{title}\n\
@@ -56,9 +58,9 @@ html\n\
         li: a(href="#")= link\r\n\
 ';
 
-  if (self) {
-    str =
-      '\
+	if (self) {
+		str =
+			'\
 html\n\
   body\n\
     h1 #{self.title}\n\
@@ -66,20 +68,20 @@ html\n\
       - each link in self.links\r\n\
         li: a(href="#")= link\r\n\
 ';
-  }
+	}
 
-  var fn3 = pug.compile(str, options);
+	const fn3 = pug.compile(str, options);
 
-  suite.bench('small locals' + suffix, function(next) {
-    fn3({
-      title: 'Title',
-      links: ['Home', 'About Us', 'Store', 'FAQ', 'Contact'],
-    });
-    next();
-  });
+	suite.bench(`small locals${suffix}`, (next: any) => {
+		fn3({
+			title: "Title",
+			links: ["Home", "About Us", "Store", "FAQ", "Contact"],
+		});
+		next();
+	});
 
-  str =
-    '\
+	str =
+		'\
 html\n\
   body\n\
     h1 Title\n\
@@ -91,16 +93,16 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-  str = Array(30).join(str);
-  var fn4 = pug.compile(str, options);
+	str = Array(30).join(str);
+	const fn4 = pug.compile(str, options);
 
-  suite.bench('medium' + suffix, function(next) {
-    fn4();
-    next();
-  });
+	suite.bench(`medium${suffix}`, (next: any) => {
+		fn4();
+		next();
+	});
 
-  str =
-    '\
+	str =
+		'\
 html\n\
   body\n\
     h1 Title\n\
@@ -112,15 +114,16 @@ html\n\
       li: a(href="#") Contact\n\
 ';
 
-  str = Array(100).join(str);
-  var fn5 = pug.compile(str, options);
+	str = Array(100).join(str);
+	const fn5 = pug.compile(str, options);
 
-  suite.bench('large' + suffix, function(next) {
-    fn5();
-    next();
-  });
+	suite.bench(`large${suffix}`, (next: any) => {
+		fn5();
+		next();
+	});
 }
 
+// @ts-expect-error TS(2554): Expected 1 arguments, but got 0.
 setup();
 setup(true);
 
