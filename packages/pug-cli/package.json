@@ -11,13 +11,17 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "commander": "^2.8.1",
-    "pug": "^2.0.0-alpha7",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "pug": "^2.0.0-alpha7"
   },
   "devDependencies": {
     "istanbul": "*",
     "mocha": "*",
-    "rimraf": "^2.3.4"
+    "rimraf": "^2.3.4",
+    "ts-migrate": "^0.1.35",
+    "ts-migrate-plugins": "^0.1.35",
+    "ts-migrate-server": "^0.1.33",
+    "typescript": "^5.0.4"
   },
   "scripts": {
     "test": "mocha -R spec --bail",
