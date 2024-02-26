@@ -69,6 +69,11 @@ function Compiler(node, options) {
   this.mixins = {};
   this.dynamicMixins = false;
   this.eachCount = 0;
+  if (options.templateName && !/^[0-9a-zA-Z\-\_]+?$/.test(options.templateName)) {
+    throw new Error(
+      'Template name should be a valid function name'
+    );
+  }
   if (options.doctype) this.setDoctype(options.doctype);
   this.runtimeFunctionsUsed = [];
   this.inlineRuntimeFunctions = options.inlineRuntimeFunctions || false;
@@ -311,10 +316,17 @@ Compiler.prototype = {
     }
 
     if (debug && node.debug !== false && node.type !== 'Block') {
+      if (typeof node.line !== 'number'){
+        throw new Error(
+          'node.line is not a valid number. Possible prototype polution?'
+        );
+      }
+      
       if (node.line) {
         var js = ';pug_debug_line = ' + node.line;
-        if (node.filename)
+        if (node.filename){
           js += ';pug_debug_filename = ' + stringify(node.filename);
+        }
         this.buf.push(js + ';');
       }
     }
