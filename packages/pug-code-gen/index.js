@@ -318,7 +318,7 @@ Compiler.prototype = {
     if (debug && node.debug !== false && node.type !== 'Block') {
       if (typeof node.line !== 'number') {
         throw new Error(
-          'node.line is not a valid number. Possible prototype polution?'
+          'node.line is not a valid number.'
         );
       }
       
