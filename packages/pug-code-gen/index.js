@@ -39,6 +39,10 @@ function toConstant(src) {
   return constantinople.toConstant(src, {pug: runtime, pug_interp: undefined});
 }
 
+function isIdentifier(name) {
+  return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(name);
+}
+
 /**
  * Initialize `Compiler` with the given `node`.
  *
@@ -62,6 +66,23 @@ function Compiler(node, options) {
       'The pretty parameter should either be a boolean or whitespace only string'
     );
   }
+  if (this.options.templateName && !isIdentifier(this.options.templateName)) {
+    throw new Error(
+      'The templateName parameter must be a valid JavaScript identifier if specified.'
+    );
+  }
+  if (
+    this.doctype &&
+    (this.doctype.includes('<') || this.doctype.includes('>'))
+  ) {
+    throw new Error('Doctype can not contain "<" or ">"');
+  }
+  if (this.options.globals && !this.options.globals.every(isIdentifier)) {
+    throw new Error(
+      'The globals option must be an array of valid JavaScript identifiers if specified.'
+    );
+  }
+
   this.debug = false !== options.compileDebug;
   this.indents = 0;
   this.parentIndents = 0;
@@ -167,6 +188,7 @@ Compiler.prototype = {
         ');' +
         '}';
     }
+
     return (
       buildRuntime(this.runtimeFunctionsUsed) +
       'function ' +
