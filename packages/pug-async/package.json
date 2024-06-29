@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mydataspace/pug-async"
+    "url": "git://github.com/fiftin/pug-async"
   },
   "main": "lib",
   "dependencies": {
