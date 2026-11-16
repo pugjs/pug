@@ -71,8 +71,8 @@ describe('sveltish directives', function() {
   describe('event attributes (modern Svelte, no on: prefix)', function() {
     it('renders a data-on-* marker attribute with the handler source', function() {
       assert.equal(
-        renderSveltish('button(on:click=save)', {}),
-        '<button data-on-click="save"></button>'
+        renderSveltish('button(onclick=save) x', {save: 1}),
+        '<button data-on-click="save">x</button>'
       );
     });
 
@@ -85,8 +85,8 @@ describe('sveltish directives', function() {
 
     it('accepts quoted handler strings', function() {
       assert.equal(
-        pug.render('button(on:click=save)(class:a={x})', {x: true, save: 1}),
-        '<button on:click="1" class:a="{&quot;x&quot;:true}"></button>'
+        renderSveltish('button(onclick="doIt()") x', {}),
+        '<button data-on-click="doIt()">x</button>'
       );
     });
 
