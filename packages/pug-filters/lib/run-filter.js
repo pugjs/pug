@@ -2,6 +2,7 @@
 
 var jstransformer = require('jstransformer');
 var resolve = require('resolve');
+var builtins = require('./builtins');
 
 module.exports = filter;
 
@@ -16,6 +17,9 @@ function getMinifyTransformerName(outputFormat) {
 
 function filter(name, str, options, currentDirectory, funcName) {
   funcName = funcName || 'render';
+  if (builtins[name]) {
+    return builtins[name](str, options);
+  }
   var trPath;
   try {
     try {

@@ -26,6 +26,7 @@
   "files": [
     "lib/handle-filters.js",
     "lib/run-filter.js",
+    "lib/builtins.js",
     "index.js"
   ],
   "repository": {

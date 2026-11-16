@@ -1173,6 +1173,34 @@ describe('pug', function() {
         assert.equal('<p>foo bar</p>', str);
       });
     });
+
+    it('should support the built-in :json filter without external dependencies', function() {
+      assert.equal(
+        '<pre>{"foo":"bar","n":1}</pre>',
+        pug.render('pre\n  :json()\n    { foo: "bar", n: 1 }')
+      );
+    });
+
+    it('should support the built-in :xml filter without external dependencies', function() {
+      assert.equal(
+        [
+          '<div><user>',
+          "  <name>O&apos;Brien</name>",
+          '  <tags>',
+          '    <item>a&lt;b</item>',
+          '    <item>c&amp;d</item>',
+          '  </tags>',
+          '</user></div>'
+        ].join('\n'),
+        pug.render(
+          [
+            'div',
+            '  :xml(root="user")',
+            "    { name: \"O'Brien\", tags: ['a<b', 'c&d'] }"
+          ].join('\n')
+        )
+      );
+    });
   });
 
   describe('.compile()', function() {
