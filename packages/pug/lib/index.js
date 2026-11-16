@@ -21,6 +21,7 @@ var link = require('pug-linker');
 var generateCode = require('pug-code-gen');
 var runtime = require('pug-runtime');
 var runtimeWrap = require('pug-runtime/wrap');
+var applySveltish = require('./sveltish');
 
 /**
  * Name for detection
@@ -193,6 +194,9 @@ function compileBody(str, options) {
   ast = applyPlugins(ast, options, plugins, 'preLink');
   ast = link(ast);
   ast = applyPlugins(ast, options, plugins, 'postLink');
+  if (options.sveltish) {
+    ast = applySveltish(ast, options.sveltish);
+  }
 
   // Compile
   ast = applyPlugins(ast, options, plugins, 'preCodeGen');
@@ -282,6 +286,7 @@ exports.compile = function(str, options) {
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
     plugins: options.plugins,
+    sveltish: options.sveltish,
   });
 
   var res = options.inlineRuntimeFunctions
@@ -330,6 +335,7 @@ exports.compileClientWithDependenciesTracked = function(str, options) {
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
     plugins: options.plugins,
+    sveltish: options.sveltish,
   });
 
   var body = parsed.body;

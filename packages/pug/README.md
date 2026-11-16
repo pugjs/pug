@@ -121,6 +121,35 @@ var html = pug.renderFile('filename.pug', merge(options, locals));
  - `filename`  Used in exceptions, and required when using includes
  - `compileDebug`  When `false` no debug instrumentation is compiled
  - `pretty`    Add pretty-indentation whitespace to output _(false by default)_
+ - `sveltish`  Enable Svelte-style directive attributes _(false by default)_;
+   see [Svelte-style directives](#svelte-style-directives-sveltish)
+
+### Svelte-style directives (`sveltish`)
+
+Pass `sveltish: true` (or a subset object such as
+`sveltish: { on: false }`) to a compile option to opt into Svelte-flavored
+directive attributes. The directives are rewritten to ordinary attributes
+before code generation, so they work anywhere pug works — including
+inside mixins and conditionals — and require no extra runtime helpers:
+
+```pug
+a.btn(class:active={cond})
+button(on:click=save)
+input(bind:value={count})
+```
+
+ - `class:name={expr}` becomes an object-form class contribution
+   (`class={name: expr}`), which pug merges with the other `class`
+   contributions on the tag; the class is present when `expr` is truthy.
+ - `bind:attr={expr}` becomes a plain `attr={expr}` attribute; the
+   rendered HTML carries the evaluated value. (True two-way binding needs
+   a client-side layer; the rewrite makes the intent declarative.)
+ - `on:event={expr}` becomes a `data-on-event` marker attribute containing
+   the handler source, which a hydration layer can attach listeners to —
+   the same idea as Svelte SSR's `data-svelte-h` attributes.
+
+Without the option, these attribute names are left as-is (they render as
+literal attributes).
 
 ## Browser Support
 

@@ -33,6 +33,7 @@
     "pug-load": "^2.0.12",
     "pug-parser": "^5.0.1",
     "pug-runtime": "^2.0.5",
+    "pug-walk": "^1.1.8",
     "pug-strip-comments": "^1.0.4"
   },
   "devDependencies": {
@@ -49,6 +50,7 @@
   },
   "files": [
     "lib/index.js",
+    "lib/sveltish.js",
     "register.js"
   ],
   "browser": {
