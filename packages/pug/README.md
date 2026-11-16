@@ -133,20 +133,31 @@ before code generation, so they work anywhere pug works — including
 inside mixins and conditionals — and require no extra runtime helpers:
 
 ```pug
-a.btn(class:active={cond})
-button(on:click=save)
-input(bind:value={count})
+a.btn(class:active=cond)
+button(onclick=save)
+input(bind:value=count)
 ```
 
- - `class:name={expr}` becomes an object-form class contribution
+Directive values are **bare pug expressions** — pug's `=` values
+already evaluate, so no braces are needed. A surrounding `{...}`
+layer is still accepted as legacy Svelte sugar (stripped automatically),
+but is not recommended: the lexer requires brace-wrapped values to be
+a valid JS expression, which restricts what can appear inside them
+(embedded string quotes break lexing).
+
+ - `class:name=expr` becomes an object-form class contribution
    (`class={name: expr}`), which pug merges with the other `class`
    contributions on the tag; the class is present when `expr` is truthy.
- - `bind:attr={expr}` becomes a plain `attr={expr}` attribute; the
+ - `bind:attr=expr` becomes a plain `attr=expr` attribute; the
    rendered HTML carries the evaluated value. (True two-way binding needs
    a client-side layer; the rewrite makes the intent declarative.)
- - `on:event={expr}` becomes a `data-on-event` marker attribute containing
+ - A bare `on<event>=expr` (e.g. `onclick=save`) becomes a `data-on-<event>`
+   marker attribute containing
    the handler source, which a hydration layer can attach listeners to —
    the same idea as Svelte SSR's `data-svelte-h` attributes.
+   This mirrors modern Svelte (v4/v5), which replaced the `on:`
+   directive with plain DOM event attributes; the legacy `on:event`
+   form is no longer rewritten and renders as a literal attribute.
 
 Without the option, these attribute names are left as-is (they render as
 literal attributes).
