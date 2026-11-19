@@ -158,8 +158,7 @@ which will produce `filename.js` containing the compiled template.
 
 ## Tutorials
 
-- cssdeck interactive [Pug syntax tutorial](http://cssdeck.com/labs/learning-the-jade-templating-engine-syntax)
-- cssdeck interactive [Pug logic tutorial](http://cssdeck.com/labs/jade-templating-tutorial-codecast-part-2)
+- Official docs: [Getting Started](https://pugjs.org/api/getting-started.html), [Tags](https://pugjs.org/language/tags.html), [Conditionals](https://pugjs.org/language/conditionals.html), [Iteration](https://pugjs.org/language/iteration.html), and [Code](https://pugjs.org/language/code.html)
 - [Pug について。](https://gist.github.com/japboy/5402844) (A Japanese Tutorial)
 
 ## Implementations in other languages
