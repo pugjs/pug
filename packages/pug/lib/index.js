@@ -263,6 +263,7 @@ function handleTemplateCache(options, str) {
 
 exports.compile = function(str, options) {
   var options = options || {};
+  var plugins = Object.prototype.hasOwnProperty.call(options, 'plugins') ? options.plugins : [];
 
   str = String(str);
 
@@ -281,7 +282,7 @@ exports.compile = function(str, options) {
     filters: options.filters,
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
-    plugins: options.plugins,
+    plugins: plugins,
   });
 
   var res = options.inlineRuntimeFunctions
@@ -329,7 +330,7 @@ exports.compileClientWithDependenciesTracked = function(str, options) {
     filters: options.filters,
     filterOptions: options.filterOptions,
     filterAliases: options.filterAliases,
-    plugins: options.plugins,
+    plugins: Object.prototype.hasOwnProperty.call(options, 'plugins') ? options.plugins : [],
   });
 
   var body = parsed.body;

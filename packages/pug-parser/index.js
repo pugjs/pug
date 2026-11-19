@@ -38,7 +38,7 @@ function Parser(tokens, options) {
   this.filename = options.filename;
   this.src = options.src;
   this.inMixin = 0;
-  this.plugins = options.plugins || [];
+  this.plugins = Object.prototype.hasOwnProperty.call(options, 'plugins') ? options.plugins : [];
 }
 
 /**

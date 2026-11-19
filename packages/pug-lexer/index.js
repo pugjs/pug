@@ -40,7 +40,7 @@ function Lexer(str, options) {
   this.interpolated = options.interpolated || false;
   this.lineno = options.startingLine || 1;
   this.colno = options.startingColumn || 1;
-  this.plugins = options.plugins || [];
+  this.plugins = Object.prototype.hasOwnProperty.call(options, 'plugins') ? options.plugins : [];
   this.indentStack = [0];
   this.indentRe = null;
   // If #{}, !{} or #[] syntax is allowed when adding text
