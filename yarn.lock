@@ -4226,9 +4226,9 @@ window-size@0.1.0:
   integrity sha1-VDjNLqk7IC76Ohn+iIeu58lPnJ0=
 
 with@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/with/-/with-7.0.0.tgz#60b88622fb56482a5ba7fa8ebe1a880d7b64a6e3"
-  integrity sha512-XS51xsYITl5V0q0AcZG/lMPFBbCETHLjL7Tr6ZOmPGP3UkKBmwOKqLgAmenC5v8MHDcOudpNkO1CW0kpe7Oyag==
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/with/-/with-7.0.2.tgz#ccee3ad542d25538a7a7a80aad212b9828495bac"
+  integrity sha512-RNGKj82nUPg3g5ygxkQl0R937xLyho1J24ItRCBTr/m1YnZkzJy1hUiHUJrc/VlsDQzsCnInEGSg3bci0Lmd4w==
   dependencies:
     "@babel/parser" "^7.9.6"
     "@babel/types" "^7.9.6"

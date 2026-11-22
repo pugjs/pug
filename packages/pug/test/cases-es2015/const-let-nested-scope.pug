@@ -1,0 +1,11 @@
+- const lang = 'en'
+- let suffix = '!'
+- const items = ['a', 'b']
+
+mixin greet(name)
+  p= name + ' (' + lang + ')' + suffix
+
+ul(lang=lang)
+  each item in items
+    li= item + ' ' + lang + suffix
++greet('pug')
